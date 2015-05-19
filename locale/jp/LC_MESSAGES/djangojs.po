@@ -1,0 +1,152 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2014-03-02 14:58+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: static/wallet/signer.js.c:1233
+msgid "No balance to spend"
+msgstr ""
+
+#: static/wallet/wallet.js.c:2102
+msgid "Error Decrypting Wallet. Please check your password is correct."
+msgstr ""
+
+#: static/js/greenaddress.js.c:4 static/js/greenaddress.min.js.c:663
+msgid ""
+"Cookies help us deliver our services. By using our services, you agree to "
+"our use of cookies."
+msgstr ""
+
+#: static/js/greenaddress.js.c:5 static/js/greenaddress.min.js.c:664
+msgid "More information"
+msgstr ""
+
+#: static/js/nfc.min.js.c:56 static/js/greenwallet/signup/nfc.js.c:56
+msgid "Failed removing NFC listener"
+msgstr ""
+
+#: static/js/greenwallet.min.js.c:1735 static/js/greenwallet.min.js.c:1762
+#: static/js/greenwallet/hdwallet.js.c:68
+#: static/js/greenwallet/hdwallet.js.c:95
+msgid "You can't sent funds in watch only mode"
+msgstr ""
+
+#: static/js/greenwallet.min.js.c:1888
+#: static/js/greenwallet/signuplogin/controllers.js.c:92
+msgid "User not found"
+msgstr ""
+
+#: static/js/greenwallet.min.js.c:1941
+#: static/js/greenwallet/signuplogin/controllers.js.c:145
+msgid "Wallet decryption failed"
+msgstr ""
+
+#: static/js/greenwallet.min.js.c:2034
+#: static/js/greenwallet/info/controllers.js.c:85
+msgid "Not a valid encrypted private key"
+msgstr ""
+
+#: static/js/greenwallet.min.js.c:2035
+#: static/js/greenwallet/info/controllers.js.c:86
+msgid "Invalid passphrase"
+msgstr ""
+
+#: static/js/greenwallet.min.js.c:2245
+#: static/js/greenwallet/send/controllers.js.c:61
+msgid "Email sent"
+msgstr ""
+
+#: static/js/greenwallet.min.js.c:2247
+#: static/js/greenwallet/send/controllers.js.c:63
+msgid "Failed sending email"
+msgstr ""
+
+#: static/js/greenwallet.min.js.c:2375
+#: static/js/greenwallet/send/controllers.js.c:191
+msgid "Email sent successfully"
+msgstr ""
+
+#: static/js/greenwallet.min.js.c:2609 static/js/greenwallet.min.js.c:2633
+#: static/js/greenwallet/settings/controllers.js.c:223
+#: static/js/greenwallet/settings/controllers.js.c:247
+msgid "{1} supports only the following currencies: {2}"
+msgstr ""
+
+#: static/js/greenwallet.min.js.c:2775
+#: static/js/greenwallet/settings/controllers.js.c:389
+msgid "PIN removed"
+msgstr ""
+
+#: static/js/greenwallet.min.js.c:2808
+#: static/js/greenwallet/settings/controllers.js.c:422
+msgid "PIN changed"
+msgstr ""
+
+#: static/js/greenwallet.min.js.c:2812
+#: static/js/greenwallet/settings/controllers.js.c:426
+msgid "PIN set"
+msgstr ""
+
+#: static/js/greenwallet.min.js.c:2825
+#: static/js/greenwallet/settings/controllers.js.c:439
+msgid "All PINs removed"
+msgstr ""
+
+#: static/js/greenwallet.min.js.c:2845
+#: static/js/greenwallet/settings/controllers.js.c:459
+msgid "Facebook integration disabled"
+msgstr ""
+
+#: static/js/greenwallet.min.js.c:2858
+#: static/js/greenwallet/settings/controllers.js.c:472
+msgid "Facebook integration enabled"
+msgstr ""
+
+#: static/js/greenwallet.min.js.c:3108 static/js/greenwallet.min.js.c:3117
+#: static/js/greenwallet.min.js.c:3147 static/js/greenwallet/services.js.c:79
+#: static/js/greenwallet/services.js.c:88
+#: static/js/greenwallet/services.js.c:118
+msgid "Login failed"
+msgstr ""
+
+#: static/js/greenwallet.min.js.c:3262 static/js/greenwallet/services.js.c:233
+msgid "Bitcoin transaction sent!"
+msgstr ""
+
+#: static/js/greenwallet.min.js.c:3265 static/js/greenwallet/services.js.c:236
+msgid "Transaction failed: "
+msgstr ""
+
+#: static/js/greenwallet.min.js.c:3520 static/js/greenwallet/services.js.c:491
+msgid "Failed retrieving password."
+msgstr ""
+
+#: static/js/test.js.c:3
+msgid "ala ma kota"
+msgstr ""
+
+#: static/js/test.js.c:4 static/js/test.js.c:5
+msgid "pojedynczo %(num)d"
+msgid_plural "mnogo %(num)d"
+msgstr[0] ""
+msgstr[1] ""
+
+#: static/js/test.js.c:6
+msgid "xxxx"
+msgid_plural "abc"
+msgstr[0] ""
+msgstr[1] ""

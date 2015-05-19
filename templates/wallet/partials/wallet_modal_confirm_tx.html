@@ -1,0 +1,29 @@
+<div class="modal-header">
+    {{ _("Confirm transaction details") }}
+</div>
+
+<div class="modal-body">
+    <p>{{ _("Please make sure the details below are correct:") }}</p>
+
+    <dl>
+        <dt>{{ _("Recipient") }}</dt>
+        <dd>(( tx.recipient ))</dd>
+    </dl>
+
+    <dl>
+        <dt>{{ _("Amount") }}</dt>
+        <dd>(( tx.value | format_btc:wallet.unit ))</dd>
+    </dl>
+
+    <dl>
+        <dt>{{ _("Fee") }}</dt>
+        <dd>(( tx.fee | format_btc:wallet.unit ))</dd>
+    </dl>
+</div>
+
+<div class="modal-footer">
+    <div class="">
+        <button class="btn btn-default" ng-click="$dismiss()">{{ _("Cancel") }}</button>
+        <button class="btn btn-primary" ng-click="$close()">{{ _("Send transaction") }}</button>
+    </div>
+</div>

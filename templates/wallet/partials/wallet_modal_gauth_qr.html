@@ -1,0 +1,13 @@
+<div class="modal-body text-center">
+    <p>{{ _("The QR code for Google Authenticator access to your wallet is:") }}</p>
+    <p><qr size="212" text="twofactor_state.google_secret_url"></qr></p>
+    <p>{{ _("Please write this down or print it for emergencies, i.e. you lose your device") }}</p>
+    <p>{{ _("You can also copy the code manually:") }}</p>
+    <p>(( twofactor_state.google_secret_key ))</p>
+</div>
+<div class="modal-footer">
+  {% if cdvapp %}
+  <button class="btn btn-info btn-block-xs" ng-click="copy_to_clipboard(twofactor_state.google_secret_key)"><i class="glyphicon glyphicon-transfer"></i>{{ _("Copy to clipboard") }}</button>
+  {% endif %}
+  <button type="button" class="btn btn-primary" ng-click="$close()">{{ _("Close") }}</button>
+</div>

@@ -1,0 +1,1631 @@
+msgid ""
+msgstr "Project-Id-Version: greenaddress-wallet\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2014-04-09 13:40+0000\n"
+"PO-Revision-Date: 2014-04-10 07:53-0400\n"
+"Last-Translator: GreenAddress <info@greenaddress.it>\n"
+"Language-Team: Greek\n"
+"Language: el_GR\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: crowdin.net\n"
+
+#: gaservices/tx_sender/docs/gait_domain.py:255
+#, python-format
+msgid "%s() (built-in function)"
+msgstr "%s() (ενσωματωμένη συνάρτηση)"
+
+#: gaservices/tx_sender/docs/gait_domain.py:256
+#: gaservices/tx_sender/docs/gait_domain.py:313
+#: gaservices/tx_sender/docs/gait_domain.py:325
+#: gaservices/tx_sender/docs/gait_domain.py:338
+#, python-format
+msgid "%s() (in module %s)"
+msgstr "%s() (στην μονάδα %s)"
+
+#: gaservices/tx_sender/docs/gait_domain.py:259
+#, python-format
+msgid "%s (built-in variable)"
+msgstr "%s (ενσωματωμένη μεταβλητή)"
+
+#: gaservices/tx_sender/docs/gait_domain.py:260
+#: gaservices/tx_sender/docs/gait_domain.py:351
+#, python-format
+msgid "%s (in module %s)"
+msgstr "%s (στην μονάδα %s)"
+
+#: gaservices/tx_sender/docs/gait_domain.py:276
+#, python-format
+msgid "%s (built-in class)"
+msgstr "%s (Ενσωματωμένη κλάση)"
+
+#: gaservices/tx_sender/docs/gait_domain.py:277
+#, python-format
+msgid "%s (class in %s)"
+msgstr "%s (κλάση σε %s)"
+
+#: gaservices/tx_sender/docs/gait_domain.py:317
+#, python-format
+msgid "%s() (%s.%s method)"
+msgstr "%s() (%s.%s μέθοδος)"
+
+#: gaservices/tx_sender/docs/gait_domain.py:319
+#, python-format
+msgid "%s() (%s method)"
+msgstr "%s() (%s μέθοδος)"
+
+#: gaservices/tx_sender/docs/gait_domain.py:329
+#, python-format
+msgid "%s() (%s.%s static method)"
+msgstr "%s() ( %s.%s στατική μέθοδος)"
+
+#: gaservices/tx_sender/docs/gait_domain.py:332
+#, python-format
+msgid "%s() (%s static method)"
+msgstr "%s() (%s στατική μέθοδος)"
+
+#: gaservices/tx_sender/docs/gait_domain.py:342
+#, python-format
+msgid "%s() (%s.%s class method)"
+msgstr "%s() (%s.%s μέθοδος κλάσης)"
+
+#: gaservices/tx_sender/docs/gait_domain.py:345
+#, python-format
+msgid "%s() (%s class method)"
+msgstr "%s() (%s μέθοδος κλάσης)"
+
+#: gaservices/tx_sender/docs/gait_domain.py:355
+#, python-format
+msgid "%s (%s.%s attribute)"
+msgstr "%s (%s.%s χαρακτηριστικό)"
+
+#: gaservices/tx_sender/docs/gait_domain.py:357
+#, python-format
+msgid "%s (%s attribute)"
+msgstr "%s (%s χαρακτηριστικό)"
+
+#: gaservices/tx_sender/docs/gait_domain.py:436
+#, python-format
+msgid "%s (module)"
+msgstr "%s (μονάδα)"
+
+#: gaservices/tx_sender/docs/gait_domain.py:540
+msgid "Deprecated"
+msgstr "Αποδοκιμάστηκε"
+
+#: gaservices/tx_sender/docs/gait_domain.py:698
+msgid " (deprecated)"
+msgstr " (αποδοκιμάστηκε)"
+
+#: gaservices/tx_sender/docs/gait_autodoc.py:535
+#, python-format
+msgid "alias of :class:`%s`"
+msgstr "ψευδώνυμο της: Κλάση: '%s'"
+
+#: utils/rate_limiter.py:40
+msgid "Request rate limit exceeded"
+msgstr "Υπέρβαση ορίου"
+
+#: templates/website/pay.html:6
+msgid "Send funds"
+msgstr "Αποστολή πόρων"
+
+#: templates/website/pay.html:9
+msgid "Please send"
+msgstr "Παρακαλούμε στείλτε"
+
+#: templates/website/faq.html:5 templates/wallet/nav.html:16
+#: templates/base/base.html:107
+msgid "FAQ"
+msgstr "ΣΥΧΝΕΣ ΕΡΩΤΗΣΕΙΣ"
+
+#: templates/website/faq.html:11
+msgid "Frequently Asked Questions"
+msgstr "Συχνές ερωτήσεις"
+
+#: templates/website/faq.html:13
+msgid "Can I migrate easily from another wallet (like blockchain.info)?  Can I sweep private keys funds into my wallet?"
+msgstr "Μπορώ να κάνω ευκολα μετεγκατάσταση από άλλο πορτοφόλι (όπως το blockchain.info); Μπορώ να σαρώσω τα ιδιωτικά κλειδιά κεφαλαίων στο πορτοφόλι μου;"
+
+#: templates/website/faq.html:14
+msgid "Yes and yes, you can, just have a look in the Receive Money tab, put your private key in the right field and client side the funds will be swept into your wallet. Voilà!"
+msgstr "Ναι και ναι, μπορείτε, απλά ρίξτε μια ματιά στην καρτέλα Λήψη Χρημάτων, βάλτε το ιδιωτικό κλειδί σας στο σωστό τομέα και την πλευρά του πελάτη και τα κεφάλαια θα μεταφερθούν στο πορτοφόλι σας. Voila!"
+
+#: templates/website/faq.html:16
+msgid "Can I try your service?  Do you have a testnet/UAT version?"
+msgstr "Μπορώ να δοκιμάσω την υπηρεσία σας;  Έχετε μια έκδοση testnet/UAT;"
+
+#: templates/website/faq.html:17
+msgid "Yes and yes, you can try our testnet version on "
+msgstr "Ναι και ναι, μπορείτε να δοκιμάσετε την έκδοση testnet μας "
+
+#: templates/website/faq.html:17
+msgid " and you can find a testnet faucet on "
+msgstr " και μπορείτε να βρείτε μια testnet faucet στο "
+
+#: templates/website/faq.html:18
+msgid " Don't forget to send the testnet coins back to the faucet when you are done!"
+msgstr " Μην ξεχάσετε να στείλετε τα νομίσματα testnet πίσω στο faucet όταν τελειώσετε!"
+
+#: templates/website/faq.html:21
+msgid "Do you support other platforms than a web page?"
+msgstr "Υποστηρίζετε και άλλες πλατφόρμες εκτός από την ιστοσελίδα;"
+
+#: templates/website/faq.html:22
+msgid "Yes! You can download an Android app"
+msgstr "Ναι! Μπορείτε να κατεβάσετε εφαρμογή για Android"
+
+#: templates/website/faq.html:22
+msgid "from the Google Play store"
+msgstr "από το κατάστημα Google Play"
+
+#: templates/website/faq.html:22
+msgid "and a Chrome packaged app"
+msgstr "και μία εφαρμογή για τον Chrome"
+
+#: templates/website/faq.html:22
+msgid "from the Chrome Web Store"
+msgstr "από το ηλεκτρονικό κατάστημα του Chrome"
+
+#: templates/website/faq.html:22
+msgid "Both apps are open source and you can "
+msgstr "Και οι δύο εφαρμογές είναι ανοικτού κώδικα και μπορείτε να "
+
+#: templates/website/faq.html:22
+msgid "see the source code of each on GitHub"
+msgstr "δείτε τον κώδικα της κάθε εφαρμογής στο GitHub"
+
+#: templates/website/faq.html:22
+msgid "It also uses <a href=\"http://electrum.org\">Electrum</a> servers for additional transaction verification, so it should be safe to use even if our servers are compromised."
+msgstr "Επίσης χρησιμοποιεί διακομιστές <a href=\"http://electrum.org\"> Electrum</a> για επιπλέον επαλήθευση των συναλλαγών, με αυτό τον τρόπο η χρήση είναι ασφαλή ακόμα και σε περίπτωση που οι διακομηστές μας παραβιαστούν."
+
+#: templates/website/faq.html:25
+msgid "But what happens if your service goes away? Will I lose my coins?"
+msgstr "Αλλά τι θα συμβεί εάν η υπηρεσία σας καταργηθεί; Θα χάσω τα νομίσματα μου;"
+
+#: templates/website/faq.html:27
+msgid "GreenAddress.it signs each transaction with its own key in addition to client-side signing by user's keys, and funds are stored in 2-of-2 multisignature outputs requiring both signatures to spend. The drawback of it is that you cannot control your funds without GreenAddress.it's signature, so you are right to worry that you can lose your coins."
+msgstr "Το GreenAddress.it υπογράφει κάθε συναλλαγή με το δικό της κλειδί εκτός από το κλειδί που χρησιμοποιήτε από την πλευρά του πελάτη, και τα κεφάλαια που αποθηκεύονται σε 2-από-2 εξόδους πολλαπλών υπογραφών απαιτούν και τις δύο υπογραφές για να προχωρήσουν. Το μειονέκτημα είναι ότι δεν μπορείτε να ελέγχετε τα κεφάλαιά σας χωρίς την υπογραφή του GreenAddress.it 's, άρα σωστά ανησυχείτε ότι μπορεί να χάσετε τα νομίσματα σας."
+
+#: templates/website/faq.html:29
+msgid "But! We have solved this issue by providing nLockTime transactions which essentially make deposits 'expire' after some time, which allows redeeming them without our intervention after this pre-set period of time. It is enabled by default when you have email notifications and two factor enabled."
+msgstr "Αλλά! Έχουμε λυσεί αυτό το ζήτημα με την παροχή των συναλλαγών nLockTime που ουσιαστικά κάνουν τις καταθέσεις να 'λήγουν' μετά από κάποιο χρονικό διάστημα, το οποίο επιτρέπει την εξαγορά τους, χωρίς την παρέμβαση μας μετά από αυτό το προκαθορισμένο χρονικό διάστημα. Είναι ενεργοποιημένο από προεπιλογή όταν έχετε τις ειδοποιήσεις μέσω email και τον έλεγχο ταυτότητας δύο παραγόντων ενεργοποιημένο."
+
+#: templates/website/faq.html:31
+msgid "This allows you to keep your ease of mind even in case GreenAddress.it disappears with its keys."
+msgstr "Αυτό επιτρέπει σε σας να είστε ήσυχοι, ακόμη και σε περίπτωση που το GreenAddress.it εξαφανιστεί με τα κλειδιά του."
+
+#: templates/website/faq.html:33
+msgid "It also means that every time the funds expire the user has to re-transfer them. This can be automated on login and notified in advance via email or manually done."
+msgstr "Αυτό σημαίνει επίσης, ότι κάθε φορά που 'λήγουν' τα κεφάλαια ο χρήστης πρέπει να τα μεταφέρει εκ νέου. Αυτό μπορεί να αυτοματοποιηθεί για την σύνδεση του χρήστη και να γνωστοποιείται εκ των προτέρων μέσω ηλεκτρονικού ταχυδρομείου ή να γίνει με μη αυτόματο τρόπο."
+
+#: templates/website/faq.html:35
+msgid "For redeeming the funds after expiration, you can use a tool we've developed specifically for this purpose - see "
+msgstr "Για να εξαργυρώσετε τα κεφάλαια μετά την λήξη τους, μπορείτε να χρησιμοποιήσετε κάποιο από τα εργαλείο που έχουμε αναπτύξει ειδικά για το σκοπό αυτό - δείτε "
+
+#: templates/website/faq.html:35
+#: templates/wallet/partials/wallet_settings.html:50
+msgid "and"
+msgstr "και"
+
+#: templates/website/faq.html:35
+msgid "its project on GitHub"
+msgstr "είναι ένα έργο στο GitHub"
+
+#: templates/website/faq.html:35
+msgid "It's open source!"
+msgstr "Είναι ανοικτού κώδικα!"
+
+#: templates/website/faq.html:38
+msgid "How is your wallet better than the others out there?"
+msgstr "Πως το πορτοφόλι σας είναι καλύτερο από τα υπόλοιπα εκεί έξω;"
+
+#: templates/website/faq.html:40
+msgid "For a simple high level comparison with a couple of web wallets please see "
+msgstr "Για μια απλή σύγκριση υψηλού επιπέδου με μερικά διαδικτυακά πορτοφόλια παρακαλούμε δείτε "
+
+#: templates/website/faq.html:40
+msgid "this"
+msgstr "αυτό"
+
+#: templates/website/faq.html:40
+msgid "table"
+msgstr "Πίνακας"
+
+#: templates/website/faq.html:41
+msgid "We offer all the advantages of a web wallet:"
+msgstr "Προσφέρουμε όλα τα πλεονεκτήματας ενός διαδικτυακού πορτοφολιού:"
+
+#: templates/website/faq.html:43
+msgid "Ubiquitously available"
+msgstr "Διαθέσιμα παντού"
+
+#: templates/website/faq.html:44
+msgid "Social/email/SMS integration"
+msgstr "Κοινωνικά Μέσα / email / SMS ενσωμάτωση"
+
+#: templates/website/faq.html:45
+#: templates/wallet/partials/wallet_settings.html:117
+msgid "Two factor authentication"
+msgstr "Ελεγχος Ταυτότητας δυο παραγόντων"
+
+#: templates/website/faq.html:46
+msgid "Transaction limits/restrictions"
+msgstr "Όρια συναλλαγών/περιορισμοί"
+
+#: templates/website/faq.html:47
+msgid "Green address instant transaction confirmation"
+msgstr "Διεύθυνση Green για στιγμιαία επιβεβαίωση συναλλαγής"
+
+#: templates/website/faq.html:49
+msgid "And the advantages of a local software wallet like "
+msgstr "Και τα πλεονεκτήματα ενός τοπικού λογισμικού πορτοφολιού όπως "
+
+#: templates/website/faq.html:51
+msgid "Mnemonic seed backup once and forget"
+msgstr "Δημιουργίας αντιγράφων ασφαλείας για το μνημονικό μία μόνο φορά και μετά ξεχάστε το"
+
+#: templates/website/faq.html:52
+msgid "Your private keys are never stored on our servers, not even encrypted"
+msgstr "Τα ιδιωτικά κλειδιά σας δεν αποθηκεύονται ποτέ στους διακομιστές μας, ούτε καν κρυπτογραφημένα"
+
+#: templates/website/faq.html:53
+msgid "No lost time synchronizing the client with the full Bitcoin blockchain"
+msgstr "Δεν χάνετε χρόνος για τον συγχρονισμό του client, με την πλήρη blockchain του Bitcoin"
+
+#: templates/website/faq.html:55
+msgid "Simply put, we offer the best web wallet available: We include more features and security safeguards than the competition with a simple interface through your browser or phone."
+msgstr "Με απλά λόγια, σας προσφέρουμε το καλύτερο web πορτοφόλι στην αγορά: έχουμε συμπεριλάβει περισσότερες δυνατότητες και εγγυήσεις ασφάλειας από τον ανταγωνισμό με μια απλή διεπαφή μέσω του πρόγραμματος περιήγησης ή του τηλέφωνου σας."
+
+#: templates/website/faq.html:58
+msgid "Where are my Bitcoin keys stored?"
+msgstr "Που αποθηκεύονται τα Bitcoin κλειδιά μου;"
+
+#: templates/website/faq.html:59
+msgid "Your keys are not stored. They are derived from your mnemonic passphrase and never sent to the server."
+msgstr "Τα κλειδιά σας δεν αποθηκεύονται. Αυτά παράγονται από την μνημονική φράση πρόσβασής σας και δεν αποστέλλονται στο διακομιστή."
+
+#: templates/website/faq.html:61
+msgid "How does the PIN work?"
+msgstr "Πως λειτουργεί το PIN?"
+
+#: templates/website/faq.html:62
+msgid "A random password (256 AES) is created and used to encrypt your mnemonics and store them on your device in encrypted form. The random password is sent server side and destroyed on the client. When during login the user provides the right PIN a mechanism will ask the server for the password which is used to decrypt the mnemnonic passphrase stored on your device and get you in your wallet. If the PIN is provided wrong for 3 times in a row the password is then deleted from our servers."
+msgstr "Ένας τυχαίος κωδικό πρόσβασης (256 AES) δημιουργείται και χρησιμοποιείται για την κρυπτογράφηση του μνημονικό σας και την αποθήκευση στη συσκευή σας σε κρυπτογραφημένη μορφή. Ο τυχαίος κωδικός πρόσβασης αποστέλλεται στο server και καταστρέφεται στην πλευρά του πελάτη. Όταν κατά τη σύνδεση ο χρήστης παρέχει το σωστό PIN ένας μηχανισμός θα ζητήσει από το διακομιστή τον κωδικό πρόσβασης που χρησιμοποιείται για να αποκρυπτογραφήσει τη μνημονική συνθηματική φράση που είναι αποθηκεύμενη στη συσκευή σας και θα πάρετε το πορτοφόλι σας. Αν ο κωδικός PIN, παρέχεται λανθασμένα για 3 φορές συνεχόμενα τότε ο κωδικός πρόσβασης διαγράφετε από τους διακομιστές μας."
+
+#: templates/website/faq.html:65
+msgid "When are you going to offer feature XYZ? I would like to access my wallet in my language, can you add it?"
+msgstr "Πότε θα προσφέρεται την δυνατότητα XYZ? Θα ήθελα να έχω πρόσβαση του πορτοφολιού στην γλώσσα μου, μπορείτε να το προσθέσετε?"
+
+#: templates/website/faq.html:67
+msgid "We are constantly looking for feedback from our users, if you want to provide some feedback or get involved feel free to PM on reddit (greenaddress) or send us an email at "
+msgstr "Ψάχνουμε συνεχώς για σχόλια από τους χρήστες μας, αν θέλετε να μας παρέχετε μερικά σχόλια ή να συμμετάσχετε μην διστάσετε να μου αποστείλετε προσωπικό μήνυμα στο reddit (greenaddress) ή απλά στείλτε μας ένα email στη διεύθυνση "
+
+#: templates/website/faq.html:68
+msgid "We have many features and language support for many languages in the pipeline, please check with us if you want to be kept up to date with development and please be patient :)"
+msgstr "Έχουμε πολλά χαρακτηριστικά και γλωσσική υποστήριξη για πολλές γλώσσες στον στάδιο της προετοιμασίας, παρακαλούμε επικοινωνήστε μαζί μας αν θέλετε να είστε ενήμερωμένοι με τις τελευταίες εξελίξεις και παρακαλώ να είστε υπομονετικοί :)"
+
+#: templates/website/faq.html:70
+msgid "Do you have a donate button for linking to users payment URLs?"
+msgstr "Έχετε κουμπί για δωρεές, για σύνδεση με τη διεύθυνση του λογαριασμό του χρήστη?"
+
+#: templates/website/faq.html:72
+msgid "Sure have a look below (let us know if you have created one!)."
+msgstr "Σίγουρα. ρίξτε μια ματιά πιο κάτω (ενημερώστε μας εαν έχετε δημιουργήσει ένα!)."
+
+#: templates/website/faq.html:76
+msgid "What exactly is an 'instant greenaddress transaction'?"
+msgstr "Τι ακριβώς είναι μια 'άμεση greenaddress συναλλαγή'?"
+
+#: templates/website/faq.html:77
+msgid "From the Bitcoin "
+msgstr "Από τα Bitcoin "
+
+#: templates/website/faq.html:78
+msgid "Your transactions are protected by both your signature and by a signature we apply when we get your permission via two factor. With this protection, comes the fact that people receiving Bitcoin from you can trust the funds instantly as we provide a 'special' signature to your transaction when you require instant confirmation."
+msgstr "Οι συναλλαγές σας προστατεύονται τόσο από την υπογραφή σας όσο και με μια υπογραφή που εφαρμόζουμε εμείς, όταν έχουμε την άδειά σας μέσω ελέγχου ταυτότητας δύο παραγόντων. Με αυτή την προστασία, έρχεται το γεγονός ότι άνθρωποι που λαμβάνουν Bitcoin από εσάς μπορούν να εμπιστευτούν τα κεφάλαια, καθώς θα παρέχουμε μια 'ειδική' υπογραφή για τη συναλλαγή σας όταν χρειάζεστε άμεση επιβεβαίωση."
+
+#: templates/website/faq.html:81
+msgid "What about cookies?"
+msgstr "Τι γίνεται με τα cookies?"
+
+#: templates/website/faq.html:83
+msgid "To enable GreenAddress.it to recognize your device and to provide features to you, we use cookies. Cookies are unique identifiers that we transfer to your device to enable our services to recognize your device and to provide features such as providing you with protection from Cross-site request forgery and display the site in the language you have selected or to not show you the EU cookie compliance info banner."
+msgstr "Για να ενεργοποιήσετε το GreenAddress.it ώστε να αναγνωρίζει τη συσκευή σας και να σας παρέχει τις λειτουργίες που προσφέρουμε, χρησιμοποιούμε cookies. Τα cookies είναι μοναδικά στοιχεία αναγνώρισης που μεταφέρουμε στη συσκευή σας έτσι ώστε να την αναγνωρίζουν και να είμαστε σε θέση να σας παρέχουμε λειτουργίες όπως προστασία από διασταυρομένες ισοσελίδες που προσπαθούν να σας αποκλέψουν τα στοιχεία σας και την εμφάνιση της ιστοσελίδας στη γλώσσα που επιλέξατε ή για να μην σας δείξει τη διαφήμιση με πληροφορίες σχετικά με την συμμόρφωση για cookie της ΕΕ."
+
+#: templates/website/faq.html:88
+msgid "Yes! You can see our <a href=\"http://api.greenaddress.it/\">API documentation at GitHub Pages</a>. The documentation is in very early stages and may be not up to date, and the API is by no means stable."
+msgstr "Ναι! Μπορείτε να δείτε την <a href=\"http://api.greenaddress.it/\">  τεκμηρίωση μας API στο GitHub στις σελίδες</a>. Η τεκμηρίωση είναι στα πολύ αρχικά στάδια και μπορεί να μην είναι ενημερωμένη, και το API δεν είναι σε καμία περίπτωση σταθερό."
+
+#: templates/website/tos.html:5
+#: templates/wallet/partials/signup_1_init.html:33
+msgid "Terms of Service"
+msgstr "Όροι Παροχής Υπηρεσιών"
+
+#: templates/website/index.html:5
+msgid "Home Page"
+msgstr "Αρχική Σελίδα"
+
+#: templates/website/index.html:30 templates/website/index.html:41
+#: templates/wallet/partials/signuplogin/header_redeem.html:5
+msgid "Create your Wallet"
+msgstr "Δημιουργήστε το πορτοφόλι σας"
+
+#: templates/website/index.html:41
+msgid "The safer "
+msgstr "Η ασφαλέστερη "
+
+#: templates/website/index.html:41
+msgid " wallet that puts "
+msgstr " πορτοφόλι που βάζει "
+
+#: templates/website/index.html:41
+msgid "you"
+msgstr "εσείς"
+
+#: templates/website/index.html:41
+msgid " in control"
+msgstr " στον έλεγχο"
+
+#: templates/website/index.html:43 templates/website/index.html:44
+#: templates/website/index.html:120 templates/website/index.html:182
+msgid "Improved security"
+msgstr "Αυξημένη ασφάλεια"
+
+#: templates/website/index.html:45
+msgid "Protect your bitcoins with both your key and ours, set spending limits, rate limited transactions and always be the only one in control"
+msgstr "Προστατέψτε τα bitcoins σας, με την χρήση τόσο του κλειδιού σας αλλά και του δικού μας κλειδιού, θέστε όρια για δαπάνες, βαθμολογήστε περιορισμένες συναλλαγές και έχετε πάντοτε τον απόλυτο έλεγχο"
+
+#: templates/website/index.html:48 templates/website/index.html:49
+#: templates/wallet/partials/wallet_settings.html:347
+msgid "Quick login"
+msgstr "Γρήγορη σύνδεση"
+
+#: templates/website/index.html:50
+msgid "You can easily login in 'watch-only mode' via Facebook/Twitter/custom login with no compromise on security and privacy"
+msgstr "Μπορείτε εύκολα να συνδεθείτε στην λειτουργία 'παρακολούθησης-μόνο' μέσω Facebook/Twitter/προσαρμοσμένης σύνδεσης χωρίς συμβιβασμούς στην ασφάλεια και την προστασία προσωπικών δεδομένων"
+
+#: templates/website/index.html:53 templates/website/index.html:54
+msgid "Send money easily"
+msgstr "Αποστολή χρηματων εύκολα"
+
+#: templates/website/index.html:55
+msgid "Send money to a friend on Facebook, a follower on Twitter or to a colleague's email or mobile number"
+msgstr "Στείλτε χρήματα σε έναν φίλο στο Facebook, σε ένα follower στο Twitter ή στο email ενός συναδέλφου σας ή στον αριθμό του κινητού"
+
+#: templates/website/index.html:62
+msgid "Scroll to read more"
+msgstr "Κάντε κύλιση για να διαβάσετε περισσότερα"
+
+#: templates/website/index.html:74
+msgid "        <p><b>Bitcoin is the currency of the future</b></p>        <p>We don't make you choose between security and convenience. And we don't compromise your <strong>privacy</strong>.</p>        <p>Our <strong>per-transaction</strong> two factor authentication, multi-signature and deterministic wallet allow you unprecedented control over your transactions.</p>        <p>And, we <strong>never</strong> store your private keys, not even encrypted. At the same time we make it trivial to view and transfer your funds.</p>        <p>Take control of your future now, at GreenAddress.it.</p>        "
+msgstr "        <p><b>Το Bitcoin είναι το νόμισμα του μέλλοντος</b></p><p>Δεν σας αναγκάζουμεν να επιλέξετε μεταξύ της ασφάλεια και της άνεση. Και δεν θέτουμε σε κίνδυνο τα <strong>προσωπικά σας δεδομένα</strong>.</p><p>Για<strong>κάθε συναλλαγή</strong> απαιτείται χρήση ελέγχου ταυτότητας δύο παράγοντων, πολλαπλές υπογραφές και το ντετερμινιστικό πορτοφόλι σας, επιτρέπουν πρωτοφανή έλεγχο των συναλλαγών σας.</p> <p>Και, εμείς <strong>ποτέ δεν</strong> θα αποθηκεύσουμε τα ιδιωτικών σας κλειδιά, ούτε καν κρυπτογραφημένα. Την ίδια στιγμή καθιστούμε τετριμμένο την προβολή και την μεταφορά των κεφαλαίων σας.</p><p>Πάρτε τον έλεγχο του δικού σας μέλλοντος τώρα, στο GreenAddress.it.</p>        "
+
+#: templates/website/index.html:87
+msgid "        <p><b>Better privacy with your funds and safer login with watch-only</b></p>        <p>Safely check your <strong>balance</strong> and <strong>transactions</strong> from public Wi-Fi, Starbucks and on the go.</p>        <p>With our unique <strong>watch-only</strong> mode you can quickly check your balance or receive funds without full access to your wallet.</p>        <p>Your <strong>keys</strong> are not loaded so no transaction are possible and settings can't be modified</p>        "
+msgstr "        <p><b>Καλύτερη προστασία προσωπικών δεδομένων και ασφαλέστερη σύνδεση με την λειτουργία παρακολούθησης-μόνο</b></p><p>Ελέγξε με ασφάλια το <strong>υπόλοιπο</strong> σας και τις <strong>συναλλαγές</strong> σας από δημόσια Wi-Fi, Starbucks και στο δρόμο.</p><p>Με την μοναδική μας λειτουργία <strong>παρακολούθησης-μόνο</strong>, μπορείται γρήγορα να ελέγξετε το υπόλοιπο ή τα κεφάλαια που λάβατε χωρίς πλήρη πρόσβαση για το πορτοφόλι σας.</p><p>Τα<strong>κλειδιά</strong> σας δεν φορτώνονται έτσι καμία συναλλαγή δεν είναι δυνατή και οι ρυθμίσεις δεν μπορούν να τροποποιηθούν</p>        "
+
+#: templates/website/index.html:99
+msgid "        <p><b>More features that allow convenient and secure access to your wallet</b></p>        <p>Enable <strong>quick</strong> PIN login to your wallet from any of your devices without having to use your passphrase</p>        <p>Should our system be taken down or disappear, sleep <strong>safe</strong> with our automatic presigned transaction (nLockTime) allowing you to simply wait for your selected expiry to get your funds!</p>        <p>All transfers to your wallet (including change) will use a newly generated address each time making it harder for people you transact with to read your past and future transactions</p>        "
+msgstr "        <p><b>Περισσότερες λειτουργίες που επιτρέπουν την άνετη και ασφαλή πρόσβαση στο πορτοφόλι σας</b></p><p>Επιτρέπει τη <strong>γρήγορη</strong> σύνδεση στο πορτοφόλι σας με την χρήση του PIN από οποιαδήποτε συσκευή σας χωρίς την χρήση της φράσης πρόσβασης</p><p>Αν το σύστημα μας βγεί εκτός λειτουργίας ή εξαφανιστεί,  κοιμηθήτε <strong>ήσυχοι</strong> με την αυτοματοποιημένη προυπογραμμένη συναλλαγή (nLockTime) που σας επιτρέπει απλά να περιμένετε μέχρι τον επιλεγμένο χρόνο λήξης για να πάρετε τα χρήματά σας!</p><p>Όλες οι μεταφορές στο πορτοφόλι σας (συμπεριλαμβανομένης της αλλαγής) θα χρησιμοποιούν μια νέα διεύθυνση κάθε φορά, καθιστώντας το πιο δύσκολο για τους ανθρώπους που συναλλάσσονται μαζί σας, να διαβάσουν τις συναλλαγές που κάνατε στο παρελθόν ή αυτές που θα κάνετε στο μέλλον</p>        "
+
+#: templates/website/index.html:116 templates/wallet/wallet.html:6
+msgid "Wallet"
+msgstr "Πορτοφόλι"
+
+#: templates/website/index.html:117 templates/website/index.html:164
+msgid "You are in control"
+msgstr "Εσείς έχετε τον έλεγχο"
+
+#: templates/website/index.html:118 templates/website/index.html:170
+msgid "Instant confirmation"
+msgstr "Άμεση επιβεβαίωση"
+
+#: templates/website/index.html:119 templates/website/index.html:176
+msgid "Social integration"
+msgstr "Κοινωνική ενσωμάτωση"
+
+#: templates/website/index.html:121 templates/website/index.html:188
+msgid "Improved privacy"
+msgstr "Βελτιωμένη προστασία προσωπικών δεδομένων"
+
+#: templates/website/index.html:197
+msgid "          1) Hot wallets can be emptied and cold wallets may have delays, bugs or be lost<br>          2) If the service is compromised brute force attacks may be tried on your encrypted wallet, requires strong password.<br>          3) Access to user wallets requires that both the user and the service are compromised at the same time which reduces risks.          "
+msgstr "          1) Ζεστά πορτοφόλια μπορούν να αδειάσουν και κρύα πορτοφόλια μπορεί να έχουν οι καθυστερήσεις, σφάλματα ή να χαθούν<br> 2) Εάν η υπηρεσία είναι σε κίνδυνο, βίαιες επιθέσεις μπορούν να δοκιμαστούν στο κρυπτογραφημένο πορτοφόλι σας, απαιτείται ισχυρός κωδικός πρόσβασης. <br> 3) Η πρόσβαση σε πορτοφόλια χρήστών απαιτεί τον χρήστη όσο και την υπηρεσία να βρίσκονται σε κίνδυνο την ίδια στιγμή μειώνοντας σημαντικά τους κινδύνους.          "
+
+#: templates/website/index.html:210
+msgid "Under the hood"
+msgstr "Σύνθετες επιλογές"
+
+#: templates/website/index.html:217
+msgid "<b>We use  hierarchical deterministic wallets</b><br>(or BIP0032 HD Wallet) which means we use new addresses for each incoming transaction (including change), which, together with coinjoin (coming soon) allows you to maintain your privacy at the highest standard."
+msgstr "<b>Χρησιμοποιούμε ιεραρχικά ντετερμινιστικά πορτοφόλια</b><br>(ή BIP0032 HD πορτοφόλι) που σημαίνει ότι χρησιμοποιούμε νέες διευθύνσεις για κάθε εισερχόμενη συναλλαγή (συμπεριλαμβανομένης της αλλαγής), η οποία, μαζί με το coinjoin (προσεχώς) σας επιτρέπει να διατηρείτε την προστασία των προσωπικών σας δεδομένων με τα υψηλότερα πρότυπα."
+
+#: templates/website/index.html:223
+msgid "<b>Quickly check your balance</b><br>You can use a number of third party services (like Facebook) to quickly check if you have received a transaction or to check your balance without exposing your wallet, indeed quite convenient when in a hurry and/or on a third party computer"
+msgstr "<b>Ελέγξε γρήγορα το υπόλοιπο σας</b><br>Μπορείτε να χρησιμοποιήσετε μια σειρά από υπηρεσίες τρίτων (όπως το Facebook), για να ελέγξετε γρήγορα εάν έχετε λάβει μια συναλλαγή ή να ελέγξετε το υπόλοιπο χωρίς να εκθέσετε το πορτοφόλι σας, πράγματικά αρκετά βολικό όταν βιάζεστε ή/και βρίσκετε σε υπολογιστή τρίτου"
+
+#: templates/website/index.html:231
+msgid "<b>We provide presigned transactions</b><br>In order to provide limits and two factor your funds are secured with both your key and ours. For ease of mind, presigned transaction are enabled (uses nlocktime) which means that each time your wallet has updates we will forward to you a presigned transaction unlocking the funds at a date in the future of your choice."
+msgstr "<b>Παρέχουμε προυπογραμμένες συναλλαγές</b><br>Προκειμένου να παρασχεθούν όρια και 'ελεγχος ταυτότητας δύο παραγόντων τα κεφάλαιά σας ασφαλίζονται τόσο με το δικό σας κλειδί σας όσο και με το δικό μας. Για να είστε ήσυχοι, προυπογραμμένες συναλλαγές είναι ενεργοποιημένες (με την χρήση nlocktime), πράγμα που σημαίνει ότι κάθε φορά που το πορτοφόλι σας έχει ενημερώσεις θα διαβιβάσει σε εσάς μια προυπογραμμένη συναλλαγή ξεκλείδωνοντας τα κεφάλαια σας σε μία μελλοντική ημερομηνία της επιλογής σας."
+
+#: templates/website/index.html:237
+msgid "<b>We use P2SH to make this all easy</b><br>P2SH allows people you interact with to handle transactions to and from GreenAddress.it's wallets transparently."
+msgstr "<b>Χρησιμοποιούμε P2SH για να κάνουμε όλα αυτά πιο εύκολα</b><br> Το P2SH επιτρέπει στους ανθρώπους με τους οποίους συνεργάζεστε να διαχείριζονται συναλλαγές από και προς τα πορτοφόλια GreenAddress.it με διαφάνεια."
+
+#: templates/website/index.html:245
+msgid "<b>We offer our second signature</b><br>Which allows us to offer and enforce 2 factor authenticated payments and daily, weekly and monthly limits, rate limiting your transactions per hour, day,  week and month and make your payment instant by providing a double spend checks with GreenAddress.it!"
+msgstr "<b>Προσφέρουμε μία δεύτερη υπογραφή</b><br>Που μας επιτρέπει να προσφέρουμε και να επιβάλλουμε πληρωμές επιβεβαιωμένες δύο παραγόντων και καθημερινά, εβδομαδιαία και μηνιαία όρια,  περιορισμό του ποσοστού των συναλλαγών σας ανά ώρα, ημέρα, εβδομάδα και μήνα και κάνοντας τις πληρωμές  σας στιγμιαίες παρέχοντας διπλούς ελέγχους με το GreenAddress.it!"
+
+#: templates/website/index.html:251
+msgid "<b>Send money to anyone via SMS, Twitter, Facebook, etc</b><br>If the user has an account at GreenAddress.it they will be immediately notified of the transfer which will be instantly added to their balance. If they don’t have an account they will receive a notification with a link to redeem the funds requiring a password (BIP0038) of your choice that you will be asked to notify them of via a second channel. The funds will always be in your control while not yet redeemed."
+msgstr "<b>Στείλτε χρήματα σε οποιοδήποτε μέσω SMS, Twitter, Facebook, κλπ</b><br>Αν ο χρήστης έχει λογαριασμό στο GreenAddress.it θα ενημερωθεί αμέσως για την μεταβίβαση χρημάτων που θα προστεθούν αμέσως στο υπόλοιπο τους. Αν δεν έχουν λογαριασμό θα λάβουν μια ειδοποίηση με μια σύνδεση στην οποία θα έχουν την δυνατότητα να εξαργυρώσουν το κεφάλαιο και θα τους ζητηθεί ένας κωδικός πρόσβασης (BIP0038) τον οποίο εσείς θα επιλέξετε και θα σας ζητηθεί να τον ειδοποιήσετε μέσω ενός δεύτερου καναλιού. Τα κεφάλαια θα είναι πάντα στον έλεγχό σας, εφόσον δεν έχουν εξαρυρωθεί."
+
+#: templates/website/about.html:5 templates/website/about.html:11
+#: templates/base/base.html:135
+msgid "About us"
+msgstr "Σχετικά με εμάς"
+
+#: templates/website/about.html:25 templates/website/support.html:33
+msgid "Check us out on"
+msgstr "Δείτε μας στο"
+
+#: templates/website/about.html:41
+msgid "Founder"
+msgstr "Ιδρυτής"
+
+#: templates/website/about.html:49
+msgid "Full Stack Developer"
+msgstr "Full Stack Developer"
+
+#: templates/website/about.html:56 templates/website/about.html:63
+msgid "Advisor"
+msgstr "Σύμβουλος"
+
+#: templates/website/support.html:5 templates/wallet/nav.html:16
+#: templates/base/base.html:108
+msgid "Support"
+msgstr "Υποστήριξη"
+
+#: templates/website/support.html:21
+msgid "For any issue, you can email us at"
+msgstr "Για οποιοδήποτε πρόβλημα, μπορείτε να μας στείλετε email στο"
+
+#: templates/website/support.html:23
+msgid "Or call us on"
+msgstr "Ή καλέστε μας στο"
+
+#: templates/website/support.html:25
+msgid "Nine to five (GMT + 1:00) Monday to Friday."
+msgstr "Εννέα έως πέντε (GMT + 1:00) Δευτέρα έως Παρασκευή."
+
+#: templates/website/support.html:26
+msgid "Please leave a message if in out of hours or if we are unable to take your call."
+msgstr "Παρακαλώ αφήστε μήνυμα σε ώρες που δεν είμαστε διαθέσιμοι ή αν δεν είμαστε σε θέση να λάβουμε την κλήση σας."
+
+#: templates/website/redeem.html:6
+msgid "Redeem funds"
+msgstr "Εξαργύρωση κεφαλαίων"
+
+#: templates/website/redeem.html:9
+#: templates/wallet/partials/signuplogin/header_redeem.html:2
+msgid "You've received"
+msgstr "Έχετε λάβει"
+
+#: templates/wallet/nav.html:4 templates/wallet/partials/wallet_info.html:4
+msgid "Balance"
+msgstr "Υπόλοιπο"
+
+#: templates/wallet/nav.html:5
+#: templates/wallet/partials/wallet_transactions.html:4
+msgid "Transactions"
+msgstr "Συναλλαγές"
+
+#: templates/wallet/nav.html:6 templates/wallet/partials/wallet_send.html:4
+#: templates/wallet/partials/wallet_send.html:81
+msgid "Send Money"
+msgstr "Αποστολή χρημάτων"
+
+#: templates/wallet/nav.html:7 templates/wallet/partials/wallet_receive.html:4
+msgid "Receive Money"
+msgstr "Παραλαβή Χρημάτων"
+
+#: templates/wallet/nav.html:8
+#: templates/wallet/partials/wallet_address_book.html:4
+msgid "Address Book"
+msgstr "Βιβλίο διευθύνσεων"
+
+#: templates/wallet/nav.html:9
+#: templates/wallet/partials/wallet_settings.html:4
+msgid "Settings"
+msgstr "Ρυθμίσεις"
+
+#: templates/wallet/nav.html:10
+msgid "Update now"
+msgstr "Ενημέρωση τώρα"
+
+#: templates/wallet/nav.html:11
+#: templates/wallet/partials/wallet_modal_logout_other_session.html:10
+#: templates/wallet/partials/wallet_modal_logout.html:11
+msgid "Logout"
+msgstr "Αποσύνδεση"
+
+#: templates/wallet/nav.html:18
+msgid "Last login"
+msgstr "Τελευταία σύνδεση"
+
+#: templates/wallet/nav.html:21
+msgid "country"
+msgstr "χώρα"
+
+#: templates/wallet/nav.html:22
+msgid "unknown country"
+msgstr "άγνωστη χώρα"
+
+#: templates/wallet/partials/concurrent_login.html:6
+msgid "You were logged out."
+msgstr "Αποσυνδεθήκατε."
+
+#: templates/wallet/partials/concurrent_login.html:10
+msgid "          You have logged in elsewhere.<br>          <small>If it was not you, please contact <strong>immediately</strong> <a href=\"/support/\">support</a>.</small>        "
+msgstr "          Έχετε συνδεθεί αλλού.<br><small>Αν δεν είσασταν εσείες, παρακαλούμε επικοινωνήστε <strong>αμέσως</strong> <a href=\"/support/\"> με την υποστήριξη</a>.</small>        "
+
+#: templates/wallet/partials/concurrent_login.html:16
+msgid "Go back to login"
+msgstr "Πηγαίνετε πίσω για να συνδεθείτε"
+
+#: templates/wallet/partials/wallet_modal_logout_other_session.html:4
+msgid "You are already logged in. Do you want to log out the other session?"
+msgstr "Είστε ήδη συνδεδεμένος. Θέλετε να αποσυνδεθείτε από την άλλη συνεδρία;"
+
+#: templates/wallet/partials/wallet_modal_logout_other_session.html:9
+#: templates/wallet/partials/wallet_modal_2fa.html:32
+#: templates/wallet/partials/wallet_2fa.html:102
+#: templates/wallet/partials/wallet_2fa.html:144
+#: templates/wallet/partials/wallet_2fa.html:186
+#: templates/wallet/partials/wallet_modal_logout.html:10
+#: templates/wallet/partials/wallet_modal_custom_login.html:25
+#: templates/wallet/partials/wallet_modal_pin.html:22
+#: templates/wallet/partials/wallet_send.html:25
+#: templates/wallet/partials/wallet_settings.html:154
+#: templates/wallet/partials/wallet_settings.html:181
+#: templates/wallet/partials/wallet_settings.html:221
+#: templates/wallet/partials/wallet_settings.html:261
+#: templates/wallet/partials/wallet_receive.html:76
+#: templates/wallet/partials/signuplogin/redeem_password_modal.html:23
+#: templates/wallet/partials/signuplogin/base.html:29
+msgid "Cancel"
+msgstr "Ακύρωση"
+
+#: templates/wallet/partials/wallet_modal_tx_details.html:2
+msgid "Transaction details"
+msgstr "Λεπτομέρειες συναλλαγών"
+
+#: templates/wallet/partials/wallet_modal_tx_details.html:7
+msgid "Timestamp"
+msgstr "Χρονική σήμανση"
+
+#: templates/wallet/partials/wallet_modal_tx_details.html:10
+msgid "Hash"
+msgstr "Hash"
+
+#: templates/wallet/partials/wallet_modal_tx_details.html:13
+#: templates/wallet/partials/wallet_send.html:66
+msgid "Fee"
+msgstr "Τέλη"
+
+#: templates/wallet/partials/wallet_modal_tx_details.html:19
+msgid "Inputs"
+msgstr "Εισροές"
+
+#: templates/wallet/partials/wallet_modal_tx_details.html:22
+#: templates/wallet/partials/wallet_modal_tx_details.html:34
+#: templates/wallet/partials/wallet_modal_my_addresses.html:5
+#: templates/wallet/partials/wallet_address_book.html:22
+#: templates/wallet/partials/wallet_receive.html:44
+msgid "Address"
+msgstr "Διεύθυνση"
+
+#: templates/wallet/partials/wallet_modal_tx_details.html:22
+#: templates/wallet/partials/wallet_modal_tx_details.html:34
+#: templates/wallet/partials/wallet_send.html:45
+#: templates/wallet/partials/wallet_settings.html:291
+#: templates/wallet/partials/wallet_settings.html:297
+#: templates/wallet/partials/wallet_settings.html:303
+#: templates/wallet/partials/wallet_settings.html:331
+#: templates/wallet/partials/wallet_receive.html:12
+msgid "Amount"
+msgstr "Ποσό"
+
+#: templates/wallet/partials/wallet_modal_tx_details.html:31
+msgid "Outputs"
+msgstr "Εκροές"
+
+#: templates/wallet/partials/wallet_modal_tx_details.html:38
+msgid "request nLockTime"
+msgstr "αίτηση nLockTime"
+
+#: templates/wallet/partials/wallet_modal_tx_details.html:48
+#: templates/wallet/partials/wallet_modal_mnemonic.html:10
+#: templates/wallet/partials/wallet_modal_my_addresses.html:16
+#: templates/wallet/partials/wallet_modal_redeposit.html:14
+#: templates/wallet/partials/signup_qr_modal.html:7
+#: templates/wallet/partials/signup_nfc_modal.html:16
+#: templates/wallet/partials/wallet_modal_gauth_qr.html:8
+#: templates/wallet/partials/wallet_modal_url_qr.html:6
+#: templates/wallet/partials/wallet_modal_expiring_soon.html:20
+msgid "Close"
+msgstr "Κλείσιμο"
+
+#: templates/wallet/partials/wallet_modal_mnemonic.html:2
+#: templates/wallet/partials/signup_qr_modal.html:2
+msgid "The QR code containing passphrase to access your wallet is:"
+msgstr "Ο κώδικας QR που περιέχει την συνθηματική φράση πρόσβασης στο πορτοφόλι σας είναι:"
+
+#: templates/wallet/partials/wallet_modal_mnemonic.html:4
+#: templates/wallet/partials/signup_qr_modal.html:4
+msgid "Remember to store it in a safe place!"
+msgstr "Θυμηθείτε να το αποθηκεύσετε σε ένα ασφαλές μέρος!"
+
+#: templates/wallet/partials/wallet_modal_mnemonic.html:6
+#: templates/wallet/partials/signup_1_init.html:24
+msgid "Your mnemonic passphrase"
+msgstr "Το συνθηματικό σας"
+
+#: templates/wallet/partials/wallet_modal_2fa.html:6
+msgid "You must provide 2 factor authentication code to perform this action"
+msgstr "Πρέπει να παρέχεται έλεγχο ταυτότητας δύο παραγόντων για να εκτελέσετε αυτήν την ενέργεια"
+
+#: templates/wallet/partials/wallet_modal_2fa.html:9
+msgid "Please select authentication method"
+msgstr "Παρακαλώ επιλέξτε μέθοδο ελέγχου ταυτότητας"
+
+#: templates/wallet/partials/wallet_modal_2fa.html:15
+msgid "Please enter your "
+msgstr "Παρακαλούμε εισάγετε "
+
+#: templates/wallet/partials/wallet_modal_2fa.html:15
+msgid " authentication code which we have just sent to you."
+msgstr " κωδικός ταυτότητας που έχουμε στείλει μόνο σε εσάς."
+
+#: templates/wallet/partials/wallet_modal_2fa.html:18
+msgid "Please enter the "
+msgstr "Παρακαλούμε εισάγετε το "
+
+#: templates/wallet/partials/wallet_modal_2fa.html:18
+msgid " code"
+msgstr " κώδικας"
+
+#: templates/wallet/partials/wallet_modal_2fa.html:31
+#: templates/wallet/partials/wallet_modal_custom_login.html:26
+msgid "OK"
+msgstr "Ok"
+
+#: templates/wallet/partials/wallet_transactions.html:12
+msgid "Last 10 items"
+msgstr "Τελευταία 10 αντικείμενα"
+
+#: templates/wallet/partials/wallet_transactions.html:13
+msgid "Last month"
+msgstr "Περασμένο μήνα"
+
+#: templates/wallet/partials/wallet_transactions.html:14
+msgid "Last 3 months"
+msgstr "Τελευταίους 3 μήνες"
+
+#: templates/wallet/partials/wallet_transactions.html:15
+msgid "All"
+msgstr "Όλα"
+
+#: templates/wallet/partials/browser_unsupported.html:6
+#: templates/wallet/partials/browser_unsupported.html:10
+msgid "We are sorry, but your browser is not supported."
+msgstr "Λυπούμαστε, αλλά το προγραμμα περιήγησης σας δεν υποστηρίζεται."
+
+#: templates/wallet/partials/browser_unsupported.html:11
+msgid "Please try a modern browser like Chrome, Firefox or our Android app!"
+msgstr "Παρακαλώ δοκιμάστε ένα σύγχρονο πρόγραμμα περιήγησης όπως το Chrome, Firefox ή την Android εφαρμογή μας!"
+
+#: templates/wallet/partials/wallet_modal_my_addresses.html:3
+msgid "No addresses found"
+msgstr "Δεν βρέθηκαν διευθύνσεις"
+
+#: templates/wallet/partials/wallet_modal_my_addresses.html:5
+msgid "number of transactions"
+msgstr "πλήθος συναλλαγών"
+
+#: templates/wallet/partials/wallet_modal_redeposit.html:2
+msgid "You have some expired deposits. Unless you re-deposit or redeem them, no transactions will be allowed"
+msgstr "Έχετε κάποιες καταθέσεις που έχουν λήξει. Εκτός και αν τις καταθέσετε εκ νέου ή να τις εξαργυρώσετε, οι συναλλαγές δεν θα επιτρέπεται"
+
+#: templates/wallet/partials/wallet_modal_redeposit.html:5
+msgid "Redeposit as single transaction (cheaper)"
+msgstr "Καταθέση εκ νέου ως ενιαία συναλλαγή (φθηνότερα)"
+
+#: templates/wallet/partials/wallet_modal_redeposit.html:6
+#: templates/wallet/partials/wallet_modal_redeposit.html:9
+msgid "estimated fee"
+msgstr "Εκτιμώμενα τέλη"
+
+#: templates/wallet/partials/wallet_modal_redeposit.html:8
+msgid "Redeposit as one transaction per output (better privacy)"
+msgstr "Καταθέστε εκ νέου σαν μια ενιαία συναλλαγή ανά εκροή (καλύτερη προστασία προσωπικών δεδομένων)"
+
+#: templates/wallet/partials/wallet_modal_redeposit.html:10
+msgid "transactions"
+msgstr "συναλλαγές"
+
+#: templates/wallet/partials/wallet_info.html:14
+#: templates/wallet/partials/wallet_info.html:27
+msgid "Year"
+msgstr "Έτος"
+
+#: templates/wallet/partials/wallet_info.html:15
+#: templates/wallet/partials/wallet_info.html:28
+msgid "Month"
+msgstr "Μήνας"
+
+#: templates/wallet/partials/wallet_info.html:16
+#: templates/wallet/partials/wallet_info.html:29
+msgid "Week"
+msgstr "Εβδομάδα"
+
+#: templates/wallet/partials/wallet_info.html:38
+msgid "Your last transactions"
+msgstr "Οι τελευταίες σας συναλλαγές"
+
+#: templates/wallet/partials/wallet_address_book.html:12
+msgid "Add new entry"
+msgstr "Προσθήκη νέας καταχώρησης"
+
+#: templates/wallet/partials/wallet_address_book.html:21
+msgid "Name"
+msgstr "Όνομα"
+
+#: templates/wallet/partials/wallet_address_book.html:29
+#: templates/wallet/partials/wallet_transactions_table.html:16
+msgid "Export to CSV"
+msgstr "Εξαγωγή σε CSV"
+
+#: templates/wallet/partials/wallet_address_book.html:49
+msgid "Your address book is empty"
+msgstr "Το βιβλίο διευθύνσεων σας είναι άδειο"
+
+#: templates/wallet/partials/signup_1_init.html:7
+msgid "Already got an account?"
+msgstr "Έχετε ήδη λογαριασμό;"
+
+#: templates/wallet/partials/signup_1_init.html:9
+#: templates/wallet/partials/signup_1_init.html:11
+#: templates/wallet/partials/signuplogin/base.html:59
+msgid "Login to your Wallet"
+msgstr "Συνδεθείτε στο πορτοφόλι σας"
+
+#: templates/wallet/partials/signup_1_init.html:13
+#: templates/wallet/partials/signup_4_2factor.html:7
+#: templates/wallet/partials/signup_3_oauth.html:7
+#: templates/wallet/partials/signup_2_pin.html:7
+msgid "Step"
+msgstr "Βήμα"
+
+#: templates/wallet/partials/signup_1_init.html:13
+#: templates/wallet/partials/signup_4_2factor.html:7
+#: templates/wallet/partials/signup_3_oauth.html:7
+#: templates/wallet/partials/signup_2_pin.html:7
+msgid "of"
+msgstr "του"
+
+#: templates/wallet/partials/signup_1_init.html:20
+msgid "You are now the proud owner of a bitcoin wallet"
+msgstr "Τώρα είστε ο υπερήφανος ιδιοκτήτης ένός πορτοφολιού bitcoin"
+
+#: templates/wallet/partials/signup_1_init.html:21
+msgid "Please finish this 4-step account setup to fully secure it against intruders"
+msgstr "Παρακαλώ ολοκληρώστε τα 4-βήματα για την ρύθμιση του λογαριασμού σας ώστε να το ασφαλίσετε πλήρως κατά των εισβολέων"
+
+#: templates/wallet/partials/signup_1_init.html:26
+msgid "Generating mnemonic, please wait..."
+msgstr "Δημιουργία μνημονικού, παρακαλώ περιμένετε..."
+
+#: templates/wallet/partials/signup_1_init.html:28
+msgid "Please write down these words and store them in a safe place as they can't be recovered."
+msgstr "Παρακαλώ γράψτε κάτω αυτές τις λέξεις και αποθηκεύστε τις σε ασφαλές μέρος, καθώς δεν μπορούν να ανακτηθούν."
+
+#: templates/wallet/partials/signup_1_init.html:28
+msgid "We do not store the above information anywhere, we can't help you recover it!"
+msgstr "Δεν αποθηκεύουμε τις παραπάνω πληροφορίες οπουδήποτε, δεν μπορούμε να σας βοηθήσουμε να τις ανακτήσετε!"
+
+#: templates/wallet/partials/signup_1_init.html:33
+msgid "I confirm that my passphrase is saved &amp; secured and I agree with the "
+msgstr "Επιβεβαιώνω ότι το συνθηματικό μου έχει αποθηκευτεί &amp; προστατευτεί και συμφωνώ με το "
+
+#: templates/wallet/partials/signup_1_init.html:36
+#: templates/wallet/partials/wallet_2fa.html:33
+#: templates/wallet/partials/wallet_settings.html:173
+#: templates/wallet/partials/wallet_receive.html:39
+#: templates/wallet/partials/wallet_receive.html:59
+#: templates/wallet/partials/signuplogin/header_pay.html:12
+msgid "Show QR Code"
+msgstr "Εμφάνιση QR Code"
+
+#: templates/wallet/partials/signup_1_init.html:38
+#: templates/wallet/partials/wallet_settings.html:453
+msgid "Write to NFC tag"
+msgstr "Γράψτε στην ετικέτα NFC"
+
+#: templates/wallet/partials/signup_1_init.html:40
+msgid "Print passphrase"
+msgstr "Εκτύπωση συνθηματικού πρόσβασης"
+
+#: templates/wallet/partials/signup_1_init.html:42
+#: templates/wallet/partials/signup_1_init.html:43
+msgid "Continue"
+msgstr "Συνέχεια"
+
+#: templates/wallet/partials/signup_1_init.html:48
+msgid "Error: "
+msgstr "Σφάλμα: "
+
+#: templates/wallet/partials/signup_1_init.html:48
+msgid " Click to try again"
+msgstr " Κάντε κλίκ για να ξαναδοκιμάσετε"
+
+#: templates/wallet/partials/signup_1_init.html:60
+msgid "The passphrase to access your wallet is:"
+msgstr "Η φράση κλειδί για να αποκτήσετε πρόσβαση στο πορτοφόλι σας είναι:"
+
+#: templates/wallet/partials/signup_1_init.html:63
+msgid "Store this page in a safe place"
+msgstr "Αποθηκεύστε αυτή την σελίδα σε ασφαλές μέρος"
+
+#: templates/wallet/partials/wallet_2fa.html:13
+#: templates/wallet/partials/wallet_settings.html:234
+msgid "Phone"
+msgstr "Τηλέφωνο"
+
+#: templates/wallet/partials/wallet_2fa.html:19
+msgid "Google Authenticator is enabled."
+msgstr "Google Authenticator είναι ενεργοποιημένος."
+
+#: templates/wallet/partials/wallet_2fa.html:24
+msgid "Install app"
+msgstr "Εγκαταστήστε την εφαρμογή"
+
+#: templates/wallet/partials/wallet_2fa.html:26
+msgid "Install the app on your device. For Android at "
+msgstr "Εγκαταστήστε την εφαρμογή στη συσκευή σας. Για Android σε "
+
+#: templates/wallet/partials/wallet_2fa.html:26
+msgid " while for iOS at "
+msgstr " ενώ για το iOS στο "
+
+#: templates/wallet/partials/wallet_2fa.html:30
+msgid "Add account"
+msgstr "Προσθέστε λογαριασμό"
+
+#: templates/wallet/partials/wallet_2fa.html:32
+msgid "Add an account to the Google Authenticator App and scan the QR code or manually enter exact code."
+msgstr "Προσθέστε ένα λογαριασμό στην εφαρμογή Google Authenticator και σαρώστε τον κωδικό QR ή εισαγάγετε με μη αυτόματο τρόπο τον ακριβή κωδικό."
+
+#: templates/wallet/partials/wallet_2fa.html:37
+msgid "Confirm code"
+msgstr "Επιβεβαίωση κωδικού"
+
+#: templates/wallet/partials/wallet_2fa.html:39
+msgid "Google Authenticator will now show a number which in order to complete the two factor setup you need to enter below."
+msgstr "Ο Επαληθευτής Google Authenticator θα δείξει τώρα ένα αριθμό με την χρήση του οποίου μπορεί να ολοκληρωθεί η εγκατάσταση δύο παράγοντων με την εισαγωγή του πιο κάτω."
+
+#: templates/wallet/partials/wallet_2fa.html:48
+msgid "Authenticator code"
+msgstr "Κώδικας επαλήθευσης"
+
+#: templates/wallet/partials/wallet_2fa.html:53
+#: templates/wallet/partials/wallet_2fa.html:100
+#: templates/wallet/partials/wallet_2fa.html:142
+#: templates/wallet/partials/wallet_2fa.html:184
+#: templates/wallet/partials/wallet_settings.html:152
+#: templates/wallet/partials/wallet_settings.html:179
+#: templates/wallet/partials/wallet_settings.html:219
+#: templates/wallet/partials/wallet_settings.html:259
+msgid "Please enter received code"
+msgstr "Παρακαλούμε εισάγετε το κωδικό που έχετε λάβει"
+
+#: templates/wallet/partials/wallet_2fa.html:55
+#: templates/wallet/partials/wallet_2fa.html:81
+#: templates/wallet/partials/wallet_2fa.html:102
+#: templates/wallet/partials/wallet_2fa.html:124
+#: templates/wallet/partials/wallet_2fa.html:144
+#: templates/wallet/partials/wallet_2fa.html:166
+#: templates/wallet/partials/wallet_2fa.html:186
+#: templates/wallet/partials/wallet_settings.html:137
+#: templates/wallet/partials/wallet_settings.html:154
+#: templates/wallet/partials/wallet_settings.html:181
+#: templates/wallet/partials/wallet_settings.html:205
+#: templates/wallet/partials/wallet_settings.html:221
+#: templates/wallet/partials/wallet_settings.html:245
+#: templates/wallet/partials/wallet_settings.html:261
+msgid "Enable"
+msgstr "Ενεργοποίηση"
+
+#: templates/wallet/partials/wallet_2fa.html:68
+msgid "Email two factor authentication is enabled."
+msgstr "Email έλεγχος ταυτότητας δύο παραγόντων είναι ενεργοποιημένος."
+
+#: templates/wallet/partials/wallet_2fa.html:74
+#: templates/wallet/partials/wallet_settings.html:130
+msgid "Your email address"
+msgstr "Διεύθυνση  του email σας"
+
+#: templates/wallet/partials/wallet_2fa.html:79
+#: templates/wallet/partials/wallet_settings.html:135
+msgid "Please enter your email"
+msgstr "Παρακαλώ εισάγετε το Email σας"
+
+#: templates/wallet/partials/wallet_2fa.html:90
+msgid "You need to provide one code from your email to set up the two factor authentication.<br>                Please open your email and provide the code."
+msgstr "Πρέπει να παρέχετε ένα κώδικό από το email σας για να δημιουργήσετε τον έλεγχο ταυτότητας δύο παραγόντων. <br> Παρακαλώ πηγαίνετε στο email σας και προμηθευτήτε τον κωδικό."
+
+#: templates/wallet/partials/wallet_2fa.html:95
+#: templates/wallet/partials/wallet_settings.html:147
+msgid "Email code"
+msgstr "Κωδικός Email"
+
+#: templates/wallet/partials/wallet_2fa.html:113
+msgid "SMS two factor authentication is enabled."
+msgstr "Ελεγχος ταυτότητας δύο παράγοντων με SMS είναι ενεργοποιημένος."
+
+#: templates/wallet/partials/wallet_2fa.html:118
+#: templates/wallet/partials/wallet_2fa.html:160
+#: templates/wallet/partials/wallet_settings.html:198
+#: templates/wallet/partials/wallet_settings.html:238
+msgid "Your phone number"
+msgstr "Τον αριθμό του τηλεφώνου σας"
+
+#: templates/wallet/partials/wallet_2fa.html:122
+#: templates/wallet/partials/wallet_2fa.html:164
+#: templates/wallet/partials/wallet_settings.html:203
+#: templates/wallet/partials/wallet_settings.html:243
+msgid "+NN... Please enter your phone"
+msgstr "+ NN... Παρακαλώ εισάγετε το τηλέφωνό σας"
+
+#: templates/wallet/partials/wallet_2fa.html:132
+msgid "You need to provide one SMS code to set up the two factor authentication.<br>                Please check your phone and provide the code."
+msgstr "Πρέπει να παρέχετε ένα SMS κωδικό για να ορίσετε τον έλεγχο ταυτότητας δύο παραγόντων.<br>Παρακαλώ ελέγξτε το τηλέφωνό σας και προμηθευτήτε τον κωδικό."
+
+#: templates/wallet/partials/wallet_2fa.html:137
+#: templates/wallet/partials/wallet_settings.html:214
+msgid "SMS code"
+msgstr "κωδικός SMS"
+
+#: templates/wallet/partials/wallet_2fa.html:155
+msgid "Phone call two factor authentication is enabled."
+msgstr "Ελεγχος ταυτότητας δύο παραγόντων με την χρήση τηλεφωνικής κλήσης είναι ενεργοποιημένος."
+
+#: templates/wallet/partials/wallet_2fa.html:174
+msgid "You need to provide one code to set up the two factor authentication.<br>                Please check your phone and provide the code."
+msgstr "Πρέπει να παρέχετε ένα SMS κωδικό για να ορίσετε τον έλεγχο ταυτότητας δύο παραγόντων.<br>Παρακαλώ ελέγξτε το τηλέφωνό σας και προμηθευτήτε τον κωδικό."
+
+#: templates/wallet/partials/wallet_2fa.html:179
+#: templates/wallet/partials/wallet_settings.html:254
+msgid "Phone code"
+msgstr "Κωδικός τηλεφώνου"
+
+#: templates/wallet/partials/wallet_transactions_table.html:6
+msgid "Date"
+msgstr "Ημερομηνία"
+
+#: templates/wallet/partials/wallet_transactions_table.html:7
+msgid "Description"
+msgstr "Περιγραφή"
+
+#: templates/wallet/partials/wallet_transactions_table.html:29
+msgid "unconfirmed"
+msgstr "ανεπιβεβαίωτες"
+
+#: templates/wallet/partials/wallet_transactions_table.html:30
+msgid "confirmations"
+msgstr "Επιβεβαιώσεις"
+
+#: templates/wallet/partials/wallet_transactions_table.html:33
+msgid "take funds back"
+msgstr "Πάρτε πίσω τα κεφάλαια"
+
+#: templates/wallet/partials/wallet_transactions_table.html:47
+msgid "No transactions found..."
+msgstr "Δεν βρέθηκαν συναλλαγές..."
+
+#: templates/wallet/partials/signup_4_2factor.html:14
+msgid "Don't compromise on security"
+msgstr "Μην κάνετε συμβιβασμούς στην ασφάλεια"
+
+#: templates/wallet/partials/signup_4_2factor.html:14
+msgid "Set up two factor authentication"
+msgstr "Δημιουργήστε έλεγχο ταυτότητας δύο παραγόντων"
+
+#: templates/wallet/partials/signup_4_2factor.html:17
+msgid "We strongly suggest you to set up two factor authentication, this will make your wallet much more secure and will let you some additional features such as Spending Limits and Delayed Payments."
+msgstr "Σας προτείνουμε ανεπιφύλακτα να δημιουργήσει έλεγχο ταυτότηταςδύο παραγόντων, αυτό θα κάνει το πορτοφόλι σας πολύ πιο ασφαλές και θα έχετε πρόσβαση σε περισσότερς λειτουργίες, όπως όρια δαπανών και καθυστερήσεις πληρωμών."
+
+#: templates/wallet/partials/signup_4_2factor.html:18
+msgid "If you set it up to issue a transaction you will not only need to login to your wallet but also confirm it with a code sent to you via email, SMS or google authenticator as per your choice."
+msgstr "Αν το ρυθμίσετε να εκδώσει μια συναλλαγή θα χρειαστεί όχι μόνο να συνδεθείτε με το πορτοφόλι σας, αλλά και να επιβεβαιώσετε με ένα κωδικό που θα σας σταλεί μέσω e-mail, SMS ή google authenticator σύμφωνα με την επιλογή σας."
+
+#: templates/wallet/partials/signup_4_2factor.html:23
+msgid "Take me to my wallet!"
+msgstr "Πάρε με στο πορτοφόλι μου!"
+
+#: templates/wallet/partials/signup_3_oauth.html:14
+msgid "Pay or get paid by social networks"
+msgstr "Πληρώστε ή πληρωθείτε από κοινωνικά δίκτυα"
+
+#: templates/wallet/partials/signup_3_oauth.html:14
+msgid "Grant access to your wallet in watch-only mode"
+msgstr "Επιτρέψτε την πρόσβαση στο πορτοφόλι σας σε κατάσταση λειτουργίας παρακολούθησης-μόνο"
+
+#: templates/wallet/partials/signup_3_oauth.html:23
+#: templates/wallet/partials/wallet_settings.html:411
+#: templates/wallet/partials/signuplogin/base.html:50
+msgid "Custom Login"
+msgstr "Προσαρμοσμένη σύνδεση"
+
+#: templates/wallet/partials/signup_3_oauth.html:25
+#: templates/wallet/partials/wallet_settings.html:283
+#: templates/wallet/partials/wallet_settings.html:323
+#: templates/wallet/partials/wallet_settings.html:423
+#: templates/wallet/partials/signuplogin/base.html:52
+msgid "Coming soon"
+msgstr "Προσεχώς"
+
+#: templates/wallet/partials/signup_3_oauth.html:29
+msgid "If you like you can access your Wallet in Watch-Only mode via simple login. When you login in this way you access a completely separate \"area\" of your wallet, in no way it can be compromised and payments cannot be made"
+msgstr "Εάν θέλετε μπορείτε να έχετε πρόσβαση στο πορτοφόλι σας σε λειτουργία παρακολούθησης-μόνο, μέσω απλής σύνδεσης. Όταν συνδεθείτε με αυτόν τον τρόπο αποκτάτε πρόσβαση σε ένα τελείως ξεχωριστό \"χώρο\" του πορτοφολιού σας, σε καμία περίπτωση δεν μπορεί να τεθεί σε κίνδυνο και πληρωμές δεν είναι εφικτές"
+
+#: templates/wallet/partials/signup_3_oauth.html:32
+msgid "Plus use your email or your Facebook name to receive payments! No more long and complicated addresses to remember and communicate. That means that you can easily login in 'watch-only mode' safely from any wi-fi, on the go or even at Starbucks!"
+msgstr "Επιπλέον χρησιμοποιείστε το email σας ή το όνομα σας στο Facebook για να λάβετε πληρωμές! Με αυτό τον τρόπο δεν απαιτείται να θυμάστε περίπλοκες διευθύνσεις για επικοινωνία. Αυτό σημαίνει ότι μπορείτε εύκολα να συνδεθείτε σε λειτουργία 'παρακολουθήσης-μόνο' με ασφάλεια από οποιοδήποτε wi-fi, στο δρόμο ή ακόμα και στα Starbucks!"
+
+#: templates/wallet/partials/signup_3_oauth.html:38
+#: templates/wallet/partials/signup_2_pin.html:37
+msgid "Generating your wallet keys, please wait"
+msgstr "Δημιουργία των κλειδιών για το πορτοφόλι σας, σας παρακαλώ να περιμένετε"
+
+#: templates/wallet/partials/signup_3_oauth.html:41
+#: templates/wallet/partials/signup_2_pin.html:40
+msgid "Please wait, logging in..."
+msgstr "Παρακαλώ περιμένετε, σύνδεση στο..."
+
+#: templates/wallet/partials/signup_3_oauth.html:44
+#: templates/wallet/partials/signup_2_pin.html:43
+msgid "Take me to my wallet and skip all this!"
+msgstr "Mετάβαση στο πορτοφόλι μου και παραλείψτε όλα αυτά!"
+
+#: templates/wallet/partials/signup_3_oauth.html:47
+msgid "Done, take me to step 4"
+msgstr "Ολοκληρώθηκε, πήγαινε με στο βήμα 4"
+
+#: templates/wallet/partials/signup_3_oauth.html:48
+msgid "Processing..."
+msgstr "Επεξεργασία..."
+
+#: templates/wallet/partials/wallet_modal_logout.html:5
+msgid "Do you want to log out?"
+msgstr "Θέλετε να αποσυνδεθείτε;"
+
+#: templates/wallet/partials/wallet_modal_fb_message.html:4
+msgid "Please send the Facebook message."
+msgstr "Παρακαλώ στείλτε το μήνυμα στο Facebook."
+
+#: templates/wallet/partials/wallet_modal_fb_message.html:6
+msgid "Send"
+msgstr "Αποστολή"
+
+#: templates/wallet/partials/wallet_modal_fb_message.html:11
+msgid "Cancel - revert transaction"
+msgstr "Ακύρωση - επαναφορά συναλλαγής"
+
+#: templates/wallet/partials/wallet_modal_fb_message.html:12
+msgid "I have sent the message"
+msgstr "Έχω αποστείλει το μήνυμα"
+
+#: templates/wallet/partials/signup_nfc_modal.html:2
+msgid "There was a problem writing to the NFC tag:"
+msgstr "Υπήρχε ένα πρόβλημα κατά την εγραφή της NFC ετικέτας:"
+
+#: templates/wallet/partials/signup_nfc_modal.html:5
+msgid "Initialising NFC tags listener..."
+msgstr "Καθορισμός αρχικών παραμέτρων για ετικέτες NFC..."
+
+#: templates/wallet/partials/signup_nfc_modal.html:8
+msgid "Please hold your tag(s) close to the device to write your wallet!"
+msgstr "Παρακαλώ κρατήστε την ετικέτα (ες) κοντά στη συσκευή για να εισαχθούν στο πορτοφόλι σας!"
+
+#: templates/wallet/partials/signup_nfc_modal.html:9
+msgid "Tags written:"
+msgstr "Ετικέτες γραμμένες:"
+
+#: templates/wallet/partials/signup_nfc_modal.html:10
+msgid "Tags formatted:"
+msgstr "Μορφοποίηση Ετικετών :"
+
+#: templates/wallet/partials/signup_nfc_modal.html:13
+msgid "Your NFC is not enable or not available. If available, please enable it in settings"
+msgstr "NFC σας δεν είναι ενεργοποιημένο ή δεν είναι διαθέσιμο. Εάν είναι διαθέσιμο, παρακαλώ να το ενεργοποιήσετε από τις ρυθμίσεις"
+
+#: templates/wallet/partials/wallet_modal_custom_login.html:4
+msgid "Please provide username and password."
+msgstr "Παρακαλώ δώστε όνομα χρήστη και κωδικό πρόσβασης."
+
+#: templates/wallet/partials/wallet_modal_custom_login.html:8
+msgid "Enter your username"
+msgstr "Εισάγετε το όνομα χρήστη"
+
+#: templates/wallet/partials/wallet_modal_custom_login.html:14
+msgid "Enter your password"
+msgstr "Εισάγετε τον κωδικό σας"
+
+#: templates/wallet/partials/wallet_modal_pin.html:4
+msgid "You can create a 4-digit personal identification number used to retrieve the password encrypting the mnemonic passphrase."
+msgstr "Μπορείτε να δημιουργήσετε ένα 4-ψήφιο προσωπικό αριθμό αναγνώρισης και να τον χρησιμοποιήσετε για να ανακτήσετε τον κωδικό πρόσβασης του μνημονικού συνθηματικού σας."
+
+#: templates/wallet/partials/wallet_modal_pin.html:8
+msgid "Enter your PIN"
+msgstr "Εισαγάγετε το PIN σας"
+
+#: templates/wallet/partials/wallet_modal_pin.html:14
+msgid "PIN must be a 4-digit number"
+msgstr "Το PIN πρέπει να είναι 4-ψήφιος αριθμός"
+
+#: templates/wallet/partials/wallet_modal_pin.html:23
+msgid "Confirm PIN number"
+msgstr "Επιβεβαίωση αριθμού PIN"
+
+#: templates/wallet/partials/wallet_modal_gauth_qr.html:2
+msgid "The QR code for Google Authenticator access to your wallet is:"
+msgstr "Ο κωδικός QR για το Google Authenticator για πρόσβαση στο πορτοφόλι σας είναι:"
+
+#: templates/wallet/partials/wallet_modal_gauth_qr.html:4
+msgid "You can also copy the code manually:"
+msgstr "Μπορείτε επίσης να αντιγράψετε τον κωδικό με μη αυτόματο τρόπο:"
+
+#: templates/wallet/partials/signup_2_pin.html:14
+msgid "Fast and secure access to your Wallet"
+msgstr "Γρήγορη και ασφαλή πρόσβαση σε πορτοφόλι σας"
+
+#: templates/wallet/partials/signup_2_pin.html:14
+msgid "To have a secure but quick access from this device set your PIN"
+msgstr "Για να έχετε μια ασφαλή, αλλά γρήγορη πρόσβαση από αυτήν τη συσκευή ορίστε το PIN σας"
+
+#: templates/wallet/partials/signup_2_pin.html:18
+#: templates/wallet/partials/wallet_settings.html:375
+#: templates/wallet/partials/signuplogin/base.html:16
+msgid "PIN number"
+msgstr "Αριθμός PIN"
+
+#: templates/wallet/partials/signup_2_pin.html:22
+msgid "Four digits number"
+msgstr "Τετραψήφιο αριθμός"
+
+#: templates/wallet/partials/signup_2_pin.html:29
+msgid "Access by PIN allows a quick login while keeping security to a high standard.                    The PIN secures a random AES 256 bit password which we will delete if 3 PIN attempts                    fail, forcing you to provide your full mnemonics once again. Easy, convenient and secure, so let's use it!"
+msgstr "Η πρόσβαση με PIN επιτρέπει γρήγορη σύνδεση, διατηρώντας παράλληλα την ασφάλεια σε υψηλό επίπεδο. Το PIN εξασφαλίζει ένα τυχαίο AES 256 bit κωδικό που θα διαγραφεί εάν οι 3 προσπάθειες του PIN αποτύχουν, αναγκάζοντάς σας να παρέχετε την πλήρη φράση πρόσβασης σας και πάλι. Εύκολο, άνετο και ασφαλή, οπότε ας το χρησιμοποιήσουμε!"
+
+#: templates/wallet/partials/signup_2_pin.html:46
+msgid "PIN set, ready for step 3"
+msgstr "Το PIN έχει οριστεί, έτοιμο για το βήμα 3"
+
+#: templates/wallet/partials/signup_2_pin.html:47
+msgid "Setting PIN..."
+msgstr "Ρύθμιση PIN..."
+
+#: templates/wallet/partials/signup_2_pin.html:50
+msgid "Skip PIN setup and continue"
+msgstr "Παραλείψτε την ρύθμιση του PIN και συνεχίστε"
+
+#: templates/wallet/partials/wallet_send.html:12
+#: templates/wallet/partials/wallet_send.html:75
+msgid "Recipient"
+msgstr "Παραλήπτης"
+
+#: templates/wallet/partials/wallet_send.html:18
+msgid "Enter recipient's bitcoin address, email or  Facebook account name"
+msgstr "Εισάγετε την διεύθυνση bitcoin του παραλήπτη, email  ή όνομα λογαριασμού στο Facebook"
+
+#: templates/wallet/partials/wallet_send.html:22
+#: templates/wallet/partials/wallet_send.html:104
+#: templates/wallet/partials/wallet_receive.html:73
+#: templates/wallet/partials/signuplogin/base.html:26
+msgid "Scan QR"
+msgstr "Σαρώστε το κωδικό QR"
+
+#: templates/wallet/partials/wallet_send.html:36
+msgid "Encryption passphrase"
+msgstr "Κρυπτογράφηση της φράσης πρόσβασης"
+
+#: templates/wallet/partials/wallet_send.html:66
+msgid "will be paid by"
+msgstr "θα πληρωθεί από"
+
+#: templates/wallet/partials/wallet_send.html:71
+msgid "Me"
+msgstr "Εγώ"
+
+#: templates/wallet/partials/wallet_send.html:95
+msgid "calculating"
+msgstr "Υπολογισμός"
+
+#: templates/wallet/partials/wallet_modal_expiring_soon.html:2
+msgid "Outputs expiring soon"
+msgstr "Εκροές λήγουν σύντομα"
+
+#: templates/wallet/partials/wallet_modal_expiring_soon.html:7
+msgid "No active nLockTime transactions found"
+msgstr "Δεν βρέθηκαν ενεργές συναλλαγές nLockTime"
+
+#: templates/wallet/partials/wallet_modal_expiring_soon.html:9
+msgid "Transaction hash, output number"
+msgstr "Hash Συναλλαγής , αριθμός εξόδου"
+
+#: templates/wallet/partials/wallet_modal_expiring_soon.html:9
+#: templates/wallet/partials/wallet_settings.html:460
+msgid "nLockTime"
+msgstr "nLockTime"
+
+#: templates/wallet/partials/wallet_settings.html:7
+msgid "Change language to"
+msgstr "Αλλαγή γλώσσας σε"
+
+#: templates/wallet/partials/wallet_settings.html:24
+msgid "Currency"
+msgstr "Συνάλλαγμα"
+
+#: templates/wallet/partials/wallet_settings.html:25
+msgid "Select your currency and pricing source."
+msgstr "Επιλέξτε το συναλλαγμα σας και την πηγή τιμολόγησης."
+
+#: templates/wallet/partials/wallet_settings.html:30
+msgid "Pricing source to use"
+msgstr "Πηγή Τιμολόγησης για χρήση"
+
+#: templates/wallet/partials/wallet_settings.html:41
+msgid "Show amounts in"
+msgstr "Εμφάνιση ποσών σε"
+
+#: templates/wallet/partials/wallet_settings.html:63
+msgid "Notifications"
+msgstr "ΕΙΔΟΠΟΙΗΣΕΙΣ"
+
+#: templates/wallet/partials/wallet_settings.html:64
+msgid "Notifications allow for improved security when configured for outgoing and for most up to date information when configured for incoming"
+msgstr "Ειδοποιήσεις επιτρέπουν τη βελτίωση της ασφάλειας, όταν ρυθμιστούν για τις εξερχόμενες και πιο ενημερωμένες πληροφορίες, όταν ρυθμιστούν για εισερχόμενες"
+
+#: templates/wallet/partials/wallet_settings.html:70
+msgid "Send incoming transaction notification by"
+msgstr "Αποστολή ειδοποίησης για εισερχόμενες συναλλαγές από"
+
+#: templates/wallet/partials/wallet_settings.html:76
+#: templates/wallet/partials/wallet_settings.html:96
+msgid "email"
+msgstr "email"
+
+#: templates/wallet/partials/wallet_settings.html:83
+#: templates/wallet/partials/wallet_settings.html:103
+#: templates/wallet/partials/wallet_settings.html:194
+msgid "SMS"
+msgstr "SMS"
+
+#: templates/wallet/partials/wallet_settings.html:90
+msgid "Send outgoing transaction notification by"
+msgstr "Αποστολή ειδοποίησης για εξερχόμενες συναλλαγές απο"
+
+#: templates/wallet/partials/wallet_settings.html:109
+#: templates/wallet/partials/wallet_settings.html:475
+msgid "NOTE"
+msgstr "ΣΗΜΕΙΩΣΗ"
+
+#: templates/wallet/partials/wallet_settings.html:109
+msgid "You need to have email Two Factor Authentication enabled for this feature to work."
+msgstr "Πρέπει να έχετε έλεγχο ταυτότητας δύο πραγόντων με email ενεργοποιημένο για να λειτουργεί αυτό το χαρακτηριστικό."
+
+#: templates/wallet/partials/wallet_settings.html:118
+msgid "Set any or all two factor: you can choose which one when needed!"
+msgstr "Ορίστε οποιοδήποτε ή όλους τους δύο παράγοντες: μπορείτε να επιλέξετε ποιο θέλετε όταν χρειάζεται!"
+
+#: templates/wallet/partials/wallet_settings.html:126
+msgid "Email"
+msgstr "Email"
+
+#: templates/wallet/partials/wallet_settings.html:144
+msgid "You need to provide one code from your email to set up the two factor authentication.<br>                    Please open your email and provide the code."
+msgstr "Πρέπει να παρέχετε ένα κώδικό από το email σας για να δημιουργήσετε τον έλεγχο ταυτότητας δύο παραγόντων. <br> Παρακαλώ πηγαίνετε στο email σας και προμηθευτήτε τον κωδικό."
+
+#: templates/wallet/partials/wallet_settings.html:167
+msgid "Google Authenticator"
+msgstr "Ελεγχος με Google Authenticator"
+
+#: templates/wallet/partials/wallet_settings.html:170
+msgid "You need to provide one Google Authenticator code to set up the two factor authentication.<br>                    Please scan the QR code below, and provide the code."
+msgstr "Πρέπει να παρέχετε ένα κωδικό για το Google Authenticator, για να ορίσετε το έλεγχο ταυτότητας δύο παράγοντων.<br>Παρακαλώ σαρώστε τον κωδικό QR παρακάτω, και προμηθευτείται τον κωδικό."
+
+#: templates/wallet/partials/wallet_settings.html:174
+msgid "Code"
+msgstr "Κώδικας"
+
+#: templates/wallet/partials/wallet_settings.html:211
+msgid "You need to provide one SMS code to set up the two factor authentication.<br>                    Please check your phone and provide the code."
+msgstr "Πρέπει να παρέχετε ένα SMS κωδικό για να ορίσετε τον έλεγχο ταυτότητας δύο παραγόντων.<br>Παρακαλώ ελέγξτε το τηλέφωνό σας και προμηθευτήτε τον κωδικό."
+
+#: templates/wallet/partials/wallet_settings.html:251
+msgid "You need to provide one phone code to set up the two factor authentication.<br>                    Please check your phone and provide the code."
+msgstr "Πρέπει να παρέχετε ένα SMS κωδικό για να ορίσετε τον έλεγχο ταυτότητας δύο παραγόντων.<br>Παρακαλώ ελέγξτε το τηλέφωνό σας και προμηθευτήτε τον κωδικό."
+
+#: templates/wallet/partials/wallet_settings.html:273
+msgid "Spending limits"
+msgstr "Όρια δαπανών"
+
+#: templates/wallet/partials/wallet_settings.html:274
+msgid "Set some limits for which you won't be asked for two factor for super userfriendly payments."
+msgstr "Θέστε κάποια όρια για τα οποία δεν θα σας ζητηθεί έλεγχο ταυρότητας με την μέθοδο των δύο παραγόντων για πληρωμές φιλικές προς το χρήστη."
+
+#: templates/wallet/partials/wallet_settings.html:282
+#: templates/wallet/partials/wallet_settings.html:322
+msgid "Enable delayed payments"
+msgstr "Ενεργοποίηση καθυστέρησης πληρωμών"
+
+#: templates/wallet/partials/wallet_settings.html:313
+msgid "Delayed payments"
+msgstr "Καθυστερήσεις πληρωμών"
+
+#: templates/wallet/partials/wallet_settings.html:314
+msgid "Delay transaction for super ease of mind: works best in conjuction with outgoing notifications."
+msgstr "Καθυστερήση των συναλλαγών για να είστε ήσυχοι: λειτουργεί καλύτερα σε συνδυασμό με τις εξερχόμενες ειδοποιήσεις."
+
+#: templates/wallet/partials/wallet_settings.html:329
+msgid "Delay payments of"
+msgstr "Καθυστέρηση πληρωμών από"
+
+#: templates/wallet/partials/wallet_settings.html:348
+msgid "Enable a simple PIN to quickly access your wallet from this device."
+msgstr "Ενεργοποιήσετε ένα απλό PIN για γρήγορη πρόσβαση στο πορτοφόλι σας από αυτήν τη συσκευή."
+
+#: templates/wallet/partials/wallet_settings.html:356
+msgid "Enable quick login on this device"
+msgstr "Ενεργοποίηση γρήγορης σύνδεσης σε αυτήν την συσκευή"
+
+#: templates/wallet/partials/wallet_settings.html:360
+msgid "Change PIN number"
+msgstr "Αλλαγή αριθμού PIN"
+
+#: templates/wallet/partials/wallet_settings.html:361
+msgid "Set PIN number"
+msgstr "Καθορισμένος αριθμός PIN"
+
+#: templates/wallet/partials/wallet_settings.html:363
+msgid "Four digit number"
+msgstr "Τετραψήφιο αριθμός"
+
+#: templates/wallet/partials/wallet_settings.html:365
+#: templates/wallet/partials/wallet_settings.html:379
+msgid "Confirm"
+msgstr "Επιβεβαίωση"
+
+#: templates/wallet/partials/wallet_settings.html:369
+msgid "Disable quick login on all devices"
+msgstr "Απενεργοποιήσετε τη γρήγορη σύνδεση σε όλες τις συσκευές"
+
+#: templates/wallet/partials/wallet_settings.html:373
+msgid "set PIN to"
+msgstr "Ορίστε το PIN"
+
+#: templates/wallet/partials/wallet_settings.html:378
+msgid "Remove"
+msgstr "Κατάργηση"
+
+#: templates/wallet/partials/wallet_settings.html:390
+msgid "Link your own third party accounts"
+msgstr "Συνδέσετε το λογαριασμό σας με λογαριασμό τρίτου"
+
+#: templates/wallet/partials/wallet_settings.html:391
+msgid "Allow social payments and watch-only login to your wallet via your own third party accounts."
+msgstr "Επιτρέπει πληρωμές σε κοινωνικά μέσα και σύνδεση με λειτουργία παρακολούθησης-μόνο στο πορτοφόλι σας μέσω το δικό σας λογαριασμό τρίτου."
+
+#: templates/wallet/partials/wallet_settings.html:417
+msgid "Username"
+msgstr "Όνομα χρήστη"
+
+#: templates/wallet/partials/wallet_settings.html:418
+msgid "Password"
+msgstr "Κωδικός πρόσβασης"
+
+#: templates/wallet/partials/wallet_settings.html:436
+msgid "Link handler"
+msgstr "Χειρισμός Συνδέσμων"
+
+#: templates/wallet/partials/wallet_settings.html:437
+msgid "Use GreenAddress to handle bitcoin: links."
+msgstr "Χρησιμοποιήστε το GreenAddress για τον χειρισμό bitcoin: συνδέσεις."
+
+#: templates/wallet/partials/wallet_settings.html:440
+msgid "Enable Handler"
+msgstr "Ενεργοποιήστε το πρόγραμμα χειρισμού"
+
+#: templates/wallet/partials/wallet_settings.html:447
+#: templates/wallet/partials/wallet_settings.html:451
+msgid "Show mnemonic"
+msgstr "Εμφάνιση μνημονικού"
+
+#: templates/wallet/partials/wallet_settings.html:448
+msgid "Display your mnemonic for account recovery or cloning on another device."
+msgstr "Εμφάνιση του μνημονικού σας για την ανάκτηση του λογαριασμού ή κλωνοποίηση σε κάποια άλλη συσκευή."
+
+#: templates/wallet/partials/wallet_settings.html:461
+msgid "nLockTime transactions allow you to redeem your deposited funds without GreenAddress.it's signature after pre-defined number of blocks"
+msgstr "οι συναλλαγές nLockTime σας επιτρέπουν να εξαργυρώσετε τα κεφάλαια που έχετε καταθέσει χωρίς την υπογραφή του GreenAddress.it, μετά από προκαθορισμένο αριθμό μπλοκς"
+
+#: templates/wallet/partials/wallet_settings.html:467
+msgid "Allow redeeming funds without GreenAddress.it signature after"
+msgstr "Επιτρέπουν την εξαργύρωση κεφαλαίων χωρίς την υπογραφή του GreenAddress.it μετά"
+
+#: templates/wallet/partials/wallet_settings.html:469
+msgid "blocks"
+msgstr "blocks"
+
+#: templates/wallet/partials/wallet_settings.html:475
+msgid "Both outgoing and incoming transaction notifications must be enabled for this feature to work."
+msgstr "Τόσο οι εξερχόμενες όσο και οι εισερχόμενες ειδοποιήσεις συναλλαγών πρέπει να είναι ενεργοποιημένες για να λειτουργεί αυτή η δυνατότητα."
+
+#: templates/wallet/partials/wallet_settings.html:478
+msgid "Show outputs expiring soon"
+msgstr "Εμφάνιση εκροών που λήγουν σύντομα"
+
+#: templates/wallet/partials/wallet_receive.html:32
+msgid "Bitcoin URI"
+msgstr "Bitcoin URI"
+
+#: templates/wallet/partials/wallet_receive.html:38
+msgid "Show URI and address"
+msgstr "Εμφάνιση URI και διεύθυνσης"
+
+#: templates/wallet/partials/wallet_receive.html:53
+msgid "Permanent Payment URL"
+msgstr "Μόνιμη πληρωμή URL"
+
+#: templates/wallet/partials/wallet_receive.html:66
+msgid "Private key in WIF format"
+msgstr "Ιδιωτικό κλειδί σε μορφή WIF"
+
+#: templates/wallet/partials/wallet_receive.html:70
+msgid "Enter a private key to sweep here"
+msgstr "Εισάγετε ένα ιδιωτικό κλειδί για να σαρώσετε εδώ"
+
+#: templates/wallet/partials/wallet_receive.html:86
+msgid "Sweep"
+msgstr "Σαρώστε"
+
+#: templates/wallet/partials/wallet_receive.html:93
+msgid "Show previously generated addresses"
+msgstr "Προβολή διευθύνσεων που δημιουργήθηκαν προηγουμένως"
+
+#: templates/wallet/partials/signuplogin/header_pay.html:1
+msgid "You're about to send "
+msgstr "Είστε έτοιμοι να στείλετε "
+
+#: templates/wallet/partials/signuplogin/header_pay.html:4
+msgid "Please log in, create a new Wallet, or click below to show a bitcoin: URI:"
+msgstr "Παρακαλώ Συνδεθείτε, δημιουργήστε ένα νέο πορτοφόλι, ή κάντε κλικ παρακάτω για να δείτε ένα bitcoin: URI:"
+
+#: templates/wallet/partials/signuplogin/header_pay.html:6
+msgid "Please log in, create a new Wallet, or use the URI below:"
+msgstr "Παρακαλώ συνδεθείτε, δημιουργήστε ένα νέο πορτοφόλι ή χρησιμοποιήστε το παρακάτω URI:"
+
+#: templates/wallet/partials/signuplogin/header_pay.html:11
+msgid "Show"
+msgstr "Εμφάνιση"
+
+#: templates/wallet/partials/signuplogin/header_wallet.html:1
+msgid "Welcome to GreenAddress.it!"
+msgstr "Καλώς ήλθατε στο GreenAddress.it!"
+
+#: templates/wallet/partials/signuplogin/header_wallet.html:1
+msgid "Please log in to use your Wallet"
+msgstr "Παρακαλώ συνδεθείτε για να χρησιμοποιήσετε το πορτοφόλι σας"
+
+#: templates/wallet/partials/signuplogin/redeem_password_modal.html:4
+msgid "Please provide the password received from sender."
+msgstr "Παρακαλείσθε εισάγετε τον κωδικό πρόσβασης που λάβατε από τον αποστολέα."
+
+#: templates/wallet/partials/signuplogin/redeem_password_modal.html:8
+msgid "Enter the password"
+msgstr "Εισάγετε τον κωδικό πρόσβασης"
+
+#: templates/wallet/partials/signuplogin/redeem_password_modal.html:15
+msgid "Please wait, decrypting..."
+msgstr "Παρακαλώ περιμένετε, αποκρυπτογράφηση..."
+
+#: templates/wallet/partials/signuplogin/redeem_password_modal.html:24
+msgid "Redeem the payment"
+msgstr "Εξαργυρώστε την πληρωμή"
+
+#: templates/wallet/partials/signuplogin/header_redeem.html:5
+msgid "If you do not have a GreenAddress.it wallet, please create one to reedem the payment"
+msgstr "Αν δεν έχετε πορτοφόλι GreenAddress.it, παρακαλούμε όπως δημιουργήσετε ένα για να εξαργυρώσετε την πληρωμή"
+
+#: templates/wallet/partials/signuplogin/header_redeem.html:6
+msgid "Otherwise, if you are a GreeenAddress.it user please login using form below"
+msgstr "Διαφορετικά, εάν είστε ένας χρήστης GreeenAddress.it παρακαλούμε συνδεθείτε χρησιμοποιώντας την πιο κάτω φόρμα"
+
+#: templates/wallet/partials/signuplogin/base.html:6
+msgid "Haven't got an account yet?"
+msgstr "Ακόμη δεν έχετε λογαριασμό?"
+
+#: templates/wallet/partials/signuplogin/base.html:6
+msgid "Create new Wallet"
+msgstr "Δημιουργήστε νέο Πορτοφόλι"
+
+#: templates/wallet/partials/signuplogin/base.html:11
+msgid "Log in for full Wallet access"
+msgstr "Συνδεθείται για πλήρη πρόσβαση στο Πορτοφόλι"
+
+#: templates/wallet/partials/signuplogin/base.html:19
+msgid "or"
+msgstr "ή"
+
+#: templates/wallet/partials/signuplogin/base.html:23
+msgid "Mnemonic passphrase"
+msgstr "Μνημονικό συνθηματικό πρόσβασης"
+
+#: templates/wallet/partials/signuplogin/base.html:37
+msgid "Invalid mnemonic"
+msgstr "Λανθασμένος μνημονικό"
+
+#: templates/wallet/partials/signuplogin/base.html:43
+msgid "Log in to Watch-Only mode"
+msgstr "Συνδεθείτε για την λειτουργία Watch-Only"
+
+#: templates/wallet/partials/signuplogin/base.html:60
+msgid "Processing"
+msgstr "Επεξεργασία"
+
+#: templates/wallet/partials/signuplogin/base.html:61
+msgid "Error, try again"
+msgstr "Σφάλμα, δοκιμάστε ξανά"
+
+#: templates/base/base.html:4
+msgid "Welcome!"
+msgstr "Καλωσορίσατε!"
+
+#: templates/base/base.html:6
+msgid "The safer Bitcoin wallet that puts you in control."
+msgstr "Το ασφαλέστερο πορτοφόλι για Bitcoin που σας δίνει τον έλεγχο."
+
+#: templates/base/base.html:97
+msgid "Toggle navigation"
+msgstr "Εναλλαγή περιήγησης"
+
+#: templates/base/base.html:106
+msgid "Blog"
+msgstr "Blog"
+
+#: templates/base/base.html:109
+msgid "Login"
+msgstr "Σύνδεση"
+
+#: templates/tests/jinja.html:20
+msgid "phone number"
+msgstr "αριθμός τηλεφώνου"
+
+#: templates/tests/jinja.html:21
+msgid "phone number: %(abc)s"
+msgstr "αριθμός τηλεφώνου: %(abc)s"
+
+#: templates/tests/jinja.html:22
+msgid "singular %(num)d"
+msgid_plural "plural %(num)d"
+msgstr[0] "Ενικός\n"
+"ενικός %(num)d\n"
+"\n"
+"Πληθυντικός\n"
+"πληθυντικός %(num)d"
+msgstr[1] "plural %(num)d"
+

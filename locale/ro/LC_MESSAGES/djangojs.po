@@ -1,0 +1,331 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2014-03-15 16:06+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: static/wallet/signer.js.c:1233
+msgid "No balance to spend"
+msgstr ""
+
+#: static/wallet/wallet.js.c:2102
+msgid "Error Decrypting Wallet. Please check your password is correct."
+msgstr ""
+
+#: static/js/greenaddress.js.c:4
+msgid ""
+"Cookies help us deliver our services. By using our services, you agree to "
+"our use of cookies."
+msgstr ""
+
+#: static/js/greenaddress.js.c:5
+msgid "More information"
+msgstr ""
+
+#: static/js/nfc.min.js.c:56 static/js/greenwallet/signup/nfc.js.c:56
+msgid "Failed removing NFC listener"
+msgstr ""
+
+#: static/js/test.js.c:3
+msgid "ala ma kota"
+msgstr ""
+
+#: static/js/test.js.c:4 static/js/test.js.c:5
+msgid "pojedynczo %(num)d"
+msgid_plural "mnogo %(num)d"
+msgstr[0] ""
+msgstr[1] ""
+
+#: static/js/test.js.c:6
+msgid "xxxx"
+msgid_plural "abc"
+msgstr[0] ""
+msgstr[1] ""
+
+#: static/js/greenwallet/hdwallet.js.c:68
+#: static/js/greenwallet/hdwallet.js.c:95
+msgid "You can't sent funds in watch only mode"
+msgstr ""
+
+#: static/js/greenwallet/services.js.c:86
+#: static/js/greenwallet/services.js.c:95
+msgid "Login failed"
+msgstr ""
+
+#: static/js/greenwallet/services.js.c:240
+msgid "Sent back from "
+msgstr ""
+
+#: static/js/greenwallet/services.js.c:242
+msgid "Received from "
+msgstr ""
+
+#: static/js/greenwallet/services.js.c:288
+msgid "Sent back to "
+msgstr ""
+
+#: static/js/greenwallet/services.js.c:291
+msgid "Re-deposited"
+msgstr ""
+
+#: static/js/greenwallet/services.js.c:318
+msgid "Time,Description,satoshis,"
+msgstr ""
+
+#: static/js/greenwallet/services.js.c:353
+msgid "Bitcoin transaction sent!"
+msgstr ""
+
+#: static/js/greenwallet/services.js.c:357
+msgid "Transaction failed: "
+msgstr ""
+
+#: static/js/greenwallet/services.js.c:478
+msgid "Failed retrieving password."
+msgstr ""
+
+#: static/js/greenwallet/controllers.js.c:175
+#: static/js/greenwallet/controllers.js.c:191
+msgid "Re-depositing successful!"
+msgstr ""
+
+#: static/js/greenwallet/signuplogin/controllers.js.c:173
+msgid "Wallet decryption failed"
+msgstr ""
+
+#: static/js/greenwallet/send/controllers.js.c:21
+msgid "Checksum validation failed!"
+msgstr ""
+
+#: static/js/greenwallet/send/controllers.js.c:26
+msgid "Version "
+msgstr ""
+
+#: static/js/greenwallet/send/controllers.js.c:32
+msgid "Invalid pubkey hash script length"
+msgstr ""
+
+#: static/js/greenwallet/send/controllers.js.c:33
+msgid "OP_DUP missing"
+msgstr ""
+
+#: static/js/greenwallet/send/controllers.js.c:34
+msgid "OP_HASH160 missing"
+msgstr ""
+
+#: static/js/greenwallet/send/controllers.js.c:35
+msgid "Invalid pubkey hash"
+msgstr ""
+
+#: static/js/greenwallet/send/controllers.js.c:36
+msgid "OP_EQUALVERIFY missing"
+msgstr ""
+
+#: static/js/greenwallet/send/controllers.js.c:37
+msgid "OP_CHECKSIG missing"
+msgstr ""
+
+#: static/js/greenwallet/send/controllers.js.c:39
+msgid "Invalid out P2SH script length"
+msgstr ""
+
+#: static/js/greenwallet/send/controllers.js.c:40
+msgid "out OP_HASH160 missing"
+msgstr ""
+
+#: static/js/greenwallet/send/controllers.js.c:41
+msgid "Invalid out P2SH hash"
+msgstr ""
+
+#: static/js/greenwallet/send/controllers.js.c:42
+msgid "out OP_EQUAL missing"
+msgstr ""
+
+#: static/js/greenwallet/send/controllers.js.c:62
+msgid "Inputs value is not larger than zero"
+msgstr ""
+
+#: static/js/greenwallet/send/controllers.js.c:66
+msgid " is not a valid number of outputs"
+msgstr ""
+
+#: static/js/greenwallet/send/controllers.js.c:83
+msgid "Invalid output value"
+msgstr ""
+
+#: static/js/greenwallet/send/controllers.js.c:90
+msgid "Fee is too large (%1, expected at most %2)"
+msgstr ""
+
+#: static/js/greenwallet/send/controllers.js.c:94
+msgid "Fee is too small (%1, expected at lest %2)"
+msgstr ""
+
+#: static/js/greenwallet/send/controllers.js.c:114
+msgid "Invalid change P2SH script length"
+msgstr ""
+
+#: static/js/greenwallet/send/controllers.js.c:115
+msgid "change OP_HASH160 missing"
+msgstr ""
+
+#: static/js/greenwallet/send/controllers.js.c:116
+msgid "Invalid change P2SH hash"
+msgstr ""
+
+#: static/js/greenwallet/send/controllers.js.c:117
+msgid "change OP_EQUAL missing"
+msgstr ""
+
+#: static/js/greenwallet/send/controllers.js.c:178
+msgid "Facebook login failed"
+msgstr ""
+
+#: static/js/greenwallet/send/controllers.js.c:200
+msgid "Transaction reversed!"
+msgstr ""
+
+#: static/js/greenwallet/send/controllers.js.c:216
+msgid "Email sent"
+msgstr ""
+
+#: static/js/greenwallet/send/controllers.js.c:220
+msgid "Failed sending email"
+msgstr ""
+
+#: static/js/greenwallet/send/controllers.js.c:230
+msgid "Reddit message sent"
+msgstr ""
+
+#: static/js/greenwallet/send/controllers.js.c:234
+msgid "Failed sending Reddit message"
+msgstr ""
+
+#: static/js/greenwallet/send/controllers.js.c:261
+msgid "You must provide encryption passphrase."
+msgstr ""
+
+#: static/js/greenwallet/send/controllers.js.c:364
+#: static/js/greenwallet/send/controllers.js.c:388
+msgid "Transaction verification failed: "
+msgstr ""
+
+#: static/js/greenwallet/send/controllers.js.c:412
+msgid "Invalid amount"
+msgstr ""
+
+#: static/js/greenwallet/send/controllers.js.c:416
+msgid "Please provide a recipient"
+msgstr ""
+
+#: static/js/greenwallet/info/controllers.js.c:87
+msgid "Not a valid encrypted private key"
+msgstr ""
+
+#: static/js/greenwallet/info/controllers.js.c:88
+msgid "Not a valid private key"
+msgstr ""
+
+#: static/js/greenwallet/info/controllers.js.c:89
+msgid "Invalid passphrase"
+msgstr ""
+
+#: static/js/greenwallet/info/controllers.js.c:100
+msgid "Funds redeemed"
+msgstr ""
+
+#: static/js/greenwallet/info/controllers.js.c:103
+msgid "Already redeemed"
+msgstr ""
+
+#: static/js/greenwallet/settings/directives.js.c:51
+msgid "Delete"
+msgstr ""
+
+#: static/js/greenwallet/settings/directives.js.c:52
+msgid "Rename"
+msgstr ""
+
+#: static/js/greenwallet/settings/directives.js.c:54
+msgid "Save"
+msgstr ""
+
+#: static/js/greenwallet/settings/controllers.js.c:195
+#, c-format
+msgid "(about %s days: 1 day ≈ 144 blocks)"
+msgstr ""
+
+#: static/js/greenwallet/settings/controllers.js.c:210
+msgid "nLockTime settings updated successfully"
+msgstr ""
+
+#: static/js/greenwallet/settings/controllers.js.c:230
+msgid "Already expired"
+msgstr ""
+
+#: static/js/greenwallet/settings/controllers.js.c:231
+#, c-format
+msgid "in about %s days"
+msgstr ""
+
+#: static/js/greenwallet/settings/controllers.js.c:265
+#: static/js/greenwallet/settings/controllers.js.c:289
+msgid "{1} supports only the following currencies: {2}"
+msgstr ""
+
+#: static/js/greenwallet/settings/controllers.js.c:392
+msgid "Error reading address book: "
+msgstr ""
+
+#: static/js/greenwallet/settings/controllers.js.c:453
+msgid "New item saved"
+msgstr ""
+
+#: static/js/greenwallet/settings/controllers.js.c:459
+msgid "Error saving item: "
+msgstr ""
+
+#: static/js/greenwallet/settings/controllers.js.c:498
+msgid "PIN removed"
+msgstr ""
+
+#: static/js/greenwallet/settings/controllers.js.c:531
+msgid "PIN changed"
+msgstr ""
+
+#: static/js/greenwallet/settings/controllers.js.c:535
+msgid "PIN set"
+msgstr ""
+
+#: static/js/greenwallet/settings/controllers.js.c:548
+msgid "All PINs removed"
+msgstr ""
+
+#: static/js/greenwallet/settings/controllers.js.c:568
+msgid "Facebook integration disabled"
+msgstr ""
+
+#: static/js/greenwallet/settings/controllers.js.c:581
+msgid "Facebook integration enabled"
+msgstr ""
+
+#: static/js/greenwallet/settings/controllers.js.c:602
+msgid "Reddit integration disabled"
+msgstr ""
+
+#: static/js/greenwallet/settings/controllers.js.c:614
+msgid "Reddit integration enabled"
+msgstr ""

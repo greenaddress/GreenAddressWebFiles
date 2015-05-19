@@ -1,0 +1,39 @@
+<link href="{{STATIC_URL}}/css/dc.min.css" rel="stylesheet" />
+{% if not crapp %}
+{% if cdvapp %}
+<script type="text/javascript">FB_APP_ID = '1470897776471523';</script>
+{% else %}
+<script type="text/javascript">FB_APP_ID = '{{ FB_APP_ID }}';REDDIT_APP_ID = '{{ REDDIT_APP_ID }}';</script>
+<script src="/static/js/trezor.js"></script>
+{% endif %}
+{% endif %}
+{% if cdvapp %}<script src="{{STATIC_URL}}/js/typedarray.js"></script>  <!-- for android 4.1 -->
+<script src="{{STATIC_URL}}/js/plugins/com.cordova.plugin.softkeyboard/www/softkeyboard.js"></script>{% endif %}
+{% if DEVELOPMENT %}{% include "wallet/scripts.generated.html" %}{% else %}
+<script src="/static/js/greenwallet.min.js"></script>
+<script src="/static/js/jsqrcode.min.js"></script>{% endif %}
+{% if cdvapp %}
+  <script src="{{STATIC_URL}}/js/nfc.min.js"></script>
+{% endif %}
+{% if crapp or cdvapp %}
+<script src="{{STATIC_URL}}/js/btchip-js-api/thirdparty/class/inheritance.min.js"></script>
+<script src="{{STATIC_URL}}/js/btchip-js-api/api/GlobalConstants.js"></script>
+<script src="{{STATIC_URL}}/js/btchip-js-api/api/Convert.js"></script>
+<script src="{{STATIC_URL}}/js/btchip-js-api/api/ByteString.js"></script>
+<script src="{{STATIC_URL}}/js/btchip-js-api/thirdparty/q/q.min.js"></script>
+{% endif %}
+{% if crapp %}
+<script src="/static/js/btchip-js-api/thirdparty/async/async.min.js"></script>
+
+<script src="/static/js/btchip-js-api/api/require.js"></script>
+<script src="/static/js/btchip-js-api/api/chromeDevice.js"></script>
+<script src="/static/js/btchip-js-api/api/Card.js"></script>
+<script src="/static/js/btchip-js-api/api/CardTerminalFactory.js"></script>
+<script src="/static/js/btchip-js-api/api/CardTerminal.js"></script>
+<script src="/static/js/btchip-js-api/api/ChromeapiPlugupCard.js"></script>
+<script src="/static/js/btchip-js-api/api/ChromeapiPlugupCardTerminalFactory.js"></script>
+<script src="/static/js/btchip-js-api/api/ChromeapiPlugupCardTerminal.js"></script>
+<script src="/static/js/btchip-js-api/api/BTChip.js"></script>
+
+<script src="/static/js/trezor-hid.js"></script>
+{% endif %}

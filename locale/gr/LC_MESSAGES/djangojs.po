@@ -1,0 +1,393 @@
+msgid ""
+msgstr "Project-Id-Version: greenaddress-wallet\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2014-04-09 13:40+0000\n"
+"PO-Revision-Date: 2014-04-10 07:53-0400\n"
+"Last-Translator: GreenAddress <info@greenaddress.it>\n"
+"Language-Team: Greek\n"
+"Language: el_GR\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: crowdin.net\n"
+
+#: static/wallet/signer.js.c:1233
+msgid "No balance to spend"
+msgstr "Μη επαρκές υπόλοιπο"
+
+#: static/wallet/wallet.js.c:2102
+msgid "Error Decrypting Wallet. Please check your password is correct."
+msgstr "Σφάλμα αποκρυπτογράφησης του πορτοφόλιου. Παρακαλώ ελέγξτε αν ο κωδικό πρόσβασής σας είναι σωστός."
+
+#: static/js/signup.min.js.c:146 static/js/greenwallet/apps/signup.js.c:146
+#: static/js/greenwallet/settings/controllers.js.c:731
+msgid "Custom login enabled"
+msgstr "Προσαρμοσμένη σύνδεση ενεργοποιημένη"
+
+#: static/js/greenaddress.js.c:11 static/js/greenaddress.min.js.c:36
+msgid "Cookies help us deliver our services. By using our services, you agree to our use of cookies."
+msgstr "Τα cookies μας βοηθούν στην παροχή των υπηρεσιών μας. Χρησιμοποιώντας τις υπηρεσιών μας, αποδέχεστε στην χρήση των cookies."
+
+#: static/js/greenaddress.js.c:12 static/js/greenaddress.min.js.c:36
+msgid "More information"
+msgstr "Περισσότερες Πληροφορίες"
+
+#: static/js/nfc.min.js.c:56 static/js/greenwallet/signup/nfc.js.c:56
+msgid "Failed removing NFC listener"
+msgstr "Αποτυχία αφαίρεσης του NFC listener"
+
+#: static/js/greenwallet/hdwallet.js.c:68
+#: static/js/greenwallet/hdwallet.js.c:95
+msgid "You can't sent funds in watch only mode"
+msgstr "Δεν μπορείτε να αποστείλετε κεφάλαια όταν βρίσκεστε σε λειτουργία Watch-only"
+
+#: static/js/greenwallet/services.js.c:111
+#: static/js/greenwallet/services.js.c:120
+msgid "Login failed"
+msgstr "Αποτυχία Σύνδεσης"
+
+#: static/js/greenwallet/services.js.c:250
+msgid "Sent back from "
+msgstr "Αποστέλλονται πίσω από "
+
+#: static/js/greenwallet/services.js.c:252
+msgid "Received from "
+msgstr "Λήψη από "
+
+#: static/js/greenwallet/services.js.c:274
+msgid "Sent to "
+msgstr "Αποστολή σε "
+
+#: static/js/greenwallet/services.js.c:300
+msgid "Sent back to "
+msgstr "Αποστολή πίσω στο "
+
+#: static/js/greenwallet/services.js.c:303
+msgid "Re-deposited"
+msgstr "Επανακατάθεση"
+
+#: static/js/greenwallet/services.js.c:330
+msgid "Time,Description,satoshis,"
+msgstr "Χρόνος, Περιγραφή, satoshis,"
+
+#: static/js/greenwallet/services.js.c:365
+msgid "Bitcoin transaction sent!"
+msgstr "Η συναλλαγή Bitcoin έχει αποσταλεί!"
+
+#: static/js/greenwallet/services.js.c:369
+msgid "Transaction failed: "
+msgstr "Απέτυχε η συναλλαγή: "
+
+#: static/js/greenwallet/services.js.c:393
+msgid "Phone"
+msgstr "Τηλέφωνο"
+
+#: static/js/greenwallet/services.js.c:515
+msgid "Failed retrieving password."
+msgstr "Απέτυχε η ανάκτηση του κωδικού πρόσβασης."
+
+#: static/js/greenwallet/services.js.c:655
+msgid "An error has occured which forced us to log you out."
+msgstr "Παρουσιάστηκε ένα σφάλμα που μας ανάγκασε να σας αποσυνδέσουμε."
+
+#: static/js/greenwallet/services.js.c:1104
+msgid "Error reading address book: "
+msgstr "Σφάλμα κατά την ανάγνωση του βιβλίου διευθύνσεων: "
+
+#: static/js/greenwallet/services.js.c:1136
+msgid "Cancelled"
+msgstr "Ακυρώθηκε"
+
+#: static/js/greenwallet/services.js.c:1138
+msgid "Invalid format"
+msgstr "Μη αποδεκτή μορφή"
+
+#: static/js/greenwallet/services.js.c:1151
+msgid "Could not process the QR code, the image may be blurry. Please try again."
+msgstr "Δεν ήταν δυνατή η επεξεργασία του κώδικα QR, η εικόνα μπορεί να είναι θολή. Παρακαλώ δοκιμάστε ξανά."
+
+#: static/js/greenwallet/services.js.c:1198
+msgid "Access denied. Retry to scan from file."
+msgstr "Δεν επιτρέπεται η πρόσβαση. Δοκιμάστε ξανά για να σαρώσετε από αρχείο."
+
+#: static/js/greenwallet/services.js.c:1204
+msgid "You must provide only one image file."
+msgstr "Πρέπει να παρέχετε μόνο ένα αρχείο εικόνας."
+
+#: static/js/greenwallet/controllers.js.c:11
+msgid "You need to log out to update cache."
+msgstr "Πρέπει να αποσυνδεθείτε για να ενημερώσετε την μνήμη cache."
+
+#: static/js/greenwallet/controllers.js.c:96
+msgid "Electrum setup failed"
+msgstr "Η εγκατάσταση του Electrum απέτυχε"
+
+#: static/js/greenwallet/controllers.js.c:230
+#: static/js/greenwallet/controllers.js.c:249
+msgid "Re-depositing successful!"
+msgstr "Επανακατάθεση επιτυχής!"
+
+#: static/js/greenwallet/signuplogin/controllers.js.c:122
+msgid "Unknown error"
+msgstr "Άγνωστο Σφάλμα"
+
+#: static/js/greenwallet/signuplogin/controllers.js.c:214
+msgid "Wallet decryption failed"
+msgstr "Αποκρυπτογράφηση του πορτοφόλιου απέτυχε"
+
+#: static/js/greenwallet/send/controllers.js.c:21
+msgid "Checksum validation failed!"
+msgstr "Απότυχε η επαλήθευση για έλεγχο υπολοίπου!"
+
+#: static/js/greenwallet/send/controllers.js.c:26
+msgid "Version "
+msgstr "Έκδοση "
+
+#: static/js/greenwallet/send/controllers.js.c:32
+msgid "Invalid pubkey hash script length"
+msgstr "Λανθασμένο μήκος ιδιωτικού κλειδιού hash"
+
+#: static/js/greenwallet/send/controllers.js.c:33
+msgid "OP_DUP missing"
+msgstr "Λείπει το OP_DUP"
+
+#: static/js/greenwallet/send/controllers.js.c:34
+msgid "OP_HASH160 missing"
+msgstr "Λείπει το OP_HASH160"
+
+#: static/js/greenwallet/send/controllers.js.c:35
+msgid "Invalid pubkey hash"
+msgstr "Λανθασμένο ιδιωτικό κλειδί hash"
+
+#: static/js/greenwallet/send/controllers.js.c:36
+msgid "OP_EQUALVERIFY missing"
+msgstr "OP_EQUALVERIFY λείπει"
+
+#: static/js/greenwallet/send/controllers.js.c:37
+msgid "OP_CHECKSIG missing"
+msgstr "OP_CHECKSIG λείπει"
+
+#: static/js/greenwallet/send/controllers.js.c:39
+msgid "Invalid out P2SH script length"
+msgstr "Λανθασμένο μήκος εξόδου P2SH script"
+
+#: static/js/greenwallet/send/controllers.js.c:40
+msgid "out OP_HASH160 missing"
+msgstr "έξοδος OP_HASH160 λείπει"
+
+#: static/js/greenwallet/send/controllers.js.c:41
+msgid "Invalid out P2SH hash"
+msgstr "Λανθασμένη έξοδος P2SH hash"
+
+#: static/js/greenwallet/send/controllers.js.c:42
+msgid "out OP_EQUAL missing"
+msgstr "OP_EQUAL λείπει"
+
+#: static/js/greenwallet/send/controllers.js.c:58
+msgid "Missing input"
+msgstr "Λείπει input"
+
+#: static/js/greenwallet/send/controllers.js.c:63
+msgid "Inputs value is not larger than zero"
+msgstr "Η τιμή της εισόδου δεν είναι μεγαλύτερη από το μηδέν"
+
+#: static/js/greenwallet/send/controllers.js.c:67
+msgid " is not a valid number of outputs"
+msgstr " δεν είναι έγκυρος αριθμός εξόδου"
+
+#: static/js/greenwallet/send/controllers.js.c:85
+msgid "Invalid output value"
+msgstr "Λανθασμένη τιμή εξόδου"
+
+#: static/js/greenwallet/send/controllers.js.c:92
+msgid "Fee is too large (%1, expected at most %2)"
+msgstr "Τα τέλη είναι πολύ μεγάλα (%1, αναμένεται το πολύ %2)"
+
+#: static/js/greenwallet/send/controllers.js.c:96
+msgid "Fee is too small (%1, expected at lest %2)"
+msgstr "Τα τέλη είναι πολύ μικρά (%1, αναμένεται τουλάχιστον %2)"
+
+#: static/js/greenwallet/send/controllers.js.c:123
+msgid "Invalid change P2SH script length"
+msgstr "Μη έγκυρη αλλαγή στο μήκος του P2SH script"
+
+#: static/js/greenwallet/send/controllers.js.c:124
+msgid "change OP_HASH160 missing"
+msgstr "αλλαγή OP_HASH160 λείπει"
+
+#: static/js/greenwallet/send/controllers.js.c:125
+msgid "Invalid change P2SH hash"
+msgstr "Μη έγκυρη αλλαγή P2SH hash"
+
+#: static/js/greenwallet/send/controllers.js.c:126
+msgid "change OP_EQUAL missing"
+msgstr "αλλαγή OP_EQUAL λείπει"
+
+#: static/js/greenwallet/send/controllers.js.c:174
+msgid "Facebook login failed"
+msgstr "Απέτυχε η σύνδεση με το Facebook"
+
+#: static/js/greenwallet/send/controllers.js.c:196
+msgid "Transaction reversed!"
+msgstr "Συναλλαγή έχει αντιστραφεί!"
+
+#: static/js/greenwallet/send/controllers.js.c:212
+msgid "Email sent"
+msgstr "Email έχει αποσταλεί"
+
+#: static/js/greenwallet/send/controllers.js.c:216
+msgid "Failed sending email"
+msgstr "Απέτυχε η αποστολή του email"
+
+#: static/js/greenwallet/send/controllers.js.c:226
+msgid "Reddit message sent"
+msgstr "Μήνυμα Reddit έχει αποσταλεί"
+
+#: static/js/greenwallet/send/controllers.js.c:230
+msgid "Failed sending Reddit message"
+msgstr "Αποτυχία αποστολής μηνύματος Reddit"
+
+#: static/js/greenwallet/send/controllers.js.c:261
+msgid "You must provide encryption passphrase."
+msgstr "Πρέπει να δώσετε κρυπτογραφημένο συνθηματικό πρόσβασης ."
+
+#: static/js/greenwallet/send/controllers.js.c:364
+#: static/js/greenwallet/send/controllers.js.c:390
+msgid "Transaction verification failed: "
+msgstr "Επαλήθευση της συναλλαγής απέτυχε: "
+
+#: static/js/greenwallet/send/controllers.js.c:414
+msgid "Invalid amount"
+msgstr "Μη έγκυρο ποσό"
+
+#: static/js/greenwallet/send/controllers.js.c:418
+msgid "Please provide a recipient"
+msgstr "Παρακαλώ παράσχετε παραλήπτη"
+
+#: static/js/greenwallet/info/controllers.js.c:68
+msgid "Not enough data to draw the graph"
+msgstr "Δεν υπάρχουν αρκετά δεδομένα για να εξαχθεί το γράφημα"
+
+#: static/js/greenwallet/info/controllers.js.c:93
+msgid "Not a valid encrypted private key"
+msgstr "Μη έγκυρο κρυπτογραφημένο private key"
+
+#: static/js/greenwallet/info/controllers.js.c:94
+#: static/js/greenwallet/receive/controllers.js.c:28
+#: static/js/greenwallet/receive/controllers.js.c:35
+#: static/js/greenwallet/receive/controllers.js.c:46
+msgid "Not a valid private key"
+msgstr "Μη έγκυρο private key"
+
+#: static/js/greenwallet/info/controllers.js.c:95
+msgid "Invalid passphrase"
+msgstr "Λανθασμένο συνθηματικό πρόσβασης"
+
+#: static/js/greenwallet/info/controllers.js.c:106
+msgid "Funds redeemed"
+msgstr "Κεφάλαια εξαργυρώθηκαν"
+
+#: static/js/greenwallet/info/controllers.js.c:109
+msgid "Already redeemed"
+msgstr "Έχουν ήδη εξαργυρωθεί"
+
+#: static/js/greenwallet/receive/controllers.js.c:63
+msgid "Funds swept"
+msgstr "Σάρωση Κεφαλαίων"
+
+#: static/js/greenwallet/receive/controllers.js.c:71
+msgid "Already swept or no funds found"
+msgstr "Εχουν ήση σαρωθεί ή δεν βρέθηκαν κεφάλαια"
+
+#: static/js/greenwallet/settings/controllers.js.c:285
+#, c-format
+msgid "(about %s days: 1 day ≈ 144 blocks)"
+msgstr "(περίπου %s μέρες: 1 ημέρα ≈ 144 blocks)"
+
+#: static/js/greenwallet/settings/controllers.js.c:303
+msgid "nLockTime settings updated successfully"
+msgstr "Ρυθμίσεις nLockTime έχουν ενημερώθεί με επιτυχία"
+
+#: static/js/greenwallet/settings/controllers.js.c:323
+msgid "Already expired"
+msgstr "Έχει ήδη λήξει"
+
+#: static/js/greenwallet/settings/controllers.js.c:324
+#, c-format
+msgid "in about %s days"
+msgstr "σε περίπου %s μέρες"
+
+#: static/js/greenwallet/settings/controllers.js.c:352
+msgid "You need to log out for language changes to be applied."
+msgstr "Pρέπει να αποσυνδεθείτε για να εφαρμοστούν οι αλλαγές στην γλώσσα."
+
+#: static/js/greenwallet/settings/controllers.js.c:360
+msgid "Error changing language:"
+msgstr "Σφάλμα στην αλλαγή της γλώσσας:"
+
+#: static/js/greenwallet/settings/controllers.js.c:381
+#: static/js/greenwallet/settings/controllers.js.c:405
+msgid "{1} supports only the following currencies: {2}"
+msgstr "{1} υποστηρίζει μόνο τα παρακάτω νομίσματα: {2}"
+
+#: static/js/greenwallet/settings/controllers.js.c:530
+msgid "New item saved"
+msgstr "Νέο αντικείμενο αποθηκεύτηκε"
+
+#: static/js/greenwallet/settings/controllers.js.c:537
+msgid "Error saving item: "
+msgstr "Σφάλμα κατά την αποθήκευση του αντικειμένου: "
+
+#: static/js/greenwallet/settings/controllers.js.c:576
+msgid "PIN removed"
+msgstr "Απομάκρυνση του PIN"
+
+#: static/js/greenwallet/settings/controllers.js.c:609
+msgid "PIN changed"
+msgstr "Αλλαγή του PIN"
+
+#: static/js/greenwallet/settings/controllers.js.c:613
+msgid "PIN set"
+msgstr "Καθορισμός PIN"
+
+#: static/js/greenwallet/settings/controllers.js.c:626
+msgid "All PINs removed"
+msgstr "Ολα τα PIN έχουν αφαιρεθεί"
+
+#: static/js/greenwallet/settings/controllers.js.c:647
+msgid "Facebook integration disabled"
+msgstr "Ενσωμάτωση Facebook απενεργοποιημένη"
+
+#: static/js/greenwallet/settings/controllers.js.c:660
+msgid "Facebook integration enabled"
+msgstr "Ενσωμάτωση Facebook ενεργοποιημένη"
+
+#: static/js/greenwallet/settings/controllers.js.c:681
+msgid "Reddit integration disabled"
+msgstr "Ενσωμάτωση Reddit απενεργοποιημένη"
+
+#: static/js/greenwallet/settings/controllers.js.c:693
+msgid "Reddit integration enabled"
+msgstr "Ενσωμάτωση Reddit ενεργοποιημένη"
+
+#: static/js/greenwallet/settings/controllers.js.c:715
+msgid "Custom login disabled"
+msgstr "Προσαρμοσμένη σύνδεση απενεργοποιημένη"
+
+#: static/js/greenwallet/settings/controllers.js.c:728
+msgid "Custom login changed"
+msgstr "Προσαρμοσμένη σύνδεση άλλαξε"
+
+#: static/js/greenwallet/settings/controllers.js.c:748
+#: static/js/greenwallet/settings/controllers.js.c:781
+#: static/js/greenwallet/settings/controllers.js.c:789
+msgid "Change"
+msgstr "Αλλαγή"
+
+#: static/js/greenwallet/settings/controllers.js.c:748
+#: static/js/greenwallet/settings/controllers.js.c:781
+#: static/js/greenwallet/settings/controllers.js.c:789
+msgid "Save"
+msgstr "Αποθήκευση"
+

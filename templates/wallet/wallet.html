@@ -1,0 +1,58 @@
+{% extends "base/base.html" %}
+
+{% block html_attrs %}toggleable-menu ng-swipe-left="toggle_set(false)" ng-swipe-right="toggle_set(true)" ng-app="greenWalletApp"{% endblock %}
+{% block page %}wallet{% endblock %}
+
+{% block title %}{{ _("Wallet") }}{% endblock %}
+
+{% block navigation %}{% endblock %}
+
+{% block prescripts %}
+  {% include "wallet/scripts.html" %}
+{% endblock %}
+
+{% block bodystart %}<div id="fb-root"></div>{% endblock %}
+
+{% block content %}
+<!-- angular-ui template overrides to disable animations -->
+<script id="template/modal/backdrop.html" type="text/ng-template">
+  <div class="modal-backdrop fade in {{ backdropClass }}"
+       ng-style="{'z-index': 1040 + (index && 1 || 0) + index*10}"
+  ></div>
+</script>
+<script id="template/modal/window.html" type="text/ng-template">
+  <div tabindex="-1" role="dialog" class="modal fade in (( windowClass ))" ng-style="{'z-index': 1050 + index*10, display: 'block'}" ng-click="close($event)">
+      <div class="modal-dialog" ng-class="{'modal-sm': size == 'sm', 'modal-lg': size == 'lg'}"><div class="modal-content" ng-transclude></div></div>
+  </div>
+</script>
+
+<div ng-controller="WalletController" id="content_container">
+  <div id="notices_container" ng-show="notices.length" ng-cloak>
+    <div ng-repeat="notice in notices" class="notice notice-((notice.type))" ng-cloak>
+      <i class="glyphicon glyphicon-exclamation-sign" ng-show="notice.type == 'error'"></i>
+      <i class="glyphicon glyphicon-ok-sign" ng-show="notice.type == 'success'"></i>
+      <i class="glyphicon glyphicon-info-sign" ng-show="notice.type == 'info'"></i>
+      ((notice.msg))
+    </div>
+  </div>
+  <div class="menu-mobile" toggle-class="visible">
+    <i class="menu-mobile-toggle menu-mobile-toggle-open glyphicon glyphicon-align-justify" toggle-class="visible" ng-click="toggle_set(true)"></i>
+    <i class="menu-mobile-toggle menu-mobile-toggle-close glyphicon glyphicon-remove" toggle-class="visible" ng-click="toggle_set(false)"></i>
+    <small>(( subpage_title ))</small>
+  </div>
+  <div class="menu-mobile-bottom" toggle-class="visible" ng-show="wallet.final_balance !== undefined">
+    <a style="color:inherit;" href="" x-apple-data-detectors="false">((wallet.final_balance|format_btc:wallet.unit))</a> ≈ <a style="color:inherit;"  href="" x-apple-data-detectors="false">((wallet.fiat_value|number:2)) ((wallet.fiat_currency))</a> {% include "snippets/loading-indicator.html" %}
+  </div>
+  <div class="container" toggle-class="visible">
+    <p ng-show="wallet.twofac && !wallet.twofac.any"><span class="label label-warning">{{ _("WARNING") }}:</span> {{ _('You have no two factor authentication set up. Please set it up in <a href="#/settings">settings</a>.') }}</p>
+    <p ng-show="wallet.hdwallet.priv && !wallet.appearance.mnemonic_verified"><span class="label label-warning">{{ _("WARNING") }}</span>
+      {{ _('You have not verified that you have backed up your mnemonic.') }}
+      <a href="" ng-click="verify_mnemonic()">{{ _('Please verify now by clicking here.') }}</a>
+    </p>
+    <div class="ng-view"></div>
+  </div>
+  {% include "wallet/nav.html" %}
+</div>
+{% endblock %}
+
+{% block footer %}{% endblock %}

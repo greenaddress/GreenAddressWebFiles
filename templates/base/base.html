@@ -1,0 +1,175 @@
+<!doctype html>
+<html {% if crapp %}style="overflow-y: auto;"{% endif %} {% block html_attrs %}{%endblock%} lang="{{LANG}}" {% if use_manifest %}manifest="/{{LANG}}/manifest.appcache"{% endif %} {% if crapp %}ng-csp{% endif %}>
+  <head>
+    <title>{% block fulltitle %}{% block title %}{{ _("Welcome!") }}{% endblock %} | GreenAddress{% endblock %}</title>
+    <meta charset="utf-8" />
+    <meta name="description" content="{% block metadescription %}{{ _("The safer Bitcoin wallet that puts you in control.") }}{% endblock %}" />
+    <meta name="keywords" content="multisig, deterministic, bitcoin, greenaddress, multisignature, wallet, blockchain, instant">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta property="og:image" content="https://{{ HOSTNAME }}{{STATIC_URL}}/img/logos/logo-greenaddress.png" />
+{% block opengraph %}
+    <meta content='https://greenaddress.it/' property='og:url'>
+{% endblock %}
+    <meta content='GreenAddress Wallet protects your bitcoins' property='og:title'>
+    <meta content='GreenAddress Wallet brings the most advanced protection level to your bitcoins without sacrifying usability or control.' property='og:description'>
+    <meta content='GreenAddress Wallet brings the most advanced protection level to your bitcoins without sacrifying usability or control.' name='description'>
+    <!--[if IE 7]>
+        <script>
+            window.location.href = "/wallet/#/browser_unsupported";
+        </script>
+    <![endif]-->
+    <link rel="shortcut icon" href="{{STATIC_URL}}/img/favicons/favicon.ico" type="image/vnd.microsoft.icon"/>
+    <link rel="apple-touch-icon" sizes="57x57" href="{{STATIC_URL}}/img/favicons/apple-touch-icon-57x57.png" />
+    <link rel="apple-touch-icon" sizes="114x114" href="{{STATIC_URL}}/img/favicons/apple-touch-icon-114x114.png" />
+    <link rel="apple-touch-icon" sizes="72x72" href="{{STATIC_URL}}/img/favicons/apple-touch-icon-72x72.png" />
+    <link rel="apple-touch-icon" sizes="144x144" href="{{STATIC_URL}}/img/favicons/apple-touch-icon-144x144.png" />
+    <link rel="apple-touch-icon" sizes="60x60" href="{{STATIC_URL}}/img/favicons/apple-touch-icon-60x60.png" />
+    <link rel="apple-touch-icon" sizes="120x120" href="{{STATIC_URL}}/img/favicons/apple-touch-icon-120x120.png" />
+    <link rel="apple-touch-icon" sizes="76x76" href="{{STATIC_URL}}/img/favicons/apple-touch-icon-76x76.png" />
+    <link rel="apple-touch-icon" sizes="152x152" href="{{STATIC_URL}}/img/favicons/apple-touch-icon-152x152.png" />
+    <link rel="icon" type="image/png" href="{{STATIC_URL}}/img/favicons/favicon-196x196.png" sizes="196x196" />
+    <link rel="icon" type="image/png" href="{{STATIC_URL}}/img/favicons/favicon-160x160.png" sizes="160x160" />
+    <link rel="icon" type="image/png" href="{{STATIC_URL}}/img/favicons/favicon-96x96.png" sizes="96x96" />
+    <link rel="icon" type="image/png" href="{{STATIC_URL}}/img/favicons/favicon-32x32.png" sizes="32x32" />
+    <link rel="icon" type="image/png" href="{{STATIC_URL}}/img/favicons/favicon-16x16.png" sizes="16x16" />
+    <link href='https://chrome.google.com/webstore/detail/greenaddress/dgbimgjoijjemhdamicmljbncacfndmp' rel='chrome-webstore-item' />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="msapplication-TileColor" content="#ffffff" />
+    <meta name="msapplication-TileImage" content="{{STATIC_URL}}/img/favicons/mstile-144x144.png" />
+    <meta name="msapplication-square70x70logo" content="{{STATIC_URL}}/img/favicons/mstile-70x70.png" />
+    <meta name="msapplication-square144x144logo" content="{{STATIC_URL}}/img/favicons/mstile-144x144.png" />
+    <meta name="msapplication-square150x150logo" content="{{STATIC_URL}}/img/favicons/mstile-150x150.png" />
+    <meta name="msapplication-square310x310logo" content="{{STATIC_URL}}/img/favicons/mstile-310x310.png" />
+    <meta name="msapplication-wide310x150logo" content="{{STATIC_URL}}/img/favicons/mstile-310x150.png" />
+    <link href="{{STATIC_URL}}/css/greenaddress.css" rel="stylesheet" />
+    {% if include_cordova or cdvapp %}
+        <script type="text/javascript" src="{{STATIC_URL}}/js/cordova.js"></script>
+        <script type="text/javascript" src="{{STATIC_URL}}/js/cdv-plugin-fb-connect.js"></script>
+        <script type="text/javascript" src="{{STATIC_URL}}/js/facebook-js-sdk.js"></script>
+        <script type="text/javascript" src="{{STATIC_URL}}/js/common_cordova_handlers.min.js"></script>
+        {% if not cdvapp %}<script>var path_with_no_lang = '{{PATH_NO_LANG}}';</script>{% endif %}
+    {% endif %}
+    {% block head %}{% endblock %}
+    <script src="{{STATIC_URL}}/wallet/config.js"></script>
+    <script src="{{BASE_URL}}/{{LANG}}/i18n_catalog.js"></script>
+    <script type="text/javascript">
+      BASE_URL = '{{BASE_URL}}';
+      LANG = '{{LANG}}';</script>
+    {% block prescripts %}{% endblock %}
+    {% if not cdvapp and not crapp %}<script src="{{STATIC_URL}}/js/greenaddress.min.js"></script>
+    <script>
+      if (window.get_catalog) get_catalog(window);
+      $(document).ready(function() {
+        {% block script %}{% endblock %}
+      });
+    </script>{% endif %}
+    {% if GA_TRACKING_ID %}
+    <script type="text/javascript">
+    /* <![CDATA[ */
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', '{{ GA_TRACKING_ID }}']);
+    if (!/\/(wallet|pay|redeem|uri)\//.test(location.href)) {
+      _gaq.push(['_trackPageview']);
+    }
+
+    (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+
+    (function(b){(function(a){"__CF"in b&&"DJS"in b.__CF?b.__CF.DJS.push(a):"addEventListener"in b?b.addEventListener("load",a,!1):b.attachEvent("onload",a)})(function(){"FB"in b&&"Event"in FB&&"subscribe"in FB.Event&&(FB.Event.subscribe("edge.create",function(a){_gaq.push(["_trackSocial","facebook","like",a])}),FB.Event.subscribe("edge.remove",function(a){_gaq.push(["_trackSocial","facebook","unlike",a])}),FB.Event.subscribe("message.send",function(a){_gaq.push(["_trackSocial","facebook","send",a])}));"twttr"in b&&"events"in twttr&&"bind"in twttr.events&&twttr.events.bind("tweet",function(a){if(a){var b;if(a.target&&a.target.nodeName=="IFRAME")a:{if(a=a.target.src){a=a.split("#")[0].match(/[^?=&]+=([^&]*)?/g);b=0;for(var c;c=a[b];++b)if(c.indexOf("url")===0){b=unescape(c.split("=")[1]);break a}}b=void 0}_gaq.push(["_trackSocial","twitter","tweet",b])}})})})(window);
+    /* ]]> */
+    </script>
+    {% endif %}
+    {% if crapp %}
+    <style type="text/css">
+    * { -webkit-user-select: text; }
+    [ng\:cloak],[ng-cloak],[data-ng-cloak],[x-ng-cloak],.ng-cloak,.x-ng-cloak,.ng-hide{display:none !important;}
+    ng\:form{display:block;}
+    .ng-animate-block-transitions{transition:0s all!important;-webkit-transition:0s all!important;}</style>
+    <script type="text/javascript" src="/electrum.js"></script>
+    {% endif %}
+    {% if cdvapp %}<script type="text/javascript" src="{{BASE_URL}}/electrum.js"></script>{% endif %}
+  </head>
+  <body id="{% block page %}{% endblock %}">
+    {% block bodystart %}{% endblock %}
+    {% block navigation %}
+    {% if not cdvapp %}
+    <nav id="navigation" class="navbar navbar-default navbar-fixed-top navbar-inverse" role="navigation">
+      <div class="container">
+        <div class="row">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#collapse">
+              <span class="sr-only">{{ _("Toggle navigation") }}</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+           <a class="navbar-brand" href="/"><img alt="greenaddress logo" src="{{STATIC_URL}}/img/logos/logo-greenaddress.png" class="navbar-logo" /><span class="brand">GreenAddress</span></a>
+          </div>
+          <div class="collapse navbar-collapse" id="collapse">
+            <ul id="navbar-main" class="nav navbar-nav navbar-right">
+              <li><a href="http://blog.greenaddress.it/">{{ _("Blog") }}</a></li>
+              <li><a href="/{{LANG}}/faq.html">{{ _("FAQ") }}</a></li>
+              <li><a href="http://api.greenaddress.it/">{{ _("API") }}</a></li>
+              <li><a href="/{{LANG}}/support.html">{{ _("Support") }}</a></li>
+              <li><a href="/{{LANG}}/wallet.html">{{ _("Login") }}</a></li>
+              <li>
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown"><img class="language-flag" src="{{STATIC_URL}}/img/flags/flag-{{ LANG }}.png" alt="{{ LANG }}"/></a>
+                <ul class="dropdown-menu language-menu" role="menu">
+                  <li role="menuitem"><a href="/de/{{ PATH_NO_LANG }}" data-lang="de"><img class="language-flag" src="{{STATIC_URL}}/img/flags/flag-de.png" alt="de"/> Deutsch</a></li>
+                  <li role="menuitem"><a href="/en/{{ PATH_NO_LANG }}" data-lang="en"><img class="language-flag" src="{{STATIC_URL}}/img/flags/flag-en.png" alt="en"/> English</a></li>
+                  <li role="menuitem"><a href="/es/{{ PATH_NO_LANG }}" data-lang="es"><img class="language-flag" src="{{STATIC_URL}}/img/flags/flag-es.png" alt="es"/> Español</a></li>
+                  <li role="menuitem"><a href="/fr/{{ PATH_NO_LANG }}" data-lang="fr"><img class="language-flag" src="{{STATIC_URL}}/img/flags/flag-fr.png" alt="fr"/> Français</a></li>
+                  <li role="menuitem"><a href="/el/{{ PATH_NO_LANG }}" data-lang="el"><img class="language-flag" src="{{STATIC_URL}}/img/flags/flag-el.png" alt="el"/> ελληνικά</a></li>
+                  <li role="menuitem"><a href="/it/{{ PATH_NO_LANG }}" data-lang="it"><img class="language-flag" src="{{STATIC_URL}}/img/flags/flag-it.png" alt="it"/> Italiano</a></li>
+                  <li role="menuitem"><a href="/nl/{{ PATH_NO_LANG }}" data-lang="nl"><img class="language-flag" src="{{STATIC_URL}}/img/flags/flag-nl.png" alt="nl"/> Nederlands</a></li>
+                  <li role="menuitem"><a href="/pl/{{ PATH_NO_LANG }}" data-lang="pl"><img class="language-flag" src="{{STATIC_URL}}/img/flags/flag-pl.png" alt="pl"/> Polski</a></li>
+                  <!-- <li role="menuitem"><a href="/he/{{ PATH_NO_LANG }}" data-lang="he"><img class="language-flag" src="{{STATIC_URL}}/img/flags/flag-he.png" alt="he"/> עברית</a></li> -->
+                  <li role="menuitem"><a href="/sv/{{ PATH_NO_LANG }}" data-lang="sv"><img class="language-flag" src="{{STATIC_URL}}/img/flags/flag-sv.png" alt="sv"/> Svenska</a></li>
+                  <li role="menuitem"><a href="/uk/{{ PATH_NO_LANG }}" data-lang="uk"><img class="language-flag" src="{{STATIC_URL}}/img/flags/flag-uk.png" alt="uk"/> Українська</a></li>
+                  <li role="menuitem"><a href="/ru/{{ PATH_NO_LANG }}" data-lang="ru"><img class="language-flag" src="{{STATIC_URL}}/img/flags/flag-ru.png" alt="ru"/> Pусский</a></li>
+                  <!-- <li role="menuitem"><a href="/zh/{{ PATH_NO_LANG }}" data-lang="he"><img class="language-flag" src="{{STATIC_URL}}/img/flags/flag-zh.png" alt="zh"/> 中文</a></li> -->
+                </ul>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </nav>
+    {% endif %}
+    {% endblock %}
+    <div id="content">
+      {% block content %}{% endblock %}
+    </div>
+    {% block footer %}
+    {% if not cdvapp %}
+    <div id="footer">
+      <div class="container">
+        <div class="row">
+          <div class="col-xs-6">
+            <b>Copyright &copy; 2015 GreenAddress{% if not cdvapp %} | <a href="/{{LANG}}/about.html">{{ _("About us") }}{% endif %}</a><br>
+            <small>GreenAddressit Limited - Vincenti Buildings 28/19 (Suite No. 1405), Strait Street<br>VLT1432 Valletta, Malta, VAT: MT21552512</small>
+          </div>
+          <div class="col-xs-6">
+            <ul class="list-inline pull-right text-center">
+              <li><a href="https://chrome.google.com/webstore/detail/greenaddressit/dgbimgjoijjemhdamicmljbncacfndmp" target="_blank"><img src="{{STATIC_URL}}/img/logos/logo-chrome-web-store.png" alt="Chrome Web Store" /></a></li>
+              <li><a href="https://play.google.com/store/apps/details?id=com.greenaddress.greenbits_android_wallet" target="_blank"><img src="{{STATIC_URL}}/img/logos/logo-google-play.png" alt="Google Play" /></a></li>
+              <li><a href="https://itunes.apple.com/us/app/greenaddress/id889740745?mt=8#" target="_blank"><img src="{{STATIC_URL}}/img/logos/logo-appstore-{{ LANG }}.svg" height="30" alt="AppStore" /></a></li>
+              <li><a href="https://f-droid.org/repository/browse/?fdid=com.greenaddress.greenbits_android_wallet" target="_blank"><img src="{{STATIC_URL}}/img/logos/logo-fdroid.svg" height="30" alt="F-Droid" /></a></li>
+              <br>
+              <li><a href="https://bitcoin.org/" target="_blank"><img src="{{STATIC_URL}}/img/logos/logo-bitcoin.png" alt="Bitcoin"/></a></li>
+              <li><a href="http://www.w3.org/TR/html5/" target="_blank"><img src="{{STATIC_URL}}/img/logos/logo-html5.png" alt="HTML5"/></a></li>
+              <li><a href="http://www.w3.org/TR/websockets/" target="_blank"><img src="{{STATIC_URL}}/img/logos/logo-sockets.png" alt="Sockets"/></a></li>
+              <li><a href="http://www.w3.org/" target="_blank"><img src="{{STATIC_URL}}/img/logos/logo-w3c.png" alt="W3C"/></a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    {% endif %}
+    {% endblock %}
+  </body>
+</html>

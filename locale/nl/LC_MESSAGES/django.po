@@ -1,0 +1,3148 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: greenaddress-wallet\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2014-10-25 14:19+0200\n"
+"PO-Revision-Date: 2014-08-20 10:08-0400\n"
+"Last-Translator: GreenAddress <info@greenaddress.it>\n"
+"Language-Team: Dutch\n"
+"Language: nl_NL\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: crowdin.com\n"
+
+#: utils/rate_limiter.py:40
+msgid "Request rate limit exceeded"
+msgstr "Aanvraaglimiet overschreden"
+
+#: templates/tests/jinja.html:20
+msgid "phone number"
+msgstr "telefoonnummer"
+
+#: templates/tests/jinja.html:21
+msgid "phone number: %(abc)s"
+msgstr "Telefoonnummer: %(abc)s"
+
+#: templates/tests/jinja.html:22
+msgid "singular %(num)d"
+msgid_plural "plural %(num)d"
+msgstr[0] "enkelvoud %(num)d"
+msgstr[1] "meervoud %(num)d"
+
+#: templates/website/index.html:5
+msgid "GreenAddress - Free and secure online Bitcoin wallet"
+msgstr "GreenAddress - Free and secure online Bitcoin wallet"
+
+#: templates/website/index.html:6
+msgid ""
+"GreenAddress is a free and secure Bitcoin wallet, a convenient alternative "
+"to paper wallets to store your bitcoins online. Independent blockchain data "
+"verification via the Electrum network."
+msgstr ""
+"GreenAddress is a free and secure Bitcoin wallet, a convenient alternative "
+"to paper wallets to store your bitcoins online. Independent blockchain data "
+"verification via the Electrum network."
+
+#: templates/website/index.html:31 templates/website/index.html:42
+#: templates/wallet/partials/signuplogin/header_redeem.html:8
+msgid "Create your Wallet"
+msgstr "Maak uw portemonnee"
+
+#: templates/website/index.html:42
+msgid "The safer "
+msgstr "De veiligere "
+
+#: templates/website/index.html:42
+msgid " wallet that puts "
+msgstr " portemonnee waar "
+
+#: templates/website/index.html:42
+msgid "you"
+msgstr "u"
+
+#: templates/website/index.html:42
+msgid " in control"
+msgstr " beheert"
+
+#: templates/website/index.html:44 templates/website/index.html:45
+#: templates/website/index.html:133 templates/website/index.html:195
+msgid "Improved security"
+msgstr "Verbeterde beveiliging"
+
+#: templates/website/index.html:46
+msgid ""
+"Protect your bitcoins with both your key and ours, set spending limits, rate "
+"limited transactions and always be the only one in control"
+msgstr ""
+"Bescherm uw bitcoins met zowel uw als onze sleutel, stel uitgavenlimieten in "
+"en u bent de enige in controle"
+
+#: templates/website/index.html:49 templates/website/index.html:50
+#: templates/wallet/partials/wallet_settings.html:148
+msgid "Quick login"
+msgstr "Snelle login"
+
+#: templates/website/index.html:51
+msgid ""
+"You can easily login in 'watch-only mode' via Facebook/Twitter/custom login "
+"with no compromise on security and privacy"
+msgstr ""
+"U kunt eenvoudig inloggen in alleen-kijken-modus via Facebook, Twitter of "
+"aangepaste login, zonder compromis te maken op beveiliging of privacy"
+
+#: templates/website/index.html:54 templates/website/index.html:55
+msgid "Send money easily"
+msgstr "Gemakkelijk geld versturen"
+
+#: templates/website/index.html:56
+msgid ""
+"Send money to a friend on Facebook, a follower on Twitter or to a "
+"colleague's email or mobile number"
+msgstr ""
+"Verstuur geld naar een vriend op Facebook, een volger op Twitter of een "
+"collega via e-mail of mobiel nummer"
+
+#: templates/website/index.html:63
+msgid "Scroll to read more"
+msgstr "Scroll om meer te lezen"
+
+#: templates/website/index.html:75
+msgid ""
+"        <p><h4>Bitcoin is the currency of the future</h4></p>        <p>We "
+"don't make you choose between security and convenience. And we don't "
+"compromise your <strong>privacy</strong>.</p>        <p>Our <strong>per-"
+"transaction</strong> two factor authentication, multi-signature and "
+"deterministic wallet allow you unprecedented control over your transactions."
+"</p>        <p>And, we <strong>never</strong> store your private keys, not "
+"even encrypted. At the same time we make it trivial to view and transfer "
+"your funds.</p>        <p>Take control of your future now, at GreenAddress.</"
+"p>        "
+msgstr ""
+"                <p><h4>Bitcoin is de valuta van de toekomst</h4></p>        "
+"<p>We laten u niet kiezen tussen veiligheid of gebruikersgemak. Ook brengen "
+"wij uw <strong>privacy</strong> niet in gevaar.</p>        <p>Onze "
+"<strong>per transactie</strong> dubbele verificatie, meervoudige "
+"handtekening en deterministische portemonnee geven u als enige controle over "
+"uw transacties.</p>        <p>Ook slaan we <strong>nooit</strong> uw "
+"privésleutels op, zelfs niet versleuteld. Toch houden we het eenvoudig om uw "
+"balans te beheren.</p>        <p>Neem nu controle over de toekomst met "
+"GreenAddress.</p>                "
+
+#: templates/website/index.html:94
+msgid ""
+"        <p><h4>Better privacy with your funds and safer login with watch-"
+"only</h4></p>        <p>Safely check your <strong>balance</strong> and "
+"<strong>transactions</strong> from public Wi-Fi, Starbucks and on the go.</"
+"p>        <p>With our unique <strong>watch-only</strong> mode you can "
+"quickly check your balance or receive funds without full access to your "
+"wallet.</p>        <p>Your <strong>keys</strong> are not loaded so no "
+"transaction are possible and settings can't be modified</p>        "
+msgstr ""
+"                <p><h4>Verbeterde privacy en veiliger inloggen via de alleen-"
+"kijken-modus.</h4></p>        <p>Bekijk je <strong>balans</strong> en "
+"<strong>transacties</strong> veilig vanaf publieke WiFi.</p>        <p>Met "
+"onze unieke <strong>alleen-kijken-modus</strong> kunt u snel uw balans "
+"controleren zonder volledige toegang tot uw portemonne te verkrijgen.</"
+"p>        <p>Uw <strong>sleutels</strong> worden hierbij niet geladen zodat "
+"transacties niet verzonden en instellingen niet gewijzigd kunnen worden.</"
+"p>                "
+
+#: templates/website/index.html:112
+msgid ""
+"        <p><h4>More features that allow convenient and secure access to your "
+"wallet</h4></p>        <p>Enable <strong>quick</strong> PIN login to your "
+"wallet from any of your devices without having to use your passphrase</"
+"p>        <p>Should our system be taken down or disappear, sleep "
+"<strong>safe</strong> with our automatic presigned transaction (nLockTime) "
+"allowing you to simply wait for your selected expiry to get your funds!</"
+"p>        <p>All transfers to your wallet (including change) will use a "
+"newly generated address each time making it harder for people you transact "
+"with to read your past and future transactions</p>        "
+msgstr ""
+"                <p><h4>Meer functies die de gebruiksvriendelijkheid en "
+"toegang tot uw portemonnee verbeteren</h4></p>        <p>Log <strong>snel</"
+"strong> in door middel van uw pincode op andere apparaten zonder uw "
+"wachtwoord in te hoeven voeren</p>        <p>Mocht onze dienst ooit gekraakt "
+"worden dan kunt u gerust zijn dat uw geld <strong>veilig</strong> is. Onze "
+"\"nLockTime\" functie zorgt ervoor dat u uw geld kunt versturen nadat een "
+"vooraf ingestelde tijd verlopen is, zonder dat onze privésleutel hieraan te "
+"pas komt.</p>        <p>Iedere inkomende transactie krijgt een nieuw publiek "
+"adres toegewezen. Dit zorgt ervoor dat andere geen inzicht hebben in uw "
+"balans en transacties</p>                "
+
+#: templates/website/index.html:129 templates/wallet/wallet.html:6
+msgid "Wallet"
+msgstr "Portemonnee"
+
+#: templates/website/index.html:130 templates/website/index.html:177
+msgid "You are in control"
+msgstr "U bent in controle"
+
+#: templates/website/index.html:131 templates/website/index.html:183
+msgid "Instant confirmation"
+msgstr "Onmiddellijke bevestiging"
+
+#: templates/website/index.html:132 templates/website/index.html:189
+msgid "Social integration"
+msgstr "Social media integratie"
+
+#: templates/website/index.html:134 templates/website/index.html:201
+msgid "Improved privacy"
+msgstr "Verbeterde privacy"
+
+#: templates/website/index.html:210
+msgid ""
+"          1) Hot wallets can be emptied and cold wallets may have delays, "
+"bugs or be lost<br>          2) If the service is compromised brute force "
+"attacks may be tried on your encrypted wallet, requires strong password."
+"<br>          3) Access to user wallets requires that both the user and the "
+"service are compromised at the same time which reduces risks.          "
+msgstr ""
+"          1) Online portemonnees kunnen worden geleegd en offline "
+"portemonnees zijn gevoelig voor vertragingen, bugs of verlies<br> 2) Als de "
+"service wordt gecompromitteerd, kunnen brute kracht aanvallen op uw "
+"gecodeerde portemonnee worden geprobeerd, sterk wachtwoord vereist.<br>3) "
+"Toegang tot portemonnees van gebruikers vereist dat zowel de gebruiker als "
+"de service tegelijkertijd gecompromitteerd wordt, wat risico's "
+"vermindert.          "
+
+#: templates/website/index.html:223
+msgid "Under the hood"
+msgstr "Onder de motorkap"
+
+#: templates/website/index.html:230
+msgid ""
+"<h3>We use  hierarchical deterministic wallets</h3>(or BIP0032 HD Wallet) "
+"which means we use new addresses for each incoming transaction (including "
+"change), which, together with coinjoin (coming soon) allows you to maintain "
+"your privacy at the highest standard."
+msgstr ""
+"<h3>We gebruiken hiërarchische deterministische wallets</h3><br>(of BIP0032 "
+"HD portemonnee) die betekent dat we nieuwe adressen gebruiken voor elke "
+"inkomende transactie (inclusief wisselgeldadressen), die u, samen met "
+"coinjoin (binnenkort beschikbaar), in staat stellen uw privacy op het "
+"hoogste niveau te bewaren."
+
+#: templates/website/index.html:236
+msgid ""
+"<h3>Quickly check your balance</h3>You can use a number of third party "
+"services (like Facebook) to quickly check if you have received a transaction "
+"or to check your balance without exposing your wallet, indeed quite "
+"convenient when in a hurry and/or on a third party computer"
+msgstr ""
+"<h3>Snel uw saldo controleren</h3><br>U kunt een aantal diensten van derden "
+"(zoals Facebook) gebruiken om snel te controleren of u een transactie hebt "
+"ontvangen, of om uw saldo te checken zonder uw portemonnee aan risico bloot "
+"te stellen. Heel handig wanneer u haast hebt en/of op een computer van een "
+"derde werkt"
+
+#: templates/website/index.html:244
+msgid ""
+"<h3>We provide presigned transactions</h3>In order to provide limits and two "
+"factor your funds are secured with both your key and ours. For ease of mind, "
+"presigned transaction are enabled (uses nlocktime) which means that each "
+"time your wallet has updates we will forward to you a presigned transaction "
+"unlocking the funds at a date in the future of your choice."
+msgstr ""
+"<h3>Wij bieden vooraf gesigneerde transacties</h3><br>Om opnamelimieten en "
+"dubbele verificatie te bieden worden uw fondsen beveiligd met zowel één "
+"sleutel van u als één van ons. Voor uw gemoedsrust kunnen vooraf gesigneerde "
+"transacties worden ingeschakeld (dit gebruikt nlocktime) wat betekent dat we "
+"u elke keer dat u mutaties in uw portemonnee hebt een vooraf gesigneerde "
+"transactie toezenden waarmee u de fondsen op een tijdstip in de toekomst van "
+"uw keuze kunt ontgrendelen."
+
+#: templates/website/index.html:250
+msgid ""
+"<h3>We use P2SH to make this all easy</h3>P2SH allows people you interact "
+"with to handle transactions to and from GreenAddress' wallets transparently."
+msgstr ""
+"<h3>We gebruiken P2SH om dit allemaal makkelijk te maken</h3><br>P2SH stelt "
+"mensen met wie u zaken doet in staat transacties van en naar portefeuilles "
+"van GreenAddress op transparante wijze te verwerken."
+
+#: templates/website/index.html:258
+msgid ""
+"<h3>We offer our second signature</h3>Which allows us to offer and enforce 2 "
+"factor authenticated payments and daily, weekly and monthly limits, rate "
+"limiting your transactions per hour, day,  week and month and make your "
+"payment instant by providing a double spend checks with GreenAddress!"
+msgstr ""
+"<h3>Wij bieden onze tweede handtekening</h3><br>Wat het ons mogelijk maakt "
+"betalingen met 2-factor autorisatie aan te bieden en te verifiëren. "
+"Dagelijkse, wekelijkse en maandelijkse limieten limiteren uw transacties per "
+"uur, dag, week en maand. Betaling zonder wachttijd worden mogelijk gemaakt "
+"door het verstrekken van een controle op dubbele uitgaven met GreenAddress!"
+
+#: templates/website/index.html:264
+msgid ""
+"<h3>Send money to anyone via SMS, Twitter, Facebook, etc</h3>If the user has "
+"an account at GreenAddress they will be immediately notified of the transfer "
+"which will be instantly added to their balance. If they don’t have an "
+"account they will receive a notification with a link to redeem the funds "
+"requiring a password (BIP0038) of your choice that you will be asked to "
+"notify them of via a second channel. The funds will always be in your "
+"control while not yet redeemed."
+msgstr ""
+"<h3>Stuur geld aan wie dan ook via SMS, Twitter, Facebook, enz</h3><br>Als "
+"de gebruiker een account heeft op GreenAddress zal deze meteen op de hoogte "
+"worden gesteld van de transactie die ook direct wordt toegevoegd aan hun "
+"saldo. Als hij nog geen account heeft, krijgt hij een melding met een link "
+"om door middel van een door u gekozen wachtwoord (BIP0038) het bedrag op te "
+"nemen. U zal gevraagd worden hen van het wachtwoord op de hoogte te stellen "
+"via een tweede communicatiekanaal. Het bedrag kan altijd door u worden "
+"opgenomen zolang het niet door de ontvanger is opgenomen."
+
+#: templates/website/faq.html:5
+msgid "FAQ for GreenAddress Bitcoin wallet"
+msgstr "FAQ for GreenAddress Bitcoin wallet"
+
+#: templates/website/faq.html:6
+msgid ""
+"GreenAddress FAQ: how to get a Bitcoin wallet? How secure are my bitcoins? "
+"Can I do instant payment?"
+msgstr ""
+"GreenAddress FAQ: how to get a Bitcoin wallet? How secure are my bitcoins? "
+"Can I do instant payment?"
+
+#: templates/website/faq.html:12
+msgid "Frequently Asked Questions"
+msgstr "Veelgestelde vragen"
+
+#: templates/website/faq.html:14
+msgid "What currency exchange sources do you support?"
+msgstr "What currency exchange sources do you support?"
+
+#: templates/website/faq.html:15
+msgid " and "
+msgstr " and "
+
+#: templates/website/faq.html:16
+msgid ""
+"Can I migrate easily from another wallet (like blockchain.info)?  Can I "
+"sweep private keys funds into my wallet?"
+msgstr ""
+"Kan ik gemakkelijk overstappen vanuit een andere portemonnee (zoals "
+"blockchain.info)? Kan ik privésleutels toevoegen aan mijn portemonnee?"
+
+#: templates/website/faq.html:17
+msgid ""
+"Yes and yes, you can, just have a look in the Receive Money tab, put your "
+"private key in the right field and client side the funds will be swept into "
+"your wallet. Voilà!"
+msgstr ""
+"Ja en ja, dat kan gewoon. Neem een kijkje in het tabblad \"Ontvang geld\", "
+"plaats uw privésleutel in het juiste veld en het geld zal worden toegevoegd "
+"aan uw portemonnee."
+
+#: templates/website/faq.html:19
+msgid "Can I try your service?  Do you have a testnet/UAT version?"
+msgstr ""
+"Kan ik deze dienst uitproberen? Is er een testnet/UAT versie beschikbaar?"
+
+#: templates/website/faq.html:20
+msgid "Yes and yes, you can try our testnet version on "
+msgstr "Ja en ja, je kunt onze testnet versie proberen op "
+
+#: templates/website/faq.html:20
+msgid " and you can find a testnet faucet on "
+msgstr " en je kunt een testnet bron vinden op "
+
+#: templates/website/faq.html:21
+msgid ""
+" Don't forget to send the testnet coins back to the faucet when you are done!"
+msgstr ""
+" Vergeet niet de testnet coins terug te sturen naar de bron wanneer u klaar "
+"bent!"
+
+#: templates/website/faq.html:24
+msgid "Do you support other platforms than a web page?"
+msgstr "Zijn er meer platforms ondersteunt dan een webpagina?"
+
+#: templates/website/faq.html:25
+msgid "Yes! You can download an Android app"
+msgstr "Ja! U kunt een Android app downloaden"
+
+#: templates/website/faq.html:25
+msgid "from the Google Play store"
+msgstr "via de Google Play Store"
+
+#: templates/website/faq.html:25
+msgid ", an iOS App"
+msgstr ", an iOS App"
+
+#: templates/website/faq.html:25
+msgid "from the iTunes Store "
+msgstr "from the iTunes Store "
+
+#: templates/website/faq.html:25
+msgid "and a Chrome packaged app"
+msgstr "en een Chrome applicatie"
+
+#: templates/website/faq.html:25
+msgid "from the Chrome Web Store"
+msgstr "uit de Chrome Web Store"
+
+#: templates/website/faq.html:25
+msgid "All apps are open source and you can "
+msgstr "All apps are open source and you can "
+
+#: templates/website/faq.html:25
+msgid "see the source code of each on GitHub"
+msgstr "de broncode van beide op GitHub bekijken"
+
+#: templates/website/faq.html:25
+msgid ""
+"It also uses <a href=\"http://electrum.org\">Electrum</a> servers for "
+"additional transaction verification, so it should be safe to use even if our "
+"servers are compromised."
+msgstr ""
+"Ze gebruiken ook <a href=\"http://electrum.org\">Electrum</a> servers voor "
+"extra transactie verificatie zodat het veilig zou moeten zijn, zelfs als "
+"onze servers gekraakt worden."
+
+#: templates/website/faq.html:28
+msgid "But what happens if your service goes away? Will I lose my coins?"
+msgstr ""
+"Maar wat gebeurt er als jullie dienst opgeheven wordt? Ben ik mijn coins dan "
+"kwijt?"
+
+#: templates/website/faq.html:30
+msgid ""
+"GreenAddress signs each transaction with its own key in addition to client-"
+"side signing by user's keys, and funds are stored in 2-of-2 multisignature "
+"outputs requiring both signatures to spend. The drawback of it is that you "
+"cannot control your funds without GreenAddress' signature, so you are right "
+"to worry that you can lose your coins."
+msgstr ""
+"GreenAddress signs each transaction with its own key in addition to client-"
+"side signing by user's keys, and funds are stored in 2-of-2 multisignature "
+"outputs requiring both signatures to spend. The drawback of it is that you "
+"cannot control your funds without GreenAddress' signature, so you are right "
+"to worry that you can lose your coins."
+
+#: templates/website/faq.html:32
+msgid ""
+"But! We have solved this issue by providing nLockTime transactions which "
+"essentially make deposits 'expire' after some time, which allows redeeming "
+"them without our intervention after this pre-set period of time. It is "
+"enabled by default when you have email notifications and two factor enabled."
+msgstr ""
+"Maar! We hebben dit probleem opgelost door het toevoegen van nLockTime "
+"transacties. Deze zorgen ervoor dat stortingen verlopen na een bepaalde "
+"tijd, wat ervoor zorgt dat u uw geld kunt verzenden na een vooraf ingestelde "
+"tijd. Deze functie wordt automatisch ingeschakeld als u e-mail meldingen en "
+"dubbele verificatie instelt."
+
+#: templates/website/faq.html:34
+msgid ""
+"This allows you to keep your ease of mind even in case GreenAddress "
+"disappears with its keys."
+msgstr ""
+"This allows you to keep your ease of mind even in case GreenAddress "
+"disappears with its keys."
+
+#: templates/website/faq.html:36
+msgid ""
+"It also means that every time the funds expire the user has to re-transfer "
+"them. This can be automated on login and notified in advance via email or "
+"manually done."
+msgstr ""
+"Dit betekent ook dat u uw geld opnieuw moet storten zodra de transactie is "
+"verlopen om optimale veiligheid te waarborgen. Dit kan automatisch worden "
+"gedaan bij het inloggen en van te voren gemeld worden via e-mail of u kunt "
+"er voor kiezen het handmatig uit te voeren."
+
+#: templates/website/faq.html:38
+msgid ""
+"For redeeming the funds after expiration, you can use a tool we've developed "
+"specifically for this purpose - see "
+msgstr ""
+"Voor het verzenden van geld nadat de transactie verlopen is hebben we een "
+"speciale tool gemaakt. Zie "
+
+#: templates/website/faq.html:38
+msgid "and"
+msgstr "en"
+
+#: templates/website/faq.html:38
+msgid "its project on GitHub"
+msgstr "zijn project op GitHub"
+
+#: templates/website/faq.html:38
+msgid "It's open source!"
+msgstr "Het is open source!"
+
+#: templates/website/faq.html:41
+msgid "How is your wallet better than the others out there?"
+msgstr "Waarom is deze portemonnee beter dan andere?"
+
+#: templates/website/faq.html:43
+msgid ""
+"For a simple high level comparison with a couple of web wallets please see "
+msgstr "Voor een eenvoudige vergelijking met andere web portemonnees zie "
+
+#: templates/website/faq.html:43
+msgid "this"
+msgstr "deze"
+
+#: templates/website/faq.html:43
+msgid "table"
+msgstr "tabel"
+
+#: templates/website/faq.html:44
+msgid "We offer all the advantages of a web wallet:"
+msgstr "Wij bieden alle voordelen van een web portemonnee:"
+
+#: templates/website/faq.html:46
+msgid "Ubiquitously available"
+msgstr "Overal beschikbaar"
+
+#: templates/website/faq.html:47
+msgid "Social/email/SMS integration"
+msgstr "Social media/e-mail/SMS integratie"
+
+#: templates/website/faq.html:48
+#: templates/wallet/partials/wallet_settings.html:313
+msgid "Two factor authentication"
+msgstr "Dubbele verificatie"
+
+#: templates/website/faq.html:49
+msgid "Transaction limits/restrictions"
+msgstr "Transactie limieten/beperkingen"
+
+#: templates/website/faq.html:50
+msgid "Green address instant transaction confirmation"
+msgstr "Green adress onmiddellijke transactie verificatie"
+
+#: templates/website/faq.html:52
+msgid "And the advantages of a local software wallet like "
+msgstr "En de voordelen van een lokale software portemonnee zoals "
+
+#: templates/website/faq.html:54
+msgid "Mnemonic seed backup once and forget"
+msgstr "Backup de mnemonic seed eenmalig"
+
+#: templates/website/faq.html:55
+msgid "Your private keys are never stored on our servers, not even encrypted"
+msgstr ""
+"Uw privésleutels worden nooit op onze servers opgeslagen, zelfs niet "
+"versleuteld"
+
+#: templates/website/faq.html:56
+msgid "No lost time synchronizing the client with the full Bitcoin blockchain"
+msgstr ""
+"U verliest geen tijd met het synchroniseren van de volledige Bitcoin "
+"blockchain"
+
+#: templates/website/faq.html:58
+msgid ""
+"Simply put, we offer the best web wallet available: We include more features "
+"and security safeguards than the competition with a simple interface through "
+"your browser or phone."
+msgstr ""
+"Simpel gezegd, wij bieden de beste web portemonnee beschikbaar. Wij hebben "
+"meer functies en veiligheidsmaatregelen dan de concurrentie met een simpele "
+"interface voor uw browser of smartphone."
+
+#: templates/website/faq.html:61
+msgid "Where are my Bitcoin keys stored?"
+msgstr "Waar worden mijn Bitcoin sleutels opgeslagen?"
+
+#: templates/website/faq.html:62
+msgid ""
+"Your keys are not stored. They are derived from your mnemonic passphrase and "
+"never sent to the server."
+msgstr ""
+"Uw sleutels worden niet opgeslagen. Ze worden samengesteld vanuit uw "
+"mnemonic passphrase en nooit naar onze server verzonden."
+
+#: templates/website/faq.html:64
+msgid "How does the PIN work?"
+msgstr "Hoe werkt de pincode?"
+
+#: templates/website/faq.html:65
+msgid ""
+"A random password (256 AES) is created and used to encrypt your mnemonics "
+"and store them on your device in encrypted form. The random password is sent "
+"server side and destroyed on the client. When during login the user provides "
+"the right PIN a mechanism will ask the server for the password which is used "
+"to decrypt the mnemnonic passphrase stored on your device and get you in "
+"your wallet. If the PIN is provided wrong for 3 times in a row the password "
+"is then deleted from our servers."
+msgstr ""
+"Een willekeurig wachtwoord wordt aangemaakt en gebruikt om uw mnemonics te "
+"versleutelen en op te slaan op uw apparaat. Dit willekeurig wachtwoord wordt "
+"hierna verwijdert van uw apparaat. Als u tijdens het inloggen de juiste "
+"pincode invoert wordt dit wachtwoord opgevraagd aan de server, welke daarna "
+"gebruikt wordt om uw mnemnonic die op uw apparaat staat te ontsleutelen en "
+"in uw portemonnee te komen. Als de pincode driemaal in een rij verkeer wordt "
+"ingevoerd wordt het wachtwoord verwijdert van onze servers."
+
+#: templates/website/faq.html:68
+msgid ""
+"When are you going to offer feature XYZ? I would like to access my wallet in "
+"my language, can you add it?"
+msgstr ""
+"Wanneer voegen jullie functie X toe? Ik zou graag mijn portemonnee willen "
+"bekijken in mijn eigen taal, kunnen jullie deze toevoegen?"
+
+#: templates/website/faq.html:70
+msgid ""
+"We are constantly looking for feedback from our users, if you want to "
+"provide some feedback or get involved feel free to PM on reddit (/u/BitFast) "
+"or send us an email at "
+msgstr ""
+"We are constantly looking for feedback from our users, if you want to "
+"provide some feedback or get involved feel free to PM on reddit (/u/BitFast) "
+"or send us an email at "
+
+#: templates/website/faq.html:71
+msgid ""
+"We have many features and language support for many languages in the "
+"pipeline, please check with us if you want to be kept up to date with "
+"development and please be patient :)"
+msgstr ""
+"We hebben veel nieuwe functies en vertalingen in de planning staan. Neem "
+"contact met ons op als u op de hoogte gehouden wilt worden en wees "
+"alstublieft geduldig :)"
+
+#: templates/website/faq.html:72
+msgid ""
+"If you want to help with translation see them <a target=\"_blank_\" href="
+"\"http://translate.greenaddress.it\">here</a> and pull requests are welcome "
+"on <a href=\"https://github.com/greenaddress\" target=\"_blank\">GitHub</a>!"
+msgstr ""
+"If you want to help with translation see them <a target=\"_blank_\" href="
+"\"http://translate.greenaddress.it\">here</a> and pull requests are welcome "
+"on <a href=\"https://github.com/greenaddress\" target=\"_blank\">GitHub</a>!"
+
+#: templates/website/faq.html:74
+msgid "Do you have a donate button for linking to users payment URLs?"
+msgstr ""
+"Hebben jullie een donatie knop voor het linken naar het publieke adres van "
+"gebruikers?"
+
+#: templates/website/faq.html:76
+msgid "Sure have a look below (let us know if you have created one!)."
+msgstr ""
+"Zeker weten! Neem hieronder een kijkje en laat het ons weten als u een eigen "
+"versie gemaakt hebt!"
+
+#: templates/website/faq.html:80
+msgid "What exactly is an 'instant greenaddress transaction'?"
+msgstr "Wat precies is een \"onmiddellijke greenaddress transactie\"?"
+
+#: templates/website/faq.html:81
+msgid ""
+"Your transactions are protected by both your signature and by a signature we "
+"apply when we get your permission via two factor. With this protection, "
+"comes the fact that people receiving Bitcoin from you can trust the funds "
+"instantly as we provide a 'special' signature to your transaction when you "
+"require instant confirmation."
+msgstr ""
+"Uw transacties worden beschermd door zowel uw handtekening als door een "
+"handtekening die we toepassen wanneer we uw toestemming via dubbele "
+"verificatie krijgen. Door deze bescherming kunnen mensen die uw bitcoins "
+"ontvangen onmiddellijk vertrouwen dat deze transactie geldig is omdat onze "
+"\"speciale\" handtekening is gebruikt."
+
+#: templates/website/faq.html:84
+msgid "What about cookies?"
+msgstr "Waarom cookies?"
+
+#: templates/website/faq.html:86
+msgid ""
+"To enable GreenAddress to recognize your device and to provide features to "
+"you, we use cookies. Cookies are unique identifiers that we transfer to your "
+"device to enable our services to recognize your device and to provide "
+"features such as providing you with protection from Cross-site request "
+"forgery and display the site in the language you have selected or to not "
+"show you the EU cookie compliance info banner."
+msgstr ""
+"Om te zorgen dat GreenAddress uw apparaat herkend en u functies kunt "
+"aanbieden gebruiken we cookies. Cookies zijn unieke id's die we naar uw "
+"apparaat versturen zodat onze dienst uw apparaat herkent en om te zorgen dat "
+"de website altijd in uw taal wordt weergegeven. Ook wordt onthouden dat u "
+"akkoord bent gegaan met cookies zodat u de melding met betrekking tot "
+"cookies maar een keer hoeft te accepteren."
+
+#: templates/website/faq.html:91
+msgid ""
+"Yes! You can see our <a href=\"http://api.greenaddress.it/\">API "
+"documentation at GitHub Pages</a>."
+msgstr ""
+"Yes! You can see our <a href=\"http://api.greenaddress.it/\">API "
+"documentation at GitHub Pages</a>."
+
+#: templates/website/redeem.html:6
+msgid "Redeem funds"
+msgstr "Geld opnemen"
+
+#: templates/website/redeem.html:9
+#: templates/wallet/partials/signuplogin/header_redeem.html:2
+msgid "You've received"
+msgstr "U hebt ontvangen"
+
+#: templates/website/support.html:5
+msgid "Support and contacts for GreenAddress Bitcoin wallet"
+msgstr "Support and contacts for GreenAddress Bitcoin wallet"
+
+#: templates/website/support.html:6
+msgid ""
+"GreenAddress contacts details. We are here to listen to your suggestions for "
+"a better and safer Bitcoin online wallet."
+msgstr ""
+"GreenAddress contacts details. We are here to listen to your suggestions for "
+"a better and safer Bitcoin online wallet."
+
+#: templates/website/support.html:22
+msgid "For any issue, you can email us at"
+msgstr "Mocht u nog vragen hebben dan kunt u ons e-mailen op"
+
+#: templates/website/support.html:24
+msgid "Or call us on"
+msgstr "Of bel ons op het volgende nummer"
+
+#: templates/website/support.html:26
+msgid "Nine to five (GMT + 1:00) Monday to Friday."
+msgstr "Negen tot vijf (GMT + 1:00) maandag tot en met vrijdag."
+
+#: templates/website/support.html:27
+msgid ""
+"Please leave a message if in out of hours or if we are unable to take your "
+"call."
+msgstr ""
+"Laat een bericht achter buiten kantooruren of als we telefonisch "
+"onbereikbaar zijn."
+
+#: templates/website/support.html:34 templates/website/about.html:25
+msgid "Check us out on"
+msgstr "Volg ons op"
+
+#: templates/website/tos.html:5
+#: templates/wallet/partials/signup_1_trezor.html:31
+#: templates/wallet/partials/signup_1_init.html:44
+#: templates/wallet/partials/signup_1_init.html:46
+#: templates/wallet/partials/signup_1_init.html:48
+msgid "Terms of Service"
+msgstr "Algemene gebruikersvoorwaarden"
+
+#: templates/website/instant.html:7
+msgid "Verify instant transaction"
+msgstr "Verify instant transaction"
+
+#: templates/website/instant.html:25
+msgid "Verify a GreenAddress instant confirmation!"
+msgstr "Verify a GreenAddress instant confirmation!"
+
+#: templates/website/instant.html:25
+msgid "Please provide transaction details below"
+msgstr "Please provide transaction details below"
+
+#: templates/website/instant.html:27 templates/website/instant.html:32
+msgid "Transaction hash"
+msgstr "Transaction hash"
+
+#: templates/website/instant.html:38
+msgid "Recipient verification signature"
+msgstr "Recipient verification signature"
+
+#: templates/website/instant.html:39
+msgid "Please sign the following message"
+msgstr "Please sign the following message"
+
+#: templates/website/instant.html:39
+msgid ""
+"You can either provide the signature yourself (recommended), <strong>or</"
+"strong>, if your client doesn't support signing messages, paste your private "
+"key in WIF format. The key will be used in your browser only to sign the "
+"message."
+msgstr ""
+"You can either provide the signature yourself (recommended), <strong>or</"
+"strong>, if your client doesn't support signing messages, paste your private "
+"key in WIF format. The key will be used in your browser only to sign the "
+"message."
+
+#: templates/website/instant.html:43
+msgid "Signature"
+msgstr "Signature"
+
+#: templates/website/instant.html:46
+msgid "or"
+msgstr "of"
+
+#: templates/website/instant.html:49
+msgid "WIF Private Key"
+msgstr "WIF Private Key"
+
+#: templates/website/instant.html:55
+msgid "Error"
+msgstr "Error"
+
+#: templates/website/instant.html:58
+msgid "Verify transaction"
+msgstr "Verify transaction"
+
+#: templates/website/instant.html:64
+msgid "Verification successful!"
+msgstr "Verification successful!"
+
+#: templates/website/instant.html:64
+msgid "is covered by GreenAddress instant confirmation."
+msgstr "is covered by GreenAddress instant confirmation."
+
+#: templates/website/instant.html:67
+msgid "Verification failed!"
+msgstr "Verification failed!"
+
+#: templates/website/instant.html:67
+msgid "is not covered by GreenAddress instant confirmation."
+msgstr "is not covered by GreenAddress instant confirmation."
+
+#: templates/website/instant.html:70
+msgid "Try again"
+msgstr "Try again"
+
+#: templates/website/pay.html:6
+msgid "Send funds"
+msgstr "Verstuur geld"
+
+#: templates/website/pay.html:9
+msgid "Please send"
+msgstr "Verstuur alstublieft"
+
+#: templates/website/privacy.html:5
+msgid "Privacy Policy"
+msgstr "Privacy Policy"
+
+#: templates/website/about.html:5 templates/website/about.html:11
+#: templates/base/base.html:149
+msgid "About us"
+msgstr "Over ons"
+
+#: templates/website/about.html:43
+#, fuzzy
+msgid "Founder & CEO"
+msgstr "Oprichter"
+
+#: templates/website/about.html:53
+msgid "Full Stack Developer"
+msgstr "Ontwikkelaar"
+
+#: templates/website/about.html:61
+msgid "Careers"
+msgstr "Careers"
+
+#: templates/base/base.html:4
+msgid "Welcome!"
+msgstr "Welkom!"
+
+#: templates/base/base.html:6
+msgid "The safer Bitcoin wallet that puts you in control."
+msgstr "De veiligere Bitcoin portemonnee waarbij u de touwtjes in handen hebt."
+
+#: templates/base/base.html:102
+msgid "Toggle navigation"
+msgstr "Navigatie aan/uit"
+
+#: templates/base/base.html:111
+msgid "Blog"
+msgstr "Blog"
+
+#: templates/base/base.html:112 templates/wallet/nav.html:20
+msgid "FAQ"
+msgstr "Veelgestelde vragen"
+
+#: templates/base/base.html:113 templates/wallet/nav.html:20
+msgid "Support"
+msgstr "Ondersteuning"
+
+#: templates/base/base.html:114
+msgid "Login"
+msgstr "Log in"
+
+#: templates/wallet/nav.html:4
+#: templates/wallet/partials/wallet_transactions.html:4
+msgid "Transactions"
+msgstr "Transacties"
+
+#: templates/wallet/nav.html:5 templates/wallet/partials/wallet_send.html:4
+#: templates/wallet/partials/wallet_send.html:183
+msgid "Send Money"
+msgstr "Geld overmaken"
+
+#: templates/wallet/nav.html:6 templates/wallet/partials/wallet_receive.html:4
+msgid "Receive Money"
+msgstr "Geld ontvangen"
+
+#: templates/wallet/nav.html:7
+#: templates/wallet/partials/wallet_address_book.html:4
+msgid "Address Book"
+msgstr "Adresboek"
+
+#: templates/wallet/nav.html:8
+msgid "Settings"
+msgstr "Instellingen"
+
+#: templates/wallet/nav.html:10
+#, fuzzy
+msgid "General"
+msgstr "General Settings"
+
+#: templates/wallet/nav.html:11
+#: templates/wallet/partials/wallet_settings.html:104
+msgid "Security"
+msgstr "Security"
+
+#: templates/wallet/nav.html:12
+#: templates/wallet/partials/wallet_settings.html:581
+#, fuzzy
+msgid "Accounts"
+msgstr "Account toevoegen"
+
+#: templates/wallet/nav.html:14
+msgid "Update now"
+msgstr "Nu bijwerken"
+
+#: templates/wallet/nav.html:15
+#: templates/wallet/partials/wallet_modal_logout_other_session.html:10
+#: templates/wallet/partials/wallet_modal_logout.html:11
+msgid "Logout"
+msgstr "Uitloggen"
+
+#: templates/wallet/nav.html:23
+msgid "Last login"
+msgstr "Laatste login"
+
+#: templates/wallet/nav.html:26
+msgid "country"
+msgstr "land"
+
+#: templates/wallet/nav.html:27
+msgid "unknown country"
+msgstr "onbekend land"
+
+#: templates/wallet/wallet.html:47 templates/wallet/wallet.html:48
+msgid "WARNING"
+msgstr "WARNING"
+
+#: templates/wallet/wallet.html:47
+msgid ""
+"You have no two factor authentication set up. Please set it up in <a href="
+"\"#/settings\">settings</a>."
+msgstr ""
+"You have no two factor authentication set up. Please set it up in <a href="
+"\"#/settings\">settings</a>."
+
+#: templates/wallet/wallet.html:49
+msgid "You have not verified that you have backed up your mnemonic."
+msgstr "You have not verified that you have backed up your mnemonic."
+
+#: templates/wallet/wallet.html:50
+msgid "Please verify now by clicking here."
+msgstr "Please verify now by clicking here."
+
+#: templates/wallet/partials/wallet_transactions_table.html:1
+msgid "New transactions! Sort by descending date to see them."
+msgstr "New transactions! Sort by descending date to see them."
+
+#: templates/wallet/partials/wallet_transactions_table.html:2
+msgid "Newly confirmed transactions! Sort by descending date to see them."
+msgstr "Newly confirmed transactions! Sort by descending date to see them."
+
+#: templates/wallet/partials/wallet_transactions_table.html:3
+msgid ""
+"Verification in progress - some transactions can be marked as unverified "
+"until it's finished. Verification status:"
+msgstr ""
+
+#: templates/wallet/partials/wallet_transactions_table.html:4
+msgid "block headers parsed"
+msgstr ""
+
+#: templates/wallet/partials/wallet_transactions_table.html:5
+msgid "Parsing block headers..."
+msgstr ""
+
+#: templates/wallet/partials/wallet_transactions_table.html:6
+#, fuzzy
+msgid "transactions left to verify"
+msgstr "transacties"
+
+#: templates/wallet/partials/wallet_transactions_table.html:12
+msgid "Date"
+msgstr "Datum"
+
+#: templates/wallet/partials/wallet_transactions_table.html:13
+#: templates/wallet/partials/wallet_modal_tx_redeem.html:14
+msgid "Description"
+msgstr "Beschrijving"
+
+#: templates/wallet/partials/wallet_transactions_table.html:22
+#: templates/wallet/partials/wallet_address_book.html:29
+msgid "Export to CSV"
+msgstr "Exporteren naar CSV"
+
+#: templates/wallet/partials/wallet_transactions_table.html:35
+msgid "instant GreenAddress confirmation"
+msgstr "instant GreenAddress confirmation"
+
+#: templates/wallet/partials/wallet_transactions_table.html:37
+msgid "unverified"
+msgstr ""
+
+#: templates/wallet/partials/wallet_transactions_table.html:39
+msgid "double spend"
+msgstr "double spend"
+
+#: templates/wallet/partials/wallet_transactions_table.html:40
+msgid "unconfirmed"
+msgstr "onbevestigde"
+
+#: templates/wallet/partials/wallet_transactions_table.html:41
+msgid "confirmations"
+msgstr "bevestigingen"
+
+#: templates/wallet/partials/wallet_transactions_table.html:44
+msgid "take funds back"
+msgstr "Neem bedrag terug"
+
+#: templates/wallet/partials/wallet_transactions_table.html:47
+msgid "Regenerate voucher"
+msgstr "Regenerate voucher"
+
+#: templates/wallet/partials/wallet_transactions_table.html:50
+msgid "Regenerate encrypted voucher"
+msgstr "Regenerate encrypted voucher"
+
+#: templates/wallet/partials/wallet_transactions_table.html:64
+#, fuzzy
+msgid "Loading transactions, please wait..."
+msgstr "Logging in, please wait..."
+
+#: templates/wallet/partials/wallet_transactions_table.html:67
+msgid "No transactions found..."
+msgstr "Geen transacties gevonden..."
+
+#: templates/wallet/partials/wallet_transactions_table.html:70
+msgid "Show more transactions..."
+msgstr "Show more transactions..."
+
+#: templates/wallet/partials/wallet_send.html:12
+#, fuzzy
+msgid "From account"
+msgstr "Account toevoegen"
+
+#: templates/wallet/partials/wallet_send.html:14
+#: templates/wallet/partials/wallet_transactions.html:41
+#: templates/wallet/partials/wallet_receive.html:15
+msgid "Main"
+msgstr ""
+
+#: templates/wallet/partials/wallet_send.html:20
+msgid "Voucher Text (optional)"
+msgstr "Voucher Text (optional)"
+
+#: templates/wallet/partials/wallet_send.html:21
+msgid "Recipient"
+msgstr "Ontvanger"
+
+#: templates/wallet/partials/wallet_send.html:24
+msgid "Enter any clear text message that will appear on the voucher"
+msgstr "Enter any clear text message that will appear on the voucher"
+
+#: templates/wallet/partials/wallet_send.html:35
+msgid "Enter recipient's bitcoin address, email or  Facebook account name"
+msgstr "Geef bitcoin adres, e-mail of Facebook accountnaam van de ontvanger"
+
+#: templates/wallet/partials/wallet_send.html:41
+msgid "Paste"
+msgstr "Paste"
+
+#: templates/wallet/partials/wallet_send.html:49
+#: templates/wallet/partials/wallet_send.html:214
+#: templates/wallet/partials/wallet_address_book.html:45
+#: templates/wallet/partials/wallet_receive.html:97
+#: templates/wallet/partials/signuplogin/base.html:36
+msgid "Scan QR"
+msgstr "Scan QR-code"
+
+#: templates/wallet/partials/wallet_send.html:52
+#: templates/wallet/partials/wallet_modal_reset_email.html:10
+#: templates/wallet/partials/wallet_2fa.html:102
+#: templates/wallet/partials/wallet_2fa.html:144
+#: templates/wallet/partials/wallet_2fa.html:186
+#: templates/wallet/partials/wallet_modal_tx_limits.html:40
+#: templates/wallet/partials/wallet_modal_custom_login.html:25
+#: templates/wallet/partials/wallet_modal_remove_account.html:6
+#: templates/wallet/partials/wallet_modal_tx_limits_fiat_warning.html:8
+#: templates/wallet/partials/wallet_modal_trezor_word.html:23
+#: templates/wallet/partials/wallet_modal_logout_other_session.html:9
+#: templates/wallet/partials/wallet_modal_tx_redeem.html:24
+#: templates/wallet/partials/wallet_modal_btchip_pin.html:22
+#: templates/wallet/partials/wallet_modal_logout.html:10
+#: templates/wallet/partials/wallet_address_book.html:48
+#: templates/wallet/partials/wallet_modal_2fa.html:31
+#: templates/wallet/partials/wallet_modal_pin.html:22
+#: templates/wallet/partials/wallet_modal_usb_device.html:5
+#: templates/wallet/partials/wallet_modal_btchip_fup.html:10
+#: templates/wallet/partials/wallet_receive.html:100
+#: templates/wallet/partials/wallet_modal_verify_mnemonic.html:18
+#: templates/wallet/partials/wallet_modal_no_electrum.html:10
+#: templates/wallet/partials/wallet_settings.html:346
+#: templates/wallet/partials/wallet_settings.html:386
+#: templates/wallet/partials/wallet_settings.html:426
+#: templates/wallet/partials/signuplogin/base.html:39
+#: templates/wallet/partials/signuplogin/modal_decryption_password.html:23
+#: templates/wallet/partials/signuplogin/modal_encryption_password.html:33
+#: templates/wallet/partials/signuplogin/redeem_password_modal.html:23
+msgid "Cancel"
+msgstr "Annuleren"
+
+#: templates/wallet/partials/wallet_send.html:67
+msgid "Create a voucher instead of sending to a recipient"
+msgstr "Create a voucher instead of sending to a recipient"
+
+#: templates/wallet/partials/wallet_send.html:73
+msgid "Encryption passphrase"
+msgstr "Wachtwoord voor versleuteling"
+
+#: templates/wallet/partials/wallet_send.html:76
+#: templates/wallet/partials/wallet_modal_tx_limits.html:11
+#: templates/wallet/partials/wallet_settings.html:274
+#: templates/wallet/partials/wallet_settings.html:488
+#: templates/wallet/partials/wallet_settings.html:511
+msgid "NOTE"
+msgstr "OPMERKING"
+
+#: templates/wallet/partials/wallet_send.html:76
+msgid ""
+"The receiving private key will not be encrypted unless you provide a "
+"passphrase. Unencrypted private keys are prone to eavesdropping!"
+msgstr ""
+"The receiving private key will not be encrypted unless you provide a "
+"passphrase. Unencrypted private keys are prone to eavesdropping!"
+
+#: templates/wallet/partials/wallet_send.html:81
+#: templates/wallet/partials/wallet_modal_tx_limits.html:18
+#: templates/wallet/partials/wallet_modal_tx_limits.html:20
+#: templates/wallet/partials/wallet_modal_tx_limits.html:28
+#: templates/wallet/partials/wallet_modal_tx_limits.html:30
+#: templates/wallet/partials/wallet_modal_tx_limits.html:31
+#: templates/wallet/partials/wallet_modal_tx_redeem.html:17
+#: templates/wallet/partials/wallet_modal_tx_details.html:56
+#: templates/wallet/partials/wallet_modal_tx_details.html:68
+#: templates/wallet/partials/wallet_receive.html:20
+#: templates/wallet/partials/wallet_settings.html:554
+msgid "Amount"
+msgstr "Bedrag"
+
+#: templates/wallet/partials/wallet_send.html:112
+#: templates/wallet/partials/wallet_send.html:155
+#: templates/wallet/partials/wallet_modal_tx_details.html:36
+msgid "Fee"
+msgstr "Transactiekosten"
+
+#: templates/wallet/partials/wallet_send.html:132
+msgid "per kB"
+msgstr ""
+
+#: templates/wallet/partials/wallet_send.html:155
+msgid "will be added to the amount"
+msgstr "will be added to the amount"
+
+#: templates/wallet/partials/wallet_send.html:156
+msgid "Rate is"
+msgstr ""
+
+#: templates/wallet/partials/wallet_send.html:164
+msgid "Requires recipient to trust GreenAddress instant confirmations"
+msgstr "Requires recipient to trust GreenAddress instant confirmations"
+
+#: templates/wallet/partials/wallet_send.html:166
+msgid "Instant Confirmation"
+msgstr "Instant Confirmation"
+
+#: templates/wallet/partials/wallet_send.html:172
+#: templates/wallet/partials/wallet_modal_tx_details.html:16
+msgid "Memo"
+msgstr ""
+
+#: templates/wallet/partials/wallet_send.html:176
+msgid "You can enter a memo to store in your transactions list"
+msgstr ""
+
+#: templates/wallet/partials/wallet_send.html:185
+msgid "Verifying"
+msgstr "Verifying"
+
+#: templates/wallet/partials/wallet_send.html:186
+msgid "Signing"
+msgstr "Signing"
+
+#: templates/wallet/partials/wallet_send.html:187
+msgid "Create a Voucher"
+msgstr "Create a Voucher"
+
+#: templates/wallet/partials/wallet_send.html:190
+#: templates/wallet/partials/wallet_receive.html:123
+msgid "Show advanced options"
+msgstr ""
+
+#: templates/wallet/partials/wallet_send.html:205
+msgid "calculating"
+msgstr "berekenen"
+
+#: templates/wallet/partials/wallet_modal_reset_email.html:4
+msgid ""
+"This email is already used by a different account. Do you want to unlink it "
+"from that account?"
+msgstr ""
+
+#: templates/wallet/partials/wallet_modal_reset_email.html:5
+msgid "Warning"
+msgstr ""
+
+#: templates/wallet/partials/wallet_modal_reset_email.html:5
+msgid ""
+"This can disable two factor authentication if you have no other 2FA method "
+"set up in that account."
+msgstr ""
+
+#: templates/wallet/partials/wallet_modal_reset_email.html:11
+#: templates/wallet/partials/wallet_modal_custom_login.html:26
+#: templates/wallet/partials/wallet_modal_tx_limits_fiat_warning.html:9
+#: templates/wallet/partials/wallet_modal_trezor_word.html:24
+#: templates/wallet/partials/wallet_modal_tx_redeem.html:25
+#: templates/wallet/partials/wallet_modal_2fa.html:32
+msgid "OK"
+msgstr "OK"
+
+#: templates/wallet/partials/wallet_modal_my_addresses.html:3
+msgid "No addresses found"
+msgstr "Er zijn geen adressen gevonden"
+
+#: templates/wallet/partials/wallet_modal_my_addresses.html:5
+#: templates/wallet/partials/wallet_modal_tx_details.html:56
+#: templates/wallet/partials/wallet_modal_tx_details.html:68
+#: templates/wallet/partials/wallet_address_book.html:22
+#: templates/wallet/partials/wallet_receive.html:65
+msgid "Address"
+msgstr "Adres"
+
+#: templates/wallet/partials/wallet_modal_my_addresses.html:5
+msgid "number of transactions"
+msgstr "aantal transacties"
+
+#: templates/wallet/partials/wallet_modal_my_addresses.html:17
+#, fuzzy
+msgid "Show more addresses"
+msgstr "Toon eerder gegenereerde adressen"
+
+#: templates/wallet/partials/wallet_modal_my_addresses.html:22
+#: templates/wallet/partials/wallet_modal_expiring_soon.html:20
+#: templates/wallet/partials/wallet_modal_tx_details.html:78
+#: templates/wallet/partials/wallet_modal_gauth_qr.html:11
+#: templates/wallet/partials/signup_qr_modal.html:7
+#: templates/wallet/partials/wallet_modal_mnemonic.html:19
+#: templates/wallet/partials/wallet_transactions.html:49
+#: templates/wallet/partials/wallet_transactions.html:59
+#: templates/wallet/partials/signup_nfc_modal.html:16
+#: templates/wallet/partials/wallet_modal_btchip_setup.html:25
+#: templates/wallet/partials/wallet_modal_url_qr.html:6
+#: templates/wallet/partials/wallet_modal_voucher.html:13
+msgid "Close"
+msgstr "Sluiten"
+
+#: templates/wallet/partials/wallet_2fa.html:13
+#: templates/wallet/partials/wallet_settings.html:399
+msgid "Phone"
+msgstr "Telefoon"
+
+#: templates/wallet/partials/wallet_2fa.html:19
+msgid "Google Authenticator is enabled."
+msgstr "Google Authenticator is ingeschakeld."
+
+#: templates/wallet/partials/wallet_2fa.html:24
+msgid "Install app"
+msgstr "Installeer app"
+
+#: templates/wallet/partials/wallet_2fa.html:26
+msgid "Install the app on your device. For Android at "
+msgstr "De app op uw apparaat installeren. Voor Android op "
+
+#: templates/wallet/partials/wallet_2fa.html:26
+msgid " while for iOS at "
+msgstr " terwijl voor iOS op "
+
+#: templates/wallet/partials/wallet_2fa.html:30
+msgid "Add account"
+msgstr "Account toevoegen"
+
+#: templates/wallet/partials/wallet_2fa.html:32
+msgid ""
+"Add an account to the Google Authenticator App and scan the QR code or "
+"manually enter exact code."
+msgstr ""
+"Voeg een account toe aan de Google Authenticator App en scan de QR code of "
+"voer de exacte code handmatig in."
+
+#: templates/wallet/partials/wallet_2fa.html:33
+#: templates/wallet/partials/wallet_receive.html:60
+#: templates/wallet/partials/wallet_receive.html:83
+#: templates/wallet/partials/signup_1_init.html:52
+#: templates/wallet/partials/wallet_settings.html:338
+#: templates/wallet/partials/signuplogin/header_pay.html:32
+msgid "Show QR Code"
+msgstr "QR-code weergeven"
+
+#: templates/wallet/partials/wallet_2fa.html:37
+msgid "Confirm code"
+msgstr "Bevestig code"
+
+#: templates/wallet/partials/wallet_2fa.html:39
+msgid ""
+"Google Authenticator will now show a number which in order to complete the "
+"two factor setup you need to enter below."
+msgstr ""
+"Op de Google Authenticator verschijnt nu een getal dat u hieronder moet "
+"invoeren om het instellen van de dubbele verificatie te voltooien."
+
+#: templates/wallet/partials/wallet_2fa.html:48
+msgid "Authenticator code"
+msgstr "Authenticator code"
+
+#: templates/wallet/partials/wallet_2fa.html:53
+#: templates/wallet/partials/wallet_2fa.html:100
+#: templates/wallet/partials/wallet_2fa.html:142
+#: templates/wallet/partials/wallet_2fa.html:184
+#: templates/wallet/partials/wallet_settings.html:132
+#: templates/wallet/partials/wallet_settings.html:344
+#: templates/wallet/partials/wallet_settings.html:384
+#: templates/wallet/partials/wallet_settings.html:424
+msgid "Please enter received code"
+msgstr "Voer ontvangen code in"
+
+#: templates/wallet/partials/wallet_2fa.html:55
+#: templates/wallet/partials/wallet_2fa.html:81
+#: templates/wallet/partials/wallet_2fa.html:102
+#: templates/wallet/partials/wallet_2fa.html:124
+#: templates/wallet/partials/wallet_2fa.html:144
+#: templates/wallet/partials/wallet_2fa.html:166
+#: templates/wallet/partials/wallet_2fa.html:186
+#: templates/wallet/partials/wallet_settings.html:346
+#: templates/wallet/partials/wallet_settings.html:370
+#: templates/wallet/partials/wallet_settings.html:386
+#: templates/wallet/partials/wallet_settings.html:410
+#: templates/wallet/partials/wallet_settings.html:426
+msgid "Enable"
+msgstr "Inschakelen"
+
+#: templates/wallet/partials/wallet_2fa.html:68
+msgid "Email two factor authentication is enabled."
+msgstr "Dubbele verificatie via e-mail is ingeschakeld."
+
+#: templates/wallet/partials/wallet_2fa.html:74
+#: templates/wallet/partials/wallet_settings.html:117
+msgid "Your email address"
+msgstr "Uw e-mailadres"
+
+#: templates/wallet/partials/wallet_2fa.html:79
+msgid "Please enter your email"
+msgstr "Voer uw e-mailadres in"
+
+#: templates/wallet/partials/wallet_2fa.html:90
+msgid ""
+"You need to provide one code from your email to set up the two factor "
+"authentication.<br>                Please open your email and provide the "
+"code."
+msgstr ""
+"U dient een code uit uw e-mail in te voeren om dubbele verificatie in te "
+"stellen.<br>Gelieve uw e-mail te openen en de code in te voeren."
+
+#: templates/wallet/partials/wallet_2fa.html:95
+#: templates/wallet/partials/wallet_settings.html:127
+msgid "Email code"
+msgstr "E-mail code"
+
+#: templates/wallet/partials/wallet_2fa.html:113
+msgid "SMS two factor authentication is enabled."
+msgstr "Dubbele verificatie via SMS is ingeschakeld."
+
+#: templates/wallet/partials/wallet_2fa.html:118
+#: templates/wallet/partials/wallet_2fa.html:160
+#: templates/wallet/partials/wallet_settings.html:363
+#: templates/wallet/partials/wallet_settings.html:403
+msgid "Your phone number"
+msgstr "Uw telefoonnummer"
+
+#: templates/wallet/partials/wallet_2fa.html:122
+#: templates/wallet/partials/wallet_2fa.html:164
+#: templates/wallet/partials/wallet_settings.html:368
+#: templates/wallet/partials/wallet_settings.html:408
+msgid "+NN... Please enter your phone"
+msgstr "Voer uw telefoonnummer inclusief landnummer in (+31 voor Nederland)"
+
+#: templates/wallet/partials/wallet_2fa.html:132
+msgid ""
+"You need to provide one SMS code to set up the two factor authentication."
+"<br>                Please check your phone and provide the code."
+msgstr ""
+"U dient een SMS code in te voeren om dubbele verificatie in te stellen."
+"<br>Gelieve uw SMS te lezen en de code in te voeren."
+
+#: templates/wallet/partials/wallet_2fa.html:137
+#: templates/wallet/partials/wallet_settings.html:379
+msgid "SMS code"
+msgstr "SMS code"
+
+#: templates/wallet/partials/wallet_2fa.html:155
+msgid "Phone call two factor authentication is enabled."
+msgstr "Dubbele verificatie via telefoon is ingeschakeld."
+
+#: templates/wallet/partials/wallet_2fa.html:174
+msgid ""
+"You need to provide one code to set up the two factor authentication."
+"<br>                Please check your phone and provide the code."
+msgstr ""
+"U dient een SMS code in te voeren om dubbele verificatie in te stellen."
+"<br>Gelieve uw SMS te lezen en de code in te voeren."
+
+#: templates/wallet/partials/wallet_2fa.html:179
+#: templates/wallet/partials/wallet_settings.html:419
+msgid "Phone code"
+msgstr "Telefoon code"
+
+#: templates/wallet/partials/wallet_modal_tx_limits.html:9
+#: templates/wallet/partials/wallet_settings.html:510
+msgid "(current currency)"
+msgstr "(current currency)"
+
+#: templates/wallet/partials/wallet_modal_tx_limits.html:11
+#: templates/wallet/partials/wallet_settings.html:511
+msgid ""
+"Using currency values for limits assumes you can trust your pricing source "
+"to provide correct values."
+msgstr ""
+"Using currency values for limits assumes you can trust your pricing source "
+"to provide correct values."
+
+#: templates/wallet/partials/wallet_modal_tx_limits.html:33
+#: templates/wallet/partials/wallet_settings.html:524
+msgid ""
+"This limit will be decreased with each transaction and you will need to "
+"\"refill\" it manually by changing this value."
+msgstr ""
+"This limit will be decreased with each transaction and you will need to "
+"\"refill\" it manually by changing this value."
+
+#: templates/wallet/partials/wallet_modal_tx_limits.html:41
+#: templates/wallet/partials/wallet_modal_tx_details.html:24
+#: templates/wallet/partials/wallet_settings.html:118
+#: templates/wallet/partials/wallet_settings.html:447
+#: templates/wallet/partials/wallet_settings.html:619
+#: templates/wallet/partials/wallet_settings.html:665
+msgid "Save"
+msgstr "Save"
+
+#: templates/wallet/partials/wallet_modal_custom_login.html:4
+msgid "Please provide username and password."
+msgstr "Geef uw gebruikersnaam en wachtwoord."
+
+#: templates/wallet/partials/wallet_modal_custom_login.html:8
+msgid "Enter your username"
+msgstr "Vul uw gebruikersnaam in"
+
+#: templates/wallet/partials/wallet_modal_custom_login.html:14
+msgid "Enter your password"
+msgstr "Voer uw wachtwoord in"
+
+#: templates/wallet/partials/wallet_modal_expiring_soon.html:2
+msgid "Outputs expiring soon"
+msgstr "Outputs die binnenkort verstrijken"
+
+#: templates/wallet/partials/wallet_modal_expiring_soon.html:7
+msgid "No active nLockTime transactions found"
+msgstr "Geen actieve nLockTime transacties gevonden"
+
+#: templates/wallet/partials/wallet_modal_expiring_soon.html:9
+msgid "Transaction hash, output number"
+msgstr "Transactie hash, nummer van de output"
+
+#: templates/wallet/partials/wallet_modal_expiring_soon.html:9
+#: templates/wallet/partials/wallet_settings.html:473
+msgid "nLockTime"
+msgstr "nLockTime"
+
+#: templates/wallet/partials/wallet_modal_redeposit.html:4
+msgid "Please re-deposit your funds"
+msgstr "Please re-deposit your funds"
+
+#: templates/wallet/partials/wallet_modal_redeposit.html:7
+msgid ""
+"You have some expired deposits. Unless you re-deposit or redeem them, no "
+"transactions will be allowed"
+msgstr ""
+"U hebt een aantal verlopen stortingen. Tenzij u ze opnieuw stort of ze "
+"opneemt, zullen geen transacties worden toegestaan"
+
+#: templates/wallet/partials/wallet_modal_redeposit.html:10
+msgid ""
+"Warning: single transactions can be used to correlate funds with your "
+"identity, including funds between different accounts."
+msgstr ""
+
+#: templates/wallet/partials/wallet_modal_redeposit.html:11
+msgid "Redeposit as single transaction (cheaper)"
+msgstr "Opnieuw storten als één transactie (goedkoper)"
+
+#: templates/wallet/partials/wallet_modal_redeposit.html:12
+#: templates/wallet/partials/wallet_modal_redeposit.html:15
+#: templates/wallet/partials/wallet_modal_redeposit.html:21
+msgid "estimated fee"
+msgstr "geschatte transactiekosten"
+
+#: templates/wallet/partials/wallet_modal_redeposit.html:14
+msgid "Redeposit as one transaction per output (better privacy)"
+msgstr "Opnieuw storten als één transactie per output (betere privacy)"
+
+#: templates/wallet/partials/wallet_modal_redeposit.html:16
+msgid "transactions"
+msgstr "transacties"
+
+#: templates/wallet/partials/wallet_modal_redeposit.html:20
+msgid "Redeposit"
+msgstr "Redeposit"
+
+#: templates/wallet/partials/wallet_modal_redeposit.html:22
+msgid "transaction"
+msgstr "transaction"
+
+#: templates/wallet/partials/wallet_fiat_price.html:3
+msgid "min"
+msgstr ""
+
+#: templates/wallet/partials/wallet_fiat_price.html:3
+msgid "mins"
+msgstr ""
+
+#: templates/wallet/partials/wallet_fiat_price.html:3
+msgid "sec"
+msgstr ""
+
+#: templates/wallet/partials/wallet_fiat_price.html:3
+msgid "secs"
+msgstr ""
+
+#: templates/wallet/partials/wallet_fiat_price.html:4
+msgid "ago"
+msgstr ""
+
+#: templates/wallet/partials/wallet_fiat_price.html:7
+msgid "just updated"
+msgstr ""
+
+#: templates/wallet/partials/wallet_modal_remove_account.html:2
+msgid ""
+"Are you sure you want to permanently remove your wallet and all associated "
+"data from our servers?"
+msgstr ""
+"Are you sure you want to permanently remove your wallet and all associated "
+"data from our servers?"
+
+#: templates/wallet/partials/wallet_modal_remove_account.html:5
+msgid "Remove my account"
+msgstr "Remove my account"
+
+#: templates/wallet/partials/wallet_modal_tx_limits_fiat_warning.html:2
+msgid "Confirm changing the pricing source"
+msgstr "Confirm changing the pricing source"
+
+#: templates/wallet/partials/wallet_modal_tx_limits_fiat_warning.html:5
+msgid ""
+"Changing the pricing source while using it for transaction limits will "
+"result in resetting the limits to 0. Do you want to proceed?"
+msgstr ""
+"Changing the pricing source while using it for transaction limits will "
+"result in resetting the limits to 0. Do you want to proceed?"
+
+#: templates/wallet/partials/wallet_modal_trezor_word.html:4
+msgid ""
+"TREZOR requires manual passing of words from computer to the device. Please "
+"enter a word provided, or choose mnemonic word index requested by TREZOR:"
+msgstr ""
+
+#: templates/wallet/partials/wallet_modal_trezor_word.html:8
+#, fuzzy
+msgid "Enter word:"
+msgstr "Voer het wachtwoord in"
+
+#: templates/wallet/partials/wallet_modal_trezor_word.html:15
+msgid "Or click word number to automatically send to TREZOR:"
+msgstr ""
+
+#: templates/wallet/partials/browser_unsupported.html:6
+#: templates/wallet/partials/browser_unsupported.html:10
+msgid "We are sorry, but your browser is not supported."
+msgstr "Het spijt ons, maar uw browser wordt niet ondersteund."
+
+#: templates/wallet/partials/browser_unsupported.html:11
+msgid ""
+"Please try a modern browser like Chrome, Firefox, Safari or our Android, iOS "
+"or F-Droid app!"
+msgstr ""
+"Please try a modern browser like Chrome, Firefox, Safari or our Android, iOS "
+"or F-Droid app!"
+
+#: templates/wallet/partials/wallet_modal_logout_other_session.html:4
+msgid "You are already logged in. Do you want to log out the other session?"
+msgstr "U bent reeds ingelogd. Wilt u de andere sessie afmelden?"
+
+#: templates/wallet/partials/concurrent_login.html:6
+msgid "You were logged out."
+msgstr "U bent uitgelogd."
+
+#: templates/wallet/partials/concurrent_login.html:11
+msgid ""
+"          You have logged in elsewhere.<br>          <small>If it was not "
+"you, please contact <strong>immediately</strong>        "
+msgstr ""
+"          You have logged in elsewhere.<br>          <small>If it was not "
+"you, please contact <strong>immediately</strong>        "
+
+#: templates/wallet/partials/concurrent_login.html:16
+#: templates/wallet/partials/concurrent_login.html:18
+#: templates/wallet/partials/concurrent_login.html:20
+msgid "support"
+msgstr "support"
+
+#: templates/wallet/partials/concurrent_login.html:24
+msgid "Go back to login"
+msgstr "Terug naar het inlogscherm"
+
+#: templates/wallet/partials/wallet_modal_tx_redeem.html:2
+msgid "Take funds back"
+msgstr "Take funds back"
+
+#: templates/wallet/partials/wallet_modal_tx_redeem.html:6
+msgid "Do you want to take funds back from the following transaction?"
+msgstr "Do you want to take funds back from the following transaction?"
+
+#: templates/wallet/partials/wallet_modal_tx_redeem.html:8
+#: templates/wallet/partials/wallet_modal_tx_details.html:7
+msgid "Timestamp"
+msgstr "Tijdsstempel"
+
+#: templates/wallet/partials/wallet_modal_tx_redeem.html:11
+#: templates/wallet/partials/wallet_modal_tx_details.html:10
+msgid "Hash"
+msgstr "Hash"
+
+#: templates/wallet/partials/wallet_modal_tx_details.html:2
+msgid "Transaction details"
+msgstr "Transactiedetails"
+
+#: templates/wallet/partials/wallet_modal_tx_details.html:10
+msgid "(verified)"
+msgstr ""
+
+#: templates/wallet/partials/wallet_modal_tx_details.html:13
+#, fuzzy
+msgid "Verification failure reason"
+msgstr "Verification failed!"
+
+#: templates/wallet/partials/wallet_modal_tx_details.html:31
+#, fuzzy
+msgid "Add"
+msgstr "Adres"
+
+#: templates/wallet/partials/wallet_modal_tx_details.html:32
+msgid "Edit"
+msgstr ""
+
+#: templates/wallet/partials/wallet_modal_tx_details.html:39
+msgid "Raw transaction"
+msgstr "Raw transaction"
+
+#: templates/wallet/partials/wallet_modal_tx_details.html:42
+msgid "Double spend by txhash"
+msgstr "Double spend by txhash"
+
+#: templates/wallet/partials/wallet_modal_tx_details.html:45
+msgid "Payment request"
+msgstr "Payment request"
+
+#: templates/wallet/partials/wallet_modal_tx_details.html:47
+msgid "download"
+msgstr "download"
+
+#: templates/wallet/partials/wallet_modal_tx_details.html:53
+msgid "Inputs"
+msgstr "Inputs"
+
+#: templates/wallet/partials/wallet_modal_tx_details.html:54
+msgid ""
+"The inputs below are only the first 10 inputs of this transaction. To see "
+"all of them, use a block explorer."
+msgstr ""
+
+#: templates/wallet/partials/wallet_modal_tx_details.html:65
+msgid "Outputs"
+msgstr "Outputs"
+
+#: templates/wallet/partials/wallet_modal_tx_details.html:66
+msgid ""
+"The outputs below are only the first 10 outputs of this transaction. To see "
+"all of them, use a block explorer."
+msgstr ""
+
+#: templates/wallet/partials/wallet_modal_btchip_pin.html:4
+msgid "Please enter BTChip PIN."
+msgstr "Please enter BTChip PIN."
+
+#: templates/wallet/partials/wallet_modal_btchip_pin.html:8
+#: templates/wallet/partials/wallet_modal_pin.html:8
+#: templates/wallet/partials/signuplogin/base.html:18
+msgid "Enter your PIN"
+msgstr "Voer uw pincode in"
+
+#: templates/wallet/partials/wallet_modal_btchip_pin.html:14
+msgid "PIN must be a 4-to-32-digit number"
+msgstr "PIN must be a 4-to-32-digit number"
+
+#: templates/wallet/partials/wallet_modal_btchip_pin.html:23
+#: templates/wallet/partials/wallet_modal_pin.html:23
+msgid "Confirm PIN number"
+msgstr "PIN-code bevestigen"
+
+#: templates/wallet/partials/wallet_modal_gauth_qr.html:2
+msgid "The QR code for Google Authenticator access to your wallet is:"
+msgstr ""
+"De QR code voor toegang tot uw portemonnee met Google Authenticator is:"
+
+#: templates/wallet/partials/wallet_modal_gauth_qr.html:4
+msgid "You can also copy the code manually:"
+msgstr "U kunt de code ook handmatig kopiëren:"
+
+#: templates/wallet/partials/wallet_modal_gauth_qr.html:9
+#: templates/wallet/partials/wallet_receive.html:58
+#: templates/wallet/partials/wallet_receive.html:81
+msgid "Copy to clipboard"
+msgstr "Copy to clipboard"
+
+#: templates/wallet/partials/signup_qr_modal.html:2
+#: templates/wallet/partials/wallet_modal_mnemonic.html:2
+msgid "The QR code containing the passphrase to access your wallet is:"
+msgstr "The QR code containing the passphrase to access your wallet is:"
+
+#: templates/wallet/partials/signup_qr_modal.html:4
+#: templates/wallet/partials/wallet_modal_mnemonic.html:6
+msgid "Remember to store it in a safe place!"
+msgstr "Vergeet niet het op een veilige plek te bewaren!"
+
+#: templates/wallet/partials/signup_4_oauth.html:7
+#: templates/wallet/partials/signup_3_pin.html:7
+#: templates/wallet/partials/signup_2_2factor.html:7
+#: templates/wallet/partials/signup_1_trezor.html:13
+#: templates/wallet/partials/signup_1_init.html:13
+msgid "Step"
+msgstr "Stap"
+
+#: templates/wallet/partials/signup_4_oauth.html:7
+#: templates/wallet/partials/signup_3_pin.html:7
+#: templates/wallet/partials/signup_2_2factor.html:7
+#: templates/wallet/partials/signup_1_trezor.html:13
+#: templates/wallet/partials/signup_1_init.html:13
+msgid "of"
+msgstr "van"
+
+#: templates/wallet/partials/signup_4_oauth.html:14
+msgid "Pay or get paid by social networks"
+msgstr "Verstuur of ontvang betalingen via sociale netwerken"
+
+#: templates/wallet/partials/signup_4_oauth.html:14
+msgid "Grant access to your wallet in watch-only mode"
+msgstr "Verleen toegang tot uw portemonnee in de alleen-kijken-modus"
+
+#: templates/wallet/partials/signup_4_oauth.html:23
+#: templates/wallet/partials/wallet_settings.html:212
+#: templates/wallet/partials/signuplogin/base.html:73
+msgid "Custom Login"
+msgstr "Aangepaste Login"
+
+#: templates/wallet/partials/signup_4_oauth.html:26
+msgid ""
+"If you like you can access your Wallet in Watch-Only mode via simple login. "
+"When you login in this way you access a completely separate \"area\" of your "
+"wallet, in no way it can be compromised and payments cannot be made"
+msgstr ""
+"Als u wilt, kunt u bij uw portemonnee in alleen-kijken-modus via een "
+"versimpelde inlogprocedure. Als u op deze wijze inlogt, komt in in a "
+"volledig afgeschermde \"zone\" van uw portemonnee, deze kan onmogelijk "
+"worden gecompromitteerd en er kunnen geen betalingen mee worden gedaan"
+
+#: templates/wallet/partials/signup_4_oauth.html:29
+msgid ""
+"Plus use your email or your Facebook name to receive payments! No more long "
+"and complicated addresses to remember and communicate. That means that you "
+"can easily login in 'watch-only mode' safely from any wi-fi, on the go or "
+"even at Starbucks!"
+msgstr ""
+"En gebruik uw e-mail of uw Facebook naam om betalingen te ontvangen! Geen "
+"lange en ingewikkelde adressen meer om te onthouden en te communiceren. Dat "
+"betekent dat u gemakkelijk veilig kunt inloggen in alleen-kijken-modus vanaf "
+"wi-fi, onderweg of zelfs bij Starbucks!"
+
+#: templates/wallet/partials/signup_4_oauth.html:35
+msgid "Take me to my wallet!"
+msgstr "Laat mijn portemonnee zien!"
+
+#: templates/wallet/partials/signup_4_oauth.html:36
+msgid "Processing..."
+msgstr "Verwerken..."
+
+#: templates/wallet/partials/wallet_modal_mnemonic.html:3
+#, fuzzy
+msgid ""
+"The QR code containing the passphrase for recovery access to your subaccount "
+"is:"
+msgstr "The QR code containing the passphrase to access your wallet is:"
+
+#: templates/wallet/partials/wallet_modal_mnemonic.html:5
+msgid ""
+"This passphrase is encrypted, so your encryption password is required to use "
+"it."
+msgstr ""
+"This passphrase is encrypted, so your encryption password is required to use "
+"it."
+
+#: templates/wallet/partials/wallet_modal_mnemonic.html:7
+msgid ""
+"The subaccount mnemonic is not stored anywhere neither by GreenAddress, nor "
+"by your browser, so you *HAVE* to back it up to have a recovery access to "
+"your 2of3 subaccount."
+msgstr ""
+
+#: templates/wallet/partials/wallet_modal_mnemonic.html:9
+#: templates/wallet/partials/signup_1_init.html:24
+msgid "Your mnemonic passphrase"
+msgstr "Uw wachtwoord om te onthouden"
+
+#: templates/wallet/partials/wallet_modal_mnemonic.html:12
+#, fuzzy
+msgid "Your subaccount recovery mnemonic passphrase"
+msgstr "Uw wachtwoord om te onthouden"
+
+#: templates/wallet/partials/wallet_modal_mnemonic.html:15
+msgid "Your subaccount GreenAddress xpub"
+msgstr ""
+
+#: templates/wallet/partials/signup_3_pin.html:14
+msgid "Fast and secure access to your Wallet"
+msgstr "Snelle en veilige toegang tot uw portemonnee"
+
+#: templates/wallet/partials/signup_3_pin.html:14
+msgid "To have a secure but quick access from this device set your PIN"
+msgstr ""
+"Voor veilige, maar snelle toegang vanaf dit apparaat kunt u een pincode "
+"instellen"
+
+#: templates/wallet/partials/signup_3_pin.html:18
+#: templates/wallet/partials/wallet_settings.html:176
+msgid "PIN number"
+msgstr "PIN-code"
+
+#: templates/wallet/partials/signup_3_pin.html:22
+#: templates/wallet/partials/wallet_settings.html:164
+msgid "4-15 digits number"
+msgstr "4-15 digits number"
+
+#: templates/wallet/partials/signup_3_pin.html:29
+msgid ""
+"Access by PIN allows a quick login while keeping security to a high "
+"standard.                    The PIN secures a random AES 256 bit password "
+"which we will delete if 3 PIN attempts                    fail, forcing you "
+"to provide your full mnemonics once again. Easy, convenient and secure, so "
+"let's use it!"
+msgstr ""
+"Met toegang door PIN kunt u snel inloggen terwijl de beveiliging hoog "
+"blijft. De PIN-code beveiligt een willekeurig gekozen AES 256 bit wachtwoord "
+"dat wij zullen wissen als 3 PIN pogingen achter elkaar mislukken, waardoor u "
+"uw volledige wachtwoord nogmaals zult moeten invoeren. Gemakkelijk, handig "
+"en veilig, dus gebruik het vooral!"
+
+#: templates/wallet/partials/signup_3_pin.html:37
+#: templates/wallet/partials/signup_2_2factor.html:24
+#: templates/wallet/partials/wallet_modal_btchip_setup.html:14
+msgid "Generating your wallet keys, please wait"
+msgstr "Sleutels van uw portemonnee genereren, een moment geduld a.u.b."
+
+#: templates/wallet/partials/signup_3_pin.html:40
+#: templates/wallet/partials/signup_2_2factor.html:27
+msgid "Please wait, logging in..."
+msgstr "Een moment geduld a.u.b., inloggen..."
+
+#: templates/wallet/partials/signup_3_pin.html:43
+msgid "Take me to my wallet and skip all this!"
+msgstr "Breng me naar mijn portemonnee en sla dit alles over!"
+
+#: templates/wallet/partials/signup_3_pin.html:46
+msgid "PIN set, ready for step 3"
+msgstr "PIN ingesteld, klaar voor stap 3"
+
+#: templates/wallet/partials/signup_3_pin.html:47
+msgid "Setting PIN..."
+msgstr "PIN-code instellen..."
+
+#: templates/wallet/partials/signup_3_pin.html:50
+msgid "Skip PIN setup and continue"
+msgstr "PIN instellen overslaan en doorgaan met"
+
+#: templates/wallet/partials/wallet_modal_logout.html:5
+msgid "Do you want to log out?"
+msgstr "Wilt u uitloggen?"
+
+#: templates/wallet/partials/signup_2_2factor.html:14
+msgid "Don't compromise on security"
+msgstr "Neem geen genoegen met gereduceerde veiligheid"
+
+#: templates/wallet/partials/signup_2_2factor.html:14
+msgid "Set up two factor authentication"
+msgstr "Dubbele verificatie instellen"
+
+#: templates/wallet/partials/signup_2_2factor.html:16
+msgid "Please wait while we log you into your new wallet..."
+msgstr "Please wait while we log you into your new wallet..."
+
+#: templates/wallet/partials/signup_2_2factor.html:18
+msgid ""
+"We require you to set up two factor authentication, this will make your "
+"wallet much more secure and will let you some additional features such as "
+"Spending Limits and Delayed Payments."
+msgstr ""
+"We require you to set up two factor authentication, this will make your "
+"wallet much more secure and will let you some additional features such as "
+"Spending Limits and Delayed Payments."
+
+#: templates/wallet/partials/signup_2_2factor.html:19
+msgid ""
+"To issue a transaction you will not only need to login to your wallet but "
+"also confirm it with a code sent to you via email, SMS or google "
+"authenticator as per your choice."
+msgstr ""
+"To issue a transaction you will not only need to login to your wallet but "
+"also confirm it with a code sent to you via email, SMS or google "
+"authenticator as per your choice."
+
+#: templates/wallet/partials/signup_2_2factor.html:30
+#: templates/wallet/partials/signup_2_2factor.html:33
+#: templates/wallet/partials/signup_1_trezor.html:34
+#: templates/wallet/partials/signup_1_init.html:64
+#: templates/wallet/partials/wallet_modal_no_electrum.html:11
+msgid "Continue"
+msgstr "Doorgaan"
+
+#: templates/wallet/partials/signup_1_trezor.html:7
+#: templates/wallet/partials/signup_1_init.html:7
+msgid "Already got an account?"
+msgstr "Heeft u al een account?"
+
+#: templates/wallet/partials/signup_1_trezor.html:9
+#: templates/wallet/partials/signup_1_trezor.html:11
+#: templates/wallet/partials/signup_1_init.html:9
+#: templates/wallet/partials/signup_1_init.html:11
+#: templates/wallet/partials/signuplogin/trezor.html:18
+msgid "Login to your Wallet"
+msgstr "Log in op uw portemonnee"
+
+#: templates/wallet/partials/signup_1_trezor.html:20
+msgid "Connect Trezor to create a GreenAddress wallet"
+msgstr "Connect Trezor to create a GreenAddress wallet"
+
+#: templates/wallet/partials/signup_1_trezor.html:21
+msgid "This 3-step account setup will fully secure it against intruders"
+msgstr "This 3-step account setup will fully secure it against intruders"
+
+#: templates/wallet/partials/signup_1_trezor.html:24
+#: templates/wallet/partials/signuplogin/trezor.html:12
+msgid "Please connect your Trezor device"
+msgstr "Please connect your Trezor device"
+
+#: templates/wallet/partials/signup_1_trezor.html:25
+#: templates/wallet/partials/signuplogin/trezor.html:13
+msgid "Trezor detected."
+msgstr "Trezor detected."
+
+#: templates/wallet/partials/signup_1_trezor.html:26
+#: templates/wallet/partials/signuplogin/trezor.html:14
+msgid "Please confirm the signature on your Trezor device."
+msgstr "Please confirm the signature on your Trezor device."
+
+#: templates/wallet/partials/signup_1_trezor.html:31
+msgid "I agree with the "
+msgstr "I agree with the "
+
+#: templates/wallet/partials/signup_1_trezor.html:39
+#: templates/wallet/partials/signup_1_init.html:69
+msgid "Error: "
+msgstr "Fout: "
+
+#: templates/wallet/partials/signup_1_trezor.html:39
+#: templates/wallet/partials/signup_1_init.html:69
+msgid " Click to try again"
+msgstr " Klik om het nog eens te proberen"
+
+#: templates/wallet/partials/signup_1_trezor.html:51
+#: templates/wallet/partials/signup_1_init.html:81
+msgid "The passphrase to access your wallet is:"
+msgstr "De passphrase voor toegang tot uw portemonnee is:"
+
+#: templates/wallet/partials/signup_1_trezor.html:54
+#: templates/wallet/partials/signup_1_init.html:85
+msgid "Store this page in a safe place"
+msgstr "Bewaar deze pagina op een veilige plek"
+
+#: templates/wallet/partials/wallet_address_book.html:12
+msgid "Add new entry"
+msgstr "Nieuwe item toevoegen"
+
+#: templates/wallet/partials/wallet_address_book.html:21
+#: templates/wallet/partials/wallet_settings.html:605
+#: templates/wallet/partials/wallet_settings.html:651
+msgid "Name"
+msgstr "Naam"
+
+#: templates/wallet/partials/wallet_address_book.html:62
+msgid "Your address book is empty"
+msgstr "Uw adresboek is leeg"
+
+#: templates/wallet/partials/wallet_modal_2fa.html:6
+msgid "You must provide 2 factor authentication code to perform this action"
+msgstr ""
+"U dient een 2-factor-authenticatiecode in te geven om deze actie uit te "
+"voeren"
+
+#: templates/wallet/partials/wallet_modal_2fa.html:9
+msgid "Please select authentication method"
+msgstr "Kies een authenticatiemethode"
+
+#: templates/wallet/partials/wallet_modal_2fa.html:15
+msgid "Please enter your "
+msgstr "Geef a.u.b. uw "
+
+#: templates/wallet/partials/wallet_modal_2fa.html:15
+msgid " authentication code which we have just sent to you."
+msgstr " verificatiecode die we net naar u hebben gestuurd."
+
+#: templates/wallet/partials/wallet_modal_2fa.html:18
+msgid "Please enter the "
+msgstr "Geef a.u.b. in "
+
+#: templates/wallet/partials/wallet_modal_2fa.html:18
+msgid " code"
+msgstr " code"
+
+#: templates/wallet/partials/wallet_modal_pin.html:4
+msgid ""
+"You can create a 4-digit personal identification number used to retrieve the "
+"password encrypting the mnemonic passphrase."
+msgstr ""
+"U kunt een 4-cijferige pincode aanmaken om het wachtwoord op te halen "
+"waarmee het te onthouden wachtwoord wordt versleuteld."
+
+#: templates/wallet/partials/wallet_modal_pin.html:14
+msgid "PIN must be a 4-digit number"
+msgstr "PIN moet een 4-cijferig getal zijn"
+
+#: templates/wallet/partials/wallet_transactions.html:14
+#: templates/wallet/partials/wallet_transactions.html:27
+msgid "Year"
+msgstr "Jaar"
+
+#: templates/wallet/partials/wallet_transactions.html:15
+#: templates/wallet/partials/wallet_transactions.html:28
+msgid "Month"
+msgstr "Maand"
+
+#: templates/wallet/partials/wallet_transactions.html:16
+#: templates/wallet/partials/wallet_transactions.html:29
+msgid "Week"
+msgstr "Week"
+
+#: templates/wallet/partials/wallet_transactions.html:39
+msgid "Your last transactions"
+msgstr "Uw meest recente transacties"
+
+#: templates/wallet/partials/wallet_transactions.html:49
+msgid "From date"
+msgstr "From date"
+
+#: templates/wallet/partials/wallet_transactions.html:59
+msgid "To date"
+msgstr "To date"
+
+#: templates/wallet/partials/wallet_transactions.html:67
+msgid "Search"
+msgstr "Search"
+
+#: templates/wallet/partials/wallet_modal_usb_device.html:2
+msgid "Please connect/reconnect your wallet USB device to proceed."
+msgstr "Please connect/reconnect your wallet USB device to proceed."
+
+#: templates/wallet/partials/signup_0_warning.html:8
+msgid ""
+"For improved security continue the registration via our desktop or mobile "
+"apps"
+msgstr ""
+"For improved security continue the registration via our desktop or mobile "
+"apps"
+
+#: templates/wallet/partials/signup_0_warning.html:9
+msgid "Locally installed apps are generally more secure than websites"
+msgstr "Locally installed apps are generally more secure than websites"
+
+#: templates/wallet/partials/signup_0_warning.html:12
+msgid ""
+"These apps are designed to protect you and your coins even in case the "
+"service is compromised and should be preferred over using the browser."
+msgstr ""
+"These apps are designed to protect you and your coins even in case the "
+"service is compromised and should be preferred over using the browser."
+
+#: templates/wallet/partials/signup_0_warning.html:13
+msgid ""
+"Web access is intended to be used for watch only mode or if you have no "
+"alternative, like on the Windows Mobile platform."
+msgstr ""
+"Web access is intended to be used for watch only mode or if you have no "
+"alternative, like on the Windows Mobile platform."
+
+#: templates/wallet/partials/signup_0_warning.html:16
+msgid ""
+"Please see the link to Google Play store, Chrome Web Store or AppStore below"
+msgstr ""
+"Please see the link to Google Play store, Chrome Web Store or AppStore below"
+
+#: templates/wallet/partials/signup_0_warning.html:26
+msgid "Continue using web page"
+msgstr "Continue using web page"
+
+#: templates/wallet/partials/signup_nfc_modal.html:2
+msgid "There was a problem writing to the NFC tag:"
+msgstr "Er is een probleem opgetreden tijdens het schrijven naar de NFC tag:"
+
+#: templates/wallet/partials/signup_nfc_modal.html:5
+msgid "Initialising NFC tags listener..."
+msgstr "NFC tag lezer initialiseren..."
+
+#: templates/wallet/partials/signup_nfc_modal.html:8
+msgid "Please hold your tag(s) close to the device to write your wallet!"
+msgstr ""
+"Gelieve uw tag(s) tegen het apparaat te houden om uw portemonnee weg te "
+"schrijven!"
+
+#: templates/wallet/partials/signup_nfc_modal.html:9
+msgid "Tags written:"
+msgstr "Tags geschreven:"
+
+#: templates/wallet/partials/signup_nfc_modal.html:10
+msgid "Tags formatted:"
+msgstr "Tags geformatteerd:"
+
+#: templates/wallet/partials/signup_nfc_modal.html:13
+msgid ""
+"Your NFC is not enabled or not available. If available, please enable it in "
+"settings"
+msgstr ""
+"Your NFC is not enabled or not available. If available, please enable it in "
+"settings"
+
+#: templates/wallet/partials/wallet_modal_btchip_fup.html:5
+#, fuzzy
+msgid "Do you want to upgrade firmware now?"
+msgstr "Wilt u uitloggen?"
+
+#: templates/wallet/partials/wallet_modal_btchip_fup.html:11
+msgid "Upgrade"
+msgstr ""
+
+#: templates/wallet/partials/wallet_modal_btchip_fup.html:17
+msgid "Close the firmware upgrade window"
+msgstr ""
+
+#: templates/wallet/partials/wallet_modal_btchip_setup.html:3
+msgid ""
+"Your BTChip is already set up. To use it with GreenAddress, you need to "
+"reset it. Do you want to reset your BTChip? This will be performed by "
+"entering wrong PIN 3 times in a row. <strong>You will lose your keys "
+"currently stored on the device.</strong>"
+msgstr ""
+"Your BTChip is already set up. To use it with GreenAddress, you need to "
+"reset it. Do you want to reset your BTChip? This will be performed by "
+"entering wrong PIN 3 times in a row. <strong>You will lose your keys "
+"currently stored on the device.</strong>"
+
+#: templates/wallet/partials/wallet_modal_btchip_setup.html:4
+msgid "Reset my BTChip"
+msgstr "Reset my BTChip"
+
+#: templates/wallet/partials/wallet_modal_btchip_setup.html:5
+msgid "Resetting..."
+msgstr "Resetting..."
+
+#: templates/wallet/partials/wallet_modal_btchip_setup.html:6
+msgid "Please unplug and plug your device in again"
+msgstr "Please unplug and plug your device in again"
+
+#: templates/wallet/partials/wallet_modal_btchip_setup.html:6
+msgid "wrong PINs remaining"
+msgstr "wrong PINs remaining"
+
+#: templates/wallet/partials/wallet_modal_btchip_setup.html:9
+msgid ""
+"Empty BTChip detected successfully. Click the button below to store your "
+"seed on it."
+msgstr ""
+"Empty BTChip detected successfully. Click the button below to store your "
+"seed on it."
+
+#: templates/wallet/partials/wallet_modal_btchip_setup.html:10
+#, fuzzy
+msgid ""
+"Empty BTChip detected successfully. Click the button below to set it up."
+msgstr ""
+"Empty BTChip detected successfully. Click the button below to store your "
+"seed on it."
+
+#: templates/wallet/partials/wallet_modal_btchip_setup.html:11
+msgid "Save to BTChip"
+msgstr "Save to BTChip"
+
+#: templates/wallet/partials/wallet_modal_btchip_setup.html:12
+#, fuzzy
+msgid "Set up BTChip"
+msgstr "Save to BTChip"
+
+#: templates/wallet/partials/wallet_modal_btchip_setup.html:18
+#: templates/wallet/partials/wallet_modal_btchip_setup.html:21
+msgid "BTChip setup successful!"
+msgstr "BTChip setup successful!"
+
+#: templates/wallet/partials/wallet_modal_btchip_setup.html:19
+msgid ""
+"Please unplug your BTChip and plug it into a secure device supporting USB "
+"keyboards to read the seed backup."
+msgstr ""
+
+#: templates/wallet/partials/wallet_modal_btchip_setup.html:20
+msgid ""
+"On the second device remember to first open a text editor or a similar "
+"application where the seed will be typed in by BTChip."
+msgstr ""
+
+#: templates/wallet/partials/wallet_receive.html:13
+#, fuzzy
+msgid "Account"
+msgstr "Account toevoegen"
+
+#: templates/wallet/partials/wallet_receive.html:50
+msgid "Bitcoin URI"
+msgstr "Bitcoin URI"
+
+#: templates/wallet/partials/wallet_receive.html:56
+msgid "Show URI and address"
+msgstr "URI en adres weergeven"
+
+#: templates/wallet/partials/wallet_receive.html:74
+msgid "Permanent Payment URL"
+msgstr "Permanente betalings-URL"
+
+#: templates/wallet/partials/wallet_receive.html:90
+msgid "Private key in WIF or BIP38 format"
+msgstr "Private key in WIF or BIP38 format"
+
+#: templates/wallet/partials/wallet_receive.html:94
+msgid "Enter a private key to sweep here"
+msgstr "Privesleutel om te leeg te vegen invoeren"
+
+#: templates/wallet/partials/wallet_receive.html:103
+msgid "Sweep"
+msgstr "Leegvegen"
+
+#: templates/wallet/partials/wallet_receive.html:120
+msgid "Show previously generated addresses"
+msgstr "Toon eerder gegenereerde adressen"
+
+#: templates/wallet/partials/wallet_modal_verify_mnemonic.html:4
+msgid ""
+"Please enter the following words from your <strong>unencrypted</strong> "
+"mnemonic:"
+msgstr ""
+"Please enter the following words from your <strong>unencrypted</strong> "
+"mnemonic:"
+
+#: templates/wallet/partials/wallet_modal_verify_mnemonic.html:8
+msgid "Word #"
+msgstr "Word #"
+
+#: templates/wallet/partials/wallet_modal_verify_mnemonic.html:19
+msgid "Verify"
+msgstr "Verify"
+
+#: templates/wallet/partials/signup_1_init.html:20
+msgid "You are now the proud owner of a bitcoin wallet"
+msgstr "U bent nu de trotse eigenaar van een bitcoinportemonnee"
+
+#: templates/wallet/partials/signup_1_init.html:21
+msgid ""
+"Please finish this 4-step account setup to fully secure it against intruders"
+msgstr ""
+"Gelieve de volgende 4-stapsprocedure te voltooien om uw account maximaal te "
+"beveiligen tegen indringers"
+
+#: templates/wallet/partials/signup_1_init.html:25
+msgid "Your <strong>encrypted</strong> mnemonic passphrase"
+msgstr "Your <strong>encrypted</strong> mnemonic passphrase"
+
+#: templates/wallet/partials/signup_1_init.html:29
+#, fuzzy
+msgid "Click to use hardware wallet seed instead"
+msgstr "Write to a hardware wallet"
+
+#: templates/wallet/partials/signup_1_init.html:32
+msgid "Generating mnemonic, please wait..."
+msgstr "Genereren van wachtwoord, even geduld..."
+
+#: templates/wallet/partials/signup_1_init.html:37
+msgid ""
+"Please write down these words and store them in a safe place as they can't "
+"be recovered."
+msgstr ""
+"Gelieve deze woorden op te schrijven en op een veilige plaats op te bergen "
+"aangezien ze bij verlies niet kunnen worden teruggehaald."
+
+#: templates/wallet/partials/signup_1_init.html:37
+msgid ""
+"We do not store the above information anywhere, we can't help you recover it!"
+msgstr ""
+"Wij slaan de bovenstaande informatie nergens op, we kunnen u niet helpen het "
+"terug te halen als u het kwijtraakt!"
+
+#: templates/wallet/partials/signup_1_init.html:42
+msgid ""
+"I confirm that my passphrase is saved &amp; secured and I agree with the "
+msgstr ""
+"Ik verklaar dat mijn passphrase op een veilige plek is opgeslagen &amp; en "
+"ik stem in met de "
+
+#: templates/wallet/partials/signup_1_init.html:55
+#: templates/wallet/partials/wallet_settings.html:462
+msgid "Write to NFC tag"
+msgstr "Schrijf naar NFC tag"
+
+#: templates/wallet/partials/signup_1_init.html:58
+#: templates/wallet/partials/wallet_settings.html:466
+msgid "Write to a hardware wallet"
+msgstr "Write to a hardware wallet"
+
+#: templates/wallet/partials/signup_1_init.html:61
+msgid ""
+"Warning: some printers store printed documents internally, so it can be "
+"insecure to print your mnemonic."
+msgstr ""
+"Warning: some printers store printed documents internally, so it can be "
+"insecure to print your mnemonic."
+
+#: templates/wallet/partials/signup_1_init.html:61
+msgid "Print passphrase"
+msgstr "Wachtwoord afdrukken"
+
+#: templates/wallet/partials/signup_1_init.html:83
+msgid ""
+"This passphrase is encrypted, so<br/> your encryption password is required "
+"to use it."
+msgstr ""
+"This passphrase is encrypted, so<br/> your encryption password is required "
+"to use it."
+
+#: templates/wallet/partials/wallet_modal_no_electrum.html:4
+msgid ""
+"No Electrum servers are reachable. They are used to verify that our servers "
+"don't attempt misleading your client into spending wrong amount of money."
+msgstr ""
+"No Electrum servers are reachable. They are used to verify that our servers "
+"don't attempt misleading your client into spending wrong amount of money."
+
+#: templates/wallet/partials/wallet_modal_no_electrum.html:5
+msgid ""
+"Do you want to continue sending the transaction without Electrum network "
+"verification?"
+msgstr ""
+"Do you want to continue sending the transaction without Electrum network "
+"verification?"
+
+#: templates/wallet/partials/wallet_settings.html:5
+msgid "General Settings"
+msgstr "General Settings"
+
+#: templates/wallet/partials/wallet_settings.html:11
+msgid "Currency"
+msgstr "Valuta"
+
+#: templates/wallet/partials/wallet_settings.html:12
+msgid "Select your currency and pricing source."
+msgstr "Selecteer uw valuta en markt voor prijsweergave."
+
+#: templates/wallet/partials/wallet_settings.html:17
+msgid "Pricing source to use"
+msgstr "Markt voor prijsweergave"
+
+#: templates/wallet/partials/wallet_settings.html:31
+msgid "Show amounts in"
+msgstr "Toon bedragen in"
+
+#: templates/wallet/partials/wallet_settings.html:44
+msgid "Sound"
+msgstr "Sound"
+
+#: templates/wallet/partials/wallet_settings.html:45
+msgid "Enable or disable sounds"
+msgstr "Enable or disable sounds"
+
+#: templates/wallet/partials/wallet_settings.html:53
+msgid "Enable sounds"
+msgstr "Enable sounds"
+
+#: templates/wallet/partials/wallet_settings.html:62
+msgid "Language"
+msgstr "Language"
+
+#: templates/wallet/partials/wallet_settings.html:63
+msgid "Change language to"
+msgstr "Taal veranderen naar"
+
+#: templates/wallet/partials/wallet_settings.html:92
+msgid "Link handler"
+msgstr "Link handler"
+
+#: templates/wallet/partials/wallet_settings.html:93
+msgid "Use GreenAddress to handle bitcoin: links."
+msgstr "GreenAddress gebruiken om bitcoin: hyperlinks te verwerken ."
+
+#: templates/wallet/partials/wallet_settings.html:96
+msgid "Enable Handler"
+msgstr "Handler inschakelen"
+
+#: templates/wallet/partials/wallet_settings.html:108
+#: templates/wallet/partials/wallet_settings.html:322
+msgid "Email"
+msgstr "E-mail"
+
+#: templates/wallet/partials/wallet_settings.html:109
+msgid ""
+"Set your email address for transactions notifications, two factor "
+"authentication, and nLockTime transactions."
+msgstr ""
+"Set your email address for transactions notifications, two factor "
+"authentication, and nLockTime transactions."
+
+#: templates/wallet/partials/wallet_settings.html:114
+msgid "Change email address"
+msgstr "Change email address"
+
+#: templates/wallet/partials/wallet_settings.html:115
+msgid "Set email address"
+msgstr "Set email address"
+
+#: templates/wallet/partials/wallet_settings.html:123
+msgid ""
+"You need to provide confirmation code from your email to allow using it."
+"<br>              Please check your email and provide the code."
+msgstr ""
+"You need to provide confirmation code from your email to allow using it."
+"<br>              Please check your email and provide the code."
+
+#: templates/wallet/partials/wallet_settings.html:134
+#: templates/wallet/partials/wallet_settings.html:166
+#: templates/wallet/partials/wallet_settings.html:180
+msgid "Confirm"
+msgstr "Bevestigen"
+
+#: templates/wallet/partials/wallet_settings.html:140
+msgid ""
+"The code is valid only for 5 minutes, so you can request another one if "
+"necessary."
+msgstr ""
+"The code is valid only for 5 minutes, so you can request another one if "
+"necessary."
+
+#: templates/wallet/partials/wallet_settings.html:140
+msgid "Request another code"
+msgstr "Request another code"
+
+#: templates/wallet/partials/wallet_settings.html:149
+msgid "Enable a simple PIN to quickly access your wallet from this device."
+msgstr ""
+"Eenvoudige PIN-code inschakelen voor snelle toegang tot uw portemonnee vanaf "
+"dit apparaat."
+
+#: templates/wallet/partials/wallet_settings.html:157
+msgid "Enable quick login on this device"
+msgstr "Snelle login op dit apparaat inschakelen"
+
+#: templates/wallet/partials/wallet_settings.html:161
+msgid "Change PIN number"
+msgstr "Pincode wijzigen"
+
+#: templates/wallet/partials/wallet_settings.html:162
+msgid "Set PIN number"
+msgstr "Pincode instellen"
+
+#: templates/wallet/partials/wallet_settings.html:170
+msgid "Disable quick login on all devices"
+msgstr "Snelle login op alle apparaten uitschakelen"
+
+#: templates/wallet/partials/wallet_settings.html:174
+msgid "set PIN to"
+msgstr "PIN instellen op"
+
+#: templates/wallet/partials/wallet_settings.html:179
+msgid "Remove"
+msgstr "Verwijderen"
+
+#: templates/wallet/partials/wallet_settings.html:191
+msgid "Link your own third party accounts"
+msgstr "Uw eigen accounts bij derde partijen koppelen"
+
+#: templates/wallet/partials/wallet_settings.html:192
+msgid ""
+"Allow social payments and watch-only login to your wallet via your own third "
+"party accounts."
+msgstr ""
+"Sociale betalingen en inloggen op uw portemonnee in alleen-kijken-modus via "
+"uw eigen accounts bij derde partijen inschakelen."
+
+#: templates/wallet/partials/wallet_settings.html:218
+msgid "Username"
+msgstr "Gebruikersnaam"
+
+#: templates/wallet/partials/wallet_settings.html:219
+#: templates/wallet/partials/signuplogin/modal_decryption_password.html:8
+#: templates/wallet/partials/signuplogin/modal_encryption_password.html:10
+msgid "Password"
+msgstr "Wachtwoord"
+
+#: templates/wallet/partials/wallet_settings.html:228
+msgid "Notifications"
+msgstr "Meldingen"
+
+#: templates/wallet/partials/wallet_settings.html:229
+msgid ""
+"Notifications allow for improved security when configured for outgoing and "
+"for most up to date information when configured for incoming"
+msgstr ""
+"Meldingen verbeteren de beveiliging voor uitgaande transacties. Ook wordt u "
+"meteen op de hoogte gebracht bij inkomende transacties."
+
+#: templates/wallet/partials/wallet_settings.html:235
+msgid "Send incoming transaction notification by"
+msgstr "Meldingen voor inkomende transacties versturen via"
+
+#: templates/wallet/partials/wallet_settings.html:241
+#: templates/wallet/partials/wallet_settings.html:261
+msgid "email"
+msgstr "E-mail"
+
+#: templates/wallet/partials/wallet_settings.html:248
+#: templates/wallet/partials/wallet_settings.html:268
+#: templates/wallet/partials/wallet_settings.html:359
+msgid "SMS"
+msgstr "SMS"
+
+#: templates/wallet/partials/wallet_settings.html:255
+msgid "Send outgoing transaction notification by"
+msgstr "Meldingen voor uitgaande transacties versturen via"
+
+#: templates/wallet/partials/wallet_settings.html:274
+msgid "You need to have a confirmed email enabled for this feature to work."
+msgstr "You need to have a confirmed email enabled for this feature to work."
+
+#: templates/wallet/partials/wallet_settings.html:282
+msgid "Privacy"
+msgstr "Privacy"
+
+#: templates/wallet/partials/wallet_settings.html:283
+msgid ""
+"Decide who can send you money directly to your GreenAddress wallet, and who "
+"can see your name when receiving money from you"
+msgstr ""
+"Decide who can send you money directly to your GreenAddress wallet, and who "
+"can see your name when receiving money from you"
+
+#: templates/wallet/partials/wallet_settings.html:288
+msgid "Allow sending to my wallet via email/Reddit"
+msgstr "Allow sending to my wallet via email/Reddit"
+
+#: templates/wallet/partials/wallet_settings.html:289
+msgid ""
+"(NOTE: at this moment addressbook is not supported for Reddit contacts, so "
+"choosing 'Addressbook contacts' will disallow sending to you wallet directly "
+"using your Reddit handle)"
+msgstr ""
+"(NOTE: at this moment addressbook is not supported for Reddit contacts, so "
+"choosing 'Addressbook contacts' will disallow sending to you wallet directly "
+"using your Reddit handle)"
+
+#: templates/wallet/partials/wallet_settings.html:291
+#: templates/wallet/partials/wallet_settings.html:302
+msgid "Everyone"
+msgstr "Everyone"
+
+#: templates/wallet/partials/wallet_settings.html:292
+msgid "Addressbook contacts"
+msgstr "Addressbook contacts"
+
+#: templates/wallet/partials/wallet_settings.html:293
+#: templates/wallet/partials/wallet_settings.html:304
+msgid "No one"
+msgstr "No one"
+
+#: templates/wallet/partials/wallet_settings.html:299
+msgid "Show my email/Reddit handle as sender to "
+msgstr "Show my email/Reddit handle as sender to "
+
+#: templates/wallet/partials/wallet_settings.html:300
+msgid ""
+"(NOTE: at this moment addressbook is not supported for Reddit contacts, so "
+"choosing 'Mutually added in addressbook' will cause you to be never visible "
+"as sender when using Reddit handle for sending)"
+msgstr ""
+"(NOTE: at this moment addressbook is not supported for Reddit contacts, so "
+"choosing 'Mutually added in addressbook' will cause you to be never visible "
+"as sender when using Reddit handle for sending)"
+
+#: templates/wallet/partials/wallet_settings.html:303
+msgid "Mutually added in addressbook"
+msgstr "Mutually added in addressbook"
+
+#: templates/wallet/partials/wallet_settings.html:314
+msgid "Set any or all two factor: you can choose which one when needed!"
+msgstr ""
+"Stel een of meerdere verificaties in: u kunt wisselen wanneer dit nodig is!"
+
+#: templates/wallet/partials/wallet_settings.html:332
+msgid "Google Authenticator"
+msgstr "Google Authenticator"
+
+#: templates/wallet/partials/wallet_settings.html:335
+msgid ""
+"You need to provide one Google Authenticator code to set up the two factor "
+"authentication.<br>                    Please scan the QR code below, and "
+"provide the code."
+msgstr ""
+"U dient een Google Authenticator code in te voeren om dubbele verificatie in "
+"te stellen.<br> Gelieve onderstaande QR-code te scannen en in te voeren."
+
+#: templates/wallet/partials/wallet_settings.html:339
+msgid "Code"
+msgstr "Code"
+
+#: templates/wallet/partials/wallet_settings.html:376
+msgid ""
+"You need to provide one SMS code to set up the two factor authentication."
+"<br>                    Please check your phone and provide the code."
+msgstr ""
+"U dient een SMS code in te voeren om dubbele verificatie in te stellen."
+"<br>Gelieve uw SMS te lezen en de code in te voeren."
+
+#: templates/wallet/partials/wallet_settings.html:416
+msgid ""
+"You need to provide one phone code to set up the two factor authentication."
+"<br>                    Please check your phone and provide the code."
+msgstr ""
+"U dient een telefoon code in te voeren om dubbele verificatie in te stellen."
+"<br>Gelieve uw telefoon op te nemen en de code in te voeren."
+
+#: templates/wallet/partials/wallet_settings.html:438
+msgid "Auto logout"
+msgstr "Auto logout"
+
+#: templates/wallet/partials/wallet_settings.html:439
+msgid "Configure auto logout after some inactivity timeout"
+msgstr "Configure auto logout after some inactivity timeout"
+
+#: templates/wallet/partials/wallet_settings.html:443
+msgid "Minutes"
+msgstr "Minutes"
+
+#: templates/wallet/partials/wallet_settings.html:445
+msgid "Timeout minutes"
+msgstr "Timeout minutes"
+
+#: templates/wallet/partials/wallet_settings.html:455
+#: templates/wallet/partials/wallet_settings.html:459
+msgid "Show mnemonic"
+msgstr "Toon passphrase"
+
+#: templates/wallet/partials/wallet_settings.html:456
+msgid ""
+"Display your mnemonic for account recovery or cloning on another device."
+msgstr ""
+"Uw passphrase voor accountherstel of klonen op een ander apparaat weergeven."
+
+#: templates/wallet/partials/wallet_settings.html:460
+msgid "Show encrypted mnemonic"
+msgstr "Show encrypted mnemonic"
+
+#: templates/wallet/partials/wallet_settings.html:463
+msgid "Write encrypted to NFC tag"
+msgstr "Write encrypted to NFC tag"
+
+#: templates/wallet/partials/wallet_settings.html:474
+msgid ""
+"nLockTime transactions allow you to redeem your deposited funds without "
+"GreenAddress' signature after pre-defined number of blocks"
+msgstr ""
+"nLockTime transactions allow you to redeem your deposited funds without "
+"GreenAddress' signature after pre-defined number of blocks"
+
+#: templates/wallet/partials/wallet_settings.html:480
+msgid "Allow redeeming funds without GreenAddress' signature after"
+msgstr "Allow redeeming funds without GreenAddress' signature after"
+
+#: templates/wallet/partials/wallet_settings.html:482
+msgid "blocks"
+msgstr "blokken"
+
+#: templates/wallet/partials/wallet_settings.html:488
+msgid ""
+"Both outgoing and incoming transaction notifications must be enabled for "
+"this feature to work."
+msgstr ""
+"Zowel binnenkomende als uitgaande transactienotificaties moeten worden "
+"ingeschakeld voor deze functie."
+
+#: templates/wallet/partials/wallet_settings.html:491
+msgid "Show outputs expiring soon"
+msgstr "Toon outputs die binnenkort verlopen"
+
+#: templates/wallet/partials/wallet_settings.html:492
+msgid "Send all nLockTime transactions by email"
+msgstr "Send all nLockTime transactions by email"
+
+#: templates/wallet/partials/wallet_settings.html:500
+msgid "Spending limits"
+msgstr "Uitgavenlimiet"
+
+#: templates/wallet/partials/wallet_settings.html:501
+msgid ""
+"Set some limits for which you won't be asked for two factor for super "
+"userfriendly payments."
+msgstr ""
+"Stel de limiet in waaronder u niet wordt gevraagd voor dubbele verificatie. "
+"Dit zorgt voor snellere en gebruiksvriendelijkere  transacties."
+
+#: templates/wallet/partials/wallet_settings.html:504
+msgid ""
+"You can provide amount (BTC or fiat) limits of transactions that you can "
+"make without using two factor authentication"
+msgstr ""
+"You can provide amount (BTC or fiat) limits of transactions that you can "
+"make without using two factor authentication"
+
+#: templates/wallet/partials/wallet_settings.html:529
+msgid "Change limits"
+msgstr "Change limits"
+
+#: templates/wallet/partials/wallet_settings.html:537
+msgid "Delayed payments"
+msgstr "Vertraagde betalingen"
+
+#: templates/wallet/partials/wallet_settings.html:538
+msgid ""
+"Delay transaction for super ease of mind: works best in conjuction with "
+"outgoing notifications."
+msgstr ""
+"Vertraag transactie voor de grootst mogelijke gemoedsrust: werkt het beste "
+"als uitgaande notificaties zijn ingeschakeld."
+
+#: templates/wallet/partials/wallet_settings.html:546
+msgid "Enable delayed payments"
+msgstr "Vertraagde betalingen inschakelen"
+
+#: templates/wallet/partials/wallet_settings.html:547
+msgid "Coming soon"
+msgstr "Binnenkort beschikbaar"
+
+#: templates/wallet/partials/wallet_settings.html:552
+msgid "Delay payments of"
+msgstr "Vertraag betalingen van"
+
+#: templates/wallet/partials/wallet_settings.html:570
+#: templates/wallet/partials/wallet_settings.html:574
+msgid "Remove account"
+msgstr "Remove account"
+
+#: templates/wallet/partials/wallet_settings.html:571
+msgid "You can remove your account with all associated data here."
+msgstr "You can remove your account with all associated data here."
+
+#: templates/wallet/partials/wallet_settings.html:585
+#, fuzzy
+msgid "Simple accounts"
+msgstr "Remove account"
+
+#: templates/wallet/partials/wallet_settings.html:586
+msgid ""
+"Create accounts that allow you to separate your funds. Each accounts will "
+"have its own receiving addresses."
+msgstr ""
+
+#: templates/wallet/partials/wallet_settings.html:591
+msgid "Create an account with the following label:"
+msgstr ""
+
+#: templates/wallet/partials/wallet_settings.html:594
+#: templates/wallet/partials/wallet_settings.html:639
+msgid "Label"
+msgstr ""
+
+#: templates/wallet/partials/wallet_settings.html:596
+#: templates/wallet/partials/wallet_settings.html:641
+msgid "Create"
+msgstr ""
+
+#: templates/wallet/partials/wallet_settings.html:602
+#, fuzzy
+msgid "Your simple accounts:"
+msgstr "Remove account"
+
+#: templates/wallet/partials/wallet_settings.html:606
+#: templates/wallet/partials/wallet_settings.html:652
+#, fuzzy
+msgid "Actions"
+msgstr "Transacties"
+
+#: templates/wallet/partials/wallet_settings.html:618
+#: templates/wallet/partials/wallet_settings.html:664
+#, fuzzy
+msgid "Rename"
+msgstr "Gebruikersnaam"
+
+#: templates/wallet/partials/wallet_settings.html:620
+#: templates/wallet/partials/wallet_settings.html:666
+#: templates/wallet/partials/wallet_modal_fb_message.html:6
+msgid "Send"
+msgstr "Verzenden"
+
+#: templates/wallet/partials/wallet_settings.html:621
+#: templates/wallet/partials/wallet_settings.html:667
+#, fuzzy
+msgid "Receive"
+msgstr "Geld ontvangen"
+
+#: templates/wallet/partials/wallet_settings.html:630
+#, fuzzy
+msgid "2of3 accounts"
+msgstr "Remove account"
+
+#: templates/wallet/partials/wallet_settings.html:631
+msgid ""
+"Create accounts that allow you to access your funds at any time even without "
+"access to GreenAddress, using additional offline recovery key.<br/"
+"><strong>NOTE:</strong> instant transactions are not available for these "
+"accounts because GreenAddress can't protect them from double spending."
+msgstr ""
+
+#: templates/wallet/partials/wallet_settings.html:636
+msgid "Create a 2of3 account with the following label:"
+msgstr ""
+
+#: templates/wallet/partials/wallet_settings.html:648
+#, fuzzy
+msgid "Your 2of3 accounts:"
+msgstr "Remove account"
+
+#: templates/wallet/partials/wallet_modal_voucher.html:4
+msgid "Voucher created successfully!"
+msgstr "Voucher created successfully!"
+
+#: templates/wallet/partials/wallet_modal_voucher.html:7
+msgid ""
+"Warning: some printers store printed documents internally, so it can be "
+"insecure to print the voucher."
+msgstr ""
+"Warning: some printers store printed documents internally, so it can be "
+"insecure to print the voucher."
+
+#: templates/wallet/partials/wallet_modal_voucher.html:7
+msgid "Print the voucher"
+msgstr "Print the voucher"
+
+#: templates/wallet/partials/wallet_modal_voucher.html:21
+msgid "This is a GreenAddress voucher for "
+msgstr "This is a GreenAddress voucher for "
+
+#: templates/wallet/partials/wallet_modal_voucher.html:23
+msgid "The QR code below contains a URL for redeeming the funds:"
+msgstr "The QR code below contains a URL for redeeming the funds:"
+
+#: templates/wallet/partials/wallet_modal_voucher.html:25
+msgid ""
+"Alternatively, you can sweep funds to a wallet supporting Wallet Import "
+"Format using the following QR code:"
+msgstr ""
+"Alternatively, you can sweep funds to a wallet supporting Wallet Import "
+"Format using the following QR code:"
+
+#: templates/wallet/partials/wallet_modal_voucher.html:26
+msgid ""
+"Alternatively, you can sweep funds to a wallet supporting BIP38 using the "
+"following QR code:"
+msgstr ""
+"Alternatively, you can sweep funds to a wallet supporting BIP38 using the "
+"following QR code:"
+
+#: templates/wallet/partials/wallet_modal_fb_message.html:4
+msgid "Please send the Facebook message."
+msgstr "Stuur het bericht via Facebook."
+
+#: templates/wallet/partials/wallet_modal_fb_message.html:11
+msgid "Cancel - revert transaction"
+msgstr "Annuleren - transactie terugdraaien"
+
+#: templates/wallet/partials/wallet_modal_fb_message.html:12
+msgid "I have sent the message"
+msgstr "Ik heb het bericht verzonden"
+
+#: templates/wallet/partials/signuplogin/header_wallet.html:2
+msgid "Welcome to GreenAddress!"
+msgstr "Welcome to GreenAddress!"
+
+#: templates/wallet/partials/signuplogin/header_wallet.html:2
+msgid "Please log in to use your Wallet"
+msgstr "Log in om uw portemonnee te gebruiken"
+
+#: templates/wallet/partials/signuplogin/header_redeem.html:6
+msgid ""
+"You can redeem it using any BIP38-compatible wallet using the password given "
+"to you by the sender and the following key: "
+msgstr ""
+"You can redeem it using any BIP38-compatible wallet using the password given "
+"to you by the sender and the following key: "
+
+#: templates/wallet/partials/signuplogin/header_redeem.html:7
+msgid ""
+"You can redeem it using any WIF-compatible wallet using the following key: "
+msgstr ""
+"You can redeem it using any WIF-compatible wallet using the following key: "
+
+#: templates/wallet/partials/signuplogin/header_redeem.html:8
+msgid ""
+"If you do not have a GreenAddress wallet, you can create one to reedem the "
+"payment"
+msgstr ""
+"If you do not have a GreenAddress wallet, you can create one to reedem the "
+"payment"
+
+#: templates/wallet/partials/signuplogin/header_redeem.html:9
+msgid ""
+"Otherwise, if you are a GreeenAddress.it user please login using form below"
+msgstr ""
+"Anders, als u een GreenAddress.it-gebruiker bent, kunt u inloggen met behulp "
+"van onderstaand formulier"
+
+#: templates/wallet/partials/signuplogin/base.html:6
+#: templates/wallet/partials/signuplogin/trezor.html:6
+msgid "Haven't got an account yet?"
+msgstr "Heeft u nog geen account?"
+
+#: templates/wallet/partials/signuplogin/base.html:7
+#: templates/wallet/partials/signuplogin/trezor.html:7
+msgid "Create new Wallet"
+msgstr "Maak een nieuwe portemonnee aan"
+
+#: templates/wallet/partials/signuplogin/base.html:12
+msgid "Log in for full Wallet access"
+msgstr "Inloggen voor volledige toegang tot uw portemonnee"
+
+#: templates/wallet/partials/signuplogin/base.html:15
+msgid "PIN Number"
+msgstr "PIN Number"
+
+#: templates/wallet/partials/signuplogin/base.html:29
+msgid "Mnemonic"
+msgstr "Mnemonic"
+
+#: templates/wallet/partials/signuplogin/base.html:32
+#: templates/wallet/partials/signuplogin/base.html:33
+msgid "Enter your Mnemonic passphrase"
+msgstr "Enter your Mnemonic passphrase"
+
+#: templates/wallet/partials/signuplogin/base.html:53
+msgid "Invalid mnemonic"
+msgstr "Ongeldige wachtwoord"
+
+#: templates/wallet/partials/signuplogin/base.html:58
+msgid "Show mnemonics"
+msgstr "Show mnemonics"
+
+#: templates/wallet/partials/signuplogin/base.html:66
+msgid "Log in to Watch-Only mode"
+msgstr "Inloggen in alleen-kijken-modus"
+
+#: templates/wallet/partials/signuplogin/base.html:78
+msgid "Log in via hardware wallet"
+msgstr "Log in via hardware wallet"
+
+#: templates/wallet/partials/signuplogin/base.html:80
+msgid "BTChip Login"
+msgstr "BTChip Login"
+
+#: templates/wallet/partials/signuplogin/base.html:81
+msgid "Logging in, please wait..."
+msgstr "Logging in, please wait..."
+
+#: templates/wallet/partials/signuplogin/base.html:93
+msgid "Show other logins"
+msgstr "Show other logins"
+
+#: templates/wallet/partials/signuplogin/modal_decryption_password.html:4
+msgid "Please provide a password to decrypt your mnemonic"
+msgstr "Please provide a password to decrypt your mnemonic"
+
+#: templates/wallet/partials/signuplogin/modal_decryption_password.html:15
+#: templates/wallet/partials/signuplogin/redeem_password_modal.html:15
+msgid "Please wait, decrypting..."
+msgstr "Een moment geduld a.u.b., decoderen..."
+
+#: templates/wallet/partials/signuplogin/modal_decryption_password.html:24
+msgid "Decrypt"
+msgstr "Decrypt"
+
+#: templates/wallet/partials/signuplogin/modal_encryption_password.html:4
+msgid "Please provide a password to encrypt your mnemonic"
+msgstr "Please provide a password to encrypt your mnemonic"
+
+#: templates/wallet/partials/signuplogin/modal_encryption_password.html:5
+msgid "Please provide a password to encrypt the voucher"
+msgstr "Please provide a password to encrypt the voucher"
+
+#: templates/wallet/partials/signuplogin/modal_encryption_password.html:6
+msgid ""
+"If you use a different password from the one used when you created the "
+"voucher, the clear text voucher message (if any) will not be displayed at "
+"the voucher URL."
+msgstr ""
+"If you use a different password from the one used when you created the "
+"voucher, the clear text voucher message (if any) will not be displayed at "
+"the voucher URL."
+
+#: templates/wallet/partials/signuplogin/modal_encryption_password.html:18
+msgid "Repeat password"
+msgstr "Repeat password"
+
+#: templates/wallet/partials/signuplogin/modal_encryption_password.html:25
+msgid "Please wait, encrypting..."
+msgstr "Please wait, encrypting..."
+
+#: templates/wallet/partials/signuplogin/modal_encryption_password.html:34
+msgid "Encrypt"
+msgstr "Encrypt"
+
+#: templates/wallet/partials/signuplogin/header_pay.html:1
+msgid "You're about to send "
+msgstr "U staat op het punt te verzenden "
+
+#: templates/wallet/partials/signuplogin/header_pay.html:18
+msgid "Click below to show a bitcoin: URI:"
+msgstr "Click below to show a bitcoin: URI:"
+
+#: templates/wallet/partials/signuplogin/header_pay.html:21
+msgid "Use the URI below:"
+msgstr "Use the URI below:"
+
+#: templates/wallet/partials/signuplogin/header_pay.html:31
+msgid "Show"
+msgstr "Toon"
+
+#: templates/wallet/partials/signuplogin/trezor.html:19
+msgid "Processing"
+msgstr "Verwerken"
+
+#: templates/wallet/partials/signuplogin/trezor.html:20
+msgid "Error, try again"
+msgstr "Fout, probeer het opnieuw"
+
+#: templates/wallet/partials/signuplogin/redeem_password_modal.html:4
+msgid "Please provide the password received from sender."
+msgstr "Geef het wachtwoord in dat u hebt ontvangen van de afzender."
+
+#: templates/wallet/partials/signuplogin/redeem_password_modal.html:8
+msgid "Enter the password"
+msgstr "Voer het wachtwoord in"
+
+#: templates/wallet/partials/signuplogin/redeem_password_modal.html:24
+msgid "Redeem the payment"
+msgstr "Neem de betaling op"
+
+#~ msgid "Your email adddress"
+#~ msgstr "Your email adddress"
+
+#~ msgid "alias of :class:`%s`"
+#~ msgstr "alias of :class:`%s`"
+
+#~ msgid "%s() (built-in function)"
+#~ msgstr "%s() (ingebouwde functie)"
+
+#~ msgid "%s() (in module %s)"
+#~ msgstr "%s() (in module %s)"
+
+#~ msgid "%s (built-in variable)"
+#~ msgstr "%s (built-in variable)"
+
+#~ msgid "%s (in module %s)"
+#~ msgstr "%s (in module %s)"
+
+#~ msgid "%s (built-in class)"
+#~ msgstr "%s (built-in class)"
+
+#~ msgid "%s (class in %s)"
+#~ msgstr "%s (class in %s)"
+
+#~ msgid "%s() (%s.%s method)"
+#~ msgstr "%s() (%s.%s method)"
+
+#~ msgid "%s() (%s method)"
+#~ msgstr "%s() (%s method)"
+
+#~ msgid "%s() (%s.%s static method)"
+#~ msgstr "%s() (%s.%s static method)"
+
+#~ msgid "%s() (%s static method)"
+#~ msgstr "%s() (%s static method)"
+
+#~ msgid "%s() (%s.%s class method)"
+#~ msgstr "%s() (%s.%s class method)"
+
+#~ msgid "%s() (%s class method)"
+#~ msgstr "%s() (%s class method)"
+
+#~ msgid "%s (%s.%s attribute)"
+#~ msgstr "%s (%s.%s attribute)"
+
+#~ msgid "%s (%s attribute)"
+#~ msgstr "%s (%s attribute)"
+
+#~ msgid "%s (module)"
+#~ msgstr "%s (module)"
+
+#~ msgid "Deprecated"
+#~ msgstr "Verouderd"
+
+#~ msgid " (deprecated)"
+#~ msgstr " (verouderd)"
