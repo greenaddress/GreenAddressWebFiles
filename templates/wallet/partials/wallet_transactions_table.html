@@ -30,7 +30,13 @@
           <span ng-hide="details">(( transaction.description ))</span>
           <div class="info">
               <span class="label label-success" ng-show="transaction.instant">{{ _("instant GreenAddress confirmation") }}</span>
-              <span class="label label-danger" ng-show="transaction.double_spent_by">{{ _("double spend") }}</span>
+              <span class="label label-danger" ng-show="
+                transaction.double_spent_by &&
+                !(transaction.double_spent_by=='update' ||
+                  transaction.double_spent_by=='malleability')
+              ">{{ _("double spend") }}</span>
+              <span class="label label-warning" ng-show="transaction.double_spent_by=='update'">{{ _("updated") }}</span>
+              <span class="label label-warning" ng-show="transaction.double_spent_by=='malleability'">{{ _("updated") }}</span>
               <span class="label label-default" ng-show="transaction.confirmations == 0 && !transaction.instant && !transaction.double_spent_by">{{ _("unconfirmed") }}</span>
               <span class="label" ng-class="{'label-info': transaction.confirmations < 6, 'label-success': transaction.confirmations >= 6}" ng-show="transaction.confirmations > 0 && transaction.confirmations < 100">((transaction.confirmations)) {{ _("confirmations") }}</span>
               <span ng-show="(transaction.external_social && redeem) || transaction.redeemable">
