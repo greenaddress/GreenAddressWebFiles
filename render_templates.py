@@ -76,12 +76,14 @@ class TemplatesRenderer(object):
         self.env.install_gettext_callables(ugettext, ungettext, newstyle=True)
         template = self.env.get_template(template)
         kwargs = {
-            'HOSTNAME': self.hostname,
+            'HOSTNAME': self.hostname or 'localhost',
             'LANG': lang,
             'BASE_URL': '..' if self.cdvapp else '',
             'STATIC_URL': '../static' if self.cdvapp else '/static',
             'DEVELOPMENT': True,
             'PATH_NO_LANG': output,
+            'cdvapp': self.cdvapp,
+            'crapp': not self.cdvapp
         }
         out = template.render(**kwargs)
         try:
@@ -119,7 +121,7 @@ def main():
         help='The output directory')
     parser.add_argument('--hostname', '-n',
         help="Optional hostname of deployment (not used for Cordova/crx)")
-    parser.add_argument('--cordova', '-a',
+    parser.add_argument('--cordova', '-a', action='store_true',
         help="Build HTML for Cordova project")
 
     args = parser.parse_args()
