@@ -1250,7 +1250,6 @@ angular.module('greenWalletServices', [])
     return noticesService;
 }]).factory('tx_sender', ['$q', '$rootScope', 'cordovaReady', '$http', 'notices', 'gaEvent', '$location', 'autotimeout', 'device_id', 'btchip',
         function($q, $rootScope, cordovaReady, $http, notices, gaEvent, $location, autotimeout, device_id, btchip) {
-    ab._Deferred = $q.defer;
     var txSenderService = {};
     if (window.Electrum) {
         if (window.cordova) {
@@ -1267,17 +1266,18 @@ angular.module('greenWalletServices', [])
             var cur_call = calls_counter++;
             calls_missed[cur_call] = [arguments, d];  // will be called on new session
             try {
-                session.call.apply(session, arguments).then(function(data) {
+                var uri = arguments[0].replace('http://greenaddressit.com/', 'com.greenaddress.').replace('/', '.');
+                session.call.apply(session, [uri, Array.prototype.slice.call(arguments, 1)]).then(function(data) {
                     if (!calls_missed[cur_call]) return;  // avoid resolving the same call twice
                     delete calls_missed[cur_call];
-                    $rootScope.$apply(function() { d.resolve(data); })
+                    d.resolve(data);
                 }, function(err) {
                     if (err.uri == 'http://greenaddressit.com/error#internal' && err.desc == 'Authentication required') {
                         return; // keep in missed calls queue for after login
                     }
                     if (!calls_missed[cur_call]) return;  // avoid resolving the same call twice
                     delete calls_missed[cur_call];
-                    $rootScope.$apply(function() { d.reject(err); })
+                    d.reject(err);
                 });
                 var args = arguments, timeout;
                 if (args[0] == "http://greenaddressit.com/vault/prepare_sweep_social") timeout = 40000;
@@ -1292,10 +1292,9 @@ angular.module('greenWalletServices', [])
                     });
                 }, timeout);
             } catch (e) {
-                if (!calls_missed[cur_call]) return;  // avoid resolving the same call twice
+                //if (!calls_missed[cur_call]) return;  // avoid resolving the same call twice
                 delete calls_missed[cur_call];
-                $rootScope.$apply(function() { d.reject(gettext('Problem with Internet connection detected. Please try again.')); })
-                session = session_for_login = null;
+                d.reject(gettext('Problem with connection detected. Please try again.'));
             }
         } else {
             if (disconnected) {
@@ -1332,13 +1331,13 @@ angular.module('greenWalletServices', [])
     var attempt_login = false;
     var onAuthed = function(s, login_d) {
         session_for_login = s;
-        session_for_login.subscribe('http://greenaddressit.com/tx_notify', function(topic, event) {
+        /*session_for_login.subscribe('http://greenaddressit.com/tx_notify', function(topic, event) {
             gaEvent('Wallet', 'TransactionNotification');
             $rootScope.$broadcast('transaction', event);
         });
         session_for_login.subscribe('http://greenaddressit.com/block_count', function(topic, event) {
             $rootScope.$broadcast('block', event);
-        });
+        });*/
         var d1, d2, logging_in = false;
         if (txSenderService.hdwallet && (txSenderService.logged_in || attempt_login)) {
             d1 = txSenderService.login('if_same_device', true); // logout=if_same_device, force_relogin
@@ -1367,8 +1366,8 @@ angular.module('greenWalletServices', [])
         });
         if (txSenderService.pin_ident) {
             // resend PIN to allow PIN changes in the event of reconnect
-            d2 = session_for_login.call('http://greenaddressit.com/pin/get_password',
-                              txSenderService.pin, txSenderService.pin_ident);
+            d2 = session_for_login.call('com.greenaddress.pin.get_password',
+                              [txSenderService.pin, txSenderService.pin_ident]);
         } else {
             d2 = $q.when(true);
         }
@@ -1420,36 +1419,43 @@ angular.module('greenWalletServices', [])
         nconn += 1;
         var retries = 60, everConnected = false;
         (function (nc) {
-            ab.connect(wss_url,
+            var connection = new autobahn.Connection({
+                url: "ws://127.0.0.1:8080/v2/ws",
+                realm: "realm1",
+                authmethods: ["wampcra"],
+                use_deferred: $q.defer,
+                onchallenge: function(session, method, extra) {
+                   if (method === "wampcra") {
+                      return autobahn.auth_cra.sign(
+                         connection.token,
+                         extra.challenge
+                      );
+                   }
+                }
+            });
+            var oldjoin = autobahn.Session.prototype.join;
+            autobahn.Session.prototype.join = function(realm, authmethods, authid) {
+                $http.get((window.root_url||'')+'/token/').then(function(response) {
+                    var token = response.data;
+                   connection.token = token;
+                   oldjoin.bind(this)(realm, authmethods, token);
+                }.bind(this));
+            }
+            connection.onopen =
                 function(s) {
-                    monkey_patch_session_nonclean_close_reason(s);
+                    s.caller_disclose_me = true;
+                    //monkey_patch_session_nonclean_close_reason(s);
                     everConnected = true;
-                    $http.get((window.root_url||'')+'/token/').then(function(response) {
-                        var token = response.data;
-                        try {
-                            s.authreq(token).then(function(challenge) {
-                                var signature = s.authsign(challenge, token);
-                                try {
-                                    s.auth(signature).then(function(permissions) {
-                                        if (nc != nconn) {
-                                            // newer connection created - close the old one
-                                            s.close();
-                                            return;
-                                        }
-                                        s.nc = nc;
-                                        connecting = false;
-                                        global_login_d = undefined;
-                                        onAuthed(s, login_d, nc);
-                                    });
-                                } catch (e) {  // "Autobahn not connected"
-                                    setTimeout(function() { connecting = false; connect(login_d); }, 5000);
-                                }
-                            });
-                        } catch (e) {  // "Autobahn not connected"
-                            setTimeout(function() { connecting = false; connect(login_d); }, 5000);
-                        }
-                    });
-                },
+                    if (nc != nconn) {
+                        // newer connection created - close the old one
+                        s.close();
+                        return;
+                    }
+                    s.nc = nc;
+                    connecting = false;
+                    global_login_d = undefined;
+                    onAuthed(s, login_d, nc);
+                }; /*,
                 function(code, reason) {
                     if (retries && !everConnected) {  // autobahnjs doesn't reconnect automatically if it never managed to connect
                         retries -= 1;
@@ -1479,7 +1485,9 @@ angular.module('greenWalletServices', [])
                     }
                 },
                 {maxRetries: 60}
-            );
+            ); */
+
+            connection.open();
         })(nconn);
     };
     cordovaReady(connect)();
@@ -1494,8 +1502,8 @@ angular.module('greenWalletServices', [])
             attempt_login = true;
             if (hdwallet.priv) {
                 if (session_for_login) {
-                    session_for_login.call('http://greenaddressit.com/login/get_challenge',
-                            hdwallet.getAddress().toString()).then(function(challenge) {
+                    session_for_login.call('com.greenaddress.login.get_challenge',
+                            [hdwallet.getAddress().toString()]).then(function(challenge) {
                         var challenge_bytes = new Bitcoin.BigInteger(challenge).toByteArrayUnsigned();
 
                         // generate random path to derive key from - avoids signing using the same key twice
@@ -1509,9 +1517,9 @@ angular.module('greenWalletServices', [])
                                 signature = Bitcoin.ecdsa.parseSig(signature);
                                 d_main.resolve(device_id().then(function(devid) {
                                     if (session_for_login && session_for_login.nc == nconn) {
-                                        return session_for_login.call('http://greenaddressit.com/login/authenticate',
-                                                [signature.r.toString(), signature.s.toString()], logout||false,
-                                                 random_path_hex, devid, user_agent).then(function(data) {
+                                        return session_for_login.call('com.greenaddress.login.authenticate',
+                                                [[signature.r.toString(), signature.s.toString()], logout||false,
+                                                 random_path_hex, devid, user_agent]).then(function(data) {
                                             if (data) {
                                                 txSenderService.logged_in = data;
                                                 return data;
