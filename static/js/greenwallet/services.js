@@ -1411,7 +1411,7 @@ angular.module('greenWalletServices', [])
         var retries = 60, everConnected = false;
         (function (nc) {
             connection = new autobahn.Connection({
-                url: "ws://127.0.0.1:8080/v2/ws",
+                url: wss_url,
                 realm: "realm1",
                 authmethods: ["wampcra"],
                 use_deferred: $q.defer,
