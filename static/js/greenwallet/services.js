@@ -1260,6 +1260,13 @@ angular.module('greenWalletServices', [])
         }
     }
     var session, session_for_login, calls = [], calls_missed = {}, calls_counter = 0, global_login_d;
+    var onLogin = function(data) {
+        session.subscribe('com.greenaddress.txs.wallet_' + data.receiving_id,
+                function(event) {
+            gaEvent('Wallet', 'TransactionNotification');
+            $rootScope.$broadcast('transaction', event[0]);
+        });
+    };
     txSenderService.call = function() {
         var d = $q.defer();
         if (session) {
@@ -1331,13 +1338,9 @@ angular.module('greenWalletServices', [])
     var attempt_login = false;
     var onAuthed = function(s, login_d) {
         session_for_login = s;
-        /*session_for_login.subscribe('http://greenaddressit.com/tx_notify', function(topic, event) {
-            gaEvent('Wallet', 'TransactionNotification');
-            $rootScope.$broadcast('transaction', event);
+        session_for_login.subscribe('com.greenaddress.blocks', function(event) {
+            $rootScope.$broadcast('block', event[0]);
         });
-        session_for_login.subscribe('http://greenaddressit.com/block_count', function(topic, event) {
-            $rootScope.$broadcast('block', event);
-        });*/
         var d1, d2, logging_in = false;
         if (txSenderService.hdwallet && (txSenderService.logged_in || attempt_login)) {
             d1 = txSenderService.login('if_same_device', true); // logout=if_same_device, force_relogin
@@ -1522,6 +1525,7 @@ angular.module('greenWalletServices', [])
                                                  random_path_hex, devid, user_agent]).then(function(data) {
                                             if (data) {
                                                 txSenderService.logged_in = data;
+                                                onLogin(data);
                                                 return data;
                                             } else { return $q.reject(gettext('Login failed')); }
                                         });
@@ -1602,6 +1606,7 @@ angular.module('greenWalletServices', [])
                                                  'GA', devid).then(function(data) {
                                             if (data) {
                                                 txSenderService.logged_in = data;
+                                                onLogin(data);
                                                 return data;
                                             } else { return $q.reject(gettext('Login failed')); }
                                         });
@@ -1630,6 +1635,7 @@ angular.module('greenWalletServices', [])
                                                              'GA', devid).then(function(data) {
                                                         if (data) {
                                                             txSenderService.logged_in = data;
+                                                            onLogin(data);
                                                             return data;
                                                         } else { return $q.reject(gettext('Login failed')); }
                                                     });
@@ -1680,6 +1686,7 @@ angular.module('greenWalletServices', [])
         txSenderService.call('http://greenaddressit.com/login/watch_only',
             token_type, token, logout||false).then(function(data) {
                 txSenderService.watch_only = [token_type, token];
+                onLogin(data);
                 d.resolve(data);
             }, function(err) {
                 d.reject(err);
