@@ -235,7 +235,7 @@ angular.module('greenWalletServices', [])
                 if (!data.gait_path) {  // *NOTE*: don't change the path after signup, because it *will* cause locked funds
                     tx_sender.call('http://greenaddressit.com/login/set_gait_path', $scope.wallet.gait_path).catch(function(err) {
                         if (err.uri != 'http://api.wamp.ws/error#NoSuchRPCEndpoint') {
-                            notices.makeNotice('error', 'Please contact support (reference "sgp_error ' + err.desc + '")');
+                            notices.makeNotice('error', 'Please contact support (reference "sgp_error ' + err.args[1] + '")');
                         } else {
                             $scope.wallet.old_server = true;
                         }
@@ -258,7 +258,7 @@ angular.module('greenWalletServices', [])
                     return that.login($scope, hdwallet, mnemonic, signup, true, path_seed);
                 });
             } else {
-                notices.makeNotice('error', gettext('Login failed') + (err && err.desc && (': ' + err.desc) || ''));
+                notices.makeNotice('error', gettext('Login failed') + (err && err.args[1] && (': ' + err.args[1]) || ''));
                 return $q.reject(err);
             }
         });
@@ -569,7 +569,7 @@ angular.module('greenWalletServices', [])
                             });
                         }});
         }, function(err) {
-            notices.makeNotice('error', err.desc);
+            notices.makeNotice('error', err.args[1]);
             d.reject(err);
         }).finally(function() { $rootScope.decrementLoading(); });
         return d.promise
@@ -606,7 +606,9 @@ angular.module('greenWalletServices', [])
                 scope.tx = {
                     fee: fee,
                     value: value,
-                    recipient: $scope.send_tx.recipient.name || $scope.send_tx.recipient,
+                    recipient: $scope.send_tx.voucher ?
+                        gettext("Voucher") :
+                        ($scope.send_tx.recipient.name || $scope.send_tx.recipient)
                 };
                 var modal = $modal.open({
                     templateUrl: BASE_URL+'/'+LANG+'/wallet/partials/wallet_modal_confirm_tx.html',
@@ -979,7 +981,7 @@ angular.module('greenWalletServices', [])
                     }
                 }, function(reason) {
                     d.reject();
-                    notices.makeNotice('error', gettext('Transaction failed: ') + reason.desc);
+                    notices.makeNotice('error', gettext('Transaction failed: ') + reason.args[1]);
                     sound.play(BASE_URL + "/static/sound/wentwrong.mp3", $scope);
                 });
             }, d.reject);
@@ -1028,7 +1030,7 @@ angular.module('greenWalletServices', [])
                             that.codes_requested[that.twofactor_method] = true;
                             that.requesting_code = false;
                         }, function(err) {
-                            notices.makeNotice('error', err.desc);
+                            notices.makeNotice('error', err.args[1]);
                             that.requesting_code = false;
                         });
                     }};
@@ -1172,13 +1174,13 @@ angular.module('greenWalletServices', [])
                                     deferred.reject(gettext('Failed retrieving password.'))
                                 }
                             }, function(err) {
-                                deferred.reject(err.desc);
+                                deferred.reject(err.args[1]);
                             });
                     } else {
                         deferred.reject();
                     }
                 }, function(err) {
-                    deferred.reject(err.desc);
+                    deferred.reject(err.args[1]);
                 }
             );
             return deferred.promise;
@@ -1280,7 +1282,7 @@ angular.module('greenWalletServices', [])
                     delete calls_missed[cur_call];
                     d.resolve(data);
                 }, function(err) {
-                    if (err.uri == 'http://greenaddressit.com/error#internal' && err.desc == 'Authentication required') {
+                    if (err.args[0] == 'http://greenaddressit.com/error#internal' && err.args[1] == 'Authentication required') {
                         return; // keep in missed calls queue for after login
                     }
                     if (!calls_missed[cur_call]) return;  // avoid resolving the same call twice
@@ -2137,7 +2139,7 @@ angular.module('greenWalletServices', [])
                             that.update_with_items(items.concat(subaccounts), $routeParams);
                         }
                     }, function(err) {
-                        notices.makeNotice('error', gettext('Error reading address book: ') + err.desc);
+                        notices.makeNotice('error', gettext('Error reading address book: ') + err.args[1]);
                     }).finally(function() {
                         if (requires_load) {
                             $rootScope.decrementLoading();
