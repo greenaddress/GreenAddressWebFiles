@@ -1259,9 +1259,10 @@ angular.module('greenWalletServices', [])
             txSenderService.electrum.connectToServer();
         }
     }
-    var session, session_for_login, calls = [], calls_missed = {}, calls_counter = 0, global_login_d;
+    var connection, session, session_for_login, calls = [], calls_missed = {}, calls_counter = 0, global_login_d;
     var onLogin = function(data) {
-        session.subscribe('com.greenaddress.txs.wallet_' + data.receiving_id,
+        var s = session || session_for_login;
+        s.subscribe('com.greenaddress.txs.wallet_' + data.receiving_id,
                 function(event) {
             gaEvent('Wallet', 'TransactionNotification');
             $rootScope.$broadcast('transaction', event[0]);
@@ -1362,6 +1363,7 @@ angular.module('greenWalletServices', [])
                 if (txSenderService.wallet) txSenderService.wallet.clear();
                 $location.path('/concurrent_login');
             } else {
+                console.log(err);
                 notices.makeNotice('error', gettext('An error has occured which forced us to log you out.'))
                 if (txSenderService.wallet) txSenderService.wallet.clear();
                 $location.path('/');
@@ -1401,20 +1403,6 @@ angular.module('greenWalletServices', [])
         });
     };
     var disconnected = false, connecting = false, nconn = 0;
-    var monkey_patch_session_nonclean_close_reason = function(session) {
-        // Sometimes e.wasClean is false which causes autobahn to ignore e.code.
-        // We patch it here to be true in case of code != null to avoid missed
-        // concurrent login errors.
-        var onclose_orig = session._websocket.onclose.bind(session._websocket);
-        session._websocket.onclose = function(e) {
-            var mock_e = {
-                wasClean: e.code != null,
-                code: e.code,
-                reason: e.reason
-            };
-            onclose_orig(mock_e);
-        }
-    }
     var connect = function(login_d) {
         global_login_d = login_d;
         if (connecting) return;
@@ -1422,7 +1410,7 @@ angular.module('greenWalletServices', [])
         nconn += 1;
         var retries = 60, everConnected = false;
         (function (nc) {
-            var connection = new autobahn.Connection({
+            connection = new autobahn.Connection({
                 url: "ws://127.0.0.1:8080/v2/ws",
                 realm: "realm1",
                 authmethods: ["wampcra"],
@@ -1444,10 +1432,12 @@ angular.module('greenWalletServices', [])
                    oldjoin.bind(this)(realm, authmethods, token);
                 }.bind(this));
             }
+            connection.onclose = function() {
+                session = session_for_login = null;
+            }
             connection.onopen =
                 function(s) {
                     s.caller_disclose_me = true;
-                    //monkey_patch_session_nonclean_close_reason(s);
                     everConnected = true;
                     if (nc != nconn) {
                         // newer connection created - close the old one
@@ -1664,8 +1654,8 @@ angular.module('greenWalletServices', [])
     };
     txSenderService.logout = function() {
         if (session) {
-            session.close();
-            session = session_for_login = null;
+            connection.close();
+            session = session_lor_login = null;
         }
         for (var key in calls_missed) {
             delete calls_missed[key];
