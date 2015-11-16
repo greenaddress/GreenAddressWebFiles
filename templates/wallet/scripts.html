@@ -9,6 +9,7 @@
 {% endif %}
 {% if cdvapp %}<script src="{{STATIC_URL}}/js/typedarray.js"></script>  <!-- for android 4.1 -->
 <script src="{{STATIC_URL}}/js/plugins/com.cordova.plugin.softkeyboard/www/softkeyboard.js"></script>{% endif %}
+<script type="text/javascript" src="{{STATIC_URL}}/js/autobahn.min.js"></script>
 {% if DEVELOPMENT %}{% include "wallet/scripts.generated.html" %}{% else %}
 <script src="/static/js/greenwallet.min.js"></script>
 <script src="/static/js/jsqrcode.min.js"></script>{% endif %}
