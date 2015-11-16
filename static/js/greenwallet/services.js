@@ -1562,7 +1562,7 @@ angular.module('greenWalletServices', [])
                         var challenge_arg_resolves_main = false;
                         dev_d = dev_d.then(function() {
                             if (session_for_login) {
-                                return session_for_login.call('http://greenaddressit.com/login/get_trezor_challenge', addr);
+                                return session_for_login.call('com.greenaddress.login.get_trezor_challenge', [addr]);
                             } else if (!connecting) {
                                 waiting_for_device = false;
                                 disconnected = false;
@@ -1591,9 +1591,9 @@ angular.module('greenWalletServices', [])
                                     var signature = Bitcoin.ecdsa.parseSigCompact(Bitcoin.convert.hexToBytes(sig));
                                     trezor_dev.signing = false;
                                     return device_id().then(function(devid) {
-                                        return session_for_login.call('http://greenaddressit.com/login/authenticate',
-                                                [signature.r.toString(), signature.s.toString(), signature.i.toString()], logout||false,
-                                                 'GA', devid).then(function(data) {
+                                        return session_for_login.call('com.greenaddress.login.authenticate',
+                                                [[signature.r.toString(), signature.s.toString(), signature.i.toString()], logout||false,
+                                                 'GA', devid]).then(function(data) {
                                             if (data) {
                                                 txSenderService.logged_in = data;
                                                 onLogin(data);
@@ -1620,9 +1620,9 @@ angular.module('greenWalletServices', [])
                                             }
                                             return device_id().then(function(devid) {
                                                 if (session_for_login && session_for_login.nc == nconn) {
-                                                    return session_for_login.call('http://greenaddressit.com/login/authenticate',
-                                                            [signature.r.toString(), signature.s.toString(), i.toString()], logout||false,
-                                                             'GA', devid).then(function(data) {
+                                                    return session_for_login.call('com.greenaddress.login.authenticate',
+                                                            [[signature.r.toString(), signature.s.toString(), i.toString()], logout||false,
+                                                             'GA', devid]).then(function(data) {
                                                         if (data) {
                                                             txSenderService.logged_in = data;
                                                             onLogin(data);
