@@ -51,6 +51,12 @@ git commit -m"$MSG"
 git push
 cd ..
 
+
+
+ssh-agent -k
+eval "$(ssh-agent -s)"
+ssh-add webfiles
+
 git add locale
 git commit -m"Updated locale"
 git push
