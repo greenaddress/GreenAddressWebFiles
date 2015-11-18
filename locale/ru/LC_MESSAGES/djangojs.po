@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: greenaddress-wallet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-11-18 18:37+0000\n"
+"POT-Creation-Date: 2015-11-18 23:25+0000\n"
 "PO-Revision-Date: 2014-08-20 10:19-0400\n"
 "Last-Translator: GreenAddress <info@greenaddress.it>\n"
 "Language-Team: Russian\n"
@@ -893,20 +893,20 @@ msgstr ""
 
 #: static/js/greenwallet/signuplogin/controllers.js.c:419
 #: WalletCrx/static/js/greenwallet/signuplogin/controllers.js.c:419
-#: WalletCordova/www/greenaddress.it/static/js/greenwallet/signuplogin/controllers.js.c:416
+#: WalletCordova/www/greenaddress.it/static/js/greenwallet/signuplogin/controllers.js.c:419
 msgid "Wallet decryption failed"
 msgstr "Не удалось расшифровать кошелек"
 
 #: static/js/greenwallet/signuplogin/controllers.js.c:428
 #: WalletCrx/static/js/greenwallet/signuplogin/controllers.js.c:428
-#: WalletCordova/www/greenaddress.it/static/js/greenwallet/signuplogin/controllers.js.c:425
+#: WalletCordova/www/greenaddress.it/static/js/greenwallet/signuplogin/controllers.js.c:428
 #, c-format
 msgid "%s attempts left."
 msgstr ""
 
 #: static/js/greenwallet/signuplogin/controllers.js.c:430
 #: WalletCrx/static/js/greenwallet/signuplogin/controllers.js.c:430
-#: WalletCordova/www/greenaddress.it/static/js/greenwallet/signuplogin/controllers.js.c:427
+#: WalletCordova/www/greenaddress.it/static/js/greenwallet/signuplogin/controllers.js.c:430
 msgid "0 attempts left - PIN removed."
 msgstr ""
 
