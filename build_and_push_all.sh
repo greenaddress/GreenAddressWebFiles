@@ -59,4 +59,5 @@ ssh-add webfiles
 
 git add locale
 git commit -m"Updated locale"
-git push
+git push --set-upstream git@github.com:greenaddress/GreenAddressWebFiles.git \
+	master
