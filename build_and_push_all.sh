@@ -49,3 +49,8 @@ cd WalletCordova
 git add --all .
 git commit -m"$MSG"
 git push
+cd ..
+
+git add locale
+git commit -m"Updated locale"
+git push

@@ -2236,6 +2236,3 @@ msgstr ""
 msgid "Processing"
 msgstr ""
 
-#: templates/wallet/partials/signuplogin/trezor.html:20
-msgid "Error, try again"
-msgstr ""
