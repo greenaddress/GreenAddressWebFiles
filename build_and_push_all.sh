@@ -1,6 +1,9 @@
 #!/bin/bash
 
 MSG=$(git log --format=%B -n 1 $TRAVIS_COMMIT)
+
+[ "$MSG" != "Updated locale" ] || exit 1
+
 git config --global user.email "info@greenaddress.it"
 git config --global user.name "GreenAddress"
 
