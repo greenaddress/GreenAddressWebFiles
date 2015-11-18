@@ -7,22 +7,7 @@ import glob
 import os
 import subprocess
 
-import jinja2
-
-GETTEXT_LANGUAGES = (
-    'en',  # default
-    'it',
-    'de',
-    'es',
-    'fr',
-    'nl',
-    'el',
-    'pl',
-    'ru',
-    'sv',
-    'th',
-    'uk',
-)
+import gettext_finder
 
 TEMPLATES = {
     'wallet.html': 'wallet/wallet.html',
@@ -30,8 +15,6 @@ TEMPLATES = {
     'wallet/partials/signuplogin/*.html':
         'wallet/partials/signuplogin/*.html',
 }
-
-TEMPLATE_SEARCH_PATH = ['templates']
 
 try:
     # Used internally by GreenAddress for website deployment.
@@ -65,13 +48,9 @@ class TemplatesRenderer(object):
         self.hostname = hostname
         self.outdir = outdir
         self.cdvapp = cdvapp
-        self.env = jinja2.Environment(
-            autoescape=True,
-            loader=jinja2.FileSystemLoader(TEMPLATE_SEARCH_PATH),
-            extensions=['jinja2.ext.i18n', 'jinja2.ext.autoescape'],
-        )
+        self.env = gettext_finder.jinja_env
         self.trs = {}
-        for lang in GETTEXT_LANGUAGES:
+        for lang in gettext_finder.GETTEXT_LANGUAGES:
             self.trs[lang] = gettext.translation(
                 'django', 'locale', [lang], fallback=True
             )
@@ -149,7 +128,7 @@ globals.i18n_catalog = {\n"""
 
 
 def compile_domain(domain):
-    for locale in GETTEXT_LANGUAGES:
+    for locale in gettext_finder.GETTEXT_LANGUAGES:
         popath = os.path.join('locale', locale, "LC_MESSAGES", domain + ".po")
         mopath = os.path.join('locale', locale, "LC_MESSAGES", domain + ".mo")
         args = [
@@ -175,15 +154,17 @@ def main():
     parser.add_argument('--cordova', '-a', action='store_true',
         help="Build HTML for Cordova project")
 
+    if render_templates_deployment:
+        TEMPLATES.update(render_templates_deployment.TEMPLATES)
+        gettext_finder.TEMPLATE_SEARCH_PATH.extend(
+            render_templates_deployment.TEMPLATE_SEARCH_PATH)
+
     args = parser.parse_args()
+
+    gettext_finder.start()  # regenerate *.po
 
     compile_domain('django')
     compile_domain('djangojs')
-
-    if render_templates_deployment:
-        TEMPLATES.update(render_templates_deployment.TEMPLATES)
-        TEMPLATE_SEARCH_PATH.extend(
-            render_templates_deployment.TEMPLATE_SEARCH_PATH)
 
     renderer = TemplatesRenderer(
         hostname=args.hostname,
@@ -193,20 +174,20 @@ def main():
 
     for output, templates in TEMPLATES.iteritems():
         if output.endswith('*.html'):
-            for path in TEMPLATE_SEARCH_PATH:
+            for path in gettext_finder.TEMPLATE_SEARCH_PATH:
                 for fname in glob.glob(os.path.join(path, templates)):
                     fname = os.path.relpath(fname, path)
-                    for lang in GETTEXT_LANGUAGES:
+                    for lang in gettext_finder.GETTEXT_LANGUAGES:
                         renderer.process_template(
                             fname,
                             lang,
                             output.replace('*.html', os.path.basename(fname))
-                    )
+                        )
         else:
-            for lang in GETTEXT_LANGUAGES:
+            for lang in gettext_finder.GETTEXT_LANGUAGES:
                 renderer.process_template(templates, lang, output)
 
-    for lang in GETTEXT_LANGUAGES:
+    for lang in gettext_finder.GETTEXT_LANGUAGES:
         renderer.generate_js_catalog(lang)
 
 
