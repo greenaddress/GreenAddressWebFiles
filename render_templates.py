@@ -10,7 +10,7 @@ import subprocess
 import jinja2
 
 GETTEXT_LANGUAGES = (
-    'en', # default
+    'en',  # default
     'it',
     'de',
     'es',
@@ -28,7 +28,7 @@ TEMPLATES = {
     'wallet.html': 'wallet/wallet.html',
     'wallet/partials/*.html': 'wallet/partials/*.html',
     'wallet/partials/signuplogin/*.html':
-            'wallet/partials/signuplogin/*.html',
+        'wallet/partials/signuplogin/*.html',
 }
 
 TEMPLATE_SEARCH_PATH = ['templates']
@@ -39,6 +39,25 @@ try:
     import render_templates_deployment
 except ImportError:
     render_templates_deployment = None
+
+
+_js_escapes = {
+    ord(u'\\'): u'\\u005C',
+    ord(u'\''): u'\\u0027',
+    ord(u'"'): u'\\u0022',
+    ord(u'>'): u'\\u003E',
+    ord(u'<'): u'\\u003C',
+    ord(u'&'): u'\\u0026',
+    ord(u'='): u'\\u003D',
+    ord(u'-'): u'\\u002D',
+    ord(u';'): u'\\u003B',
+    ord(u'\u2028'): u'\\u2028',
+    ord(u'\u2029'): u'\\u2029'
+}
+
+
+def escapejs(txt):
+    return txt.translate(_js_escapes)
 
 
 class TemplatesRenderer(object):
@@ -53,8 +72,9 @@ class TemplatesRenderer(object):
         )
         self.trs = {}
         for lang in GETTEXT_LANGUAGES:
-            self.trs[lang] = gettext.translation('django',
-                'locale', [lang], fallback=True)
+            self.trs[lang] = gettext.translation(
+                'django', 'locale', [lang], fallback=True
+            )
             if not isinstance(self.trs[lang], gettext.GNUTranslations):
                 print "Translation file for %s not found." % lang
 
@@ -95,6 +115,37 @@ class TemplatesRenderer(object):
                 raise
         with open(os.path.join(self.outdir, lang, output), 'w+') as f:
             f.write(out.encode('utf-8'))
+
+    def generate_js_catalog(self, lang):
+        tr = gettext.translation('djangojs', 'locale', [lang], fallback=True)
+        s = """
+function get_catalog(globals) {
+globals.i18n_catalog = {\n"""
+        entries = []
+        plurals = {}
+        for key, val in tr._catalog.items():
+            if not key:
+                continue
+            if isinstance(key, tuple):
+                if key[0] in plurals:
+                    plurals[key[0]][key[1]] = val
+                else:
+                    plurals[key[0]] = {key[1]: val}
+            else:
+                entries.append('"%s": "%s"' % (escapejs(key), escapejs(val)))
+        for key, val in plurals.items():
+            sd = "{\n"
+            sds = []
+            for sk, sv in val.items():
+                sds.append("    %s: '%s'" % (sk, escapejs(sv)))
+            sd += ",\n".join(sds) + "}"
+            entries.append('"%s": %s' % (escapejs(key), sd))
+        s += ",\n".join(entries)
+        s += "\n};}"
+        with open(
+                os.path.join(self.outdir, lang, 'i18n_catalog.js'), 'w'
+                ) as f:
+            f.write(s.encode('utf-8'))
 
 
 def compile_domain(domain):
@@ -154,6 +205,9 @@ def main():
         else:
             for lang in GETTEXT_LANGUAGES:
                 renderer.process_template(templates, lang, output)
+
+    for lang in GETTEXT_LANGUAGES:
+        renderer.generate_js_catalog(lang)
 
 
 if __name__ == '__main__':
