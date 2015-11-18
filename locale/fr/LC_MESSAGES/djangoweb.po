@@ -1,0 +1,862 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: greenaddress-wallet\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-11-18 17:43+0100\n"
+"PO-Revision-Date: 2014-08-20 09:34-0400\n"
+"Last-Translator: GreenAddress <info@greenaddress.it>\n"
+"Language-Team: French\n"
+"Language: fr_FR\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Generator: crowdin.com\n"
+
+#: utils/rate_limiter.py:40
+msgid "Request rate limit exceeded"
+msgstr "Vous avez atteint la limite de volume de requêtes"
+
+#: templates/tests/jinja.html:20
+msgid "phone number"
+msgstr "Numéro de téléphone"
+
+#: templates/tests/jinja.html:21
+msgid "phone number: %(abc)s"
+msgstr "Numéro de téléphone : %(abc)s"
+
+#: templates/tests/jinja.html:22
+msgid "singular %(num)d"
+msgid_plural "plural %(num)d"
+msgstr[0] "singulier %(num)d"
+msgstr[1] "plural %(num)d"
+
+#: templates/website/about.html:5 templates/website/about.html:11
+msgid "About us"
+msgstr "À propos de nous"
+
+#: templates/website/about.html:25 templates/website/support.html:32
+msgid "Check us out on"
+msgstr "Retrouvez-nous sur"
+
+#: templates/website/about.html:43
+#, fuzzy
+msgid "Founder & CEO"
+msgstr "Fondateur"
+
+#: templates/website/about.html:53
+msgid "Full Stack Developer"
+msgstr "Développeur principal"
+
+#: templates/website/about.html:61
+msgid "Careers"
+msgstr "Carrières"
+
+#: templates/website/faq.html:5
+msgid "FAQ for GreenAddress Bitcoin wallet"
+msgstr "FAQ pour portefeuille GreenAddress Bitcoin"
+
+#: templates/website/faq.html:6
+msgid ""
+"GreenAddress FAQ: how to get a Bitcoin wallet? How secure are my bitcoins? "
+"Can I do instant payment?"
+msgstr ""
+"GreenAddress FAQ: how to get a Bitcoin wallet? How secure are my bitcoins? "
+"Can I do instant payment?"
+
+#: templates/website/faq.html:12
+msgid "Frequently Asked Questions"
+msgstr "Foire aux questions"
+
+#: templates/website/faq.html:14
+msgid "What currency exchange sources do you support?"
+msgstr "What currency exchange sources do you support?"
+
+#: templates/website/faq.html:15
+msgid " and "
+msgstr " and "
+
+#: templates/website/faq.html:16
+msgid ""
+"Can I migrate easily from another wallet (like blockchain.info)?  Can I "
+"sweep private keys funds into my wallet?"
+msgstr ""
+"Puis-je transférer mes fonds facilement depuis un autre portefeuille (comme "
+"blockchain.info)? Est-il possible d'importer (sweep) des clés privées sur "
+"mon porte-monnaie ?"
+
+#: templates/website/faq.html:17
+msgid ""
+"Yes and yes, you can, just have a look in the Receive Money tab, put your "
+"private key in the right field and client side the funds will be swept into "
+"your wallet. Voilà!"
+msgstr ""
+"Oui et oui, dans l'onglet \"Recevoir de l'argent\" vous pouvez importer vos "
+"clés privées. Les fonds seront importés directement sur votre porte-monnaie "
+"GreenAddress.it."
+
+#: templates/website/faq.html:19
+msgid "Can I try your service?  Do you have a testnet/UAT version?"
+msgstr ""
+"Est-il possible de tester votre service ? Avez-vous une version de test?"
+
+#: templates/website/faq.html:20
+msgid "Yes and yes, you can try our testnet version on "
+msgstr ""
+"Oui, et oui. Vous pouvez tester notre service sur notre version de test "
+
+#: templates/website/faq.html:20
+msgid " and you can find a testnet faucet on "
+msgstr "et vous trouverez un faucet de test sur "
+
+#: templates/website/faq.html:21
+msgid ""
+" Don't forget to send the testnet coins back to the faucet when you are done!"
+msgstr ""
+"N'oubliez pas de renvoyer les coins au faucet lorsque vous avez terminé!"
+
+#: templates/website/faq.html:24
+msgid "Do you support other platforms than a web page?"
+msgstr "Êtes-vous favorable autres plates-formes que d'une page web?"
+
+#: templates/website/faq.html:25
+msgid "Yes! You can download an Android app"
+msgstr "Oui! Vous pouvez télécharger une application Android"
+
+#: templates/website/faq.html:25
+msgid "from the Google Play store"
+msgstr "de la boutique Google Play"
+
+#: templates/website/faq.html:25
+msgid ", an iOS App"
+msgstr ", an iOS App"
+
+#: templates/website/faq.html:25
+msgid "from the iTunes Store "
+msgstr "from the iTunes Store "
+
+#: templates/website/faq.html:25
+msgid "and a Chrome packaged app"
+msgstr "et une application locale Chrome"
+
+#: templates/website/faq.html:25
+msgid "from the Chrome Web Store"
+msgstr "du Chrome Web Store"
+
+#: templates/website/faq.html:25
+msgid "All apps are open source and you can "
+msgstr "All apps are open source and you can "
+
+#: templates/website/faq.html:25
+msgid "see the source code of each on GitHub"
+msgstr "consulter le code source de chacune sur GitHub"
+
+#: templates/website/faq.html:25
+#, fuzzy
+msgid ""
+"It also uses Electrum servers for additional transaction verification, so it "
+"should be safe to use even if our servers are compromised."
+msgstr ""
+"Elle utilise également les serveurs <a href=\"http://electrum.org"
+"\">Electrum</a> pour effectuer des vérifications supplémentaires. Il est "
+"donc possible de l'utiliser en toute sécurité, même si nos serveurs devaient "
+"être compromis."
+
+#: templates/website/faq.html:28
+msgid "But what happens if your service goes away? Will I lose my coins?"
+msgstr ""
+"Si le service s'arrêtait du jour au lendemain, que se passerait-il ? Est-ce "
+"que je perdrais toutes mes coins ?"
+
+#: templates/website/faq.html:30
+msgid ""
+"GreenAddress signs each transaction with its own key in addition to client-"
+"side signing by user's keys, and funds are stored in 2-of-2 multisignature "
+"outputs requiring both signatures to spend. The drawback of it is that you "
+"cannot control your funds without GreenAddress' signature, so you are right "
+"to worry that you can lose your coins."
+msgstr ""
+"GreenAddress signs each transaction with its own key in addition to client-"
+"side signing by user's keys, and funds are stored in 2-of-2 multisignature "
+"outputs requiring both signatures to spend. The drawback of it is that you "
+"cannot control your funds without GreenAddress' signature, so you are right "
+"to worry that you can lose your coins."
+
+#: templates/website/faq.html:32
+msgid ""
+"But! We have solved this issue by providing nLockTime transactions which "
+"essentially make deposits 'expire' after some time, which allows redeeming "
+"them without our intervention after this pre-set period of time. It is "
+"enabled by default when you have email notifications and two factor enabled."
+msgstr ""
+"Mais ! Nous avons résolu ce problème grâce aux transactions nLockTime qui "
+"font \"expirer\" un dépôt après un certain temps, permettant de les "
+"débloquer sans notre intervention après un période de temps configurable. "
+"Cette fonction est activée par défaut si les notifications par mail et "
+"l'authentification à deux-facteurs sont activées."
+
+#: templates/website/faq.html:34
+msgid ""
+"This allows you to keep your ease of mind even in case GreenAddress "
+"disappears with its keys."
+msgstr ""
+"This allows you to keep your ease of mind even in case GreenAddress "
+"disappears with its keys."
+
+#: templates/website/faq.html:36
+msgid ""
+"It also means that every time the funds expire the user has to re-transfer "
+"them. This can be automated on login and notified in advance via email or "
+"manually done."
+msgstr ""
+"Cela signifie également qu'à chaque fois que les fonds expirent, "
+"l'utilisateur doit les re-transférer. Cela peut être effectué "
+"automatiquement lors de votre connexion, prévu à l'avance par email ou fait "
+"manuellement."
+
+#: templates/website/faq.html:38 templates/website/service.html:30
+msgid ""
+"For redeeming the funds after expiration, you can use a tool we've developed "
+"specifically for this purpose - see "
+msgstr ""
+"Pour réclamer des fonds après expiration, vous pouvez également utiliser "
+"l'outil que nous avons développé spécialement pour, voir "
+
+#: templates/website/faq.html:38
+msgid "and"
+msgstr "et"
+
+#: templates/website/faq.html:38
+msgid "its project on GitHub"
+msgstr "sa page GitHub"
+
+#: templates/website/faq.html:38
+msgid "It's open source!"
+msgstr "C'est open source !"
+
+#: templates/website/faq.html:41
+msgid "How is your wallet better than the others out there?"
+msgstr "Pourquoi votre porte-monnaie est meilleur que les autres ?"
+
+#: templates/website/faq.html:43
+msgid ""
+"For a simple high level comparison with a couple of web wallets please see "
+msgstr ""
+"Pour comparer rapidement les fonctionnalités de GreenAddress.it avec celles "
+"des autres porte-monnaies, consultez "
+
+#: templates/website/faq.html:43
+msgid "this"
+msgstr "ce"
+
+#: templates/website/faq.html:43
+msgid "table"
+msgstr "tableau"
+
+#: templates/website/faq.html:44
+msgid "We offer all the advantages of a web wallet:"
+msgstr "Vous offrons tous les avantages d'un porte-monnaie en ligne :"
+
+#: templates/website/faq.html:46
+msgid "Ubiquitously available"
+msgstr "Disponibilité ubiquitaire"
+
+#: templates/website/faq.html:47
+msgid "Social/email/SMS integration"
+msgstr "Interaction avec les outils sociaux, email et SMS"
+
+#: templates/website/faq.html:48
+msgid "Two factor authentication"
+msgstr "Authentification à deux-facteurs"
+
+#: templates/website/faq.html:49
+msgid "Transaction limits/restrictions"
+msgstr "Limites et restrictions pour les transactions"
+
+#: templates/website/faq.html:50
+msgid "Green address instant transaction confirmation"
+msgstr "Confirmation instantanée des transactions avec une Green Address"
+
+#: templates/website/faq.html:52
+msgid "And the advantages of a local software wallet like "
+msgstr "Et les avantages d'un porte-monnaie en local comme "
+
+#: templates/website/faq.html:54
+msgid "Mnemonic seed backup once and forget"
+msgstr "Code mnémonique, sauvegardez une fois et n'y pensez plus "
+
+#: templates/website/faq.html:55
+msgid "Your private keys are never stored on our servers, not even encrypted"
+msgstr ""
+"Vos clés privées ne sont jamais stockées sur nos serveurs, même chiffrées"
+
+#: templates/website/faq.html:56
+msgid "No lost time synchronizing the client with the full Bitcoin blockchain"
+msgstr ""
+"Pas de perte de temps à cause de la synchronisation avec toute la blockchain"
+
+#: templates/website/faq.html:58
+msgid ""
+"Simply put, we offer the best web wallet available: We include more features "
+"and security safeguards than the competition with a simple interface through "
+"your browser or phone."
+msgstr ""
+"Pour faire simple, nous proposons le meilleur système de porte monnaie "
+"actuellement disponible : nous mettons en oeuvre plus de fonctionnalités "
+"pour la sécurité que n'importe quel autre outil, le tout via une interface "
+"web simple accessible via ordinateur fixe ou smartphone."
+
+#: templates/website/faq.html:61
+msgid "Where are my Bitcoin keys stored?"
+msgstr "Où sont stockées mes clés Bitcoin ?"
+
+#: templates/website/faq.html:62
+msgid ""
+"Your keys are not stored. They are derived from your mnemonic passphrase and "
+"never sent to the server."
+msgstr ""
+"Elles ne sont pas stockées. Elles sont des dérivés de votre code mnémonic et "
+"ne sont jamais envoyées au serveur."
+
+#: templates/website/faq.html:64
+msgid "How does the PIN work?"
+msgstr "Comment fonctionne le PIN ?"
+
+#: templates/website/faq.html:65
+msgid ""
+"A random password (256 AES) is created and used to encrypt your mnemonics "
+"and store them on your device in encrypted form. The random password is sent "
+"server side and destroyed on the client. When during login the user provides "
+"the right PIN a mechanism will ask the server for the password which is used "
+"to decrypt the mnemnonic passphrase stored on your device and get you in "
+"your wallet. If the PIN is provided wrong for 3 times in a row the password "
+"is then deleted from our servers."
+msgstr ""
+"Un mot de passe aléatoire (256 AES) est généré et utilisé pour chiffrer vos "
+"codes mnémoniques et les stocker sur votre appareil (toujours chiffrés). Le "
+"mot de passe aléatoire est envoyé côté serveur et détruit sur le client. "
+"Pendant la phase de connexion, si l'utilisateur fournit le bon PIN un "
+"mecanisme va demander au serveur le mot de passe qui sera utilisé pour "
+"déchiffrer le code mnémonique stocké sur votre appareil afin de vous donner "
+"accès à votre porte-monnaie. Si un mauvais PIN est founit, au bout de trois "
+"tentatives consécutives le mot de passe sera effacé de nos serveurs."
+
+#: templates/website/faq.html:68
+msgid ""
+"When are you going to offer feature XYZ? I would like to access my wallet in "
+"my language, can you add it?"
+msgstr ""
+"Pouvez-vous ajouter telle ou telle fonctionnalité ? J'aimerais pouvoir "
+"utiliser mon porte-monnaie dans ma langue, pouvez-vous l'ajouter ?"
+
+#: templates/website/faq.html:70
+msgid ""
+"We are constantly looking for feedback from our users, if you want to "
+"provide some feedback or get involved feel free to PM on reddit (/u/BitFast) "
+"or send us an email at "
+msgstr ""
+"We are constantly looking for feedback from our users, if you want to "
+"provide some feedback or get involved feel free to PM on reddit (/u/BitFast) "
+"or send us an email at "
+
+#: templates/website/faq.html:71
+msgid ""
+"We have many features and language support for many languages in the "
+"pipeline, please check with us if you want to be kept up to date with "
+"development and please be patient :)"
+msgstr ""
+"Nous avons beaucoup de fonctionnalités en cours de développement et de "
+"nouvelles versions linguistiques dans les tuyaux, contactez-nous si vous "
+"voulez être mis au courant de l'avancement, et soyez patient ;)"
+
+#: templates/website/faq.html:72
+msgid ""
+"If you want to help with translation see them <a target=\"_blank_\" href="
+"\"http://translate.greenaddress.it\">here</a> and pull requests are welcome "
+"on <a href=\"https://github.com/greenaddress\" target=\"_blank\">GitHub</a>!"
+msgstr ""
+"If you want to help with translation see them <a target=\"_blank_\" href="
+"\"http://translate.greenaddress.it\">here</a> and pull requests are welcome "
+"on <a href=\"https://github.com/greenaddress\" target=\"_blank\">GitHub</a>!"
+
+#: templates/website/faq.html:74
+msgid "Do you have a donate button for linking to users payment URLs?"
+msgstr ""
+"Avez-vous un bouton de don pour renvoyer les utilisateurs vers une URL de "
+"paiement ?"
+
+#: templates/website/faq.html:76
+msgid "Sure have a look below (let us know if you have created one!)."
+msgstr ""
+"Tout à fait, voyez ci-dessous (tenez-nous au courant si vous en avez créé "
+"vous-même !)."
+
+#: templates/website/faq.html:80
+msgid "What exactly is an 'instant greenaddress transaction'?"
+msgstr "Qu'est-ce qu'une \"transaction greenaddress instantanée\" exactement ?"
+
+#: templates/website/faq.html:81
+msgid ""
+"Your transactions are protected by both your signature and by a signature we "
+"apply when we get your permission via two factor. With this protection, "
+"comes the fact that people receiving Bitcoin from you can trust the funds "
+"instantly as we provide a 'special' signature to your transaction when you "
+"require instant confirmation."
+msgstr ""
+"Vos transactions sont protégées non seulement par votre signature mais aussi "
+"par une signature que nous appliquons lors que nous recevons votre "
+"permission via deux-facteurs. Avec cette protection les destinataires "
+"peuvent instantanément être sûr que la transaction est valide et que les "
+"fonds existent étant donné que nous fournissons une adresse bitcoin "
+"\"spéciale\" de confiance."
+
+#: templates/website/faq.html:84
+msgid "What about cookies?"
+msgstr "Et concernant les cookies ?"
+
+#: templates/website/faq.html:86
+msgid ""
+"To enable GreenAddress to recognize your device and to provide features to "
+"you, we use cookies. Cookies are unique identifiers that we transfer to your "
+"device to enable our services to recognize your device and to provide "
+"features such as providing you with protection from Cross-site request "
+"forgery and display the site in the language you have selected or to not "
+"show you the EU cookie compliance info banner."
+msgstr ""
+"To enable GreenAddress to recognize your device and to provide features to "
+"you, we use cookies. Cookies are unique identifiers that we transfer to your "
+"device to enable our services to recognize your device and to provide "
+"features such as providing you with protection from Cross-site request "
+"forgery and display the site in the language you have selected or to not "
+"show you the EU cookie compliance info banner."
+
+#: templates/website/faq.html:91
+msgid ""
+"Yes! You can see our <a href=\"http://api.greenaddress.it/\">API "
+"documentation at GitHub Pages</a>."
+msgstr ""
+"Yes! You can see our <a href=\"http://api.greenaddress.it/\">API "
+"documentation at GitHub Pages</a>."
+
+#: templates/website/faq.html:95
+msgid ""
+"Yes! Our https site supports tor users, for onion specific urls see <a href="
+"\"http://s7a4rvc6425y72d2.onion\">s7a4rvc6425y72d2.onion</a> and <a href="
+"\"http://gu5ke7a2aguwfqhz.onion\">gu5ke7a2aguwfqhz.onion</a> respectively "
+"for prodnet and testnet"
+msgstr ""
+
+#: templates/website/faq.html:99
+msgid ""
+"Yes! One is available  <a href=\"http://blog.greenaddress.it/2of3recovery"
+"\">here</a>"
+msgstr ""
+
+#: templates/website/index.html:5
+#, fuzzy
+msgid "GreenAddress Bitcoin Wallet"
+msgstr "FAQ pour portefeuille GreenAddress Bitcoin"
+
+#: templates/website/index.html:6
+msgid ""
+"GreenAddress Wallet brings the most advanced protection level to your "
+"bitcoins without sacrifying usability or control."
+msgstr ""
+
+#: templates/website/index.html:31 templates/website/index.html:42
+msgid "Create your Wallet"
+msgstr "Créez un porte-monnaie"
+
+#: templates/website/index.html:42
+msgid "The safer "
+msgstr "Un porte-monnaie "
+
+#: templates/website/index.html:42
+msgid " wallet that puts "
+msgstr " sûr et dont "
+
+#: templates/website/index.html:42
+msgid "you"
+msgstr "vous "
+
+#: templates/website/index.html:42
+msgid " in control"
+msgstr "avez le contrôle"
+
+#: templates/website/index.html:44 templates/website/index.html:45
+#: templates/website/index.html:133 templates/website/index.html:195
+msgid "Improved security"
+msgstr "Plus de sécurité"
+
+#: templates/website/index.html:46
+msgid ""
+"Protect your bitcoins with both your key and ours, set spending limits, rate "
+"limited transactions and always be the only one in control"
+msgstr ""
+"Vos bitcoins sont protégés par un système de signature à deux clés. Mettez "
+"en place des plafonds de dépense et gardez le contrôle."
+
+#: templates/website/index.html:49 templates/website/index.html:50
+msgid "Quick login"
+msgstr "Quick Login"
+
+#: templates/website/index.html:51
+msgid ""
+"You can easily login in 'watch-only mode' via Facebook/Twitter/custom login "
+"with no compromise on security and privacy"
+msgstr ""
+"La connexion en mode lecture seule vous permet de vérifier vos comptes "
+"rapidement via Facebook ou Twitter, sans compromettre vos bitcoins."
+
+#: templates/website/index.html:54 templates/website/index.html:55
+msgid "Send money easily"
+msgstr "Transactions simples"
+
+#: templates/website/index.html:56
+msgid ""
+"Send money to a friend on Facebook, a follower on Twitter or to a "
+"colleague's email or mobile number"
+msgstr ""
+"Envoyez des bitcoins facilement à un ami sur Facebook, un follower sur "
+"Twitter où à n'importe qui d'autre par e-mail ou par SMS."
+
+#: templates/website/index.html:63
+msgid "Scroll to read more"
+msgstr "Plus de détails"
+
+#: templates/website/index.html:75
+msgid ""
+"        <p><h4>Bitcoin is the currency of the future</h4></p>        <p>We "
+"don't make you choose between security and convenience. And we don't "
+"compromise your <strong>privacy</strong>.</p>        <p>Our <strong>per-"
+"transaction</strong> two factor authentication, multi-signature and "
+"deterministic wallet allow you unprecedented control over your transactions."
+"</p>        <p>And, we <strong>never</strong> store your private keys, not "
+"even encrypted. At the same time we make it trivial to view and transfer "
+"your funds.</p>        <p>Take control of your future now, at GreenAddress.</"
+"p>        "
+msgstr ""
+"        <p><h4>Bitcoin est la monnaie du futur</h4></p>        <p>Vous "
+"n'êtes plus obligé de faire un choix entre la sécurité et le fonctionnel et "
+"nous refusons tout compromis quand il s'agit de vos <strong>données privées</"
+"strong>.</p>        <p>Notre système d'authentification à deux-facteurs "
+"<strong>\"par transaction\"</strong>, de multi-signatures et de porte-"
+"monnaie déterministe permettent un niveau de contrôle sans précédent de vos "
+"transactions.</p>        <p>Et nous ne stockons <strong>jamais</strong> "
+"aucune de vos clés privées, même chiffrées. Même avec toute cette sécurité "
+"nous faisons en sorte que la gestion de votre argent soit simple et "
+"intuitive.</p>        <p>Prenez votre futur en main, avec GreenAddress.</"
+"p>        "
+
+#: templates/website/index.html:94
+msgid ""
+"        <p><h4>Better privacy with your funds and safer login with watch-"
+"only</h4></p>        <p>Safely check your <strong>balance</strong> and "
+"<strong>transactions</strong> from public Wi-Fi, Starbucks and on the go.</"
+"p>        <p>With our unique <strong>watch-only</strong> mode you can "
+"quickly check your balance or receive funds without full access to your "
+"wallet.</p>        <p>Your <strong>keys</strong> are not loaded so no "
+"transaction are possible and settings can't be modified</p>        "
+msgstr ""
+"        <p><h4>Vos bitcoins restent en sécurité grâce au mode  \"watch-only"
+"\".</h4></p><p>Vérifiez vos avoirs et vos transactions en toute sécurité "
+"depuis une connexion publique dans un Starbucks, un McDonald's etc.</"
+"p>        <p>Avec notre mode lecture seule (watch-only) vous pouvez "
+"rapidement vérifier vos comptes ou recevoir des fonds sans avoir un accès "
+"total à votre portefeuille.</p>        <p>Vos <strong>clés</strong> ne sont "
+"pas utilisées donc aucune transaction sortante n'est possible et aucun "
+"paramètre ne peut être modifié.</p>        "
+
+#: templates/website/index.html:112
+msgid ""
+"        <p><h4>More features that allow convenient and secure access to your "
+"wallet</h4></p>        <p>Enable <strong>quick</strong> PIN login to your "
+"wallet from any of your devices without having to use your passphrase</"
+"p>        <p>Should our system be taken down or disappear, sleep "
+"<strong>safe</strong> with our automatic presigned transaction (nLockTime) "
+"allowing you to simply wait for your selected expiry to get your funds!</"
+"p>        <p>All transfers to your wallet (including change) will use a "
+"newly generated address each time making it harder for people you transact "
+"with to read your past and future transactions</p>        "
+msgstr ""
+"        <p><h4>Plus de fonctionnalités pour préserver la sécurité de votre "
+"portefeuille.</h4></p>        <p>Activez la connexion rapide avec votre PIN "
+"pour accéder à votre portefeuille depuis n'importe quel appareil sans être "
+"obligé d'utiliser votre passphrase.</p>        <p>Si notre service devait "
+"disparaître vous pouvez dormir tranquille grâce au système de pré-signature "
+"<strong>nLockTime</strong> qui vous permet de débloquer des fonds "
+"automatiquement après leur expiration.</p>        <p>Toutes les transactions "
+"entrantes sur votre porte-monnaie (y compris les retours de monnaie) sont "
+"effectuées sur une nouvelle adresse générée aléatoirement, rendant plus "
+"difficile pour vos contacts le traçage de vos transactions.</p>        "
+
+#: templates/website/index.html:129
+msgid "Wallet"
+msgstr "Porte-monnaie"
+
+#: templates/website/index.html:130 templates/website/index.html:177
+msgid "You are in control"
+msgstr "Vous avez le contrôle"
+
+#: templates/website/index.html:131 templates/website/index.html:183
+msgid "Instant confirmation"
+msgstr "Confirmation instantanée"
+
+#: templates/website/index.html:132 templates/website/index.html:189
+msgid "Social integration"
+msgstr "Compatible médias sociaux"
+
+#: templates/website/index.html:134 templates/website/index.html:201
+msgid "Improved privacy"
+msgstr "Vie privée"
+
+#: templates/website/index.html:210
+msgid ""
+"          1) Hot wallets can be emptied and cold wallets may have delays, "
+"bugs or be lost<br>          2) If the service is compromised brute force "
+"attacks may be tried on your encrypted wallet, requires strong password."
+"<br>          3) Access to user wallets requires that both the user and the "
+"service are compromised at the same time which reduces risks.          "
+msgstr ""
+"          1) Les porte-monnaies \"hot\" (en ligne) peuvent être vidés et "
+"ceux hors ligne (cold) peuvent subir des ralentissement, bugs ou peuvent "
+"être perdus<br>          2) Si le service est compromis des attaques de type "
+"brute force peuvent être tentées sur votre portefeuille ce qui vous oblige à "
+"avoir un mot de passe très fort.<br>          3) Un accès frauduleux à votre "
+"porte-monnaie ne pourrait avoir lieu que si les deux parties ont été "
+"compromises (l'utilisateur et notre service) en même temps, ce qui réduit "
+"grandement les risques."
+
+#: templates/website/index.html:223
+msgid "Under the hood"
+msgstr "Encore plus de détails"
+
+#: templates/website/index.html:230
+msgid ""
+"<h3>We use  hierarchical deterministic wallets</h3>(or BIP0032 HD Wallet) "
+"which means we use new addresses for each incoming transaction (including "
+"change), which, together with coinjoin (coming soon) allows you to maintain "
+"your privacy at the highest standard."
+msgstr ""
+"<h3>Nous utilisons un système de porte-monnaies déterministes hiérarchiques</"
+"h3><br>(ou porte-monnaie BIP0032 HD) ce qui signifie que nous générons une "
+"nouvelle adresse à chaque fois qu'une transaction entrante est effectuée (y "
+"compris pour les retours de monnaie), ce qui, allié au système CoinJoin "
+"(bientôt), fournit les standards de sécurité les plus exigeants du moment."
+
+#: templates/website/index.html:236
+msgid ""
+"<h3>Quickly check your balance</h3>You can use a number of third party "
+"services (like Facebook) to quickly check if you have received a transaction "
+"or to check your balance without exposing your wallet, indeed quite "
+"convenient when in a hurry and/or on a third party computer"
+msgstr ""
+"<h3>Coup d'oeil rapide sur vos avoirs</h3><br>Vous pouvez utiliser un "
+"certain nombre de services tiers pour vous connecter à votre porte-monnaie "
+"rapidement pour voir si vous avez reçu une transaction ou simplement "
+"vérifier vos comptes sans compromettre la sécurité de vos fonds. Ce qui est "
+"très appréciable quand on doit se connecter via un WiFi publique ou sur un "
+"l'appareil de quelqu'un d'autre"
+
+#: templates/website/index.html:244
+msgid ""
+"<h3>We provide presigned transactions</h3>In order to provide limits and two "
+"factor your funds are secured with both your key and ours. For ease of mind, "
+"presigned transaction are enabled (uses nlocktime) which means that each "
+"time your wallet has updates we will forward to you a presigned transaction "
+"unlocking the funds at a date in the future of your choice."
+msgstr ""
+"<h3>Transactions pré-signées</h3><br> Pour optimiser la sécurité de vos "
+"avoirs, les transactions sont signées grâce à un système de double clé, la "
+"notre et la votre. Mais si notre système venait à disparaître nous avons mis "
+"en place des transactions pré-signées permettant de transférer des fonds "
+"après un certain temps (configurable), ce qui signifie qu'à chaque fois que "
+"votre porte-monnaie est mis à jour nous vous envoyons une transaction pré-"
+"signée débloquant vos fonds à une date et une adresse de votre choix "
+"(utilise nLockTime)."
+
+#: templates/website/index.html:250
+msgid ""
+"<h3>We use P2SH to make this all easy</h3>P2SH allows people you interact "
+"with to handle transactions to and from GreenAddress' wallets transparently."
+msgstr ""
+"<h3>Pay To Script Hash</h3><br>Nous utilisons les adresses P2SH, permet aux "
+"utilisateurs avec qui vous communiquez de traiter les transaction vers et "
+"depuis un porte-monnaie GreenAddress de façon transparente."
+
+#: templates/website/index.html:258
+msgid ""
+"<h3>We offer our second signature</h3>Which allows us to offer and enforce 2 "
+"factor authenticated payments and daily, weekly and monthly limits, rate "
+"limiting your transactions per hour, day,  week and month and make your "
+"payment instant by providing a double spend checks with GreenAddress!"
+msgstr ""
+"<h3>La double signature</h3><br>Ce système de double signature nous permet "
+"de renforcer la sécurité en imposant une double authentification lors de "
+"chaque paiement, de proposer des limites de dépenses ou de la fréquence à "
+"laquelle vous pouvez envoyer de l'argent, mais nous permet aussi de vérifier "
+"les doubles dépenses instantanément et ainsi de confirmer immédiatement vos "
+"transaction!"
+
+#: templates/website/index.html:264
+msgid ""
+"<h3>Send money to anyone via SMS, Twitter, Facebook, etc</h3>If the user has "
+"an account at GreenAddress they will be immediately notified of the transfer "
+"which will be instantly added to their balance. If they don’t have an "
+"account they will receive a notification with a link to redeem the funds "
+"requiring a password (BIP0038) of your choice that you will be asked to "
+"notify them of via a second channel. The funds will always be in your "
+"control while not yet redeemed."
+msgstr ""
+"<h3>Envoyez de l'argent via SMS, Twitter, Facebook etc.</h3><br>Si le "
+"destinataire possède également un compte GreenAddress il sera instantanément "
+"prévenu et l'argent sera immédiatement ajouté à son solde. Si il n'a pas de "
+"compte chez nous il recevra une simple notification avec un lien pour "
+"réclamer l'argent à l'aide d'un mot de passe (BIP0038) que vous aurez "
+"configuré. Tant que les fonds ne sont pas réclamés ils restent sous votre "
+"contrôle."
+
+#: templates/website/instant.html:7
+msgid "Verify instant transaction"
+msgstr "Verify instant transaction"
+
+#: templates/website/instant.html:25
+msgid "Verify a GreenAddress instant confirmation!"
+msgstr "Verify a GreenAddress instant confirmation!"
+
+#: templates/website/instant.html:25
+msgid "Please provide transaction details below"
+msgstr "Please provide transaction details below"
+
+#: templates/website/instant.html:27 templates/website/instant.html:32
+msgid "Transaction hash"
+msgstr "Transaction hash"
+
+#: templates/website/instant.html:38
+msgid "Recipient verification signature"
+msgstr "Recipient verification signature"
+
+#: templates/website/instant.html:39
+msgid "Please sign the following message"
+msgstr "Please sign the following message"
+
+#: templates/website/instant.html:39
+msgid ""
+"You can either provide the signature yourself (recommended), <strong>or</"
+"strong>, if your client doesn't support signing messages, paste your private "
+"key in WIF format. The key will be used in your browser only to sign the "
+"message."
+msgstr ""
+"You can either provide the signature yourself (recommended), <strong>or</"
+"strong>, if your client doesn't support signing messages, paste your private "
+"key in WIF format. The key will be used in your browser only to sign the "
+"message."
+
+#: templates/website/instant.html:43
+msgid "Signature"
+msgstr "Signature"
+
+#: templates/website/instant.html:46
+msgid "or"
+msgstr "ou"
+
+#: templates/website/instant.html:49
+msgid "WIF Private Key"
+msgstr "WIF Private Key"
+
+#: templates/website/instant.html:55
+msgid "Error"
+msgstr "Error"
+
+#: templates/website/instant.html:58
+msgid "Verify transaction"
+msgstr "Verify transaction"
+
+#: templates/website/instant.html:64
+msgid "Verification successful!"
+msgstr "Verification successful!"
+
+#: templates/website/instant.html:64
+msgid "is covered by GreenAddress instant confirmation."
+msgstr "is covered by GreenAddress instant confirmation."
+
+#: templates/website/instant.html:67
+msgid "Verification failed!"
+msgstr "Verification failed!"
+
+#: templates/website/instant.html:67
+msgid "is not covered by GreenAddress instant confirmation."
+msgstr "is not covered by GreenAddress instant confirmation."
+
+#: templates/website/instant.html:70
+msgid "Try again"
+msgstr "Try again"
+
+#: templates/website/pay.html:6
+msgid "Send funds"
+msgstr "Envoyer des fonds"
+
+#: templates/website/pay.html:9
+msgid "Please send"
+msgstr "Merci d'envoyer"
+
+#: templates/website/privacy.html:5
+msgid "Privacy Policy"
+msgstr "Privacy Policy"
+
+#: templates/website/redeem.html:6
+msgid "Redeem funds"
+msgstr "Réclamer des fonds"
+
+#: templates/website/redeem.html:9
+msgid "You've received"
+msgstr "Vous avez reçu"
+
+#: templates/website/service.html:23
+msgid "The service is currently unavailable!"
+msgstr ""
+
+#: templates/website/service.html:23
+#, fuzzy
+msgid "Please retry later"
+msgstr "Entrez le "
+
+#: templates/website/service.html:25
+msgid "Your funds are safe"
+msgstr ""
+
+#: templates/website/service.html:31
+msgid ""
+"For 2of3 recovery see this guide  <a href=\"http://blog.greenaddress."
+"it/2of3recovery\">here</a>"
+msgstr ""
+
+#: templates/website/service.html:37
+msgid "Want to get in touch? Email us!"
+msgstr ""
+
+#: templates/website/support.html:5
+msgid "Support and contacts for GreenAddress Bitcoin wallet"
+msgstr "Support et contacts pour GreenAddress Bitcoin portefeuille"
+
+#: templates/website/support.html:6
+msgid ""
+"GreenAddress contacts details. We are here to listen to your suggestions for "
+"a better and safer Bitcoin online wallet."
+msgstr ""
+"GreenAddress contacts details. We are here to listen to your suggestions for "
+"a better and safer Bitcoin online wallet."
+
+#: templates/website/support.html:22
+msgid "For any issue, you can email us at"
+msgstr "En cas de problème, contactez-nous à "
+
+#: templates/website/support.html:24
+#, fuzzy
+msgid "Or leave us a message on"
+msgstr "J'ai envoyé le message"
+
+#: templates/website/tos.html:5
+msgid "Terms of Service"
+msgstr "Conditions d'utilisation"

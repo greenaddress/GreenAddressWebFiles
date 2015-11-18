@@ -1,0 +1,844 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: greenaddress-wallet\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-11-18 17:43+0100\n"
+"PO-Revision-Date: 2014-08-24 12:04-0400\n"
+"Last-Translator: GreenAddress <info@greenaddress.it>\n"
+"Language-Team: Hungarian\n"
+"Language: hu_HU\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: crowdin.com\n"
+
+#: utils/rate_limiter.py:40
+msgid "Request rate limit exceeded"
+msgstr "Túllépted a lekérdezési sebesség limitet"
+
+#: templates/tests/jinja.html:20
+msgid "phone number"
+msgstr "telefonszám"
+
+#: templates/tests/jinja.html:21
+msgid "phone number: %(abc)s"
+msgstr "telefonszám: %(abc)s"
+
+#: templates/tests/jinja.html:22
+msgid "singular %(num)d"
+msgid_plural "plural %(num)d"
+msgstr[0] "singular %(num)d"
+msgstr[1] "többes számú %(num)d"
+
+#: templates/website/about.html:5 templates/website/about.html:11
+msgid "About us"
+msgstr "Rólunk"
+
+#: templates/website/about.html:25 templates/website/support.html:32
+msgid "Check us out on"
+msgstr "Check us out on"
+
+#: templates/website/about.html:43
+msgid "Founder & CEO"
+msgstr "Alapító & vezérigazgató"
+
+#: templates/website/about.html:53
+msgid "Full Stack Developer"
+msgstr "Teljes Stack-fejlesztő"
+
+#: templates/website/about.html:61
+msgid "Careers"
+msgstr "Karrierek"
+
+#: templates/website/faq.html:5
+msgid "FAQ for GreenAddress Bitcoin wallet"
+msgstr "Gyakori kérdések a GreenAddress Bitcoin pénztárcával kapcsolatban"
+
+#: templates/website/faq.html:6
+msgid ""
+"GreenAddress FAQ: how to get a Bitcoin wallet? How secure are my bitcoins? "
+"Can I do instant payment?"
+msgstr ""
+"GreenAddress GYIK: hogy kaphatok egy Bitcoin pénztárcát? Mennyire vannak "
+"biztonságban a bitcoin-jaim? Tudok azonnali fizetést végrehajtani?"
+
+#: templates/website/faq.html:12
+msgid "Frequently Asked Questions"
+msgstr "Gyakran ismételt kérdések"
+
+#: templates/website/faq.html:14
+msgid "What currency exchange sources do you support?"
+msgstr "Milyen devizapiaci árfolyam forrásokat támogattok?"
+
+#: templates/website/faq.html:15
+msgid " and "
+msgstr " és "
+
+#: templates/website/faq.html:16
+msgid ""
+"Can I migrate easily from another wallet (like blockchain.info)?  Can I "
+"sweep private keys funds into my wallet?"
+msgstr ""
+"Át tudom könnyen hozni a pénzemet egy másik pénztárcából (pl. blockchain."
+"info)? Ki tudom üríteni (sweep) egy privát kulcsomon lévő pénzemet a "
+"pénztárcámba?"
+
+#: templates/website/faq.html:17
+msgid ""
+"Yes and yes, you can, just have a look in the Receive Money tab, put your "
+"private key in the right field and client side the funds will be swept into "
+"your wallet. Voilà!"
+msgstr ""
+"Igen, és igen lehet, csak vess egy pillantást a Pénz Fogadása fülre, helyezd "
+"a privát kulcsod a jobb oldali mezőbe és a pénz már besöprésre is került a "
+"pénztárcádba, mindez a kliens oldalon. Ennyi!"
+
+#: templates/website/faq.html:19
+msgid "Can I try your service?  Do you have a testnet/UAT version?"
+msgstr "Kipróbálhatom a szolgáltatásotokat? Van testnet/UAT verziótok?"
+
+#: templates/website/faq.html:20
+msgid "Yes and yes, you can try our testnet version on "
+msgstr "Igen, és igen kipróbálhatod a testnet verziót a "
+
+#: templates/website/faq.html:20
+msgid " and you can find a testnet faucet on "
+msgstr " és megtalálhatod a testnet faucet-et a "
+
+#: templates/website/faq.html:21
+msgid ""
+" Don't forget to send the testnet coins back to the faucet when you are done!"
+msgstr " Ne felejtsd el visszaküldeni az testnet coin-okat miután végeztél!"
+
+#: templates/website/faq.html:24
+msgid "Do you support other platforms than a web page?"
+msgstr "Támogattok más platformokat, mint egy weboldal?"
+
+#: templates/website/faq.html:25
+msgid "Yes! You can download an Android app"
+msgstr "Igen! Letölthető egy Android app"
+
+#: templates/website/faq.html:25
+msgid "from the Google Play store"
+msgstr "a Google Play bolt-ból"
+
+#: templates/website/faq.html:25
+msgid ", an iOS App"
+msgstr ", egy iOS App"
+
+#: templates/website/faq.html:25
+msgid "from the iTunes Store "
+msgstr "az iTunes Store-ból "
+
+#: templates/website/faq.html:25
+msgid "and a Chrome packaged app"
+msgstr "és egy Chrome csomagolt app"
+
+#: templates/website/faq.html:25
+msgid "from the Chrome Web Store"
+msgstr "a Chrome Web áruházból"
+
+#: templates/website/faq.html:25
+msgid "All apps are open source and you can "
+msgstr "Minden app nyílt forráskódú és "
+
+#: templates/website/faq.html:25
+msgid "see the source code of each on GitHub"
+msgstr "mindegyik forráskódját megnézheted a GitHub-on"
+
+#: templates/website/faq.html:25
+#, fuzzy
+msgid ""
+"It also uses Electrum servers for additional transaction verification, so it "
+"should be safe to use even if our servers are compromised."
+msgstr ""
+"<a href=\"http://electrum.org\"> Elektrum</a> szervereket is használ a "
+"tranzakciók további ellenőrzéshez, így még akkor is biztonságos a "
+"használata, ha a mi szervereinket feltörték."
+
+#: templates/website/faq.html:28
+msgid "But what happens if your service goes away? Will I lose my coins?"
+msgstr "De mi történik, ha a szolgáltatás eltűnik? Elveszítem az coin-jaimat?"
+
+#: templates/website/faq.html:30
+msgid ""
+"GreenAddress signs each transaction with its own key in addition to client-"
+"side signing by user's keys, and funds are stored in 2-of-2 multisignature "
+"outputs requiring both signatures to spend. The drawback of it is that you "
+"cannot control your funds without GreenAddress' signature, so you are right "
+"to worry that you can lose your coins."
+msgstr ""
+"A kliens oldali, felhasználó privát kulcsával történő aláíráson túl a "
+"GreenAddress minden egyes tranzakciót a saját kulcsával is aláír és a pénzek "
+"2-ből-2 többszörös aláírással (2-of-2 multisig) vannak tárolva, ami mindkét "
+"fél aláírását igényli az elköltéshez.  Ennek a hátulütője, hogy nem "
+"rendelkezhetsz a pénzed felett a GreenAddress aláírása nélkül. Emiatt jogos "
+"az aggodalmad, hogy elvesztheted a coin-jaidat."
+
+#: templates/website/faq.html:32
+msgid ""
+"But! We have solved this issue by providing nLockTime transactions which "
+"essentially make deposits 'expire' after some time, which allows redeeming "
+"them without our intervention after this pre-set period of time. It is "
+"enabled by default when you have email notifications and two factor enabled."
+msgstr ""
+"De! Megoldottuk a problémát egy nLockTime tranzakció segítségével, ami "
+"tulajdonképpen lejáratja a betéteket egy idő után. Ez lehetővé teszi, hogy "
+"hozzáférj a betétedhez egy előre definiált idő után, a mi közbeavatkozásunk "
+"nélkül is. Ez alapértelmezésben be van kapcsolva, ha engedélyezted az email "
+"értesítéseket és a két tényezős autentikációt."
+
+#: templates/website/faq.html:34
+msgid ""
+"This allows you to keep your ease of mind even in case GreenAddress "
+"disappears with its keys."
+msgstr ""
+"Ez lehetővé teszi, hogy nyugodtan aludhass, még abban az esetben is, ha a "
+"GreenAddress eltűnne a saját kulcsaival."
+
+#: templates/website/faq.html:36
+msgid ""
+"It also means that every time the funds expire the user has to re-transfer "
+"them. This can be automated on login and notified in advance via email or "
+"manually done."
+msgstr ""
+"Ez azt is jelenti, hogy minden alkalommal, amikor a betéted lejár, újra át "
+"kell utalni őket. Ez lehet automatikus a belépéskor és előzetesen e-mail "
+"értesítés alapján vagy kézzel is végezhető."
+
+#: templates/website/faq.html:38 templates/website/service.html:30
+msgid ""
+"For redeeming the funds after expiration, you can use a tool we've developed "
+"specifically for this purpose - see "
+msgstr ""
+"A pénzed felszabadításához a lejáratot követően használhatsz egy eszközt is. "
+"Fejlesztettünk egy alkalmazást, kifejezetten erre a célra. Lásd "
+
+#: templates/website/faq.html:38
+msgid "and"
+msgstr "és"
+
+#: templates/website/faq.html:38
+msgid "its project on GitHub"
+msgstr "a projektje megtalálható a GitHub-on"
+
+#: templates/website/faq.html:38
+msgid "It's open source!"
+msgstr "És nyílt forráskódú!"
+
+#: templates/website/faq.html:41
+msgid "How is your wallet better than the others out there?"
+msgstr "Mennyiben jobb a pénztárcátok, mint másoké?"
+
+#: templates/website/faq.html:43
+msgid ""
+"For a simple high level comparison with a couple of web wallets please see "
+msgstr ""
+"Egy egyszerű, magas szintű összehasonlítás néhány más internetes "
+"pénztárcával: "
+
+#: templates/website/faq.html:43
+msgid "this"
+msgstr "ez"
+
+#: templates/website/faq.html:43
+msgid "table"
+msgstr "táblázat"
+
+#: templates/website/faq.html:44
+msgid "We offer all the advantages of a web wallet:"
+msgstr "Egy webes pénztárca minden előnyével rendelkezünk:"
+
+#: templates/website/faq.html:46
+msgid "Ubiquitously available"
+msgstr "Mindenütt kapható"
+
+#: templates/website/faq.html:47
+msgid "Social/email/SMS integration"
+msgstr "Közösségi integráció/e-mail/SMS"
+
+#: templates/website/faq.html:48
+msgid "Two factor authentication"
+msgstr "Két faktoros azonosítást"
+
+#: templates/website/faq.html:49
+msgid "Transaction limits/restrictions"
+msgstr "Tranzakció korlátok/korlátozások"
+
+#: templates/website/faq.html:50
+msgid "Green address instant transaction confirmation"
+msgstr "Zöld-cím azonnali ügylet-visszaigazolás"
+
+#: templates/website/faq.html:52
+msgid "And the advantages of a local software wallet like "
+msgstr "És egy helyi alkalmazás az előnyei mint "
+
+#: templates/website/faq.html:54
+msgid "Mnemonic seed backup once and forget"
+msgstr "Elég csak a mnemonikod elmentened"
+
+#: templates/website/faq.html:55
+msgid "Your private keys are never stored on our servers, not even encrypted"
+msgstr ""
+"A privát kulcsaid soha nem kerülnek tárolásra a szervereinken, még "
+"titkosítva sem"
+
+#: templates/website/faq.html:56
+msgid "No lost time synchronizing the client with the full Bitcoin blockchain"
+msgstr ""
+"Nincs elvesztegetett idő a kliens szinkronilázásával a teljes Bitcoin "
+"blockchain-nel"
+
+#: templates/website/faq.html:58
+msgid ""
+"Simply put, we offer the best web wallet available: We include more features "
+"and security safeguards than the competition with a simple interface through "
+"your browser or phone."
+msgstr ""
+"Simply put, we offer the best web wallet available: We include more features "
+"and security safeguards than the competition with a simple interface through "
+"your browser or phone."
+
+#: templates/website/faq.html:61
+msgid "Where are my Bitcoin keys stored?"
+msgstr "Hol vannak a Bitcoin kulcsaim tárolva?"
+
+#: templates/website/faq.html:62
+msgid ""
+"Your keys are not stored. They are derived from your mnemonic passphrase and "
+"never sent to the server."
+msgstr ""
+"Your keys are not stored. They are derived from your mnemonic passphrase and "
+"never sent to the server."
+
+#: templates/website/faq.html:64
+msgid "How does the PIN work?"
+msgstr "Hogyan működik a PIN-kód?"
+
+#: templates/website/faq.html:65
+msgid ""
+"A random password (256 AES) is created and used to encrypt your mnemonics "
+"and store them on your device in encrypted form. The random password is sent "
+"server side and destroyed on the client. When during login the user provides "
+"the right PIN a mechanism will ask the server for the password which is used "
+"to decrypt the mnemnonic passphrase stored on your device and get you in "
+"your wallet. If the PIN is provided wrong for 3 times in a row the password "
+"is then deleted from our servers."
+msgstr ""
+"A random password (256 AES) is created and used to encrypt your mnemonics "
+"and store them on your device in encrypted form. The random password is sent "
+"server side and destroyed on the client. When during login the user provides "
+"the right PIN a mechanism will ask the server for the password which is used "
+"to decrypt the mnemnonic passphrase stored on your device and get you in "
+"your wallet. If the PIN is provided wrong for 3 times in a row the password "
+"is then deleted from our servers."
+
+#: templates/website/faq.html:68
+msgid ""
+"When are you going to offer feature XYZ? I would like to access my wallet in "
+"my language, can you add it?"
+msgstr ""
+"When are you going to offer feature XYZ? I would like to access my wallet in "
+"my language, can you add it?"
+
+#: templates/website/faq.html:70
+msgid ""
+"We are constantly looking for feedback from our users, if you want to "
+"provide some feedback or get involved feel free to PM on reddit (/u/BitFast) "
+"or send us an email at "
+msgstr ""
+"We are constantly looking for feedback from our users, if you want to "
+"provide some feedback or get involved feel free to PM on reddit (/u/BitFast) "
+"or send us an email at "
+
+#: templates/website/faq.html:71
+msgid ""
+"We have many features and language support for many languages in the "
+"pipeline, please check with us if you want to be kept up to date with "
+"development and please be patient :)"
+msgstr ""
+"We have many features and language support for many languages in the "
+"pipeline, please check with us if you want to be kept up to date with "
+"development and please be patient :)"
+
+#: templates/website/faq.html:72
+msgid ""
+"If you want to help with translation see them <a target=\"_blank_\" href="
+"\"http://translate.greenaddress.it\">here</a> and pull requests are welcome "
+"on <a href=\"https://github.com/greenaddress\" target=\"_blank\">GitHub</a>!"
+msgstr ""
+"If you want to help with translation see them <a target=\"_blank_\" href="
+"\"http://translate.greenaddress.it\">here</a> and pull requests are welcome "
+"on <a href=\"https://github.com/greenaddress\" target=\"_blank\">GitHub</a>!"
+
+#: templates/website/faq.html:74
+msgid "Do you have a donate button for linking to users payment URLs?"
+msgstr "Do you have a donate button for linking to users payment URLs?"
+
+#: templates/website/faq.html:76
+msgid "Sure have a look below (let us know if you have created one!)."
+msgstr "Sure have a look below (let us know if you have created one!)."
+
+#: templates/website/faq.html:80
+msgid "What exactly is an 'instant greenaddress transaction'?"
+msgstr "What exactly is an 'instant greenaddress transaction'?"
+
+#: templates/website/faq.html:81
+msgid ""
+"Your transactions are protected by both your signature and by a signature we "
+"apply when we get your permission via two factor. With this protection, "
+"comes the fact that people receiving Bitcoin from you can trust the funds "
+"instantly as we provide a 'special' signature to your transaction when you "
+"require instant confirmation."
+msgstr ""
+"Your transactions are protected by both your signature and by a signature we "
+"apply when we get your permission via two factor. With this protection, "
+"comes the fact that people receiving Bitcoin from you can trust the funds "
+"instantly as we provide a 'special' signature to your transaction when you "
+"require instant confirmation."
+
+#: templates/website/faq.html:84
+msgid "What about cookies?"
+msgstr "Mi a helyzet a cookie-kal?"
+
+#: templates/website/faq.html:86
+msgid ""
+"To enable GreenAddress to recognize your device and to provide features to "
+"you, we use cookies. Cookies are unique identifiers that we transfer to your "
+"device to enable our services to recognize your device and to provide "
+"features such as providing you with protection from Cross-site request "
+"forgery and display the site in the language you have selected or to not "
+"show you the EU cookie compliance info banner."
+msgstr ""
+"To enable GreenAddress to recognize your device and to provide features to "
+"you, we use cookies. Cookies are unique identifiers that we transfer to your "
+"device to enable our services to recognize your device and to provide "
+"features such as providing you with protection from Cross-site request "
+"forgery and display the site in the language you have selected or to not "
+"show you the EU cookie compliance info banner."
+
+#: templates/website/faq.html:91
+msgid ""
+"Yes! You can see our <a href=\"http://api.greenaddress.it/\">API "
+"documentation at GitHub Pages</a>."
+msgstr ""
+"Yes! You can see our <a href=\"http://api.greenaddress.it/\">API "
+"documentation at GitHub Pages</a>."
+
+#: templates/website/faq.html:95
+msgid ""
+"Yes! Our https site supports tor users, for onion specific urls see <a href="
+"\"http://s7a4rvc6425y72d2.onion\">s7a4rvc6425y72d2.onion</a> and <a href="
+"\"http://gu5ke7a2aguwfqhz.onion\">gu5ke7a2aguwfqhz.onion</a> respectively "
+"for prodnet and testnet"
+msgstr ""
+
+#: templates/website/faq.html:99
+msgid ""
+"Yes! One is available  <a href=\"http://blog.greenaddress.it/2of3recovery"
+"\">here</a>"
+msgstr ""
+
+#: templates/website/index.html:5
+#, fuzzy
+msgid "GreenAddress Bitcoin Wallet"
+msgstr "Gyakori kérdések a GreenAddress Bitcoin pénztárcával kapcsolatban"
+
+#: templates/website/index.html:6
+msgid ""
+"GreenAddress Wallet brings the most advanced protection level to your "
+"bitcoins without sacrifying usability or control."
+msgstr ""
+
+#: templates/website/index.html:31 templates/website/index.html:42
+msgid "Create your Wallet"
+msgstr "Hozz létre egy pénztárcát"
+
+#: templates/website/index.html:42
+msgid "The safer "
+msgstr "A biztonságosabb "
+
+#: templates/website/index.html:42
+msgid " wallet that puts "
+msgstr " pénztárca, ami "
+
+#: templates/website/index.html:42
+msgid "you"
+msgstr "kezedbe"
+
+#: templates/website/index.html:42
+msgid " in control"
+msgstr " adja az irányítást"
+
+#: templates/website/index.html:44 templates/website/index.html:45
+#: templates/website/index.html:133 templates/website/index.html:195
+msgid "Improved security"
+msgstr "Továbbfejlesztett biztonság"
+
+#: templates/website/index.html:46
+msgid ""
+"Protect your bitcoins with both your key and ours, set spending limits, rate "
+"limited transactions and always be the only one in control"
+msgstr ""
+"Védd meg a bitcoinjaidat a saját és a mi kulcsunkat kombinálva, állíts be "
+"költési limiteket és mindig maradjon a kezedben az irányítás"
+
+#: templates/website/index.html:49 templates/website/index.html:50
+msgid "Quick login"
+msgstr "Gyors belépés"
+
+#: templates/website/index.html:51
+msgid ""
+"You can easily login in 'watch-only mode' via Facebook/Twitter/custom login "
+"with no compromise on security and privacy"
+msgstr ""
+"Bármikor beléphetsz megfigyelő módban Facebook/Twitter/egyedi "
+"bejelentkezéssel, anélkül hogy bármit feladnál a biztonságból és "
+"adatvédelemből"
+
+#: templates/website/index.html:54 templates/website/index.html:55
+msgid "Send money easily"
+msgstr "Küldj pénzt egyszerűen"
+
+#: templates/website/index.html:56
+msgid ""
+"Send money to a friend on Facebook, a follower on Twitter or to a "
+"colleague's email or mobile number"
+msgstr ""
+"Küldj pénzt egy barátodnak a Facebook-on, egy követődnek a Twitteren vagy "
+"egy kollegád email címére vagy mobil számára"
+
+#: templates/website/index.html:63
+msgid "Scroll to read more"
+msgstr "Görgess tovább"
+
+#: templates/website/index.html:75
+msgid ""
+"        <p><h4>Bitcoin is the currency of the future</h4></p>        <p>We "
+"don't make you choose between security and convenience. And we don't "
+"compromise your <strong>privacy</strong>.</p>        <p>Our <strong>per-"
+"transaction</strong> two factor authentication, multi-signature and "
+"deterministic wallet allow you unprecedented control over your transactions."
+"</p>        <p>And, we <strong>never</strong> store your private keys, not "
+"even encrypted. At the same time we make it trivial to view and transfer "
+"your funds.</p>        <p>Take control of your future now, at GreenAddress.</"
+"p>        "
+msgstr ""
+"<p><h4>A Bitcoin a jövő pénzneme</h4></p> <p>Velünk nem kell a biztonság és "
+"a kényelem között választanod. Mi nem veszélyeztetjük a <strong>személyes "
+"adataidat</strong>.</p> <p>A mi <strong>tranzakciónkénti</strong> két "
+"lépéses hitelesítésünk, több aláírásos és determinisztikus pénztárcánk  "
+"egyedülálló felügyeletet biztosít számodra a tranzakcióid felett.</p> <p>És "
+"mi <strong>soha</strong> nem tároljuk a privát kulcsaidat, még titkosítva "
+"sem. Ugyanakkor egyszerűn megnézheted és átutalhatod a pénzed.</p> <p>Vedd "
+"át az irányítást a jövőd felett most, a GreenAddress-szel.</p>"
+
+#: templates/website/index.html:94
+msgid ""
+"        <p><h4>Better privacy with your funds and safer login with watch-"
+"only</h4></p>        <p>Safely check your <strong>balance</strong> and "
+"<strong>transactions</strong> from public Wi-Fi, Starbucks and on the go.</"
+"p>        <p>With our unique <strong>watch-only</strong> mode you can "
+"quickly check your balance or receive funds without full access to your "
+"wallet.</p>        <p>Your <strong>keys</strong> are not loaded so no "
+"transaction are possible and settings can't be modified</p>        "
+msgstr ""
+"        <p><h4>Jobb személyes adatvédelem és biztonságosabb belépés a csak-"
+"néző móddal</h4></p>        <p>Ellenőrizd <strong>egyenleged</strong> és "
+"<strong>tranzakcióid</strong> biztonságosan nyilvános Wi-Fi-ről, Starbucks-"
+"ból és útközben.</p>        <p>Az egyedi <strong>csak-nézőh</strong> "
+"módunkkal gyorsan ellenőrizheted egyenleged vagy fogadhatsz pénzt, anélkül "
+"hogy teljes hozzáférést kérnél pénztárcádhoz</p>        <p>A "
+"<strong>kulcsaid</strong> nem töltődnek be, így nem lehetséges tranzakciót "
+"indítani vagy beállításokat változtatni.</p>        "
+
+#: templates/website/index.html:112
+msgid ""
+"        <p><h4>More features that allow convenient and secure access to your "
+"wallet</h4></p>        <p>Enable <strong>quick</strong> PIN login to your "
+"wallet from any of your devices without having to use your passphrase</"
+"p>        <p>Should our system be taken down or disappear, sleep "
+"<strong>safe</strong> with our automatic presigned transaction (nLockTime) "
+"allowing you to simply wait for your selected expiry to get your funds!</"
+"p>        <p>All transfers to your wallet (including change) will use a "
+"newly generated address each time making it harder for people you transact "
+"with to read your past and future transactions</p>        "
+msgstr ""
+"<p><h4>További funkciók, amik kényelmes és biztonságos hozzáférést "
+"biztosítanak a pénztárcádhoz</h4></p> <p><strong>Gyors</strong> PIN belépés "
+"a pénztárcádba bármelyik eszközödről anélkül, hogy a jelszavad kéne "
+"használnod.  </p> <p>Ha a rendszerünk leállna vagy eltűnne, "
+"<strong>nyugodtan</strong> aludhatsz az automatikus előre aláírt "
+"tranzakciónk segítségével (nLockTime), ami lehetővé teszi hogy egyszerűen "
+"kivárd az általad beállított lejárati időt, hogy hozzájuss pénzedhez!</p> "
+"<p>Minden átutalás a pénztárcádra (a váltást is beleértve) egy újonnan "
+"generált címet használ, ezzel megnehezítve a múlt és jövőbeli tranzakcióid "
+"megtekintését azok által, akikkel tranzakciót bonyolítasz</p>"
+
+#: templates/website/index.html:129
+msgid "Wallet"
+msgstr "Pénztárca"
+
+#: templates/website/index.html:130 templates/website/index.html:177
+msgid "You are in control"
+msgstr "Kezedben az irányítás"
+
+#: templates/website/index.html:131 templates/website/index.html:183
+msgid "Instant confirmation"
+msgstr "Azonnali visszaigazolás"
+
+#: templates/website/index.html:132 templates/website/index.html:189
+msgid "Social integration"
+msgstr "Közösségi integráció"
+
+#: templates/website/index.html:134 templates/website/index.html:201
+msgid "Improved privacy"
+msgstr "Továbbfejlesztett személyes adatvédelem"
+
+#: templates/website/index.html:210
+msgid ""
+"          1) Hot wallets can be emptied and cold wallets may have delays, "
+"bugs or be lost<br>          2) If the service is compromised brute force "
+"attacks may be tried on your encrypted wallet, requires strong password."
+"<br>          3) Access to user wallets requires that both the user and the "
+"service are compromised at the same time which reduces risks.          "
+msgstr ""
+"1) Online pénztárcák kiürülhetnek és az offline pénztárcáknál "
+"előfordulhatnak késések, hibák vagy elveszhetnek<br> 2) Használj erős "
+"jelszót a pénztárcád titkosítására, arra az esetre, ha a szolgáltatást "
+"feltörnék és brute force támadással próbálkoznának. <br> 3) A felhasználó "
+"pénztárcájához való hozzáféréshez a felhasználó és a szolgáltatás is "
+"ugyanabban az időben kell, hogy feltörésre kerüljön, ami csökkenti a "
+"kockázatokat."
+
+#: templates/website/index.html:223
+msgid "Under the hood"
+msgstr "A motorháztető alatt"
+
+#: templates/website/index.html:230
+msgid ""
+"<h3>We use  hierarchical deterministic wallets</h3>(or BIP0032 HD Wallet) "
+"which means we use new addresses for each incoming transaction (including "
+"change), which, together with coinjoin (coming soon) allows you to maintain "
+"your privacy at the highest standard."
+msgstr ""
+"<h3>Hierarchikus determinisztikus pénztárcákat használunk</h3>(BIP0032 HD "
+"pénztárca), ami azt jelenti, hogy új címet használunk minden bejövő "
+"tranzakcióhoz (beleértve a váltást is), ami coinjoin-nal (hamarosan "
+"elérhető) együtt lehetővé teszi, hogy a legmagasabb színvonalon megőrizd a "
+"névtelenséged ."
+
+#: templates/website/index.html:236
+msgid ""
+"<h3>Quickly check your balance</h3>You can use a number of third party "
+"services (like Facebook) to quickly check if you have received a transaction "
+"or to check your balance without exposing your wallet, indeed quite "
+"convenient when in a hurry and/or on a third party computer"
+msgstr ""
+"<h3>Gyors egyenleg ellenőrzés</h3>Számos harmadik fél szolgáltatását "
+"használhatod (például Facebook), hogy gyorsan ellenőrízd, hogy megkaptál-e "
+"egy utalást vagy megnézd az egyenleged anélkül, hogy fel kéne fedned a "
+"pénztárcádat. Kényelmes, ha sietsz vagy másnak a gépét használod"
+
+#: templates/website/index.html:244
+msgid ""
+"<h3>We provide presigned transactions</h3>In order to provide limits and two "
+"factor your funds are secured with both your key and ours. For ease of mind, "
+"presigned transaction are enabled (uses nlocktime) which means that each "
+"time your wallet has updates we will forward to you a presigned transaction "
+"unlocking the funds at a date in the future of your choice."
+msgstr ""
+"<h3>Előre létrehozott tranzakciók</h3>Pénzed a te és mi kulcsunkkal is "
+"biztosítva van, lehetővé téve a tranzakciós limiteket és a két tényezős "
+"hozzáférést. A nyugalmad érdekében az előre létrehozott tranzakció "
+"engedélyezve van (nlocktime használatával). Ez azt jelenti, hogy minden "
+"alkalommal, amikor a pénztárcád módosul, mi továbbítunk neked egy előre "
+"létrehozott tranzakciót a pénzed felszabadítására, egy általad választott "
+"jövőbeli időpontban. "
+
+#: templates/website/index.html:250
+msgid ""
+"<h3>We use P2SH to make this all easy</h3>P2SH allows people you interact "
+"with to handle transactions to and from GreenAddress' wallets transparently."
+msgstr ""
+"<h3>P2SH használunk, hogy mindez könnyű legyen</h3>A P2SH lehetővé teszi a "
+"GreenAddress pénztárcákba és pénztárcákból érkező tranzakciók átlátható "
+"kezelését azok számára,  akikkel kapcsolatban vagy."
+
+#: templates/website/index.html:258
+msgid ""
+"<h3>We offer our second signature</h3>Which allows us to offer and enforce 2 "
+"factor authenticated payments and daily, weekly and monthly limits, rate "
+"limiting your transactions per hour, day,  week and month and make your "
+"payment instant by providing a double spend checks with GreenAddress!"
+msgstr ""
+"<h3>Felkínáljuk a második aláírásunkat</h3>Amely lehetővé teszi számunkra, "
+"hogy 2 tényezős azonosítású fizetési tranzakciókat nyújtsunk és "
+"érvényesítsünk. Ezenfelül ennek segítségével napi, heti és havi limiteket "
+"állíthatsz be pénztárcádra illetve lehetővé teszi a GreenAddress azonnali "
+"fizetést a dupla költés ellenőrzés segítségével!"
+
+#: templates/website/index.html:264
+msgid ""
+"<h3>Send money to anyone via SMS, Twitter, Facebook, etc</h3>If the user has "
+"an account at GreenAddress they will be immediately notified of the transfer "
+"which will be instantly added to their balance. If they don’t have an "
+"account they will receive a notification with a link to redeem the funds "
+"requiring a password (BIP0038) of your choice that you will be asked to "
+"notify them of via a second channel. The funds will always be in your "
+"control while not yet redeemed."
+msgstr ""
+"<h3>Küldj pénzt bárkinek SMS-ben, Twitter-en, Facebook-on, stb.</h3>Ha a "
+"felhasználó rendelkezik GreenAddress fiókkal, akkor az összeg azonnal "
+"hozzáadásra kerül az egyenlegéhez és egy azonnali értesítést is kap az "
+"átutalásról. Ha a címzett nem rendelkezik GreenAddress fiókkal, akkor egy "
+"értesítést kap egy linkkel, amivel beválthatja az utalványod egy általad "
+"választott jelszó segítségével (BIP0038). Az általad választott jelszót "
+"másik csatornán kell eljuttatnod a címzettnek. A pénzről mindaddig te "
+"rendelkezel, amíg az utalványod beváltásra nem kerül."
+
+#: templates/website/instant.html:7
+msgid "Verify instant transaction"
+msgstr "Verify instant transaction"
+
+#: templates/website/instant.html:25
+msgid "Verify a GreenAddress instant confirmation!"
+msgstr "Verify a GreenAddress instant confirmation!"
+
+#: templates/website/instant.html:25
+msgid "Please provide transaction details below"
+msgstr "Please provide transaction details below"
+
+#: templates/website/instant.html:27 templates/website/instant.html:32
+msgid "Transaction hash"
+msgstr "Transaction hash"
+
+#: templates/website/instant.html:38
+msgid "Recipient verification signature"
+msgstr "Recipient verification signature"
+
+#: templates/website/instant.html:39
+msgid "Please sign the following message"
+msgstr "Please sign the following message"
+
+#: templates/website/instant.html:39
+msgid ""
+"You can either provide the signature yourself (recommended), <strong>or</"
+"strong>, if your client doesn't support signing messages, paste your private "
+"key in WIF format. The key will be used in your browser only to sign the "
+"message."
+msgstr ""
+"You can either provide the signature yourself (recommended), <strong>or</"
+"strong>, if your client doesn't support signing messages, paste your private "
+"key in WIF format. The key will be used in your browser only to sign the "
+"message."
+
+#: templates/website/instant.html:43
+msgid "Signature"
+msgstr "Aláírás"
+
+#: templates/website/instant.html:46
+msgid "or"
+msgstr "vagy"
+
+#: templates/website/instant.html:49
+msgid "WIF Private Key"
+msgstr "WIF Private Key"
+
+#: templates/website/instant.html:55
+msgid "Error"
+msgstr "Hiba"
+
+#: templates/website/instant.html:58
+msgid "Verify transaction"
+msgstr "Verify transaction"
+
+#: templates/website/instant.html:64
+msgid "Verification successful!"
+msgstr "Sikeres ellenőrzés!"
+
+#: templates/website/instant.html:64
+msgid "is covered by GreenAddress instant confirmation."
+msgstr "is covered by GreenAddress instant confirmation."
+
+#: templates/website/instant.html:67
+msgid "Verification failed!"
+msgstr "Verification failed!"
+
+#: templates/website/instant.html:67
+msgid "is not covered by GreenAddress instant confirmation."
+msgstr "is not covered by GreenAddress instant confirmation."
+
+#: templates/website/instant.html:70
+msgid "Try again"
+msgstr "Try again"
+
+#: templates/website/pay.html:6
+msgid "Send funds"
+msgstr "Pénz küldése"
+
+#: templates/website/pay.html:9
+msgid "Please send"
+msgstr "Please send"
+
+#: templates/website/privacy.html:5
+msgid "Privacy Policy"
+msgstr "Privacy Policy"
+
+#: templates/website/redeem.html:6
+msgid "Redeem funds"
+msgstr "Redeem funds"
+
+#: templates/website/redeem.html:9
+msgid "You've received"
+msgstr "You've received"
+
+#: templates/website/service.html:23
+msgid "The service is currently unavailable!"
+msgstr ""
+
+#: templates/website/service.html:23
+#, fuzzy
+msgid "Please retry later"
+msgstr "Légyszives, írd be a "
+
+#: templates/website/service.html:25
+msgid "Your funds are safe"
+msgstr ""
+
+#: templates/website/service.html:31
+msgid ""
+"For 2of3 recovery see this guide  <a href=\"http://blog.greenaddress."
+"it/2of3recovery\">here</a>"
+msgstr ""
+
+#: templates/website/service.html:37
+msgid "Want to get in touch? Email us!"
+msgstr ""
+
+#: templates/website/support.html:5
+msgid "Support and contacts for GreenAddress Bitcoin wallet"
+msgstr "Support and contacts for GreenAddress Bitcoin wallet"
+
+#: templates/website/support.html:6
+msgid ""
+"GreenAddress contacts details. We are here to listen to your suggestions for "
+"a better and safer Bitcoin online wallet."
+msgstr ""
+"GreenAddress contacts details. We are here to listen to your suggestions for "
+"a better and safer Bitcoin online wallet."
+
+#: templates/website/support.html:22
+msgid "For any issue, you can email us at"
+msgstr "For any issue, you can email us at"
+
+#: templates/website/support.html:24
+#, fuzzy
+msgid "Or leave us a message on"
+msgstr "Küldtem az üzenetet"
+
+#: templates/website/tos.html:5
+msgid "Terms of Service"
+msgstr "Felhasználási Feltételek"

@@ -1,0 +1,804 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: greenaddress-wallet\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-11-18 17:43+0100\n"
+"PO-Revision-Date: 2014-08-20 09:25-0400\n"
+"Last-Translator: GreenAddress <info@greenaddress.it>\n"
+"Language-Team: Thai\n"
+"Language: th_TH\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: crowdin.com\n"
+
+#: utils/rate_limiter.py:40
+msgid "Request rate limit exceeded"
+msgstr "ถึงขีดจำกัดของเรทที่ร้องขอ"
+
+#: templates/tests/jinja.html:20
+msgid "phone number"
+msgstr "หมายเลขโทรศัพท์"
+
+#: templates/tests/jinja.html:21
+msgid "phone number: %(abc)s"
+msgstr "หมายเลขโทรศัพท์: %(abc)s"
+
+#: templates/tests/jinja.html:22
+msgid "singular %(num)d"
+msgid_plural "plural %(num)d"
+msgstr[0] "พหูพจน์ %(num)d"
+
+#: templates/website/about.html:5 templates/website/about.html:11
+msgid "About us"
+msgstr "เกี่ยวกับเรา"
+
+#: templates/website/about.html:25 templates/website/support.html:32
+msgid "Check us out on"
+msgstr "ติดตามพวกเราได้ที่ "
+
+#: templates/website/about.html:43
+#, fuzzy
+msgid "Founder & CEO"
+msgstr "ผู้ก่อตั้ง"
+
+#: templates/website/about.html:53
+msgid "Full Stack Developer"
+msgstr "ผู้พัฒนาครบวงจร"
+
+#: templates/website/about.html:61
+msgid "Careers"
+msgstr "ร่วมงานกับเรา"
+
+#: templates/website/faq.html:5
+msgid "FAQ for GreenAddress Bitcoin wallet"
+msgstr "FAQ สำหรับ Wallet GreenAddress"
+
+#: templates/website/faq.html:6
+msgid ""
+"GreenAddress FAQ: how to get a Bitcoin wallet? How secure are my bitcoins? "
+"Can I do instant payment?"
+msgstr ""
+"GreenAddress FAQ: จะได้ wallet บิทคอยน์ได้อย่างไร บิทคอยน์จะปลอดภัยเพีงใด "
+"จะชำระแบบทันทีได้หรือไม่?"
+
+#: templates/website/faq.html:12
+msgid "Frequently Asked Questions"
+msgstr "คำถามที่พบบ่อย"
+
+#: templates/website/faq.html:14
+msgid "What currency exchange sources do you support?"
+msgstr "คุณต้องการแหล่งแลกเปลี่ยนสกุลเงินใด?"
+
+#: templates/website/faq.html:15
+msgid " and "
+msgstr " และ "
+
+#: templates/website/faq.html:16
+msgid ""
+"Can I migrate easily from another wallet (like blockchain.info)?  Can I "
+"sweep private keys funds into my wallet?"
+msgstr ""
+"ฉันจะสามารถย้ายจาก wallet อื่นเช่น blockchain ได้หรือไม่ จะย้ายกองทุนคีย์ส่วนตัวมายัง "
+"Wallet ได้หรือไม่"
+
+#: templates/website/faq.html:17
+msgid ""
+"Yes and yes, you can, just have a look in the Receive Money tab, put your "
+"private key in the right field and client side the funds will be swept into "
+"your wallet. Voilà!"
+msgstr ""
+"ใช่ คุณสามารถทำได้ ดูที่แทบเงินที่ได้รับ ใส่คีย์ส่วนตัวไปในช่องขวาและด้านลูกข่ายเพื่อให้ย้ายไปที่ "
+"Wallet ของคุณ"
+
+#: templates/website/faq.html:19
+msgid "Can I try your service?  Do you have a testnet/UAT version?"
+msgstr "จะสามรถทดลองบริการได้หรือไม่ มีเวอร์ชั่น testnet/UAT หรือไม่"
+
+#: templates/website/faq.html:20
+msgid "Yes and yes, you can try our testnet version on "
+msgstr "สามารถทำได้ ไปทดลองเวอร์ชั่น testnet ได้ที่"
+
+#: templates/website/faq.html:20
+msgid " and you can find a testnet faucet on "
+msgstr " และคุณสามารถหา testnet faucet ได้จาก  "
+
+#: templates/website/faq.html:21
+msgid ""
+" Don't forget to send the testnet coins back to the faucet when you are done!"
+msgstr " อย่าลืมส่งเหรียญ testnet กลับไปยัง faucet เมื่อเสร็จ"
+
+#: templates/website/faq.html:24
+msgid "Do you support other platforms than a web page?"
+msgstr "สนับสนุนแพลตฟอร์มอื่น ๆ นอกจากเว็บเพจหรือไม่"
+
+#: templates/website/faq.html:25
+msgid "Yes! You can download an Android app"
+msgstr "ได้ คุณสามารถดาวน์โหลด Android app"
+
+#: templates/website/faq.html:25
+msgid "from the Google Play store"
+msgstr "จาก Google Play store"
+
+#: templates/website/faq.html:25
+msgid ", an iOS App"
+msgstr "แอพของ iOS"
+
+#: templates/website/faq.html:25
+msgid "from the iTunes Store "
+msgstr "จาก iTunes Store "
+
+#: templates/website/faq.html:25
+msgid "and a Chrome packaged app"
+msgstr "และแอพ Chrome packaged "
+
+#: templates/website/faq.html:25
+msgid "from the Chrome Web Store"
+msgstr "จาก Chrome Web Store"
+
+#: templates/website/faq.html:25
+msgid "All apps are open source and you can "
+msgstr "ทุกแอพเป็นแบบเปิดและคุณสามารถ "
+
+#: templates/website/faq.html:25
+msgid "see the source code of each on GitHub"
+msgstr "ดู source code ได้บน GitHub"
+
+#: templates/website/faq.html:25
+#, fuzzy
+msgid ""
+"It also uses Electrum servers for additional transaction verification, so it "
+"should be safe to use even if our servers are compromised."
+msgstr ""
+"นอกจากนี้ยังใช้ <a href=\"http://electrum.org\">Electrum</a> "
+"เซอร์เวอร์สำหรับการยืนยันธุรกรรมภายนอกเพิ่มเติม "
+"ดังนั้นจึงมีความปลอดภัยสูงแม้ในระหว่างที่เซอร์เวอร์เรามีปัญหา"
+
+#: templates/website/faq.html:28
+msgid "But what happens if your service goes away? Will I lose my coins?"
+msgstr "แต่จะเกิดสิ่งใดขึ้นหากบริการของคุณหายไป จะสูญคอยน์หรือไม่?"
+
+#: templates/website/faq.html:30
+msgid ""
+"GreenAddress signs each transaction with its own key in addition to client-"
+"side signing by user's keys, and funds are stored in 2-of-2 multisignature "
+"outputs requiring both signatures to spend. The drawback of it is that you "
+"cannot control your funds without GreenAddress' signature, so you are right "
+"to worry that you can lose your coins."
+msgstr ""
+"GreenAddress ได้มีการรองรับธุรกรรมทุกอย่างด้วยคีย์ของตนเอง "
+"เพิ่มเติมจากการรองรับโดยคีย์ของผู้ใช้ และกองทุนถูกเก็บในแบบการเซ็นแบบรองรับหลายชั้นแบบ 2-2 "
+"โดยอาศัยการรองรับจาก 2 ฝั่งเพื่อใช้งานได้ "
+"จุดสังเกตคือจะไม่สามารถจัดการกองทุนได้ปราศจากลายเซ็น GreenAddress "
+"จึงอาจสร้างความกังวลให้คุณได้."
+
+#: templates/website/faq.html:32
+msgid ""
+"But! We have solved this issue by providing nLockTime transactions which "
+"essentially make deposits 'expire' after some time, which allows redeeming "
+"them without our intervention after this pre-set period of time. It is "
+"enabled by default when you have email notifications and two factor enabled."
+msgstr ""
+"แต่เราได้แก้ไขปัญหาแล้วโดยการนำธุรกรรม nLockTime "
+"มาใช้เพื่อให้การฝากเงินบางรายการหมดอายุเมื่อผ่านไประยะหนึ่ง "
+"ที่อนุญาตให้คุณแลกคืนได้โดยปราศจากการแทรกแซงของเราหลังจากหมดเวลา "
+"ฟังก์ชั่นนี้ทำงานอัตโนมัติเมื่อเปิดการแจ้งเตือนอีเมล์หรือรหัสผ่าน 2 ขั้น"
+
+#: templates/website/faq.html:34
+msgid ""
+"This allows you to keep your ease of mind even in case GreenAddress "
+"disappears with its keys."
+msgstr "ด้วยวิธีนี้จะทำให้คุณจดจำได้แม้กระทั่งเวลาที่ GreenAddress  สูญหายไปพร้อมคีย์."
+
+#: templates/website/faq.html:36
+msgid ""
+"It also means that every time the funds expire the user has to re-transfer "
+"them. This can be automated on login and notified in advance via email or "
+"manually done."
+msgstr ""
+"นั่นหมายถึงว่าทุกครั้งที่กองทุนหมดอายุลูกค้าจะต้องทำการฝากใหม่ "
+"ซึ่งสามารถทำได้อัตโนมัติโดยการเข้าระบบและมีการแจ้งเตือนล่วงหน้าผ่านทางอีเมล์หรือทำด้วยตนเอง"
+
+#: templates/website/faq.html:38 templates/website/service.html:30
+msgid ""
+"For redeeming the funds after expiration, you can use a tool we've developed "
+"specifically for this purpose - see "
+msgstr ""
+"สำหรับการแลกคืนกองทุนที่หมดอายุ "
+"คุณสามารถใช้เครื่องมือที่เราพัฒนามาโดยเฉพาะซึ่งสามารถเข้าไปใช้งานได้ที่ "
+
+#: templates/website/faq.html:38
+msgid "and"
+msgstr "และ"
+
+#: templates/website/faq.html:38
+msgid "its project on GitHub"
+msgstr "โครงการใน GitHub"
+
+#: templates/website/faq.html:38
+msgid "It's open source!"
+msgstr "เป็นแบบเปิด!"
+
+#: templates/website/faq.html:41
+msgid "How is your wallet better than the others out there?"
+msgstr "Wallet ของคุณดีกว่าที่อื่นอย่างไร?"
+
+#: templates/website/faq.html:43
+msgid ""
+"For a simple high level comparison with a couple of web wallets please see "
+msgstr "สำหรับการเปรียบเทียบง่าย ๆ ในระดับสูง กับ Wallet ตัวอื่น ๆ คุณสามารถดูได้จาก "
+
+#: templates/website/faq.html:43
+msgid "this"
+msgstr "นี้"
+
+#: templates/website/faq.html:43
+msgid "table"
+msgstr "ตาราง"
+
+#: templates/website/faq.html:44
+msgid "We offer all the advantages of a web wallet:"
+msgstr "เรามีข้อได้เปรียบของ Wallet แบบ web:"
+
+#: templates/website/faq.html:46
+msgid "Ubiquitously available"
+msgstr "ที่ใช้ได้ในทุกที่"
+
+#: templates/website/faq.html:47
+msgid "Social/email/SMS integration"
+msgstr "รวม Social/email/SMS"
+
+#: templates/website/faq.html:48
+msgid "Two factor authentication"
+msgstr "การตั้งรหัสผ่านสองขั้น"
+
+#: templates/website/faq.html:49
+msgid "Transaction limits/restrictions"
+msgstr "การจำกัดทางธุรกรรม/ข้อจำกัด"
+
+#: templates/website/faq.html:50
+msgid "Green address instant transaction confirmation"
+msgstr "การยืนยันธุรกรรมแบบทันทีของ Green address"
+
+#: templates/website/faq.html:52
+msgid "And the advantages of a local software wallet like "
+msgstr "และข้อดีของซอฟต์แวร์ Wallet ที่ติดตั้งภายในเช่น  "
+
+#: templates/website/faq.html:54
+msgid "Mnemonic seed backup once and forget"
+msgstr "การสำรองรหัสช่วยจำครั้งเดียวและลืม"
+
+#: templates/website/faq.html:55
+msgid "Your private keys are never stored on our servers, not even encrypted"
+msgstr "คีย์ส่วนตัวของคุณถูกเก็บไว้ในเซิร์ฟเวอร์ของเรา และไม่มีการเข้ารหัส"
+
+#: templates/website/faq.html:56
+msgid "No lost time synchronizing the client with the full Bitcoin blockchain"
+msgstr "ไม่มีการสูญหายเวลาเมื่อเชื่อมเครื่องลูกข่ายกับ blockchain ของบิทคอยน์"
+
+#: templates/website/faq.html:58
+msgid ""
+"Simply put, we offer the best web wallet available: We include more features "
+"and security safeguards than the competition with a simple interface through "
+"your browser or phone."
+msgstr ""
+"เพื่อให้ง่าย เรานำเสนอ web wallet "
+"ที่ดีที่สุดและมีฟังก์ชั่นการทำงานรวมถึงความปลอดภัยมากกว่าคู่แข่งด้วยการใชเ้งานที่เรียบง่ายผ่านเบราเซอร์โทรศัพท์ของคุณ"
+
+#: templates/website/faq.html:61
+msgid "Where are my Bitcoin keys stored?"
+msgstr "คีย์ของบิทคอยน์มีการเก็บไว้ที่ไหน"
+
+#: templates/website/faq.html:62
+msgid ""
+"Your keys are not stored. They are derived from your mnemonic passphrase and "
+"never sent to the server."
+msgstr "คีย์จะไม่มีการเก็บเอาไว้ มันแปลงมาจากรหัสผ่านช่วยจำและไม่มีการส่งไปยังเซอร์เวอร์"
+
+#: templates/website/faq.html:64
+msgid "How does the PIN work?"
+msgstr "PIN ทำงานอย่างไร"
+
+#: templates/website/faq.html:65
+msgid ""
+"A random password (256 AES) is created and used to encrypt your mnemonics "
+"and store them on your device in encrypted form. The random password is sent "
+"server side and destroyed on the client. When during login the user provides "
+"the right PIN a mechanism will ask the server for the password which is used "
+"to decrypt the mnemnonic passphrase stored on your device and get you in "
+"your wallet. If the PIN is provided wrong for 3 times in a row the password "
+"is then deleted from our servers."
+msgstr ""
+"รหัสผ่านแบบสุ่ม (256 AES) "
+"สร้างและใช้เพื่อเข้ารหัสรหัสผ่านช่วยจำและเก็บไว้บนอุปกรณ์ในรูปแบบการเข้ารหัส "
+"รหัสแบบสุ่มจะส่งไปยังเซอร์เวอร์และถูกทำลายเมื่อถึงเครื่องลูกข่าย ขณะที่ผู้ใช้งานเข้าระบบและแจ้ง "
+"PIN ที่ถูกต้อง กลไกจะถามไปยังเซอร์เวอร์ถึงรหัสที่ใช้ถอดรหัสจากอุปกรณ์ของคุณที่คุณใช้เข้าสู่ Wallet "
+"ถ้าใส่ PIN ผิด 3 คร้งติดกันรหัสผ่านจะถูกลบออกจากเซอร์เวอร์"
+
+#: templates/website/faq.html:68
+msgid ""
+"When are you going to offer feature XYZ? I would like to access my wallet in "
+"my language, can you add it?"
+msgstr "เมื่อคุณต้องการใช้ฟังก์ชั่น XYZ? ฉันอยากใช้ Wallet ในภาษาของฉันเองจะทำได้หรือไม่"
+
+#: templates/website/faq.html:70
+msgid ""
+"We are constantly looking for feedback from our users, if you want to "
+"provide some feedback or get involved feel free to PM on reddit (/u/BitFast) "
+"or send us an email at "
+msgstr ""
+"เรากำลังรวบรวมเสียงตอบรับจากผู้ใช้งาน "
+"หากคุณมีข้อเสนอแนะหรือต้องการมีส่วนร่วมคุณสามารถส่งข้อความมาทาง reddit (/u/BitFast) "
+"หรืออีเมล์มาที่ "
+
+#: templates/website/faq.html:71
+msgid ""
+"We have many features and language support for many languages in the "
+"pipeline, please check with us if you want to be kept up to date with "
+"development and please be patient :)"
+msgstr ""
+"เรามีฟังก์ชั่นมากมายและการสนับสนุนทางภาษาหลายภาษา "
+"กรุณาเข้ามาตรวจสอบหากคุณต้องการให้เราติดตามและพัฒนาการใช้งาน กรุณาอดทน "
+
+#: templates/website/faq.html:72
+msgid ""
+"If you want to help with translation see them <a target=\"_blank_\" href="
+"\"http://translate.greenaddress.it\">here</a> and pull requests are welcome "
+"on <a href=\"https://github.com/greenaddress\" target=\"_blank\">GitHub</a>!"
+msgstr ""
+"หากคุณต้องการช่วยแปลภาษาคุณสามารถดูได้ <a target=\"_blank_\" href=\"http://"
+"translate.greenaddress.it\">ที่นี่</a> และเสนอข้อเสนอแนะต่าง ๆ บน <a href="
+"\"https://github.com/greenaddress\" target=\"_blank\">GitHub</a>!"
+
+#: templates/website/faq.html:74
+msgid "Do you have a donate button for linking to users payment URLs?"
+msgstr "มีปุ่มบริจาคสำหรับเชื่อมโยงไปยัง Url ผู้ชำระเงินหรือไม่"
+
+#: templates/website/faq.html:76
+msgid "Sure have a look below (let us know if you have created one!)."
+msgstr "แน่นอนว่ามีสามารถดูได้ด้านล่าง (โปรดแจ้งเราถ้าคุณได้สร้างมาแล้ว)"
+
+#: templates/website/faq.html:80
+msgid "What exactly is an 'instant greenaddress transaction'?"
+msgstr "อะไรคือ ธุรกรรม greenaddress แบบทันที"
+
+#: templates/website/faq.html:81
+msgid ""
+"Your transactions are protected by both your signature and by a signature we "
+"apply when we get your permission via two factor. With this protection, "
+"comes the fact that people receiving Bitcoin from you can trust the funds "
+"instantly as we provide a 'special' signature to your transaction when you "
+"require instant confirmation."
+msgstr ""
+"ธุรกรรมของคุณจะมีการปกป้องโดยลายเซ็นทางคุณและลายเซ็นทางเราที่มีการอนุญาตผ่านรหัสผ่าน 2 "
+"ขั้นมาให้ ด้วยการป้องกันแบบนี้ "
+"จะทำให้ผู้รับสามารถไว้วางใจได้ในขณะที่เราจะมีการออกแบบลายเซ็นแบบพิเศษสำหรับธุรกรรมของคุณที่ต้องการการยืนยันแบบทันที"
+
+#: templates/website/faq.html:84
+msgid "What about cookies?"
+msgstr "เกี่ยวกับคุกกี้"
+
+#: templates/website/faq.html:86
+msgid ""
+"To enable GreenAddress to recognize your device and to provide features to "
+"you, we use cookies. Cookies are unique identifiers that we transfer to your "
+"device to enable our services to recognize your device and to provide "
+"features such as providing you with protection from Cross-site request "
+"forgery and display the site in the language you have selected or to not "
+"show you the EU cookie compliance info banner."
+msgstr ""
+"เพื่อทำให้ GreenAddress จดจำอุปกรณ์คุณได้และเริ่มฟังก์ชั่นให้คุณ เราได้ใช้คุกกี้ "
+"ซึ่งก็คือการระบุตัวตนแบบเฉพาะที่เราส่งไปยังอุปกรณ์ของคุณเพื่อเปิดใช้งานและจดจำอุปกรณ์ "
+"รวมถึงการใช้งานด้านความปลอดภัยจากการปลอมโดยไซด์อื่น ๆ "
+"และแสดงผลเว็บไซด์ในแบบภาษาที่คุณเลือกหรือการไม่แสดงข้อมูลป้ายโฆษณา."
+
+#: templates/website/faq.html:91
+msgid ""
+"Yes! You can see our <a href=\"http://api.greenaddress.it/\">API "
+"documentation at GitHub Pages</a>."
+msgstr ""
+"Yes! You can see our <a href=\"http://api.greenaddress.it/\">API "
+"documentation at GitHub Pages</a>."
+
+#: templates/website/faq.html:95
+msgid ""
+"Yes! Our https site supports tor users, for onion specific urls see <a href="
+"\"http://s7a4rvc6425y72d2.onion\">s7a4rvc6425y72d2.onion</a> and <a href="
+"\"http://gu5ke7a2aguwfqhz.onion\">gu5ke7a2aguwfqhz.onion</a> respectively "
+"for prodnet and testnet"
+msgstr ""
+
+#: templates/website/faq.html:99
+msgid ""
+"Yes! One is available  <a href=\"http://blog.greenaddress.it/2of3recovery"
+"\">here</a>"
+msgstr ""
+
+#: templates/website/index.html:5
+#, fuzzy
+msgid "GreenAddress Bitcoin Wallet"
+msgstr "FAQ สำหรับ Wallet GreenAddress"
+
+#: templates/website/index.html:6
+msgid ""
+"GreenAddress Wallet brings the most advanced protection level to your "
+"bitcoins without sacrifying usability or control."
+msgstr ""
+
+#: templates/website/index.html:31 templates/website/index.html:42
+msgid "Create your Wallet"
+msgstr "สร้าง Wallet ของคุณ"
+
+#: templates/website/index.html:42
+msgid "The safer "
+msgstr "ที่ปลอดภัยกว่า"
+
+#: templates/website/index.html:42
+msgid " wallet that puts "
+msgstr " wallet นำไปสู่ "
+
+#: templates/website/index.html:42
+msgid "you"
+msgstr "คุณ"
+
+#: templates/website/index.html:42
+msgid " in control"
+msgstr " ในการควบคุม"
+
+#: templates/website/index.html:44 templates/website/index.html:45
+#: templates/website/index.html:133 templates/website/index.html:195
+msgid "Improved security"
+msgstr "ความปลอดภัยที่พัฒนาขึ้น"
+
+#: templates/website/index.html:46
+msgid ""
+"Protect your bitcoins with both your key and ours, set spending limits, rate "
+"limited transactions and always be the only one in control"
+msgstr ""
+"ปกป้องบิทคอยน์ด้วคีย์ของคุณและของเรา ตั้งการจำกัดการใช้จ่าย "
+"เรทจำกัดการทำธุรกรรมและเป็นเพียงผู้เดียวที่สามารถควบคุมได้"
+
+#: templates/website/index.html:49 templates/website/index.html:50
+msgid "Quick login"
+msgstr "เข้าสู่ระบบอย่างรวดเร็ว"
+
+#: templates/website/index.html:51
+msgid ""
+"You can easily login in 'watch-only mode' via Facebook/Twitter/custom login "
+"with no compromise on security and privacy"
+msgstr ""
+"คุณสามารถเข้าสู่ระบบแบบดูอย่างเดียวผ่านทาง Facebook/Twitter/ "
+"การเข้าระบบเฉพาะซึ่งจะไม่มีความยุ่งยากหรือปัญหาด้านความปลอดภัย"
+
+#: templates/website/index.html:54 templates/website/index.html:55
+msgid "Send money easily"
+msgstr "ส่งเงินได้อย่างง่ายดาย"
+
+#: templates/website/index.html:56
+msgid ""
+"Send money to a friend on Facebook, a follower on Twitter or to a "
+"colleague's email or mobile number"
+msgstr ""
+"ส่งเงินให้เพื่อนใน Facebook ผู้ติดตาม Twitter "
+"ผ่านอีเมล์ของเพื่อนร่วมงานหรือหมายเลขโทรศัพท์มือถือ"
+
+#: templates/website/index.html:63
+msgid "Scroll to read more"
+msgstr "เลื่อนไปอ่านเพิ่มเติม"
+
+#: templates/website/index.html:75
+msgid ""
+"        <p><h4>Bitcoin is the currency of the future</h4></p>        <p>We "
+"don't make you choose between security and convenience. And we don't "
+"compromise your <strong>privacy</strong>.</p>        <p>Our <strong>per-"
+"transaction</strong> two factor authentication, multi-signature and "
+"deterministic wallet allow you unprecedented control over your transactions."
+"</p>        <p>And, we <strong>never</strong> store your private keys, not "
+"even encrypted. At the same time we make it trivial to view and transfer "
+"your funds.</p>        <p>Take control of your future now, at GreenAddress.</"
+"p>        "
+msgstr ""
+"        <p><h4>บิทคอยน์เป็นหน่วยดิจิตอลแห่งอนาคต</h4></p>        "
+"<p>คุณไม่ต้องเลือกระหว่างความปลอดภัยหรือความสะดวกสบาย "
+"และเราไม่ประนีประนอมกับ<strong>นโยบาย</strong></p>        <p>การทำ "
+"<strong>ธุรกรรมแต่ละครั้งผ่าน</strong> การตรวจสอบหลายขั้น หลายลายเซ็นและ wallet "
+"ที่กำหนดเองช่วยให้คุณสามารถตรวจสอบธุรกรรมของคุณ</p>        <p>และเรา <strong>ไม่เคย</"
+"strong> เก็บคีย์ส่วนตัวของคุณ หรือการเข้ารหัส "
+"และในขณะเดียวกันเราทำขั้นตอนให้ซับซ้อนสำหรับการดูและโอนย้ายกองทุนของคุณ</p>        "
+"<p>ควบคุมอนาคตของคุณได้ตอนนี้ที่ GreenAddress.</p>        "
+
+#: templates/website/index.html:94
+msgid ""
+"        <p><h4>Better privacy with your funds and safer login with watch-"
+"only</h4></p>        <p>Safely check your <strong>balance</strong> and "
+"<strong>transactions</strong> from public Wi-Fi, Starbucks and on the go.</"
+"p>        <p>With our unique <strong>watch-only</strong> mode you can "
+"quickly check your balance or receive funds without full access to your "
+"wallet.</p>        <p>Your <strong>keys</strong> are not loaded so no "
+"transaction are possible and settings can't be modified</p>        "
+msgstr ""
+"        <p><h4>ความเป็นส่วนตัวที่มากขึ้นกับกองทุนของคุณและการเข้าระบบที่ปลอดภัยในโหมดดูอย่างเดียว</"
+"h4></p>        <p>สามารถตรวจสอบ <strong>ยอดคงเหลือ</strong>และ<strong>ธุรกรรม</"
+"strong> จากไวไฟสาธารณะ สตาร์บัคส์ หรือที่ใดก็ได้</p>        <p>ด้วยโหมด "
+"<strong>ดูอย่างเดียว</strong> "
+"อันเป็นเอกลักษณ์ทำให้คุณตรวจสอบยอดคงเหลือหรือรับกองทุนได้โดยไม่ต้องใช้ล็อคอินแบบเต็มเพื่อเข้า "
+"wallet</p>        <p>คีย์<strong>ของคุณ</strong> "
+"จะไม่มีการเรียกดังนั้นจะไม่สามารถทำธุรกรรมใด ๆ และไม่สามารถแก้ไขการตั้งค่าได้อีกด้วย</"
+"p>        "
+
+#: templates/website/index.html:112
+msgid ""
+"        <p><h4>More features that allow convenient and secure access to your "
+"wallet</h4></p>        <p>Enable <strong>quick</strong> PIN login to your "
+"wallet from any of your devices without having to use your passphrase</"
+"p>        <p>Should our system be taken down or disappear, sleep "
+"<strong>safe</strong> with our automatic presigned transaction (nLockTime) "
+"allowing you to simply wait for your selected expiry to get your funds!</"
+"p>        <p>All transfers to your wallet (including change) will use a "
+"newly generated address each time making it harder for people you transact "
+"with to read your past and future transactions</p>        "
+msgstr ""
+"        <p><h4>อีกหนึ่งคุณลักษณะที่อนุญาตให้เข้าถึงสะดวก และปลอดภัยกับ Wallet ของคุณ</h4></"
+"p>        <p>เปิดใช้งานการเข้าระบบ PIN <strong>แบบด่วน</strong>กับ Wallet "
+"ของคุณจากอุปกรณ์ของคุณโดยไม่ต้องใช้วลีรหัสผ่านของคุณ</p>        "
+"<p>และระบบของเราจะหยุดทำงาน หายไป หรือหยุดการทำงานชั่วคราว<strong>แบบปลอดภัย</"
+"strong>โดยอัตโนมัติด้วยระบบธุรฏรรมที่ตั้งค่าไว้ก่อน (nLockTime) "
+"ช่วยให้คุณสามารถรอธุรกรรมหมดอายุที่คุณเลือกและรับเงิน! </p>        <p>โอนย้ายทั้งหมดที่ "
+"wallet ของคุณ (รวมทั้งหมด) "
+"จะใช้ที่อยู่สร้างขึ้นใหม่แต่ละครั้งที่ทำให้มันยากสำหรับคนที่ประสงค์จะอ่านธุรกรรมที่ผ่านมา และในอนาคต</"
+"p>        "
+
+#: templates/website/index.html:129
+msgid "Wallet"
+msgstr "กระเป๋าสตางค์"
+
+#: templates/website/index.html:130 templates/website/index.html:177
+msgid "You are in control"
+msgstr "คุณอยู่ในการควบคุม"
+
+#: templates/website/index.html:131 templates/website/index.html:183
+msgid "Instant confirmation"
+msgstr "การยืนยันแบบทันที"
+
+#: templates/website/index.html:132 templates/website/index.html:189
+msgid "Social integration"
+msgstr "เชื่อมต่อรวมทางสังคม"
+
+#: templates/website/index.html:134 templates/website/index.html:201
+msgid "Improved privacy"
+msgstr "ความเป็นส่วนตัวดีขึ้น"
+
+#: templates/website/index.html:210
+msgid ""
+"          1) Hot wallets can be emptied and cold wallets may have delays, "
+"bugs or be lost<br>          2) If the service is compromised brute force "
+"attacks may be tried on your encrypted wallet, requires strong password."
+"<br>          3) Access to user wallets requires that both the user and the "
+"service are compromised at the same time which reduces risks.          "
+msgstr ""
+"          1) wallet แบบ hot สามารถว่างได้และ wallet แบบ cold อาจล่าช้า มีข้อผิดพลาด "
+"หรือสูญหาย<br>          2) หากการบริการถูกรบกวน หรือโจมตีอย่างรุนแรง "
+"อาขมีความพยามเข้ารหัส wallet ซึ่งแนะนำให้ใช้รหัสผ่านความปลอดภัยสูง<br>          3) "
+"การเข้าถึง wallet ผู้ใช้งานต้องใช้จากทั้งผู้ใช้งานและบริการพร้อมกันซึ่งสามารถช่วยลดความเสี่ยงได้ "
+
+#: templates/website/index.html:223
+msgid "Under the hood"
+msgstr "ภายใต้การปกป้อง"
+
+#: templates/website/index.html:230
+msgid ""
+"<h3>We use  hierarchical deterministic wallets</h3>(or BIP0032 HD Wallet) "
+"which means we use new addresses for each incoming transaction (including "
+"change), which, together with coinjoin (coming soon) allows you to maintain "
+"your privacy at the highest standard."
+msgstr ""
+"<h3>เราใช้ Wallet แบบมีขั้นกำหนด</h3>(หรือ แบบ BIP0032 HD) "
+"ซึ่งหมายถึงเราใช้ที่อยู่ใหม่ทุกครั้งสำหรับธุรกรรม (รวมทั้งที่เปลี่ยนแปลง), ซึ่งเราจะรวมเข้ากับ "
+"coinjoin (เร็ว ๆ นี้) ซึ่งทำให้คุณสามารถรักษานโยบายความเป็นส่วนตัวได้ในระดับสูงสุด."
+
+#: templates/website/index.html:236
+msgid ""
+"<h3>Quickly check your balance</h3>You can use a number of third party "
+"services (like Facebook) to quickly check if you have received a transaction "
+"or to check your balance without exposing your wallet, indeed quite "
+"convenient when in a hurry and/or on a third party computer"
+msgstr ""
+"<h3>ตรวจสอบยอดคงเหลือ</h3>คุณสามารถใช้บริการบุคคลที่ 3 เช่น Facebook "
+"ในการตรวจสอบยอดคงเหลือถ้าคุณได้รับธุรกรรมโดยไม่ต้องไปดำเนินการใน Wallet ของคุณ "
+"นอกจากนี้มันยังง่ายและสะดวกขึ้นเพราะตรวจสอบจากคอมพิวเตอร์บุคคลที่ 3 ได้"
+
+#: templates/website/index.html:244
+msgid ""
+"<h3>We provide presigned transactions</h3>In order to provide limits and two "
+"factor your funds are secured with both your key and ours. For ease of mind, "
+"presigned transaction are enabled (uses nlocktime) which means that each "
+"time your wallet has updates we will forward to you a presigned transaction "
+"unlocking the funds at a date in the future of your choice."
+msgstr ""
+"<h3>เรานำเสนอธุรกรรมแบบ presigned</h3>เพื่อจะให้มีขีดจำกัดและรหัสผ่านสองขั้น "
+"กองทุนของคุณจะเก็บโดยอาศัยทั้งคีย์ของคุณและของเรา เพื่อให้ง่ายดายขึ้น, ธุรกรรมแบบ presigned "
+"จะเปิดใช้งานได้ (ใช้ nlocktime) ซึ่งหมายความว่าแต่ละครั้งที่ wallet "
+"มีการอัพเดทเราจะส่งธุรกรรมแบบ presifned "
+"ไปให้คุณเพื่อปลดล็อคกองทุนในวันที่คุณต้องการใช้ในอนาคต"
+
+#: templates/website/index.html:250
+msgid ""
+"<h3>We use P2SH to make this all easy</h3>P2SH allows people you interact "
+"with to handle transactions to and from GreenAddress' wallets transparently."
+msgstr ""
+"<h3>เราใช้ P2SH เพื่อให้ง่ายดายขึ้น</h3>P2SH "
+"ช่วยให้คนสามารถจัดการกับแต่ละธุรกรรมที่มาจากและไปยัง Wallet ของ GreenAddress "
+"ได้อย่างโปร่งใส."
+
+#: templates/website/index.html:258
+msgid ""
+"<h3>We offer our second signature</h3>Which allows us to offer and enforce 2 "
+"factor authenticated payments and daily, weekly and monthly limits, rate "
+"limiting your transactions per hour, day,  week and month and make your "
+"payment instant by providing a double spend checks with GreenAddress!"
+msgstr ""
+"<h3>เรานำเสนอลายเซ็นที่สอง</"
+"h3>ซึ่งทำให้เราจัดเตรียมและทำให้มีการเข้ารหัสสองขั้นสำหรับการชำระและมีการจำกัดรายวัน "
+"รายสัปดาห์ และรายเดือน เรทการจำกัดธุรกรรมของคุณรายชั่วโมง รายวัน รายสัปดาห์และรายเดือน "
+"และทำให้การชำระของคุณมีผลโดยทันทีโดยอาศัยการตรวจสอบสองขั้นจาก GreenAddress!"
+
+#: templates/website/index.html:264
+msgid ""
+"<h3>Send money to anyone via SMS, Twitter, Facebook, etc</h3>If the user has "
+"an account at GreenAddress they will be immediately notified of the transfer "
+"which will be instantly added to their balance. If they don’t have an "
+"account they will receive a notification with a link to redeem the funds "
+"requiring a password (BIP0038) of your choice that you will be asked to "
+"notify them of via a second channel. The funds will always be in your "
+"control while not yet redeemed."
+msgstr ""
+"<h3>ส่งเงินให้ทุกคนได้ทาง SMS, Twitter, Facebook หรืออื่น ๆ </h3>ถ้าผู้ใช้งานมีบัญชีที่ "
+"GreenAddress พวกเขาจะได้รับการแจ้งเตือนและการโอนไปยังบัญชีทันทีหลังจากที่อัพเดทยอด. "
+"ถ้าไม่มีบัญชีผู้ใช้จะได้รับการแจ้งเตือนพร้อมกับลิงค์เพื่อแลกคืนไปยังกองทุนซึ่งจะต้องอาศัยรหัสผ่าน "
+"(BIP0038) ซึ่งคุณสามารถเลือกแจ้งเตือนผ่านทางช่องทางที่ 2 ด้วย "
+"กองทุนจะยังปลอดภัยและควบคุมได้เสมอตราบที่ยังไม่มีการแลกคืน."
+
+#: templates/website/instant.html:7
+msgid "Verify instant transaction"
+msgstr "ตรวจสอบธุรกรรมทันที"
+
+#: templates/website/instant.html:25
+msgid "Verify a GreenAddress instant confirmation!"
+msgstr "ตรวจสอบการยืนยัน GreenAddress ทันที!"
+
+#: templates/website/instant.html:25
+msgid "Please provide transaction details below"
+msgstr "กรุณาใส่รายละเอียดธุรกรรมด้านล่าง"
+
+#: templates/website/instant.html:27 templates/website/instant.html:32
+msgid "Transaction hash"
+msgstr "ธุรกรรมแฮช"
+
+#: templates/website/instant.html:38
+msgid "Recipient verification signature"
+msgstr "ผู้รับการตรวจสอบลายเซ็น"
+
+#: templates/website/instant.html:39
+msgid "Please sign the following message"
+msgstr "กรุณาเซ็นรับข้อความเหล่านี่้"
+
+#: templates/website/instant.html:39
+msgid ""
+"You can either provide the signature yourself (recommended), <strong>or</"
+"strong>, if your client doesn't support signing messages, paste your private "
+"key in WIF format. The key will be used in your browser only to sign the "
+"message."
+msgstr ""
+"คุณสามารถใช้ลายเซ็นของตนเอง (แนะนำ) <strong>หรือ</strong> "
+"ถ้าเครื่องลูกข่ายไม่รองรับการเซ็น ให้วางคีย์ส่วนตัวของคุณในรูปแบบ WIF. "
+"คีย์จะใช้ในเบราเซอร์เพื่อเซ็นรองรับข้อความ"
+
+#: templates/website/instant.html:43
+msgid "Signature"
+msgstr "ลายเซ็น"
+
+#: templates/website/instant.html:46
+msgid "or"
+msgstr "หรือ"
+
+#: templates/website/instant.html:49
+msgid "WIF Private Key"
+msgstr "คีย์ส่วนตัว WIF"
+
+#: templates/website/instant.html:55
+msgid "Error"
+msgstr "ข้อผิดพลาด"
+
+#: templates/website/instant.html:58
+msgid "Verify transaction"
+msgstr "ตรวจสอบธุรกรรม"
+
+#: templates/website/instant.html:64
+msgid "Verification successful!"
+msgstr "การตรวจสอบสำเร็จแล้ว"
+
+#: templates/website/instant.html:64
+msgid "is covered by GreenAddress instant confirmation."
+msgstr "ครอบคลุม โดยการยืนยันแบบทันทีของ GreenAddress "
+
+#: templates/website/instant.html:67
+msgid "Verification failed!"
+msgstr "การตรวจสอบล้มเหลว!"
+
+#: templates/website/instant.html:67
+msgid "is not covered by GreenAddress instant confirmation."
+msgstr "ไม่ครอบคลุม โดยการยืนยันแบบทันทีของ GreenAddress."
+
+#: templates/website/instant.html:70
+msgid "Try again"
+msgstr "ลองอีกครั้ง"
+
+#: templates/website/pay.html:6
+msgid "Send funds"
+msgstr "ส่งกองทุน"
+
+#: templates/website/pay.html:9
+msgid "Please send"
+msgstr "กรุณาส่ง"
+
+#: templates/website/privacy.html:5
+msgid "Privacy Policy"
+msgstr "Privacy Policy"
+
+#: templates/website/redeem.html:6
+msgid "Redeem funds"
+msgstr "แลกคืนกองทุน"
+
+#: templates/website/redeem.html:9
+msgid "You've received"
+msgstr "คุณได้รับ"
+
+#: templates/website/service.html:23
+msgid "The service is currently unavailable!"
+msgstr ""
+
+#: templates/website/service.html:23
+#, fuzzy
+msgid "Please retry later"
+msgstr "กรุณาป้อน "
+
+#: templates/website/service.html:25
+msgid "Your funds are safe"
+msgstr ""
+
+#: templates/website/service.html:31
+msgid ""
+"For 2of3 recovery see this guide  <a href=\"http://blog.greenaddress."
+"it/2of3recovery\">here</a>"
+msgstr ""
+
+#: templates/website/service.html:37
+msgid "Want to get in touch? Email us!"
+msgstr ""
+
+#: templates/website/support.html:5
+msgid "Support and contacts for GreenAddress Bitcoin wallet"
+msgstr "ฝ่ายสนับสนุนหรือติดต่อ wallet ของ GreenAddress"
+
+#: templates/website/support.html:6
+msgid ""
+"GreenAddress contacts details. We are here to listen to your suggestions for "
+"a better and safer Bitcoin online wallet."
+msgstr ""
+"รายละเอียดติดต่อ GreenAddress เรายินดีรับฟังข้อเสนอแนะของคุณในการความปลอดภัยของ Wallet "
+"Bitcoin แบบออนไลน์."
+
+#: templates/website/support.html:22
+msgid "For any issue, you can email us at"
+msgstr "สำหรับปัญหาใด ๆ คุณสามารถอีเมล์ที่"
+
+#: templates/website/support.html:24
+#, fuzzy
+msgid "Or leave us a message on"
+msgstr "ฉันได้ส่งข้อความ"
+
+#: templates/website/tos.html:5
+msgid "Terms of Service"
+msgstr "เงื่อนไขการใช้บริการ"
