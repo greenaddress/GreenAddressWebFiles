@@ -13,6 +13,7 @@ git clone git@github.com:greenaddress/WalletCrx.git
 cp WalletCrx/static/wallet/config{,_regtest,_testnet}.js /tmp
 python render_templates.py WalletCrx
 rm -rf WalletCrx/static
+rm -rf WalletCrx/fi
 cp -r static WalletCrx/static
 rm -rf WalletCrx/static/fonts/*.svg  # .woff are enough for crx
 rm -rf WalletCrx/static/sound/*.wav  # .mp3 are enough for crx
@@ -37,6 +38,7 @@ git clone git@github.com:greenaddress/WalletCordova.git
 cp WalletCordova/www/greenaddress.it/static/wallet/config.js /tmp/config.js
 python render_templates.py -a WalletCordova/www/greenaddress.it
 rm -rf WalletCordova/www/greenaddress.it/static
+rm -rf WalletCordova/fi
 cp -r static WalletCordova/www/greenaddress.it/static
 rm -rf WalletCordova/www/greenaddress.it/static/js/jsqrcode  # crx only
 rm -rf WalletCordova/www/greenaddress.it/static/js/btchip-js-api  # crx only

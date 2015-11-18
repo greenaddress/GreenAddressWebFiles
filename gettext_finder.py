@@ -17,7 +17,6 @@ IGNORED_DIRS = [".git", "build", "docs"]
 
 GETTEXT_LANGUAGES = (
     'en',  # default
-    'fi',
     'it',
     'de',
     'es',
