@@ -18,11 +18,11 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 #: templates/base/base.html:4
-msgid "Welcome!"
+msgid "Bem vindo!"
 msgstr ""
 
 #: templates/base/base.html:6
-msgid "The safer Bitcoin wallet that puts you in control."
+msgid "A carteira de Bitcoin mais segura que o coloca no total control dos seus fundos."
 msgstr ""
 
 #: templates/base/base.html:105
@@ -30,7 +30,7 @@ msgid "Toggle navigation"
 msgstr ""
 
 #: templates/base/base.html:114
-msgid "Blog"
+msgid "Blogue"
 msgstr ""
 
 #: templates/base/base.html:115 templates/wallet/nav.html:21
@@ -44,7 +44,7 @@ msgstr ""
 
 #: templates/base/base.html:117 templates/wallet/nav.html:21
 #: templates/wallet/nav.html:23
-msgid "Support"
+msgid "Suporte"
 msgstr ""
 
 #: templates/base/base.html:118
@@ -52,25 +52,25 @@ msgid "Login"
 msgstr ""
 
 #: templates/base/base.html:153
-msgid "About us"
+msgid "Quem somos"
 msgstr ""
 
 #: templates/wallet/nav.html:4
 #: templates/wallet/partials/wallet_transactions.html:4
-msgid "Transactions"
+msgid "Transacções"
 msgstr ""
 
 #: templates/wallet/nav.html:5 templates/wallet/partials/wallet_send.html:4
-msgid "Send Money"
+msgid "Enviar dinheiro"
 msgstr ""
 
 #: templates/wallet/nav.html:6 templates/wallet/partials/wallet_receive.html:4
-msgid "Receive Money"
+msgid "Receber dinheiro"
 msgstr ""
 
 #: templates/wallet/nav.html:7
 #: templates/wallet/partials/wallet_address_book.html:4
-msgid "Address Book"
+msgid "Livro de Enderessos"
 msgstr ""
 
 #: templates/wallet/nav.html:8
@@ -78,31 +78,31 @@ msgid "Settings"
 msgstr ""
 
 #: templates/wallet/nav.html:10
-msgid "General"
+msgid "Geral"
 msgstr ""
 
 #: templates/wallet/nav.html:11
 #: templates/wallet/partials/wallet_settings.html:104
-msgid "Security"
+msgid "Segurança"
 msgstr ""
 
 #: templates/wallet/nav.html:12
 #: templates/wallet/partials/wallet_settings.html:600
-msgid "Accounts"
+msgid "Contas"
 msgstr ""
 
 #: templates/wallet/nav.html:14
-msgid "Update now"
+msgid "Actualizar agora"
 msgstr ""
 
 #: templates/wallet/nav.html:15
 #: templates/wallet/partials/wallet_modal_logout.html:11
 #: templates/wallet/partials/wallet_modal_logout_other_session.html:10
-msgid "Logout"
+msgid "Sairt"
 msgstr ""
 
 #: templates/wallet/nav.html:27
-msgid "Last login"
+msgid "Ultima entrada"
 msgstr ""
 
 #: templates/wallet/nav.html:30
@@ -110,66 +110,66 @@ msgid "country"
 msgstr ""
 
 #: templates/wallet/nav.html:31
-msgid "unknown country"
+msgid "País desconhecido"
 msgstr ""
 
 #: templates/wallet/wallet.html:6
-msgid "Wallet"
+msgid "Carteira"
 msgstr ""
 
 #: templates/wallet/wallet.html:47 templates/wallet/wallet.html:48
-msgid "WARNING"
+msgid "CUIDADO"
 msgstr ""
 
 #: templates/wallet/wallet.html:47
 msgid ""
-"You have no two factor authentication set up. Please set it up in <a href="
-"\"#/settings\">settings</a>."
+"Não tem a validação de 2 factores activada. Por favor, para sua segurança active-a em<a href="
+"\"#/settings\">opções</a>."
 msgstr ""
 
 #: templates/wallet/wallet.html:49
-msgid "You have not verified that you have backed up your mnemonic."
+msgid "Ainda não foi feito backup da sua mnemônica."
 msgstr ""
 
 #: templates/wallet/wallet.html:50
-msgid "Please verify now by clicking here."
+msgid "Por favor verifique agora, clicando aqui."
 msgstr ""
 
 #: templates/wallet/partials/browser_unsupported.html:6
 #: templates/wallet/partials/browser_unsupported.html:10
-msgid "We are sorry, but your browser is not supported."
+msgid "Lamentamos, mas o seu browser não é suportado."
 msgstr ""
 
 #: templates/wallet/partials/browser_unsupported.html:11
 msgid ""
-"Please try a modern browser like Chrome, Firefox, Safari or our Android, iOS "
-"or F-Droid app!"
+"Por favor tente com um browser mais moderno como Chrome, Firefox, Safari ou Android, iOS "
+"ou F-Droid!"
 msgstr ""
 
 #: templates/wallet/partials/concurrent_login.html:6
-msgid "You were logged out."
+msgid "Você foi desconectado."
 msgstr ""
 
 #: templates/wallet/partials/concurrent_login.html:11
 msgid ""
-"          You have logged in elsewhere.<br>          <small>If it was not "
-"you, please contact <strong>immediately</strong>        "
+"          Você esta logado em outro lugar.<br>          <small>Se não é o caso "
+"por favor entre em contacto de <strong>immediato</strong>        "
 msgstr ""
 
 #: templates/wallet/partials/concurrent_login.html:16
 #: templates/wallet/partials/concurrent_login.html:18
 #: templates/wallet/partials/concurrent_login.html:20
-msgid "support"
+msgid "suporte"
 msgstr ""
 
 #: templates/wallet/partials/concurrent_login.html:24
-msgid "Go back to login"
+msgid "Volte para acessar"
 msgstr ""
 
 #: templates/wallet/partials/signup_0_warning.html:8
 msgid ""
-"For improved security continue the registration via our desktop or mobile "
-"apps"
+"Para maior segurança continue a inscrição através do nosso desktop ou móvel "
+"aplicação"
 msgstr ""
 
 #: templates/wallet/partials/signup_0_warning.html:9
@@ -2210,33 +2210,33 @@ msgid ""
 msgstr ""
 
 #: templates/wallet/partials/signuplogin/modal_encryption_password.html:18
-msgid "Repeat password"
+msgid "Repita a password"
 msgstr ""
 
 #: templates/wallet/partials/signuplogin/modal_encryption_password.html:25
-msgid "Please wait, encrypting..."
+msgid "Por favor aguarde, a encriptar..."
 msgstr ""
 
 #: templates/wallet/partials/signuplogin/modal_encryption_password.html:34
-msgid "Encrypt"
+msgid "Encriptar"
 msgstr ""
 
 #: templates/wallet/partials/signuplogin/redeem_password_modal.html:4
-msgid "Please provide the password received from sender."
+msgid "Por favor, introduza a password recebida pelo mensageiro."
 msgstr ""
 
 #: templates/wallet/partials/signuplogin/redeem_password_modal.html:8
-msgid "Enter the password"
+msgid "Introduza a password"
 msgstr ""
 
 #: templates/wallet/partials/signuplogin/redeem_password_modal.html:24
-msgid "Redeem the payment"
+msgid "Resgatar o pagamento"
 msgstr ""
 
 #: templates/wallet/partials/signuplogin/trezor.html:19
-msgid "Processing"
+msgid "Em processamento"
 msgstr ""
 
 #: templates/wallet/partials/signuplogin/trezor.html:20
-msgid "Error, try again"
+msgid "Erro, tente novamente"
 msgstr ""
