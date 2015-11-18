@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: greenaddress-wallet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-10-25 14:19+0200\n"
+"POT-Creation-Date: 2015-11-18 18:00+0100\n"
 "PO-Revision-Date: 2014-08-20 10:26-0400\n"
 "Last-Translator: GreenAddress <info@greenaddress.it>\n"
 "Language-Team: Ukrainian\n"
@@ -15,726 +15,7 @@ msgstr ""
 "%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 "X-Generator: crowdin.com\n"
 
-#: crx/dist/static/js/signup.min.js.c:104
-#: crx/dist/static/js/greenwallet/services.js.c:2302
-#: crx/dist/static/js/greenwallet/signuplogin/controllers.js.c:312
-#: static/js/signup.min.js.c:104 static/js/greenwallet/services.js.c:2302
-#: static/js/greenwallet/signuplogin/controllers.js.c:312
-#: static/js/greenwallet/apps/signup.js.c:104
-msgid "Invalid PIN"
-msgstr "Invalid PIN"
-
-#: crx/dist/static/js/signup.min.js.c:106
-#: crx/dist/static/js/greenwallet/services.js.c:2304
-#: crx/dist/static/js/greenwallet/services.js.c:2314
-#: crx/dist/static/js/greenwallet/signuplogin/controllers.js.c:320
-#: static/js/signup.min.js.c:106 static/js/greenwallet/services.js.c:2304
-#: static/js/greenwallet/services.js.c:2314
-#: static/js/greenwallet/signuplogin/controllers.js.c:320
-#: static/js/greenwallet/apps/signup.js.c:106
-msgid "Dongle is not set up"
-msgstr "Dongle is not set up"
-
-#: crx/dist/static/js/signup.min.js.c:108
-#: crx/dist/static/js/greenwallet/services.js.c:2306
-#: crx/dist/static/js/greenwallet/signuplogin/controllers.js.c:322
-#: static/js/signup.min.js.c:108 static/js/greenwallet/services.js.c:2306
-#: static/js/greenwallet/signuplogin/controllers.js.c:322
-#: static/js/greenwallet/apps/signup.js.c:108
-msgid "Dongle is locked - reconnect the dongle and retry"
-msgstr "Dongle is locked - reconnect the dongle and retry"
-
-#: crx/dist/static/js/signup.min.js.c:252
-#: crx/dist/static/js/greenwallet/settings/controllers.js.c:1039
-#: static/js/signup.min.js.c:252
-#: static/js/greenwallet/settings/controllers.js.c:1039
-#: static/js/greenwallet/apps/signup.js.c:252
-msgid "Custom login enabled"
-msgstr "Спеціальний логін дозволений"
-
-#: crx/dist/static/js/signup.min.js.c:337 static/js/signup.min.js.c:337
-#: static/js/greenwallet/apps/signup.js.c:337
-msgid "Mnemonic not available when using BTChip seed"
-msgstr ""
-
-#: crx/dist/static/js/greenwallet/services.js.c:264
-#: crx/dist/static/js/greenwallet/services.js.c:1222
-#: crx/dist/static/js/greenwallet/services.js.c:1300
-#: crx/dist/static/js/greenwallet/services.js.c:1328
-#: static/js/greenwallet/services.js.c:264
-#: static/js/greenwallet/services.js.c:1222
-#: static/js/greenwallet/services.js.c:1300
-#: static/js/greenwallet/services.js.c:1328
-msgid "Login failed"
-msgstr "Не вдалося увійти"
-
-#: crx/dist/static/js/greenwallet/services.js.c:377
-#: static/js/greenwallet/services.js.c:377
-msgid "Voucher"
-msgstr "Voucher"
-
-#: crx/dist/static/js/greenwallet/services.js.c:457
-#: static/js/greenwallet/services.js.c:457
-msgid "Back from "
-msgstr "Back from "
-
-#: crx/dist/static/js/greenwallet/services.js.c:459
-#: static/js/greenwallet/services.js.c:459
-msgid "From "
-msgstr "From "
-
-#: crx/dist/static/js/greenwallet/services.js.c:484
-#: static/js/greenwallet/services.js.c:484
-msgid "To "
-msgstr "To "
-
-#: crx/dist/static/js/greenwallet/services.js.c:520
-#: static/js/greenwallet/services.js.c:520
-msgid "Sent back to "
-msgstr "Відправлено назад на "
-
-#: crx/dist/static/js/greenwallet/services.js.c:523
-#: static/js/greenwallet/services.js.c:523
-msgid "Re-deposited"
-msgstr "Покладено на депозит повторно"
-
-#: crx/dist/static/js/greenwallet/services.js.c:559
-#: static/js/greenwallet/services.js.c:559
-msgid "Time,Description,satoshis,"
-msgstr "Час, Опис, сатоші"
-
-#: crx/dist/static/js/greenwallet/services.js.c:706
-#: static/js/greenwallet/services.js.c:706
-msgid "Bitcoin transaction sent!"
-msgstr "Bitcoin транзакція відправлена!"
-
-#: crx/dist/static/js/greenwallet/services.js.c:710
-#: static/js/greenwallet/services.js.c:710
-msgid "Transaction failed: "
-msgstr "Збій транзакції: "
-
-#: crx/dist/static/js/greenwallet/services.js.c:737
-#: static/js/greenwallet/services.js.c:737
-msgid "Phone"
-msgstr "Телефон"
-
-#: crx/dist/static/js/greenwallet/services.js.c:889
-#: static/js/greenwallet/services.js.c:889
-msgid "Internal error"
-msgstr "Internal error"
-
-#: crx/dist/static/js/greenwallet/services.js.c:902
-#: static/js/greenwallet/services.js.c:902
-msgid "Failed retrieving password."
-msgstr "Помилка при отриманні пароля."
-
-#: crx/dist/static/js/greenwallet/services.js.c:1008
-#: static/js/greenwallet/services.js.c:1008
-#, c-format
-msgid "Request timed out (%s)"
-msgstr ""
-
-#: crx/dist/static/js/greenwallet/services.js.c:1016
-#: static/js/greenwallet/services.js.c:1016
-msgid "Problem with Internet connection detected. Please try again."
-msgstr "Problem with Internet connection detected. Please try again."
-
-#: crx/dist/static/js/greenwallet/services.js.c:1082
-#: static/js/greenwallet/services.js.c:1082
-msgid "An error has occured which forced us to log you out."
-msgstr "Сталася помилка, яка змушує нас закрити Вашу сесію."
-
-#: crx/dist/static/js/greenwallet/services.js.c:1824
-#: static/js/greenwallet/services.js.c:1824
-msgid "Error reading address book: "
-msgstr "Помилка при зчитуванні адресної книги: "
-
-#: crx/dist/static/js/greenwallet/services.js.c:1840
-#: static/js/greenwallet/services.js.c:1840
-msgid "Copied"
-msgstr "Copied"
-
-#: crx/dist/static/js/greenwallet/services.js.c:1842
-#: static/js/greenwallet/services.js.c:1842
-msgid "Error copying"
-msgstr "Error copying"
-
-#: crx/dist/static/js/greenwallet/services.js.c:1899
-#: static/js/greenwallet/services.js.c:1899
-msgid "Cancelled"
-msgstr "Скасовано"
-
-#: crx/dist/static/js/greenwallet/services.js.c:1901
-#: static/js/greenwallet/services.js.c:1901
-msgid "Invalid format"
-msgstr "Невірний формат"
-
-#: crx/dist/static/js/greenwallet/services.js.c:1912
-#: static/js/greenwallet/services.js.c:1912
-msgid ""
-"Could not process the QR code, the image may be blurry. Please try again."
-msgstr ""
-"Не вдалося обробити QR-код, зображення може бути розмито. Будь ласка, "
-"спробуйте ще раз."
-
-#: crx/dist/static/js/greenwallet/services.js.c:1959
-#: static/js/greenwallet/services.js.c:1959
-msgid "Access denied. Retry to scan from file."
-msgstr "Доступ відхилено. Повторіть спробу сканування з файлу."
-
-#: crx/dist/static/js/greenwallet/services.js.c:1965
-#: static/js/greenwallet/services.js.c:1965
-msgid "You must provide only one image file."
-msgstr "Необхідно вказати лише один файл образу."
-
-#: crx/dist/static/js/greenwallet/services.js.c:2099
-#: static/js/greenwallet/services.js.c:2099
-#, fuzzy
-msgid "TREZOR initialisation failed"
-msgstr "Збій транзакції: "
-
-#: crx/dist/static/js/greenwallet/services.js.c:2276
-#: static/js/greenwallet/services.js.c:2276
-#, fuzzy
-msgid "BTChip communication failed"
-msgstr "Помилка контрольної суми!"
-
-#: crx/dist/static/js/greenwallet/services.js.c:2317
-#: static/js/greenwallet/services.js.c:2317
-msgid "Dongle is locked - remove the dongle and retry"
-msgstr "Dongle is locked - remove the dongle and retry"
-
-#: crx/dist/static/js/greenwallet/services.js.c:2402
-#: static/js/greenwallet/services.js.c:2402
-#, c-format
-msgid "Old BTChip firmware version detected. Please upgrade to at least %s."
-msgstr "Old BTChip firmware version detected. Please upgrade to at least %s."
-
-#: crx/dist/static/js/greenwallet/services.js.c:2669
-#: crx/dist/static/js/greenwallet/signuplogin/controllers.js.c:61
-#: crx/dist/static/js/greenwallet/transactions/controllers.js.c:114
-#: static/js/greenwallet/services.js.c:2669
-#: static/js/greenwallet/signuplogin/controllers.js.c:61
-#: static/js/greenwallet/transactions/controllers.js.c:114
-msgid "Please provide a password."
-msgstr "Please provide a password."
-
-#: crx/dist/static/js/greenwallet/services.js.c:2673
-#: crx/dist/static/js/greenwallet/transactions/controllers.js.c:118
-#: static/js/greenwallet/services.js.c:2673
-#: static/js/greenwallet/transactions/controllers.js.c:118
-msgid "Passwords do not match."
-msgstr "Passwords do not match."
-
-#: crx/dist/static/js/greenwallet/controllers.js.c:35
-#: static/js/greenwallet/controllers.js.c:35
-msgid "You need to log out to update cache."
-msgstr "Ви маєте вийти для оновлення кешу."
-
-#: crx/dist/static/js/greenwallet/controllers.js.c:128
-#: crx/dist/static/js/greenwallet/send/controllers.js.c:696
-#: static/js/greenwallet/controllers.js.c:128
-#: static/js/greenwallet/send/controllers.js.c:696
-msgid "Failed processing payment protocol request:"
-msgstr "Failed processing payment protocol request:"
-
-#: crx/dist/static/js/greenwallet/controllers.js.c:204
-#: static/js/greenwallet/controllers.js.c:204
-msgid "Electrum setup failed"
-msgstr "Помилка при налаштуванні Electrum"
-
-#: crx/dist/static/js/greenwallet/controllers.js.c:236
-#: static/js/greenwallet/controllers.js.c:236
-msgid "Bitcoin transaction received!"
-msgstr "Bitcoin transaction received!"
-
-#: crx/dist/static/js/greenwallet/controllers.js.c:297
-#: static/js/greenwallet/controllers.js.c:297
-msgid "Please provide this word"
-msgstr "Please provide this word"
-
-#: crx/dist/static/js/greenwallet/controllers.js.c:300
-#: static/js/greenwallet/controllers.js.c:300
-msgid "Incorrect word"
-msgstr "Incorrect word"
-
-#: crx/dist/static/js/greenwallet/controllers.js.c:373
-#: crx/dist/static/js/greenwallet/controllers.js.c:395
-#: static/js/greenwallet/controllers.js.c:373
-#: static/js/greenwallet/controllers.js.c:395
-msgid "Re-depositing successful!"
-msgstr "Повторне внесення депозиту успішно завершено!"
-
-#: crx/dist/static/js/greenwallet/signuplogin/controllers.js.c:233
-#: static/js/greenwallet/signuplogin/controllers.js.c:233
-msgid "Unknown error"
-msgstr "Невідома помилка"
-
-#: crx/dist/static/js/greenwallet/signuplogin/controllers.js.c:314
-#: static/js/greenwallet/signuplogin/controllers.js.c:314
-msgid "Invalid PIN, 2 retries left"
-msgstr ""
-
-#: crx/dist/static/js/greenwallet/signuplogin/controllers.js.c:316
-#: static/js/greenwallet/signuplogin/controllers.js.c:316
-#, fuzzy
-msgid "Invalid PIN, 1 retry left"
-msgstr "Invalid PIN"
-
-#: crx/dist/static/js/greenwallet/signuplogin/controllers.js.c:318
-#: static/js/greenwallet/signuplogin/controllers.js.c:318
-#, fuzzy
-msgid "Invalid PIN, dongle wiped"
-msgstr "Invalid PIN"
-
-#: crx/dist/static/js/greenwallet/signuplogin/controllers.js.c:392
-#: static/js/greenwallet/signuplogin/controllers.js.c:392
-msgid "Wallet decryption failed"
-msgstr "Не вдалося дешифрувати гаманець"
-
-#: crx/dist/static/js/greenwallet/signuplogin/controllers.js.c:401
-#: static/js/greenwallet/signuplogin/controllers.js.c:401
-#, c-format
-msgid "%s attempts left."
-msgstr ""
-
-#: crx/dist/static/js/greenwallet/signuplogin/controllers.js.c:403
-#: static/js/greenwallet/signuplogin/controllers.js.c:403
-msgid "0 attempts left - PIN removed."
-msgstr ""
-
-#: crx/dist/static/js/greenwallet/receive/controllers.js.c:51
-#: static/js/greenwallet/receive/controllers.js.c:51
-msgid "Funds swept"
-msgstr "Кошти зняті"
-
-#: crx/dist/static/js/greenwallet/receive/controllers.js.c:59
-#: static/js/greenwallet/receive/controllers.js.c:59
-msgid "Already swept or no funds found"
-msgstr "Кошти уже були зняті або не знайдені"
-
-#: crx/dist/static/js/greenwallet/receive/controllers.js.c:72
-#: crx/dist/static/js/greenwallet/info/controllers.js.c:185
-#: static/js/greenwallet/receive/controllers.js.c:72
-#: static/js/greenwallet/info/controllers.js.c:185
-msgid "Not a valid encrypted private key"
-msgstr "Зашифрований приватний ключ не дійсний"
-
-#: crx/dist/static/js/greenwallet/receive/controllers.js.c:73
-#: crx/dist/static/js/greenwallet/info/controllers.js.c:187
-#: static/js/greenwallet/receive/controllers.js.c:73
-#: static/js/greenwallet/info/controllers.js.c:187
-msgid "Invalid passphrase"
-msgstr "Неправильна фраза-пароль"
-
-#: crx/dist/static/js/greenwallet/receive/controllers.js.c:133
-#: crx/dist/static/js/greenwallet/receive/controllers.js.c:142
-#: crx/dist/static/js/greenwallet/receive/controllers.js.c:154
-#: crx/dist/static/js/greenwallet/info/controllers.js.c:186
-#: static/js/greenwallet/receive/controllers.js.c:133
-#: static/js/greenwallet/receive/controllers.js.c:142
-#: static/js/greenwallet/receive/controllers.js.c:154
-#: static/js/greenwallet/info/controllers.js.c:186
-msgid "Not a valid private key"
-msgstr "Приватний ключ не дійсний"
-
-#: crx/dist/static/js/greenwallet/settings/controllers.js.c:326
-#: static/js/greenwallet/settings/controllers.js.c:326
-#, c-format
-msgid "(about %s days: 1 day ≈ 144 blocks)"
-msgstr "(близько %s днів: 1 день ≈ 144 блоків)"
-
-#: crx/dist/static/js/greenwallet/settings/controllers.js.c:344
-#: static/js/greenwallet/settings/controllers.js.c:344
-msgid "nLockTime settings updated successfully"
-msgstr "nLockTime параметри успішно оновлені"
-
-#: crx/dist/static/js/greenwallet/settings/controllers.js.c:393
-#: static/js/greenwallet/settings/controllers.js.c:393
-msgid "Already expired"
-msgstr "Вже минув термін"
-
-#: crx/dist/static/js/greenwallet/settings/controllers.js.c:394
-#: static/js/greenwallet/settings/controllers.js.c:394
-#, c-format
-msgid "in about %s days"
-msgstr "через близько %s днів"
-
-#: crx/dist/static/js/greenwallet/settings/controllers.js.c:409
-#: crx/dist/static/js/greenwallet/settings/controllers.js.c:649
-#: crx/dist/static/js/greenwallet/send/controllers.js.c:378
-#: static/js/greenwallet/settings/controllers.js.c:409
-#: static/js/greenwallet/settings/controllers.js.c:649
-#: static/js/greenwallet/send/controllers.js.c:378
-msgid "Email sent"
-msgstr "Email відправлено"
-
-#: crx/dist/static/js/greenwallet/settings/controllers.js.c:445
-#: static/js/greenwallet/settings/controllers.js.c:445
-msgid "You need to log out for language changes to be applied."
-msgstr "Вам потрібно вийти, щоб зміни набули силу."
-
-#: crx/dist/static/js/greenwallet/settings/controllers.js.c:453
-#: static/js/greenwallet/settings/controllers.js.c:453
-msgid "Error changing language:"
-msgstr "Помилка вибору мови:"
-
-#: crx/dist/static/js/greenwallet/settings/controllers.js.c:485
-#: crx/dist/static/js/greenwallet/settings/controllers.js.c:519
-#: crx/dist/static/js/greenwallet/settings/controllers.js.c:543
-#: static/js/greenwallet/settings/controllers.js.c:485
-#: static/js/greenwallet/settings/controllers.js.c:519
-#: static/js/greenwallet/settings/controllers.js.c:543
-msgid "{1} supports only the following currencies: {2}"
-msgstr "{1} підтримує тільки наступні валюти: {2}"
-
-#: crx/dist/static/js/greenwallet/settings/controllers.js.c:593
-#: static/js/greenwallet/settings/controllers.js.c:593
-msgid "Sent handler registration request"
-msgstr "Sent handler registration request"
-
-#: crx/dist/static/js/greenwallet/settings/controllers.js.c:621
-#: static/js/greenwallet/settings/controllers.js.c:621
-msgid "Cannot remove an account with non-zero balance"
-msgstr "Cannot remove an account with non-zero balance"
-
-#: crx/dist/static/js/greenwallet/settings/controllers.js.c:642
-#: static/js/greenwallet/settings/controllers.js.c:642
-msgid "You can't change your email address while you have email 2FA enabled"
-msgstr "You can't change your email address while you have email 2FA enabled"
-
-#: crx/dist/static/js/greenwallet/settings/controllers.js.c:659
-#: static/js/greenwallet/settings/controllers.js.c:659
-msgid "Email confirmed"
-msgstr "Email confirmed"
-
-#: crx/dist/static/js/greenwallet/settings/controllers.js.c:788
-#: static/js/greenwallet/settings/controllers.js.c:788
-msgid "New item saved"
-msgstr "Новий елемент збережений"
-
-#: crx/dist/static/js/greenwallet/settings/controllers.js.c:794
-#: static/js/greenwallet/settings/controllers.js.c:794
-msgid "Error saving item: "
-msgstr "Помилка при збереженні елементу: "
-
-#: crx/dist/static/js/greenwallet/settings/controllers.js.c:884
-#: static/js/greenwallet/settings/controllers.js.c:884
-msgid "PIN removed"
-msgstr "PIN-код видалений"
-
-#: crx/dist/static/js/greenwallet/settings/controllers.js.c:917
-#: static/js/greenwallet/settings/controllers.js.c:917
-msgid "PIN changed"
-msgstr "PIN-код змінений"
-
-#: crx/dist/static/js/greenwallet/settings/controllers.js.c:921
-#: static/js/greenwallet/settings/controllers.js.c:921
-msgid "PIN set"
-msgstr "PIN-код встановлений"
-
-#: crx/dist/static/js/greenwallet/settings/controllers.js.c:934
-#: static/js/greenwallet/settings/controllers.js.c:934
-msgid "All PINs removed"
-msgstr "Всі PIN-коди видалені"
-
-#: crx/dist/static/js/greenwallet/settings/controllers.js.c:955
-#: static/js/greenwallet/settings/controllers.js.c:955
-msgid "Facebook integration disabled"
-msgstr "Інтеграція с Facebook заборонена"
-
-#: crx/dist/static/js/greenwallet/settings/controllers.js.c:968
-#: static/js/greenwallet/settings/controllers.js.c:968
-msgid "Facebook integration enabled"
-msgstr "Інтеграция з Facebook дозволена"
-
-#: crx/dist/static/js/greenwallet/settings/controllers.js.c:989
-#: static/js/greenwallet/settings/controllers.js.c:989
-msgid "Reddit integration disabled"
-msgstr "Інтеграція з Reddit заборонена"
-
-#: crx/dist/static/js/greenwallet/settings/controllers.js.c:1001
-#: static/js/greenwallet/settings/controllers.js.c:1001
-msgid "Reddit integration enabled"
-msgstr "Інтеграція с Reddit дозволена"
-
-#: crx/dist/static/js/greenwallet/settings/controllers.js.c:1023
-#: static/js/greenwallet/settings/controllers.js.c:1023
-msgid "Custom login disabled"
-msgstr "Спеціальний вхід заборонений"
-
-#: crx/dist/static/js/greenwallet/settings/controllers.js.c:1036
-#: static/js/greenwallet/settings/controllers.js.c:1036
-msgid "Custom login changed"
-msgstr "Спеціальний вхід дозволений"
-
-#: crx/dist/static/js/greenwallet/settings/controllers.js.c:1056
-#: crx/dist/static/js/greenwallet/settings/controllers.js.c:1089
-#: crx/dist/static/js/greenwallet/settings/controllers.js.c:1097
-#: static/js/greenwallet/settings/controllers.js.c:1056
-#: static/js/greenwallet/settings/controllers.js.c:1089
-#: static/js/greenwallet/settings/controllers.js.c:1097
-msgid "Change"
-msgstr "Решта"
-
-#: crx/dist/static/js/greenwallet/settings/controllers.js.c:1056
-#: crx/dist/static/js/greenwallet/settings/controllers.js.c:1089
-#: crx/dist/static/js/greenwallet/settings/controllers.js.c:1097
-#: static/js/greenwallet/settings/controllers.js.c:1056
-#: static/js/greenwallet/settings/controllers.js.c:1089
-#: static/js/greenwallet/settings/controllers.js.c:1097
-msgid "Save"
-msgstr "Зберегти"
-
-#: crx/dist/static/js/greenwallet/settings/controllers.js.c:1164
-#: static/js/greenwallet/settings/controllers.js.c:1164
-msgid "Limits updated successfully"
-msgstr "Limits updated successfully"
-
-#: crx/dist/static/js/greenwallet/settings/controllers.js.c:1318
-#: static/js/greenwallet/settings/controllers.js.c:1318
-#, fuzzy
-msgid "Renamed successfully"
-msgstr "Limits updated successfully"
-
-#: crx/dist/static/js/greenwallet/info/controllers.js.c:77
-#: static/js/greenwallet/info/controllers.js.c:77
-msgid "Not enough data to draw the graph"
-msgstr "Недостатньо даних, щоб побудувати графік"
-
-#: crx/dist/static/js/greenwallet/info/controllers.js.c:198
-#: static/js/greenwallet/info/controllers.js.c:198
-msgid "Funds redeemed"
-msgstr "Кошти виплачені"
-
-#: crx/dist/static/js/greenwallet/info/controllers.js.c:201
-#: static/js/greenwallet/info/controllers.js.c:201
-msgid "Already redeemed"
-msgstr "Уже були виплачені"
-
-#: crx/dist/static/js/greenwallet/blockchain/services.js.c:117
-#: static/js/greenwallet/blockchain/services.js.c:117
-msgid "Block header missing"
-msgstr ""
-
-#: crx/dist/static/js/greenwallet/blockchain/services.js.c:118
-#: static/js/greenwallet/blockchain/services.js.c:118
-msgid "Merkle root mismatch"
-msgstr ""
-
-#: crx/dist/static/js/greenwallet/blockchain/services.js.c:134
-#: static/js/greenwallet/blockchain/services.js.c:134
-msgid "Private keys not available - can't verify external social transactions"
-msgstr ""
-
-#: crx/dist/static/js/greenwallet/blockchain/services.js.c:139
-#: static/js/greenwallet/blockchain/services.js.c:139
-msgid "Private keys not available - can't verify subaccount transactions"
-msgstr ""
-
-#: crx/dist/static/js/greenwallet/blockchain/services.js.c:207
-#: static/js/greenwallet/blockchain/services.js.c:207
-msgid "Incorrect output address: %1 != %2"
-msgstr ""
-
-#: crx/dist/static/js/greenwallet/blockchain/services.js.c:224
-#: static/js/greenwallet/blockchain/services.js.c:224
-#, fuzzy
-msgid "Incorrect output value"
-msgstr "Недопустиме вихідне значення"
-
-#: crx/dist/static/js/greenwallet/blockchain/services.js.c:355
-#: static/js/greenwallet/blockchain/services.js.c:355
-#, fuzzy
-msgid "Electrum server failed to reply"
-msgstr "Помилка при налаштуванні Electrum"
-
-#: crx/dist/static/js/greenwallet/blockchain/services.js.c:377
-#: static/js/greenwallet/blockchain/services.js.c:377
-msgid "Verification pending"
-msgstr ""
-
-#: crx/dist/static/js/greenwallet/send/controllers.js.c:24
-#: static/js/greenwallet/send/controllers.js.c:24
-msgid "Checksum validation failed!"
-msgstr "Помилка контрольної суми!"
-
-#: crx/dist/static/js/greenwallet/send/controllers.js.c:32
-#: static/js/greenwallet/send/controllers.js.c:32
-msgid "Version "
-msgstr "Версія "
-
-#: crx/dist/static/js/greenwallet/send/controllers.js.c:37
-#: static/js/greenwallet/send/controllers.js.c:37
-msgid " is not a valid number of outputs"
-msgstr " не є допустимою кількістю виходів"
-
-#: crx/dist/static/js/greenwallet/send/controllers.js.c:134
-#: static/js/greenwallet/send/controllers.js.c:134
-msgid "Missing change P2SH script"
-msgstr "Missing change P2SH script"
-
-#: crx/dist/static/js/greenwallet/send/controllers.js.c:137
-#: static/js/greenwallet/send/controllers.js.c:137
-msgid "change OP_HASH160 missing"
-msgstr "Зміна OP_HASH160 відсутня"
-
-#: crx/dist/static/js/greenwallet/send/controllers.js.c:138
-#: static/js/greenwallet/send/controllers.js.c:138
-msgid "change OP_EQUAL missing"
-msgstr "зміна OP_EQUAL відсутня"
-
-#: crx/dist/static/js/greenwallet/send/controllers.js.c:155
-#: static/js/greenwallet/send/controllers.js.c:155
-msgid "Invalid pubkey hash script length"
-msgstr "Неправильна довжина хешу публічного ключа"
-
-#: crx/dist/static/js/greenwallet/send/controllers.js.c:156
-#: static/js/greenwallet/send/controllers.js.c:156
-msgid "OP_DUP missing"
-msgstr "Відсутній OP_DUP"
-
-#: crx/dist/static/js/greenwallet/send/controllers.js.c:157
-#: static/js/greenwallet/send/controllers.js.c:157
-msgid "OP_HASH160 missing"
-msgstr "Відсутній OP_HASH160"
-
-#: crx/dist/static/js/greenwallet/send/controllers.js.c:158
-#: static/js/greenwallet/send/controllers.js.c:158
-msgid "Invalid pubkey hash"
-msgstr "Неправильний хеш публічного ключа"
-
-#: crx/dist/static/js/greenwallet/send/controllers.js.c:159
-#: static/js/greenwallet/send/controllers.js.c:159
-msgid "OP_EQUALVERIFY missing"
-msgstr "Відсутній OP_EQUALVERIFY"
-
-#: crx/dist/static/js/greenwallet/send/controllers.js.c:160
-#: static/js/greenwallet/send/controllers.js.c:160
-msgid "OP_CHECKSIG missing"
-msgstr "Відсутній OP_CHECKSIG"
-
-#: crx/dist/static/js/greenwallet/send/controllers.js.c:162
-#: static/js/greenwallet/send/controllers.js.c:162
-msgid "Invalid out P2SH script length"
-msgstr "Неправильна довжина виходу P2SH"
-
-#: crx/dist/static/js/greenwallet/send/controllers.js.c:163
-#: static/js/greenwallet/send/controllers.js.c:163
-msgid "out OP_HASH160 missing"
-msgstr "вихід OP_HASH160 відсутній"
-
-#: crx/dist/static/js/greenwallet/send/controllers.js.c:164
-#: static/js/greenwallet/send/controllers.js.c:164
-msgid "Invalid out P2SH hash"
-msgstr "Неправильний хеш P2SH виходу"
-
-#: crx/dist/static/js/greenwallet/send/controllers.js.c:165
-#: static/js/greenwallet/send/controllers.js.c:165
-msgid "out OP_EQUAL missing"
-msgstr "вихід OP_EQUAL відсутній"
-
-#: crx/dist/static/js/greenwallet/send/controllers.js.c:172
-#: crx/dist/static/js/greenwallet/send/controllers.js.c:223
-#: static/js/greenwallet/send/controllers.js.c:172
-#: static/js/greenwallet/send/controllers.js.c:223
-msgid "Invalid output value"
-msgstr "Недопустиме вихідне значення"
-
-#: crx/dist/static/js/greenwallet/send/controllers.js.c:201
-#: static/js/greenwallet/send/controllers.js.c:201
-msgid "Missing input"
-msgstr "Відсутній вхід"
-
-#: crx/dist/static/js/greenwallet/send/controllers.js.c:206
-#: static/js/greenwallet/send/controllers.js.c:206
-msgid "Inputs value is not larger than zero"
-msgstr "Сума входів не є більше нуля"
-
-#: crx/dist/static/js/greenwallet/send/controllers.js.c:230
-#: static/js/greenwallet/send/controllers.js.c:230
-msgid "Fee is too large (%1, expected at most %2)"
-msgstr "Комісія занадто висока (%1, очікується не більш ніж %2)"
-
-#: crx/dist/static/js/greenwallet/send/controllers.js.c:234
-#: static/js/greenwallet/send/controllers.js.c:234
-msgid "Fee is too small (%1, expected at least %2)"
-msgstr "Fee is too small (%1, expected at least %2)"
-
-#: crx/dist/static/js/greenwallet/send/controllers.js.c:263
-#: crx/dist/static/js/greenwallet/send/controllers.js.c:276
-#: static/js/greenwallet/send/controllers.js.c:263
-#: static/js/greenwallet/send/controllers.js.c:276
-msgid "No Electrum servers reachable"
-msgstr "No Electrum servers reachable"
-
-#: crx/dist/static/js/greenwallet/send/controllers.js.c:339
-#: static/js/greenwallet/send/controllers.js.c:339
-msgid "Facebook login failed"
-msgstr "Не вдалося ввійти за допомогою Facebook"
-
-#: crx/dist/static/js/greenwallet/send/controllers.js.c:362
-#: static/js/greenwallet/send/controllers.js.c:362
-msgid "Transaction reversed!"
-msgstr "Транзакція анульована!"
-
-#: crx/dist/static/js/greenwallet/send/controllers.js.c:382
-#: static/js/greenwallet/send/controllers.js.c:382
-msgid "Failed sending email"
-msgstr "Не вдалося надіслати email"
-
-#: crx/dist/static/js/greenwallet/send/controllers.js.c:406
-#: static/js/greenwallet/send/controllers.js.c:406
-msgid "Reddit message sent"
-msgstr "Reddit повідомлення відправлено"
-
-#: crx/dist/static/js/greenwallet/send/controllers.js.c:411
-#: static/js/greenwallet/send/controllers.js.c:411
-msgid "Failed sending Reddit message"
-msgstr "Не вдалося відправити повідомлення Reddit"
-
-#: crx/dist/static/js/greenwallet/send/controllers.js.c:455
-#: static/js/greenwallet/send/controllers.js.c:455
-msgid "Transaction amount must be at least 0.1543mBTC to allow redemption fee"
-msgstr "Transaction amount must be at least 0.1543mBTC to allow redemption fee"
-
-#: crx/dist/static/js/greenwallet/send/controllers.js.c:490
-#: crx/dist/static/js/greenwallet/send/controllers.js.c:541
-#: static/js/greenwallet/send/controllers.js.c:490
-#: static/js/greenwallet/send/controllers.js.c:541
-msgid "Transaction verification failed: "
-msgstr "Збій перевірки транзакції: "
-
-#: crx/dist/static/js/greenwallet/send/controllers.js.c:571
-#: static/js/greenwallet/send/controllers.js.c:571
-msgid ""
-"Sorry, vouchers and social transactions are not supported with hardware "
-"wallets."
-msgstr ""
-"Sorry, vouchers and social transactions are not supported with hardware "
-"wallets."
-
-#: crx/dist/static/js/greenwallet/send/controllers.js.c:614
-#: static/js/greenwallet/send/controllers.js.c:614
-msgid "Invalid amount"
-msgstr "Недопустима сума"
-
-#: crx/dist/static/js/greenwallet/send/controllers.js.c:623
-#: static/js/greenwallet/send/controllers.js.c:623
-msgid "Please provide a recipient"
-msgstr "Будь ласка, додайте отримувача"
-
-#: static/wallet/signer.js.c:1233
-msgid "No balance to spend"
-msgstr "Не вистачає балансу"
-
-#: static/wallet/wallet.js.c:2102
-msgid "Error Decrypting Wallet. Please check your password is correct."
-msgstr ""
-"Помилка в дешифруванні гаманця. Будь-ласка, перевірте коректність Вашого "
-"пароля."
-
-#: static/js/greenaddress.min.js.c:36 static/js/greenaddress.js.c:11
+#: static/js/greenaddress.js.c:11
 msgid ""
 "Cookies help us deliver our services. By using our services, you agree to "
 "our use of cookies."
@@ -742,13 +23,581 @@ msgstr ""
 "Куки допомагають нам надавати Вам наші послуги. Користуючись нашими "
 "послугами, ви погоджуєтесь на використання наших куків."
 
-#: static/js/greenaddress.min.js.c:36 static/js/greenaddress.js.c:12
+#: static/js/greenaddress.js.c:12
 msgid "More information"
 msgstr "Додаткова інформація"
 
 #: static/js/instant.js.c:54
 msgid "Invalid WIF key"
 msgstr "Invalid WIF key"
+
+#: static/js/signup.min.js.c:31 static/js/greenwallet/apps/signup.js.c:31
+#, c-format
+msgid "Please go to %s first to set up your device."
+msgstr ""
+
+#: static/js/signup.min.js.c:87 static/js/greenwallet/services.js.c:2843
+#: static/js/greenwallet/apps/signup.js.c:87
+#: static/js/greenwallet/signuplogin/controllers.js.c:330
+msgid "Invalid PIN"
+msgstr "Invalid PIN"
+
+#: static/js/signup.min.js.c:89 static/js/greenwallet/services.js.c:2845
+#: static/js/greenwallet/services.js.c:2855
+#: static/js/greenwallet/apps/signup.js.c:89
+#: static/js/greenwallet/signuplogin/controllers.js.c:338
+msgid "Dongle is not set up"
+msgstr "Dongle is not set up"
+
+#: static/js/signup.min.js.c:91 static/js/greenwallet/services.js.c:2847
+#: static/js/greenwallet/apps/signup.js.c:91
+#: static/js/greenwallet/signuplogin/controllers.js.c:340
+msgid "Dongle is locked - reconnect the dongle and retry"
+msgstr "Dongle is locked - reconnect the dongle and retry"
+
+#: static/js/signup.min.js.c:181 static/js/greenwallet/apps/signup.js.c:181
+msgid "You were already registered, so we logged you in."
+msgstr ""
+
+#: static/js/signup.min.js.c:306 static/js/greenwallet/apps/signup.js.c:306
+#: static/js/greenwallet/settings/controllers.js.c:1066
+msgid "Custom login enabled"
+msgstr "Спеціальний логін дозволений"
+
+#: static/js/signup.min.js.c:401 static/js/greenwallet/apps/signup.js.c:401
+msgid "Mnemonic not available when using hardware wallet seed"
+msgstr ""
+
+#: static/js/greenwallet/controllers.js.c:35
+msgid "You need to log out to update cache."
+msgstr "Ви маєте вийти для оновлення кешу."
+
+#: static/js/greenwallet/controllers.js.c:128
+#: static/js/greenwallet/send/controllers.js.c:725
+msgid "Failed processing payment protocol request:"
+msgstr "Failed processing payment protocol request:"
+
+#: static/js/greenwallet/controllers.js.c:173
+msgid "Electrum setup failed"
+msgstr "Помилка при налаштуванні Electrum"
+
+#: static/js/greenwallet/controllers.js.c:203
+msgid "Bitcoin transaction received!"
+msgstr "Bitcoin transaction received!"
+
+#: static/js/greenwallet/controllers.js.c:264
+msgid "Please provide this word"
+msgstr "Please provide this word"
+
+#: static/js/greenwallet/controllers.js.c:267
+msgid "Incorrect word"
+msgstr "Incorrect word"
+
+#: static/js/greenwallet/controllers.js.c:321
+#: static/js/greenwallet/controllers.js.c:344
+msgid "Re-depositing successful!"
+msgstr "Повторне внесення депозиту успішно завершено!"
+
+#: static/js/greenwallet/hdwallet.js.c:68
+#: static/js/greenwallet/hdwallet.js.c:95
+msgid "You can't sent funds in watch only mode"
+msgstr ""
+
+#: static/js/greenwallet/services.js.c:261
+#: static/js/greenwallet/services.js.c:1533
+#: static/js/greenwallet/services.js.c:1614
+#: static/js/greenwallet/services.js.c:1643
+msgid "Login failed"
+msgstr "Не вдалося увійти"
+
+#: static/js/greenwallet/services.js.c:372
+#: static/js/greenwallet/services.js.c:610
+msgid "Voucher"
+msgstr "Voucher"
+
+#: static/js/greenwallet/services.js.c:450
+msgid "Back from "
+msgstr "Back from "
+
+#: static/js/greenwallet/services.js.c:452
+msgid "From "
+msgstr "From "
+
+#: static/js/greenwallet/services.js.c:477
+msgid "To "
+msgstr "To "
+
+#: static/js/greenwallet/services.js.c:513
+msgid "Sent back to "
+msgstr "Відправлено назад на "
+
+#: static/js/greenwallet/services.js.c:516
+msgid "Re-deposited"
+msgstr "Покладено на депозит повторно"
+
+#: static/js/greenwallet/services.js.c:544
+#, fuzzy, c-format
+msgid "Time,Description,satoshis,%s,txhash,fee,memo"
+msgstr "Час, Опис, сатоші"
+
+#: static/js/greenwallet/services.js.c:980
+msgid "Bitcoin transaction sent!"
+msgstr "Bitcoin транзакція відправлена!"
+
+#: static/js/greenwallet/services.js.c:984
+msgid "Transaction failed: "
+msgstr "Збій транзакції: "
+
+#: static/js/greenwallet/services.js.c:1012
+msgid "Phone"
+msgstr "Телефон"
+
+#: static/js/greenwallet/services.js.c:1161
+msgid "Internal error"
+msgstr "Internal error"
+
+#: static/js/greenwallet/services.js.c:1174
+msgid "Failed retrieving password."
+msgstr "Помилка при отриманні пароля."
+
+#: static/js/greenwallet/services.js.c:1291
+msgid "Session expired. Please try again."
+msgstr ""
+
+#: static/js/greenwallet/services.js.c:1310
+#, c-format
+msgid "Request timed out (%s)"
+msgstr ""
+
+#: static/js/greenwallet/services.js.c:1318
+#, fuzzy
+msgid "Problem with connection detected. Please try again."
+msgstr "Problem with Internet connection detected. Please try again."
+
+#: static/js/greenwallet/services.js.c:1380
+msgid "An error has occured which forced us to log you out."
+msgstr "Сталася помилка, яка змушує нас закрити Вашу сесію."
+
+#: static/js/greenwallet/services.js.c:2153
+msgid "Error reading address book: "
+msgstr "Помилка при зчитуванні адресної книги: "
+
+#: static/js/greenwallet/services.js.c:2169
+msgid "Copied"
+msgstr "Copied"
+
+#: static/js/greenwallet/services.js.c:2171
+msgid "Error copying"
+msgstr "Error copying"
+
+#: static/js/greenwallet/services.js.c:2228
+msgid "Cancelled"
+msgstr "Скасовано"
+
+#: static/js/greenwallet/services.js.c:2230
+msgid "Invalid format"
+msgstr "Невірний формат"
+
+#: static/js/greenwallet/services.js.c:2241
+msgid ""
+"Could not process the QR code, the image may be blurry. Please try again."
+msgstr ""
+"Не вдалося обробити QR-код, зображення може бути розмито. Будь ласка, "
+"спробуйте ще раз."
+
+#: static/js/greenwallet/services.js.c:2288
+msgid "Access denied. Retry to scan from file."
+msgstr "Доступ відхилено. Повторіть спробу сканування з файлу."
+
+#: static/js/greenwallet/services.js.c:2294
+msgid "You must provide only one image file."
+msgstr "Необхідно вказати лише один файл образу."
+
+#: static/js/greenwallet/services.js.c:2472
+msgid ""
+"Device could not be opened. Make sure you don't have any TREZOR client "
+"running in another tab or browser window!"
+msgstr ""
+
+#: static/js/greenwallet/services.js.c:2581
+msgid ""
+"Outdated firmware. Please upgrade to at least 1.3.0 at http://mytrezor.com/"
+msgstr ""
+
+#: static/js/greenwallet/services.js.c:2817
+#, fuzzy
+msgid "BTChip communication failed"
+msgstr "Помилка контрольної суми!"
+
+#: static/js/greenwallet/services.js.c:2858
+msgid "Dongle is locked - remove the dongle and retry"
+msgstr "Dongle is locked - remove the dongle and retry"
+
+#: static/js/greenwallet/services.js.c:2949
+#, c-format
+msgid "Old BTChip firmware version detected. Please upgrade to at least %s."
+msgstr "Old BTChip firmware version detected. Please upgrade to at least %s."
+
+#: static/js/greenwallet/services.js.c:3221
+#: static/js/greenwallet/signuplogin/controllers.js.c:61
+#: static/js/greenwallet/transactions/controllers.js.c:114
+msgid "Please provide a password."
+msgstr "Please provide a password."
+
+#: static/js/greenwallet/services.js.c:3225
+#: static/js/greenwallet/transactions/controllers.js.c:118
+msgid "Passwords do not match."
+msgstr "Passwords do not match."
+
+#: static/js/greenwallet/info/controllers.js.c:77
+msgid "Not enough data to draw the graph"
+msgstr "Недостатньо даних, щоб побудувати графік"
+
+#: static/js/greenwallet/info/controllers.js.c:168
+#: static/js/greenwallet/receive/controllers.js.c:72
+msgid "Not a valid encrypted private key"
+msgstr "Зашифрований приватний ключ не дійсний"
+
+#: static/js/greenwallet/info/controllers.js.c:169
+#: static/js/greenwallet/receive/controllers.js.c:133
+#: static/js/greenwallet/receive/controllers.js.c:142
+#: static/js/greenwallet/receive/controllers.js.c:154
+msgid "Not a valid private key"
+msgstr "Приватний ключ не дійсний"
+
+#: static/js/greenwallet/info/controllers.js.c:170
+#: static/js/greenwallet/receive/controllers.js.c:73
+msgid "Invalid passphrase"
+msgstr "Неправильна фраза-пароль"
+
+#: static/js/greenwallet/info/controllers.js.c:181
+msgid "Funds redeemed"
+msgstr "Кошти виплачені"
+
+#: static/js/greenwallet/info/controllers.js.c:184
+msgid "Already redeemed"
+msgstr "Уже були виплачені"
+
+#: static/js/greenwallet/receive/controllers.js.c:51
+msgid "Funds swept"
+msgstr "Кошти зняті"
+
+#: static/js/greenwallet/receive/controllers.js.c:59
+msgid "Already swept or no funds found"
+msgstr "Кошти уже були зняті або не знайдені"
+
+#: static/js/greenwallet/send/controllers.js.c:24
+msgid "Checksum validation failed!"
+msgstr "Помилка контрольної суми!"
+
+#: static/js/greenwallet/send/controllers.js.c:32
+msgid "Version "
+msgstr "Версія "
+
+#: static/js/greenwallet/send/controllers.js.c:37
+msgid " is not a valid number of outputs"
+msgstr " не є допустимою кількістю виходів"
+
+#: static/js/greenwallet/send/controllers.js.c:140
+msgid "Missing change P2SH script"
+msgstr "Missing change P2SH script"
+
+#: static/js/greenwallet/send/controllers.js.c:143
+msgid "change OP_HASH160 missing"
+msgstr "Зміна OP_HASH160 відсутня"
+
+#: static/js/greenwallet/send/controllers.js.c:144
+msgid "change OP_EQUAL missing"
+msgstr "зміна OP_EQUAL відсутня"
+
+#: static/js/greenwallet/send/controllers.js.c:161
+msgid "Invalid pubkey hash script length"
+msgstr "Неправильна довжина хешу публічного ключа"
+
+#: static/js/greenwallet/send/controllers.js.c:162
+msgid "OP_DUP missing"
+msgstr "Відсутній OP_DUP"
+
+#: static/js/greenwallet/send/controllers.js.c:163
+msgid "OP_HASH160 missing"
+msgstr "Відсутній OP_HASH160"
+
+#: static/js/greenwallet/send/controllers.js.c:164
+msgid "Invalid pubkey hash"
+msgstr "Неправильний хеш публічного ключа"
+
+#: static/js/greenwallet/send/controllers.js.c:165
+msgid "OP_EQUALVERIFY missing"
+msgstr "Відсутній OP_EQUALVERIFY"
+
+#: static/js/greenwallet/send/controllers.js.c:166
+msgid "OP_CHECKSIG missing"
+msgstr "Відсутній OP_CHECKSIG"
+
+#: static/js/greenwallet/send/controllers.js.c:168
+msgid "Invalid out P2SH script length"
+msgstr "Неправильна довжина виходу P2SH"
+
+#: static/js/greenwallet/send/controllers.js.c:169
+msgid "out OP_HASH160 missing"
+msgstr "вихід OP_HASH160 відсутній"
+
+#: static/js/greenwallet/send/controllers.js.c:170
+msgid "Invalid out P2SH hash"
+msgstr "Неправильний хеш P2SH виходу"
+
+#: static/js/greenwallet/send/controllers.js.c:171
+msgid "out OP_EQUAL missing"
+msgstr "вихід OP_EQUAL відсутній"
+
+#: static/js/greenwallet/send/controllers.js.c:178
+#: static/js/greenwallet/send/controllers.js.c:230
+msgid "Invalid output value"
+msgstr "Недопустиме вихідне значення"
+
+#: static/js/greenwallet/send/controllers.js.c:207
+msgid "Missing input"
+msgstr "Відсутній вхід"
+
+#: static/js/greenwallet/send/controllers.js.c:212
+msgid "Inputs value is not larger than zero"
+msgstr "Сума входів не є більше нуля"
+
+#: static/js/greenwallet/send/controllers.js.c:237
+msgid "Fee is too large (%1, expected at most %2)"
+msgstr "Комісія занадто висока (%1, очікується не більш ніж %2)"
+
+#: static/js/greenwallet/send/controllers.js.c:241
+msgid "Fee is too small (%1, expected at least %2)"
+msgstr "Fee is too small (%1, expected at least %2)"
+
+#: static/js/greenwallet/send/controllers.js.c:270
+#: static/js/greenwallet/send/controllers.js.c:283
+msgid "No Electrum servers reachable"
+msgstr "No Electrum servers reachable"
+
+#: static/js/greenwallet/send/controllers.js.c:346
+msgid "Facebook login failed"
+msgstr "Не вдалося ввійти за допомогою Facebook"
+
+#: static/js/greenwallet/send/controllers.js.c:369
+msgid "Transaction reversed!"
+msgstr "Транзакція анульована!"
+
+#: static/js/greenwallet/send/controllers.js.c:385
+#: static/js/greenwallet/settings/controllers.js.c:415
+#: static/js/greenwallet/settings/controllers.js.c:655
+msgid "Email sent"
+msgstr "Email відправлено"
+
+#: static/js/greenwallet/send/controllers.js.c:389
+msgid "Failed sending email"
+msgstr "Не вдалося надіслати email"
+
+#: static/js/greenwallet/send/controllers.js.c:413
+msgid "Reddit message sent"
+msgstr "Reddit повідомлення відправлено"
+
+#: static/js/greenwallet/send/controllers.js.c:418
+msgid "Failed sending Reddit message"
+msgstr "Не вдалося відправити повідомлення Reddit"
+
+#: static/js/greenwallet/send/controllers.js.c:468
+msgid "Transaction amount must be at least 0.1543mBTC to allow redemption fee"
+msgstr "Transaction amount must be at least 0.1543mBTC to allow redemption fee"
+
+#: static/js/greenwallet/send/controllers.js.c:510
+#: static/js/greenwallet/send/controllers.js.c:562
+msgid "Transaction verification failed: "
+msgstr "Збій перевірки транзакції: "
+
+#: static/js/greenwallet/send/controllers.js.c:592
+msgid ""
+"Sorry, vouchers and social transactions are not supported with hardware "
+"wallets."
+msgstr ""
+"Sorry, vouchers and social transactions are not supported with hardware "
+"wallets."
+
+#: static/js/greenwallet/send/controllers.js.c:635
+msgid "Invalid amount"
+msgstr "Недопустима сума"
+
+#: static/js/greenwallet/send/controllers.js.c:644
+msgid "Please provide a recipient"
+msgstr "Будь ласка, додайте отримувача"
+
+#: static/js/greenwallet/settings/controllers.js.c:326
+#, c-format
+msgid "(about %s days: 1 day ≈ 144 blocks)"
+msgstr "(близько %s днів: 1 день ≈ 144 блоків)"
+
+#: static/js/greenwallet/settings/controllers.js.c:344
+msgid "nLockTime settings updated successfully"
+msgstr "nLockTime параметри успішно оновлені"
+
+#: static/js/greenwallet/settings/controllers.js.c:399
+msgid "Already expired"
+msgstr "Вже минув термін"
+
+#: static/js/greenwallet/settings/controllers.js.c:400
+#, c-format
+msgid "in about %s days"
+msgstr "через близько %s днів"
+
+#: static/js/greenwallet/settings/controllers.js.c:451
+msgid "You need to log out for language changes to be applied."
+msgstr "Вам потрібно вийти, щоб зміни набули силу."
+
+#: static/js/greenwallet/settings/controllers.js.c:459
+msgid "Error changing language:"
+msgstr "Помилка вибору мови:"
+
+#: static/js/greenwallet/settings/controllers.js.c:491
+#: static/js/greenwallet/settings/controllers.js.c:525
+#: static/js/greenwallet/settings/controllers.js.c:549
+msgid "{1} supports only the following currencies: {2}"
+msgstr "{1} підтримує тільки наступні валюти: {2}"
+
+#: static/js/greenwallet/settings/controllers.js.c:599
+msgid "Sent handler registration request"
+msgstr "Sent handler registration request"
+
+#: static/js/greenwallet/settings/controllers.js.c:627
+msgid "Cannot remove an account with non-zero balance"
+msgstr "Cannot remove an account with non-zero balance"
+
+#: static/js/greenwallet/settings/controllers.js.c:648
+msgid "You can't change your email address while you have email 2FA enabled"
+msgstr "You can't change your email address while you have email 2FA enabled"
+
+#: static/js/greenwallet/settings/controllers.js.c:665
+msgid "Email confirmed"
+msgstr "Email confirmed"
+
+#: static/js/greenwallet/settings/controllers.js.c:794
+msgid "New item saved"
+msgstr "Новий елемент збережений"
+
+#: static/js/greenwallet/settings/controllers.js.c:800
+msgid "Error saving item: "
+msgstr "Помилка при збереженні елементу: "
+
+#: static/js/greenwallet/settings/controllers.js.c:911
+msgid "PIN removed"
+msgstr "PIN-код видалений"
+
+#: static/js/greenwallet/settings/controllers.js.c:944
+msgid "PIN changed"
+msgstr "PIN-код змінений"
+
+#: static/js/greenwallet/settings/controllers.js.c:948
+msgid "PIN set"
+msgstr "PIN-код встановлений"
+
+#: static/js/greenwallet/settings/controllers.js.c:961
+msgid "All PINs removed"
+msgstr "Всі PIN-коди видалені"
+
+#: static/js/greenwallet/settings/controllers.js.c:982
+msgid "Facebook integration disabled"
+msgstr "Інтеграція с Facebook заборонена"
+
+#: static/js/greenwallet/settings/controllers.js.c:995
+msgid "Facebook integration enabled"
+msgstr "Інтеграция з Facebook дозволена"
+
+#: static/js/greenwallet/settings/controllers.js.c:1016
+msgid "Reddit integration disabled"
+msgstr "Інтеграція з Reddit заборонена"
+
+#: static/js/greenwallet/settings/controllers.js.c:1028
+msgid "Reddit integration enabled"
+msgstr "Інтеграція с Reddit дозволена"
+
+#: static/js/greenwallet/settings/controllers.js.c:1050
+msgid "Custom login disabled"
+msgstr "Спеціальний вхід заборонений"
+
+#: static/js/greenwallet/settings/controllers.js.c:1063
+msgid "Custom login changed"
+msgstr "Спеціальний вхід дозволений"
+
+#: static/js/greenwallet/settings/controllers.js.c:1083
+#: static/js/greenwallet/settings/controllers.js.c:1116
+#: static/js/greenwallet/settings/controllers.js.c:1124
+msgid "Change"
+msgstr "Решта"
+
+#: static/js/greenwallet/settings/controllers.js.c:1083
+#: static/js/greenwallet/settings/controllers.js.c:1116
+#: static/js/greenwallet/settings/controllers.js.c:1124
+msgid "Save"
+msgstr "Зберегти"
+
+#: static/js/greenwallet/settings/controllers.js.c:1191
+msgid "Limits updated successfully"
+msgstr "Limits updated successfully"
+
+#: static/js/greenwallet/settings/controllers.js.c:1378
+#, fuzzy
+msgid "Renamed successfully"
+msgstr "Limits updated successfully"
+
+#: static/js/greenwallet/signuplogin/controllers.js.c:234
+msgid "Unknown error"
+msgstr "Невідома помилка"
+
+#: static/js/greenwallet/signuplogin/controllers.js.c:332
+msgid "Invalid PIN, 2 retries left"
+msgstr ""
+
+#: static/js/greenwallet/signuplogin/controllers.js.c:334
+#, fuzzy
+msgid "Invalid PIN, 1 retry left"
+msgstr "Invalid PIN"
+
+#: static/js/greenwallet/signuplogin/controllers.js.c:336
+#, fuzzy
+msgid "Invalid PIN, dongle wiped"
+msgstr "Invalid PIN"
+
+#: static/js/greenwallet/signuplogin/controllers.js.c:349
+msgid "{hardware_wallet_name} Login"
+msgstr ""
+
+#: static/js/greenwallet/signuplogin/controllers.js.c:416
+msgid "Wallet decryption failed"
+msgstr "Не вдалося дешифрувати гаманець"
+
+#: static/js/greenwallet/signuplogin/controllers.js.c:425
+#, c-format
+msgid "%s attempts left."
+msgstr ""
+
+#: static/js/greenwallet/signuplogin/controllers.js.c:427
+msgid "0 attempts left - PIN removed."
+msgstr ""
+
+#, fuzzy
+#~ msgid "TREZOR initialisation failed"
+#~ msgstr "Збій транзакції: "
+
+#, fuzzy
+#~ msgid "Incorrect output value"
+#~ msgstr "Недопустиме вихідне значення"
+
+#, fuzzy
+#~ msgid "Electrum server failed to reply"
+#~ msgstr "Помилка при налаштуванні Electrum"
+
+#~ msgid "No balance to spend"
+#~ msgstr "Не вистачає балансу"
+
+#~ msgid "Error Decrypting Wallet. Please check your password is correct."
+#~ msgstr ""
+#~ "Помилка в дешифруванні гаманця. Будь-ласка, перевірте коректність Вашого "
+#~ "пароля."
 
 #~ msgid "Logged in!"
 #~ msgstr "Logged in!"
