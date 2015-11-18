@@ -57,7 +57,7 @@ ssh-agent -k
 eval "$(ssh-agent -s)"
 ssh-add webfiles
 
-git clone git@github.com:greenaddress/WalletCordova.git
+git clone git@github.com:greenaddress/GreenAddressWebFiles.git
 cp -r locale GreenAddressWebFiles
 
 cd GreenAddressWebFiles
