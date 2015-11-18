@@ -57,7 +57,10 @@ ssh-agent -k
 eval "$(ssh-agent -s)"
 ssh-add webfiles
 
+git clone git@github.com:greenaddress/WalletCordova.git
+cp -r locale GreenAddressWebFiles
+
+cd GreenAddressWebFiles
 git add locale
 git commit -m"Updated locale"
-git push --set-upstream git@github.com:greenaddress/GreenAddressWebFiles.git \
-	master
+git push
