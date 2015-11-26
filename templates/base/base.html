@@ -55,8 +55,9 @@
     <script type="text/javascript">
       BASE_URL = '{{BASE_URL}}';
       LANG = '{{LANG}}';</script>
-    {% block prescripts %}{% endblock %}
     <script src="{{STATIC_URL}}/wallet/config.js"></script>
+    {% block prescripts %}{% endblock %}
+    <script src="{{STATIC_URL}}/wallet/network.js"></script>
     {% if not cdvapp and not crapp %}<script src="{{STATIC_URL}}/js/greenaddress.min.js"></script>
     <script>
       if (window.get_catalog) get_catalog(window);

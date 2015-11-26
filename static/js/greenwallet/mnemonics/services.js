@@ -74,8 +74,9 @@ angular.module('greenWalletMnemonicsServices', ['greenWalletServices'])
             if(words.length != 2048) {
                 throw("Wordlist should contain 2048 words, but it contains "+words.length+" words.");
             }
-
-            var binary = Bitcoin.BigInteger.fromByteArrayUnsigned(data).toRadix(2);
+            var binary = Bitcoin.BigInteger.fromBuffer(
+                new Bitcoin.Buffer.Buffer(data, 'hex')
+            ).toRadix(2);
             while (binary.length < data.length*8) { binary = '0' + binary; }
             var bytes = Bitcoin.bitcoin.crypto.sha256(data);
             var hash = Bitcoin.BigInteger.fromBuffer(bytes).toRadix(2);

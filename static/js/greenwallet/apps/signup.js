@@ -123,11 +123,9 @@ return ['$scope', '$location', 'mnemonics', 'tx_sender', 'notices', 'wallets', '
 
         var generate_mnemonic = function() {
             $scope.signup.unexpected_error = false;
-            entropy = new Bitcoin.BigInteger.fromBuffer(
-                Bitcoin.randombytes(32)
-            ).toString(16);
-            $scope.signup.seed = new Bitcoin.Buffer.Buffer(entropy, 'hex');
+            entropy = Bitcoin.randombytes(32);
             while (entropy.length < 32) entropy.unshift(0);
+            $scope.signup.seed = new Bitcoin.Buffer.Buffer(entropy, 'hex');
             mnemonics.toMnemonic(entropy).then(function(mnemonic) {
                 mnemonics.toSeed(mnemonic).then(function(seed) {
                     mnemonics.toSeed(mnemonic, 'greenaddress_path').then(function(path_seed) {
