@@ -34,17 +34,15 @@ angular.module('greenWalletServices', [])
                 pbkdf2_iterations,
                 256/8
             );
-            var cipher = Bitcoin.aes.createCipher(
+            var cipher = Bitcoin.aes.createCipheriv(
                 'aes-256-cbc',
                 key256Bits,
                 salt
             );
-
-            var encrypted = Bitcoin.aes.AES.encrypt(data, key256Bits, {
-                    mode: Bitcoin.CryptoJS.mode.CBC,
-                    padding: Bitcoin.CryptoJS.pad.Iso10126,
-                    iv: salt});
-            return $q.when(Bitcoin.CryptoJS.enc.Base64.stringify(salt.concat(encrypted.ciphertext)));
+            cipher.end(data);
+            return $q.when(Bitcoin.Buffer.Buffer.concat([
+                salt, cipher.read()
+            ]).toString('base64'));
         }
     }
     cryptoService.decrypt = function(data, password) {
