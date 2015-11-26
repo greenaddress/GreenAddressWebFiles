@@ -132,7 +132,7 @@ angular.module('greenWalletSignupLoginControllers', ['greenWalletMnemonicsServic
             });
         }
         return login_data_d.then(function(data) {
-            return $q.when(Bitcoin.HDWallet.fromSeedHex(data.seed, cur_net)).then(function(hdwallet) {
+            return $q.when(Bitcoin.bitcoin.HDNode.fromSeedHex(data.seed, cur_net)).then(function(hdwallet) {
                 hdwallet.seed_hex = data.seed;
                 // seed, mnemonic, and path seed required already here for PIN setup below
                 $scope.wallet.hdwallet = hdwallet;
@@ -400,7 +400,7 @@ angular.module('greenWalletSignupLoginControllers', ['greenWalletMnemonicsServic
                                     storage.set('encrypted_seed', encrypted);
                                 })
                                 var path = mnemonics.seedToPath(path_seed);
-                                return $q.when(Bitcoin.HDWallet.fromSeedHex(parsed.seed, cur_net)).then(function(hdwallet) {
+                                return $q.when(Bitcoin.bitcoin.HDNode.fromSeedHex(parsed.seed, cur_net)).then(function(hdwallet) {
                                     hdwallet.seed_hex = parsed.seed;
                                     return wallets.login($scope, hdwallet, state.mnemonic, false, false, path_seed);
                                 });
@@ -408,7 +408,7 @@ angular.module('greenWalletSignupLoginControllers', ['greenWalletMnemonicsServic
                                 state.seed_progress = progress;
                             });
                         } else {
-                            return $q.when(Bitcoin.HDWallet.fromSeedHex(parsed.seed, cur_net)).then(function(hdwallet) {
+                            return $q.when(Bitcoin.bitcoin.HDNode.fromSeedHex(parsed.seed, cur_net)).then(function(hdwallet) {
                                 hdwallet.seed_hex = parsed.seed;
                                 return wallets.login($scope, hdwallet, parsed.mnemonic, false, false, parsed.path_seed);
                             });

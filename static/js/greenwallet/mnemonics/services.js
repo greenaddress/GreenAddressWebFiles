@@ -40,12 +40,13 @@ angular.module('greenWalletMnemonicsServices', ['greenWalletServices'])
                 binary += binPart;
             }
             var bits = words.length*11 - words.length/3;
-            var retval = new Bitcoin.BigInteger(binary.substr(0, bits), 2).toByteArrayUnsigned();
-            while (retval.length < bits/8) retval.unshift(0);
+            var retval = new Bitcoin.BigInteger(binary.substr(0, bits), 2).toBuffer();
+            while (retval.length < bits/8) {
+                retval = Bitcoin.Buffer.Buffer.concat([0], retval);
+            }
 
             var checksum = binary.substr(bits);
-            var wordArray = Bitcoin.convert.bytesToWordArray(retval);
-            var hash = Bitcoin.convert.wordArrayToBytes(Bitcoin.CryptoJS.SHA256(wordArray));
+            var hash = Bitcoin.bitcoin.crypto.sha256(retval);
             var binHash = '';
             for(var i = 0; i < hash.length; i++) {
                 var binPart = new Bitcoin.BigInteger(hash[i].toString()).toRadix(2);
@@ -76,9 +77,8 @@ angular.module('greenWalletMnemonicsServices', ['greenWalletServices'])
 
             var binary = Bitcoin.BigInteger.fromByteArrayUnsigned(data).toRadix(2);
             while (binary.length < data.length*8) { binary = '0' + binary; }
-            var bytes = Bitcoin.CryptoJS.SHA256(Bitcoin.convert.bytesToWordArray(data));
-            bytes = Bitcoin.convert.wordArrayToBytes(bytes);
-            var hash = Bitcoin.BigInteger.fromByteArrayUnsigned(bytes).toRadix(2);
+            var bytes = Bitcoin.bitcoin.crypto.sha256(data);
+            var hash = Bitcoin.BigInteger.fromBuffer(bytes).toRadix(2);
             while (hash.length < 256) { hash = '0' + hash; }
             binary += hash.substr(0, data.length / 4);  // checksum
 
@@ -92,7 +92,7 @@ angular.module('greenWalletMnemonicsServices', ['greenWalletServices'])
     }
     mnemonics.seedToPath = function(seed) {
         var shaObj = new jsSHA(seed, 'HEX');
-        return shaObj.getHMAC('GreenAddress.it HD wallet path', 'TEXT', 'SHA-512', 'HEX'); 
+        return shaObj.getHMAC('GreenAddress.it HD wallet path', 'TEXT', 'SHA-512', 'HEX');
     }
     mnemonics.toSeed = function(mnemonic, k, validated) {
         var that = this;
