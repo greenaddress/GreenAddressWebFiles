@@ -232,7 +232,9 @@ angular.module('greenWalletServices', [])
                 autotimeout.start($scope.wallet.appearance.altimeout);
                 $scope.wallet.privacy = data.privacy;
                 $scope.wallet.limits = data.limits;
-                $scope.wallet.subaccounts = data.subaccounts;
+                $scope.wallet.subaccounts = [
+                    {pointer: 0, name: gettext("Main")}
+                ].concat(data.subaccounts);
                 $scope.wallet.current_subaccount = $scope.wallet.appearance.current_subaccount || 0;
                 $scope.wallet.unit = $scope.wallet.appearance.unit || 'mBTC';
                 $scope.wallet.cache_password = data.cache_password;
@@ -369,7 +371,10 @@ angular.module('greenWalletServices', [])
 
             autotimeout.start($scope.wallet.appearance.altimeout);
             $scope.wallet.unit = $scope.wallet.appearance.unit || 'mBTC';
-            $scope.wallet.subaccounts = data.subaccounts;
+            $scope.wallet.subaccounts = [
+                {pointer: 0, name: gettext("Main")}
+            ].concat(data.subaccounts);
+            console.log($scope.wallet.subaccounts);
             $scope.wallet.current_subaccount = 0;
             $scope.wallet.cache_password = data.cache_password;
             $scope.wallet.fiat_exchange = data.exchange;

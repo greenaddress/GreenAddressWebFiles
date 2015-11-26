@@ -35,7 +35,7 @@ angular.module('greenWalletReceiveControllers',
             }).finally(function() { $rootScope.decrementLoading(); });
         },
         is_bip38: function(privkey) {
-            return Bitcoin.BIP38.isBIP38Format(privkey);
+            return new Bitcoin.bip38().verify(privkey);
         },
         sweep: function() {
             var do_sweep_key = function(key) {
@@ -66,7 +66,7 @@ angular.module('greenWalletReceiveControllers',
             var that = this;
             var key_wif = this.privkey_wif;
             var iframe;
-            if (Bitcoin.BIP38.isBIP38Format(key_wif)) {
+            if (new Bitcoin.bip38().verify(key_wif)) {
                 that.sweeping = true;
                 var errors = {
                     invalid_privkey: gettext('Not a valid encrypted private key'),
