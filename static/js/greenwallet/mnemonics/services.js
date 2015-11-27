@@ -111,14 +111,9 @@ angular.module('greenWalletMnemonicsServices', ['greenWalletServices'])
                     if (param.constructor === Number) {
                         deferred.notify(param);
                     } else {
-                        var ArrayBuffer2hex = function (buffer) {
-                            var hex = "";
-                            var view = new Uint8Array(buffer);
-                            for (var i = 0; i < view.length; i++)
-                                hex += ("00" + view[i].toString(16)).slice(-2);
-                            return hex;
-                        };
-                        var hex = ArrayBuffer2hex(param);
+                        var hex = Bitcoin.Buffer.Buffer(
+                            new Uint8Array(param)
+                        ).toString('hex');
                         deferred.resolve(hex);
                     }
                 }, function(fail) {
