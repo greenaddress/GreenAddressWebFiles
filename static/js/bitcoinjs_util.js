@@ -174,12 +174,14 @@ if (self.cordova && cordova.platformId == 'ios') {
 
     Bitcoin.bitcoin.ECPair.prototype.sign = function(hash) {
         var deferred = $q.defer();
-        cordova.exec(function(param) {
-            deferred.resolve(Bitcoin.convert.hexToBytes(param));
+        cordova.exec(function(der) {
+            deferred.resolve(Bitcoin.bitcoin.ECSignature.fromDER(
+                new Bitcoin.Buffer.Buffer(der, 'hex')
+            ));
         }, function(fail) {
             console.log('ecdsa.sign failed: ' + fail)
             deferred.reject(fail);
-        }, "ECDSA", "sign", [this.toWif(), Bitcoin.convert.bytesToHex(hash)]);
+        }, "ECDSA", "sign", [this.toWIF(), hash.toString('hex')]);
         return deferred.promise;
     }
 } else {
@@ -263,7 +265,9 @@ if (self.cordova && cordova.platformId == 'ios') {
 
             Bitcoin.bitcoin.ECPair.prototype.sign = function(hash) {
                 var deferred = $q.defer();
-                cbs[++callId] = deferred.resolve;
+                cbs[++callId] = function(der) {
+                    deferred.resolve(Bitcoin.bitcoin.ECSignature.fromDER(der));
+                };
                 worker.postMessage({
                     func: 'sign',
                     data: {key: this.toWIF(), hash: hash},

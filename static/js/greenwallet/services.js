@@ -758,7 +758,7 @@ angular.module('greenWalletServices', [])
                         var sign = $q.when(key.sign(tx.hashForSignature(i, script, SIGHASH_ALL)));
                         return sign.then(function(sign) {
                             sign = Bitcoin.Buffer.Buffer.concat([
-                                new Bitcoin.Buffer.Buffer(sign),
+                                new Bitcoin.Buffer.Buffer(sign.toDER()),
                                 new Bitcoin.Buffer.Buffer([SIGHASH_ALL]),
                             ]);
                             return sign.toString('hex');
@@ -1562,7 +1562,8 @@ angular.module('greenWalletServices', [])
                 if (session_for_login) {
                     session_for_login.call('com.greenaddress.login.get_challenge',
                             [hdwallet.getAddress().toString()]).then(function(challenge) {
-                        var challenge_bytes = new Bitcoin.BigInteger(challenge).toByteArrayUnsigned();
+
+                        var challenge_bytes = new Bitcoin.BigInteger(challenge).toBuffer();
 
                         // generate random path to derive key from - avoids signing using the same key twice
                         var random_path_hex = new Bitcoin.BigInteger.fromBuffer(
@@ -1571,7 +1572,6 @@ angular.module('greenWalletServices', [])
                         while (random_path_hex.length < 16) random_path_hex = '0' + random_path_hex;
                         $q.when(hdwallet.subpath_for_login(random_path_hex)).then(function(subhd) {
                             $q.when(subhd.keyPair.sign(challenge_bytes)).then(function(signature) {
-                                signature = Bitcoin.bitcoin.ECSignature.fromDER(signature);
                                 d_main.resolve(device_id().then(function(devid) {
                                     if (session_for_login && session_for_login.nc == nconn) {
                                         return session_for_login.call('com.greenaddress.login.authenticate',
