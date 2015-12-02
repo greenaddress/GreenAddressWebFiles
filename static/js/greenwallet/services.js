@@ -410,6 +410,106 @@ angular.module('greenWalletServices', [])
             return social_destination;
         }
     };
+    var unblindOutValue = function($scope, out, scanning_key) {
+        var t0 = new Date();
+        var secexp_buf = scanning_key.d.toBuffer();
+        var secexp = Module._malloc(32);
+        var nonce = Module._malloc(33);
+        var nonce_res = Module._malloc(32);
+        var pubkey_p = Module._malloc(172);
+        var toa = function(p, l) {
+            var ret = [];
+            for (var i = 0; i < l; ++i) {
+                ret.push(getValue(p+i));
+            }
+            return ret;
+        }
+        var p_arr = Array.from(new Bitcoin.BigInteger(''+pubkey_p).toBuffer());
+        while (p_arr.length < 4) p_arr.unshift(0);
+        for (var i = 0; i < 32; ++i) {
+            setValue(secexp+i, secexp_buf[i]);
+        }
+        for (var i = 0; i < 33; ++i) {
+            setValue(nonce + i, out.nonce_commitment[i], 'i8');
+        }
+        console.log(Module._secp256k1_ec_pubkey_parse(
+            Module.secp256k1ctx,
+            pubkey_p,
+            nonce,
+            33
+        ));
+        console.log(Module._secp256k1_ecdh(
+            Module.secp256k1ctx,
+            nonce_res,
+            pubkey_p,
+            secexp
+        ));
+        var nonce_buf = new Bitcoin.Buffer.Buffer(32);
+        for (var i = 0; i < 32; ++i) {
+            nonce_buf[i] = getValue(nonce_res + i);
+        }
+        nonce_buf = Bitcoin.bitcoin.crypto.sha256(nonce_buf);
+        for (var i = 0; i < 32; ++i) {
+            setValue(nonce_res + i, nonce_buf[i]);
+        }
+        var blinding_factor_out = Module._malloc(32);
+        var amount_out = Module._malloc(8);
+        var min_value = Module._malloc(8);
+        var max_value = Module._malloc(8);
+        var msg_out = Module._malloc(4096);
+        var msg_size = Module._malloc(4);
+        var commitment = Module._malloc(33);
+        for (var i = 0; i < 33; ++i) {
+            setValue(commitment + i, out.commitment[i], 'i8');
+        }
+        var range_proof = Module._malloc(out.range_proof.length);
+        for (var i = 0; i < out.range_proof.length; ++i) {
+            setValue(range_proof + i, out.range_proof[i], 'i8');
+        }
+        console.log(Module._secp256k1_rangeproof_rewind(
+            Module.secp256k1ctx,
+            blinding_factor_out,
+            amount_out,
+            msg_out,
+            msg_size,
+            nonce_res,
+            min_value,
+            max_value,
+            commitment,
+            range_proof,
+            out.range_proof.length
+        ));
+        var ret = [];
+        for (var i = 0; i < 8; ++i) {
+            ret[8-i-1] = getValue(amount_out+i, 'i8') & 0xff;
+        }
+        console.log(new Date() - t0);
+        return ''+(+Bitcoin.BigInteger.fromBuffer(new Bitcoin.Buffer.Buffer(ret)));
+    };
+    var unblindOutputs = function($scope, txData) {
+        var deferreds = [];
+        var tx = Bitcoin.bitcoin.Transaction.fromHex(txData.data);
+        for (var i = 0; i < txData.eps.length; ++i) {
+            var ep = txData.eps[i];
+            (function(ep) {
+                if (ep.value == 0 && ep.is_relevant && ep.is_credit) {
+                    var d = $scope.wallet.hdwallet.deriveHardened(branches.BLINDED);
+                    d = d.then(function(branch) {
+                        // TODO: subaccounts
+                        return branch.deriveHardened(ep.pubkey_pointer);
+                    }).then(function(scanning_node) {
+                        ep.value = unblindOutValue(
+                            $scope,
+                            tx.outs[ep.pt_idx],
+                            scanning_node.keyPair
+                        );
+                    });
+                    deferreds.push(d);
+                }
+            })(ep);
+        }
+        return $q.all(deferreds);
+    }
     walletsService._getTransactions = function($scope, notifydata, page_id, query, sorting, date_range, subaccount) {
         var transactions_key = $scope.wallet.receiving_id + 'transactions';
         var d = $q.defer();
@@ -429,6 +529,17 @@ angular.module('greenWalletServices', [])
                                             end && end.toISOString()];
         var call = tx_sender.call('http://greenaddressit.com/txs/get_list_v2',
             page_id, query, sort_by, date_range_iso, subaccount);
+
+        call = call.then(function(data) {
+            var deferreds = [];
+            for (var i = 0; i < data.list.length; i++) {
+                var tx = data.list[i];
+                deferreds.push(unblindOutputs($scope, tx));
+            }
+            return $q.all(deferreds).then(function() {
+                return data;
+            });
+        });
 
         call.then(function(data) {
             var retval = [];

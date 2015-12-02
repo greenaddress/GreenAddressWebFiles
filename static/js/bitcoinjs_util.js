@@ -195,6 +195,8 @@ if (self.cordova && cordova.platformId == 'ios') {
                 if (!ready && (!this.readyState || this.readyState == 'complete')) {
                     ready = true;
                     Module.secp256k1ctx = Module._secp256k1_context_create(3);
+                    Module._secp256k1_pedersen_context_initialize(Module.secp256k1ctx);
+                    Module._secp256k1_rangeproof_context_initialize(Module.secp256k1ctx);
                     var randArr = new Uint8Array(32);
                     crypto.getRandomValues(randArr);
                     if (!Module._secp256k1_context_randomize(Module.secp256k1ctx, randArr)) {

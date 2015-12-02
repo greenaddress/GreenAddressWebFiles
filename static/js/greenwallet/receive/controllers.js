@@ -191,20 +191,38 @@ angular.module('greenWalletReceiveControllers',
         var satoshi = Bitcoin.Util.parseValue(amount.toString()).divide(Bitcoin.BigInteger.valueOf(div));
         return satoshi.toString();
     }
-    $scope.show_bitcoin_uri = function(show_qr, confidential) {
+    $scope.show_bitcoin_uri = function(show_qr) {
         if ($scope.receive.bitcoin_uri) {
             if (show_qr) $scope.show_url_qr($scope.receive.bitcoin_uri);
         } else {
             gaEvent('Wallet', 'ReceiveShowBitcoinUri');
+            var confidential = true; // TODO settings
             tx_sender.call('http://greenaddressit.com/vault/fund', $scope.wallet.current_subaccount, confidential, confidential).then(function(data) {
                 var address;
                 if (confidential) {
-                    $scope.wallet.hdwallet.derive(branches.BLINDED).then(function(branch) {
-                        return branch.derive(data.pointer)
-                    });
-                    tx_sender.call('http://greenaddressit.com/vault/set_scanning_key', $scope.wallet.current_subaccount, data.pointer).then(function(data) {
-                        address = Bitcoin.bitcoin.address.toBase58Check(hash, cur_net.scriptHash);
-
+                    address = $scope.wallet.hdwallet.deriveHardened(branches.BLINDED).then(function(branch) {
+                        return branch.deriveHardened(data.pointer);
+                    }).then(function(blinded_key) {
+                        var version;
+                        if (cur_net === Bitcoin.bitcoin.networks.bitcoin) {
+                            version = 10;
+                        } else {
+                            version = 25;
+                        }
+                        return tx_sender.call(
+                            'http://greenaddressit.com/vault/set_scanning_key',
+                            $scope.wallet.current_subaccount,
+                            data.pointer,
+                            Array.from(blinded_key.keyPair.getPublicKeyBuffer())
+                        ).then(function() {
+                            return Bitcoin.bs58check.encode(Bitcoin.Buffer.Buffer.concat([
+                                new Bitcoin.Buffer.Buffer([version, cur_net.scriptHash]),
+                                blinded_key.keyPair.getPublicKeyBuffer(),
+                                Bitcoin.bitcoin.crypto.hash160(
+                                    new Bitcoin.Buffer.Buffer(data.script, 'hex')
+                                )
+                            ]));
+                        });
                     });
                 } else {
                     var script = new Bitcoin.Buffer.Buffer(data, 'hex');
@@ -214,7 +232,7 @@ angular.module('greenWalletReceiveControllers',
                         Bitcoin.bitcoin.address.toBase58Check(hash, cur_net.scriptHash)
                     );
                 }
-                address.then(funcion(address) {
+                address.then(function(address) {
                     $scope.receive.bitcoin_address = address;
                     $scope.receive.base_bitcoin_uri = $scope.receive.bitcoin_uri = 'bitcoin:' + address;
                     if ($scope.receive.amount) {
