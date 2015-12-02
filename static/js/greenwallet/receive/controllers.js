@@ -1,7 +1,7 @@
 angular.module('greenWalletReceiveControllers',
     ['greenWalletServices'])
-.controller('ReceiveController', ['$rootScope', '$scope', 'wallets', 'tx_sender', 'notices', 'cordovaReady', 'hostname', 'gaEvent', '$modal', '$location', 'qrcode', 'clipboard',
-        function InfoController($rootScope, $scope, wallets, tx_sender, notices, cordovaReady, hostname, gaEvent, $modal, $location, qrcode, clipboard) {
+.controller('ReceiveController', ['$rootScope', '$scope', 'wallets', 'tx_sender', 'notices', 'cordovaReady', 'hostname', 'gaEvent', '$modal', '$location', 'qrcode', 'clipboard', 'branches', '$q',
+        function InfoController($rootScope, $scope, wallets, tx_sender, notices, cordovaReady, hostname, gaEvent, $modal, $location, qrcode, clipboard, branches, $q) {
     if(!wallets.requireWallet($scope)) return;
     $scope.wallet.signup = false;  // required for 2FA settings to work properly in the same session as signup
 
@@ -191,24 +191,42 @@ angular.module('greenWalletReceiveControllers',
         var satoshi = Bitcoin.Util.parseValue(amount.toString()).divide(Bitcoin.BigInteger.valueOf(div));
         return satoshi.toString();
     }
-    $scope.show_bitcoin_uri = function(show_qr) {
+    $scope.show_bitcoin_uri = function(show_qr, confidential) {
         if ($scope.receive.bitcoin_uri) {
             if (show_qr) $scope.show_url_qr($scope.receive.bitcoin_uri);
         } else {
             gaEvent('Wallet', 'ReceiveShowBitcoinUri');
-            tx_sender.call('http://greenaddressit.com/vault/fund', $scope.wallet.current_subaccount).then(function(data) {
-                var script = new Bitcoin.Buffer.Buffer(data, 'hex');
-                var hash = Bitcoin.bitcoin.crypto.hash160(script);
-                var version = cur_net.scriptHash;
-                var address = Bitcoin.bitcoin.address.toBase58Check(hash, cur_net.scriptHash);
-                $scope.receive.bitcoin_address = address;
-                $scope.receive.base_bitcoin_uri = $scope.receive.bitcoin_uri = 'bitcoin:' + address;
-                if ($scope.receive.amount) {
-                    $scope.receive.bitcoin_uri += '?amount=' + formatAmountBitcoin($scope.receive.amount);
+            tx_sender.call('http://greenaddressit.com/vault/fund', $scope.wallet.current_subaccount, confidential, confidential).then(function(data) {
+                var address;
+                if (confidential) {
+                    $scope.wallet.hdwallet.derive(branches.BLINDED).then(function(branch) {
+                        return branch.derive(data.pointer)
+                    });
+                    tx_sender.call('http://greenaddressit.com/vault/set_scanning_key', $scope.wallet.current_subaccount, data.pointer).then(function(data) {
+                        address = Bitcoin.bitcoin.address.toBase58Check(hash, cur_net.scriptHash);
+
+                    });
+                } else {
+                    var script = new Bitcoin.Buffer.Buffer(data, 'hex');
+                    var hash = Bitcoin.bitcoin.crypto.hash160(script);
+                    var version = cur_net.scriptHash;
+                    address = $q.when(
+                        Bitcoin.bitcoin.address.toBase58Check(hash, cur_net.scriptHash)
+                    );
                 }
+                address.then(funcion(address) {
+                    $scope.receive.bitcoin_address = address;
+                    $scope.receive.base_bitcoin_uri = $scope.receive.bitcoin_uri = 'bitcoin:' + address;
+                    if ($scope.receive.amount) {
+                        $scope.receive.bitcoin_uri += '?amount=' + formatAmountBitcoin($scope.receive.amount);
+                    }
+                });
                 if (show_qr) $scope.show_url_qr($scope.receive.bitcoin_uri);
             });
         }
+    }
+    $scope.show_confidential_uri = function() {
+        return $scope.show_bitcoin_uri(false, true);
     }
     $scope.show_myaddr_qrcode = function(addr) {
         $scope.show_url_qr('bitcoin:' + addr);

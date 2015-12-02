@@ -613,47 +613,50 @@ angular.module('greenWalletServices', [])
         var d = $q.defer();
         var tx = Bitcoin.bitcoin.Transaction.fromHex(data.tx);
         var prevouts_d;
+        var response;
         if ($scope && ($scope.send_tx || $scope.wallet.trezor_dev)) {
-            prevouts_d = $http.get(data.prevout_rawtxs);
+            prevouts_d = $http.get(data.prevout_rawtxs).then(function(response_) {
+                response = response_;
+            });
         }
         var ask_for_confirmation = function() {
             if (!$scope.send_tx) {
                 // not all txs support this dialog, like redepositing or sweeping
                 return $q.when();
             }
-            return prevouts_d.then(function(response) {
-                var scope = $scope.$new();
-                var in_value = 0, out_value = 0;
-                tx.ins.forEach(function(txin) {
-                    var prevtx = Bitcoin.bitcoin.Transaction.fromHex(
-                        response.data[txin.hash.reverse().toString('hex')]
-                    );
-                    var prevout = prevtx.outs[txin.index];
-                    in_value += prevout.value;
-                });
-                tx.outs.forEach(function(txout) {
-                    out_value += txout.value;
-                });
-                var fee = in_value - out_value, value;
-                if ($scope.send_tx.amount == 'MAX') {
-                    value = $scope.wallet.final_balance - fee;
-                } else {
-                    value = $scope.send_tx.amount_to_satoshis($scope.send_tx.amount);
-                }
-                scope.tx = {
-                    fee: fee,
-                    value: value,
-                    recipient: $scope.send_tx.voucher ?
-                        gettext("Voucher") :
-                        ($scope.send_tx.recipient.name || $scope.send_tx.recipient)
-                };
-                var modal = $modal.open({
-                    templateUrl: BASE_URL+'/'+LANG+'/wallet/partials/wallet_modal_confirm_tx.html',
-                    scope: scope,
-                    windowClass: 'twofactor'  // is a 'sibling' to 2fa - show with the same z-index
-                });
-                return modal.result;
+            var scope = $scope.$new();
+            var in_value = 0, out_value = 0;
+            tx.ins.forEach(function(txin) {
+                var rev = new Bitcoin.Buffer.Buffer(txin.hash);
+                rev.reverse();
+                var prevtx = Bitcoin.bitcoin.Transaction.fromHex(
+                    response.data[rev.toString('hex')]
+                );
+                var prevout = prevtx.outs[txin.index];
+                in_value += prevout.value;
             });
+            tx.outs.forEach(function(txout) {
+                out_value += txout.value;
+            });
+            var fee = in_value - out_value, value;
+            if ($scope.send_tx.amount == 'MAX') {
+                value = $scope.wallet.final_balance - fee;
+            } else {
+                value = $scope.send_tx.amount_to_satoshis($scope.send_tx.amount);
+            }
+            scope.tx = {
+                fee: fee,
+                value: value,
+                recipient: $scope.send_tx.voucher ?
+                    gettext("Voucher") :
+                    ($scope.send_tx.recipient.name || $scope.send_tx.recipient)
+            };
+            var modal = $modal.open({
+                templateUrl: BASE_URL+'/'+LANG+'/wallet/partials/wallet_modal_confirm_tx.html',
+                scope: scope,
+                windowClass: 'twofactor'  // is a 'sibling' to 2fa - show with the same z-index
+            });
+            return modal.result;
         }
         var signatures = [], device_deferred = null, signed_n = 0;
         var prevoutToPath = function(prevout, trezor, from_subaccount) {
@@ -681,6 +684,7 @@ angular.module('greenWalletServices', [])
             }
             return path;
         }
+    var sigds = prevouts_d.then(function() {
         for (var i = 0; i < tx.ins.length; ++i) {
             (function(i) {
                 var key, path = [];
@@ -755,10 +759,28 @@ angular.module('greenWalletServices', [])
                         if (progress_cb) progress_cb(Math.round(100 * signed_n / tx.ins.length));
                         var script = new Bitcoin.Buffer.Buffer(data.prev_outputs[i].script, 'hex');
                         var SIGHASH_ALL = 1;
-                        var sign = $q.when(key.sign(tx.hashForSignature(i, script, SIGHASH_ALL)));
+                        var scope = $scope.$new();
+                        var in_value = 0, out_value = 0;
+                        tx.ins.forEach(function(txin) {
+                            var rev = new Bitcoin.Buffer.Buffer(txin.hash);
+                            rev.reverse();
+                            var prevtx = Bitcoin.bitcoin.Transaction.fromHex(
+                                response.data[rev.toString('hex')]
+                            );
+                            var prevout = prevtx.outs[txin.index];
+                            in_value += prevout.value;
+                            txin.prevValue = prevout.value;
+                        });
+                        tx.outs.forEach(function(txout) {
+                            out_value += txout.value;
+                        });
+                        var fee = in_value - out_value, value;
+                        console.log(in_value, out_value);
+                        console.log(fee);
+                        var sign = $q.when(key.sign(tx.hashForSignature(i, script, SIGHASH_ALL, fee)));
                         return sign.then(function(sign) {
                             sign = Bitcoin.Buffer.Buffer.concat([
-                                new Bitcoin.Buffer.Buffer(sign.toDER()),
+                                new Bitcoin.Buffer.Buffer(sign),
                                 new Bitcoin.Buffer.Buffer([SIGHASH_ALL]),
                             ]);
                             return sign.toString('hex');
@@ -768,6 +790,8 @@ angular.module('greenWalletServices', [])
                 signatures.push(sign);
             })(i);
         }
+        return signatures;
+    });
         if (!send_after) {
             var send_after = $q.when();
         }
@@ -1002,7 +1026,9 @@ angular.module('greenWalletServices', [])
                 });
             });
         } else {
-            var d_all = $q.all(signatures);
+            var d_all = sigds.then(function(signatures) {
+                return $q.all(signatures);
+            });
         }
         d_all = d_all.then(function(signatures) {
             return ask_for_confirmation().then(function() {
@@ -1575,7 +1601,7 @@ angular.module('greenWalletServices', [])
                                 d_main.resolve(device_id().then(function(devid) {
                                     if (session_for_login && session_for_login.nc == nconn) {
                                         return session_for_login.call('com.greenaddress.login.authenticate',
-                                                [[signature.r.toString(), signature.s.toString()], logout||false,
+                                                [signature, logout||false,
                                                  random_path_hex, devid, user_agent]).then(function(data) {
                                             if (data) {
                                                 txSenderService.logged_in = data;
