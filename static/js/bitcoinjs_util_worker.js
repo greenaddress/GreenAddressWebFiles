@@ -61,8 +61,6 @@ funcs = {
         var sig = Module._malloc(64);
         var msg = Module._malloc(32);
         var seckey = Module._malloc(32);
-        console.log(Bitcoin.BigInteger.fromBuffer(data.hash).toString());
-        console.log(key.Q.x.toString(), key.Q.y.toString());
         var start = key.d.toByteArray().length - 32;
         if (start >= 0) {  // remove excess zeroes
             var slice = key.d.toByteArray().slice(start);
@@ -81,7 +79,6 @@ funcs = {
         for (var i = 0; i < 64; ++i) {
             ret[i] = getValue(sig+i, 'i8') & 0xff;
         }
-        console.log(ret);
 
         Module._free(sig);
         Module._free(msg);

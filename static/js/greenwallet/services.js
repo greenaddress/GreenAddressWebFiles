@@ -150,8 +150,83 @@ angular.module('greenWalletServices', [])
 
     return autotimeoutService;
 
-}]).factory('wallets', ['$q', '$rootScope', 'tx_sender', '$location', 'notices', '$modal', 'focus', 'crypto', 'gaEvent', 'storage', 'mnemonics', 'addressbook', 'autotimeout', 'social_types', 'sound', '$interval', '$timeout', 'branches', 'user_agent', '$http',
-        function($q, $rootScope, tx_sender, $location, notices, $modal, focus, crypto, gaEvent, storage, mnemonics, addressbook, autotimeout, social_types, sound, $interval, $timeout, branches, user_agent, $http) {
+}]).factory('blind', [function() {
+    var service = {};
+    service.unblindOutValue = function($scope, out, scanning_key) {
+        var secexp_buf = scanning_key.d.toBuffer();
+        var secexp = Module._malloc(32);
+        var nonce = Module._malloc(33);
+        var nonce_res = Module._malloc(32);
+        var pubkey_p = Module._malloc(64);
+        var p_arr = Array.from(new Bitcoin.BigInteger(''+pubkey_p).toBuffer());
+        while (p_arr.length < 4) p_arr.unshift(0);
+        for (var i = 0; i < 32; ++i) {
+            setValue(secexp+i, secexp_buf[i], 'i8');
+        }
+        for (var i = 0; i < 33; ++i) {
+            setValue(nonce + i, out.nonce_commitment[i], 'i8');
+        }
+        Module._secp256k1_ec_pubkey_parse(
+            Module.secp256k1ctx,
+            pubkey_p,
+            nonce,
+            33
+        );
+        Module._secp256k1_ecdh(
+            Module.secp256k1ctx,
+            nonce_res,
+            pubkey_p,
+            secexp
+        );
+        var nonce_buf = new Bitcoin.Buffer.Buffer(32);
+        for (var i = 0; i < 32; ++i) {
+            nonce_buf[i] = getValue(nonce_res + i, 'i8') & 0xff;
+        }
+        nonce_buf = Bitcoin.bitcoin.crypto.sha256(nonce_buf);
+        for (var i = 0; i < 32; ++i) {
+            setValue(nonce_res + i, nonce_buf[i], 'i8');
+        }
+        var blinding_factor_out = Module._malloc(32);
+        var amount_out = Module._malloc(8);
+        var min_value = Module._malloc(8);
+        var max_value = Module._malloc(8);
+        var msg_out = Module._malloc(4096);
+        var msg_size = Module._malloc(4);
+        var commitment = Module._malloc(33);
+        for (var i = 0; i < 33; ++i) {
+            setValue(commitment + i, out.commitment[i], 'i8');
+        }
+        var range_proof = Module._malloc(out.range_proof.length);
+        for (var i = 0; i < out.range_proof.length; ++i) {
+            setValue(range_proof + i, out.range_proof[i], 'i8');
+        }
+        Module._secp256k1_rangeproof_rewind(
+            Module.secp256k1ctx,
+            blinding_factor_out,
+            amount_out,
+            msg_out,
+            msg_size,
+            nonce_res,
+            min_value,
+            max_value,
+            commitment,
+            range_proof,
+            out.range_proof.length
+        );
+        var ret = [];
+        for (var i = 0; i < 8; ++i) {
+            ret[8-i-1] = getValue(amount_out+i, 'i8') & 0xff;
+        }
+        return {
+            value: ''+(+Bitcoin.BigInteger.fromBuffer(
+                new Bitcoin.Buffer.Buffer(ret)
+            )),
+            blinding_factor_out: blinding_factor_out
+        };
+    };
+    return service;
+}]).factory('wallets', ['$q', '$rootScope', 'tx_sender', '$location', 'notices', '$modal', 'focus', 'crypto', 'gaEvent', 'storage', 'mnemonics', 'addressbook', 'autotimeout', 'social_types', 'sound', '$interval', '$timeout', 'branches', 'user_agent', '$http', 'blind',
+        function($q, $rootScope, tx_sender, $location, notices, $modal, focus, crypto, gaEvent, storage, mnemonics, addressbook, autotimeout, social_types, sound, $interval, $timeout, branches, user_agent, $http, blind) {
     var walletsService = {};
     var handle_double_login = function(retry_fun) {
         return $modal.open({
@@ -410,82 +485,6 @@ angular.module('greenWalletServices', [])
             return social_destination;
         }
     };
-    var unblindOutValue = function($scope, out, scanning_key) {
-        var t0 = new Date();
-        var secexp_buf = scanning_key.d.toBuffer();
-        var secexp = Module._malloc(32);
-        var nonce = Module._malloc(33);
-        var nonce_res = Module._malloc(32);
-        var pubkey_p = Module._malloc(172);
-        var toa = function(p, l) {
-            var ret = [];
-            for (var i = 0; i < l; ++i) {
-                ret.push(getValue(p+i));
-            }
-            return ret;
-        }
-        var p_arr = Array.from(new Bitcoin.BigInteger(''+pubkey_p).toBuffer());
-        while (p_arr.length < 4) p_arr.unshift(0);
-        for (var i = 0; i < 32; ++i) {
-            setValue(secexp+i, secexp_buf[i]);
-        }
-        for (var i = 0; i < 33; ++i) {
-            setValue(nonce + i, out.nonce_commitment[i], 'i8');
-        }
-        console.log(Module._secp256k1_ec_pubkey_parse(
-            Module.secp256k1ctx,
-            pubkey_p,
-            nonce,
-            33
-        ));
-        console.log(Module._secp256k1_ecdh(
-            Module.secp256k1ctx,
-            nonce_res,
-            pubkey_p,
-            secexp
-        ));
-        var nonce_buf = new Bitcoin.Buffer.Buffer(32);
-        for (var i = 0; i < 32; ++i) {
-            nonce_buf[i] = getValue(nonce_res + i);
-        }
-        nonce_buf = Bitcoin.bitcoin.crypto.sha256(nonce_buf);
-        for (var i = 0; i < 32; ++i) {
-            setValue(nonce_res + i, nonce_buf[i]);
-        }
-        var blinding_factor_out = Module._malloc(32);
-        var amount_out = Module._malloc(8);
-        var min_value = Module._malloc(8);
-        var max_value = Module._malloc(8);
-        var msg_out = Module._malloc(4096);
-        var msg_size = Module._malloc(4);
-        var commitment = Module._malloc(33);
-        for (var i = 0; i < 33; ++i) {
-            setValue(commitment + i, out.commitment[i], 'i8');
-        }
-        var range_proof = Module._malloc(out.range_proof.length);
-        for (var i = 0; i < out.range_proof.length; ++i) {
-            setValue(range_proof + i, out.range_proof[i], 'i8');
-        }
-        console.log(Module._secp256k1_rangeproof_rewind(
-            Module.secp256k1ctx,
-            blinding_factor_out,
-            amount_out,
-            msg_out,
-            msg_size,
-            nonce_res,
-            min_value,
-            max_value,
-            commitment,
-            range_proof,
-            out.range_proof.length
-        ));
-        var ret = [];
-        for (var i = 0; i < 8; ++i) {
-            ret[8-i-1] = getValue(amount_out+i, 'i8') & 0xff;
-        }
-        console.log(new Date() - t0);
-        return ''+(+Bitcoin.BigInteger.fromBuffer(new Bitcoin.Buffer.Buffer(ret)));
-    };
     var unblindOutputs = function($scope, txData) {
         var deferreds = [];
         var tx = Bitcoin.bitcoin.Transaction.fromHex(txData.data);
@@ -494,15 +493,21 @@ angular.module('greenWalletServices', [])
             (function(ep) {
                 if (ep.value == 0 && ep.is_relevant && ep.is_credit) {
                     var d = $scope.wallet.hdwallet.deriveHardened(branches.BLINDED);
+                    window.utxo = {
+                        txhash: 'c995a77c70a00142200043e5af2a95d1b821e8e4db0e57c9cb8777b9f2b1650f',
+                        data: ep,
+                        out: tx.outs[ep.pt_idx]
+                    };
+                    console.log(window.utxo);
                     d = d.then(function(branch) {
                         // TODO: subaccounts
                         return branch.deriveHardened(ep.pubkey_pointer);
                     }).then(function(scanning_node) {
-                        ep.value = unblindOutValue(
+                        ep.value = blind.unblindOutValue(
                             $scope,
                             tx.outs[ep.pt_idx],
                             scanning_node.keyPair
-                        );
+                        ).value;
                     });
                     deferreds.push(d);
                 }
@@ -719,6 +724,254 @@ angular.module('greenWalletServices', [])
             d.reject(err);
         }).finally(function() { $rootScope.decrementLoading(); });
         return d.promise
+    };
+    walletsService.send_confidential_tx = function($scope, recipient, satoshis) {
+        satoshis = new Bitcoin.BigInteger(satoshis);
+        var recipient_scanning_pubkey = recipient.slice(2, 35);
+        var change_idx = Bitcoin.randombytes(1)[0] % 2;
+        var version;
+        if (cur_net === Bitcoin.bitcoin.networks.bitcoin) {
+            version = 10;
+        } else {
+            version = 25;
+        }
+        var needed_unspent = [window.utxo];
+        var input_blinds_and_change = [];
+        for (var i = 0; i < needed_unspent.length; ++i) {
+            (function(utxo) {
+                input_blinds_and_change.push(
+                    $scope.wallet.hdwallet.deriveHardened(
+                        branches.BLINDED
+                    ).then(function(branch) {
+                        // TODO subaccounts
+                        return branch.deriveHardened(window.utxo.data.pubkey_pointer)
+                    }).then(function(scanning_key) {
+                        return blind.unblindOutValue(
+                            $scope, utxo.out, scanning_key.keyPair
+                        ).blinding_factor_out;
+                    })
+                );
+            })(needed_unspent[i]);
+        }
+        input_blinds_and_change.push(
+            tx_sender.call(
+                'http://greenaddressit.com/vault/fund',
+                $scope.wallet.current_subaccount, true, true
+            ).then(function(data) {
+                return $scope.wallet.hdwallet.deriveHardened(
+                    branches.BLINDED
+                ).then(function(branch) {
+                    return branch.deriveHardened(data.pointer);
+                }).then(function(blinded_key) {
+                    return tx_sender.call(
+                        'http://greenaddressit.com/vault/set_scanning_key',
+                        $scope.wallet.current_subaccount,
+                        data.pointer,
+                        Array.from(blinded_key.keyPair.getPublicKeyBuffer())
+                    ).then(function() {
+                        return blinded_key;
+                    })
+                }).then(function(blinded_key) {
+                    return [
+                        blinded_key.keyPair.getPublicKeyBuffer(),
+                        Bitcoin.bitcoin.crypto.hash160(
+                            new Bitcoin.Buffer.Buffer(data.script, 'hex')
+                        )
+                    ];
+                });
+            })
+        );
+        $q.all(input_blinds_and_change).then(function(input_blinds) {
+            var change = input_blinds.pop();
+            var outs = [null, null];
+            var fee = new Bitcoin.BigInteger('10000');
+            var in_value = new Bitcoin.BigInteger('0');
+            for (var i = 0; i < needed_unspent.length; ++i) {
+                in_value = in_value.add(new Bitcoin.BigInteger(
+                    needed_unspent[i].data.value
+                ));
+            }
+            outs[change_idx] = {
+                value: in_value.subtract(satoshis).subtract(fee),
+                to_version: cur_net.scriptHash,
+                to_scanning_pubkey: change[0],
+                to_hash: change[1]
+            };
+            outs[1-change_idx] = {
+                value: satoshis,
+                to_version: recipient[1],
+                to_scanning_pubkey: recipient.slice(2, 35),
+                to_hash: recipient.slice(35)
+            };
+            var all = (needed_unspent.length + outs.length);
+            var blindptrs = Module._malloc(4 * all);
+            var cur_blindptr = 4 * needed_unspent.length;
+            for (var i = 0; i < all; ++i) {
+                if (i < needed_unspent.length) {
+                    setValue(blindptrs + 4*i, input_blinds[i], '*');
+                } else {
+                    var cur = Module._malloc(32);
+                    setValue(blindptrs + 4*i, cur, '*');
+                    var rand = Bitcoin.randombytes(32);
+                    for (var j = 0; j < 32; ++j) {
+                        setValue(cur + j, rand[j], 'i8');
+                    }
+                }
+            }
+            for (var i = 0; i < outs.length; ++i) {
+                if (i == outs.length - 1) {
+                    Module._secp256k1_pedersen_blind_sum(
+                        Module.secp256k1ctx,
+                        getValue(blindptrs + 4 * (all - 1), '*'),
+                        blindptrs,
+                        all - 1,
+                        needed_unspent.length
+                    );
+                }
+                var commitment = Module._malloc(33);
+                Module._secp256k1_pedersen_commit(
+                    Module.secp256k1ctx,
+                    commitment,
+                    getValue(blindptrs + cur_blindptr, '*'),
+                    +outs[i].value.mod(Bitcoin.BigInteger('2').pow(32)),
+                    +outs[i].value.divide(Bitcoin.BigInteger('2').pow(32))
+                );
+                var commitment_buf = new Bitcoin.Buffer.Buffer(33);
+                for (var j = 0; j < 33; ++j) {
+                    commitment_buf[j] = getValue(
+                        commitment + j, 'i8'
+                    ) & 0xff;
+                }
+                var rangeproof_len = Module._malloc(4);
+                var len = 5134;
+                var rangeproof = Module._malloc(len);
+                var rangeproof_len_buf = new Bitcoin.BigInteger(''+len).toBuffer();
+                while (rangeproof_len_buf.length < 4) {
+                    rangeproof_len_buf = Bitcoin.Buffer.Buffer.concat([
+                        new Bitcoin.Buffer.Buffer([0]),
+                        rangeproof_len_buf
+                    ]);
+                }
+                for (var j = 0; j < 4; ++j) {
+                    setValue(
+                        rangeproof_len+j,
+                        rangeproof_len_buf[4-j-1],
+                        'i8'
+                    );
+                }
+                var ephemeral_key = Bitcoin.bitcoin.ECPair.makeRandom();
+                var secexp_buf = ephemeral_key.d.toBuffer();
+                var secexp = Module._malloc(32);
+                var nonce = Module._malloc(33);
+                var nonce_res = Module._malloc(32);
+                var pubkey_p = Module._malloc(64);
+                var p_arr = Array.from(new Bitcoin.BigInteger(''+pubkey_p).toBuffer());
+                while (p_arr.length < 4) p_arr.unshift(0);
+                for (var j = 0; j < 32; ++j) {
+                    setValue(secexp+j, secexp_buf[j], 'i8');
+                }
+                for (var j = 0; j < 33; ++j) {
+                    setValue(nonce+j, outs[i].to_scanning_pubkey[j], 'i8');
+                }
+                Module._secp256k1_ec_pubkey_parse(
+                    Module.secp256k1ctx,
+                    pubkey_p,
+                    nonce,
+                    33
+                );
+                Module._secp256k1_ecdh(
+                    Module.secp256k1ctx,
+                    nonce_res,
+                    pubkey_p,
+                    secexp
+                );
+                var nonce_buf = new Bitcoin.Buffer.Buffer(32);
+                for (var j = 0; j < 32; ++j) {
+                    nonce_buf[j] = getValue(nonce_res + j, 'i8') & 0xff;
+                }
+                nonce_buf = Bitcoin.bitcoin.crypto.sha256(nonce_buf);
+                for (var j = 0; j < 32; ++j) {
+                    setValue(nonce_res + j, nonce_buf[j], 'i8');
+                }
+                Module._secp256k1_rangeproof_sign(
+                    Module.secp256k1ctx,
+                    rangeproof,
+                    rangeproof_len,
+                    0, 0,
+                    commitment,
+                    getValue(blindptrs + cur_blindptr, '*'),
+                    nonce_res,
+                    0, 32,
+                    +outs[i].value.mod(Bitcoin.BigInteger('2').pow(32)),
+                    +outs[i].value.divide(Bitcoin.BigInteger('2').pow(32))
+                );
+                for (var j = 0; j < 4; ++j) {
+                    rangeproof_len_buf[4-j-1] = getValue(
+                        rangeproof_len+j, 'i8'
+                    ) & 0xff;
+                }
+                len = +Bitcoin.BigInteger(rangeproof_len_buf);
+                var rangeproof_buf = new Bitcoin.Buffer.Buffer(len);
+                for (var j = 0; j < len; ++j) {
+                    rangeproof_buf[j] = getValue(rangeproof+j, 'i8') & 0xff;
+                }
+                cur_blindptr += 4;
+                outs[i].nonce_commitment = ephemeral_key.getPublicKeyBuffer();
+                outs[i].commitment = commitment_buf;
+                outs[i].range_proof = rangeproof_buf;
+            }
+            console.log(outs);
+            var tx = new Bitcoin.bitcoin.TransactionBuilder(cur_net);
+            tx.addInput(
+                needed_unspent[0].txhash,
+                needed_unspent[0].data.pt_idx
+            );
+            tx.tx.ins[0].prevOut = needed_unspent[0].out;
+            tx.addOutput(
+                Bitcoin.bitcoin.address.toBase58Check(
+                    outs[0].to_hash, outs[0].to_version
+                ), 0
+            )
+            tx.tx.outs[tx.tx.outs.length-1].commitment = outs[0].commitment;
+            tx.tx.outs[tx.tx.outs.length-1].range_proof = outs[0].range_proof;
+            tx.tx.outs[tx.tx.outs.length-1].nonce_commitment = outs[0].nonce_commitment;
+            tx.addOutput(
+                Bitcoin.bitcoin.address.toBase58Check(
+                    outs[1].to_hash, outs[1].to_version
+                ), 0
+            );
+            tx.tx.outs[tx.tx.outs.length-1].commitment = outs[1].commitment;
+            tx.tx.outs[tx.tx.outs.length-1].range_proof = outs[1].range_proof;
+            tx.tx.outs[tx.tx.outs.length-1].nonce_commitment = outs[1].nonce_commitment;
+            var gawallet = new Bitcoin.bitcoin.HDNode(
+                Bitcoin.bitcoin.ECPair.fromPublicKeyBuffer(
+                    new Bitcoin.Buffer.Buffer(deposit_pubkey, 'hex'),
+                    cur_net
+                ),
+                new Bitcoin.Buffer.Buffer(deposit_chaincode, 'hex')
+            );
+            var gaKey = gawallet.derive(1).then(function(branch) {
+                return branch.subpath($scope.wallet.gait_path);
+            }).then(function(gawallet) {
+                return gawallet.derive(needed_unspent[0].data.pubkey_pointer);
+            });
+            var userKey = $scope.wallet.hdwallet.derive(
+                branches.REGULAR
+            ).then(function(branch) {
+                return branch.derive(needed_unspent[0].data.pubkey_pointer)
+            });
+            $q.all([gaKey, userKey]).then(function(keys) {
+                var gaKey = keys[0], userKey = keys[1];
+                var redeemScript = Bitcoin.bitcoin.script.multisigOutput(
+                    2,
+                    [gaKey.keyPair.getPublicKeyBuffer(),
+                     userKey.keyPair.getPublicKeyBuffer()]
+                )
+                tx.sign(0, userKey.keyPair, redeemScript, +fee).then(function() {
+                    console.log(tx.build().toHex(+fee));
+                })
+            });
+        })
     };
     walletsService.sign_and_send_tx = function($scope, data, priv_der, twofactor, notify, progress_cb, send_after) {
         var d = $q.defer();
