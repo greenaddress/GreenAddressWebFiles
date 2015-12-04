@@ -542,17 +542,21 @@ angular.module('greenWalletSendControllers',
             });
         },
         send_address: function() {
+            var that = this;
             var to_addr = this.recipient.constructor === String ? this.recipient : this.recipient.address;
             var parsed_uri = parse_bitcoin_uri(to_addr);
             if (parsed_uri.recipient) to_addr = parsed_uri.recipient;
             var decoded = Bitcoin.bs58check.decode(to_addr);
             var satoshis = this.amount_to_satoshis(this.amount);
+            $rootScope.is_loading += 1;
             if (decoded[0] == 25 || decoded[0] == 10) {  // confidential tx
-                wallets.send_confidential_tx($scope, decoded, satoshis);
+                wallets.send_confidential_tx($scope, decoded, satoshis)
+                        .finally(function() {
+                    $rootScope.decrementLoading();
+                    that.sending = false;
+                });
                 return;
             }
-            var that = this;
-            $rootScope.is_loading += 1;
             var priv_data = {instant: that.instant, allow_random_change: true, memo: this.memo,
                 subaccount: $scope.wallet.current_subaccount, prevouts_mode: 'http'};
             if (that.spend_all) satoshis = $scope.wallet.final_balance;

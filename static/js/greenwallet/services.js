@@ -781,7 +781,7 @@ angular.module('greenWalletServices', [])
                 });
             })
         );
-        $q.all(input_blinds_and_change).then(function(input_blinds) {
+        return $q.all(input_blinds_and_change).then(function(input_blinds) {
             var change = input_blinds.pop();
             var outs = [null, null];
             var fee = new Bitcoin.BigInteger('10000');
@@ -960,15 +960,18 @@ angular.module('greenWalletServices', [])
             ).then(function(branch) {
                 return branch.derive(needed_unspent[0].data.pubkey_pointer)
             });
-            $q.all([gaKey, userKey]).then(function(keys) {
+            return $q.all([gaKey, userKey]).then(function(keys) {
                 var gaKey = keys[0], userKey = keys[1];
                 var redeemScript = Bitcoin.bitcoin.script.multisigOutput(
                     2,
                     [gaKey.keyPair.getPublicKeyBuffer(),
                      userKey.keyPair.getPublicKeyBuffer()]
                 )
-                tx.sign(0, userKey.keyPair, redeemScript, +fee).then(function() {
-                    console.log(tx.build().toHex(+fee));
+                return tx.sign(0, userKey.keyPair, redeemScript, +fee).then(function() {
+                    return tx_sender.call(
+                        'http://greenaddressit.com/vault/send_raw_tx',
+                        tx.build().toHex(+fee)
+                    );
                 })
             });
         })
