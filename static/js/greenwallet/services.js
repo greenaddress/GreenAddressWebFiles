@@ -733,7 +733,17 @@ angular.module('greenWalletServices', [])
         } else {
             version = 25;
         }
-        var needed_unspent = $scope.wallet.utxo;
+        var unspent_found = 0, utxo_num = 0;
+        var needed_unspent = [];
+        while (unspent_found < satoshis) {
+            if (utxo_num + 1 > $scope.wallet.utxo.length) {
+                return $q.reject("Not enough money");
+            }
+            var utxo = $scope.wallet.utxo[utxo_num];
+            unspent_found += +utxo.data.value;
+            needed_unspent.push(utxo);
+            utxo_num += 1;
+        }
         var input_blinds_and_change = [];
         for (var i = 0; i < needed_unspent.length; ++i) {
             (function(utxo) {
@@ -973,7 +983,7 @@ angular.module('greenWalletServices', [])
                     }));
                 })(i);
             }
-            $q.all(signatures_ds).then(function() {
+            return $q.all(signatures_ds).then(function() {
                 return tx_sender.call(
                     'http://greenaddressit.com/vault/send_raw_tx',
                     tx.build().toHex(+fee)
