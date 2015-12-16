@@ -200,6 +200,11 @@ angular.module('greenWalletControllers', [])
                                         },
                                         out: tx.outs[rawtx.pt_idx]
                                     })
+                                }, function(e) {
+                                    // ignore invalid transactions
+                                    if (e !== "Invalid transaction.") {
+                                        throw e;
+                                    }
                                 }));
                             })(rawtxs[i]);
                         }

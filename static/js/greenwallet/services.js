@@ -200,7 +200,7 @@ angular.module('greenWalletServices', [])
         for (var i = 0; i < out.range_proof.length; ++i) {
             setValue(range_proof + i, out.range_proof[i], 'i8');
         }
-        Module._secp256k1_rangeproof_rewind(
+        var rewindRes = Module._secp256k1_rangeproof_rewind(
             Module.secp256k1ctx,
             blinding_factor_out,
             amount_out,
@@ -213,14 +213,18 @@ angular.module('greenWalletServices', [])
             range_proof,
             out.range_proof.length
         );
+        if (rewindRes != 1) {
+            throw "Invalid transaction."
+        }
         var ret = [];
         for (var i = 0; i < 8; ++i) {
             ret[8-i-1] = getValue(amount_out+i, 'i8') & 0xff;
         }
+        var val = Bitcoin.BigInteger.fromBuffer(
+            new Bitcoin.Buffer.Buffer(ret)
+        );
         return {
-            value: ''+(+Bitcoin.BigInteger.fromBuffer(
-                new Bitcoin.Buffer.Buffer(ret)
-            )),
+            value: ''+(+val),
             blinding_factor_out: blinding_factor_out
         };
     };
@@ -535,11 +539,27 @@ angular.module('greenWalletServices', [])
 
         call = call.then(function(data) {
             var deferreds = [];
+            var valid = {};
             for (var i = 0; i < data.list.length; i++) {
-                var tx = data.list[i];
-                deferreds.push(unblindOutputs($scope, tx));
+                (function(i) {
+                    var tx = data.list[i];
+                    valid[i] = true;
+                    deferreds.push(unblindOutputs($scope, tx).catch(function(e) {
+                        if (e !== "Invalid transaction.") {
+                            throw e;
+                        } else {
+                            // skip invalid transactions
+                            valid[i] = false;
+                        }
+                    }));
+                })(i);
             }
             return $q.all(deferreds).then(function() {
+                var orig_list = data.list;
+                data.list = [];
+                for (var i = 0; i < orig_list.length; ++i) {
+                    if (valid[i]) data.list.push(orig_list[i]);
+                }
                 return data;
             });
         });
