@@ -191,13 +191,19 @@ if (self.cordova && cordova.platformId == 'ios') {
             var ready = false;
             var script = document.createElement('script')
             script.type = 'text/javascript';
-            script.src = '/static/js/secp256k1.js';
+            if (cur_net.isAlpha) {
+                script.src = '/static/js/secp256k1-alpha.js';
+            } else {
+                script.src = '/static/js/secp256k1.js';
+            }
             script.onload = script.onreadystatechange = function () {
                 if (!ready && (!this.readyState || this.readyState == 'complete')) {
                     ready = true;
                     Module.secp256k1ctx = Module._secp256k1_context_create(3);
-                    Module._secp256k1_pedersen_context_initialize(Module.secp256k1ctx);
-                    Module._secp256k1_rangeproof_context_initialize(Module.secp256k1ctx);
+                    if (cur_net.isAlpha) {
+                        Module._secp256k1_pedersen_context_initialize(Module.secp256k1ctx);
+                        Module._secp256k1_rangeproof_context_initialize(Module.secp256k1ctx);
+                    }
                     var randArr = new Uint8Array(32);
                     crypto.getRandomValues(randArr);
                     if (!Module._secp256k1_context_randomize(Module.secp256k1ctx, randArr)) {
@@ -210,8 +216,9 @@ if (self.cordova && cordova.platformId == 'ios') {
         });
 
         no_secp256k1_getPub = Bitcoin.bitcoin.ECPair.prototype.getPublicKeyBuffer;
-        /*Bitcoin.bitcoin.ECPair.prototype.getPublicKeyBuffer = function() {
-            if (self.Module === undefined || !this.d) {
+        Bitcoin.bitcoin.ECPair.prototype.getPublicKeyBuffer = function() {
+            // TODO: implementation for alpha's libsecp256k1
+            if (self.Module === undefined || !this.d || !cur_net.isAlpha) {
                 // in case it's called before module finishes initialisation,
                 // or in case of pubkey-only ECPair
                 return no_secp256k1_getPub.bind(this)();
@@ -239,7 +246,7 @@ if (self.cordova && cordova.platformId == 'ios') {
             }
 
             return new Bitcoin.Buffer.Buffer(ret);
-        };*/
+        };
     }
     if (self.Worker && !self.GAIT_IN_WORKER) {
         (function() {
@@ -259,6 +266,7 @@ if (self.cordova && cordova.platformId == 'ios') {
                     );
                 };
                 worker.postMessage({
+                    isAlpha: cur_net.isAlpha,
                     func: 'derive',
                     data: {wallet: this.toBase58(), i: i},
                     callId: callId
@@ -268,8 +276,15 @@ if (self.cordova && cordova.platformId == 'ios') {
 
             Bitcoin.bitcoin.ECPair.prototype.sign = function(hash) {
                 var deferred = $q.defer();
-                cbs[++callId] = deferred.resolve;
+                if (cur_net.isAlpha) {
+                    cbs[++callId] = deferred.resolve;
+                } else {
+                    cbs[++callId] = function(der) {
+                        deferred.resolve(Bitcoin.bitcoin.ECSignature.fromDER(der));
+                    };
+                }
                 worker.postMessage({
+                    isAlpha: cur_net.isAlpha,
                     func: 'sign',
                     data: {key: this.toWIF(), hash: hash},
                     callId: callId

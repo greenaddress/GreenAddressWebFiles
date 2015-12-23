@@ -196,7 +196,7 @@ angular.module('greenWalletReceiveControllers',
             if (show_qr) $scope.show_url_qr($scope.receive.bitcoin_uri);
         } else {
             gaEvent('Wallet', 'ReceiveShowBitcoinUri');
-            var confidential = true; // TODO settings
+            var confidential = cur_net.isAlpha;
             tx_sender.call('http://greenaddressit.com/vault/fund', $scope.wallet.current_subaccount, confidential, confidential).then(function(data) {
                 var address;
                 if (confidential) {

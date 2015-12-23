@@ -6,7 +6,7 @@ angular.module('greenWalletSendControllers',
 
     var _verify_tx = function(that, rawtx, destination, satoshis, change_pointer, no_electrum) {
         var d = $q.defer();
-        var tx = Bitcoin.bitcoin.Transaction.fromHex(rawtx);
+        var tx = Bitcoin.contrib.transactionFromHex(rawtx);
 
         if (destination && (0 != destination.indexOf('GA'))) {  // we can't verify GA* addresses
             // decode the expected destination address

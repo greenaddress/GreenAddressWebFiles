@@ -142,10 +142,10 @@ angular.module('greenWalletControllers', [])
         $scope.wallet = {
             version: app_version,
             update_balance: function(first) {
-                var that = this, is_alpha = true;  // TODO config
+                var that = this;
                 that.balance_updating = true;
                 $scope.wallet.utxo = [];
-                if (!is_alpha) {
+                if (!cur_net.isAlpha) {
                     tx_sender.call('http://greenaddressit.com/txs/get_balance', $scope.wallet.current_subaccount).then(function(data) {
                         that.final_balance = data.satoshi;
                         that.fiat_currency = data.fiat_currency;
@@ -184,7 +184,7 @@ angular.module('greenWalletControllers', [])
                         var unblind_ds = [];
                         for (var i = 0; i < rawtxs.length; ++i) {
                             (function(rawtx) {
-                                var tx = Bitcoin.bitcoin.Transaction.fromHex(
+                                var tx = Bitcoin.contrib.transactionFromHex(
                                     rawtx.rawtx
                                 );
                                 unblind_ds.push(blind.unblindOutValue(

@@ -502,7 +502,7 @@ angular.module('greenWalletServices', [])
     };
     var unblindOutputs = function($scope, txData) {
         var deferreds = [];
-        var tx = Bitcoin.bitcoin.Transaction.fromHex(txData.data);
+        var tx = Bitcoin.contrib.transactionFromHex(txData.data);
         for (var i = 0; i < txData.eps.length; ++i) {
             (function(ep) {
                 if (ep.value == 0 && ep.is_relevant && ep.is_credit) {
@@ -537,32 +537,34 @@ angular.module('greenWalletServices', [])
         var call = tx_sender.call('http://greenaddressit.com/txs/get_list_v2',
             page_id, query, sort_by, date_range_iso, subaccount);
 
-        call = call.then(function(data) {
-            var deferreds = [];
-            var valid = {};
-            for (var i = 0; i < data.list.length; i++) {
-                (function(i) {
-                    var tx = data.list[i];
-                    valid[i] = true;
-                    deferreds.push(unblindOutputs($scope, tx).catch(function(e) {
-                        if (e !== "Invalid transaction.") {
-                            throw e;
-                        } else {
-                            // skip invalid transactions
-                            valid[i] = false;
-                        }
-                    }));
-                })(i);
-            }
-            return $q.all(deferreds).then(function() {
-                var orig_list = data.list;
-                data.list = [];
-                for (var i = 0; i < orig_list.length; ++i) {
-                    if (valid[i]) data.list.push(orig_list[i]);
+        if (cur_net.isAlpha) {
+            call = call.then(function(data) {
+                var deferreds = [];
+                var valid = {};
+                for (var i = 0; i < data.list.length; i++) {
+                    (function(i) {
+                        var tx = data.list[i];
+                        valid[i] = true;
+                        deferreds.push(unblindOutputs($scope, tx).catch(function(e) {
+                            if (e !== "Invalid transaction.") {
+                                throw e;
+                            } else {
+                                // skip invalid transactions
+                                valid[i] = false;
+                            }
+                        }));
+                    })(i);
                 }
-                return data;
+                return $q.all(deferreds).then(function() {
+                    var orig_list = data.list;
+                    data.list = [];
+                    for (var i = 0; i < orig_list.length; ++i) {
+                        if (valid[i]) data.list.push(orig_list[i]);
+                    }
+                    return data;
+                });
             });
-        });
+        }
 
         call.then(function(data) {
             var retval = [];
@@ -1013,7 +1015,7 @@ angular.module('greenWalletServices', [])
     };
     walletsService.sign_and_send_tx = function($scope, data, priv_der, twofactor, notify, progress_cb, send_after) {
         var d = $q.defer();
-        var tx = Bitcoin.bitcoin.Transaction.fromHex(data.tx);
+        var tx = Bitcoin.contrib.transactionFromHex(data.tx);
         var prevouts_d;
         var response;
         if ($scope && ($scope.send_tx || $scope.wallet.trezor_dev)) {
@@ -1031,7 +1033,7 @@ angular.module('greenWalletServices', [])
             tx.ins.forEach(function(txin) {
                 var rev = new Bitcoin.Buffer.Buffer(txin.hash);
                 rev.reverse();
-                var prevtx = Bitcoin.bitcoin.Transaction.fromHex(
+                var prevtx = Bitcoin.contrib.transactionFromHex(
                     response.data[rev.toString('hex')]
                 );
                 var prevout = prevtx.outs[txin.index];
@@ -1166,7 +1168,7 @@ angular.module('greenWalletServices', [])
                         tx.ins.forEach(function(txin) {
                             var rev = new Bitcoin.Buffer.Buffer(txin.hash);
                             rev.reverse();
-                            var prevtx = Bitcoin.bitcoin.Transaction.fromHex(
+                            var prevtx = Bitcoin.contrib.transactionFromHex(
                                 response.data[rev.toString('hex')]
                             );
                             var prevout = prevtx.outs[txin.index];
@@ -1177,12 +1179,16 @@ angular.module('greenWalletServices', [])
                             out_value += txout.value;
                         });
                         var fee = in_value - out_value, value;
-                        console.log(in_value, out_value);
-                        console.log(fee);
                         var sign = $q.when(key.sign(tx.hashForSignature(i, script, SIGHASH_ALL, fee)));
                         return sign.then(function(sign) {
+                            var sign_serialized;
+                            if (cur_net.isAlpha) {
+                                sign_serialized = sign;
+                            } else {
+                                sign_serialized = sign.toDER();
+                            }
                             sign = Bitcoin.Buffer.Buffer.concat([
-                                new Bitcoin.Buffer.Buffer(sign),
+                                new Bitcoin.Buffer.Buffer(sign_serialized),
                                 new Bitcoin.Buffer.Buffer([SIGHASH_ALL]),
                             ]);
                             return sign.toString('hex');
@@ -2002,6 +2008,9 @@ angular.module('greenWalletServices', [])
                             $q.when(subhd.keyPair.sign(challenge_bytes)).then(function(signature) {
                                 d_main.resolve(device_id().then(function(devid) {
                                     if (session_for_login && session_for_login.nc == nconn) {
+                                        if (!cur_net.isAlpha) {
+                                            signature = [signature.r.toString(), signature.s.toString()];
+                                        }
                                         return session_for_login.call('com.greenaddress.login.authenticate',
                                                 [signature, logout||false,
                                                  random_path_hex, devid, user_agent]).then(function(data) {
