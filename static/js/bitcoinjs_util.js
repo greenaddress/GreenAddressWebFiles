@@ -218,7 +218,7 @@ if (self.cordova && cordova.platformId == 'ios') {
         no_secp256k1_getPub = Bitcoin.bitcoin.ECPair.prototype.getPublicKeyBuffer;
         Bitcoin.bitcoin.ECPair.prototype.getPublicKeyBuffer = function() {
             // TODO: implementation for alpha's libsecp256k1
-            if (self.Module === undefined || !this.d || !cur_net.isAlpha) {
+            if (self.Module === undefined || !this.d || cur_net.isAlpha) {
                 // in case it's called before module finishes initialisation,
                 // or in case of pubkey-only ECPair
                 return no_secp256k1_getPub.bind(this)();

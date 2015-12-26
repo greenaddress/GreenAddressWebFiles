@@ -945,8 +945,7 @@ angular.module('greenWalletServices', [])
                 outs[i].commitment = commitment_buf;
                 outs[i].range_proof = rangeproof_buf;
             }
-            console.log(outs);
-            var tx = new Bitcoin.bitcoin.TransactionBuilder(cur_net);
+            var tx = new Bitcoin.contrib.AlphaTransactionBuilder(cur_net);
             for (var i = 0; i < needed_unspent.length; ++i) {
                 tx.addInput(
                     needed_unspent[i].txhash,
