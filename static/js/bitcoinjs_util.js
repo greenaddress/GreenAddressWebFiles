@@ -174,8 +174,10 @@ if (self.cordova && cordova.platformId == 'ios') {
 
     Bitcoin.bitcoin.ECPair.prototype.sign = function(hash) {
         var deferred = $q.defer();
-        cordova.exec(function(param) {
-            deferred.resolve(new Bitcoin.Buffer.Buffer(param, 'hex'));
+        cordova.exec(function(der) {
+            deferred.resolve(Bitcoin.bitcoin.ECSignature.fromDER(
+                new Bitcoin.Buffer.Buffer(der, 'hex')
+            ));
         }, function(fail) {
             console.log('ecdsa.sign failed: ' + fail)
             deferred.reject(fail);
