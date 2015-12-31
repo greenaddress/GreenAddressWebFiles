@@ -8,7 +8,7 @@
         ng-class="{'glyphicon-chevron-down': sorting.reversed, 'glyphicon-chevron-up': !sorting.reversed}"></i> {{ _("Date") }}</a></th>
       <th>{{ _("Description") }}</th>
       <th class="text-right"><a href="" ng-click="sorting.order_by == 'value' ? (sorting.reversed = !sorting.reversed) : (sorting.order_by = 'value'); filtered_transactions.sort_by(sorting);"><i ng-show="sorting.order_by == 'value'" class="glyphicon"
-        ng-class="{'glyphicon-chevron-down': sorting.reversed, 'glyphicon-chevron-up': !sorting.reversed}"></i>(( wallet.unit ))</a></th>
+        ng-class="{'glyphicon-chevron-down': sorting.reversed, 'glyphicon-chevron-up': !sorting.reversed}"></i>{% if MULTIASSET %}{{ _("Value") }}{% else %}(( wallet.unit )){% endif %}</a></th>
     </tr>
   </thead>
   {% if not include_cordova and not cdvapp %}
@@ -56,8 +56,10 @@
       </td>
       <td class="amount" ng-style="{opacity: (transaction.double_spent_by !== undefined) ? 0.3 : 1}">
         <span class="amount" ng-class="{'amount-plus': transaction.positive, 'amount-minus': transaction.negative}" ng-hide="!transaction.nonzero && transaction.redeemable">(( transaction.value|format_btc_nounit:wallet.unit ))</span>
-        <span class="amount amount-redeemable" ng-show="!transaction.nonzero && transaction.redeemable">(( transaction.redeemable_value|format_btc_nounit:wallet.unit ))</span><br>
-        <span class="amount info" ng-class="{'amount-plus': transaction.positive, 'amount-minus': transaction.negative}">(( transaction.value_fiat|number:2 )) (( filtered_transactions.fiat_currency ))</span>
+        <span class="amount amount-redeemable" ng-show="!transaction.nonzero && transaction.redeemable">(( transaction.redeemable_value|format_btc_nounit:wallet.unit ))</span>{% if MULTIASSET %}
+        (( transaction.asset_name ))
+        {% else %}<br>
+        <span class="amount info" ng-class="{'amount-plus': transaction.positive, 'amount-minus': transaction.negative}">(( transaction.value_fiat|number:2 )) (( filtered_transactions.fiat_currency ))</span>{% endif %}
       </td>
     </tr>
     <tr ng-show="loading_txs">

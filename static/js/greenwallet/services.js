@@ -569,7 +569,7 @@ angular.module('greenWalletServices', [])
         call.then(function(data) {
             var retval = [];
             var any_unconfirmed_seen = false;
-
+            var asset_name = null;
             for (var i = 0; i < data.list.length; i++) {
                 var tx = data.list[i], inputs = [], outputs = [];
                 var num_confirmations = data.cur_block - tx.block_height + 1;
@@ -587,6 +587,7 @@ angular.module('greenWalletServices', [])
                 }
                 for (var j = 0; j < tx.eps.length; j++) {
                     var ep = tx.eps[j];
+                    if (ep.asset_name) asset_name = ep.asset_name;
                     if (ep.is_relevant) {
                         if (ep.is_credit) {
                             var bytes = Bitcoin.bs58.decode(ep.ad);
@@ -705,7 +706,8 @@ angular.module('greenWalletServices', [])
                              confirmations: tx.block_height ? data.cur_block - tx.block_height + 1: 0,
                              has_payment_request: tx.has_payment_request,
                              double_spent_by: tx.double_spent_by, rawtx: tx.data,
-                             social_destination: tx_social_destination, social_value: tx_social_value});
+                             social_destination: tx_social_destination, social_value: tx_social_value,
+                             asset_name: asset_name});
                 // tx.unclaimed is later used for cache updating
                 tx.unclaimed = retval[0].unclaimed || (retval[0].redeemable && retval[0].redeemable_unspent);
             }
