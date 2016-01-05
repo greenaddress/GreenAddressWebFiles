@@ -1355,6 +1355,15 @@ msgstr "Dirección"
 msgid "Edit"
 msgstr "Edit"
 
+#: templates/wallet/partials/wallet_modal_tx_details.html:33
+msgid "Size (bytes)"
+msgstr ""
+
+#: templates/wallet/partials/wallet_modal_tx_details.html:33
+#, fuzzy
+msgid "Fee per kB"
+msgstr "per kB"
+
 #: templates/wallet/partials/wallet_modal_tx_details.html:36
 msgid "Raw transaction"
 msgstr "Transacción bruta"

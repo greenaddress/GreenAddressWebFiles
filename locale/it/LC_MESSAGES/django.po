@@ -1363,6 +1363,14 @@ msgstr "Indirizzo"
 msgid "Edit"
 msgstr ""
 
+#: templates/wallet/partials/wallet_modal_tx_details.html:33
+msgid "Size (bytes)"
+msgstr ""
+
+#: templates/wallet/partials/wallet_modal_tx_details.html:33
+msgid "Fee per kB"
+msgstr ""
+
 #: templates/wallet/partials/wallet_modal_tx_details.html:36
 msgid "Raw transaction"
 msgstr "Transazione"
