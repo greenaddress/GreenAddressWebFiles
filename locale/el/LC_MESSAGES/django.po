@@ -718,7 +718,8 @@ msgstr "Κωδικός Email"
 #: templates/wallet/partials/wallet_2fa.html:102
 #: templates/wallet/partials/wallet_2fa.html:144
 #: templates/wallet/partials/wallet_2fa.html:186
-#: templates/wallet/partials/wallet_address_book.html:48
+#: templates/wallet/partials/wallet_address_book.html:54
+#: templates/wallet/partials/wallet_address_book.html:69
 #: templates/wallet/partials/wallet_modal_2fa.html:31
 #: templates/wallet/partials/wallet_modal_btchip_fup.html:10
 #: templates/wallet/partials/wallet_modal_btchip_pin.html:22
@@ -801,13 +802,15 @@ msgstr "Κωδικός τηλεφώνου"
 msgid "Add new entry"
 msgstr "Προσθήκη νέας καταχώρησης"
 
-#: templates/wallet/partials/wallet_address_book.html:21
+#: templates/wallet/partials/wallet_address_book.html:27
+#: templates/wallet/partials/wallet_address_book.html:45
 #: templates/wallet/partials/wallet_settings.html:641
 #: templates/wallet/partials/wallet_settings.html:697
 msgid "Name"
 msgstr "Όνομα"
 
-#: templates/wallet/partials/wallet_address_book.html:22
+#: templates/wallet/partials/wallet_address_book.html:28
+#: templates/wallet/partials/wallet_address_book.html:47
 #: templates/wallet/partials/wallet_modal_my_addresses.html:5
 #: templates/wallet/partials/wallet_modal_tx_details.html:53
 #: templates/wallet/partials/wallet_modal_tx_details.html:65
@@ -815,12 +818,13 @@ msgstr "Όνομα"
 msgid "Address"
 msgstr "Διεύθυνση"
 
-#: templates/wallet/partials/wallet_address_book.html:29
+#: templates/wallet/partials/wallet_address_book.html:35
 #: templates/wallet/partials/wallet_transactions_table.html:18
 msgid "Export to CSV"
 msgstr "Εξαγωγή σε CSV"
 
-#: templates/wallet/partials/wallet_address_book.html:45
+#: templates/wallet/partials/wallet_address_book.html:51
+#: templates/wallet/partials/wallet_address_book.html:66
 #: templates/wallet/partials/wallet_receive.html:97
 #: templates/wallet/partials/wallet_send.html:49
 #: templates/wallet/partials/wallet_send.html:224
@@ -828,7 +832,7 @@ msgstr "Εξαγωγή σε CSV"
 msgid "Scan QR"
 msgstr "Σαρώστε το κωδικό QR"
 
-#: templates/wallet/partials/wallet_address_book.html:62
+#: templates/wallet/partials/wallet_address_book.html:78
 msgid "Your address book is empty"
 msgstr "Το βιβλίο διευθύνσεων σας είναι άδειο"
 
