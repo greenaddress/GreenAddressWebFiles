@@ -1045,10 +1045,15 @@ angular.module('greenWalletServices', [])
                 })(i);
             }
             return $q.all(signatures_ds).then(function() {
-                return tx_sender.call(
-                    'http://greenaddressit.com/vault/send_raw_tx',
-                    tx.build().toHex(+fee)
-                );
+                return walletsService.get_two_factor_code(
+                    $scope, 'send_raw_tx'
+                ).then(function(twofac_data) {
+                    return tx_sender.call(
+                        'http://greenaddressit.com/vault/send_raw_tx',
+                        tx.build().toHex(+fee),
+                        twofac_data
+                    );
+                });
             })
         })
     };
