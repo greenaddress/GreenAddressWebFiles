@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: greenaddress-wallet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-01-13 22:44+0000\n"
+"POT-Creation-Date: 2016-01-14 17:53+0000\n"
 "PO-Revision-Date: 2014-08-24 12:04-0400\n"
 "Last-Translator: GreenAddress <info@greenaddress.it>\n"
 "Language-Team: Hungarian\n"
@@ -32,87 +32,6 @@ msgstr "More information"
 #: WalletCordova/www/greenaddress.it/static/js/instant.js.c:54
 msgid "Invalid WIF key"
 msgstr "Invalid WIF key"
-
-#: static/js/signup.min.js.c:31 static/js/greenwallet/apps/signup.js.c:31
-#: WalletCrx/static/js/signup.min.js.c:31
-#: WalletCrx/static/js/greenwallet/apps/signup.js.c:31
-#: WalletCordova/www/greenaddress.it/static/js/signup.min.js.c:31
-#: WalletCordova/www/greenaddress.it/static/js/greenwallet/apps/signup.js.c:31
-#, c-format
-msgid "Please go to %s first to set up your device."
-msgstr ""
-
-#: static/js/signup.min.js.c:87 static/js/greenwallet/services.js.c:3457
-#: static/js/greenwallet/apps/signup.js.c:90
-#: static/js/greenwallet/signuplogin/controllers.js.c:353
-#: WalletCrx/static/js/signup.min.js.c:87
-#: WalletCrx/static/js/greenwallet/services.js.c:3457
-#: WalletCrx/static/js/greenwallet/apps/signup.js.c:90
-#: WalletCrx/static/js/greenwallet/signuplogin/controllers.js.c:353
-#: WalletCordova/www/greenaddress.it/static/js/signup.min.js.c:87
-#: WalletCordova/www/greenaddress.it/static/js/greenwallet/services.js.c:3457
-#: WalletCordova/www/greenaddress.it/static/js/greenwallet/apps/signup.js.c:90
-#: WalletCordova/www/greenaddress.it/static/js/greenwallet/signuplogin/controllers.js.c:353
-msgid "Invalid PIN"
-msgstr "Invalid PIN"
-
-#: static/js/signup.min.js.c:89 static/js/greenwallet/services.js.c:3459
-#: static/js/greenwallet/services.js.c:3469
-#: static/js/greenwallet/apps/signup.js.c:92
-#: static/js/greenwallet/signuplogin/controllers.js.c:361
-#: WalletCrx/static/js/signup.min.js.c:89
-#: WalletCrx/static/js/greenwallet/services.js.c:3459
-#: WalletCrx/static/js/greenwallet/services.js.c:3469
-#: WalletCrx/static/js/greenwallet/apps/signup.js.c:92
-#: WalletCrx/static/js/greenwallet/signuplogin/controllers.js.c:361
-#: WalletCordova/www/greenaddress.it/static/js/signup.min.js.c:89
-#: WalletCordova/www/greenaddress.it/static/js/greenwallet/services.js.c:3459
-#: WalletCordova/www/greenaddress.it/static/js/greenwallet/services.js.c:3469
-#: WalletCordova/www/greenaddress.it/static/js/greenwallet/apps/signup.js.c:92
-#: WalletCordova/www/greenaddress.it/static/js/greenwallet/signuplogin/controllers.js.c:361
-msgid "Dongle is not set up"
-msgstr "Dongle is not set up"
-
-#: static/js/signup.min.js.c:91 static/js/greenwallet/services.js.c:3461
-#: static/js/greenwallet/apps/signup.js.c:94
-#: static/js/greenwallet/signuplogin/controllers.js.c:363
-#: WalletCrx/static/js/signup.min.js.c:91
-#: WalletCrx/static/js/greenwallet/services.js.c:3461
-#: WalletCrx/static/js/greenwallet/apps/signup.js.c:94
-#: WalletCrx/static/js/greenwallet/signuplogin/controllers.js.c:363
-#: WalletCordova/www/greenaddress.it/static/js/signup.min.js.c:91
-#: WalletCordova/www/greenaddress.it/static/js/greenwallet/services.js.c:3461
-#: WalletCordova/www/greenaddress.it/static/js/greenwallet/apps/signup.js.c:94
-#: WalletCordova/www/greenaddress.it/static/js/greenwallet/signuplogin/controllers.js.c:363
-msgid "Dongle is locked - reconnect the dongle and retry"
-msgstr "Dongle is locked - reconnect the dongle and retry"
-
-#: static/js/signup.min.js.c:181 static/js/greenwallet/apps/signup.js.c:181
-#: WalletCrx/static/js/signup.min.js.c:181
-#: WalletCrx/static/js/greenwallet/apps/signup.js.c:181
-#: WalletCordova/www/greenaddress.it/static/js/signup.min.js.c:181
-#: WalletCordova/www/greenaddress.it/static/js/greenwallet/apps/signup.js.c:181
-msgid "You were already registered, so we logged you in."
-msgstr ""
-
-#: static/js/signup.min.js.c:306 static/js/greenwallet/apps/signup.js.c:306
-#: static/js/greenwallet/settings/controllers.js.c:1067
-#: WalletCrx/static/js/signup.min.js.c:306
-#: WalletCrx/static/js/greenwallet/apps/signup.js.c:306
-#: WalletCrx/static/js/greenwallet/settings/controllers.js.c:1067
-#: WalletCordova/www/greenaddress.it/static/js/signup.min.js.c:306
-#: WalletCordova/www/greenaddress.it/static/js/greenwallet/apps/signup.js.c:306
-#: WalletCordova/www/greenaddress.it/static/js/greenwallet/settings/controllers.js.c:1067
-msgid "Custom login enabled"
-msgstr "Egyéni bejelentkezés engedélyezve"
-
-#: static/js/signup.min.js.c:401 static/js/greenwallet/apps/signup.js.c:401
-#: WalletCrx/static/js/signup.min.js.c:401
-#: WalletCrx/static/js/greenwallet/apps/signup.js.c:401
-#: WalletCordova/www/greenaddress.it/static/js/signup.min.js.c:401
-#: WalletCordova/www/greenaddress.it/static/js/greenwallet/apps/signup.js.c:401
-msgid "Mnemonic not available when using hardware wallet seed"
-msgstr ""
 
 #: static/js/greenwallet/controllers.js.c:43
 #: WalletCrx/static/js/greenwallet/controllers.js.c:43
@@ -369,6 +288,45 @@ msgstr ""
 msgid "BTChip communication failed"
 msgstr "Checksum validation failed!"
 
+#: static/js/greenwallet/services.js.c:3457
+#: static/js/greenwallet/apps/signup.js.c:90
+#: static/js/greenwallet/signuplogin/controllers.js.c:353
+#: WalletCrx/static/js/greenwallet/services.js.c:3457
+#: WalletCrx/static/js/greenwallet/apps/signup.js.c:90
+#: WalletCrx/static/js/greenwallet/signuplogin/controllers.js.c:353
+#: WalletCordova/www/greenaddress.it/static/js/greenwallet/services.js.c:3457
+#: WalletCordova/www/greenaddress.it/static/js/greenwallet/apps/signup.js.c:90
+#: WalletCordova/www/greenaddress.it/static/js/greenwallet/signuplogin/controllers.js.c:353
+msgid "Invalid PIN"
+msgstr "Invalid PIN"
+
+#: static/js/greenwallet/services.js.c:3459
+#: static/js/greenwallet/services.js.c:3469
+#: static/js/greenwallet/apps/signup.js.c:92
+#: static/js/greenwallet/signuplogin/controllers.js.c:361
+#: WalletCrx/static/js/greenwallet/services.js.c:3459
+#: WalletCrx/static/js/greenwallet/services.js.c:3469
+#: WalletCrx/static/js/greenwallet/apps/signup.js.c:92
+#: WalletCrx/static/js/greenwallet/signuplogin/controllers.js.c:361
+#: WalletCordova/www/greenaddress.it/static/js/greenwallet/services.js.c:3459
+#: WalletCordova/www/greenaddress.it/static/js/greenwallet/services.js.c:3469
+#: WalletCordova/www/greenaddress.it/static/js/greenwallet/apps/signup.js.c:92
+#: WalletCordova/www/greenaddress.it/static/js/greenwallet/signuplogin/controllers.js.c:361
+msgid "Dongle is not set up"
+msgstr "Dongle is not set up"
+
+#: static/js/greenwallet/services.js.c:3461
+#: static/js/greenwallet/apps/signup.js.c:94
+#: static/js/greenwallet/signuplogin/controllers.js.c:363
+#: WalletCrx/static/js/greenwallet/services.js.c:3461
+#: WalletCrx/static/js/greenwallet/apps/signup.js.c:94
+#: WalletCrx/static/js/greenwallet/signuplogin/controllers.js.c:363
+#: WalletCordova/www/greenaddress.it/static/js/greenwallet/services.js.c:3461
+#: WalletCordova/www/greenaddress.it/static/js/greenwallet/apps/signup.js.c:94
+#: WalletCordova/www/greenaddress.it/static/js/greenwallet/signuplogin/controllers.js.c:363
+msgid "Dongle is locked - reconnect the dongle and retry"
+msgstr "Dongle is locked - reconnect the dongle and retry"
+
 #: static/js/greenwallet/services.js.c:3472
 #: WalletCrx/static/js/greenwallet/services.js.c:3472
 #: WalletCordova/www/greenaddress.it/static/js/greenwallet/services.js.c:3472
@@ -402,6 +360,34 @@ msgstr "Please provide a password."
 #: WalletCordova/www/greenaddress.it/static/js/greenwallet/transactions/controllers.js.c:118
 msgid "Passwords do not match."
 msgstr "Passwords do not match."
+
+#: static/js/greenwallet/apps/signup.js.c:31
+#: WalletCrx/static/js/greenwallet/apps/signup.js.c:31
+#: WalletCordova/www/greenaddress.it/static/js/greenwallet/apps/signup.js.c:31
+#, c-format
+msgid "Please go to %s first to set up your device."
+msgstr ""
+
+#: static/js/greenwallet/apps/signup.js.c:181
+#: WalletCrx/static/js/greenwallet/apps/signup.js.c:181
+#: WalletCordova/www/greenaddress.it/static/js/greenwallet/apps/signup.js.c:181
+msgid "You were already registered, so we logged you in."
+msgstr ""
+
+#: static/js/greenwallet/apps/signup.js.c:306
+#: static/js/greenwallet/settings/controllers.js.c:1067
+#: WalletCrx/static/js/greenwallet/apps/signup.js.c:306
+#: WalletCrx/static/js/greenwallet/settings/controllers.js.c:1067
+#: WalletCordova/www/greenaddress.it/static/js/greenwallet/apps/signup.js.c:306
+#: WalletCordova/www/greenaddress.it/static/js/greenwallet/settings/controllers.js.c:1067
+msgid "Custom login enabled"
+msgstr "Egyéni bejelentkezés engedélyezve"
+
+#: static/js/greenwallet/apps/signup.js.c:401
+#: WalletCrx/static/js/greenwallet/apps/signup.js.c:401
+#: WalletCordova/www/greenaddress.it/static/js/greenwallet/apps/signup.js.c:401
+msgid "Mnemonic not available when using hardware wallet seed"
+msgstr ""
 
 #: static/js/greenwallet/info/controllers.js.c:77
 #: WalletCrx/static/js/greenwallet/info/controllers.js.c:77
