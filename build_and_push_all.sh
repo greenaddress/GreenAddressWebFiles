@@ -22,6 +22,7 @@ rm -rf WalletCrx/static/fonts/*.svg  # .woff are enough for crx
 rm -rf WalletCrx/static/sound/*.wav  # .mp3 are enough for crx
 rm WalletCrx/static/js/cdv-plugin-fb-connect.js  # cordova only
 rm WalletCrx/static/js/facebook-js-sdk.js  # cordova only
+rm WalletCrx/static/js/common_cordova_handlers.js  # cordova only
 rm WalletCrx/static/js/{greenaddress,instant}.js  # web only
 mkdir -p WalletCrx/static/wallet >/dev/null
 mv /tmp/config{,_regtest,_testnet}.js WalletCrx/static/wallet/
