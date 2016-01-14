@@ -13,9 +13,9 @@
           <small>If it was not you, please contact <strong>immediately</strong>
         {% endtrans %}
         {% if cdvapp %}
-          <a href="" onclick="window.open('support.html', '_blank', 'location=no'); return false">{{ _("support") }}</a>.
+          <a href="#" onclick="cordova.InAppBrowser.open('https://greenaddress.it/support.html', '_system'); return false">{{ _("support") }}</a>.
         {% elif crapp %}
-          <a href="https://greenaddress.it/support/" target="_blank">{{ _("support") }}</a>.
+          <a href="https://greenaddress.it/support.html" target="_blank">{{ _("support") }}</a>.
         {% else %}
           <a href="/support/">{{ _("support") }}</a>.
         {% endif %}</small>
