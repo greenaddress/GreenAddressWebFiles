@@ -22,33 +22,33 @@ msgstr "¡Bienvenido!"
 msgid "The safer Bitcoin wallet that puts you in control."
 msgstr "La Bitcoin Wallet más segura que lo pone a usted en el control."
 
-#: templates/base/base.html:106
+#: templates/base/base.html:110
 msgid "Toggle navigation"
 msgstr "Cambiar navegación"
 
-#: templates/base/base.html:115
+#: templates/base/base.html:119
 msgid "Blog"
 msgstr "Blog"
 
-#: templates/base/base.html:116 templates/wallet/nav.html:21
+#: templates/base/base.html:120 templates/wallet/nav.html:21
 #: templates/wallet/nav.html:23
 msgid "FAQ"
 msgstr "Preguntas Frecuentes"
 
-#: templates/base/base.html:117
+#: templates/base/base.html:121
 msgid "API"
 msgstr ""
 
-#: templates/base/base.html:118 templates/wallet/nav.html:21
+#: templates/base/base.html:122 templates/wallet/nav.html:21
 #: templates/wallet/nav.html:23
 msgid "Support"
 msgstr "Soporte"
 
-#: templates/base/base.html:119
+#: templates/base/base.html:123
 msgid "Login"
 msgstr "Iniciar sesión"
 
-#: templates/base/base.html:154
+#: templates/base/base.html:158
 msgid "About us"
 msgstr "Acerca de nosotros"
 
@@ -2308,11 +2308,6 @@ msgstr "Mostrar más transacciones..."
 msgid "Haven't got an account yet?"
 msgstr "¿Aún no tiene una cuenta?"
 
-#: templates/wallet/partials/signuplogin/base.html:7
-#: templates/wallet/partials/signuplogin/trezor.html:7
-msgid "Create new Wallet"
-msgstr "Crear nueva Wallet"
-
 #: templates/wallet/partials/signuplogin/base.html:12
 msgid "Log in for full Wallet access"
 msgstr "Inicie sesión para un acceso completo a su Wallet"
@@ -2472,6 +2467,10 @@ msgstr "Ingrese su contraseña"
 #: templates/wallet/partials/signuplogin/redeem_password_modal.html:24
 msgid "Redeem the payment"
 msgstr "Redimir pago"
+
+#: templates/wallet/partials/signuplogin/trezor.html:7
+msgid "Create new Wallet"
+msgstr "Crear nueva Wallet"
 
 #: templates/wallet/partials/signuplogin/trezor.html:19
 msgid "Processing"

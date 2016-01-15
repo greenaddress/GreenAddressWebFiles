@@ -23,33 +23,33 @@ msgstr "Ласкаво просимо!"
 msgid "The safer Bitcoin wallet that puts you in control."
 msgstr "Безпечний Bitcoin гаманець, що дає Вам повний контроль."
 
-#: templates/base/base.html:106
+#: templates/base/base.html:110
 msgid "Toggle navigation"
 msgstr "Переключити навігацію"
 
-#: templates/base/base.html:115
+#: templates/base/base.html:119
 msgid "Blog"
 msgstr "Блог"
 
-#: templates/base/base.html:116 templates/wallet/nav.html:21
+#: templates/base/base.html:120 templates/wallet/nav.html:21
 #: templates/wallet/nav.html:23
 msgid "FAQ"
 msgstr "ФАК"
 
-#: templates/base/base.html:117
+#: templates/base/base.html:121
 msgid "API"
 msgstr ""
 
-#: templates/base/base.html:118 templates/wallet/nav.html:21
+#: templates/base/base.html:122 templates/wallet/nav.html:21
 #: templates/wallet/nav.html:23
 msgid "Support"
 msgstr "Підтримка"
 
-#: templates/base/base.html:119
+#: templates/base/base.html:123
 msgid "Login"
 msgstr "Логін"
 
-#: templates/base/base.html:154
+#: templates/base/base.html:158
 msgid "About us"
 msgstr "Про нас"
 
@@ -2291,11 +2291,6 @@ msgstr "Show more transactions..."
 msgid "Haven't got an account yet?"
 msgstr "У Вас ще немає акаунта?"
 
-#: templates/wallet/partials/signuplogin/base.html:7
-#: templates/wallet/partials/signuplogin/trezor.html:7
-msgid "Create new Wallet"
-msgstr "Створити новий гаманець"
-
 #: templates/wallet/partials/signuplogin/base.html:12
 msgid "Log in for full Wallet access"
 msgstr "Ввійдіть для повного доступу до гаманця"
@@ -2452,6 +2447,10 @@ msgstr "Введіть пароль"
 #: templates/wallet/partials/signuplogin/redeem_password_modal.html:24
 msgid "Redeem the payment"
 msgstr "Отримати платіж"
+
+#: templates/wallet/partials/signuplogin/trezor.html:7
+msgid "Create new Wallet"
+msgstr "Створити новий гаманець"
 
 #: templates/wallet/partials/signuplogin/trezor.html:19
 msgid "Processing"

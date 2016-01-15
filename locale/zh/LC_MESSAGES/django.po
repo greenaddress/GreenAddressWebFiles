@@ -22,33 +22,33 @@ msgstr "欢迎您 ！"
 msgid "The safer Bitcoin wallet that puts you in control."
 msgstr "更安全的比特币钱包，由你掌控"
 
-#: templates/base/base.html:106
+#: templates/base/base.html:110
 msgid "Toggle navigation"
 msgstr "切换导航"
 
-#: templates/base/base.html:115
+#: templates/base/base.html:119
 msgid "Blog"
 msgstr "博客"
 
-#: templates/base/base.html:116 templates/wallet/nav.html:21
+#: templates/base/base.html:120 templates/wallet/nav.html:21
 #: templates/wallet/nav.html:23
 msgid "FAQ"
 msgstr "常见问题"
 
-#: templates/base/base.html:117
+#: templates/base/base.html:121
 msgid "API"
 msgstr ""
 
-#: templates/base/base.html:118 templates/wallet/nav.html:21
+#: templates/base/base.html:122 templates/wallet/nav.html:21
 #: templates/wallet/nav.html:23
 msgid "Support"
 msgstr "支持"
 
-#: templates/base/base.html:119
+#: templates/base/base.html:123
 msgid "Login"
 msgstr "登录"
 
-#: templates/base/base.html:154
+#: templates/base/base.html:158
 msgid "About us"
 msgstr "关于我们"
 
@@ -2259,11 +2259,6 @@ msgstr "Show more transactions..."
 msgid "Haven't got an account yet?"
 msgstr "还没有创建「绿色地址」的钱包帐号吗？"
 
-#: templates/wallet/partials/signuplogin/base.html:7
-#: templates/wallet/partials/signuplogin/trezor.html:7
-msgid "Create new Wallet"
-msgstr "创建一个新的钱包"
-
 #: templates/wallet/partials/signuplogin/base.html:12
 msgid "Log in for full Wallet access"
 msgstr "登录为钱包的完全访问权限"
@@ -2419,6 +2414,10 @@ msgstr "输入密码"
 #: templates/wallet/partials/signuplogin/redeem_password_modal.html:24
 msgid "Redeem the payment"
 msgstr "赎回支付"
+
+#: templates/wallet/partials/signuplogin/trezor.html:7
+msgid "Create new Wallet"
+msgstr "创建一个新的钱包"
 
 #: templates/wallet/partials/signuplogin/trezor.html:19
 msgid "Processing"
