@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: greenaddress-wallet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-01-15 17:20+0000\n"
+"POT-Creation-Date: 2016-01-15 17:32+0000\n"
 "PO-Revision-Date: 2014-08-20 10:19-0400\n"
 "Last-Translator: GreenAddress <info@greenaddress.it>\n"
 "Language-Team: Russian\n"
@@ -298,7 +298,7 @@ msgstr "Ошибка контрольной суммы!"
 #: WalletCrx/static/js/greenwallet/signuplogin/controllers.js.c:369
 #: WalletCordova/www/greenaddress.it/static/js/greenwallet/services.js.c:3457
 #: WalletCordova/www/greenaddress.it/static/js/greenwallet/apps/signup.js.c:90
-#: WalletCordova/www/greenaddress.it/static/js/greenwallet/signuplogin/controllers.js.c:353
+#: WalletCordova/www/greenaddress.it/static/js/greenwallet/signuplogin/controllers.js.c:369
 msgid "Invalid PIN"
 msgstr "Invalid PIN"
 
@@ -313,7 +313,7 @@ msgstr "Invalid PIN"
 #: WalletCordova/www/greenaddress.it/static/js/greenwallet/services.js.c:3459
 #: WalletCordova/www/greenaddress.it/static/js/greenwallet/services.js.c:3469
 #: WalletCordova/www/greenaddress.it/static/js/greenwallet/apps/signup.js.c:92
-#: WalletCordova/www/greenaddress.it/static/js/greenwallet/signuplogin/controllers.js.c:361
+#: WalletCordova/www/greenaddress.it/static/js/greenwallet/signuplogin/controllers.js.c:377
 msgid "Dongle is not set up"
 msgstr "Dongle is not set up"
 
@@ -325,7 +325,7 @@ msgstr "Dongle is not set up"
 #: WalletCrx/static/js/greenwallet/signuplogin/controllers.js.c:379
 #: WalletCordova/www/greenaddress.it/static/js/greenwallet/services.js.c:3461
 #: WalletCordova/www/greenaddress.it/static/js/greenwallet/apps/signup.js.c:94
-#: WalletCordova/www/greenaddress.it/static/js/greenwallet/signuplogin/controllers.js.c:363
+#: WalletCordova/www/greenaddress.it/static/js/greenwallet/signuplogin/controllers.js.c:379
 msgid "Dongle is locked - reconnect the dongle and retry"
 msgstr "Dongle is locked - reconnect the dongle and retry"
 
@@ -349,7 +349,7 @@ msgstr "Old BTChip firmware version detected. Please upgrade to at least %s."
 #: WalletCrx/static/js/greenwallet/signuplogin/controllers.js.c:100
 #: WalletCrx/static/js/greenwallet/transactions/controllers.js.c:114
 #: WalletCordova/www/greenaddress.it/static/js/greenwallet/services.js.c:3835
-#: WalletCordova/www/greenaddress.it/static/js/greenwallet/signuplogin/controllers.js.c:84
+#: WalletCordova/www/greenaddress.it/static/js/greenwallet/signuplogin/controllers.js.c:100
 #: WalletCordova/www/greenaddress.it/static/js/greenwallet/transactions/controllers.js.c:114
 msgid "Please provide a password."
 msgstr "Please provide a password."
@@ -847,62 +847,64 @@ msgstr "Limits updated successfully"
 
 #: static/js/greenwallet/signuplogin/controllers.js.c:11
 #: WalletCrx/static/js/greenwallet/signuplogin/controllers.js.c:11
+#: WalletCordova/www/greenaddress.it/static/js/greenwallet/signuplogin/controllers.js.c:11
 msgid "Create new Wallet"
 msgstr "Создать новый кошелёк"
 
 #: static/js/greenwallet/signuplogin/controllers.js.c:13
 #: WalletCrx/static/js/greenwallet/signuplogin/controllers.js.c:13
+#: WalletCordova/www/greenaddress.it/static/js/greenwallet/signuplogin/controllers.js.c:13
 msgid "Install the App"
 msgstr ""
 
 #: static/js/greenwallet/signuplogin/controllers.js.c:273
 #: WalletCrx/static/js/greenwallet/signuplogin/controllers.js.c:273
-#: WalletCordova/www/greenaddress.it/static/js/greenwallet/signuplogin/controllers.js.c:257
+#: WalletCordova/www/greenaddress.it/static/js/greenwallet/signuplogin/controllers.js.c:273
 msgid "Unknown error"
 msgstr "Неизвестная ошибка"
 
 #: static/js/greenwallet/signuplogin/controllers.js.c:371
 #: WalletCrx/static/js/greenwallet/signuplogin/controllers.js.c:371
-#: WalletCordova/www/greenaddress.it/static/js/greenwallet/signuplogin/controllers.js.c:355
+#: WalletCordova/www/greenaddress.it/static/js/greenwallet/signuplogin/controllers.js.c:371
 msgid "Invalid PIN, 2 retries left"
 msgstr ""
 
 #: static/js/greenwallet/signuplogin/controllers.js.c:373
 #: WalletCrx/static/js/greenwallet/signuplogin/controllers.js.c:373
-#: WalletCordova/www/greenaddress.it/static/js/greenwallet/signuplogin/controllers.js.c:357
+#: WalletCordova/www/greenaddress.it/static/js/greenwallet/signuplogin/controllers.js.c:373
 #, fuzzy
 msgid "Invalid PIN, 1 retry left"
 msgstr "Invalid PIN"
 
 #: static/js/greenwallet/signuplogin/controllers.js.c:375
 #: WalletCrx/static/js/greenwallet/signuplogin/controllers.js.c:375
-#: WalletCordova/www/greenaddress.it/static/js/greenwallet/signuplogin/controllers.js.c:359
+#: WalletCordova/www/greenaddress.it/static/js/greenwallet/signuplogin/controllers.js.c:375
 #, fuzzy
 msgid "Invalid PIN, dongle wiped"
 msgstr "Invalid PIN"
 
 #: static/js/greenwallet/signuplogin/controllers.js.c:388
 #: WalletCrx/static/js/greenwallet/signuplogin/controllers.js.c:388
-#: WalletCordova/www/greenaddress.it/static/js/greenwallet/signuplogin/controllers.js.c:372
+#: WalletCordova/www/greenaddress.it/static/js/greenwallet/signuplogin/controllers.js.c:388
 msgid "{hardware_wallet_name} Login"
 msgstr ""
 
 #: static/js/greenwallet/signuplogin/controllers.js.c:467
 #: WalletCrx/static/js/greenwallet/signuplogin/controllers.js.c:467
-#: WalletCordova/www/greenaddress.it/static/js/greenwallet/signuplogin/controllers.js.c:451
+#: WalletCordova/www/greenaddress.it/static/js/greenwallet/signuplogin/controllers.js.c:467
 msgid "Wallet decryption failed"
 msgstr "Не удалось расшифровать кошелек"
 
 #: static/js/greenwallet/signuplogin/controllers.js.c:476
 #: WalletCrx/static/js/greenwallet/signuplogin/controllers.js.c:476
-#: WalletCordova/www/greenaddress.it/static/js/greenwallet/signuplogin/controllers.js.c:460
+#: WalletCordova/www/greenaddress.it/static/js/greenwallet/signuplogin/controllers.js.c:476
 #, c-format
 msgid "%s attempts left."
 msgstr ""
 
 #: static/js/greenwallet/signuplogin/controllers.js.c:478
 #: WalletCrx/static/js/greenwallet/signuplogin/controllers.js.c:478
-#: WalletCordova/www/greenaddress.it/static/js/greenwallet/signuplogin/controllers.js.c:462
+#: WalletCordova/www/greenaddress.it/static/js/greenwallet/signuplogin/controllers.js.c:478
 msgid "0 attempts left - PIN removed."
 msgstr ""
 
