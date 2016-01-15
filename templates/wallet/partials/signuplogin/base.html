@@ -4,7 +4,7 @@
         <div class="create-modal-content">
             <div class="create-modal-header" ng-hide="wallet.redeem_key">
                 {{ _("Haven't got an account yet?") }}
-                <a href="#/create{% if not crapp and not cdvapp %}_warning{% endif %}"><strong>{{ _("Create new Wallet") }}</strong></a>
+                <a ng-click="create_new_wallet($event)" href="#/create{% if not crapp and not cdvapp %}_warning{% endif %}"><strong>(( create_new_wallet_label ))</strong></a>
             </div>
             <div class="create-modal-body">
                 <div ng-include="wallet.signuplogin_header"></div>
