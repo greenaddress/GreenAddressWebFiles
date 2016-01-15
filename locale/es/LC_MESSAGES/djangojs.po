@@ -855,7 +855,7 @@ msgstr "Límites actualizados con éxito"
 #: static/js/greenwallet/signuplogin/controllers.js.c:11
 #: WalletCrx/static/js/greenwallet/signuplogin/controllers.js.c:11
 msgid "Create new Wallet"
-msgstr ""
+msgstr "Crear nueva Wallet"
 
 #: static/js/greenwallet/signuplogin/controllers.js.c:13
 #: WalletCrx/static/js/greenwallet/signuplogin/controllers.js.c:13
