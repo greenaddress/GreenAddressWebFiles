@@ -1310,7 +1310,7 @@ angular.module('greenWalletServices', [])
         }
         if ($scope && $scope.wallet.trezor_dev) {
             var fromHex = (window.trezor && trezor.ByteBuffer) ? trezor.ByteBuffer.fromHex : function(x) { return x; };
-            var gawallet = new Bitcoin.bitcoin.HDNode(
+            var gawallet_hd = new Bitcoin.bitcoin.HDNode(
                 Bitcoin.bitcoin.ECPair.fromPublicKeyBuffer(
                     new Bitcoin.Buffer.Buffer(deposit_pubkey, 'hex'),
                     cur_net
@@ -1326,7 +1326,6 @@ angular.module('greenWalletServices', [])
                     break;
                 }
             }
-            gawallet_hd.index = 0;
             if ($scope.wallet.current_subaccount) {
                 gawallet_path = $q.when(gawallet_hd.derive(branches.SUBACCOUNT)).then(function(gawallet_hd) {
                     return gawallet_hd.subpath($scope.wallet.gait_path);
@@ -1431,13 +1430,14 @@ angular.module('greenWalletServices', [])
                     script_to_hash.push(Bitcoin.bitcoin.opcodes.OP_2);
                 }
                 script_to_hash.push(Bitcoin.bitcoin.opcodes.OP_CHECKMULTISIG);
-                var change_addr = Bitcoin.bitcoin.script.scriptHashOutput(
-                    Bitcoin.bitcoin.crypto.hash160(
-                        Bitcoin.bitcoin.Address.fromOutputScript(
-                            Bitcoin.bitcoin.script.compile(script_to_hash),
-                            cur_net.scriptHash
-                        )
-                    )
+                script_to_hash = Bitcoin.bitcoin.script.compile(
+                    script_to_hash
+                );
+                var change_addr = Bitcoin.bitcoin.address.fromOutputScript(
+                    Bitcoin.bitcoin.script.scriptHashOutput(
+                        Bitcoin.bitcoin.crypto.hash160(script_to_hash)
+                    ),
+                    cur_net
                 );
                 var get_pubkeys = function(prevout, is2of3) {
                     var ret = [{node: gawallet,
@@ -1450,44 +1450,52 @@ angular.module('greenWalletServices', [])
                     }
                     return ret;
                 }
-                var txs_dict = {}, inputs = [];
+                var inputs = [];
                 for (var i = 0; i < tx.ins.length; ++i) {
-                    txs_dict[tx.ins[i].hash] = true;
                     inputs.push({address_n: prevoutToPath(data.prev_outputs[i], true),
-                                   prev_hash: fromHex(tx.ins[i].hash),
-                                   prev_index: tx.ins[i].index,
-                                   script_type: (window.trezor && trezor.ByteBuffer) ? 1 : 'SPENDMULTISIG',
-                                   multisig: {
-                                       pubkeys: get_pubkeys(data.prev_outputs[i], is_2of3),
-                                       m: 2
-                                   }})
+                                    prev_hash: fromHex(
+                                        Bitcoin.bitcoin.bufferutils.reverse(
+                                            tx.ins[i].hash
+                                        ).toString('hex')
+                                    ),
+                                    prev_index: tx.ins[i].index,
+                                    script_type: (window.trezor && trezor.ByteBuffer) ? 1 : 'SPENDMULTISIG',
+                                    multisig: {
+                                        pubkeys: get_pubkeys(data.prev_outputs[i], is_2of3),
+                                        m: 2
+                                    }})
                 }
 
                 var convert_ins = function(ins) {
                     return ins.map(function(inp) {
                         var fromHex = (window.trezor && trezor.ByteBuffer) ? trezor.ByteBuffer.fromHex : function(x) { return x; };
                         return {
-                            prev_hash: fromHex(inp.hash),
+                            prev_hash: fromHex(
+                                Bitcoin.bitcoin.bufferutils.reverse(
+                                    inp.hash
+                                ).toString('hex')
+                            ),
                             prev_index: inp.index,
                             script_sig: fromHex(inp.script.toString('hex')),
-                            sequence: parseInt(inp.sequence).toString()
+                            sequence: inp.sequence
                         }
                     })
                 }
-                var convert_outs = function(outs, change_pointer) {
+                var convert_outs = function(outs) {
                     return outs.map(function(out) {
                         var TYPE_ADDR = (window.trezor && trezor.ByteBuffer) ? 0 : 'PAYTOADDRESS';
                         var TYPE_P2SH = (window.trezor && trezor.ByteBuffer) ? 1 : 'PAYTOSCRIPTHASH';
                         var TYPE_MULTISIG = (window.trezor && trezor.ByteBuffer) ? 2 : 'PAYTOMULTISIG';
-                        var addr = new Bitcoin.Address(out.address.toString());
-                        if (out.script.getOutType() == "P2SH") {
-                            // workaround for our old copy of bitcoinjs not supporting testnet here
-                            addr.version = cur_net.scriptHash;
-                        }
+                        var addr = Bitcoin.bitcoin.address.fromOutputScript(
+                            out.script, cur_net
+                        );
                         var ret = {
                             amount: out.value,
-                            address: addr.toString(),
-                            script_type: out.script.getOutType() == "P2SH" ? TYPE_P2SH : TYPE_ADDR
+                            address: addr,
+                            script_type:
+                                Bitcoin.bitcoin.script.isScriptHashOutput(
+                                    out.script
+                                ) ? TYPE_P2SH : TYPE_ADDR
                         };
                         if (ret.address == change_addr) {
                             ret.script_type = TYPE_MULTISIG;
@@ -1519,19 +1527,21 @@ angular.module('greenWalletServices', [])
                 }
 
                 var txs = [];
-                return prevouts_d.then(function(response) {
+                return prevouts_d.then(function() {
                     for (var k in response.data) {
-                        var parsed = Bitcoin.Transaction.deserialize(response.data[k]);
+                        var parsed = Bitcoin.bitcoin.Transaction.fromHex(response.data[k]);
                         txs.push({
-                            hash: k,
+                            hash: k, /* new Bitcoin.Buffer.Buffer(k, 'hex')
+                                    .reverse().toString('hex'), */
                             version: parsed.version,
                             lock_time: parsed.locktime,
                             bin_outputs: convert_outs_bin(parsed.outs),
                             inputs: convert_ins(parsed.ins)
                         });
                     }
-                    return $scope.wallet.trezor_dev.signTx(inputs, convert_outs(tx.outs, data.change_pointer),
-                        txs, {coin_name: cur_net == 'mainnet' ? 'Bitcoin' : 'Testnet'}).then(function(res) {
+                    return $scope.wallet.trezor_dev.signTx(inputs, convert_outs(tx.outs),
+                        txs, {coin_name: cur_net == Bitcoin.bitcoin.networks.bitcoin
+                                ? 'Bitcoin' : 'Testnet'}).then(function(res) {
                             return res.message.serialized.signatures.map(function(a) {
                                 return (a.toHex ? a.toHex() : a)+"01";
                             });
@@ -2197,13 +2207,13 @@ angular.module('greenWalletServices', [])
                                         {'message': msg, address_n: path}).then(function(res) {
                                     var sig = res.message.signature;
                                     sig = sig.toHex ? sig.toHex() : sig;
-                                    var signature = Bitcoin.bitcoin.ECSignature.parseCompat(
+                                    var signature = Bitcoin.bitcoin.ECSignature.parseCompact(
                                         new Bitcoin.Buffer.Buffer(sig, 'hex')
                                     );
                                     trezor_dev.signing = false;
                                     return device_id().then(function(devid) {
                                         return session_for_login.call('com.greenaddress.login.authenticate',
-                                                [[signature.r.toString(), signature.s.toString(), signature.i.toString()], logout||false,
+                                                [[signature.signature.r.toString(), signature.signature.s.toString(), signature.i.toString()], logout||false,
                                                  'GA', devid]).then(function(data) {
                                             if (data) {
                                                 txSenderService.logged_in = data;
