@@ -74,7 +74,7 @@ return ['$scope', '$location', 'mnemonics', 'tx_sender', 'notices', 'wallets', '
                     );
                     ecPub.compressed = true;
                     hd_deferred.resolve({
-                        master_public: Bitcoin.bs58check.decode(ecPub.toWIF()).toString('hex'),  // compressed master pubkey
+                        master_public: ecPub.getPublicKeyBuffer().toString('hex'),  // compressed master pubkey
                         master_chaincode: result.chainCode.toString(HEX),
                         btchip_pubkey: result,
                         btchip_dev: btchip_dev

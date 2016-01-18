@@ -417,6 +417,7 @@ angular.module('greenWalletServices', [])
         var chainCode = new Bitcoin.Buffer.Buffer(
             btchip_pubkey.chainCode.toString(HEX), 'hex'
         );
+        keyPair.compressed = true;
         var hdwallet = new Bitcoin.bitcoin.HDNode(
             keyPair,
             chainCode
@@ -426,9 +427,10 @@ angular.module('greenWalletServices', [])
             var path_d = btchip.app.getWalletPublicKey_async("18241'").then(function(result) {
                 var ecPub = new Bitcoin.bitcoin.ECPair.fromPublicKeyBuffer(new Bitcoin.Buffer.Buffer(result.publicKey.toString(HEX), 'hex'));
                 ecPub.compressed = true;
-                var extended = result.chainCode.toString(HEX) + bs58check.decode(ecPub.toWIF()).toString('hex');
-                var path = Bitcoin.CryptoJS.HmacSHA512(extended, 'GreenAddress.it HD wallet path');
-                return Bitcoin.CryptoJS.enc.Hex.stringify(path);
+                var extended = result.chainCode.toString(HEX) + ecPub.getPublicKeyBuffer().toString('hex');
+                extended = new Bitcoin.Buffer.Buffer(extended, 'hex');
+                var path = Bitcoin.hmac('sha512', 'GreenAddress.it HD wallet path').update(extended).digest();
+                return path.toString('hex');
             });
         } else path_d = $q.when();
         var that = this;
@@ -2182,7 +2184,9 @@ angular.module('greenWalletServices', [])
                             if (!challenge) return $q.defer().promise;  // never resolve
 
                             var msg_plain = 'greenaddress.it      login ' + challenge;
-                            var msg = Bitcoin.CryptoJS.enc.Hex.stringify(Bitcoin.CryptoJS.enc.Utf8.parse(msg_plain));
+                            var msg = (new Bitcoin.Buffer.Buffer(
+                                msg_plain, 'utf8'
+                            )).toString('hex');
                             // btchip requires 0xB11E to skip HID authentication
                             // 0x4741 = 18241 = 256*G + A in ASCII
                             var path = [0x4741b11e];
