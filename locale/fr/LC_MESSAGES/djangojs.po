@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: greenaddress-wallet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-01-20 01:05+0000\n"
+"POT-Creation-Date: 2016-01-20 13:07+0000\n"
 "PO-Revision-Date: 2014-08-20 09:34-0400\n"
 "Last-Translator: GreenAddress <info@greenaddress.it>\n"
 "Language-Team: French\n"
@@ -14,7 +14,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "X-Generator: crowdin.com\n"
 
-#: static/js/greenaddress.js.c:11
+#: static/js/greenaddress.js.c:19
 #: WalletCordova/www/greenaddress.it/static/js/greenaddress.js.c:11
 msgid ""
 "Cookies help us deliver our services. By using our services, you agree to "
@@ -23,7 +23,7 @@ msgstr ""
 "Les cookies nous aident à améliorer notre service. En utilisant nos services "
 "vous acceptez que nous utilisions les cookies."
 
-#: static/js/greenaddress.js.c:12
+#: static/js/greenaddress.js.c:20
 #: WalletCordova/www/greenaddress.it/static/js/greenaddress.js.c:12
 msgid "More information"
 msgstr "Plus d'informations"
