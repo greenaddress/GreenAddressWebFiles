@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: greenaddress-wallet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-01-21 00:37+0000\n"
+"POT-Creation-Date: 2016-01-22 02:05+0000\n"
 "PO-Revision-Date: 2014-08-20 10:26-0400\n"
 "Last-Translator: GreenAddress <info@greenaddress.it>\n"
 "Language-Team: Ukrainian\n"
@@ -41,9 +41,9 @@ msgid "You need to log out to update cache."
 msgstr "Ви маєте вийти для оновлення кешу."
 
 #: static/js/greenwallet/controllers.js.c:137
-#: static/js/greenwallet/send/controllers.js.c:738
+#: static/js/greenwallet/send/controllers.js.c:750
 #: WalletCrx/static/js/greenwallet/controllers.js.c:137
-#: WalletCrx/static/js/greenwallet/send/controllers.js.c:738
+#: WalletCrx/static/js/greenwallet/send/controllers.js.c:750
 #: WalletCordova/www/greenaddress.it/static/js/greenwallet/controllers.js.c:137
 #: WalletCordova/www/greenaddress.it/static/js/greenwallet/send/controllers.js.c:738
 msgid "Failed processing payment protocol request:"
@@ -109,9 +109,9 @@ msgstr ""
 #: WalletCrx/static/js/greenwallet/services.js.c:2226
 #: WalletCrx/static/js/greenwallet/services.js.c:2260
 #: WalletCordova/www/greenaddress.it/static/js/greenwallet/services.js.c:379
-#: WalletCordova/www/greenaddress.it/static/js/greenwallet/services.js.c:2137
-#: WalletCordova/www/greenaddress.it/static/js/greenwallet/services.js.c:2222
-#: WalletCordova/www/greenaddress.it/static/js/greenwallet/services.js.c:2256
+#: WalletCordova/www/greenaddress.it/static/js/greenwallet/services.js.c:2141
+#: WalletCordova/www/greenaddress.it/static/js/greenwallet/services.js.c:2226
+#: WalletCordova/www/greenaddress.it/static/js/greenwallet/services.js.c:2260
 msgid "Login failed"
 msgstr "Не вдалося увійти"
 
@@ -163,93 +163,93 @@ msgstr "Час, Опис, сатоші"
 
 #: static/js/greenwallet/services.js.c:1585
 #: WalletCrx/static/js/greenwallet/services.js.c:1585
-#: WalletCordova/www/greenaddress.it/static/js/greenwallet/services.js.c:1581
+#: WalletCordova/www/greenaddress.it/static/js/greenwallet/services.js.c:1585
 msgid "Bitcoin transaction sent!"
 msgstr "Bitcoin транзакція відправлена!"
 
 #: static/js/greenwallet/services.js.c:1589
 #: WalletCrx/static/js/greenwallet/services.js.c:1589
-#: WalletCordova/www/greenaddress.it/static/js/greenwallet/services.js.c:1585
+#: WalletCordova/www/greenaddress.it/static/js/greenwallet/services.js.c:1589
 msgid "Transaction failed: "
 msgstr "Збій транзакції: "
 
 #: static/js/greenwallet/services.js.c:1617
 #: WalletCrx/static/js/greenwallet/services.js.c:1617
-#: WalletCordova/www/greenaddress.it/static/js/greenwallet/services.js.c:1613
+#: WalletCordova/www/greenaddress.it/static/js/greenwallet/services.js.c:1617
 msgid "Phone"
 msgstr "Телефон"
 
 #: static/js/greenwallet/services.js.c:1767
 #: WalletCrx/static/js/greenwallet/services.js.c:1767
-#: WalletCordova/www/greenaddress.it/static/js/greenwallet/services.js.c:1763
+#: WalletCordova/www/greenaddress.it/static/js/greenwallet/services.js.c:1767
 msgid "Internal error"
 msgstr "Internal error"
 
 #: static/js/greenwallet/services.js.c:1780
 #: WalletCrx/static/js/greenwallet/services.js.c:1780
-#: WalletCordova/www/greenaddress.it/static/js/greenwallet/services.js.c:1776
+#: WalletCordova/www/greenaddress.it/static/js/greenwallet/services.js.c:1780
 msgid "Failed retrieving password."
 msgstr "Помилка при отриманні пароля."
 
 #: static/js/greenwallet/services.js.c:1898
 #: WalletCrx/static/js/greenwallet/services.js.c:1898
-#: WalletCordova/www/greenaddress.it/static/js/greenwallet/services.js.c:1894
+#: WalletCordova/www/greenaddress.it/static/js/greenwallet/services.js.c:1898
 msgid "Session expired. Please try again."
 msgstr ""
 
 #: static/js/greenwallet/services.js.c:1917
 #: WalletCrx/static/js/greenwallet/services.js.c:1917
-#: WalletCordova/www/greenaddress.it/static/js/greenwallet/services.js.c:1913
+#: WalletCordova/www/greenaddress.it/static/js/greenwallet/services.js.c:1917
 #, c-format
 msgid "Request timed out (%s)"
 msgstr ""
 
 #: static/js/greenwallet/services.js.c:1925
 #: WalletCrx/static/js/greenwallet/services.js.c:1925
-#: WalletCordova/www/greenaddress.it/static/js/greenwallet/services.js.c:1921
+#: WalletCordova/www/greenaddress.it/static/js/greenwallet/services.js.c:1925
 #, fuzzy
 msgid "Problem with connection detected. Please try again."
 msgstr "Problem with Internet connection detected. Please try again."
 
 #: static/js/greenwallet/services.js.c:1985
 #: WalletCrx/static/js/greenwallet/services.js.c:1985
-#: WalletCordova/www/greenaddress.it/static/js/greenwallet/services.js.c:1981
+#: WalletCordova/www/greenaddress.it/static/js/greenwallet/services.js.c:1985
 msgid "An error has occured which forced us to log you out."
 msgstr "Сталася помилка, яка змушує нас закрити Вашу сесію."
 
 #: static/js/greenwallet/services.js.c:2773
 #: WalletCrx/static/js/greenwallet/services.js.c:2773
-#: WalletCordova/www/greenaddress.it/static/js/greenwallet/services.js.c:2769
+#: WalletCordova/www/greenaddress.it/static/js/greenwallet/services.js.c:2773
 msgid "Error reading address book: "
 msgstr "Помилка при зчитуванні адресної книги: "
 
 #: static/js/greenwallet/services.js.c:2789
 #: WalletCrx/static/js/greenwallet/services.js.c:2789
-#: WalletCordova/www/greenaddress.it/static/js/greenwallet/services.js.c:2785
+#: WalletCordova/www/greenaddress.it/static/js/greenwallet/services.js.c:2789
 msgid "Copied"
 msgstr "Copied"
 
 #: static/js/greenwallet/services.js.c:2791
 #: WalletCrx/static/js/greenwallet/services.js.c:2791
-#: WalletCordova/www/greenaddress.it/static/js/greenwallet/services.js.c:2787
+#: WalletCordova/www/greenaddress.it/static/js/greenwallet/services.js.c:2791
 msgid "Error copying"
 msgstr "Error copying"
 
 #: static/js/greenwallet/services.js.c:2852
 #: WalletCrx/static/js/greenwallet/services.js.c:2852
-#: WalletCordova/www/greenaddress.it/static/js/greenwallet/services.js.c:2848
+#: WalletCordova/www/greenaddress.it/static/js/greenwallet/services.js.c:2852
 msgid "Cancelled"
 msgstr "Скасовано"
 
 #: static/js/greenwallet/services.js.c:2854
 #: WalletCrx/static/js/greenwallet/services.js.c:2854
-#: WalletCordova/www/greenaddress.it/static/js/greenwallet/services.js.c:2850
+#: WalletCordova/www/greenaddress.it/static/js/greenwallet/services.js.c:2854
 msgid "Invalid format"
 msgstr "Невірний формат"
 
 #: static/js/greenwallet/services.js.c:2865
 #: WalletCrx/static/js/greenwallet/services.js.c:2865
-#: WalletCordova/www/greenaddress.it/static/js/greenwallet/services.js.c:2861
+#: WalletCordova/www/greenaddress.it/static/js/greenwallet/services.js.c:2865
 msgid ""
 "Could not process the QR code, the image may be blurry. Please try again."
 msgstr ""
@@ -258,19 +258,19 @@ msgstr ""
 
 #: static/js/greenwallet/services.js.c:2912
 #: WalletCrx/static/js/greenwallet/services.js.c:2912
-#: WalletCordova/www/greenaddress.it/static/js/greenwallet/services.js.c:2908
+#: WalletCordova/www/greenaddress.it/static/js/greenwallet/services.js.c:2912
 msgid "Access denied. Retry to scan from file."
 msgstr "Доступ відхилено. Повторіть спробу сканування з файлу."
 
 #: static/js/greenwallet/services.js.c:2918
 #: WalletCrx/static/js/greenwallet/services.js.c:2918
-#: WalletCordova/www/greenaddress.it/static/js/greenwallet/services.js.c:2914
+#: WalletCordova/www/greenaddress.it/static/js/greenwallet/services.js.c:2918
 msgid "You must provide only one image file."
 msgstr "Необхідно вказати лише один файл образу."
 
 #: static/js/greenwallet/services.js.c:3100
 #: WalletCrx/static/js/greenwallet/services.js.c:3100
-#: WalletCordova/www/greenaddress.it/static/js/greenwallet/services.js.c:3096
+#: WalletCordova/www/greenaddress.it/static/js/greenwallet/services.js.c:3100
 msgid ""
 "Device could not be opened. Make sure you don't have any TREZOR client "
 "running in another tab or browser window!"
@@ -278,14 +278,14 @@ msgstr ""
 
 #: static/js/greenwallet/services.js.c:3209
 #: WalletCrx/static/js/greenwallet/services.js.c:3209
-#: WalletCordova/www/greenaddress.it/static/js/greenwallet/services.js.c:3205
+#: WalletCordova/www/greenaddress.it/static/js/greenwallet/services.js.c:3209
 msgid ""
 "Outdated firmware. Please upgrade to at least 1.3.0 at http://mytrezor.com/"
 msgstr ""
 
 #: static/js/greenwallet/services.js.c:3449
 #: WalletCrx/static/js/greenwallet/services.js.c:3449
-#: WalletCordova/www/greenaddress.it/static/js/greenwallet/services.js.c:3445
+#: WalletCordova/www/greenaddress.it/static/js/greenwallet/services.js.c:3449
 #, fuzzy
 msgid "BTChip communication failed"
 msgstr "Помилка контрольної суми!"
@@ -296,7 +296,7 @@ msgstr "Помилка контрольної суми!"
 #: WalletCrx/static/js/greenwallet/services.js.c:3475
 #: WalletCrx/static/js/greenwallet/apps/signup.js.c:90
 #: WalletCrx/static/js/greenwallet/signuplogin/controllers.js.c:387
-#: WalletCordova/www/greenaddress.it/static/js/greenwallet/services.js.c:3471
+#: WalletCordova/www/greenaddress.it/static/js/greenwallet/services.js.c:3475
 #: WalletCordova/www/greenaddress.it/static/js/greenwallet/apps/signup.js.c:90
 #: WalletCordova/www/greenaddress.it/static/js/greenwallet/signuplogin/controllers.js.c:387
 msgid "Invalid PIN"
@@ -310,8 +310,8 @@ msgstr "Invalid PIN"
 #: WalletCrx/static/js/greenwallet/services.js.c:3487
 #: WalletCrx/static/js/greenwallet/apps/signup.js.c:92
 #: WalletCrx/static/js/greenwallet/signuplogin/controllers.js.c:395
-#: WalletCordova/www/greenaddress.it/static/js/greenwallet/services.js.c:3473
-#: WalletCordova/www/greenaddress.it/static/js/greenwallet/services.js.c:3483
+#: WalletCordova/www/greenaddress.it/static/js/greenwallet/services.js.c:3477
+#: WalletCordova/www/greenaddress.it/static/js/greenwallet/services.js.c:3487
 #: WalletCordova/www/greenaddress.it/static/js/greenwallet/apps/signup.js.c:92
 #: WalletCordova/www/greenaddress.it/static/js/greenwallet/signuplogin/controllers.js.c:395
 msgid "Dongle is not set up"
@@ -323,7 +323,7 @@ msgstr "Dongle is not set up"
 #: WalletCrx/static/js/greenwallet/services.js.c:3479
 #: WalletCrx/static/js/greenwallet/apps/signup.js.c:94
 #: WalletCrx/static/js/greenwallet/signuplogin/controllers.js.c:397
-#: WalletCordova/www/greenaddress.it/static/js/greenwallet/services.js.c:3475
+#: WalletCordova/www/greenaddress.it/static/js/greenwallet/services.js.c:3479
 #: WalletCordova/www/greenaddress.it/static/js/greenwallet/apps/signup.js.c:94
 #: WalletCordova/www/greenaddress.it/static/js/greenwallet/signuplogin/controllers.js.c:397
 msgid "Dongle is locked - reconnect the dongle and retry"
@@ -331,13 +331,13 @@ msgstr "Dongle is locked - reconnect the dongle and retry"
 
 #: static/js/greenwallet/services.js.c:3490
 #: WalletCrx/static/js/greenwallet/services.js.c:3490
-#: WalletCordova/www/greenaddress.it/static/js/greenwallet/services.js.c:3486
+#: WalletCordova/www/greenaddress.it/static/js/greenwallet/services.js.c:3490
 msgid "Dongle is locked - remove the dongle and retry"
 msgstr "Dongle is locked - remove the dongle and retry"
 
 #: static/js/greenwallet/services.js.c:3581
 #: WalletCrx/static/js/greenwallet/services.js.c:3581
-#: WalletCordova/www/greenaddress.it/static/js/greenwallet/services.js.c:3577
+#: WalletCordova/www/greenaddress.it/static/js/greenwallet/services.js.c:3581
 #, c-format
 msgid "Old BTChip firmware version detected. Please upgrade to at least %s."
 msgstr "Old BTChip firmware version detected. Please upgrade to at least %s."
@@ -348,7 +348,7 @@ msgstr "Old BTChip firmware version detected. Please upgrade to at least %s."
 #: WalletCrx/static/js/greenwallet/services.js.c:3853
 #: WalletCrx/static/js/greenwallet/signuplogin/controllers.js.c:118
 #: WalletCrx/static/js/greenwallet/transactions/controllers.js.c:114
-#: WalletCordova/www/greenaddress.it/static/js/greenwallet/services.js.c:3849
+#: WalletCordova/www/greenaddress.it/static/js/greenwallet/services.js.c:3853
 #: WalletCordova/www/greenaddress.it/static/js/greenwallet/signuplogin/controllers.js.c:118
 #: WalletCordova/www/greenaddress.it/static/js/greenwallet/transactions/controllers.js.c:114
 msgid "Please provide a password."
@@ -358,7 +358,7 @@ msgstr "Please provide a password."
 #: static/js/greenwallet/transactions/controllers.js.c:118
 #: WalletCrx/static/js/greenwallet/services.js.c:3857
 #: WalletCrx/static/js/greenwallet/transactions/controllers.js.c:118
-#: WalletCordova/www/greenaddress.it/static/js/greenwallet/services.js.c:3853
+#: WalletCordova/www/greenaddress.it/static/js/greenwallet/services.js.c:3857
 #: WalletCordova/www/greenaddress.it/static/js/greenwallet/transactions/controllers.js.c:118
 msgid "Passwords do not match."
 msgstr "Passwords do not match."
@@ -472,133 +472,133 @@ msgstr "Версія "
 msgid " is not a valid number of outputs"
 msgstr " не є допустимою кількістю виходів"
 
-#: static/js/greenwallet/send/controllers.js.c:136
-#: WalletCrx/static/js/greenwallet/send/controllers.js.c:136
+#: static/js/greenwallet/send/controllers.js.c:148
+#: WalletCrx/static/js/greenwallet/send/controllers.js.c:148
 #: WalletCordova/www/greenaddress.it/static/js/greenwallet/send/controllers.js.c:136
 msgid "Missing change P2SH script"
 msgstr "Missing change P2SH script"
 
-#: static/js/greenwallet/send/controllers.js.c:139
-#: WalletCrx/static/js/greenwallet/send/controllers.js.c:139
+#: static/js/greenwallet/send/controllers.js.c:151
+#: WalletCrx/static/js/greenwallet/send/controllers.js.c:151
 #: WalletCordova/www/greenaddress.it/static/js/greenwallet/send/controllers.js.c:139
 msgid "change OP_HASH160 missing"
 msgstr "Зміна OP_HASH160 відсутня"
 
-#: static/js/greenwallet/send/controllers.js.c:140
-#: WalletCrx/static/js/greenwallet/send/controllers.js.c:140
+#: static/js/greenwallet/send/controllers.js.c:152
+#: WalletCrx/static/js/greenwallet/send/controllers.js.c:152
 #: WalletCordova/www/greenaddress.it/static/js/greenwallet/send/controllers.js.c:140
 msgid "change OP_EQUAL missing"
 msgstr "зміна OP_EQUAL відсутня"
 
-#: static/js/greenwallet/send/controllers.js.c:157
-#: WalletCrx/static/js/greenwallet/send/controllers.js.c:157
+#: static/js/greenwallet/send/controllers.js.c:169
+#: WalletCrx/static/js/greenwallet/send/controllers.js.c:169
 #: WalletCordova/www/greenaddress.it/static/js/greenwallet/send/controllers.js.c:157
 msgid "Invalid pubkey hash script length"
 msgstr "Неправильна довжина хешу публічного ключа"
 
-#: static/js/greenwallet/send/controllers.js.c:158
-#: WalletCrx/static/js/greenwallet/send/controllers.js.c:158
+#: static/js/greenwallet/send/controllers.js.c:170
+#: WalletCrx/static/js/greenwallet/send/controllers.js.c:170
 #: WalletCordova/www/greenaddress.it/static/js/greenwallet/send/controllers.js.c:158
 msgid "OP_DUP missing"
 msgstr "Відсутній OP_DUP"
 
-#: static/js/greenwallet/send/controllers.js.c:159
-#: WalletCrx/static/js/greenwallet/send/controllers.js.c:159
+#: static/js/greenwallet/send/controllers.js.c:171
+#: WalletCrx/static/js/greenwallet/send/controllers.js.c:171
 #: WalletCordova/www/greenaddress.it/static/js/greenwallet/send/controllers.js.c:159
 msgid "OP_HASH160 missing"
 msgstr "Відсутній OP_HASH160"
 
-#: static/js/greenwallet/send/controllers.js.c:160
-#: WalletCrx/static/js/greenwallet/send/controllers.js.c:160
+#: static/js/greenwallet/send/controllers.js.c:172
+#: WalletCrx/static/js/greenwallet/send/controllers.js.c:172
 #: WalletCordova/www/greenaddress.it/static/js/greenwallet/send/controllers.js.c:160
 msgid "Invalid pubkey hash"
 msgstr "Неправильний хеш публічного ключа"
 
-#: static/js/greenwallet/send/controllers.js.c:161
-#: WalletCrx/static/js/greenwallet/send/controllers.js.c:161
+#: static/js/greenwallet/send/controllers.js.c:173
+#: WalletCrx/static/js/greenwallet/send/controllers.js.c:173
 #: WalletCordova/www/greenaddress.it/static/js/greenwallet/send/controllers.js.c:161
 msgid "OP_EQUALVERIFY missing"
 msgstr "Відсутній OP_EQUALVERIFY"
 
-#: static/js/greenwallet/send/controllers.js.c:162
-#: WalletCrx/static/js/greenwallet/send/controllers.js.c:162
+#: static/js/greenwallet/send/controllers.js.c:174
+#: WalletCrx/static/js/greenwallet/send/controllers.js.c:174
 #: WalletCordova/www/greenaddress.it/static/js/greenwallet/send/controllers.js.c:162
 msgid "OP_CHECKSIG missing"
 msgstr "Відсутній OP_CHECKSIG"
 
-#: static/js/greenwallet/send/controllers.js.c:164
-#: WalletCrx/static/js/greenwallet/send/controllers.js.c:164
+#: static/js/greenwallet/send/controllers.js.c:176
+#: WalletCrx/static/js/greenwallet/send/controllers.js.c:176
 #: WalletCordova/www/greenaddress.it/static/js/greenwallet/send/controllers.js.c:164
 msgid "Invalid out P2SH script length"
 msgstr "Неправильна довжина виходу P2SH"
 
-#: static/js/greenwallet/send/controllers.js.c:165
-#: WalletCrx/static/js/greenwallet/send/controllers.js.c:165
+#: static/js/greenwallet/send/controllers.js.c:177
+#: WalletCrx/static/js/greenwallet/send/controllers.js.c:177
 #: WalletCordova/www/greenaddress.it/static/js/greenwallet/send/controllers.js.c:165
 msgid "out OP_HASH160 missing"
 msgstr "вихід OP_HASH160 відсутній"
 
-#: static/js/greenwallet/send/controllers.js.c:166
-#: WalletCrx/static/js/greenwallet/send/controllers.js.c:166
+#: static/js/greenwallet/send/controllers.js.c:178
+#: WalletCrx/static/js/greenwallet/send/controllers.js.c:178
 #: WalletCordova/www/greenaddress.it/static/js/greenwallet/send/controllers.js.c:166
 msgid "Invalid out P2SH hash"
 msgstr "Неправильний хеш P2SH виходу"
 
-#: static/js/greenwallet/send/controllers.js.c:167
-#: WalletCrx/static/js/greenwallet/send/controllers.js.c:167
+#: static/js/greenwallet/send/controllers.js.c:179
+#: WalletCrx/static/js/greenwallet/send/controllers.js.c:179
 #: WalletCordova/www/greenaddress.it/static/js/greenwallet/send/controllers.js.c:167
 msgid "out OP_EQUAL missing"
 msgstr "вихід OP_EQUAL відсутній"
 
-#: static/js/greenwallet/send/controllers.js.c:174
-#: static/js/greenwallet/send/controllers.js.c:226
-#: WalletCrx/static/js/greenwallet/send/controllers.js.c:174
-#: WalletCrx/static/js/greenwallet/send/controllers.js.c:226
+#: static/js/greenwallet/send/controllers.js.c:186
+#: static/js/greenwallet/send/controllers.js.c:238
+#: WalletCrx/static/js/greenwallet/send/controllers.js.c:186
+#: WalletCrx/static/js/greenwallet/send/controllers.js.c:238
 #: WalletCordova/www/greenaddress.it/static/js/greenwallet/send/controllers.js.c:174
 #: WalletCordova/www/greenaddress.it/static/js/greenwallet/send/controllers.js.c:226
 msgid "Invalid output value"
 msgstr "Недопустиме вихідне значення"
 
-#: static/js/greenwallet/send/controllers.js.c:203
-#: WalletCrx/static/js/greenwallet/send/controllers.js.c:203
+#: static/js/greenwallet/send/controllers.js.c:215
+#: WalletCrx/static/js/greenwallet/send/controllers.js.c:215
 #: WalletCordova/www/greenaddress.it/static/js/greenwallet/send/controllers.js.c:203
 msgid "Missing input"
 msgstr "Відсутній вхід"
 
-#: static/js/greenwallet/send/controllers.js.c:208
-#: WalletCrx/static/js/greenwallet/send/controllers.js.c:208
+#: static/js/greenwallet/send/controllers.js.c:220
+#: WalletCrx/static/js/greenwallet/send/controllers.js.c:220
 #: WalletCordova/www/greenaddress.it/static/js/greenwallet/send/controllers.js.c:208
 msgid "Inputs value is not larger than zero"
 msgstr "Сума входів не є більше нуля"
 
-#: static/js/greenwallet/send/controllers.js.c:233
-#: WalletCrx/static/js/greenwallet/send/controllers.js.c:233
+#: static/js/greenwallet/send/controllers.js.c:245
+#: WalletCrx/static/js/greenwallet/send/controllers.js.c:245
 #: WalletCordova/www/greenaddress.it/static/js/greenwallet/send/controllers.js.c:233
 msgid "Fee is too large (%1, expected at most %2)"
 msgstr "Комісія занадто висока (%1, очікується не більш ніж %2)"
 
-#: static/js/greenwallet/send/controllers.js.c:237
-#: WalletCrx/static/js/greenwallet/send/controllers.js.c:237
+#: static/js/greenwallet/send/controllers.js.c:249
+#: WalletCrx/static/js/greenwallet/send/controllers.js.c:249
 #: WalletCordova/www/greenaddress.it/static/js/greenwallet/send/controllers.js.c:237
 msgid "Fee is too small (%1, expected at least %2)"
 msgstr "Fee is too small (%1, expected at least %2)"
 
-#: static/js/greenwallet/send/controllers.js.c:343
-#: WalletCrx/static/js/greenwallet/send/controllers.js.c:343
+#: static/js/greenwallet/send/controllers.js.c:355
+#: WalletCrx/static/js/greenwallet/send/controllers.js.c:355
 #: WalletCordova/www/greenaddress.it/static/js/greenwallet/send/controllers.js.c:343
 msgid "Facebook login failed"
 msgstr "Не вдалося ввійти за допомогою Facebook"
 
-#: static/js/greenwallet/send/controllers.js.c:366
-#: WalletCrx/static/js/greenwallet/send/controllers.js.c:366
+#: static/js/greenwallet/send/controllers.js.c:378
+#: WalletCrx/static/js/greenwallet/send/controllers.js.c:378
 #: WalletCordova/www/greenaddress.it/static/js/greenwallet/send/controllers.js.c:366
 msgid "Transaction reversed!"
 msgstr "Транзакція анульована!"
 
-#: static/js/greenwallet/send/controllers.js.c:382
+#: static/js/greenwallet/send/controllers.js.c:394
 #: static/js/greenwallet/settings/controllers.js.c:415
 #: static/js/greenwallet/settings/controllers.js.c:655
-#: WalletCrx/static/js/greenwallet/send/controllers.js.c:382
+#: WalletCrx/static/js/greenwallet/send/controllers.js.c:394
 #: WalletCrx/static/js/greenwallet/settings/controllers.js.c:415
 #: WalletCrx/static/js/greenwallet/settings/controllers.js.c:655
 #: WalletCordova/www/greenaddress.it/static/js/greenwallet/send/controllers.js.c:382
@@ -607,41 +607,41 @@ msgstr "Транзакція анульована!"
 msgid "Email sent"
 msgstr "Email відправлено"
 
-#: static/js/greenwallet/send/controllers.js.c:386
-#: WalletCrx/static/js/greenwallet/send/controllers.js.c:386
+#: static/js/greenwallet/send/controllers.js.c:398
+#: WalletCrx/static/js/greenwallet/send/controllers.js.c:398
 #: WalletCordova/www/greenaddress.it/static/js/greenwallet/send/controllers.js.c:386
 msgid "Failed sending email"
 msgstr "Не вдалося надіслати email"
 
-#: static/js/greenwallet/send/controllers.js.c:410
-#: WalletCrx/static/js/greenwallet/send/controllers.js.c:410
+#: static/js/greenwallet/send/controllers.js.c:422
+#: WalletCrx/static/js/greenwallet/send/controllers.js.c:422
 #: WalletCordova/www/greenaddress.it/static/js/greenwallet/send/controllers.js.c:410
 msgid "Reddit message sent"
 msgstr "Reddit повідомлення відправлено"
 
-#: static/js/greenwallet/send/controllers.js.c:415
-#: WalletCrx/static/js/greenwallet/send/controllers.js.c:415
+#: static/js/greenwallet/send/controllers.js.c:427
+#: WalletCrx/static/js/greenwallet/send/controllers.js.c:427
 #: WalletCordova/www/greenaddress.it/static/js/greenwallet/send/controllers.js.c:415
 msgid "Failed sending Reddit message"
 msgstr "Не вдалося відправити повідомлення Reddit"
 
-#: static/js/greenwallet/send/controllers.js.c:465
-#: WalletCrx/static/js/greenwallet/send/controllers.js.c:465
+#: static/js/greenwallet/send/controllers.js.c:477
+#: WalletCrx/static/js/greenwallet/send/controllers.js.c:477
 #: WalletCordova/www/greenaddress.it/static/js/greenwallet/send/controllers.js.c:465
 msgid "Transaction amount must be at least 0.1543mBTC to allow redemption fee"
 msgstr "Transaction amount must be at least 0.1543mBTC to allow redemption fee"
 
-#: static/js/greenwallet/send/controllers.js.c:507
-#: static/js/greenwallet/send/controllers.js.c:575
-#: WalletCrx/static/js/greenwallet/send/controllers.js.c:507
-#: WalletCrx/static/js/greenwallet/send/controllers.js.c:575
+#: static/js/greenwallet/send/controllers.js.c:519
+#: static/js/greenwallet/send/controllers.js.c:587
+#: WalletCrx/static/js/greenwallet/send/controllers.js.c:519
+#: WalletCrx/static/js/greenwallet/send/controllers.js.c:587
 #: WalletCordova/www/greenaddress.it/static/js/greenwallet/send/controllers.js.c:507
 #: WalletCordova/www/greenaddress.it/static/js/greenwallet/send/controllers.js.c:575
 msgid "Transaction verification failed: "
 msgstr "Збій перевірки транзакції: "
 
-#: static/js/greenwallet/send/controllers.js.c:605
-#: WalletCrx/static/js/greenwallet/send/controllers.js.c:605
+#: static/js/greenwallet/send/controllers.js.c:617
+#: WalletCrx/static/js/greenwallet/send/controllers.js.c:617
 #: WalletCordova/www/greenaddress.it/static/js/greenwallet/send/controllers.js.c:605
 msgid ""
 "Sorry, vouchers and social transactions are not supported with hardware "
@@ -650,14 +650,14 @@ msgstr ""
 "Sorry, vouchers and social transactions are not supported with hardware "
 "wallets."
 
-#: static/js/greenwallet/send/controllers.js.c:648
-#: WalletCrx/static/js/greenwallet/send/controllers.js.c:648
+#: static/js/greenwallet/send/controllers.js.c:660
+#: WalletCrx/static/js/greenwallet/send/controllers.js.c:660
 #: WalletCordova/www/greenaddress.it/static/js/greenwallet/send/controllers.js.c:648
 msgid "Invalid amount"
 msgstr "Недопустима сума"
 
-#: static/js/greenwallet/send/controllers.js.c:657
-#: WalletCrx/static/js/greenwallet/send/controllers.js.c:657
+#: static/js/greenwallet/send/controllers.js.c:669
+#: WalletCrx/static/js/greenwallet/send/controllers.js.c:669
 #: WalletCordova/www/greenaddress.it/static/js/greenwallet/send/controllers.js.c:657
 msgid "Please provide a recipient"
 msgstr "Будь ласка, додайте отримувача"
