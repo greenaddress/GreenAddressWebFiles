@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: greenaddress-wallet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-01-26 17:50+0000\n"
+"POT-Creation-Date: 2016-01-26 23:55+0000\n"
 "PO-Revision-Date: 2014-08-20 10:12-0400\n"
 "Last-Translator: GreenAddress <info@greenaddress.it>\n"
 "Language-Team: Greek\n"
@@ -218,37 +218,37 @@ msgstr "Παρουσιάστηκε ένα σφάλμα που μας ανάγκ�
 
 #: static/js/greenwallet/services.js.c:2774
 #: WalletCrx/static/js/greenwallet/services.js.c:2774
-#: WalletCordova/www/greenaddress.it/static/js/greenwallet/services.js.c:2773
+#: WalletCordova/www/greenaddress.it/static/js/greenwallet/services.js.c:2774
 msgid "Error reading address book: "
 msgstr "Σφάλμα κατά την ανάγνωση του βιβλίου διευθύνσεων: "
 
 #: static/js/greenwallet/services.js.c:2790
 #: WalletCrx/static/js/greenwallet/services.js.c:2790
-#: WalletCordova/www/greenaddress.it/static/js/greenwallet/services.js.c:2789
+#: WalletCordova/www/greenaddress.it/static/js/greenwallet/services.js.c:2790
 msgid "Copied"
 msgstr "Copied"
 
 #: static/js/greenwallet/services.js.c:2792
 #: WalletCrx/static/js/greenwallet/services.js.c:2792
-#: WalletCordova/www/greenaddress.it/static/js/greenwallet/services.js.c:2791
+#: WalletCordova/www/greenaddress.it/static/js/greenwallet/services.js.c:2792
 msgid "Error copying"
 msgstr "Error copying"
 
 #: static/js/greenwallet/services.js.c:2853
 #: WalletCrx/static/js/greenwallet/services.js.c:2853
-#: WalletCordova/www/greenaddress.it/static/js/greenwallet/services.js.c:2852
+#: WalletCordova/www/greenaddress.it/static/js/greenwallet/services.js.c:2853
 msgid "Cancelled"
 msgstr "Ακυρώθηκε"
 
 #: static/js/greenwallet/services.js.c:2855
 #: WalletCrx/static/js/greenwallet/services.js.c:2855
-#: WalletCordova/www/greenaddress.it/static/js/greenwallet/services.js.c:2854
+#: WalletCordova/www/greenaddress.it/static/js/greenwallet/services.js.c:2855
 msgid "Invalid format"
 msgstr "Μη αποδεκτή μορφή"
 
 #: static/js/greenwallet/services.js.c:2866
 #: WalletCrx/static/js/greenwallet/services.js.c:2866
-#: WalletCordova/www/greenaddress.it/static/js/greenwallet/services.js.c:2865
+#: WalletCordova/www/greenaddress.it/static/js/greenwallet/services.js.c:2866
 msgid ""
 "Could not process the QR code, the image may be blurry. Please try again."
 msgstr ""
@@ -257,19 +257,19 @@ msgstr ""
 
 #: static/js/greenwallet/services.js.c:2913
 #: WalletCrx/static/js/greenwallet/services.js.c:2913
-#: WalletCordova/www/greenaddress.it/static/js/greenwallet/services.js.c:2912
+#: WalletCordova/www/greenaddress.it/static/js/greenwallet/services.js.c:2913
 msgid "Access denied. Retry to scan from file."
 msgstr "Δεν επιτρέπεται η πρόσβαση. Δοκιμάστε ξανά για να σαρώσετε από αρχείο."
 
 #: static/js/greenwallet/services.js.c:2919
 #: WalletCrx/static/js/greenwallet/services.js.c:2919
-#: WalletCordova/www/greenaddress.it/static/js/greenwallet/services.js.c:2918
+#: WalletCordova/www/greenaddress.it/static/js/greenwallet/services.js.c:2919
 msgid "You must provide only one image file."
 msgstr "Πρέπει να παρέχετε μόνο ένα αρχείο εικόνας."
 
 #: static/js/greenwallet/services.js.c:3101
 #: WalletCrx/static/js/greenwallet/services.js.c:3101
-#: WalletCordova/www/greenaddress.it/static/js/greenwallet/services.js.c:3100
+#: WalletCordova/www/greenaddress.it/static/js/greenwallet/services.js.c:3101
 msgid ""
 "Device could not be opened. Make sure you don't have any TREZOR client "
 "running in another tab or browser window!"
@@ -277,14 +277,14 @@ msgstr ""
 
 #: static/js/greenwallet/services.js.c:3210
 #: WalletCrx/static/js/greenwallet/services.js.c:3210
-#: WalletCordova/www/greenaddress.it/static/js/greenwallet/services.js.c:3209
+#: WalletCordova/www/greenaddress.it/static/js/greenwallet/services.js.c:3210
 msgid ""
 "Outdated firmware. Please upgrade to at least 1.3.0 at http://mytrezor.com/"
 msgstr ""
 
 #: static/js/greenwallet/services.js.c:3450
 #: WalletCrx/static/js/greenwallet/services.js.c:3450
-#: WalletCordova/www/greenaddress.it/static/js/greenwallet/services.js.c:3449
+#: WalletCordova/www/greenaddress.it/static/js/greenwallet/services.js.c:3450
 #, fuzzy
 msgid "BTChip communication failed"
 msgstr "Απότυχε η επαλήθευση για έλεγχο υπολοίπου!"
@@ -295,7 +295,7 @@ msgstr "Απότυχε η επαλήθευση για έλεγχο υπολοί�
 #: WalletCrx/static/js/greenwallet/services.js.c:3476
 #: WalletCrx/static/js/greenwallet/apps/signup.js.c:90
 #: WalletCrx/static/js/greenwallet/signuplogin/controllers.js.c:387
-#: WalletCordova/www/greenaddress.it/static/js/greenwallet/services.js.c:3475
+#: WalletCordova/www/greenaddress.it/static/js/greenwallet/services.js.c:3476
 #: WalletCordova/www/greenaddress.it/static/js/greenwallet/apps/signup.js.c:90
 #: WalletCordova/www/greenaddress.it/static/js/greenwallet/signuplogin/controllers.js.c:387
 msgid "Invalid PIN"
@@ -309,8 +309,8 @@ msgstr "Invalid PIN"
 #: WalletCrx/static/js/greenwallet/services.js.c:3488
 #: WalletCrx/static/js/greenwallet/apps/signup.js.c:92
 #: WalletCrx/static/js/greenwallet/signuplogin/controllers.js.c:395
-#: WalletCordova/www/greenaddress.it/static/js/greenwallet/services.js.c:3477
-#: WalletCordova/www/greenaddress.it/static/js/greenwallet/services.js.c:3487
+#: WalletCordova/www/greenaddress.it/static/js/greenwallet/services.js.c:3478
+#: WalletCordova/www/greenaddress.it/static/js/greenwallet/services.js.c:3488
 #: WalletCordova/www/greenaddress.it/static/js/greenwallet/apps/signup.js.c:92
 #: WalletCordova/www/greenaddress.it/static/js/greenwallet/signuplogin/controllers.js.c:395
 msgid "Dongle is not set up"
@@ -322,7 +322,7 @@ msgstr "Dongle is not set up"
 #: WalletCrx/static/js/greenwallet/services.js.c:3480
 #: WalletCrx/static/js/greenwallet/apps/signup.js.c:94
 #: WalletCrx/static/js/greenwallet/signuplogin/controllers.js.c:397
-#: WalletCordova/www/greenaddress.it/static/js/greenwallet/services.js.c:3479
+#: WalletCordova/www/greenaddress.it/static/js/greenwallet/services.js.c:3480
 #: WalletCordova/www/greenaddress.it/static/js/greenwallet/apps/signup.js.c:94
 #: WalletCordova/www/greenaddress.it/static/js/greenwallet/signuplogin/controllers.js.c:397
 msgid "Dongle is locked - reconnect the dongle and retry"
@@ -330,13 +330,13 @@ msgstr "Dongle is locked - reconnect the dongle and retry"
 
 #: static/js/greenwallet/services.js.c:3491
 #: WalletCrx/static/js/greenwallet/services.js.c:3491
-#: WalletCordova/www/greenaddress.it/static/js/greenwallet/services.js.c:3490
+#: WalletCordova/www/greenaddress.it/static/js/greenwallet/services.js.c:3491
 msgid "Dongle is locked - remove the dongle and retry"
 msgstr "Dongle is locked - remove the dongle and retry"
 
 #: static/js/greenwallet/services.js.c:3582
 #: WalletCrx/static/js/greenwallet/services.js.c:3582
-#: WalletCordova/www/greenaddress.it/static/js/greenwallet/services.js.c:3581
+#: WalletCordova/www/greenaddress.it/static/js/greenwallet/services.js.c:3582
 #, c-format
 msgid "Old BTChip firmware version detected. Please upgrade to at least %s."
 msgstr "Old BTChip firmware version detected. Please upgrade to at least %s."
@@ -347,7 +347,7 @@ msgstr "Old BTChip firmware version detected. Please upgrade to at least %s."
 #: WalletCrx/static/js/greenwallet/services.js.c:3854
 #: WalletCrx/static/js/greenwallet/signuplogin/controllers.js.c:118
 #: WalletCrx/static/js/greenwallet/transactions/controllers.js.c:114
-#: WalletCordova/www/greenaddress.it/static/js/greenwallet/services.js.c:3853
+#: WalletCordova/www/greenaddress.it/static/js/greenwallet/services.js.c:3854
 #: WalletCordova/www/greenaddress.it/static/js/greenwallet/signuplogin/controllers.js.c:118
 #: WalletCordova/www/greenaddress.it/static/js/greenwallet/transactions/controllers.js.c:114
 msgid "Please provide a password."
@@ -357,7 +357,7 @@ msgstr "Please provide a password."
 #: static/js/greenwallet/transactions/controllers.js.c:118
 #: WalletCrx/static/js/greenwallet/services.js.c:3858
 #: WalletCrx/static/js/greenwallet/transactions/controllers.js.c:118
-#: WalletCordova/www/greenaddress.it/static/js/greenwallet/services.js.c:3857
+#: WalletCordova/www/greenaddress.it/static/js/greenwallet/services.js.c:3858
 #: WalletCordova/www/greenaddress.it/static/js/greenwallet/transactions/controllers.js.c:118
 msgid "Passwords do not match."
 msgstr "Passwords do not match."
@@ -753,14 +753,14 @@ msgstr "Σφάλμα κατά την αποθήκευση του αντικει�
 msgid "PIN removed"
 msgstr "Απομάκρυνση του PIN"
 
-#: static/js/greenwallet/settings/controllers.js.c:945
-#: WalletCrx/static/js/greenwallet/settings/controllers.js.c:945
+#: static/js/greenwallet/settings/controllers.js.c:944
+#: WalletCrx/static/js/greenwallet/settings/controllers.js.c:944
 #: WalletCordova/www/greenaddress.it/static/js/greenwallet/settings/controllers.js.c:945
 msgid "PIN changed"
 msgstr "Αλλαγή του PIN"
 
-#: static/js/greenwallet/settings/controllers.js.c:949
-#: WalletCrx/static/js/greenwallet/settings/controllers.js.c:949
+#: static/js/greenwallet/settings/controllers.js.c:948
+#: WalletCrx/static/js/greenwallet/settings/controllers.js.c:948
 #: WalletCordova/www/greenaddress.it/static/js/greenwallet/settings/controllers.js.c:949
 msgid "PIN set"
 msgstr "Καθορισμός PIN"
