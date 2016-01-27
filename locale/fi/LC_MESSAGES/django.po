@@ -2067,39 +2067,43 @@ msgid "double spend"
 msgstr ""
 
 #: templates/wallet/partials/wallet_transactions_table.html:38
+msgid "replaceable"
+msgstr ""
+
 #: templates/wallet/partials/wallet_transactions_table.html:39
+#: templates/wallet/partials/wallet_transactions_table.html:40
 msgid "updated"
 msgstr ""
 
-#: templates/wallet/partials/wallet_transactions_table.html:40
+#: templates/wallet/partials/wallet_transactions_table.html:41
 msgid "unconfirmed"
 msgstr ""
 
-#: templates/wallet/partials/wallet_transactions_table.html:41
+#: templates/wallet/partials/wallet_transactions_table.html:42
 msgid "confirmations"
 msgstr ""
 
-#: templates/wallet/partials/wallet_transactions_table.html:44
+#: templates/wallet/partials/wallet_transactions_table.html:45
 msgid "take funds back"
 msgstr ""
 
-#: templates/wallet/partials/wallet_transactions_table.html:47
+#: templates/wallet/partials/wallet_transactions_table.html:48
 msgid "Regenerate voucher"
 msgstr ""
 
-#: templates/wallet/partials/wallet_transactions_table.html:50
+#: templates/wallet/partials/wallet_transactions_table.html:51
 msgid "Regenerate encrypted voucher"
 msgstr ""
 
-#: templates/wallet/partials/wallet_transactions_table.html:66
+#: templates/wallet/partials/wallet_transactions_table.html:67
 msgid "Loading transactions, please wait..."
 msgstr ""
 
-#: templates/wallet/partials/wallet_transactions_table.html:69
+#: templates/wallet/partials/wallet_transactions_table.html:70
 msgid "No transactions found..."
 msgstr ""
 
-#: templates/wallet/partials/wallet_transactions_table.html:72
+#: templates/wallet/partials/wallet_transactions_table.html:73
 msgid "Show more transactions..."
 msgstr ""
 

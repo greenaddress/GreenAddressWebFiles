@@ -2249,40 +2249,44 @@ msgid "double spend"
 msgstr "dupla költés"
 
 #: templates/wallet/partials/wallet_transactions_table.html:38
+msgid "replaceable"
+msgstr ""
+
 #: templates/wallet/partials/wallet_transactions_table.html:39
+#: templates/wallet/partials/wallet_transactions_table.html:40
 msgid "updated"
 msgstr ""
 
-#: templates/wallet/partials/wallet_transactions_table.html:40
+#: templates/wallet/partials/wallet_transactions_table.html:41
 msgid "unconfirmed"
 msgstr "meg nem erősített"
 
-#: templates/wallet/partials/wallet_transactions_table.html:41
+#: templates/wallet/partials/wallet_transactions_table.html:42
 msgid "confirmations"
 msgstr "megerősítések"
 
-#: templates/wallet/partials/wallet_transactions_table.html:44
+#: templates/wallet/partials/wallet_transactions_table.html:45
 msgid "take funds back"
 msgstr "pénz visszavétele"
 
-#: templates/wallet/partials/wallet_transactions_table.html:47
+#: templates/wallet/partials/wallet_transactions_table.html:48
 msgid "Regenerate voucher"
 msgstr "Utalvány újragenerálása"
 
-#: templates/wallet/partials/wallet_transactions_table.html:50
+#: templates/wallet/partials/wallet_transactions_table.html:51
 msgid "Regenerate encrypted voucher"
 msgstr "Regenerate encrypted voucher"
 
-#: templates/wallet/partials/wallet_transactions_table.html:66
+#: templates/wallet/partials/wallet_transactions_table.html:67
 #, fuzzy
 msgid "Loading transactions, please wait..."
 msgstr "Logging in, please wait..."
 
-#: templates/wallet/partials/wallet_transactions_table.html:69
+#: templates/wallet/partials/wallet_transactions_table.html:70
 msgid "No transactions found..."
 msgstr "Nem található tranzakció..."
 
-#: templates/wallet/partials/wallet_transactions_table.html:72
+#: templates/wallet/partials/wallet_transactions_table.html:73
 msgid "Show more transactions..."
 msgstr "További tranzakciók megjelenítése..."
 
