@@ -40,6 +40,9 @@
               <span class="label label-warning" ng-show="transaction.double_spent_by=='malleability'">{{ _("updated") }}</span>
               <span class="label label-default" ng-show="transaction.confirmations == 0 && !transaction.instant && !transaction.double_spent_by">{{ _("unconfirmed") }}</span>
               <span class="label" ng-class="{'label-info': transaction.confirmations < 6, 'label-success': transaction.confirmations >= 6}" ng-show="transaction.confirmations > 0 && transaction.confirmations < 100">((transaction.confirmations)) {{ _("confirmations") }}</span>
+              <span ng-show="transaction.negative && transaction.rbf_optin && !transaction.bumped">
+                  <a class="btn btn-info btn-xs" ng-class="{disabled: bumping_fee}" href="" ng-click="bump_fee(transaction)" ng-show="wallet.hdwallet.keyPair.d">{{ _("bump fee") }}</a>
+              </span>
               <span ng-show="(transaction.external_social && redeem) || transaction.redeemable">
                 <span ng-show="transaction.unclaimed || (transaction.redeemable && transaction.redeemable_unspent)">unclaimed;
                     <a href="" ng-click="redeem(transaction)" ng-show="wallet.hdwallet.keyPair.d">{{ _("take funds back") }}</a>

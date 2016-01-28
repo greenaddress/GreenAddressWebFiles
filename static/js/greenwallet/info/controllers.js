@@ -137,7 +137,8 @@ angular.module('greenWalletInfoControllers',
         }
     });
     $scope.$on('transaction', function(event, data) {
-        if (data.subaccounts.indexOf($scope.wallet.current_subaccount) != -1) {
+        if (!data.subaccounts ||
+                data.subaccounts.indexOf($scope.wallet.current_subaccount) != -1) {
             update_txs(0, true);
             update_graph();
         }
