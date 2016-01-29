@@ -140,15 +140,15 @@ angular.module('greenWalletInfoControllers',
             }
         });
     };
+    $scope.loading_txs = false;
+    var update_after_loaded = false;
     var update_txs = function(timeout_ms, check_sorting) {
+        $scope.loading_txs = true;
         if (updating_timeout) $timeout.cancel(updating_timeout);
         updating_timeout = $timeout(function() {
-            $scope.filtered_transactions = [];
-            $scope.loading_txs = true;
             updating_timeout = null;
             wallets.getTransactions($scope, null, $scope.search.query, $scope.sorting,
                     [$scope.search.date_start, $scope.search.date_end], $scope.wallet.current_subaccount).then(function(txs) {
-                $scope.loading_txs = false;
                 $scope.filtered_transactions = txs;
                 if (check_sorting && ($scope.filtered_transactions.sorting.order_by != 'ts' ||
                                       !$scope.filtered_transactions.sorting.reversed)) {
@@ -156,6 +156,15 @@ angular.module('greenWalletInfoControllers',
                 }
                 update_fees();
                 txs.populate_csv();
+            }).finally(function() {
+                if (update_after_loaded) {
+                    update_after_loaded = false;
+                    // some new notifications arrived while we were updating
+                    update_txs();
+                    update_graph();
+                } else {
+                    $scope.loading_txs = false;
+                }
             });
         }, timeout_ms||0);
     };
@@ -178,10 +187,12 @@ angular.module('greenWalletInfoControllers',
         }
     });
     $scope.$on('transaction', function(event, data) {
-        if (!data.subaccounts ||
-                data.subaccounts.indexOf($scope.wallet.current_subaccount) != -1) {
+        if (!$scope.loading_txs && (!data.subaccounts ||
+                data.subaccounts.indexOf($scope.wallet.current_subaccount) != -1)) {
             update_txs(0, true);
             update_graph();
+        } else if ($scope.loading_txs) {
+            update_after_loaded = true;
         }
     });
     $scope.$on('fee_estimate', function(event, data) {

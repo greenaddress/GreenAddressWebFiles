@@ -41,7 +41,7 @@
               <span class="label label-default" ng-show="transaction.confirmations == 0 && !transaction.instant && !transaction.double_spent_by">{{ _("unconfirmed") }}</span>
               <span class="label" ng-class="{'label-info': transaction.confirmations < 6, 'label-success': transaction.confirmations >= 6}" ng-show="transaction.confirmations > 0 && transaction.confirmations < 100">((transaction.confirmations)) {{ _("confirmations") }}</span>
               <span ng-if="transaction.negative && transaction.rbf_optin && !transaction.replaced_by">
-                <span class="dropdown" ng-show="wallet.hdwallet.keyPair.d">
+                <span class="dropdown" is-open="transaction.bumping_dropdown_open" ng-show="wallet.hdwallet.keyPair.d">
                   <a class="btn btn-info btn-xs dropdown-toggle" ng-class="{disabled: bumping_fee}" href="">
                     {{ _("bump fee") }}
                     <span class="caret"></span>
@@ -92,7 +92,7 @@
           </div>
         </div>
       </td>
-      <td class="amount" ng-style="{opacity: (!transaction.replaced_by && transaction.double_spent_by !== undefined) ? 0.3 : 1}">
+      <td class="amount" ng-style="{opacity: (!transaction.replaced_by && !transaction.replacement_of.length && transaction.double_spent_by !== undefined) ? 0.3 : 1}">
         <span class="amount" ng-class="{'amount-plus': transaction.positive, 'amount-minus': transaction.negative}" ng-hide="!transaction.nonzero && transaction.redeemable">(( transaction.value|format_btc_nounit:wallet.unit ))</span>
         <span class="amount amount-redeemable" ng-show="!transaction.nonzero && transaction.redeemable">(( transaction.redeemable_value|format_btc_nounit:wallet.unit ))</span>{% if MULTIASSET %}
         (( transaction.asset_name ))
@@ -100,7 +100,7 @@
         <span class="amount info" ng-class="{'amount-plus': transaction.positive, 'amount-minus': transaction.negative}">(( transaction.value_fiat|number:2 )) (( filtered_transactions.fiat_currency ))</span>{% endif %}
       </td>
     </tr>
-    <tr ng-show="loading_txs">
+    <tr ng-show="loading_txs && !filtered_transactions.list">
       <td colspan="3"><small class="text-muted"><i>{{ _("Loading transactions, please wait...") }}</i></small></td>
     </tr>
     <tr ng-hide="loading_txs || filtered_transactions.list || filtered_transactions === undefined">
