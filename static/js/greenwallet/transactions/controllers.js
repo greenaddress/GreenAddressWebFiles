@@ -53,6 +53,7 @@ angular.module('greenWalletTransactionsControllers',
     }
 
     $scope.bump_fee = function(transaction, new_fee) {
+        new_fee = Math.round(new_fee);
         $scope.bumping_fee = true;
         //tx_sender.call(
         //              'http://greenaddressit.com/txs/get_all_unspent_outputs',

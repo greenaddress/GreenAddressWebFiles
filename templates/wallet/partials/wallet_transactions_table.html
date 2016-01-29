@@ -21,7 +21,7 @@
   </tfoot>
   {% endif %}
   <tbody>
-    <tr ng-repeat="transaction in filtered_transactions.list">
+    <tr ng-repeat="transaction in filtered_transactions.list" ng-style="{opacity: (transaction.replaced_by) ? 0.3 : 1}">
       <td class="date">(( transaction.ts|date:"dd/MM/yyyy" ))</td>
       <td>
         <div class="desc">
@@ -40,9 +40,9 @@
               <span class="label label-warning" ng-show="transaction.double_spent_by=='malleability'">{{ _("updated") }}</span>
               <span class="label label-default" ng-show="transaction.confirmations == 0 && !transaction.instant && !transaction.double_spent_by">{{ _("unconfirmed") }}</span>
               <span class="label" ng-class="{'label-info': transaction.confirmations < 6, 'label-success': transaction.confirmations >= 6}" ng-show="transaction.confirmations > 0 && transaction.confirmations < 100">((transaction.confirmations)) {{ _("confirmations") }}</span>
-              <span ng-if="transaction.negative && transaction.rbf_optin && !transaction.bumped">
+              <span ng-if="transaction.negative && transaction.rbf_optin && !transaction.replaced_by">
                 <span class="dropdown" ng-show="wallet.hdwallet.keyPair.d">
-                  <a id="(( 'bump_' + transaction.txhash ))" class="btn btn-info btn-xs dropdown-toggle" ng-class="{disabled: bumping_fee}" href="">
+                  <a class="btn btn-info btn-xs dropdown-toggle" ng-class="{disabled: bumping_fee}" href="">
                     {{ _("bump fee") }}
                     <span class="caret"></span>
                   </a>
@@ -65,6 +65,9 @@
                     <li><a href="" ng-click="bump_fee(transaction, transaction.fee*3)">{{ _("3x current fee") }} (~<span>(( transaction.fee*3 | format_btc:wallet.unit )) / (( transaction.fee*3 | format_fiat:wallet.fiat ))</span>)</a></li>
                   </ul>
                 </span>
+                <a class="btn btn-info btn-xs dropdown-toggle" ng-show="transaction.replacement_of.length && !transaction.show_replaced" href="" ng-click="transaction.show_replaced = true">
+                    {{ _("show replaced") }}
+                  </a>
               </span>
               <span ng-show="(transaction.external_social && redeem) || transaction.redeemable">
                 <span ng-show="transaction.unclaimed || (transaction.redeemable && transaction.redeemable_unspent)">unclaimed;
@@ -79,9 +82,17 @@
                 <span ng-hide="transaction.sent_back || transaction.unclaimed || (transaction.redeemable && transaction.redeemable_unspent)">claimed</span>
               </span>
           </div>
+          <div class="replacements" ng-show="transaction.show_replaced">
+            {{ _("Replaced transactions:") }}
+            <ul>
+              <li ng-repeat="replaced in transaction.replacement_of">
+                <a href="" ng-click="details(replaced)">(( replaced.txhash ))</a>
+              </li>
+            </ul>
+          </div>
         </div>
       </td>
-      <td class="amount" ng-style="{opacity: (transaction.double_spent_by !== undefined) ? 0.3 : 1}">
+      <td class="amount" ng-style="{opacity: (!transaction.replaced_by && transaction.double_spent_by !== undefined) ? 0.3 : 1}">
         <span class="amount" ng-class="{'amount-plus': transaction.positive, 'amount-minus': transaction.negative}" ng-hide="!transaction.nonzero && transaction.redeemable">(( transaction.value|format_btc_nounit:wallet.unit ))</span>
         <span class="amount amount-redeemable" ng-show="!transaction.nonzero && transaction.redeemable">(( transaction.redeemable_value|format_btc_nounit:wallet.unit ))</span>{% if MULTIASSET %}
         (( transaction.asset_name ))

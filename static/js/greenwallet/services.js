@@ -755,7 +755,8 @@ angular.module('greenWalletServices', [])
                              sent_back: sent_back, block_height: tx.block_height,
                              confirmations: tx.block_height ? num_confirmations: 0,
                              has_payment_request: tx.has_payment_request,
-                             double_spent_by: tx.double_spent_by,
+                             double_spent_by: tx.double_spent_by, replaced_by: tx.replaced_by,
+                             replacement_of: [],
                              rawtx: cur_net.isAlpha ? data.data[tx.txhash] : tx.data,
                              social_destination: tx_social_destination, social_value: tx_social_value,
                              asset_id: asset_id, asset_name: asset_name, size: tx.size,
@@ -764,7 +765,29 @@ angular.module('greenWalletServices', [])
                 // tx.unclaimed is later used for cache updating
                 tx.unclaimed = retval[0].unclaimed || (retval[0].redeemable && retval[0].redeemable_unspent);
             }
-
+            var hash2tx = {};
+            for (var i = 0; i < retval.length; ++i) {
+                hash2tx[retval[i].txhash] = retval[i];
+            }
+            var new_retval = [];
+            for (var i = 0; i < retval.length; ++i) {
+                var merged = false;
+                if (retval[i].replaced_by && retval[i].replaced_by.length > 0) {
+                    var replaced_by = retval[i].replaced_by;
+                    for (var j = 0; j < replaced_by.length; ++j) {
+                        var tx = hash2tx[replaced_by[j]];
+                        if (tx && !(tx.replaced_by && tx.replaced_by.length)) {
+                            tx.replacement_of.push(retval[i]);
+                            merged = true;
+                            break;
+                        }
+                    }
+                }
+                if (!merged) {
+                    new_retval.push(retval[i]);
+                }
+            }
+            retval = new_retval;
             d.resolve({fiat_currency: data.fiat_currency, list: retval, sorting: sorting, date_range: date_range, subaccount: subaccount,
                         populate_csv: function() {
                             var csv_list = [gettext('Time,Description,satoshis,%s,txhash,fee,memo').replace('%s', this.fiat_currency)];
