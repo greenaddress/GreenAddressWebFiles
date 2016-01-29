@@ -40,8 +40,31 @@
               <span class="label label-warning" ng-show="transaction.double_spent_by=='malleability'">{{ _("updated") }}</span>
               <span class="label label-default" ng-show="transaction.confirmations == 0 && !transaction.instant && !transaction.double_spent_by">{{ _("unconfirmed") }}</span>
               <span class="label" ng-class="{'label-info': transaction.confirmations < 6, 'label-success': transaction.confirmations >= 6}" ng-show="transaction.confirmations > 0 && transaction.confirmations < 100">((transaction.confirmations)) {{ _("confirmations") }}</span>
-              <span ng-show="transaction.negative && transaction.rbf_optin && !transaction.bumped">
-                  <a class="btn btn-info btn-xs" ng-class="{disabled: bumping_fee}" href="" ng-click="bump_fee(transaction)" ng-show="wallet.hdwallet.keyPair.d">{{ _("bump fee") }}</a>
+              <span ng-if="transaction.negative && transaction.rbf_optin && !transaction.bumped">
+                <span class="dropdown" ng-show="wallet.hdwallet.keyPair.d">
+                  <a id="(( 'bump_' + transaction.txhash ))" class="btn btn-info btn-xs dropdown-toggle" ng-class="{disabled: bumping_fee}" href="">
+                    {{ _("bump fee") }}
+                    <span class="caret"></span>
+                  </a>
+                  <ul class="dropdown-menu" ng-if="transaction.estimated_fees.length">
+                    <li class="dropdown-header">{{ _("Choose required estimated number of confirmations:") }}
+                    <span ng-show="transaction.below_estimate_for"><br/>({{ _("Current estimate") }} &lt; (( transaction.below_estimate_for )))</span>
+                    </li>
+                    <li role="separator" class="divider"></li>
+                    <li ng-repeat="estimate in transaction.estimated_fees">
+                    <a href="" ng-click="bump_fee(transaction, estimate.fee)">
+                      (( estimate.message )) (~<span>(( estimate.fee | format_btc:wallet.unit )) / (( estimate.fee | format_fiat:wallet.fiat ))</span>)
+                    </a>
+                    </li>
+                  </ul>
+                  <ul class="dropdown-menu" ng-if="!transaction.estimated_fees.length">
+                    <li class="dropdown-header">{{ _("Fee already at 1-conf-estimate level. Choose new fee:") }}</li>
+                    <li role="separator" class="divider"></li>
+                    <li><a href="" ng-click="bump_fee(transaction, transaction.fee*1.5)">{{ _("1.5x current fee") }} (~<span>(( transaction.fee*1.5 | format_btc:wallet.unit )) / (( transaction.fee*1.5 | format_fiat:wallet.fiat ))</span>)</a></li>
+                    <li><a href="" ng-click="bump_fee(transaction, transaction.fee*2)">{{ _("2x current fee") }} (~<span>(( transaction.fee*2 | format_btc:wallet.unit )) / (( transaction.fee*2 | format_fiat:wallet.fiat ))</span>)</a></li>
+                    <li><a href="" ng-click="bump_fee(transaction, transaction.fee*3)">{{ _("3x current fee") }} (~<span>(( transaction.fee*3 | format_btc:wallet.unit )) / (( transaction.fee*3 | format_fiat:wallet.fiat ))</span>)</a></li>
+                  </ul>
+                </span>
               </span>
               <span ng-show="(transaction.external_social && redeem) || transaction.redeemable">
                 <span ng-show="transaction.unclaimed || (transaction.redeemable && transaction.redeemable_unspent)">unclaimed;

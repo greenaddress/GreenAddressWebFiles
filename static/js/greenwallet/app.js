@@ -98,6 +98,12 @@ angular.module('greenWalletBaseApp', deps)
     return function format_btc_nounit(satoshis, unit) {
         return btc_formatter(satoshis, unit);
     };
+}]).filter('format_fiat', [function() {
+    return function format_fiat(satoshi, wallet_fiat) {
+        wallet_fiat = JSON.parse(wallet_fiat);
+        var value = satoshi * wallet_fiat.rate / (1000*1000*100);
+        return (Math.round(value * 100) / 100) + ' ' + wallet_fiat.currency;
+    }
 }]).filter('startFrom', function() {
     return function(input, start) {
         if (!input) return input;

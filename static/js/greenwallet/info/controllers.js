@@ -1,7 +1,7 @@
 angular.module('greenWalletInfoControllers',
     ['greenWalletServices'])
-.controller('InfoController', ['$scope', 'wallets', 'tx_sender', '$modal', '$q', 'notices', '$location', 'gaEvent', 'cordovaReady', '$timeout',
-        function InfoController($scope, wallets, tx_sender, $modal, $q, notices, $location, gaEvent, cordovaReady, $timeout) {
+.controller('InfoController', ['$scope', 'wallets', 'tx_sender', '$modal', '$q', 'notices', '$location', 'gaEvent', 'cordovaReady', '$timeout', '$rootScope',
+        function InfoController($scope, wallets, tx_sender, $modal, $q, notices, $location, gaEvent, cordovaReady, $timeout, $rootScope) {
     if(!wallets.requireWallet($scope)) return;
 
     $scope.search = {query: null, today: new Date().toISOString(),
@@ -100,6 +100,46 @@ angular.module('greenWalletInfoControllers',
     });
 
     var updating_timeout;
+    var update_tx_fees = function(tx) {
+        var estimates = [], below = null;
+        var keys = Object.keys($scope.wallet.fee_estimates).sort();
+        for (var i = 0; i < keys.length; ++i) {
+            var estimated_fee = Math.round(
+                $scope.wallet.fee_estimates[keys[i]].feerate * tx.size / 1000
+            );
+            // If cur fee is already above estimated, don't suggest it.
+            // Needs to be checked early to avoid suggesting the minimum of
+            // tx.fee + tx.size needlessly.
+            if (parseInt(tx.fee) >= estimated_fee) continue;
+            // Set at least cur_fee + min_delta. (assumes minrelayfee=1000)
+            var new_fee = Math.max(
+                parseInt(tx.fee)+tx.size,
+                estimated_fee
+            );
+            var blocks = $scope.wallet.fee_estimates[keys[i]].blocks;
+            if (new_fee > parseInt(tx.fee)) {
+                estimates.push({
+                    fee: new_fee,
+                    message:
+                        blocks == 1 ?
+                            gettext('1 confirmation') :
+                            gettext('%s confirmations').replace('%s', blocks)
+                });
+            } else if (!below) {
+                below = blocks;
+            }
+        }
+        tx.below_estimate_for = below;
+        tx.estimated_fees = estimates;
+    };
+    var update_fees = function() {
+        if (!$scope.filtered_transactions || !$scope.filtered_transactions.list || !$scope.filtered_transactions.list.length) return;
+        $rootScope.safeApply(function() {
+            for (var i = 0; i < $scope.filtered_transactions.list.length; i++) {
+                update_tx_fees($scope.filtered_transactions.list[i])
+            }
+        });
+    };
     var update_txs = function(timeout_ms, check_sorting) {
         if (updating_timeout) $timeout.cancel(updating_timeout);
         updating_timeout = $timeout(function() {
@@ -114,6 +154,7 @@ angular.module('greenWalletInfoControllers',
                                       !$scope.filtered_transactions.sorting.reversed)) {
                     $scope.filtered_transactions.pending_from_notification = true;
                 }
+                update_fees();
                 txs.populate_csv();
             });
         }, timeout_ms||0);
@@ -142,6 +183,11 @@ angular.module('greenWalletInfoControllers',
             update_txs(0, true);
             update_graph();
         }
+    });
+    $scope.$on('fee_estimate', function(event, data) {
+        if (!$scope.filtered_transactions || !$scope.filtered_transactions.list || !$scope.filtered_transactions.list.length) return;
+        $scope.wallet.fee_estimates = data;
+        update_fees();
     });
     $scope.$on('block', function(event, data) {
         if (!$scope.filtered_transactions || !$scope.filtered_transactions.list || !$scope.filtered_transactions.list.length) return;

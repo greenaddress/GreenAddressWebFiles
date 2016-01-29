@@ -158,6 +158,12 @@ angular.module('greenWalletControllers', [])
                         that.fiat_currency = data.fiat_currency;
                         that.fiat_value = data.fiat_value;
                         that.fiat_rate = data.fiat_exchange;
+                        // copy in .fiat to allow passing to format_fiat filter
+                        // without running the digest cycle too often
+                        // (having an object here instead of JSON representation
+                        //  causes calling format_fiat repeatedly)
+                        that.fiat = JSON.stringify({rate: data.fiat_exchange,
+                                                    currency: data.fiat_currency});
                         that.fiat_last_fetch = 1*((new Date).getTime()/1000).toFixed();
                         that.fiat_exchange_extended = exchanges[$scope.wallet.fiat_exchange];
                         if (first) {
@@ -240,6 +246,13 @@ angular.module('greenWalletControllers', [])
                             that.fiat_currency = data.fiat_currency;
                             that.fiat_value = data.fiat_value;
                             that.fiat_rate = data.fiat_exchange;
+                            // copy in .fiat to allow passing to format_fiat filter
+                            // without running the digest cycle too often
+                            // (having an object here instead of JSON representation
+                            //  causes calling format_fiat repeatedly)
+                            that.fiat = JSON.stringify({rate: data.fiat_exchange,
+                                                        currency: data.fiat_currency});
+
                             that.fiat_last_fetch = 1*((new Date).getTime()/1000).toFixed();
                             that.fiat_exchange_extended = exchanges[$scope.wallet.fiat_exchange];
                             if (first) {

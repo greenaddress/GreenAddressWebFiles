@@ -317,6 +317,7 @@ angular.module('greenWalletServices', [])
                 } catch(e) {
                     $scope.wallet.appearance = {};
                 }
+                $scope.wallet.fee_estimates = data.fee_estimates;
                 if (!('sound' in $scope.wallet.appearance)) {
                     $scope.wallet.appearance.sound = true;
                 }
@@ -1876,6 +1877,10 @@ angular.module('greenWalletServices', [])
                 function(event) {
             gaEvent('Wallet', 'TransactionNotification');
             $rootScope.$broadcast('transaction', event[0]);
+        });
+        s.subscribe('com.greenaddress.fee_estimates',
+                function(event) {
+            $rootScope.$broadcast('fee_estimate', event[0]);
         });
     };
     txSenderService.call = function() {

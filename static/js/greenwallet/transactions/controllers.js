@@ -52,7 +52,7 @@ angular.module('greenWalletTransactionsControllers',
         });
     }
 
-    $scope.bump_fee = function(transaction) {
+    $scope.bump_fee = function(transaction, new_fee) {
         $scope.bumping_fee = true;
         //tx_sender.call(
         //              'http://greenaddressit.com/txs/get_all_unspent_outputs',
@@ -60,16 +60,20 @@ angular.module('greenWalletTransactionsControllers',
         //      ).then(function(utxos) {
         var bumpedTx = Bitcoin.contrib.transactionFromHex(transaction.rawtx);
         var requiredFeeDelta = transaction.rawtx.length / 2; // assumes mintxfee = 1000
+        var newFee = Math.max(
+            parseInt(transaction.fee) + requiredFeeDelta,
+            new_fee
+        );
         var newOuts = [];
         for (var i = 0; i < transaction.outputs.length; ++i) {
             if (transaction.outputs[i].is_relevant) {
                 // either change or re-deposit
-                if (bumpedTx.outs[i].value < requiredFeeDelta) {
+                if (bumpedTx.outs[i].value < newFee) {
                     // output too small to be decreased - remove it altogether
-                    requiredFeeDelta -= bumpedTx.outs[i].value;
+                    newFee -= bumpedTx.outs[i].value;
                 } else {
-                    bumpedTx.outs[i].value -= requiredFeeDelta;
-                    requiredFeeDelta = 0;
+                    bumpedTx.outs[i].value -= newFee;
+                    newFee = 0;
                     newOuts.push(bumpedTx.outs[i]);
                 }
             } else {
@@ -79,7 +83,7 @@ angular.module('greenWalletTransactionsControllers',
         }
         bumpedTx.outs = newOuts;
 
-        if (requiredFeeDelta > 0) {
+        if (newFee > 0) {
             notices.makeNotice('error', 'Adding inputs not yet supported');
             return;
         }
