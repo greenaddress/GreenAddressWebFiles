@@ -326,11 +326,7 @@ angular.module('greenWalletSettingsControllers',
         return gettext("(about %s days: 1 day ≈ 144 blocks)").replace("%s", Math.round(num/144));
     }
     var settings = $scope.settings = {
-        replace_by_fee: $scope.wallet.appearance.replace_by_fee !== undefined ?
-            $scope.wallet.appearance.replace_by_fee : (
-                cur_net === Bitcoin.bitcoin.networks.bitcoin ?
-                    false : true  // enable by default for testnet
-            ),
+        replace_by_fee: $scope.wallet.appearance.replace_by_fee,
         noLocalStorage: storage.noLocalStorage,
         unit: $scope.wallet.unit,
         pricing_source: $scope.wallet.fiat_currency + '|' + $scope.wallet.fiat_exchange,

@@ -328,6 +328,12 @@ angular.module('greenWalletServices', [])
                 if (!('altimeout' in $scope.wallet.appearance)) {
                     $scope.wallet.appearance.altimeout = 20;
                 }
+                if (data.rbf && !('replace_by_fee' in $scope.wallet.appearance)) {
+                    $scope.wallet.appearance.replace_by_fee = (
+                        cur_net === Bitcoin.bitcoin.networks.bitcoin ?
+                            false : true  // enable by default for testnet
+                    );
+                }
                 sound.play(BASE_URL + "/static/sound/coinreceived.mp3", $scope);
                 autotimeout.start($scope.wallet.appearance.altimeout);
                 $scope.wallet.privacy = data.privacy;
