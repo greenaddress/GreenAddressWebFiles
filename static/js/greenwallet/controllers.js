@@ -410,7 +410,8 @@ angular.module('greenWalletControllers', [])
         for (var i = 0; i < txos.length; ++i) {
             txos_in.push([txos[i].txhash, txos[i].out_n]);
         }
-        tx_sender.call("http://greenaddressit.com/vault/prepare_redeposit", txos_in, {prevouts_mode: 'http'}).then(function(data) {
+        tx_sender.call("http://greenaddressit.com/vault/prepare_redeposit", txos_in,
+                {rbf_optin: $scope.wallet.appearance.replace_by_fee, prevouts_mode: 'http'}).then(function(data) {
             wallets.sign_and_send_tx($scope, data, false, twofac_data).then(function() {
                 deferred.resolve();
             }, function(err) {
@@ -435,7 +436,8 @@ angular.module('greenWalletControllers', [])
         $scope.redepositing = true;
         return tx_sender.call("http://greenaddressit.com/vault/prepare_redeposit",
                 [[$scope.wallet.expired_deposits[0].txhash, $scope.wallet.expired_deposits[0].out_n]],
-                {prevouts_mode: 'http'}).then(function() {
+                {rbf_optin: $scope.wallet.appearance.replace_by_fee,
+                 prevouts_mode: 'http'}).then(function() {
             // prepare one to set appropriate tx data for 2FA
             return wallets.get_two_factor_code($scope, 'send_tx', null, true).then(function(twofac_data) {
                 var promise = $q.when();

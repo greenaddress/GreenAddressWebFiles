@@ -8,6 +8,7 @@
     <li ng-show="wallet.hdwallet.keyPair.d || wallet.trezor_dev || wallet.btchip" path="/settings" class="menu-settings"><a href="#/settings">{{ _("Settings") }}</a></li>
 
     <li ng-show="settings" du-scrollspy="general" class="menu-submenu"><a href="#general" du-smooth-scroll>{{ _("General") }}</a></li>
+    <li ng-show="settings" du-scrollspy="transactions" class="menu-submenu"><a href="#transactions" du-smooth-scroll>{{ _("Transactions") }}</a></li>
     <li ng-show="settings" du-scrollspy="security" class="menu-submenu"><a href="#security" du-smooth-scroll>{{ _("Security") }}</a></li>
     <li ng-show="settings" du-scrollspy="accounts" class="menu-submenu"><a href="#accounts" du-smooth-scroll>{{ _("Accounts") }}</a></li>
 

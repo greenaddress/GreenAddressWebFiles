@@ -318,6 +318,7 @@ angular.module('greenWalletServices', [])
                     $scope.wallet.appearance = {};
                 }
                 $scope.wallet.fee_estimates = data.fee_estimates;
+                $scope.wallet.rbf = data.rbf;
                 if (!('sound' in $scope.wallet.appearance)) {
                     $scope.wallet.appearance.sound = true;
                 }
