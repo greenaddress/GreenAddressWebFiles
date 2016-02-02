@@ -329,7 +329,7 @@ angular.module('greenWalletServices', [])
                     $scope.wallet.appearance.altimeout = 20;
                 }
                 if (data.rbf && !('replace_by_fee' in $scope.wallet.appearance)) {
-                    $scope.wallet.appearance.replace_by_fee = (
+                    $scope.wallet.appearance.replace_by_fee = data.rbf && (
                         cur_net === Bitcoin.bitcoin.networks.bitcoin ?
                             false : true  // enable by default for testnet
                     );
