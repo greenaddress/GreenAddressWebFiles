@@ -30,8 +30,8 @@ msgstr "ปิด/เปิดการนำทาง"
 msgid "Blog"
 msgstr "บล็อก"
 
-#: templates/base/base.html:120 templates/wallet/nav.html:21
-#: templates/wallet/nav.html:23
+#: templates/base/base.html:120 templates/wallet/nav.html:22
+#: templates/wallet/nav.html:24
 msgid "FAQ"
 msgstr "FAQ"
 
@@ -39,8 +39,8 @@ msgstr "FAQ"
 msgid "API"
 msgstr ""
 
-#: templates/base/base.html:122 templates/wallet/nav.html:21
-#: templates/wallet/nav.html:23
+#: templates/base/base.html:122 templates/wallet/nav.html:22
+#: templates/wallet/nav.html:24
 msgid "Support"
 msgstr "สนับสนุน"
 
@@ -52,7 +52,8 @@ msgstr "เข้าสู่ระบบ"
 msgid "About us"
 msgstr "เกี่ยวกับเรา"
 
-#: templates/wallet/nav.html:4
+#: templates/wallet/nav.html:4 templates/wallet/nav.html:11
+#: templates/wallet/partials/wallet_settings.html:104
 #: templates/wallet/partials/wallet_transactions.html:4
 msgid "Transactions"
 msgstr "ธุรกรรม"
@@ -79,36 +80,36 @@ msgstr "การตั้งค่า"
 msgid "General"
 msgstr "ตั้งค่าทั่วไป"
 
-#: templates/wallet/nav.html:11
-#: templates/wallet/partials/wallet_settings.html:104
+#: templates/wallet/nav.html:12
+#: templates/wallet/partials/wallet_settings.html:279
 msgid "Security"
 msgstr "ความปลอดภัย"
 
-#: templates/wallet/nav.html:12
-#: templates/wallet/partials/wallet_settings.html:617
+#: templates/wallet/nav.html:13
+#: templates/wallet/partials/wallet_settings.html:644
 #, fuzzy
 msgid "Accounts"
 msgstr "เพิ่มบัญชี"
 
-#: templates/wallet/nav.html:14
+#: templates/wallet/nav.html:15
 msgid "Update now"
 msgstr "อัพเดท"
 
-#: templates/wallet/nav.html:15
+#: templates/wallet/nav.html:16
 #: templates/wallet/partials/wallet_modal_logout.html:11
 #: templates/wallet/partials/wallet_modal_logout_other_session.html:10
 msgid "Logout"
 msgstr "ออกจากระบบ"
 
-#: templates/wallet/nav.html:27
+#: templates/wallet/nav.html:28
 msgid "Last login"
 msgstr "เข้าระบบล่าสุด"
 
-#: templates/wallet/nav.html:30
+#: templates/wallet/nav.html:31
 msgid "country"
 msgstr "ประเทศ"
 
-#: templates/wallet/nav.html:31
+#: templates/wallet/nav.html:32
 msgid "unknown country"
 msgstr "ประเทศที่ไม่รู้จัก"
 
@@ -307,13 +308,13 @@ msgstr "เงื่อนไขการใช้บริการ"
 #: templates/wallet/partials/wallet_2fa.html:33
 #: templates/wallet/partials/wallet_receive.html:60
 #: templates/wallet/partials/wallet_receive.html:83
-#: templates/wallet/partials/wallet_settings.html:374
+#: templates/wallet/partials/wallet_settings.html:464
 #: templates/wallet/partials/signuplogin/header_pay.html:32
 msgid "Show QR Code"
 msgstr "แสดง QR code"
 
 #: templates/wallet/partials/signup_1_init.html:64
-#: templates/wallet/partials/wallet_settings.html:498
+#: templates/wallet/partials/wallet_settings.html:588
 msgid "Write to NFC tag"
 msgstr "เขียน NFC tag "
 
@@ -449,12 +450,12 @@ msgid "To have a secure but quick access from this device set your PIN"
 msgstr "เพื่อให้เข้าถึงได้เร็วและปลอดภัยตั้ง PIN จากอุปกรณ์นี้"
 
 #: templates/wallet/partials/signup_3_pin.html:18
-#: templates/wallet/partials/wallet_settings.html:195
+#: templates/wallet/partials/wallet_settings.html:370
 msgid "PIN number"
 msgstr "หมายเลข PIN"
 
 #: templates/wallet/partials/signup_3_pin.html:22
-#: templates/wallet/partials/wallet_settings.html:182
+#: templates/wallet/partials/wallet_settings.html:357
 msgid "4-15 digits number"
 msgstr "จำนวนตัวเลข 4-15"
 
@@ -495,7 +496,7 @@ msgid "Grant access to your wallet in watch-only mode"
 msgstr "ให้การเข้าถึง Wallet ของคุณในโหมดดูอย่างเดียว"
 
 #: templates/wallet/partials/signup_4_oauth.html:23
-#: templates/wallet/partials/wallet_settings.html:248
+#: templates/wallet/partials/wallet_settings.html:423
 #: templates/wallet/partials/signuplogin/base.html:73
 msgid "Custom Login"
 msgstr "เข้าระบบเอง"
@@ -566,8 +567,8 @@ msgstr "NFC ของคุณไม่ได้เปิดใช้งาน�
 #: templates/wallet/partials/wallet_modal_tx_details.html:77
 #: templates/wallet/partials/wallet_modal_url_qr.html:6
 #: templates/wallet/partials/wallet_modal_voucher.html:13
-#: templates/wallet/partials/wallet_transactions.html:49
-#: templates/wallet/partials/wallet_transactions.html:59
+#: templates/wallet/partials/wallet_transactions.html:50
+#: templates/wallet/partials/wallet_transactions.html:60
 msgid "Close"
 msgstr "ปิด"
 
@@ -582,7 +583,7 @@ msgid "Remember to store it in a safe place!"
 msgstr "อย่าลืมเก็บไว้ในที่ปลอดภัย"
 
 #: templates/wallet/partials/wallet_2fa.html:13
-#: templates/wallet/partials/wallet_settings.html:435
+#: templates/wallet/partials/wallet_settings.html:525
 msgid "Phone"
 msgstr "โทรศัพท์"
 
@@ -630,10 +631,10 @@ msgstr "โค้ด Authenticator"
 #: templates/wallet/partials/wallet_2fa.html:100
 #: templates/wallet/partials/wallet_2fa.html:142
 #: templates/wallet/partials/wallet_2fa.html:184
-#: templates/wallet/partials/wallet_settings.html:132
-#: templates/wallet/partials/wallet_settings.html:380
-#: templates/wallet/partials/wallet_settings.html:420
-#: templates/wallet/partials/wallet_settings.html:460
+#: templates/wallet/partials/wallet_settings.html:307
+#: templates/wallet/partials/wallet_settings.html:470
+#: templates/wallet/partials/wallet_settings.html:510
+#: templates/wallet/partials/wallet_settings.html:550
 msgid "Please enter received code"
 msgstr "ใส่รหัสที่ได้รับ"
 
@@ -644,11 +645,11 @@ msgstr "ใส่รหัสที่ได้รับ"
 #: templates/wallet/partials/wallet_2fa.html:144
 #: templates/wallet/partials/wallet_2fa.html:166
 #: templates/wallet/partials/wallet_2fa.html:186
-#: templates/wallet/partials/wallet_settings.html:382
-#: templates/wallet/partials/wallet_settings.html:406
-#: templates/wallet/partials/wallet_settings.html:422
-#: templates/wallet/partials/wallet_settings.html:446
-#: templates/wallet/partials/wallet_settings.html:462
+#: templates/wallet/partials/wallet_settings.html:472
+#: templates/wallet/partials/wallet_settings.html:496
+#: templates/wallet/partials/wallet_settings.html:512
+#: templates/wallet/partials/wallet_settings.html:536
+#: templates/wallet/partials/wallet_settings.html:552
 msgid "Enable"
 msgstr "เปิดใช้งาน"
 
@@ -657,7 +658,7 @@ msgid "Email two factor authentication is enabled."
 msgstr "การใช้งานรหัสผ่านสองขั้นโดยอีเมล์เปิดใช้งาน"
 
 #: templates/wallet/partials/wallet_2fa.html:74
-#: templates/wallet/partials/wallet_settings.html:117
+#: templates/wallet/partials/wallet_settings.html:292
 msgid "Your email address"
 msgstr "อีเมล์แอดเดรสของคุณ"
 
@@ -675,7 +676,7 @@ msgstr ""
 "กรุณาเปิดอีเมล์และใส่รหัสที่ได้"
 
 #: templates/wallet/partials/wallet_2fa.html:95
-#: templates/wallet/partials/wallet_settings.html:127
+#: templates/wallet/partials/wallet_settings.html:302
 msgid "Email code"
 msgstr "รหัสจากอีเมล์"
 
@@ -702,9 +703,9 @@ msgstr "รหัสจากอีเมล์"
 #: templates/wallet/partials/wallet_modal_verify_mnemonic.html:18
 #: templates/wallet/partials/wallet_receive.html:100
 #: templates/wallet/partials/wallet_send.html:52
-#: templates/wallet/partials/wallet_settings.html:382
-#: templates/wallet/partials/wallet_settings.html:422
-#: templates/wallet/partials/wallet_settings.html:462
+#: templates/wallet/partials/wallet_settings.html:472
+#: templates/wallet/partials/wallet_settings.html:512
+#: templates/wallet/partials/wallet_settings.html:552
 #: templates/wallet/partials/signuplogin/base.html:39
 #: templates/wallet/partials/signuplogin/modal_decryption_password.html:23
 #: templates/wallet/partials/signuplogin/modal_encryption_password.html:33
@@ -718,15 +719,15 @@ msgstr "รหัสผ่านสองขั้นโดยข้อควา
 
 #: templates/wallet/partials/wallet_2fa.html:118
 #: templates/wallet/partials/wallet_2fa.html:160
-#: templates/wallet/partials/wallet_settings.html:399
-#: templates/wallet/partials/wallet_settings.html:439
+#: templates/wallet/partials/wallet_settings.html:489
+#: templates/wallet/partials/wallet_settings.html:529
 msgid "Your phone number"
 msgstr "หมายเลขโทรศัพท์ของคุณ"
 
 #: templates/wallet/partials/wallet_2fa.html:122
 #: templates/wallet/partials/wallet_2fa.html:164
-#: templates/wallet/partials/wallet_settings.html:404
-#: templates/wallet/partials/wallet_settings.html:444
+#: templates/wallet/partials/wallet_settings.html:494
+#: templates/wallet/partials/wallet_settings.html:534
 msgid "+NN... Please enter your phone"
 msgstr "+NN... กรุณาป้อนหมายเลขโทรศัพท์"
 
@@ -739,7 +740,7 @@ msgstr ""
 "กรุณาตรวจสอบโทรศัพท์และป้อนรหัส"
 
 #: templates/wallet/partials/wallet_2fa.html:137
-#: templates/wallet/partials/wallet_settings.html:415
+#: templates/wallet/partials/wallet_settings.html:505
 msgid "SMS code"
 msgstr "รหัสจากข้อความ"
 
@@ -755,7 +756,7 @@ msgstr ""
 "กรุณาใส่รหัสผ่านเพื่อตั้งค่ารหัสผ่านสองขั้น<br>                กรุณาตรวจสอบโทรศัพท์และใส่รหัส"
 
 #: templates/wallet/partials/wallet_2fa.html:179
-#: templates/wallet/partials/wallet_settings.html:455
+#: templates/wallet/partials/wallet_settings.html:545
 msgid "Phone code"
 msgstr "รหัสโทรศัพท์"
 
@@ -765,8 +766,8 @@ msgstr "ใส่ค่าใหม่"
 
 #: templates/wallet/partials/wallet_address_book.html:27
 #: templates/wallet/partials/wallet_address_book.html:45
-#: templates/wallet/partials/wallet_settings.html:641
-#: templates/wallet/partials/wallet_settings.html:697
+#: templates/wallet/partials/wallet_settings.html:668
+#: templates/wallet/partials/wallet_settings.html:724
 msgid "Name"
 msgstr "ชื่อ"
 
@@ -980,7 +981,7 @@ msgstr "ผู้รับ"
 #: templates/wallet/partials/wallet_modal_tx_redeem.html:17
 #: templates/wallet/partials/wallet_receive.html:20
 #: templates/wallet/partials/wallet_send.html:81
-#: templates/wallet/partials/wallet_settings.html:590
+#: templates/wallet/partials/wallet_settings.html:617
 msgid "Amount"
 msgstr "จำนวน"
 
@@ -1020,7 +1021,7 @@ msgid "Transaction hash, output number"
 msgstr "แฮชธุรกรรม หมายเลขผลลัพธ์"
 
 #: templates/wallet/partials/wallet_modal_expiring_soon.html:9
-#: templates/wallet/partials/wallet_settings.html:509
+#: templates/wallet/partials/wallet_settings.html:162
 msgid "nLockTime"
 msgstr "nLockTime"
 
@@ -1029,8 +1030,8 @@ msgid "Please send the Facebook message."
 msgstr "กรุณาส่งข้อความ Facebook"
 
 #: templates/wallet/partials/wallet_modal_fb_message.html:6
-#: templates/wallet/partials/wallet_settings.html:656
-#: templates/wallet/partials/wallet_settings.html:712
+#: templates/wallet/partials/wallet_settings.html:683
+#: templates/wallet/partials/wallet_settings.html:739
 msgid "Send"
 msgstr "ส่ง"
 
@@ -1297,11 +1298,11 @@ msgstr ""
 
 #: templates/wallet/partials/wallet_modal_tx_details.html:21
 #: templates/wallet/partials/wallet_modal_tx_limits.html:41
-#: templates/wallet/partials/wallet_settings.html:118
-#: templates/wallet/partials/wallet_settings.html:157
-#: templates/wallet/partials/wallet_settings.html:483
-#: templates/wallet/partials/wallet_settings.html:655
-#: templates/wallet/partials/wallet_settings.html:711
+#: templates/wallet/partials/wallet_settings.html:293
+#: templates/wallet/partials/wallet_settings.html:332
+#: templates/wallet/partials/wallet_settings.html:573
+#: templates/wallet/partials/wallet_settings.html:682
+#: templates/wallet/partials/wallet_settings.html:738
 msgid "Save"
 msgstr "บันทึก"
 
@@ -1364,27 +1365,27 @@ msgid ""
 msgstr ""
 
 #: templates/wallet/partials/wallet_modal_tx_limits.html:9
-#: templates/wallet/partials/wallet_settings.html:546
+#: templates/wallet/partials/wallet_settings.html:199
 msgid "(current currency)"
 msgstr "(สกุลเงินปัจจุบัน)"
 
 #: templates/wallet/partials/wallet_modal_tx_limits.html:11
 #: templates/wallet/partials/wallet_send.html:76
-#: templates/wallet/partials/wallet_settings.html:310
-#: templates/wallet/partials/wallet_settings.html:524
-#: templates/wallet/partials/wallet_settings.html:547
+#: templates/wallet/partials/wallet_settings.html:154
+#: templates/wallet/partials/wallet_settings.html:177
+#: templates/wallet/partials/wallet_settings.html:200
 msgid "NOTE"
 msgstr "บันทึก"
 
 #: templates/wallet/partials/wallet_modal_tx_limits.html:11
-#: templates/wallet/partials/wallet_settings.html:547
+#: templates/wallet/partials/wallet_settings.html:200
 msgid ""
 "Using currency values for limits assumes you can trust your pricing source "
 "to provide correct values."
 msgstr "การใช้ค่าเงินเป็นขีดจำกัดหมายถึงคุณยอมรับความถูกต้องของการอ้างอิงราคาจากแหล่งที่มาแล้ว"
 
 #: templates/wallet/partials/wallet_modal_tx_limits.html:33
-#: templates/wallet/partials/wallet_settings.html:560
+#: templates/wallet/partials/wallet_settings.html:213
 msgid ""
 "This limit will be decreased with each transaction and you will need to "
 "\"refill\" it manually by changing this value."
@@ -1657,169 +1658,95 @@ msgid "Enable Handler"
 msgstr "ช่วยการจัดการ"
 
 #: templates/wallet/partials/wallet_settings.html:108
-#: templates/wallet/partials/wallet_settings.html:358
-msgid "Email"
-msgstr "อีเมล"
-
-#: templates/wallet/partials/wallet_settings.html:109
-msgid ""
-"Set your email address for transactions notifications, two factor "
-"authentication, and nLockTime transactions."
-msgstr ""
-"ตั้งค่าของคุณที่อยู่อีเมล์สำหรับการแจ้งเตือนธุรกรรม ปัจจัยสองรับรองความถูกต้อง และธุรกรรม "
-"nLockTime"
-
-#: templates/wallet/partials/wallet_settings.html:114
-msgid "Change email address"
-msgstr "เปลี่ยนอีเมล์"
-
-#: templates/wallet/partials/wallet_settings.html:115
-msgid "Set email address"
-msgstr "การตั้งค่าอีเมล์"
-
-#: templates/wallet/partials/wallet_settings.html:123
-msgid ""
-"You need to provide confirmation code from your email to allow using it."
-"<br>              Please check your email and provide the code."
-msgstr "คุณต้องระบุรหัสยืนยันจากอีเมล์ของคุณให้ใช้<br>โปรดตรวจสอบอีเมล์ของคุณ และให้รหัส"
-
-#: templates/wallet/partials/wallet_settings.html:134
-#: templates/wallet/partials/wallet_settings.html:184
-#: templates/wallet/partials/wallet_settings.html:199
-msgid "Confirm"
-msgstr "ยืน​ยัน"
-
-#: templates/wallet/partials/wallet_settings.html:140
-msgid ""
-"The code is valid only for 5 minutes, so you can request another one if "
-"necessary."
-msgstr "รหัสถูกต้องสำหรับ 5 นาที เพื่อให้คุณสามารถร้องขออย่างอื่นถ้าจำเป็น"
-
-#: templates/wallet/partials/wallet_settings.html:140
-msgid "Request another code"
-msgstr "ขอรหัสอื่น"
-
-#: templates/wallet/partials/wallet_settings.html:148
-msgid "PGP"
-msgstr ""
-
-#: templates/wallet/partials/wallet_settings.html:149
-msgid "Set your Pretty Good Privacy public key for improved privacy."
-msgstr ""
-
-#: templates/wallet/partials/wallet_settings.html:153
-msgid "Public Key"
-msgstr ""
-
-#: templates/wallet/partials/wallet_settings.html:155
-msgid "----BEGIN PGP PUBLIC KEY..."
-msgstr ""
-
-#: templates/wallet/partials/wallet_settings.html:165
-msgid "Quick login"
-msgstr "เข้าสู่ระบบอย่างรวดเร็ว"
-
-#: templates/wallet/partials/wallet_settings.html:166
-msgid "Enable a simple PIN to quickly access your wallet from this device."
-msgstr "เปิดใช้งาน PIN อย่างรวดเร็วเข้าถึง Wallet ของคุณจากอุปกรณ์นี้"
-
-#: templates/wallet/partials/wallet_settings.html:175
-msgid "Enable quick login on this device"
-msgstr "เปิดใช้งานการเข้าสู่ระบบอย่างรวดเร็วบนอุปกรณ์นี้"
-
-#: templates/wallet/partials/wallet_settings.html:179
-msgid "Change PIN number"
-msgstr "เปลี่ยนหมายเลข PIN"
-
-#: templates/wallet/partials/wallet_settings.html:180
-msgid "Set PIN number"
-msgstr "กำหนดหมายเลข PIN"
-
-#: templates/wallet/partials/wallet_settings.html:189
-msgid "Disable quick login on all devices"
-msgstr "ปิดใช้งานการเข้าสู่ระบบอย่างรวดเร็วบนอุปกรณ์ทั้งหมด"
-
-#: templates/wallet/partials/wallet_settings.html:193
-msgid "set PIN to"
-msgstr "ตั้งค่า PIN"
-
-#: templates/wallet/partials/wallet_settings.html:198
-msgid "Remove"
-msgstr "เอาออก"
-
-#: templates/wallet/partials/wallet_settings.html:209
-msgid "Touch ID"
-msgstr ""
-
-#: templates/wallet/partials/wallet_settings.html:210
-#, fuzzy
-msgid "Enable Touch ID to quickly access your wallet from this device."
-msgstr "เปิดใช้งาน PIN อย่างรวดเร็วเข้าถึง Wallet ของคุณจากอุปกรณ์นี้"
-
-#: templates/wallet/partials/wallet_settings.html:218
-#, fuzzy
-msgid "Enable Touch ID on this device"
-msgstr "เปิดใช้งานการเข้าสู่ระบบอย่างรวดเร็วบนอุปกรณ์นี้"
-
-#: templates/wallet/partials/wallet_settings.html:227
-msgid "Link your own third party accounts"
-msgstr "เชื่อมโยงบัญชีของบุคคลที่สาม"
-
-#: templates/wallet/partials/wallet_settings.html:228
-msgid ""
-"Allow social payments and watch-only login to your wallet via your own third "
-"party accounts."
-msgstr ""
-"อนุญาตจ่ายด้วยโซเชียลและการใช้งานแบบดูอย่างเดียวสำหรับ Wallet ผ่านทางบัญชีผู้ใช้งานแอพภายนอก"
-
-#: templates/wallet/partials/wallet_settings.html:254
-msgid "Username"
-msgstr "ผู้ใช้"
-
-#: templates/wallet/partials/wallet_settings.html:255
-#: templates/wallet/partials/signuplogin/modal_decryption_password.html:8
-#: templates/wallet/partials/signuplogin/modal_encryption_password.html:10
-msgid "Password"
-msgstr "รหัสผ่าน"
-
-#: templates/wallet/partials/wallet_settings.html:264
 msgid "Notifications"
 msgstr "แจ้งเตือน"
 
-#: templates/wallet/partials/wallet_settings.html:265
+#: templates/wallet/partials/wallet_settings.html:109
 msgid ""
 "Notifications allow for improved security when configured for outgoing and "
 "for most up to date information when configured for incoming"
 msgstr "การแจ้งเตือนอนุญาตให้พัฒนาความปลอดภัยเมื่อตั้งค่าขาออกและดึงข้อมูลล่าสุดเมื่อมีการตั้งค่าสำหรับขาเข้า"
 
-#: templates/wallet/partials/wallet_settings.html:271
+#: templates/wallet/partials/wallet_settings.html:115
 msgid "Send incoming transaction notification by"
 msgstr "ส่งการแจ้งเตือนธุรกรรมขาเข้าโดย"
 
-#: templates/wallet/partials/wallet_settings.html:277
-#: templates/wallet/partials/wallet_settings.html:297
+#: templates/wallet/partials/wallet_settings.html:121
+#: templates/wallet/partials/wallet_settings.html:141
 msgid "email"
 msgstr "อีเมล์"
 
-#: templates/wallet/partials/wallet_settings.html:284
-#: templates/wallet/partials/wallet_settings.html:304
-#: templates/wallet/partials/wallet_settings.html:395
+#: templates/wallet/partials/wallet_settings.html:128
+#: templates/wallet/partials/wallet_settings.html:148
+#: templates/wallet/partials/wallet_settings.html:485
 msgid "SMS"
 msgstr "SMS"
 
-#: templates/wallet/partials/wallet_settings.html:291
+#: templates/wallet/partials/wallet_settings.html:135
 msgid "Send outgoing transaction notification by"
 msgstr "ส่งการเตือนธุรกรรมขาออกโดย"
 
-#: templates/wallet/partials/wallet_settings.html:310
+#: templates/wallet/partials/wallet_settings.html:154
 msgid "You need to have a confirmed email enabled for this feature to work."
 msgstr "คุณต้องเปิดการยืนยันผ่านอีดมล์เพื่อให้ใช้งานฟังก์ชันนี้ได้"
 
-#: templates/wallet/partials/wallet_settings.html:318
+#: templates/wallet/partials/wallet_settings.html:163
+msgid ""
+"nLockTime transactions allow you to redeem your deposited funds without "
+"GreenAddress' signature after pre-defined number of blocks"
+msgstr ""
+"nLockTime transactions allow you to redeem your deposited funds without "
+"GreenAddress' signature after pre-defined number of blocks"
+
+#: templates/wallet/partials/wallet_settings.html:169
+msgid "Allow redeeming funds without GreenAddress' signature after"
+msgstr "Allow redeeming funds without GreenAddress' signature after"
+
+#: templates/wallet/partials/wallet_settings.html:171
+msgid "blocks"
+msgstr "บล็อค"
+
+#: templates/wallet/partials/wallet_settings.html:177
+msgid ""
+"Both outgoing and incoming transaction notifications must be enabled for "
+"this feature to work."
+msgstr "ทั้งการแจ้งเตือนธุรกรรมขาเข้าและขาออกต้องเปิดใช้งานเพื่อให้ฟังก์ชั่นนี้ใช้งานได้"
+
+#: templates/wallet/partials/wallet_settings.html:180
+msgid "Show outputs expiring soon"
+msgstr "แสดงผลลัพธ์ที่จะหมดอายุเร็ว ๆ นี้"
+
+#: templates/wallet/partials/wallet_settings.html:181
+msgid "Send all nLockTime transactions by email"
+msgstr "ส่งธุรกรรม nLockTime ทั้งหมดทางอีเมล์"
+
+#: templates/wallet/partials/wallet_settings.html:189
+msgid "Spending limits"
+msgstr "การจำกัดการใช้จ่าย"
+
+#: templates/wallet/partials/wallet_settings.html:190
+msgid ""
+"Set some limits for which you won't be asked for two factor for super "
+"userfriendly payments."
+msgstr "ตั้งขีดจำกัดที่คุณจะไม่ถูกถามรหัสผ่าน 2 ขั้นสำหรับการชำระเงินที่สามารถทำได้อย่างง่ายดาย"
+
+#: templates/wallet/partials/wallet_settings.html:193
+msgid ""
+"You can provide amount (BTC or fiat) limits of transactions that you can "
+"make without using two factor authentication"
+msgstr ""
+"คุณสามารถตั้งขีดจำกัด (บีทีซีหรือเฟียต) "
+"ของยอดธุรกรรมที่คุณสามารถทำได้โดยไม่ต้องใช้การตรวจสอบรหัสผ่านขั้นที่ 2"
+
+#: templates/wallet/partials/wallet_settings.html:218
+msgid "Change limits"
+msgstr "เปลี่ยนข้อจำกัด"
+
+#: templates/wallet/partials/wallet_settings.html:225
 msgid "Privacy"
 msgstr "ส่วนตัว"
 
-#: templates/wallet/partials/wallet_settings.html:319
+#: templates/wallet/partials/wallet_settings.html:226
 msgid ""
 "Decide who can send you money directly to your GreenAddress wallet, and who "
 "can see your name when receiving money from you"
@@ -1827,11 +1754,11 @@ msgstr ""
 "ตัดสินใจเลือกบุคคลที่สามารถส่งเงินเข้า GreenAddress "
 "ได้และเลือกบุคคลที่เห็นชื่อคุณเมื่อมีการส่งเงินให้"
 
-#: templates/wallet/partials/wallet_settings.html:324
+#: templates/wallet/partials/wallet_settings.html:231
 msgid "Allow sending to my wallet via email/Reddit"
 msgstr "อนุญาตให้ส่งมาที่ wallet ผ่าน email/Reddit"
 
-#: templates/wallet/partials/wallet_settings.html:325
+#: templates/wallet/partials/wallet_settings.html:232
 msgid ""
 "(NOTE: at this moment addressbook is not supported for Reddit contacts, so "
 "choosing 'Addressbook contacts' will disallow sending to you wallet directly "
@@ -1840,25 +1767,25 @@ msgstr ""
 "(หมายเหตุ: ขณะนี้สมุดบันทึกที่อยู่ไม่รองรับที่อยู่จาก reddit ดังนั้นการเลือก Addressbook "
 "contacts จะปิดการอนุญาตสำหรับการใช้ Reddit ส่งเข้าบัญชีคุณโดยตรง)"
 
-#: templates/wallet/partials/wallet_settings.html:327
-#: templates/wallet/partials/wallet_settings.html:338
+#: templates/wallet/partials/wallet_settings.html:234
+#: templates/wallet/partials/wallet_settings.html:245
 msgid "Everyone"
 msgstr "ทุกท่าน"
 
-#: templates/wallet/partials/wallet_settings.html:328
+#: templates/wallet/partials/wallet_settings.html:235
 msgid "Addressbook contacts"
 msgstr "สมุดรายชื่อที่อยู่"
 
-#: templates/wallet/partials/wallet_settings.html:329
-#: templates/wallet/partials/wallet_settings.html:340
+#: templates/wallet/partials/wallet_settings.html:236
+#: templates/wallet/partials/wallet_settings.html:247
 msgid "No one"
 msgstr "ไม่มีใคร"
 
-#: templates/wallet/partials/wallet_settings.html:335
+#: templates/wallet/partials/wallet_settings.html:242
 msgid "Show my email/Reddit handle as sender to "
 msgstr "แสดงอีเมล์/reddit เป็นผู้ส่งไปยัง"
 
-#: templates/wallet/partials/wallet_settings.html:336
+#: templates/wallet/partials/wallet_settings.html:243
 msgid ""
 "(NOTE: at this moment addressbook is not supported for Reddit contacts, so "
 "choosing 'Mutually added in addressbook' will cause you to be never visible "
@@ -1867,27 +1794,167 @@ msgstr ""
 "(หมายเหตุ: ขณะนี้สมุดบันทึกที่อยู่ไม่รองรับที่อยู่จาก reddit ดังนั้นการเลือก Addressbook "
 "contacts จะทำให้คุณไม่เห็นผู้ส่งในชื่อ Reddit ขณะใช้งาน)"
 
-#: templates/wallet/partials/wallet_settings.html:339
+#: templates/wallet/partials/wallet_settings.html:246
 msgid "Mutually added in addressbook"
 msgstr "เพิ่มความร่วมกันใน Facebook"
 
-#: templates/wallet/partials/wallet_settings.html:349
+#: templates/wallet/partials/wallet_settings.html:256
+msgid "Replace by fee"
+msgstr ""
+
+#: templates/wallet/partials/wallet_settings.html:257
+msgid ""
+"Replace by fee functionality allows re-sending unconfirmed transactions with "
+"higher fees to speed up confirmation progress."
+msgstr ""
+
+#: templates/wallet/partials/wallet_settings.html:269
+msgid "Allow replacing by fee for all outgoing transactions"
+msgstr ""
+
+#: templates/wallet/partials/wallet_settings.html:283
+#: templates/wallet/partials/wallet_settings.html:448
+msgid "Email"
+msgstr "อีเมล"
+
+#: templates/wallet/partials/wallet_settings.html:284
+msgid ""
+"Set your email address for transactions notifications, two factor "
+"authentication, and nLockTime transactions."
+msgstr ""
+"ตั้งค่าของคุณที่อยู่อีเมล์สำหรับการแจ้งเตือนธุรกรรม ปัจจัยสองรับรองความถูกต้อง และธุรกรรม "
+"nLockTime"
+
+#: templates/wallet/partials/wallet_settings.html:289
+msgid "Change email address"
+msgstr "เปลี่ยนอีเมล์"
+
+#: templates/wallet/partials/wallet_settings.html:290
+msgid "Set email address"
+msgstr "การตั้งค่าอีเมล์"
+
+#: templates/wallet/partials/wallet_settings.html:298
+msgid ""
+"You need to provide confirmation code from your email to allow using it."
+"<br>              Please check your email and provide the code."
+msgstr "คุณต้องระบุรหัสยืนยันจากอีเมล์ของคุณให้ใช้<br>โปรดตรวจสอบอีเมล์ของคุณ และให้รหัส"
+
+#: templates/wallet/partials/wallet_settings.html:309
+#: templates/wallet/partials/wallet_settings.html:359
+#: templates/wallet/partials/wallet_settings.html:374
+msgid "Confirm"
+msgstr "ยืน​ยัน"
+
+#: templates/wallet/partials/wallet_settings.html:315
+msgid ""
+"The code is valid only for 5 minutes, so you can request another one if "
+"necessary."
+msgstr "รหัสถูกต้องสำหรับ 5 นาที เพื่อให้คุณสามารถร้องขออย่างอื่นถ้าจำเป็น"
+
+#: templates/wallet/partials/wallet_settings.html:315
+msgid "Request another code"
+msgstr "ขอรหัสอื่น"
+
+#: templates/wallet/partials/wallet_settings.html:323
+msgid "PGP"
+msgstr ""
+
+#: templates/wallet/partials/wallet_settings.html:324
+msgid "Set your Pretty Good Privacy public key for improved privacy."
+msgstr ""
+
+#: templates/wallet/partials/wallet_settings.html:328
+msgid "Public Key"
+msgstr ""
+
+#: templates/wallet/partials/wallet_settings.html:330
+msgid "----BEGIN PGP PUBLIC KEY..."
+msgstr ""
+
+#: templates/wallet/partials/wallet_settings.html:340
+msgid "Quick login"
+msgstr "เข้าสู่ระบบอย่างรวดเร็ว"
+
+#: templates/wallet/partials/wallet_settings.html:341
+msgid "Enable a simple PIN to quickly access your wallet from this device."
+msgstr "เปิดใช้งาน PIN อย่างรวดเร็วเข้าถึง Wallet ของคุณจากอุปกรณ์นี้"
+
+#: templates/wallet/partials/wallet_settings.html:350
+msgid "Enable quick login on this device"
+msgstr "เปิดใช้งานการเข้าสู่ระบบอย่างรวดเร็วบนอุปกรณ์นี้"
+
+#: templates/wallet/partials/wallet_settings.html:354
+msgid "Change PIN number"
+msgstr "เปลี่ยนหมายเลข PIN"
+
+#: templates/wallet/partials/wallet_settings.html:355
+msgid "Set PIN number"
+msgstr "กำหนดหมายเลข PIN"
+
+#: templates/wallet/partials/wallet_settings.html:364
+msgid "Disable quick login on all devices"
+msgstr "ปิดใช้งานการเข้าสู่ระบบอย่างรวดเร็วบนอุปกรณ์ทั้งหมด"
+
+#: templates/wallet/partials/wallet_settings.html:368
+msgid "set PIN to"
+msgstr "ตั้งค่า PIN"
+
+#: templates/wallet/partials/wallet_settings.html:373
+msgid "Remove"
+msgstr "เอาออก"
+
+#: templates/wallet/partials/wallet_settings.html:384
+msgid "Touch ID"
+msgstr ""
+
+#: templates/wallet/partials/wallet_settings.html:385
+#, fuzzy
+msgid "Enable Touch ID to quickly access your wallet from this device."
+msgstr "เปิดใช้งาน PIN อย่างรวดเร็วเข้าถึง Wallet ของคุณจากอุปกรณ์นี้"
+
+#: templates/wallet/partials/wallet_settings.html:393
+#, fuzzy
+msgid "Enable Touch ID on this device"
+msgstr "เปิดใช้งานการเข้าสู่ระบบอย่างรวดเร็วบนอุปกรณ์นี้"
+
+#: templates/wallet/partials/wallet_settings.html:402
+msgid "Link your own third party accounts"
+msgstr "เชื่อมโยงบัญชีของบุคคลที่สาม"
+
+#: templates/wallet/partials/wallet_settings.html:403
+msgid ""
+"Allow social payments and watch-only login to your wallet via your own third "
+"party accounts."
+msgstr ""
+"อนุญาตจ่ายด้วยโซเชียลและการใช้งานแบบดูอย่างเดียวสำหรับ Wallet ผ่านทางบัญชีผู้ใช้งานแอพภายนอก"
+
+#: templates/wallet/partials/wallet_settings.html:429
+msgid "Username"
+msgstr "ผู้ใช้"
+
+#: templates/wallet/partials/wallet_settings.html:430
+#: templates/wallet/partials/signuplogin/modal_decryption_password.html:8
+#: templates/wallet/partials/signuplogin/modal_encryption_password.html:10
+msgid "Password"
+msgstr "รหัสผ่าน"
+
+#: templates/wallet/partials/wallet_settings.html:439
 msgid "Two factor authentication"
 msgstr "การตั้งรหัสผ่านสองขั้น"
 
-#: templates/wallet/partials/wallet_settings.html:350
+#: templates/wallet/partials/wallet_settings.html:440
 msgid "Set any or all two factor: you can choose which one when needed!"
 msgstr "ตั้งค่าตัวแปรหรือตั้งค่าทั้งหมด: คุณสามารถเลือกอันที่ต้องการได้"
 
-#: templates/wallet/partials/wallet_settings.html:350
+#: templates/wallet/partials/wallet_settings.html:440
 msgid "Enable two or back up the given code where applicable."
 msgstr ""
 
-#: templates/wallet/partials/wallet_settings.html:368
+#: templates/wallet/partials/wallet_settings.html:458
 msgid "Google Authenticator"
 msgstr "Google Authenticator"
 
-#: templates/wallet/partials/wallet_settings.html:371
+#: templates/wallet/partials/wallet_settings.html:461
 msgid ""
 "You need to provide one Google Authenticator code to set up the two factor "
 "authentication.<br>                    Please scan the QR code below, and "
@@ -1896,11 +1963,11 @@ msgstr ""
 "คุณต้องป้อนรหัส Google Authenticator เพื่อตั้งค่ารหัสสองขั้น.<br>                    "
 "กรุณาสแกน QR code ด้านล่างและป้อนรหัส"
 
-#: templates/wallet/partials/wallet_settings.html:375
+#: templates/wallet/partials/wallet_settings.html:465
 msgid "Code"
 msgstr "รหัส"
 
-#: templates/wallet/partials/wallet_settings.html:412
+#: templates/wallet/partials/wallet_settings.html:502
 msgid ""
 "You need to provide one SMS code to set up the two factor authentication."
 "<br>                    Please check your phone and provide the code."
@@ -1908,7 +1975,7 @@ msgstr ""
 "คุณต้องป้อนรหัสจากข้อความเพื่อตั้งค่ารหัสผ่านสองขั้น.<br>                "
 "กรุณาตรวจสอบโทรศัพท์และป้อนรหัส."
 
-#: templates/wallet/partials/wallet_settings.html:452
+#: templates/wallet/partials/wallet_settings.html:542
 msgid ""
 "You need to provide one phone code to set up the two factor authentication."
 "<br>                    Please check your phone and provide the code."
@@ -1916,101 +1983,49 @@ msgstr ""
 "คุณต้องป้อนรหัสจากโทรศัพท์เพื่อตั้งค่ารหัสผ่านสองขั้น.<br>                "
 "กรุณาตรวจสอบโทรศัพท์และป้อนรหัส."
 
-#: templates/wallet/partials/wallet_settings.html:474
+#: templates/wallet/partials/wallet_settings.html:564
 msgid "Auto logout"
 msgstr "ออกจากระบบอัตโนมัติ"
 
-#: templates/wallet/partials/wallet_settings.html:475
+#: templates/wallet/partials/wallet_settings.html:565
 msgid "Configure auto logout after some inactivity timeout"
 msgstr "กำหนดค่าออกจากระบบโดยอัตโนมัติหลังจากไม่มีความเคลื่อนไหว"
 
-#: templates/wallet/partials/wallet_settings.html:479
+#: templates/wallet/partials/wallet_settings.html:569
 msgid "Minutes"
 msgstr "นาที"
 
-#: templates/wallet/partials/wallet_settings.html:481
+#: templates/wallet/partials/wallet_settings.html:571
 msgid "Timeout minutes"
 msgstr "นาที ออกจากระบบ"
 
-#: templates/wallet/partials/wallet_settings.html:491
-#: templates/wallet/partials/wallet_settings.html:495
+#: templates/wallet/partials/wallet_settings.html:581
+#: templates/wallet/partials/wallet_settings.html:585
 msgid "Show mnemonic"
 msgstr "แสดงการช่วยจำ"
 
-#: templates/wallet/partials/wallet_settings.html:492
+#: templates/wallet/partials/wallet_settings.html:582
 msgid ""
 "Display your mnemonic for account recovery or cloning on another device."
 msgstr "แสดงรหัสช่วยจำของการกู้บัญชีหรือนำไปใช้บนอุปกรณ์อื่น"
 
-#: templates/wallet/partials/wallet_settings.html:496
+#: templates/wallet/partials/wallet_settings.html:586
 msgid "Show encrypted mnemonic"
 msgstr "แสดงรหัสช่วยจำเข้ารหัส"
 
-#: templates/wallet/partials/wallet_settings.html:499
+#: templates/wallet/partials/wallet_settings.html:589
 msgid "Write encrypted to NFC tag"
 msgstr "เขียนการเข้ารหัสไปยัง NFC Tag"
 
-#: templates/wallet/partials/wallet_settings.html:502
+#: templates/wallet/partials/wallet_settings.html:592
 msgid "Write to a hardware wallet"
 msgstr "Write to a hardware wallet"
 
-#: templates/wallet/partials/wallet_settings.html:510
-msgid ""
-"nLockTime transactions allow you to redeem your deposited funds without "
-"GreenAddress' signature after pre-defined number of blocks"
-msgstr ""
-"nLockTime transactions allow you to redeem your deposited funds without "
-"GreenAddress' signature after pre-defined number of blocks"
-
-#: templates/wallet/partials/wallet_settings.html:516
-msgid "Allow redeeming funds without GreenAddress' signature after"
-msgstr "Allow redeeming funds without GreenAddress' signature after"
-
-#: templates/wallet/partials/wallet_settings.html:518
-msgid "blocks"
-msgstr "บล็อค"
-
-#: templates/wallet/partials/wallet_settings.html:524
-msgid ""
-"Both outgoing and incoming transaction notifications must be enabled for "
-"this feature to work."
-msgstr "ทั้งการแจ้งเตือนธุรกรรมขาเข้าและขาออกต้องเปิดใช้งานเพื่อให้ฟังก์ชั่นนี้ใช้งานได้"
-
-#: templates/wallet/partials/wallet_settings.html:527
-msgid "Show outputs expiring soon"
-msgstr "แสดงผลลัพธ์ที่จะหมดอายุเร็ว ๆ นี้"
-
-#: templates/wallet/partials/wallet_settings.html:528
-msgid "Send all nLockTime transactions by email"
-msgstr "ส่งธุรกรรม nLockTime ทั้งหมดทางอีเมล์"
-
-#: templates/wallet/partials/wallet_settings.html:536
-msgid "Spending limits"
-msgstr "การจำกัดการใช้จ่าย"
-
-#: templates/wallet/partials/wallet_settings.html:537
-msgid ""
-"Set some limits for which you won't be asked for two factor for super "
-"userfriendly payments."
-msgstr "ตั้งขีดจำกัดที่คุณจะไม่ถูกถามรหัสผ่าน 2 ขั้นสำหรับการชำระเงินที่สามารถทำได้อย่างง่ายดาย"
-
-#: templates/wallet/partials/wallet_settings.html:540
-msgid ""
-"You can provide amount (BTC or fiat) limits of transactions that you can "
-"make without using two factor authentication"
-msgstr ""
-"คุณสามารถตั้งขีดจำกัด (บีทีซีหรือเฟียต) "
-"ของยอดธุรกรรมที่คุณสามารถทำได้โดยไม่ต้องใช้การตรวจสอบรหัสผ่านขั้นที่ 2"
-
-#: templates/wallet/partials/wallet_settings.html:565
-msgid "Change limits"
-msgstr "เปลี่ยนข้อจำกัด"
-
-#: templates/wallet/partials/wallet_settings.html:573
+#: templates/wallet/partials/wallet_settings.html:600
 msgid "Delayed payments"
 msgstr "ชำระเงินล่าช้า"
 
-#: templates/wallet/partials/wallet_settings.html:574
+#: templates/wallet/partials/wallet_settings.html:601
 msgid ""
 "Delay transaction for super ease of mind: works best in conjuction with "
 "outgoing notifications."
@@ -2018,81 +2033,81 @@ msgstr ""
 "ธุรกรรมหน่วงเวลาเป็นเรื่องง่ายดาย: ทำงานดีที่สุดใช้พร้อม conjunction "
 "และระบบแจ้งเตือนเปิดใช้งาน"
 
-#: templates/wallet/partials/wallet_settings.html:582
+#: templates/wallet/partials/wallet_settings.html:609
 msgid "Enable delayed payments"
 msgstr "ใช้งานชำระเงินล่าช้า"
 
-#: templates/wallet/partials/wallet_settings.html:583
+#: templates/wallet/partials/wallet_settings.html:610
 msgid "Coming soon"
 msgstr "เร็วๆนี้"
 
-#: templates/wallet/partials/wallet_settings.html:588
+#: templates/wallet/partials/wallet_settings.html:615
 msgid "Delay payments of"
 msgstr "ชำระเงินล่าช้าของ"
 
-#: templates/wallet/partials/wallet_settings.html:606
-#: templates/wallet/partials/wallet_settings.html:610
+#: templates/wallet/partials/wallet_settings.html:633
+#: templates/wallet/partials/wallet_settings.html:637
 msgid "Remove account"
 msgstr "ย้ายบัญชีออก"
 
-#: templates/wallet/partials/wallet_settings.html:607
+#: templates/wallet/partials/wallet_settings.html:634
 msgid "You can remove your account with all associated data here."
 msgstr "คุณสามารถย้ายบัญชีและข้อมูลที่เกี่ยวข้องออกได้ที่นี่"
 
-#: templates/wallet/partials/wallet_settings.html:621
+#: templates/wallet/partials/wallet_settings.html:648
 #, fuzzy
 msgid "Simple accounts"
 msgstr "ย้ายบัญชีออก"
 
-#: templates/wallet/partials/wallet_settings.html:622
+#: templates/wallet/partials/wallet_settings.html:649
 msgid ""
 "Create accounts that allow you to separate your funds. Each accounts will "
 "have its own receiving addresses."
 msgstr ""
 
-#: templates/wallet/partials/wallet_settings.html:627
+#: templates/wallet/partials/wallet_settings.html:654
 msgid "Create an account with the following label:"
 msgstr ""
 
-#: templates/wallet/partials/wallet_settings.html:630
-#: templates/wallet/partials/wallet_settings.html:679
+#: templates/wallet/partials/wallet_settings.html:657
+#: templates/wallet/partials/wallet_settings.html:706
 msgid "Label"
 msgstr ""
 
-#: templates/wallet/partials/wallet_settings.html:632
-#: templates/wallet/partials/wallet_settings.html:681
+#: templates/wallet/partials/wallet_settings.html:659
+#: templates/wallet/partials/wallet_settings.html:708
 msgid "Create"
 msgstr ""
 
-#: templates/wallet/partials/wallet_settings.html:638
+#: templates/wallet/partials/wallet_settings.html:665
 #, fuzzy
 msgid "Your simple accounts:"
 msgstr "ย้ายบัญชีออก"
 
-#: templates/wallet/partials/wallet_settings.html:642
-#: templates/wallet/partials/wallet_settings.html:698
+#: templates/wallet/partials/wallet_settings.html:669
+#: templates/wallet/partials/wallet_settings.html:725
 #, fuzzy
 msgid "Actions"
 msgstr "ธุรกรรม"
 
-#: templates/wallet/partials/wallet_settings.html:654
-#: templates/wallet/partials/wallet_settings.html:710
+#: templates/wallet/partials/wallet_settings.html:681
+#: templates/wallet/partials/wallet_settings.html:737
 #, fuzzy
 msgid "Rename"
 msgstr "ผู้ใช้"
 
-#: templates/wallet/partials/wallet_settings.html:657
-#: templates/wallet/partials/wallet_settings.html:713
+#: templates/wallet/partials/wallet_settings.html:684
+#: templates/wallet/partials/wallet_settings.html:740
 #, fuzzy
 msgid "Receive"
 msgstr "รับเงิน"
 
-#: templates/wallet/partials/wallet_settings.html:666
+#: templates/wallet/partials/wallet_settings.html:693
 #, fuzzy
 msgid "2of3 accounts"
 msgstr "ย้ายบัญชีออก"
 
-#: templates/wallet/partials/wallet_settings.html:668
+#: templates/wallet/partials/wallet_settings.html:695
 msgid ""
 "Create accounts that allow you to access your funds at any time even without "
 "access to GreenAddress, using additional offline recovery key.<br/"
@@ -2102,7 +2117,7 @@ msgid ""
 "protect them from double spending."
 msgstr ""
 
-#: templates/wallet/partials/wallet_settings.html:670
+#: templates/wallet/partials/wallet_settings.html:697
 msgid ""
 "Create accounts that allow you to access your funds at any time even without "
 "access to GreenAddress, using additional offline recovery key.<br/"
@@ -2110,19 +2125,19 @@ msgid ""
 "accounts because GreenAddress can't protect them from double spending."
 msgstr ""
 
-#: templates/wallet/partials/wallet_settings.html:676
+#: templates/wallet/partials/wallet_settings.html:703
 msgid "Create a 2of3 account with the following label:"
 msgstr ""
 
-#: templates/wallet/partials/wallet_settings.html:688
+#: templates/wallet/partials/wallet_settings.html:715
 msgid "Optionally provide your custom recovery xpub:"
 msgstr ""
 
-#: templates/wallet/partials/wallet_settings.html:690
+#: templates/wallet/partials/wallet_settings.html:717
 msgid "xpub"
 msgstr ""
 
-#: templates/wallet/partials/wallet_settings.html:694
+#: templates/wallet/partials/wallet_settings.html:721
 #, fuzzy
 msgid "Your 2of3 accounts:"
 msgstr "ย้ายบัญชีออก"
@@ -2146,15 +2161,15 @@ msgstr "สัปดาห์"
 msgid "Your last transactions"
 msgstr "ธุรกรรมล่าสุดของคุณ"
 
-#: templates/wallet/partials/wallet_transactions.html:49
+#: templates/wallet/partials/wallet_transactions.html:50
 msgid "From date"
 msgstr "From date"
 
-#: templates/wallet/partials/wallet_transactions.html:59
+#: templates/wallet/partials/wallet_transactions.html:60
 msgid "To date"
 msgstr "To date"
 
-#: templates/wallet/partials/wallet_transactions.html:67
+#: templates/wallet/partials/wallet_transactions.html:68
 msgid "Search"
 msgstr "Search"
 
@@ -2199,28 +2214,65 @@ msgstr "ยังไม่ได้ยืนยัน"
 msgid "confirmations"
 msgstr "การยืนยัน"
 
-#: templates/wallet/partials/wallet_transactions_table.html:45
+#: templates/wallet/partials/wallet_transactions_table.html:46
+msgid "bump fee"
+msgstr ""
+
+#: templates/wallet/partials/wallet_transactions_table.html:50
+msgid "Choose required estimated number of confirmations:"
+msgstr ""
+
+#: templates/wallet/partials/wallet_transactions_table.html:51
+msgid "Current estimate"
+msgstr ""
+
+#: templates/wallet/partials/wallet_transactions_table.html:61
+msgid "Fee already at 1-conf-estimate level. Choose new fee:"
+msgstr ""
+
+#: templates/wallet/partials/wallet_transactions_table.html:63
+msgid "1.5x current fee"
+msgstr ""
+
+#: templates/wallet/partials/wallet_transactions_table.html:64
+msgid "2x current fee"
+msgstr ""
+
+#: templates/wallet/partials/wallet_transactions_table.html:65
+msgid "3x current fee"
+msgstr ""
+
+#: templates/wallet/partials/wallet_transactions_table.html:69
+msgid "show replaced"
+msgstr ""
+
+#: templates/wallet/partials/wallet_transactions_table.html:74
 msgid "take funds back"
 msgstr "นำกองทุนกลับมา"
 
-#: templates/wallet/partials/wallet_transactions_table.html:48
+#: templates/wallet/partials/wallet_transactions_table.html:77
 msgid "Regenerate voucher"
 msgstr "Regenerate voucher"
 
-#: templates/wallet/partials/wallet_transactions_table.html:51
+#: templates/wallet/partials/wallet_transactions_table.html:80
 msgid "Regenerate encrypted voucher"
 msgstr "Regenerate encrypted voucher"
 
-#: templates/wallet/partials/wallet_transactions_table.html:67
+#: templates/wallet/partials/wallet_transactions_table.html:86
+#, fuzzy
+msgid "Replaced transactions:"
+msgstr "ธุรกรรมที่วัตถุดิบ"
+
+#: templates/wallet/partials/wallet_transactions_table.html:104
 #, fuzzy
 msgid "Loading transactions, please wait..."
 msgstr "Logging in, please wait..."
 
-#: templates/wallet/partials/wallet_transactions_table.html:70
+#: templates/wallet/partials/wallet_transactions_table.html:107
 msgid "No transactions found..."
 msgstr "ไม่พบธุรกรรม"
 
-#: templates/wallet/partials/wallet_transactions_table.html:73
+#: templates/wallet/partials/wallet_transactions_table.html:110
 msgid "Show more transactions..."
 msgstr "Show more transactions..."
 
