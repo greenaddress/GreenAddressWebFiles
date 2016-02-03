@@ -714,7 +714,7 @@ msgstr "Code de l'email"
 #: templates/wallet/partials/wallet_modal_2fa.html:31
 #: templates/wallet/partials/wallet_modal_btchip_fup.html:10
 #: templates/wallet/partials/wallet_modal_btchip_pin.html:22
-#: templates/wallet/partials/wallet_modal_confirm_tx.html:26
+#: templates/wallet/partials/wallet_modal_confirm_tx.html:34
 #: templates/wallet/partials/wallet_modal_custom_login.html:25
 #: templates/wallet/partials/wallet_modal_logout.html:10
 #: templates/wallet/partials/wallet_modal_logout_other_session.html:9
@@ -990,16 +990,21 @@ msgstr ""
 msgid "Confirm transaction details"
 msgstr "Détails de la transaction"
 
-#: templates/wallet/partials/wallet_modal_confirm_tx.html:6
+#: templates/wallet/partials/wallet_modal_confirm_tx.html:7
+#, fuzzy
+msgid "You are about to bump a fee."
+msgstr "Vous allez envoyer "
+
+#: templates/wallet/partials/wallet_modal_confirm_tx.html:8
 msgid "Please make sure the details below are correct:"
 msgstr ""
 
-#: templates/wallet/partials/wallet_modal_confirm_tx.html:9
+#: templates/wallet/partials/wallet_modal_confirm_tx.html:12
 #: templates/wallet/partials/wallet_send.html:21
 msgid "Recipient"
 msgstr "Le destinataire"
 
-#: templates/wallet/partials/wallet_modal_confirm_tx.html:14
+#: templates/wallet/partials/wallet_modal_confirm_tx.html:17
 #: templates/wallet/partials/wallet_modal_tx_details.html:53
 #: templates/wallet/partials/wallet_modal_tx_details.html:66
 #: templates/wallet/partials/wallet_modal_tx_limits.html:18
@@ -1014,13 +1019,17 @@ msgstr "Le destinataire"
 msgid "Amount"
 msgstr "Montant"
 
-#: templates/wallet/partials/wallet_modal_confirm_tx.html:19
+#: templates/wallet/partials/wallet_modal_confirm_tx.html:22
 #: templates/wallet/partials/wallet_modal_tx_details.html:33
 #: templates/wallet/partials/wallet_send.html:121
 msgid "Fee"
 msgstr "Frais"
 
-#: templates/wallet/partials/wallet_modal_confirm_tx.html:27
+#: templates/wallet/partials/wallet_modal_confirm_tx.html:26
+msgid "Previous fee:"
+msgstr ""
+
+#: templates/wallet/partials/wallet_modal_confirm_tx.html:35
 #, fuzzy
 msgid "Send transaction"
 msgstr "transaction"
