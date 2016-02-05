@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: greenaddress-wallet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-02-05 11:30+0000\n"
+"POT-Creation-Date: 2016-02-05 12:11+0000\n"
 "PO-Revision-Date: 2014-08-23 15:03-0400\n"
 "Last-Translator: GreenAddress <info@greenaddress.it>\n"
 "Language-Team: Chinese Simplified\n"
@@ -347,22 +347,22 @@ msgstr "Old BTChip firmware version detected. Please upgrade to at least %s."
 
 #: static/js/greenwallet/services.js.c:3909
 #: static/js/greenwallet/signuplogin/controllers.js.c:118
-#: static/js/greenwallet/transactions/controllers.js.c:249
+#: static/js/greenwallet/transactions/controllers.js.c:255
 #: WalletCrx/static/js/greenwallet/services.js.c:3909
 #: WalletCrx/static/js/greenwallet/signuplogin/controllers.js.c:118
-#: WalletCrx/static/js/greenwallet/transactions/controllers.js.c:249
+#: WalletCrx/static/js/greenwallet/transactions/controllers.js.c:255
 #: WalletCordova/www/greenaddress.it/static/js/greenwallet/services.js.c:3909
 #: WalletCordova/www/greenaddress.it/static/js/greenwallet/signuplogin/controllers.js.c:118
-#: WalletCordova/www/greenaddress.it/static/js/greenwallet/transactions/controllers.js.c:232
+#: WalletCordova/www/greenaddress.it/static/js/greenwallet/transactions/controllers.js.c:249
 msgid "Please provide a password."
 msgstr "Please provide a password."
 
 #: static/js/greenwallet/services.js.c:3913
-#: static/js/greenwallet/transactions/controllers.js.c:253
+#: static/js/greenwallet/transactions/controllers.js.c:259
 #: WalletCrx/static/js/greenwallet/services.js.c:3913
-#: WalletCrx/static/js/greenwallet/transactions/controllers.js.c:253
+#: WalletCrx/static/js/greenwallet/transactions/controllers.js.c:259
 #: WalletCordova/www/greenaddress.it/static/js/greenwallet/services.js.c:3913
-#: WalletCordova/www/greenaddress.it/static/js/greenwallet/transactions/controllers.js.c:236
+#: WalletCordova/www/greenaddress.it/static/js/greenwallet/transactions/controllers.js.c:253
 msgid "Passwords do not match."
 msgstr "Passwords do not match."
 
