@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: greenaddress-wallet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-02-10 16:00+0000\n"
+"POT-Creation-Date: 2016-02-24 21:18+0000\n"
 "PO-Revision-Date: 2014-08-20 10:23-0400\n"
 "Last-Translator: GreenAddress <info@greenaddress.it>\n"
 "Language-Team: Swedish\n"
@@ -164,6 +164,8 @@ msgstr "Tid,Beskrivning,satoshis"
 #: static/js/greenwallet/transactions/controllers.js.c:173
 #: WalletCrx/static/js/greenwallet/services.js.c:856
 #: WalletCrx/static/js/greenwallet/transactions/controllers.js.c:173
+#: WalletCordova/www/greenaddress.it/static/js/greenwallet/services.js.c:856
+#: WalletCordova/www/greenaddress.it/static/js/greenwallet/transactions/controllers.js.c:173
 msgid "Not enough money"
 msgstr ""
 
@@ -361,7 +363,7 @@ msgstr "Old BTChip firmware version detected. Please upgrade to at least %s."
 #: WalletCrx/static/js/greenwallet/transactions/controllers.js.c:336
 #: WalletCordova/www/greenaddress.it/static/js/greenwallet/services.js.c:3909
 #: WalletCordova/www/greenaddress.it/static/js/greenwallet/signuplogin/controllers.js.c:118
-#: WalletCordova/www/greenaddress.it/static/js/greenwallet/transactions/controllers.js.c:255
+#: WalletCordova/www/greenaddress.it/static/js/greenwallet/transactions/controllers.js.c:336
 msgid "Please provide a password."
 msgstr "Please provide a password."
 
@@ -370,7 +372,7 @@ msgstr "Please provide a password."
 #: WalletCrx/static/js/greenwallet/services.js.c:3913
 #: WalletCrx/static/js/greenwallet/transactions/controllers.js.c:340
 #: WalletCordova/www/greenaddress.it/static/js/greenwallet/services.js.c:3913
-#: WalletCordova/www/greenaddress.it/static/js/greenwallet/transactions/controllers.js.c:259
+#: WalletCordova/www/greenaddress.it/static/js/greenwallet/transactions/controllers.js.c:340
 msgid "Passwords do not match."
 msgstr "Passwords do not match."
 
@@ -432,13 +434,13 @@ msgid "Not a valid encrypted private key"
 msgstr "Inte en giltig krypterad privat nyckel"
 
 #: static/js/greenwallet/info/controllers.js.c:234
-#: static/js/greenwallet/receive/controllers.js.c:139
-#: static/js/greenwallet/receive/controllers.js.c:146
-#: static/js/greenwallet/receive/controllers.js.c:163
+#: static/js/greenwallet/receive/controllers.js.c:135
+#: static/js/greenwallet/receive/controllers.js.c:142
+#: static/js/greenwallet/receive/controllers.js.c:159
 #: WalletCrx/static/js/greenwallet/info/controllers.js.c:234
-#: WalletCrx/static/js/greenwallet/receive/controllers.js.c:139
-#: WalletCrx/static/js/greenwallet/receive/controllers.js.c:146
-#: WalletCrx/static/js/greenwallet/receive/controllers.js.c:163
+#: WalletCrx/static/js/greenwallet/receive/controllers.js.c:135
+#: WalletCrx/static/js/greenwallet/receive/controllers.js.c:142
+#: WalletCrx/static/js/greenwallet/receive/controllers.js.c:159
 #: WalletCordova/www/greenaddress.it/static/js/greenwallet/info/controllers.js.c:234
 #: WalletCordova/www/greenaddress.it/static/js/greenwallet/receive/controllers.js.c:139
 #: WalletCordova/www/greenaddress.it/static/js/greenwallet/receive/controllers.js.c:146
