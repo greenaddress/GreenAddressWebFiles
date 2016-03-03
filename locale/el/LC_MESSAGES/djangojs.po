@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: greenaddress-wallet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-02-24 21:18+0000\n"
+"POT-Creation-Date: 2016-03-03 12:50+0000\n"
 "PO-Revision-Date: 2014-08-20 10:12-0400\n"
 "Last-Translator: GreenAddress <info@greenaddress.it>\n"
 "Language-Team: Greek\n"
@@ -444,9 +444,9 @@ msgstr "Μη έγκυρο κρυπτογραφημένο private key"
 #: WalletCrx/static/js/greenwallet/receive/controllers.js.c:142
 #: WalletCrx/static/js/greenwallet/receive/controllers.js.c:159
 #: WalletCordova/www/greenaddress.it/static/js/greenwallet/info/controllers.js.c:234
-#: WalletCordova/www/greenaddress.it/static/js/greenwallet/receive/controllers.js.c:139
-#: WalletCordova/www/greenaddress.it/static/js/greenwallet/receive/controllers.js.c:146
-#: WalletCordova/www/greenaddress.it/static/js/greenwallet/receive/controllers.js.c:163
+#: WalletCordova/www/greenaddress.it/static/js/greenwallet/receive/controllers.js.c:135
+#: WalletCordova/www/greenaddress.it/static/js/greenwallet/receive/controllers.js.c:142
+#: WalletCordova/www/greenaddress.it/static/js/greenwallet/receive/controllers.js.c:159
 msgid "Not a valid private key"
 msgstr "Μη έγκυρο private key"
 
