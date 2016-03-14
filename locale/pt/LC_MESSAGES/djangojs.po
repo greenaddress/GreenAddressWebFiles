@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-03-14 09:35+0000\n"
+"POT-Creation-Date: 2016-03-14 14:58+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -41,9 +41,9 @@ msgid "You need to log out to update cache."
 msgstr ""
 
 #: static/js/greenwallet/controllers.js.c:137
-#: static/js/greenwallet/send/controllers.js.c:754
+#: static/js/greenwallet/send/controllers.js.c:758
 #: WalletCrx/static/js/greenwallet/controllers.js.c:137
-#: WalletCrx/static/js/greenwallet/send/controllers.js.c:754
+#: WalletCrx/static/js/greenwallet/send/controllers.js.c:758
 #: WalletCordova/www/greenaddress.it/static/js/greenwallet/controllers.js.c:137
 #: WalletCordova/www/greenaddress.it/static/js/greenwallet/send/controllers.js.c:754
 msgid "Failed processing payment protocol request:"
@@ -649,37 +649,37 @@ msgstr ""
 msgid "Failed sending Reddit message"
 msgstr ""
 
-#: static/js/greenwallet/send/controllers.js.c:477
-#: WalletCrx/static/js/greenwallet/send/controllers.js.c:477
+#: static/js/greenwallet/send/controllers.js.c:481
+#: WalletCrx/static/js/greenwallet/send/controllers.js.c:481
 #: WalletCordova/www/greenaddress.it/static/js/greenwallet/send/controllers.js.c:477
 msgid "Transaction amount must be at least 0.1543mBTC to allow redemption fee"
 msgstr ""
 
-#: static/js/greenwallet/send/controllers.js.c:520
-#: static/js/greenwallet/send/controllers.js.c:589
-#: WalletCrx/static/js/greenwallet/send/controllers.js.c:520
-#: WalletCrx/static/js/greenwallet/send/controllers.js.c:589
+#: static/js/greenwallet/send/controllers.js.c:524
+#: static/js/greenwallet/send/controllers.js.c:593
+#: WalletCrx/static/js/greenwallet/send/controllers.js.c:524
+#: WalletCrx/static/js/greenwallet/send/controllers.js.c:593
 #: WalletCordova/www/greenaddress.it/static/js/greenwallet/send/controllers.js.c:520
 #: WalletCordova/www/greenaddress.it/static/js/greenwallet/send/controllers.js.c:589
 msgid "Transaction verification failed: "
 msgstr ""
 
-#: static/js/greenwallet/send/controllers.js.c:619
-#: WalletCrx/static/js/greenwallet/send/controllers.js.c:619
+#: static/js/greenwallet/send/controllers.js.c:623
+#: WalletCrx/static/js/greenwallet/send/controllers.js.c:623
 #: WalletCordova/www/greenaddress.it/static/js/greenwallet/send/controllers.js.c:619
 msgid ""
 "Sorry, vouchers and social transactions are not supported with hardware "
 "wallets."
 msgstr ""
 
-#: static/js/greenwallet/send/controllers.js.c:664
-#: WalletCrx/static/js/greenwallet/send/controllers.js.c:664
+#: static/js/greenwallet/send/controllers.js.c:668
+#: WalletCrx/static/js/greenwallet/send/controllers.js.c:668
 #: WalletCordova/www/greenaddress.it/static/js/greenwallet/send/controllers.js.c:664
 msgid "Invalid amount"
 msgstr ""
 
-#: static/js/greenwallet/send/controllers.js.c:673
-#: WalletCrx/static/js/greenwallet/send/controllers.js.c:673
+#: static/js/greenwallet/send/controllers.js.c:677
+#: WalletCrx/static/js/greenwallet/send/controllers.js.c:677
 #: WalletCordova/www/greenaddress.it/static/js/greenwallet/send/controllers.js.c:673
 msgid "Please provide a recipient"
 msgstr ""
