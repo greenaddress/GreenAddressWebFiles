@@ -1959,7 +1959,7 @@ msgstr ""
 
 #: templates/wallet/partials/wallet_settings.html:649
 msgid ""
-"Create accounts that allow you to separate your funds. Each accounts will "
+"Create accounts that allow you to separate your funds. Each account will "
 "have its own receiving addresses."
 msgstr ""
 

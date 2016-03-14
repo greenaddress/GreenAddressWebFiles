@@ -462,7 +462,7 @@ msgstr "ЧАВО по GreenAddress Bitcoin кошельку"
 #: templates/website/index.html:6
 msgid ""
 "GreenAddress Wallet brings the most advanced protection level to your "
-"bitcoins without sacrifying usability or control."
+"bitcoins without sacrificing usability or control."
 msgstr ""
 
 #: templates/website/index.html:31 templates/website/index.html:42
