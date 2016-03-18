@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: greenaddress-wallet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-03-14 14:58+0000\n"
+"POT-Creation-Date: 2016-03-18 19:21+0000\n"
 "PO-Revision-Date: 2014-08-23 16:08-0400\n"
 "Last-Translator: GreenAddress <info@greenaddress.it>\n"
 "Language-Team: Italian\n"
@@ -44,7 +44,7 @@ msgstr "Devi uscire per aggiornare l'app."
 #: WalletCrx/static/js/greenwallet/controllers.js.c:137
 #: WalletCrx/static/js/greenwallet/send/controllers.js.c:758
 #: WalletCordova/www/greenaddress.it/static/js/greenwallet/controllers.js.c:137
-#: WalletCordova/www/greenaddress.it/static/js/greenwallet/send/controllers.js.c:754
+#: WalletCordova/www/greenaddress.it/static/js/greenwallet/send/controllers.js.c:758
 msgid "Failed processing payment protocol request:"
 msgstr "Fallita la richiesta al protocollo di pagamento:"
 
@@ -660,7 +660,7 @@ msgstr "L'invio del messaggio tramite Reddit è fallito"
 
 #: static/js/greenwallet/send/controllers.js.c:481
 #: WalletCrx/static/js/greenwallet/send/controllers.js.c:481
-#: WalletCordova/www/greenaddress.it/static/js/greenwallet/send/controllers.js.c:477
+#: WalletCordova/www/greenaddress.it/static/js/greenwallet/send/controllers.js.c:481
 msgid "Transaction amount must be at least 0.1543mBTC to allow redemption fee"
 msgstr ""
 "L'ammontare della transazione deve essere almeno di 0.1543mBTC per poterla "
@@ -670,14 +670,14 @@ msgstr ""
 #: static/js/greenwallet/send/controllers.js.c:593
 #: WalletCrx/static/js/greenwallet/send/controllers.js.c:524
 #: WalletCrx/static/js/greenwallet/send/controllers.js.c:593
-#: WalletCordova/www/greenaddress.it/static/js/greenwallet/send/controllers.js.c:520
-#: WalletCordova/www/greenaddress.it/static/js/greenwallet/send/controllers.js.c:589
+#: WalletCordova/www/greenaddress.it/static/js/greenwallet/send/controllers.js.c:524
+#: WalletCordova/www/greenaddress.it/static/js/greenwallet/send/controllers.js.c:593
 msgid "Transaction verification failed: "
 msgstr "La verifica della transazione è fallita:"
 
 #: static/js/greenwallet/send/controllers.js.c:623
 #: WalletCrx/static/js/greenwallet/send/controllers.js.c:623
-#: WalletCordova/www/greenaddress.it/static/js/greenwallet/send/controllers.js.c:619
+#: WalletCordova/www/greenaddress.it/static/js/greenwallet/send/controllers.js.c:623
 msgid ""
 "Sorry, vouchers and social transactions are not supported with hardware "
 "wallets."
@@ -687,13 +687,13 @@ msgstr ""
 
 #: static/js/greenwallet/send/controllers.js.c:668
 #: WalletCrx/static/js/greenwallet/send/controllers.js.c:668
-#: WalletCordova/www/greenaddress.it/static/js/greenwallet/send/controllers.js.c:664
+#: WalletCordova/www/greenaddress.it/static/js/greenwallet/send/controllers.js.c:668
 msgid "Invalid amount"
 msgstr "L'ammontare non è valido"
 
 #: static/js/greenwallet/send/controllers.js.c:677
 #: WalletCrx/static/js/greenwallet/send/controllers.js.c:677
-#: WalletCordova/www/greenaddress.it/static/js/greenwallet/send/controllers.js.c:673
+#: WalletCordova/www/greenaddress.it/static/js/greenwallet/send/controllers.js.c:677
 msgid "Please provide a recipient"
 msgstr "Per favore inserisci un destinatario"
 
