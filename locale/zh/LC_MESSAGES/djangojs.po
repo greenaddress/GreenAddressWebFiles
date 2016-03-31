@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: greenaddress-wallet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-03-30 06:03+0000\n"
+"POT-Creation-Date: 2016-03-31 10:40+0000\n"
 "PO-Revision-Date: 2014-08-23 15:03-0400\n"
 "Last-Translator: GreenAddress <info@greenaddress.it>\n"
 "Language-Team: Chinese Simplified\n"
@@ -160,11 +160,11 @@ msgid "Time,Description,satoshis,%s,txhash,fee,memo"
 msgstr "时间，说明，satoshis，"
 
 #: static/js/greenwallet/services.js.c:857
-#: static/js/greenwallet/transactions/controllers.js.c:177
+#: static/js/greenwallet/transactions/controllers.js.c:189
 #: WalletCrx/static/js/greenwallet/services.js.c:857
-#: WalletCrx/static/js/greenwallet/transactions/controllers.js.c:177
+#: WalletCrx/static/js/greenwallet/transactions/controllers.js.c:189
 #: WalletCordova/www/greenaddress.it/static/js/greenwallet/services.js.c:857
-#: WalletCordova/www/greenaddress.it/static/js/greenwallet/transactions/controllers.js.c:173
+#: WalletCordova/www/greenaddress.it/static/js/greenwallet/transactions/controllers.js.c:177
 msgid "Not enough money"
 msgstr ""
 
@@ -356,22 +356,22 @@ msgstr "Old BTChip firmware version detected. Please upgrade to at least %s."
 
 #: static/js/greenwallet/services.js.c:3933
 #: static/js/greenwallet/signuplogin/controllers.js.c:118
-#: static/js/greenwallet/transactions/controllers.js.c:340
+#: static/js/greenwallet/transactions/controllers.js.c:382
 #: WalletCrx/static/js/greenwallet/services.js.c:3933
 #: WalletCrx/static/js/greenwallet/signuplogin/controllers.js.c:118
-#: WalletCrx/static/js/greenwallet/transactions/controllers.js.c:340
+#: WalletCrx/static/js/greenwallet/transactions/controllers.js.c:382
 #: WalletCordova/www/greenaddress.it/static/js/greenwallet/services.js.c:3933
 #: WalletCordova/www/greenaddress.it/static/js/greenwallet/signuplogin/controllers.js.c:118
-#: WalletCordova/www/greenaddress.it/static/js/greenwallet/transactions/controllers.js.c:336
+#: WalletCordova/www/greenaddress.it/static/js/greenwallet/transactions/controllers.js.c:340
 msgid "Please provide a password."
 msgstr "Please provide a password."
 
 #: static/js/greenwallet/services.js.c:3937
-#: static/js/greenwallet/transactions/controllers.js.c:344
+#: static/js/greenwallet/transactions/controllers.js.c:386
 #: WalletCrx/static/js/greenwallet/services.js.c:3937
-#: WalletCrx/static/js/greenwallet/transactions/controllers.js.c:344
+#: WalletCrx/static/js/greenwallet/transactions/controllers.js.c:386
 #: WalletCordova/www/greenaddress.it/static/js/greenwallet/services.js.c:3937
-#: WalletCordova/www/greenaddress.it/static/js/greenwallet/transactions/controllers.js.c:340
+#: WalletCordova/www/greenaddress.it/static/js/greenwallet/transactions/controllers.js.c:344
 msgid "Passwords do not match."
 msgstr "Passwords do not match."
 
@@ -409,34 +409,34 @@ msgstr ""
 msgid "Not enough data to draw the graph"
 msgstr "没有足够的数据来绘制图表"
 
-#: static/js/greenwallet/info/controllers.js.c:125
-#: WalletCrx/static/js/greenwallet/info/controllers.js.c:125
+#: static/js/greenwallet/info/controllers.js.c:126
+#: WalletCrx/static/js/greenwallet/info/controllers.js.c:126
 #: WalletCordova/www/greenaddress.it/static/js/greenwallet/info/controllers.js.c:125
 #, fuzzy
 msgid "1 confirmation"
 msgstr "详细信息"
 
-#: static/js/greenwallet/info/controllers.js.c:126
-#: WalletCrx/static/js/greenwallet/info/controllers.js.c:126
+#: static/js/greenwallet/info/controllers.js.c:127
+#: WalletCrx/static/js/greenwallet/info/controllers.js.c:127
 #: WalletCordova/www/greenaddress.it/static/js/greenwallet/info/controllers.js.c:126
 #, fuzzy, c-format
 msgid "%s confirmations"
 msgstr "详细信息"
 
-#: static/js/greenwallet/info/controllers.js.c:233
+#: static/js/greenwallet/info/controllers.js.c:234
 #: static/js/greenwallet/receive/controllers.js.c:72
-#: WalletCrx/static/js/greenwallet/info/controllers.js.c:233
+#: WalletCrx/static/js/greenwallet/info/controllers.js.c:234
 #: WalletCrx/static/js/greenwallet/receive/controllers.js.c:72
 #: WalletCordova/www/greenaddress.it/static/js/greenwallet/info/controllers.js.c:233
 #: WalletCordova/www/greenaddress.it/static/js/greenwallet/receive/controllers.js.c:72
 msgid "Not a valid encrypted private key"
 msgstr "不是有效的加密私钥"
 
-#: static/js/greenwallet/info/controllers.js.c:234
+#: static/js/greenwallet/info/controllers.js.c:235
 #: static/js/greenwallet/receive/controllers.js.c:135
 #: static/js/greenwallet/receive/controllers.js.c:142
 #: static/js/greenwallet/receive/controllers.js.c:159
-#: WalletCrx/static/js/greenwallet/info/controllers.js.c:234
+#: WalletCrx/static/js/greenwallet/info/controllers.js.c:235
 #: WalletCrx/static/js/greenwallet/receive/controllers.js.c:135
 #: WalletCrx/static/js/greenwallet/receive/controllers.js.c:142
 #: WalletCrx/static/js/greenwallet/receive/controllers.js.c:159
@@ -447,23 +447,23 @@ msgstr "不是有效的加密私钥"
 msgid "Not a valid private key"
 msgstr "不是一个有效的私钥"
 
-#: static/js/greenwallet/info/controllers.js.c:235
+#: static/js/greenwallet/info/controllers.js.c:236
 #: static/js/greenwallet/receive/controllers.js.c:73
-#: WalletCrx/static/js/greenwallet/info/controllers.js.c:235
+#: WalletCrx/static/js/greenwallet/info/controllers.js.c:236
 #: WalletCrx/static/js/greenwallet/receive/controllers.js.c:73
 #: WalletCordova/www/greenaddress.it/static/js/greenwallet/info/controllers.js.c:235
 #: WalletCordova/www/greenaddress.it/static/js/greenwallet/receive/controllers.js.c:73
 msgid "Invalid passphrase"
 msgstr "无效的密码"
 
-#: static/js/greenwallet/info/controllers.js.c:252
-#: WalletCrx/static/js/greenwallet/info/controllers.js.c:252
+#: static/js/greenwallet/info/controllers.js.c:253
+#: WalletCrx/static/js/greenwallet/info/controllers.js.c:253
 #: WalletCordova/www/greenaddress.it/static/js/greenwallet/info/controllers.js.c:252
 msgid "Funds redeemed"
 msgstr "资金赎回"
 
-#: static/js/greenwallet/info/controllers.js.c:255
-#: WalletCrx/static/js/greenwallet/info/controllers.js.c:255
+#: static/js/greenwallet/info/controllers.js.c:256
+#: WalletCrx/static/js/greenwallet/info/controllers.js.c:256
 #: WalletCordova/www/greenaddress.it/static/js/greenwallet/info/controllers.js.c:255
 msgid "Already redeemed"
 msgstr "已兑换"
