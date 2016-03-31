@@ -1711,17 +1711,17 @@ msgid "Mutually added in addressbook"
 msgstr ""
 
 #: templates/wallet/partials/wallet_settings.html:256
-msgid "Replace by fee"
+msgid "Transaction replacement"
 msgstr ""
 
 #: templates/wallet/partials/wallet_settings.html:257
 msgid ""
-"Replace by fee functionality allows re-sending unconfirmed transactions with "
-"higher fees to speed up confirmation progress."
+"Transaction replacement functionality allows re-sending unconfirmed "
+"transactions with higher fees to speed up confirmation progress."
 msgstr ""
 
 #: templates/wallet/partials/wallet_settings.html:269
-msgid "Allow replacing by fee for all outgoing transactions"
+msgid "Allow to increase the fee for outgoing transactions"
 msgstr ""
 
 #: templates/wallet/partials/wallet_settings.html:283
