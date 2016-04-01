@@ -585,7 +585,7 @@ msgstr ""
 #: templates/wallet/partials/wallet_modal_mnemonic.html:27
 #: templates/wallet/partials/wallet_modal_my_addresses.html:22
 #: templates/wallet/partials/wallet_modal_trezor_setup.html:26
-#: templates/wallet/partials/wallet_modal_tx_details.html:77
+#: templates/wallet/partials/wallet_modal_tx_details.html:84
 #: templates/wallet/partials/wallet_modal_url_qr.html:6
 #: templates/wallet/partials/wallet_modal_voucher.html:13
 #: templates/wallet/partials/wallet_transactions.html:50
@@ -800,8 +800,8 @@ msgstr "Namn"
 #: templates/wallet/partials/wallet_address_book.html:28
 #: templates/wallet/partials/wallet_address_book.html:47
 #: templates/wallet/partials/wallet_modal_my_addresses.html:5
-#: templates/wallet/partials/wallet_modal_tx_details.html:53
-#: templates/wallet/partials/wallet_modal_tx_details.html:66
+#: templates/wallet/partials/wallet_modal_tx_details.html:60
+#: templates/wallet/partials/wallet_modal_tx_details.html:73
 #: templates/wallet/partials/wallet_receive.html:65
 msgid "Address"
 msgstr "Adress"
@@ -1003,8 +1003,8 @@ msgid "Recipient"
 msgstr "Mottagare"
 
 #: templates/wallet/partials/wallet_modal_confirm_tx.html:17
-#: templates/wallet/partials/wallet_modal_tx_details.html:53
-#: templates/wallet/partials/wallet_modal_tx_details.html:66
+#: templates/wallet/partials/wallet_modal_tx_details.html:60
+#: templates/wallet/partials/wallet_modal_tx_details.html:73
 #: templates/wallet/partials/wallet_modal_tx_limits.html:18
 #: templates/wallet/partials/wallet_modal_tx_limits.html:20
 #: templates/wallet/partials/wallet_modal_tx_limits.html:28
@@ -1367,42 +1367,46 @@ msgstr ""
 msgid "Fee per kB"
 msgstr ""
 
-#: templates/wallet/partials/wallet_modal_tx_details.html:36
+#: templates/wallet/partials/wallet_modal_tx_details.html:39
+msgid "Estimated number of confirmations required:"
+msgstr ""
+
+#: templates/wallet/partials/wallet_modal_tx_details.html:43
 msgid "Raw transaction"
 msgstr "Raw transaction"
 
-#: templates/wallet/partials/wallet_modal_tx_details.html:39
+#: templates/wallet/partials/wallet_modal_tx_details.html:46
 msgid "Double spend by txhash"
 msgstr "Double spend by txhash"
 
-#: templates/wallet/partials/wallet_modal_tx_details.html:42
+#: templates/wallet/partials/wallet_modal_tx_details.html:49
 msgid "Payment request"
 msgstr "Payment request"
 
-#: templates/wallet/partials/wallet_modal_tx_details.html:44
+#: templates/wallet/partials/wallet_modal_tx_details.html:51
 msgid "download"
 msgstr "download"
 
-#: templates/wallet/partials/wallet_modal_tx_details.html:50
+#: templates/wallet/partials/wallet_modal_tx_details.html:57
 msgid "Inputs"
 msgstr "Input"
 
-#: templates/wallet/partials/wallet_modal_tx_details.html:51
+#: templates/wallet/partials/wallet_modal_tx_details.html:58
 msgid ""
 "The inputs below are only the first 10 inputs of this transaction. To see "
 "all of them, use a block explorer."
 msgstr ""
 
-#: templates/wallet/partials/wallet_modal_tx_details.html:57
-#: templates/wallet/partials/wallet_modal_tx_details.html:70
+#: templates/wallet/partials/wallet_modal_tx_details.html:64
+#: templates/wallet/partials/wallet_modal_tx_details.html:77
 msgid "Confidential"
 msgstr ""
 
-#: templates/wallet/partials/wallet_modal_tx_details.html:63
+#: templates/wallet/partials/wallet_modal_tx_details.html:70
 msgid "Outputs"
 msgstr "Utmatning"
 
-#: templates/wallet/partials/wallet_modal_tx_details.html:64
+#: templates/wallet/partials/wallet_modal_tx_details.html:71
 msgid ""
 "The outputs below are only the first 10 outputs of this transaction. To see "
 "all of them, use a block explorer."
