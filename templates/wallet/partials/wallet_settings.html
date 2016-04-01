@@ -588,7 +588,7 @@
     <button ng-hide="cordova_platform=='ios'" class="btn btn-default btn-block-xs" ng-click="settings.nfcmodal()"><i class="glyphicon glyphicon-transfer"></i> {{ _("Write to NFC tag") }}</button>
     <button ng-hide="cordova_platform=='ios'" class="btn btn-default btn-block-xs" ng-click="settings.nfcmodal_encrypted()"><i class="glyphicon glyphicon-transfer"></i><i class="glyphicon glyphicon-lock"></i> {{ _("Write encrypted to NFC tag") }}</button>
     {% endif %}
-    {% if not cdvapp %}
+    {% if crapp %}
     <button class="btn btn-default btn-block-xs" ng-click="settings.usbmodal()"><i class="glyphicon glyphicon-transfer"></i> {{ _("Write to a hardware wallet") }}</button>
     {% endif %}
   </div>

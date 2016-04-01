@@ -34,7 +34,7 @@
                 <div class="mnemonic-label ng-cloak" ng-show="signup.mnemonic && signup.mnemonic_encrypted">{{ _("Your <strong>encrypted</strong> mnemonic passphrase") }}</div>
                 <div class="mnemonic info ng-cloak" ng-show="signup.mnemonic_encrypted || signup.mnemonic">
                 <span ng-bind="signup.mnemonic_encrypted || signup.mnemonic" ></span>
-                {% if crapp or not cdvapp %}
+                {% if crapp %}
                 <a ng-hide="wallet.nohw_chosen" ng-click="signup.usb_hwseed_modal()"  ng-class="{disabled: signup.hw_wallet_processing}" tooltip-placement="left" tooltip="{{ _("Click to use hardware wallet seed instead") }}" class="btn btn-default btn-xs" style="float: right; position: relative; top: 14px; left: 18px;"><i class="glyphicon glyphicon-transfer"></i></a>
                 {% endif %}
                 </div>
