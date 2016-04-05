@@ -35,8 +35,8 @@
                 >{{ _("Change PGP Public Key") }}</button>
             <button class="btn btn-primary" ng-click="submit_me()"
                 ng-disabled="pgpstate.enabled"
-                ng-show="! pgpstate.pgp"
-                >{{ _("Do Not Use PGP") }}</button>
+                ng-show="! pgpstate.pgp && wallet.appearance.pgp "
+                >{{ _("Remove PGP Public Key") }}</button>
         </div>
     </div>
 
