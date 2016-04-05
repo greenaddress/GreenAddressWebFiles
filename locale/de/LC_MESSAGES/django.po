@@ -659,9 +659,9 @@ msgid "Authenticator code"
 msgstr "Authenticator-Code"
 
 #: templates/wallet/partials/wallet_2fa.html:53
-#: templates/wallet/partials/wallet_2fa.html:100
-#: templates/wallet/partials/wallet_2fa.html:142
-#: templates/wallet/partials/wallet_2fa.html:184
+#: templates/wallet/partials/wallet_2fa.html:101
+#: templates/wallet/partials/wallet_2fa.html:143
+#: templates/wallet/partials/wallet_2fa.html:185
 #: templates/wallet/partials/wallet_settings.html:307
 #: templates/wallet/partials/wallet_settings.html:470
 #: templates/wallet/partials/wallet_settings.html:510
@@ -670,12 +670,12 @@ msgid "Please enter received code"
 msgstr "Bitte geben Sie den erhaltenen Code ein"
 
 #: templates/wallet/partials/wallet_2fa.html:55
-#: templates/wallet/partials/wallet_2fa.html:81
-#: templates/wallet/partials/wallet_2fa.html:102
-#: templates/wallet/partials/wallet_2fa.html:124
-#: templates/wallet/partials/wallet_2fa.html:144
-#: templates/wallet/partials/wallet_2fa.html:166
-#: templates/wallet/partials/wallet_2fa.html:186
+#: templates/wallet/partials/wallet_2fa.html:82
+#: templates/wallet/partials/wallet_2fa.html:103
+#: templates/wallet/partials/wallet_2fa.html:125
+#: templates/wallet/partials/wallet_2fa.html:145
+#: templates/wallet/partials/wallet_2fa.html:167
+#: templates/wallet/partials/wallet_2fa.html:187
 #: templates/wallet/partials/wallet_settings.html:472
 #: templates/wallet/partials/wallet_settings.html:496
 #: templates/wallet/partials/wallet_settings.html:512
@@ -693,11 +693,11 @@ msgstr "Zwei-Faktor-Authentifizierung über Email ist aktiviert."
 msgid "Your email address"
 msgstr "Ihre Emailadresse"
 
-#: templates/wallet/partials/wallet_2fa.html:79
+#: templates/wallet/partials/wallet_2fa.html:80
 msgid "Please enter your email"
 msgstr "Bitte geben Sie Ihre Emailadresse ein"
 
-#: templates/wallet/partials/wallet_2fa.html:90
+#: templates/wallet/partials/wallet_2fa.html:91
 msgid ""
 "You need to provide one code from your email to set up the two factor "
 "authentication.<br>                Please open your email and provide the "
@@ -707,14 +707,14 @@ msgstr ""
 "Authentifizierung zu aktivieren<br>Bitte öffnen Sie Ihre Email und geben Sie "
 "den Code ein."
 
-#: templates/wallet/partials/wallet_2fa.html:95
+#: templates/wallet/partials/wallet_2fa.html:96
 #: templates/wallet/partials/wallet_settings.html:302
 msgid "Email code"
 msgstr "Email Code"
 
-#: templates/wallet/partials/wallet_2fa.html:102
-#: templates/wallet/partials/wallet_2fa.html:144
-#: templates/wallet/partials/wallet_2fa.html:186
+#: templates/wallet/partials/wallet_2fa.html:103
+#: templates/wallet/partials/wallet_2fa.html:145
+#: templates/wallet/partials/wallet_2fa.html:187
 #: templates/wallet/partials/wallet_address_book.html:54
 #: templates/wallet/partials/wallet_address_book.html:69
 #: templates/wallet/partials/wallet_modal_2fa.html:31
@@ -745,25 +745,25 @@ msgstr "Email Code"
 msgid "Cancel"
 msgstr "Abbrechen"
 
-#: templates/wallet/partials/wallet_2fa.html:113
+#: templates/wallet/partials/wallet_2fa.html:114
 msgid "SMS two factor authentication is enabled."
 msgstr "SMS Zwei-Faktor-Authentifizierung ist aktiviert."
 
-#: templates/wallet/partials/wallet_2fa.html:118
-#: templates/wallet/partials/wallet_2fa.html:160
+#: templates/wallet/partials/wallet_2fa.html:119
+#: templates/wallet/partials/wallet_2fa.html:161
 #: templates/wallet/partials/wallet_settings.html:489
 #: templates/wallet/partials/wallet_settings.html:529
 msgid "Your phone number"
 msgstr "Ihre Telefonnummer"
 
-#: templates/wallet/partials/wallet_2fa.html:122
-#: templates/wallet/partials/wallet_2fa.html:164
+#: templates/wallet/partials/wallet_2fa.html:123
+#: templates/wallet/partials/wallet_2fa.html:165
 #: templates/wallet/partials/wallet_settings.html:494
 #: templates/wallet/partials/wallet_settings.html:534
 msgid "+NN... Please enter your phone"
 msgstr "+NN... Bitte geben Sie Ihre Telefonnummer ein"
 
-#: templates/wallet/partials/wallet_2fa.html:132
+#: templates/wallet/partials/wallet_2fa.html:133
 msgid ""
 "You need to provide one SMS code to set up the two factor authentication."
 "<br>                Please check your phone and provide the code."
@@ -771,16 +771,16 @@ msgstr ""
 "Sie müssen einen SMS Code eingeben um die Zwei-Faktor-Authentifizierung "
 "einzurichten.<br>Bitte prüfen Sie Ihr Telefon und geben Sie den Code ein."
 
-#: templates/wallet/partials/wallet_2fa.html:137
+#: templates/wallet/partials/wallet_2fa.html:138
 #: templates/wallet/partials/wallet_settings.html:505
 msgid "SMS code"
 msgstr "SMS-Code"
 
-#: templates/wallet/partials/wallet_2fa.html:155
+#: templates/wallet/partials/wallet_2fa.html:156
 msgid "Phone call two factor authentication is enabled."
 msgstr "Anruf Zwei-Faktor-Authentifizierung ist aktiviert."
 
-#: templates/wallet/partials/wallet_2fa.html:174
+#: templates/wallet/partials/wallet_2fa.html:175
 msgid ""
 "You need to provide one code to set up the two factor authentication."
 "<br>                Please check your phone and provide the code."
@@ -789,7 +789,7 @@ msgstr ""
 "einzurichten.<br>               Bitte prüfen Sie Ihr Telefon und geben Sie "
 "den Code ein."
 
-#: templates/wallet/partials/wallet_2fa.html:179
+#: templates/wallet/partials/wallet_2fa.html:180
 #: templates/wallet/partials/wallet_settings.html:545
 msgid "Phone code"
 msgstr "Telefon-Code"
