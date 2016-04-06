@@ -323,15 +323,26 @@
     <div class="sub-header">{{ _("PGP") }}</div>
     <div class="sub-header-desc">{{ _("Set your Pretty Good Privacy public key for improved privacy.") }}</div>
   </div>
-  <div class="col-md-9" submittable>
-    <form role="form" class="form-horizontal" ng-submit="save_pgp()">
-        <label class="col-sm-2 control-label" for="wallet-emailpgp">{{ _("Public Key") }}</label>
-        <div class="input-group">
-            <textarea class="form-control" placeholder="{{ _("----BEGIN PGP PUBLIC KEY...") }}"
-                   ng-model="pgpstate.pgp" id="wallet-emailpgp" ng-trim="false"></textarea>
-            <input type="submit" class="btn btn-primary" ng-show="wallet.appearance.pgp != pgpstate.pgp" value="{{ _("Save") }}" ng-disabled="pgpstate.enabled" />
-        </div>
-    </form>
+  <div class="col-md-9">
+      <div class="button-group">
+          <input
+            id="wallet-emailpgp"
+            type="button"
+            class="btn btn-primary"
+            value="{{ _('View/Edit Public Key') }}"
+            ng-show="wallet.appearance.pgp"
+            ng-click="showPGPModal()"
+            ng-disabled="pgpstate.enabled" />
+
+          <input
+            id="wallet-emailpgp"
+            type="button"
+            class="btn btn-primary"
+            value="{{ _('Add Public Key') }}"
+            ng-show="! wallet.appearance.pgp"
+            ng-click="showPGPModal()"
+            ng-disabled="pgpstate.enabled" />
+      </div>
   </div>
 </div>
 <hr class="double" ng-show="!settings.noLocalStorage">
