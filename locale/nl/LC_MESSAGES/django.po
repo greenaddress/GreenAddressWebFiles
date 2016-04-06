@@ -86,7 +86,7 @@ msgid "Security"
 msgstr "Security"
 
 #: templates/wallet/nav.html:13
-#: templates/wallet/partials/wallet_settings.html:644
+#: templates/wallet/partials/wallet_settings.html:655
 #, fuzzy
 msgid "Accounts"
 msgstr "Account toevoegen"
@@ -320,13 +320,13 @@ msgstr "Algemene gebruikersvoorwaarden"
 #: templates/wallet/partials/wallet_2fa.html:33
 #: templates/wallet/partials/wallet_receive.html:60
 #: templates/wallet/partials/wallet_receive.html:83
-#: templates/wallet/partials/wallet_settings.html:464
+#: templates/wallet/partials/wallet_settings.html:475
 #: templates/wallet/partials/signuplogin/header_pay.html:32
 msgid "Show QR Code"
 msgstr "QR-code weergeven"
 
 #: templates/wallet/partials/signup_1_init.html:64
-#: templates/wallet/partials/wallet_settings.html:588
+#: templates/wallet/partials/wallet_settings.html:599
 msgid "Write to NFC tag"
 msgstr "Schrijf naar NFC tag"
 
@@ -468,12 +468,12 @@ msgstr ""
 "instellen"
 
 #: templates/wallet/partials/signup_3_pin.html:18
-#: templates/wallet/partials/wallet_settings.html:370
+#: templates/wallet/partials/wallet_settings.html:381
 msgid "PIN number"
 msgstr "PIN-code"
 
 #: templates/wallet/partials/signup_3_pin.html:22
-#: templates/wallet/partials/wallet_settings.html:357
+#: templates/wallet/partials/wallet_settings.html:368
 msgid "4-15 digits number"
 msgstr "4-15 digits number"
 
@@ -516,7 +516,7 @@ msgid "Grant access to your wallet in watch-only mode"
 msgstr "Verleen toegang tot uw portemonnee in de alleen-kijken-modus"
 
 #: templates/wallet/partials/signup_4_oauth.html:23
-#: templates/wallet/partials/wallet_settings.html:423
+#: templates/wallet/partials/wallet_settings.html:434
 #: templates/wallet/partials/signuplogin/base.html:73
 msgid "Custom Login"
 msgstr "Aangepaste Login"
@@ -609,7 +609,7 @@ msgid "Remember to store it in a safe place!"
 msgstr "Vergeet niet het op een veilige plek te bewaren!"
 
 #: templates/wallet/partials/wallet_2fa.html:13
-#: templates/wallet/partials/wallet_settings.html:525
+#: templates/wallet/partials/wallet_settings.html:536
 msgid "Phone"
 msgstr "Telefoon"
 
@@ -662,9 +662,9 @@ msgstr "Authenticator code"
 #: templates/wallet/partials/wallet_2fa.html:143
 #: templates/wallet/partials/wallet_2fa.html:185
 #: templates/wallet/partials/wallet_settings.html:307
-#: templates/wallet/partials/wallet_settings.html:470
-#: templates/wallet/partials/wallet_settings.html:510
-#: templates/wallet/partials/wallet_settings.html:550
+#: templates/wallet/partials/wallet_settings.html:481
+#: templates/wallet/partials/wallet_settings.html:521
+#: templates/wallet/partials/wallet_settings.html:561
 msgid "Please enter received code"
 msgstr "Voer ontvangen code in"
 
@@ -675,11 +675,11 @@ msgstr "Voer ontvangen code in"
 #: templates/wallet/partials/wallet_2fa.html:145
 #: templates/wallet/partials/wallet_2fa.html:167
 #: templates/wallet/partials/wallet_2fa.html:187
-#: templates/wallet/partials/wallet_settings.html:472
-#: templates/wallet/partials/wallet_settings.html:496
-#: templates/wallet/partials/wallet_settings.html:512
-#: templates/wallet/partials/wallet_settings.html:536
-#: templates/wallet/partials/wallet_settings.html:552
+#: templates/wallet/partials/wallet_settings.html:483
+#: templates/wallet/partials/wallet_settings.html:507
+#: templates/wallet/partials/wallet_settings.html:523
+#: templates/wallet/partials/wallet_settings.html:547
+#: templates/wallet/partials/wallet_settings.html:563
 msgid "Enable"
 msgstr "Inschakelen"
 
@@ -723,6 +723,7 @@ msgstr "E-mail code"
 #: templates/wallet/partials/wallet_modal_logout.html:10
 #: templates/wallet/partials/wallet_modal_logout_other_session.html:9
 #: templates/wallet/partials/wallet_modal_no_electrum.html:10
+#: templates/wallet/partials/wallet_modal_pgp.html:27
 #: templates/wallet/partials/wallet_modal_pin.html:22
 #: templates/wallet/partials/wallet_modal_remove_account.html:6
 #: templates/wallet/partials/wallet_modal_reset_email.html:10
@@ -733,9 +734,9 @@ msgstr "E-mail code"
 #: templates/wallet/partials/wallet_modal_verify_mnemonic.html:18
 #: templates/wallet/partials/wallet_receive.html:100
 #: templates/wallet/partials/wallet_send.html:52
-#: templates/wallet/partials/wallet_settings.html:472
-#: templates/wallet/partials/wallet_settings.html:512
-#: templates/wallet/partials/wallet_settings.html:552
+#: templates/wallet/partials/wallet_settings.html:483
+#: templates/wallet/partials/wallet_settings.html:523
+#: templates/wallet/partials/wallet_settings.html:563
 #: templates/wallet/partials/signuplogin/base.html:39
 #: templates/wallet/partials/signuplogin/modal_decryption_password.html:23
 #: templates/wallet/partials/signuplogin/modal_encryption_password.html:33
@@ -749,15 +750,15 @@ msgstr "Dubbele verificatie via SMS is ingeschakeld."
 
 #: templates/wallet/partials/wallet_2fa.html:119
 #: templates/wallet/partials/wallet_2fa.html:161
-#: templates/wallet/partials/wallet_settings.html:489
-#: templates/wallet/partials/wallet_settings.html:529
+#: templates/wallet/partials/wallet_settings.html:500
+#: templates/wallet/partials/wallet_settings.html:540
 msgid "Your phone number"
 msgstr "Uw telefoonnummer"
 
 #: templates/wallet/partials/wallet_2fa.html:123
 #: templates/wallet/partials/wallet_2fa.html:165
-#: templates/wallet/partials/wallet_settings.html:494
-#: templates/wallet/partials/wallet_settings.html:534
+#: templates/wallet/partials/wallet_settings.html:505
+#: templates/wallet/partials/wallet_settings.html:545
 msgid "+NN... Please enter your phone"
 msgstr "Voer uw telefoonnummer inclusief landnummer in (+31 voor Nederland)"
 
@@ -770,7 +771,7 @@ msgstr ""
 "<br>Gelieve uw SMS te lezen en de code in te voeren."
 
 #: templates/wallet/partials/wallet_2fa.html:138
-#: templates/wallet/partials/wallet_settings.html:505
+#: templates/wallet/partials/wallet_settings.html:516
 msgid "SMS code"
 msgstr "SMS code"
 
@@ -787,7 +788,7 @@ msgstr ""
 "<br>Gelieve uw SMS te lezen en de code in te voeren."
 
 #: templates/wallet/partials/wallet_2fa.html:180
-#: templates/wallet/partials/wallet_settings.html:545
+#: templates/wallet/partials/wallet_settings.html:556
 msgid "Phone code"
 msgstr "Telefoon code"
 
@@ -797,8 +798,8 @@ msgstr "Nieuwe item toevoegen"
 
 #: templates/wallet/partials/wallet_address_book.html:27
 #: templates/wallet/partials/wallet_address_book.html:45
-#: templates/wallet/partials/wallet_settings.html:668
-#: templates/wallet/partials/wallet_settings.html:724
+#: templates/wallet/partials/wallet_settings.html:679
+#: templates/wallet/partials/wallet_settings.html:735
 msgid "Name"
 msgstr "Naam"
 
@@ -1019,7 +1020,7 @@ msgstr "Ontvanger"
 #: templates/wallet/partials/wallet_modal_tx_redeem.html:17
 #: templates/wallet/partials/wallet_receive.html:20
 #: templates/wallet/partials/wallet_send.html:81
-#: templates/wallet/partials/wallet_settings.html:617
+#: templates/wallet/partials/wallet_settings.html:628
 msgid "Amount"
 msgstr "Bedrag"
 
@@ -1072,8 +1073,8 @@ msgid "Please send the Facebook message."
 msgstr "Stuur het bericht via Facebook."
 
 #: templates/wallet/partials/wallet_modal_fb_message.html:6
-#: templates/wallet/partials/wallet_settings.html:683
-#: templates/wallet/partials/wallet_settings.html:739
+#: templates/wallet/partials/wallet_settings.html:694
+#: templates/wallet/partials/wallet_settings.html:750
 msgid "Send"
 msgstr "Verzenden"
 
@@ -1177,6 +1178,27 @@ msgid ""
 msgstr ""
 "Do you want to continue sending the transaction without Electrum network "
 "verification?"
+
+#: templates/wallet/partials/wallet_modal_pgp.html:4
+msgid "Please enter a valid PGP public key into the box below."
+msgstr ""
+
+#: templates/wallet/partials/wallet_modal_pgp.html:12
+msgid "----BEGIN PGP PUBLIC KEY..."
+msgstr ""
+
+#: templates/wallet/partials/wallet_modal_pgp.html:31
+msgid "Add PGP Public Key"
+msgstr ""
+
+#: templates/wallet/partials/wallet_modal_pgp.html:35
+#, fuzzy
+msgid "Change PGP Public Key"
+msgstr "Pincode wijzigen"
+
+#: templates/wallet/partials/wallet_modal_pgp.html:39
+msgid "Remove PGP Public Key"
+msgstr ""
 
 #: templates/wallet/partials/wallet_modal_pin.html:4
 msgid ""
@@ -1350,10 +1372,9 @@ msgstr ""
 #: templates/wallet/partials/wallet_modal_tx_details.html:21
 #: templates/wallet/partials/wallet_modal_tx_limits.html:41
 #: templates/wallet/partials/wallet_settings.html:293
-#: templates/wallet/partials/wallet_settings.html:332
-#: templates/wallet/partials/wallet_settings.html:573
-#: templates/wallet/partials/wallet_settings.html:682
-#: templates/wallet/partials/wallet_settings.html:738
+#: templates/wallet/partials/wallet_settings.html:584
+#: templates/wallet/partials/wallet_settings.html:693
+#: templates/wallet/partials/wallet_settings.html:749
 msgid "Save"
 msgstr "Save"
 
@@ -1740,7 +1761,7 @@ msgstr "E-mail"
 
 #: templates/wallet/partials/wallet_settings.html:128
 #: templates/wallet/partials/wallet_settings.html:148
-#: templates/wallet/partials/wallet_settings.html:485
+#: templates/wallet/partials/wallet_settings.html:496
 msgid "SMS"
 msgstr "SMS"
 
@@ -1882,7 +1903,7 @@ msgid "Allow to increase the fee for outgoing transactions"
 msgstr ""
 
 #: templates/wallet/partials/wallet_settings.html:283
-#: templates/wallet/partials/wallet_settings.html:448
+#: templates/wallet/partials/wallet_settings.html:459
 msgid "Email"
 msgstr "E-mail"
 
@@ -1911,8 +1932,8 @@ msgstr ""
 "<br>              Please check your email and provide the code."
 
 #: templates/wallet/partials/wallet_settings.html:309
-#: templates/wallet/partials/wallet_settings.html:359
-#: templates/wallet/partials/wallet_settings.html:374
+#: templates/wallet/partials/wallet_settings.html:370
+#: templates/wallet/partials/wallet_settings.html:385
 msgid "Confirm"
 msgstr "Bevestigen"
 
@@ -1936,69 +1957,69 @@ msgstr ""
 msgid "Set your Pretty Good Privacy public key for improved privacy."
 msgstr ""
 
-#: templates/wallet/partials/wallet_settings.html:328
-msgid "Public Key"
+#: templates/wallet/partials/wallet_settings.html:332
+msgid "View/Edit Public Key"
 msgstr ""
 
-#: templates/wallet/partials/wallet_settings.html:330
-msgid "----BEGIN PGP PUBLIC KEY..."
+#: templates/wallet/partials/wallet_settings.html:341
+msgid "Add Public Key"
 msgstr ""
 
-#: templates/wallet/partials/wallet_settings.html:340
+#: templates/wallet/partials/wallet_settings.html:351
 msgid "Quick login"
 msgstr "Snelle login"
 
-#: templates/wallet/partials/wallet_settings.html:341
+#: templates/wallet/partials/wallet_settings.html:352
 msgid "Enable a simple PIN to quickly access your wallet from this device."
 msgstr ""
 "Eenvoudige PIN-code inschakelen voor snelle toegang tot uw portemonnee vanaf "
 "dit apparaat."
 
-#: templates/wallet/partials/wallet_settings.html:350
+#: templates/wallet/partials/wallet_settings.html:361
 msgid "Enable quick login on this device"
 msgstr "Snelle login op dit apparaat inschakelen"
 
-#: templates/wallet/partials/wallet_settings.html:354
+#: templates/wallet/partials/wallet_settings.html:365
 msgid "Change PIN number"
 msgstr "Pincode wijzigen"
 
-#: templates/wallet/partials/wallet_settings.html:355
+#: templates/wallet/partials/wallet_settings.html:366
 msgid "Set PIN number"
 msgstr "Pincode instellen"
 
-#: templates/wallet/partials/wallet_settings.html:364
+#: templates/wallet/partials/wallet_settings.html:375
 msgid "Disable quick login on all devices"
 msgstr "Snelle login op alle apparaten uitschakelen"
 
-#: templates/wallet/partials/wallet_settings.html:368
+#: templates/wallet/partials/wallet_settings.html:379
 msgid "set PIN to"
 msgstr "PIN instellen op"
 
-#: templates/wallet/partials/wallet_settings.html:373
+#: templates/wallet/partials/wallet_settings.html:384
 msgid "Remove"
 msgstr "Verwijderen"
 
-#: templates/wallet/partials/wallet_settings.html:384
+#: templates/wallet/partials/wallet_settings.html:395
 msgid "Touch ID"
 msgstr ""
 
-#: templates/wallet/partials/wallet_settings.html:385
+#: templates/wallet/partials/wallet_settings.html:396
 #, fuzzy
 msgid "Enable Touch ID to quickly access your wallet from this device."
 msgstr ""
 "Eenvoudige PIN-code inschakelen voor snelle toegang tot uw portemonnee vanaf "
 "dit apparaat."
 
-#: templates/wallet/partials/wallet_settings.html:393
+#: templates/wallet/partials/wallet_settings.html:404
 #, fuzzy
 msgid "Enable Touch ID on this device"
 msgstr "Snelle login op dit apparaat inschakelen"
 
-#: templates/wallet/partials/wallet_settings.html:402
+#: templates/wallet/partials/wallet_settings.html:413
 msgid "Link your own third party accounts"
 msgstr "Uw eigen accounts bij derde partijen koppelen"
 
-#: templates/wallet/partials/wallet_settings.html:403
+#: templates/wallet/partials/wallet_settings.html:414
 msgid ""
 "Allow social payments and watch-only login to your wallet via your own third "
 "party accounts."
@@ -2006,34 +2027,34 @@ msgstr ""
 "Sociale betalingen en inloggen op uw portemonnee in alleen-kijken-modus via "
 "uw eigen accounts bij derde partijen inschakelen."
 
-#: templates/wallet/partials/wallet_settings.html:429
+#: templates/wallet/partials/wallet_settings.html:440
 msgid "Username"
 msgstr "Gebruikersnaam"
 
-#: templates/wallet/partials/wallet_settings.html:430
+#: templates/wallet/partials/wallet_settings.html:441
 #: templates/wallet/partials/signuplogin/modal_decryption_password.html:8
 #: templates/wallet/partials/signuplogin/modal_encryption_password.html:10
 msgid "Password"
 msgstr "Wachtwoord"
 
-#: templates/wallet/partials/wallet_settings.html:439
+#: templates/wallet/partials/wallet_settings.html:450
 msgid "Two factor authentication"
 msgstr "Dubbele verificatie"
 
-#: templates/wallet/partials/wallet_settings.html:440
+#: templates/wallet/partials/wallet_settings.html:451
 msgid "Set any or all two factor: you can choose which one when needed!"
 msgstr ""
 "Stel een of meerdere verificaties in: u kunt wisselen wanneer dit nodig is!"
 
-#: templates/wallet/partials/wallet_settings.html:440
+#: templates/wallet/partials/wallet_settings.html:451
 msgid "Enable two or back up the given code where applicable."
 msgstr ""
 
-#: templates/wallet/partials/wallet_settings.html:458
+#: templates/wallet/partials/wallet_settings.html:469
 msgid "Google Authenticator"
 msgstr "Google Authenticator"
 
-#: templates/wallet/partials/wallet_settings.html:461
+#: templates/wallet/partials/wallet_settings.html:472
 msgid ""
 "You need to provide one Google Authenticator code to set up the two factor "
 "authentication.<br>                    Please scan the QR code below, and "
@@ -2042,11 +2063,11 @@ msgstr ""
 "U dient een Google Authenticator code in te voeren om dubbele verificatie in "
 "te stellen.<br> Gelieve onderstaande QR-code te scannen en in te voeren."
 
-#: templates/wallet/partials/wallet_settings.html:465
+#: templates/wallet/partials/wallet_settings.html:476
 msgid "Code"
 msgstr "Code"
 
-#: templates/wallet/partials/wallet_settings.html:502
+#: templates/wallet/partials/wallet_settings.html:513
 msgid ""
 "You need to provide one SMS code to set up the two factor authentication."
 "<br>                    Please check your phone and provide the code."
@@ -2054,7 +2075,7 @@ msgstr ""
 "U dient een SMS code in te voeren om dubbele verificatie in te stellen."
 "<br>Gelieve uw SMS te lezen en de code in te voeren."
 
-#: templates/wallet/partials/wallet_settings.html:542
+#: templates/wallet/partials/wallet_settings.html:553
 msgid ""
 "You need to provide one phone code to set up the two factor authentication."
 "<br>                    Please check your phone and provide the code."
@@ -2062,50 +2083,50 @@ msgstr ""
 "U dient een telefoon code in te voeren om dubbele verificatie in te stellen."
 "<br>Gelieve uw telefoon op te nemen en de code in te voeren."
 
-#: templates/wallet/partials/wallet_settings.html:564
+#: templates/wallet/partials/wallet_settings.html:575
 msgid "Auto logout"
 msgstr "Auto logout"
 
-#: templates/wallet/partials/wallet_settings.html:565
+#: templates/wallet/partials/wallet_settings.html:576
 msgid "Configure auto logout after some inactivity timeout"
 msgstr "Configure auto logout after some inactivity timeout"
 
-#: templates/wallet/partials/wallet_settings.html:569
+#: templates/wallet/partials/wallet_settings.html:580
 msgid "Minutes"
 msgstr "Minutes"
 
-#: templates/wallet/partials/wallet_settings.html:571
+#: templates/wallet/partials/wallet_settings.html:582
 msgid "Timeout minutes"
 msgstr "Timeout minutes"
 
-#: templates/wallet/partials/wallet_settings.html:581
-#: templates/wallet/partials/wallet_settings.html:585
+#: templates/wallet/partials/wallet_settings.html:592
+#: templates/wallet/partials/wallet_settings.html:596
 msgid "Show mnemonic"
 msgstr "Toon passphrase"
 
-#: templates/wallet/partials/wallet_settings.html:582
+#: templates/wallet/partials/wallet_settings.html:593
 msgid ""
 "Display your mnemonic for account recovery or cloning on another device."
 msgstr ""
 "Uw passphrase voor accountherstel of klonen op een ander apparaat weergeven."
 
-#: templates/wallet/partials/wallet_settings.html:586
+#: templates/wallet/partials/wallet_settings.html:597
 msgid "Show encrypted mnemonic"
 msgstr "Show encrypted mnemonic"
 
-#: templates/wallet/partials/wallet_settings.html:589
+#: templates/wallet/partials/wallet_settings.html:600
 msgid "Write encrypted to NFC tag"
 msgstr "Write encrypted to NFC tag"
 
-#: templates/wallet/partials/wallet_settings.html:592
+#: templates/wallet/partials/wallet_settings.html:603
 msgid "Write to a hardware wallet"
 msgstr "Write to a hardware wallet"
 
-#: templates/wallet/partials/wallet_settings.html:600
+#: templates/wallet/partials/wallet_settings.html:611
 msgid "Delayed payments"
 msgstr "Vertraagde betalingen"
 
-#: templates/wallet/partials/wallet_settings.html:601
+#: templates/wallet/partials/wallet_settings.html:612
 msgid ""
 "Delay transaction for super ease of mind: works best in conjuction with "
 "outgoing notifications."
@@ -2113,81 +2134,81 @@ msgstr ""
 "Vertraag transactie voor de grootst mogelijke gemoedsrust: werkt het beste "
 "als uitgaande notificaties zijn ingeschakeld."
 
-#: templates/wallet/partials/wallet_settings.html:609
+#: templates/wallet/partials/wallet_settings.html:620
 msgid "Enable delayed payments"
 msgstr "Vertraagde betalingen inschakelen"
 
-#: templates/wallet/partials/wallet_settings.html:610
+#: templates/wallet/partials/wallet_settings.html:621
 msgid "Coming soon"
 msgstr "Binnenkort beschikbaar"
 
-#: templates/wallet/partials/wallet_settings.html:615
+#: templates/wallet/partials/wallet_settings.html:626
 msgid "Delay payments of"
 msgstr "Vertraag betalingen van"
 
-#: templates/wallet/partials/wallet_settings.html:633
-#: templates/wallet/partials/wallet_settings.html:637
+#: templates/wallet/partials/wallet_settings.html:644
+#: templates/wallet/partials/wallet_settings.html:648
 msgid "Remove account"
 msgstr "Remove account"
 
-#: templates/wallet/partials/wallet_settings.html:634
+#: templates/wallet/partials/wallet_settings.html:645
 msgid "You can remove your account with all associated data here."
 msgstr "You can remove your account with all associated data here."
 
-#: templates/wallet/partials/wallet_settings.html:648
+#: templates/wallet/partials/wallet_settings.html:659
 #, fuzzy
 msgid "Simple accounts"
 msgstr "Remove account"
 
-#: templates/wallet/partials/wallet_settings.html:649
+#: templates/wallet/partials/wallet_settings.html:660
 msgid ""
 "Create accounts that allow you to separate your funds. Each account will "
 "have its own receiving addresses."
 msgstr ""
 
-#: templates/wallet/partials/wallet_settings.html:654
+#: templates/wallet/partials/wallet_settings.html:665
 msgid "Create an account with the following label:"
 msgstr ""
 
-#: templates/wallet/partials/wallet_settings.html:657
-#: templates/wallet/partials/wallet_settings.html:706
+#: templates/wallet/partials/wallet_settings.html:668
+#: templates/wallet/partials/wallet_settings.html:717
 msgid "Label"
 msgstr ""
 
-#: templates/wallet/partials/wallet_settings.html:659
-#: templates/wallet/partials/wallet_settings.html:708
+#: templates/wallet/partials/wallet_settings.html:670
+#: templates/wallet/partials/wallet_settings.html:719
 msgid "Create"
 msgstr ""
 
-#: templates/wallet/partials/wallet_settings.html:665
+#: templates/wallet/partials/wallet_settings.html:676
 #, fuzzy
 msgid "Your simple accounts:"
 msgstr "Remove account"
 
-#: templates/wallet/partials/wallet_settings.html:669
-#: templates/wallet/partials/wallet_settings.html:725
+#: templates/wallet/partials/wallet_settings.html:680
+#: templates/wallet/partials/wallet_settings.html:736
 #, fuzzy
 msgid "Actions"
 msgstr "Transacties"
 
-#: templates/wallet/partials/wallet_settings.html:681
-#: templates/wallet/partials/wallet_settings.html:737
+#: templates/wallet/partials/wallet_settings.html:692
+#: templates/wallet/partials/wallet_settings.html:748
 #, fuzzy
 msgid "Rename"
 msgstr "Gebruikersnaam"
 
-#: templates/wallet/partials/wallet_settings.html:684
-#: templates/wallet/partials/wallet_settings.html:740
+#: templates/wallet/partials/wallet_settings.html:695
+#: templates/wallet/partials/wallet_settings.html:751
 #, fuzzy
 msgid "Receive"
 msgstr "Geld ontvangen"
 
-#: templates/wallet/partials/wallet_settings.html:693
+#: templates/wallet/partials/wallet_settings.html:704
 #, fuzzy
 msgid "2of3 accounts"
 msgstr "Remove account"
 
-#: templates/wallet/partials/wallet_settings.html:695
+#: templates/wallet/partials/wallet_settings.html:706
 msgid ""
 "Create accounts that allow you to access your funds at any time even without "
 "access to GreenAddress, using additional offline recovery key.<br/"
@@ -2197,7 +2218,7 @@ msgid ""
 "protect them from double spending."
 msgstr ""
 
-#: templates/wallet/partials/wallet_settings.html:697
+#: templates/wallet/partials/wallet_settings.html:708
 msgid ""
 "Create accounts that allow you to access your funds at any time even without "
 "access to GreenAddress, using additional offline recovery key.<br/"
@@ -2205,19 +2226,19 @@ msgid ""
 "accounts because GreenAddress can't protect them from double spending."
 msgstr ""
 
-#: templates/wallet/partials/wallet_settings.html:703
+#: templates/wallet/partials/wallet_settings.html:714
 msgid "Create a 2of3 account with the following label:"
 msgstr ""
 
-#: templates/wallet/partials/wallet_settings.html:715
+#: templates/wallet/partials/wallet_settings.html:726
 msgid "Optionally provide your custom recovery xpub:"
 msgstr ""
 
-#: templates/wallet/partials/wallet_settings.html:717
+#: templates/wallet/partials/wallet_settings.html:728
 msgid "xpub"
 msgstr ""
 
-#: templates/wallet/partials/wallet_settings.html:721
+#: templates/wallet/partials/wallet_settings.html:732
 #, fuzzy
 msgid "Your 2of3 accounts:"
 msgstr "Remove account"
