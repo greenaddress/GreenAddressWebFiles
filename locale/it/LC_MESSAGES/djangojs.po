@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: greenaddress-wallet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-04-06 17:11+0000\n"
+"POT-Creation-Date: 2016-04-06 17:40+0000\n"
 "PO-Revision-Date: 2014-08-23 16:08-0400\n"
 "Last-Translator: GreenAddress <info@greenaddress.it>\n"
 "Language-Team: Italian\n"
@@ -400,7 +400,7 @@ msgstr ""
 #: WalletCrx/static/js/greenwallet/apps/signup.js.c:307
 #: WalletCrx/static/js/greenwallet/settings/controllers.js.c:1131
 #: WalletCordova/www/greenaddress.it/static/js/greenwallet/apps/signup.js.c:307
-#: WalletCordova/www/greenaddress.it/static/js/greenwallet/settings/controllers.js.c:1100
+#: WalletCordova/www/greenaddress.it/static/js/greenwallet/settings/controllers.js.c:1131
 msgid "Custom login enabled"
 msgstr "Login custom abilitata"
 
@@ -787,61 +787,61 @@ msgstr "C'è stato un errore aggiungendo il contatto: "
 
 #: static/js/greenwallet/settings/controllers.js.c:975
 #: WalletCrx/static/js/greenwallet/settings/controllers.js.c:975
-#: WalletCordova/www/greenaddress.it/static/js/greenwallet/settings/controllers.js.c:944
+#: WalletCordova/www/greenaddress.it/static/js/greenwallet/settings/controllers.js.c:975
 msgid "PIN removed"
 msgstr "PIN rimosso"
 
 #: static/js/greenwallet/settings/controllers.js.c:1007
 #: WalletCrx/static/js/greenwallet/settings/controllers.js.c:1007
-#: WalletCordova/www/greenaddress.it/static/js/greenwallet/settings/controllers.js.c:976
+#: WalletCordova/www/greenaddress.it/static/js/greenwallet/settings/controllers.js.c:1007
 msgid "PIN changed"
 msgstr "PIN modificato"
 
 #: static/js/greenwallet/settings/controllers.js.c:1011
 #: WalletCrx/static/js/greenwallet/settings/controllers.js.c:1011
-#: WalletCordova/www/greenaddress.it/static/js/greenwallet/settings/controllers.js.c:980
+#: WalletCordova/www/greenaddress.it/static/js/greenwallet/settings/controllers.js.c:1011
 msgid "PIN set"
 msgstr "PIN impostato"
 
 #: static/js/greenwallet/settings/controllers.js.c:1026
 #: WalletCrx/static/js/greenwallet/settings/controllers.js.c:1026
-#: WalletCordova/www/greenaddress.it/static/js/greenwallet/settings/controllers.js.c:995
+#: WalletCordova/www/greenaddress.it/static/js/greenwallet/settings/controllers.js.c:1026
 msgid "All PINs removed"
 msgstr "Tutti i PIN sono stati rimossi"
 
 #: static/js/greenwallet/settings/controllers.js.c:1047
 #: WalletCrx/static/js/greenwallet/settings/controllers.js.c:1047
-#: WalletCordova/www/greenaddress.it/static/js/greenwallet/settings/controllers.js.c:1016
+#: WalletCordova/www/greenaddress.it/static/js/greenwallet/settings/controllers.js.c:1047
 msgid "Facebook integration disabled"
 msgstr "Integrazione con Facebook disabilitata"
 
 #: static/js/greenwallet/settings/controllers.js.c:1060
 #: WalletCrx/static/js/greenwallet/settings/controllers.js.c:1060
-#: WalletCordova/www/greenaddress.it/static/js/greenwallet/settings/controllers.js.c:1029
+#: WalletCordova/www/greenaddress.it/static/js/greenwallet/settings/controllers.js.c:1060
 msgid "Facebook integration enabled"
 msgstr "Integrazione con Facebook abilitata"
 
 #: static/js/greenwallet/settings/controllers.js.c:1081
 #: WalletCrx/static/js/greenwallet/settings/controllers.js.c:1081
-#: WalletCordova/www/greenaddress.it/static/js/greenwallet/settings/controllers.js.c:1050
+#: WalletCordova/www/greenaddress.it/static/js/greenwallet/settings/controllers.js.c:1081
 msgid "Reddit integration disabled"
 msgstr "Integrazione con Reddit disabilitata"
 
 #: static/js/greenwallet/settings/controllers.js.c:1093
 #: WalletCrx/static/js/greenwallet/settings/controllers.js.c:1093
-#: WalletCordova/www/greenaddress.it/static/js/greenwallet/settings/controllers.js.c:1062
+#: WalletCordova/www/greenaddress.it/static/js/greenwallet/settings/controllers.js.c:1093
 msgid "Reddit integration enabled"
 msgstr "Integrazione con Reddit abilitata"
 
 #: static/js/greenwallet/settings/controllers.js.c:1115
 #: WalletCrx/static/js/greenwallet/settings/controllers.js.c:1115
-#: WalletCordova/www/greenaddress.it/static/js/greenwallet/settings/controllers.js.c:1084
+#: WalletCordova/www/greenaddress.it/static/js/greenwallet/settings/controllers.js.c:1115
 msgid "Custom login disabled"
 msgstr "Login custom disabilitata"
 
 #: static/js/greenwallet/settings/controllers.js.c:1128
 #: WalletCrx/static/js/greenwallet/settings/controllers.js.c:1128
-#: WalletCordova/www/greenaddress.it/static/js/greenwallet/settings/controllers.js.c:1097
+#: WalletCordova/www/greenaddress.it/static/js/greenwallet/settings/controllers.js.c:1128
 msgid "Custom login changed"
 msgstr "Login custom cambiata"
 
@@ -851,9 +851,9 @@ msgstr "Login custom cambiata"
 #: WalletCrx/static/js/greenwallet/settings/controllers.js.c:1148
 #: WalletCrx/static/js/greenwallet/settings/controllers.js.c:1181
 #: WalletCrx/static/js/greenwallet/settings/controllers.js.c:1189
-#: WalletCordova/www/greenaddress.it/static/js/greenwallet/settings/controllers.js.c:1117
-#: WalletCordova/www/greenaddress.it/static/js/greenwallet/settings/controllers.js.c:1150
-#: WalletCordova/www/greenaddress.it/static/js/greenwallet/settings/controllers.js.c:1158
+#: WalletCordova/www/greenaddress.it/static/js/greenwallet/settings/controllers.js.c:1148
+#: WalletCordova/www/greenaddress.it/static/js/greenwallet/settings/controllers.js.c:1181
+#: WalletCordova/www/greenaddress.it/static/js/greenwallet/settings/controllers.js.c:1189
 msgid "Change"
 msgstr "Resto"
 
@@ -863,21 +863,21 @@ msgstr "Resto"
 #: WalletCrx/static/js/greenwallet/settings/controllers.js.c:1148
 #: WalletCrx/static/js/greenwallet/settings/controllers.js.c:1181
 #: WalletCrx/static/js/greenwallet/settings/controllers.js.c:1189
-#: WalletCordova/www/greenaddress.it/static/js/greenwallet/settings/controllers.js.c:1117
-#: WalletCordova/www/greenaddress.it/static/js/greenwallet/settings/controllers.js.c:1150
-#: WalletCordova/www/greenaddress.it/static/js/greenwallet/settings/controllers.js.c:1158
+#: WalletCordova/www/greenaddress.it/static/js/greenwallet/settings/controllers.js.c:1148
+#: WalletCordova/www/greenaddress.it/static/js/greenwallet/settings/controllers.js.c:1181
+#: WalletCordova/www/greenaddress.it/static/js/greenwallet/settings/controllers.js.c:1189
 msgid "Save"
 msgstr "Salva"
 
 #: static/js/greenwallet/settings/controllers.js.c:1256
 #: WalletCrx/static/js/greenwallet/settings/controllers.js.c:1256
-#: WalletCordova/www/greenaddress.it/static/js/greenwallet/settings/controllers.js.c:1225
+#: WalletCordova/www/greenaddress.it/static/js/greenwallet/settings/controllers.js.c:1256
 msgid "Limits updated successfully"
 msgstr "Limiti aggiornati con successo"
 
 #: static/js/greenwallet/settings/controllers.js.c:1447
 #: WalletCrx/static/js/greenwallet/settings/controllers.js.c:1447
-#: WalletCordova/www/greenaddress.it/static/js/greenwallet/settings/controllers.js.c:1416
+#: WalletCordova/www/greenaddress.it/static/js/greenwallet/settings/controllers.js.c:1447
 #, fuzzy
 msgid "Renamed successfully"
 msgstr "Limiti aggiornati con successo"

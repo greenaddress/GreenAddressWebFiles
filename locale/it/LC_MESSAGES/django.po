@@ -1193,7 +1193,8 @@ msgstr ""
 
 #: templates/wallet/partials/wallet_modal_pgp.html:4
 msgid "Please enter a valid PGP public key into the box below."
-msgstr "Inserire una chiave pubblica PGP valida nel box sottostante per piacere."
+msgstr ""
+"Inserire una chiave pubblica PGP valida nel box sottostante per piacere."
 
 #: templates/wallet/partials/wallet_modal_pgp.html:12
 msgid "----BEGIN PGP PUBLIC KEY..."
