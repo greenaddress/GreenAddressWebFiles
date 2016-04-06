@@ -1,3 +1,4 @@
+// replace this with an app object of some sort?
 var deps = ['duScroll', 'ngAnimate', 'greenWalletServices'];
 if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
     deps.push('ngTouch');

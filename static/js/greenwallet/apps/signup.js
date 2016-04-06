@@ -1,8 +1,31 @@
-var SignupControllerAsync = (function() {
 var signup = {};  // bleh (see comment below)
 var secured_confirmed;
-return ['$scope', '$location', 'mnemonics', 'tx_sender', 'notices', 'wallets', '$window', 'facebook', '$uibModal', 'gaEvent', '$q', 'reddit', 'storage', 'trezor', 'btchip', 'bip38', '$interval', '$sce', 'hw_detector', 'user_agent',
-        function SignupController($scope, $location, mnemonics, tx_sender, notices, wallets, $window, facebook, $uibModal, gaEvent, $q, reddit, storage, trezor, btchip, bip38, $interval, $sce, hw_detector, user_agent) {
+
+module.exports = [
+    '$scope',
+    '$location',
+    'mnemonics',
+    'tx_sender',
+    'notices',
+    'wallets',
+    '$window',
+    'facebook',
+    '$uibModal',
+    'gaEvent',
+    '$q',
+    'reddit',
+    'storage',
+    'trezor',
+    'btchip',
+    'bip38',
+    '$interval',
+    '$sce',
+    'hw_detector',
+    'user_agent',
+    SignupController
+];
+
+function SignupController($scope, $location, mnemonics, tx_sender, notices, wallets, $window, facebook, $uibModal, gaEvent, $q, reddit, storage, trezor, btchip, bip38, $interval, $sce, hw_detector, user_agent) {
     // some Android devices have window.WebSocket defined and yet still don't support WebSockets
     var isUnsupportedAndroid = navigator.userAgent.match(/Android 4.0/i) ||
                                navigator.userAgent.match(/Android 4.1/i) ||
@@ -427,4 +450,4 @@ return ['$scope', '$location', 'mnemonics', 'tx_sender', 'notices', 'wallets', '
         });
     }
 
-}]})();
+}
