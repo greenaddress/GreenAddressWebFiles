@@ -12,14 +12,10 @@ gulp.task('clean-assets', function () {
 });
 
 gulp.task('assets', ['clean-assets'], function () {
-  var fonts = gulp.src(['static/fonts/**/*'], {base: '.'})
-    .pipe(gulp.dest('build/static/fonts'));
-
-  var img = gulp.src(['static/img/**/*'], {base: '.'})
-    .pipe(gulp.dest('build/static/img'));
-
-  var sound = gulp.src(['static/sound/**/*'], {base: '.'})
-    .pipe(gulp.dest('build/static/sound'));
-
-  return merge(fonts, img, sound);
+  return gulp.src([
+      'static/fonts/**/*',
+      'static/img/**/*',
+      'static/sound/**/*'
+    ], {base: '.'})
+    .pipe(gulp.dest('build/'));
 });
