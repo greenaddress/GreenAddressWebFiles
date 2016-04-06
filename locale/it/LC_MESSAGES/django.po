@@ -1171,9 +1171,8 @@ msgid "number of transactions"
 msgstr "numero di transazioni"
 
 #: templates/wallet/partials/wallet_modal_my_addresses.html:17
-#, fuzzy
 msgid "Show more addresses"
-msgstr "Mostra tutti gli indirizzi generati fino ad oggi"
+msgstr "Mostra altri indirizzi"
 
 #: templates/wallet/partials/wallet_modal_no_electrum.html:4
 msgid ""
@@ -1194,7 +1193,7 @@ msgstr ""
 
 #: templates/wallet/partials/wallet_modal_pgp.html:4
 msgid "Please enter a valid PGP public key into the box below."
-msgstr ""
+msgstr "Inserire una chiave pubblica PGP valida nel box sottostante per piacere."
 
 #: templates/wallet/partials/wallet_modal_pgp.html:12
 msgid "----BEGIN PGP PUBLIC KEY..."
@@ -1202,16 +1201,15 @@ msgstr ""
 
 #: templates/wallet/partials/wallet_modal_pgp.html:31
 msgid "Add PGP Public Key"
-msgstr ""
+msgstr "Aggiungi una chiave PGP"
 
 #: templates/wallet/partials/wallet_modal_pgp.html:35
-#, fuzzy
 msgid "Change PGP Public Key"
-msgstr "Cambia PIN"
+msgstr "Cambia chiave PGP"
 
 #: templates/wallet/partials/wallet_modal_pgp.html:39
 msgid "Remove PGP Public Key"
-msgstr ""
+msgstr "Rimuovi chiave PGP"
 
 #: templates/wallet/partials/wallet_modal_pin.html:4
 msgid ""
