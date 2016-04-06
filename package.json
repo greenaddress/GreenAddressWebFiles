@@ -18,5 +18,14 @@
   "bugs": {
     "url": "https://github.com/greenaddress/GreenAddressWebFiles/issues"
   },
-  "homepage": "https://github.com/greenaddress/GreenAddressWebFiles#readme"
+  "homepage": "https://github.com/greenaddress/GreenAddressWebFiles#readme",
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-browserify": "^0.5.1",
+    "gulp-clean": "^0.3.2",
+    "gulp-run": "^1.6.12",
+    "merge-stream": "^1.0.0",
+    "tap-spec": "^4.1.1",
+    "tape": "^4.5.1"
+  }
 }
