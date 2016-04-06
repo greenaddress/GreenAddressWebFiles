@@ -1,0 +1,22 @@
+{
+  "name": "greenaddress-webfiles",
+  "version": "1.0.0",
+  "description": "You can just load the directory in Chrome extentions by enabling the developer mode.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "rm -r ./build && mkdir build && python render_templates.py build && cp -r ./static ./build/",
+    "sync": "rsync -av ./build/ ../WalletCrx/",
+    "watch": "nodemon --watch static --exec 'npm run build && npm run sync'"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/greenaddress/GreenAddressWebFiles.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/greenaddress/GreenAddressWebFiles/issues"
+  },
+  "homepage": "https://github.com/greenaddress/GreenAddressWebFiles#readme"
+}
