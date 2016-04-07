@@ -1,3 +1,5 @@
+var raf = require('raf');
+
 angular.module('greenWalletDirectives', [])
 .directive('maskInput', function() {
     // should be used with class="pin" or otherwise something that sets webkitTextSecurity
@@ -60,7 +62,7 @@ angular.module('greenWalletDirectives', [])
                         elem[0].focus();
                         if (elem[0].getBoundingClientRect().width == 0) {
                             // retry in case the element is invisible
-                            window.requestAnimationFrame(attempt);
+                            raf(attempt);
                         }
                     };
                     attempt();

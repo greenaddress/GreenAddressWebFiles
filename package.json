@@ -1,13 +1,13 @@
 {
   "name": "greenaddress-webfiles",
   "version": "1.0.0",
-  "description": "You can just load the directory in Chrome extentions by enabling the developer mode.",
-  "main": "index.js",
+  "description": "Shared web files used by the Cordova and Chrome apps.",
+  "main": "static/js/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "rm -r ./build && mkdir build && python render_templates.py build && cp -r ./static ./build/",
+    "build": "./node_modules/.bin/gulp build",
     "sync": "rsync -av ./build/ ../WalletCrx/",
-    "watch": "nodemon --watch static --exec 'npm run build && npm run sync'"
+    "watch": "./node_modules/.bin/gulp"
   },
   "repository": {
     "type": "git",
@@ -27,5 +27,14 @@
     "merge-stream": "^1.0.0",
     "tap-spec": "^4.1.1",
     "tape": "^4.5.1"
+  },
+  "dependencies": {
+    "angular": "^1.4.8",
+    "angular-animate": "^1.4.8",
+    "angular-route": "^1.4.8",
+    "angular-scroll": "^1.0.0",
+    "angular-touch": "^1.4.8",
+    "angular-ui-bootstrap": "^1.2.4",
+    "raf": "^3.2.0"
   }
 }
