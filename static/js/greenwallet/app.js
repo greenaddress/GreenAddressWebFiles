@@ -1,15 +1,14 @@
-var app = {};
-
-module.exports = app;
-
 // replace this with an app object of some sort?
 var deps = ['duScroll', 'ngAnimate', 'greenWalletServices'];
 if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
     deps.push('ngTouch');
     window.IS_MOBILE = true;
 }
-angular.module('greenWalletBaseApp', deps)
-.config(['$interpolateProvider', '$httpProvider',
+var app = angular.module('greenWalletBaseApp', deps);
+
+module.exports = app;
+
+app.config(['$interpolateProvider', '$httpProvider',
         function config($interpolateProvider, $httpProvider) {
     // don't conflict with Django templates
     $interpolateProvider.startSymbol('((');

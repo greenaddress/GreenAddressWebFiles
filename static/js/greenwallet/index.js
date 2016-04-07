@@ -1,5 +1,3 @@
-/*
-*/
 var app = require('./app');
 require('./signuplogin');
 require('./info');
@@ -12,5 +10,8 @@ require('./directives');
 require('./services');
 require('./mnemonics');
 require('./apps');
+
+// last minute initialization code attached to app
+require('./init');
 
 module.exports = app;

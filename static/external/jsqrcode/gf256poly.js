@@ -22,6 +22,7 @@
 * limitations under the License.
 */
 
+module.exports = GF256Poly;
 
 function GF256Poly(field,  coefficients)
 {
