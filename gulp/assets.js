@@ -1,5 +1,4 @@
 var gulp = require('gulp');
-var merge = require('merge-stream');
 var clean = require('gulp-clean');
 
 gulp.task('clean-assets', function () {

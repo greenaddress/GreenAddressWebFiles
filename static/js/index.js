@@ -1,5 +1,7 @@
-// entry point
-// load all the angular code into the global scope
-require('./angular');
+var Window = require('global/window');
+// load libs, this is basically a shame folder
+require('./lib');
 
-module.exports = require('./greenwallet');
+var app = module.exports = require('./greenwallet');
+
+Window.app = app;

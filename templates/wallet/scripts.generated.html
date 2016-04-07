@@ -1,26 +1,8 @@
-<script type="text/javascript" src="{{STATIC_URL}}/js/sha512.js"></script>
 <script type="text/javascript" src="{{STATIC_URL}}/js/index.js"></script>
 <script type="text/javascript" src="{{STATIC_URL}}/js/bitcoinjs.min.js"></script>
 <script type="text/javascript" src="{{STATIC_URL}}/js/bitcoinjs_util.js"></script>
-<script type="text/javascript" src="{{STATIC_URL}}/js/d3.min.js"></script>
-<script type="text/javascript" src="{{STATIC_URL}}/js/crossfilter.min.js"></script>
-<script type="text/javascript" src="{{STATIC_URL}}/js/dc.min.js"></script>
 {% if not cdvapp %}
-<script type="text/javascript" src="{{STATIC_URL}}/js/jsqrcode/grid.js"></script>
-<script type="text/javascript" src="{{STATIC_URL}}/js/jsqrcode/version.js"></script>
-<script type="text/javascript" src="{{STATIC_URL}}/js/jsqrcode/detector.js"></script>
-<script type="text/javascript" src="{{STATIC_URL}}/js/jsqrcode/formatinf.js"></script>
-<script type="text/javascript" src="{{STATIC_URL}}/js/jsqrcode/errorlevel.js"></script>
-<script type="text/javascript" src="{{STATIC_URL}}/js/jsqrcode/bitmat.js"></script>
-<script type="text/javascript" src="{{STATIC_URL}}/js/jsqrcode/datablock.js"></script>
-<script type="text/javascript" src="{{STATIC_URL}}/js/jsqrcode/bmparser.js"></script>
-<script type="text/javascript" src="{{STATIC_URL}}/js/jsqrcode/datamask.js"></script>
-<script type="text/javascript" src="{{STATIC_URL}}/js/jsqrcode/rsdecoder.js"></script>
-<script type="text/javascript" src="{{STATIC_URL}}/js/jsqrcode/gf256poly.js"></script>
-<script type="text/javascript" src="{{STATIC_URL}}/js/jsqrcode/gf256.js"></script>
-<script type="text/javascript" src="{{STATIC_URL}}/js/jsqrcode/decoder.js"></script>
-<script type="text/javascript" src="{{STATIC_URL}}/js/jsqrcode/qrcode.js"></script>
-<script type="text/javascript" src="{{STATIC_URL}}/js/jsqrcode/findpat.js"></script>
-<script type="text/javascript" src="{{STATIC_URL}}/js/jsqrcode/alignpat.js"></script>
-<script type="text/javascript" src="{{STATIC_URL}}/js/jsqrcode/databr.js"></script>
-{% endif %}<script type="text/javascript" src="{{STATIC_URL}}/js/gettext.js"></script>
+<script type="text/javascript">
+  notCdvapp();
+</script>
+{% endif %}

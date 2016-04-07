@@ -3745,6 +3745,7 @@ angular.module('greenWalletServices', [])
                         });
                     }
                     app_promise.then(function(btchip) {
+                        if (!btchip) { return; };
                         btchip.app.getFirmwareVersion_async().then(function(version) {
                             if (noModal) {
                                 $interval.cancel(tick);
