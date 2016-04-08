@@ -17,6 +17,8 @@
 // QR8bitByte
 //---------------------------------------------------------------------
 
+module.exports = QRCode;
+
 function QR8bitByte(data) {
   this.mode = QRMode.MODE_8BIT_BYTE;
   this.data = data;

@@ -70,7 +70,7 @@ function SignupController($scope, $location, mnemonics, tx_sender, notices, wall
         signup.is_trezor = false;
     }
     signup.noLocalStorage = storage.noLocalStorage;
-    $scope.$digest();  // not sure why is this necessary, but i'm already too annoyed with this JS to find out...
+    // $scope.$digest();  // not sure why is this necessary, but i'm already too annoyed with this JS to find out...
     $scope.wallet.hidden = true;
     $scope.wallet.signup = true;
 

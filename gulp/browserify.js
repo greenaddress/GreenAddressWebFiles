@@ -20,5 +20,11 @@ gulp.task('browserify', ['clean-js'], function () {
   var external = gulp.src('static/external/**/*')
     .pipe(gulp.dest('build/static/js/'));
 
-  return merge(browserified, external);
+  var mnonic = gulp.src(['static/js/greenwallet/mnemonics/**/*'])
+    .pipe(gulp.dest('build/static/js/greenwallet/mnemonics/'));
+    
+  var signupWorker = gulp.src(['static/js/greenwallet/signup/**/*'])
+    .pipe(gulp.dest('build/static/js/greenwallet/signup/'));
+
+  return merge(browserified, external, mnonic, signupWorker);
 });
