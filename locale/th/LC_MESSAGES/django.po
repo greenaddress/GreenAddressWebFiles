@@ -117,7 +117,8 @@ msgstr "ประเทศที่ไม่รู้จัก"
 msgid "Wallet"
 msgstr "กระเป๋าสตางค์"
 
-#: templates/wallet/wallet.html:47 templates/wallet/wallet.html:48
+#: templates/wallet/wallet.html:47 templates/wallet/wallet.html:49
+#: templates/wallet/partials/wallet_receive.html:20
 msgid "WARNING"
 msgstr "คำเตือน"
 
@@ -128,11 +129,11 @@ msgid ""
 msgstr ""
 "คุณยังไม่มีการตั้งรหัสผ่านสองขั้น. กรุณา่เข้าไปตั้งค่าใน <a href=\"#/settings\">การตั้งค่า</a>."
 
-#: templates/wallet/wallet.html:49
+#: templates/wallet/wallet.html:50
 msgid "You have not verified that you have backed up your mnemonic."
 msgstr "คุณไม่ได้ตรวจสอบว่า คุณได้สำรองข้อมูลที่ช่วยในการจำ"
 
-#: templates/wallet/wallet.html:50
+#: templates/wallet/wallet.html:51
 msgid "Please verify now by clicking here."
 msgstr "กรุณาตรวจสอบขณะนี้ โดยคลิกที่นี่"
 
@@ -306,9 +307,9 @@ msgstr "เงื่อนไขการใช้บริการ"
 
 #: templates/wallet/partials/signup_1_init.html:61
 #: templates/wallet/partials/wallet_2fa.html:33
+#: templates/wallet/partials/wallet_receive.html:64
+#: templates/wallet/partials/wallet_receive.html:87
 #: templates/wallet/partials/wallet_settings.html:475
-#: templates/wallet/partials/wallet_receive.html:60
-#: templates/wallet/partials/wallet_receive.html:83
 #: templates/wallet/partials/signuplogin/header_pay.html:32
 msgid "Show QR Code"
 msgstr "แสดง QR code"
@@ -702,11 +703,11 @@ msgstr "รหัสจากอีเมล์"
 #: templates/wallet/partials/wallet_modal_tx_redeem.html:24
 #: templates/wallet/partials/wallet_modal_usb_device.html:5
 #: templates/wallet/partials/wallet_modal_verify_mnemonic.html:18
+#: templates/wallet/partials/wallet_receive.html:104
 #: templates/wallet/partials/wallet_send.html:52
 #: templates/wallet/partials/wallet_settings.html:483
 #: templates/wallet/partials/wallet_settings.html:523
 #: templates/wallet/partials/wallet_settings.html:563
-#: templates/wallet/partials/wallet_receive.html:100
 #: templates/wallet/partials/signuplogin/base.html:39
 #: templates/wallet/partials/signuplogin/modal_decryption_password.html:23
 #: templates/wallet/partials/signuplogin/modal_encryption_password.html:33
@@ -777,7 +778,7 @@ msgstr "ชื่อ"
 #: templates/wallet/partials/wallet_modal_my_addresses.html:5
 #: templates/wallet/partials/wallet_modal_tx_details.html:60
 #: templates/wallet/partials/wallet_modal_tx_details.html:73
-#: templates/wallet/partials/wallet_receive.html:65
+#: templates/wallet/partials/wallet_receive.html:69
 msgid "Address"
 msgstr "ที่อยู่"
 
@@ -788,9 +789,9 @@ msgstr "นำออกเป็น CSV"
 
 #: templates/wallet/partials/wallet_address_book.html:51
 #: templates/wallet/partials/wallet_address_book.html:66
+#: templates/wallet/partials/wallet_receive.html:101
 #: templates/wallet/partials/wallet_send.html:49
 #: templates/wallet/partials/wallet_send.html:224
-#: templates/wallet/partials/wallet_receive.html:97
 #: templates/wallet/partials/signuplogin/base.html:36
 msgid "Scan QR"
 msgstr "สแกน QR"
@@ -985,9 +986,9 @@ msgstr "ผู้รับ"
 #: templates/wallet/partials/wallet_modal_tx_limits.html:30
 #: templates/wallet/partials/wallet_modal_tx_limits.html:31
 #: templates/wallet/partials/wallet_modal_tx_redeem.html:17
+#: templates/wallet/partials/wallet_receive.html:24
 #: templates/wallet/partials/wallet_send.html:81
 #: templates/wallet/partials/wallet_settings.html:628
-#: templates/wallet/partials/wallet_receive.html:20
 msgid "Amount"
 msgstr "จำนวน"
 
@@ -1067,8 +1068,8 @@ msgid "You can also copy the code manually:"
 msgstr "คุณยังสามารถคัดลอกรหัสด้วยตนเอง:"
 
 #: templates/wallet/partials/wallet_modal_gauth_qr.html:10
-#: templates/wallet/partials/wallet_receive.html:58
-#: templates/wallet/partials/wallet_receive.html:81
+#: templates/wallet/partials/wallet_receive.html:62
+#: templates/wallet/partials/wallet_receive.html:85
 msgid "Copy to clipboard"
 msgstr "คัด​ลอก​ไป​ยัง​คลิ​ป​บอร์ด"
 
@@ -1509,6 +1510,50 @@ msgstr ""
 "อีกทางเลือกหนึ่ง คุณสามารถย้ายกองทุนไปยัง wallet ได้ด้วยการรองรับ BIP38 โดยการใช้ QR "
 "Code ต่อไปนี้:"
 
+#: templates/wallet/partials/wallet_receive.html:13
+#, fuzzy
+msgid "Account"
+msgstr "เพิ่มบัญชี"
+
+#: templates/wallet/partials/wallet_receive.html:21
+msgid ""
+"You are logged in via watch only mode, you will need to login with the "
+"mnemonics passphrase (or hardware wallet if applicable) to spend."
+msgstr ""
+
+#: templates/wallet/partials/wallet_receive.html:54
+msgid "Bitcoin URI"
+msgstr "Bitcoin URI"
+
+#: templates/wallet/partials/wallet_receive.html:60
+msgid "Show URI and address"
+msgstr "แสดง URI และที่อยู่"
+
+#: templates/wallet/partials/wallet_receive.html:78
+msgid "Permanent Payment URL"
+msgstr "URL ชำระเงินถาวร"
+
+#: templates/wallet/partials/wallet_receive.html:94
+msgid "Private key in WIF or BIP38 format"
+msgstr "คีย์ส่วนตัวในรูปแบบWIFหรือ BIP38"
+
+#: templates/wallet/partials/wallet_receive.html:98
+msgid "Enter a private key to sweep here"
+msgstr "ใส่รหัสส่วนตัวเพื่อย้ายที่นี่"
+
+#: templates/wallet/partials/wallet_receive.html:107
+msgid "Sweep"
+msgstr "กวาด"
+
+#: templates/wallet/partials/wallet_receive.html:124
+msgid "Show previously generated addresses"
+msgstr "แสดงที่อยู่สร้างก่อนหน้านี้"
+
+#: templates/wallet/partials/wallet_receive.html:127
+#: templates/wallet/partials/wallet_send.html:200
+msgid "Show advanced options"
+msgstr ""
+
 #: templates/wallet/partials/wallet_send.html:12
 #, fuzzy
 msgid "From account"
@@ -1596,11 +1641,6 @@ msgstr "Signing"
 #: templates/wallet/partials/wallet_send.html:197
 msgid "Create a Voucher"
 msgstr "การสร้างคูปอง"
-
-#: templates/wallet/partials/wallet_send.html:200
-#: templates/wallet/partials/wallet_receive.html:123
-msgid "Show advanced options"
-msgstr ""
 
 #: templates/wallet/partials/wallet_send.html:215
 msgid "calculating"
@@ -2277,39 +2317,6 @@ msgstr "ไม่พบธุรกรรม"
 #: templates/wallet/partials/wallet_transactions_table.html:110
 msgid "Show more transactions..."
 msgstr "Show more transactions..."
-
-#: templates/wallet/partials/wallet_receive.html:13
-#, fuzzy
-msgid "Account"
-msgstr "เพิ่มบัญชี"
-
-#: templates/wallet/partials/wallet_receive.html:50
-msgid "Bitcoin URI"
-msgstr "Bitcoin URI"
-
-#: templates/wallet/partials/wallet_receive.html:56
-msgid "Show URI and address"
-msgstr "แสดง URI และที่อยู่"
-
-#: templates/wallet/partials/wallet_receive.html:74
-msgid "Permanent Payment URL"
-msgstr "URL ชำระเงินถาวร"
-
-#: templates/wallet/partials/wallet_receive.html:90
-msgid "Private key in WIF or BIP38 format"
-msgstr "คีย์ส่วนตัวในรูปแบบWIFหรือ BIP38"
-
-#: templates/wallet/partials/wallet_receive.html:94
-msgid "Enter a private key to sweep here"
-msgstr "ใส่รหัสส่วนตัวเพื่อย้ายที่นี่"
-
-#: templates/wallet/partials/wallet_receive.html:103
-msgid "Sweep"
-msgstr "กวาด"
-
-#: templates/wallet/partials/wallet_receive.html:120
-msgid "Show previously generated addresses"
-msgstr "แสดงที่อยู่สร้างก่อนหน้านี้"
 
 #: templates/wallet/partials/signuplogin/base.html:6
 #: templates/wallet/partials/signuplogin/trezor.html:6
