@@ -319,9 +319,9 @@ msgstr "Termini di Servizio"
 
 #: templates/wallet/partials/signup_1_init.html:61
 #: templates/wallet/partials/wallet_2fa.html:33
+#: templates/wallet/partials/wallet_settings.html:475
 #: templates/wallet/partials/wallet_receive.html:60
 #: templates/wallet/partials/wallet_receive.html:83
-#: templates/wallet/partials/wallet_settings.html:475
 #: templates/wallet/partials/signuplogin/header_pay.html:32
 msgid "Show QR Code"
 msgstr "Mostra Codice QR"
@@ -738,11 +738,11 @@ msgstr "Codice email"
 #: templates/wallet/partials/wallet_modal_tx_redeem.html:24
 #: templates/wallet/partials/wallet_modal_usb_device.html:5
 #: templates/wallet/partials/wallet_modal_verify_mnemonic.html:18
-#: templates/wallet/partials/wallet_receive.html:100
 #: templates/wallet/partials/wallet_send.html:52
 #: templates/wallet/partials/wallet_settings.html:483
 #: templates/wallet/partials/wallet_settings.html:523
 #: templates/wallet/partials/wallet_settings.html:563
+#: templates/wallet/partials/wallet_receive.html:100
 #: templates/wallet/partials/signuplogin/base.html:39
 #: templates/wallet/partials/signuplogin/modal_decryption_password.html:23
 #: templates/wallet/partials/signuplogin/modal_encryption_password.html:33
@@ -829,9 +829,9 @@ msgstr "Esporta in CSV"
 
 #: templates/wallet/partials/wallet_address_book.html:51
 #: templates/wallet/partials/wallet_address_book.html:66
-#: templates/wallet/partials/wallet_receive.html:97
 #: templates/wallet/partials/wallet_send.html:49
 #: templates/wallet/partials/wallet_send.html:224
+#: templates/wallet/partials/wallet_receive.html:97
 #: templates/wallet/partials/signuplogin/base.html:36
 msgid "Scan QR"
 msgstr "Leggi QR"
@@ -1027,9 +1027,9 @@ msgstr "Destinatario"
 #: templates/wallet/partials/wallet_modal_tx_limits.html:30
 #: templates/wallet/partials/wallet_modal_tx_limits.html:31
 #: templates/wallet/partials/wallet_modal_tx_redeem.html:17
-#: templates/wallet/partials/wallet_receive.html:20
 #: templates/wallet/partials/wallet_send.html:81
 #: templates/wallet/partials/wallet_settings.html:628
+#: templates/wallet/partials/wallet_receive.html:20
 msgid "Amount"
 msgstr "Ammontare"
 
@@ -1567,44 +1567,6 @@ msgstr ""
 "In alternativa puoi spostare i fondi a un portafogli che supporta BIP38 "
 "usando il seguente qr code:"
 
-#: templates/wallet/partials/wallet_receive.html:13
-#, fuzzy
-msgid "Account"
-msgstr "Aggiungi un account"
-
-#: templates/wallet/partials/wallet_receive.html:50
-msgid "Bitcoin URI"
-msgstr "Indirizzo Bitcoin"
-
-#: templates/wallet/partials/wallet_receive.html:56
-msgid "Show URI and address"
-msgstr "Visualizza URI e indirizzo"
-
-#: templates/wallet/partials/wallet_receive.html:74
-msgid "Permanent Payment URL"
-msgstr "Indirizzo permanente per pagamenti"
-
-#: templates/wallet/partials/wallet_receive.html:90
-msgid "Private key in WIF or BIP38 format"
-msgstr "Private key in formato WIF o BIP38"
-
-#: templates/wallet/partials/wallet_receive.html:94
-msgid "Enter a private key to sweep here"
-msgstr "Inserisci qui la chiave privata dei fondi da acquisire"
-
-#: templates/wallet/partials/wallet_receive.html:103
-msgid "Sweep"
-msgstr "Acquisisci"
-
-#: templates/wallet/partials/wallet_receive.html:120
-msgid "Show previously generated addresses"
-msgstr "Mostra tutti gli indirizzi generati fino ad oggi"
-
-#: templates/wallet/partials/wallet_receive.html:123
-#: templates/wallet/partials/wallet_send.html:200
-msgid "Show advanced options"
-msgstr ""
-
 #: templates/wallet/partials/wallet_send.html:12
 #, fuzzy
 msgid "From account"
@@ -1699,6 +1661,11 @@ msgstr "Firma"
 #: templates/wallet/partials/wallet_send.html:197
 msgid "Create a Voucher"
 msgstr "Crea un Voucher"
+
+#: templates/wallet/partials/wallet_send.html:200
+#: templates/wallet/partials/wallet_receive.html:123
+msgid "Show advanced options"
+msgstr ""
 
 #: templates/wallet/partials/wallet_send.html:215
 msgid "calculating"
@@ -2398,6 +2365,39 @@ msgstr "Nessuna transazione..."
 #: templates/wallet/partials/wallet_transactions_table.html:110
 msgid "Show more transactions..."
 msgstr "Visualizza più transazioni..."
+
+#: templates/wallet/partials/wallet_receive.html:13
+#, fuzzy
+msgid "Account"
+msgstr "Aggiungi un account"
+
+#: templates/wallet/partials/wallet_receive.html:50
+msgid "Bitcoin URI"
+msgstr "Indirizzo Bitcoin"
+
+#: templates/wallet/partials/wallet_receive.html:56
+msgid "Show URI and address"
+msgstr "Visualizza URI e indirizzo"
+
+#: templates/wallet/partials/wallet_receive.html:74
+msgid "Permanent Payment URL"
+msgstr "Indirizzo permanente per pagamenti"
+
+#: templates/wallet/partials/wallet_receive.html:90
+msgid "Private key in WIF or BIP38 format"
+msgstr "Private key in formato WIF o BIP38"
+
+#: templates/wallet/partials/wallet_receive.html:94
+msgid "Enter a private key to sweep here"
+msgstr "Inserisci qui la chiave privata dei fondi da acquisire"
+
+#: templates/wallet/partials/wallet_receive.html:103
+msgid "Sweep"
+msgstr "Acquisisci"
+
+#: templates/wallet/partials/wallet_receive.html:120
+msgid "Show previously generated addresses"
+msgstr "Mostra tutti gli indirizzi generati fino ad oggi"
 
 #: templates/wallet/partials/signuplogin/base.html:6
 #: templates/wallet/partials/signuplogin/trezor.html:6

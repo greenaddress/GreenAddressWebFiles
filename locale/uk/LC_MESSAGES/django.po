@@ -319,9 +319,9 @@ msgstr "Умови надання послуг"
 
 #: templates/wallet/partials/signup_1_init.html:61
 #: templates/wallet/partials/wallet_2fa.html:33
+#: templates/wallet/partials/wallet_settings.html:475
 #: templates/wallet/partials/wallet_receive.html:60
 #: templates/wallet/partials/wallet_receive.html:83
-#: templates/wallet/partials/wallet_settings.html:475
 #: templates/wallet/partials/signuplogin/header_pay.html:32
 msgid "Show QR Code"
 msgstr "Показати QR код"
@@ -733,11 +733,11 @@ msgstr "Email код"
 #: templates/wallet/partials/wallet_modal_tx_redeem.html:24
 #: templates/wallet/partials/wallet_modal_usb_device.html:5
 #: templates/wallet/partials/wallet_modal_verify_mnemonic.html:18
-#: templates/wallet/partials/wallet_receive.html:100
 #: templates/wallet/partials/wallet_send.html:52
 #: templates/wallet/partials/wallet_settings.html:483
 #: templates/wallet/partials/wallet_settings.html:523
 #: templates/wallet/partials/wallet_settings.html:563
+#: templates/wallet/partials/wallet_receive.html:100
 #: templates/wallet/partials/signuplogin/base.html:39
 #: templates/wallet/partials/signuplogin/modal_decryption_password.html:23
 #: templates/wallet/partials/signuplogin/modal_encryption_password.html:33
@@ -820,9 +820,9 @@ msgstr "Експортувати у формат CSV"
 
 #: templates/wallet/partials/wallet_address_book.html:51
 #: templates/wallet/partials/wallet_address_book.html:66
-#: templates/wallet/partials/wallet_receive.html:97
 #: templates/wallet/partials/wallet_send.html:49
 #: templates/wallet/partials/wallet_send.html:224
+#: templates/wallet/partials/wallet_receive.html:97
 #: templates/wallet/partials/signuplogin/base.html:36
 msgid "Scan QR"
 msgstr "Сканувати QR код"
@@ -1019,9 +1019,9 @@ msgstr "Отримувач"
 #: templates/wallet/partials/wallet_modal_tx_limits.html:30
 #: templates/wallet/partials/wallet_modal_tx_limits.html:31
 #: templates/wallet/partials/wallet_modal_tx_redeem.html:17
-#: templates/wallet/partials/wallet_receive.html:20
 #: templates/wallet/partials/wallet_send.html:81
 #: templates/wallet/partials/wallet_settings.html:628
+#: templates/wallet/partials/wallet_receive.html:20
 msgid "Amount"
 msgstr "Кількість"
 
@@ -1556,44 +1556,6 @@ msgstr ""
 "Alternatively, you can sweep funds to a wallet supporting BIP38 using the "
 "following QR code:"
 
-#: templates/wallet/partials/wallet_receive.html:13
-#, fuzzy
-msgid "Account"
-msgstr "Додати акаунт"
-
-#: templates/wallet/partials/wallet_receive.html:50
-msgid "Bitcoin URI"
-msgstr "Bitcoin URI"
-
-#: templates/wallet/partials/wallet_receive.html:56
-msgid "Show URI and address"
-msgstr "Показати URI адресу"
-
-#: templates/wallet/partials/wallet_receive.html:74
-msgid "Permanent Payment URL"
-msgstr "Постійний URI для платежів"
-
-#: templates/wallet/partials/wallet_receive.html:90
-msgid "Private key in WIF or BIP38 format"
-msgstr "Private key in WIF or BIP38 format"
-
-#: templates/wallet/partials/wallet_receive.html:94
-msgid "Enter a private key to sweep here"
-msgstr "Введіть приватний ключ для змітання коштів сюди"
-
-#: templates/wallet/partials/wallet_receive.html:103
-msgid "Sweep"
-msgstr "Змести"
-
-#: templates/wallet/partials/wallet_receive.html:120
-msgid "Show previously generated addresses"
-msgstr "Показати згенеровані раніше адреси"
-
-#: templates/wallet/partials/wallet_receive.html:123
-#: templates/wallet/partials/wallet_send.html:200
-msgid "Show advanced options"
-msgstr ""
-
 #: templates/wallet/partials/wallet_send.html:12
 #, fuzzy
 msgid "From account"
@@ -1681,6 +1643,11 @@ msgstr "Signing"
 #: templates/wallet/partials/wallet_send.html:197
 msgid "Create a Voucher"
 msgstr "Create a Voucher"
+
+#: templates/wallet/partials/wallet_send.html:200
+#: templates/wallet/partials/wallet_receive.html:123
+msgid "Show advanced options"
+msgstr ""
 
 #: templates/wallet/partials/wallet_send.html:215
 msgid "calculating"
@@ -2376,6 +2343,39 @@ msgstr "Транзакції не знайдені..."
 #: templates/wallet/partials/wallet_transactions_table.html:110
 msgid "Show more transactions..."
 msgstr "Show more transactions..."
+
+#: templates/wallet/partials/wallet_receive.html:13
+#, fuzzy
+msgid "Account"
+msgstr "Додати акаунт"
+
+#: templates/wallet/partials/wallet_receive.html:50
+msgid "Bitcoin URI"
+msgstr "Bitcoin URI"
+
+#: templates/wallet/partials/wallet_receive.html:56
+msgid "Show URI and address"
+msgstr "Показати URI адресу"
+
+#: templates/wallet/partials/wallet_receive.html:74
+msgid "Permanent Payment URL"
+msgstr "Постійний URI для платежів"
+
+#: templates/wallet/partials/wallet_receive.html:90
+msgid "Private key in WIF or BIP38 format"
+msgstr "Private key in WIF or BIP38 format"
+
+#: templates/wallet/partials/wallet_receive.html:94
+msgid "Enter a private key to sweep here"
+msgstr "Введіть приватний ключ для змітання коштів сюди"
+
+#: templates/wallet/partials/wallet_receive.html:103
+msgid "Sweep"
+msgstr "Змести"
+
+#: templates/wallet/partials/wallet_receive.html:120
+msgid "Show previously generated addresses"
+msgstr "Показати згенеровані раніше адреси"
 
 #: templates/wallet/partials/signuplogin/base.html:6
 #: templates/wallet/partials/signuplogin/trezor.html:6
