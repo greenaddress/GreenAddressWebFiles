@@ -30,20 +30,41 @@
                     <small>{{ _("Please finish this 4-step account setup to fully secure it against intruders") }}</small>
                 </div>
                 <hr>
-                <div class="mnemonic-label ng-cloak" ng-show="signup.mnemonic && !signup.mnemonic_encrypted">{{ _("Your mnemonic passphrase") }}</div>
-                <div class="mnemonic-label ng-cloak" ng-show="signup.mnemonic && signup.mnemonic_encrypted">{{ _("Your <strong>encrypted</strong> mnemonic passphrase") }}</div>
-                <div class="mnemonic info ng-cloak" ng-show="signup.mnemonic_encrypted || signup.mnemonic">
-                <span ng-bind="signup.mnemonic_encrypted || signup.mnemonic" ></span>
-                {% if crapp %}
-                <a ng-hide="wallet.nohw_chosen" ng-click="signup.usb_hwseed_modal()"  ng-class="{disabled: signup.hw_wallet_processing}" tooltip-placement="left" tooltip="{{ _("Click to use hardware wallet seed instead") }}" class="btn btn-default btn-xs" style="float: right; position: relative; top: 14px; left: 18px;"><i class="glyphicon glyphicon-transfer"></i></a>
-                {% endif %}
+                <div class="warningHolder" style="position: relative; overflow-y: hidden">
+                    <div 
+                        class="mnemonicWarning"
+                        style="
+                            position: absolute;
+                            transform-origin: 50% 0 -20px;
+                            background: white;
+                            border-color: rgb(204, 204, 204);
+                            border-width: 0px 1px 1px;
+                            border-style: solid;
+                            transition: transform .2s;
+                        "
+                        ng-style="{transform: 'rotateX(' + (!signup.secured_confirmed ? 90 : 0) + 'deg)'}">
+                        <p>
+                            <br />
+                            <i class="btn-sm btn-warning glyphicon glyphicon-warning-sign"></i>
+                            {{ _("There is no way to recover this mnemonic once you go passed this step. Please store this somewhere secure before continuing.") }}
+                            <br />
+                        </p>
+                    </div>
+                    <div class="mnemonic-label ng-cloak" ng-show="signup.mnemonic && !signup.mnemonic_encrypted">{{ _("Your mnemonic passphrase") }}</div>
+                    <div class="mnemonic-label ng-cloak" ng-show="signup.mnemonic && signup.mnemonic_encrypted">{{ _("Your <strong>encrypted</strong> mnemonic passphrase") }}</div>
+                    <div class="mnemonic info ng-cloak" ng-show="signup.mnemonic_encrypted || signup.mnemonic">
+                    <span ng-bind="signup.mnemonic_encrypted || signup.mnemonic" ></span>
+                    {% if crapp %}
+                    <a ng-hide="wallet.nohw_chosen" ng-click="signup.usb_hwseed_modal()"  ng-class="{disabled: signup.hw_wallet_processing}" tooltip-placement="left" tooltip="{{ _("Click to use hardware wallet seed instead") }}" class="btn btn-default btn-xs" style="float: right; position: relative; top: 14px; left: 18px;"><i class="glyphicon glyphicon-transfer"></i></a>
+                    {% endif %}
+                    </div>
+                    <div class="mnemonic info" ng-hide="signup.mnemonic">{{ _("Generating mnemonic, please wait...") }}</div>
+                    <div ng-hide="signup.mnemonic_encrypted || cordova_platform=='ios'" class="row"><div class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2 col-xs-12">
+                        <a class="col-xs-12 btn btn-large btn-success" ng-class="{disabled: !signup.mnemonic}" ng-click="signup.encrypt_mnemonic()"><i class="glyphicon glyphicon-lock"></i>{{ ("Click to encrypt your mnemonic") }}</a>
+                    </div></div>
+                    <hr>
+                    <p>{{ _("Please write down these words and store them in a safe place as they can't be recovered.") }} <b>{{ _("We do not store the above information anywhere, we can't help you recover it!") }}</b></p>
                 </div>
-                <div class="mnemonic info" ng-hide="signup.mnemonic">{{ _("Generating mnemonic, please wait...") }}</div>
-                <div ng-hide="signup.mnemonic_encrypted || cordova_platform=='ios'" class="row"><div class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2 col-xs-12">
-                    <a class="col-xs-12 btn btn-large btn-success" ng-class="{disabled: !signup.mnemonic}" ng-click="signup.encrypt_mnemonic()"><i class="glyphicon glyphicon-lock"></i>{{ ("Click to encrypt your mnemonic") }}</a>
-                </div></div>
-                <hr>
-                <p>{{ _("Please write down these words and store them in a safe place as they can't be recovered.") }} <b>{{ _("We do not store the above information anywhere, we can't help you recover it!") }}</b></p>
             </div>
 
             <div class="create-modal-footer" ng-hide="signup.unexpected_error || signup.empty_trezor">

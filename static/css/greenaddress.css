@@ -7522,9 +7522,15 @@ input[type="checkbox"].switch:disabled + span + span {
 .create-modal .create-modal-dialog .create-modal-content .create-modal-body .mnemonic-label.has-error {
   background: #dd6666;
 }
+.create-modal .create-modal-dialog .create-modal-content .create-modal-body .mnemonicWarning {
+  padding: 40px;
+}
 @media (max-width: 991px) {
   .create-modal .create-modal-dialog .create-modal-content .create-modal-body .mnemonic-label {
     font-size: 14px;
+  }
+  .create-modal .create-modal-dialog .create-modal-content .create-modal-body .mnemonicWarning {
+    padding: 10px;
   }
 }
 .create-modal .create-modal-dialog .create-modal-content .create-modal-body .mnemonic-label strong {
