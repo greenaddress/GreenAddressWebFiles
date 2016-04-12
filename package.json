@@ -4,7 +4,7 @@
   "description": "Shared web files used by the Cordova and Chrome apps.",
   "main": "static/js/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "./node_modules/.bin/tape './static/**/test.js' | ./node_modules/.bin/tap-spec",
     "build": "./node_modules/.bin/gulp build",
     "sync": "rsync -av ./build/ ../WalletCrx/",
     "watch": "./node_modules/.bin/gulp"
