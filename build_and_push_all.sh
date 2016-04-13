@@ -17,7 +17,7 @@ cp WalletCrx/static/wallet/config{,_regtest,_testnet}.js /tmp
 cp WalletCrx/static/wallet/network{,_regtest,_testnet}.js /tmp
 python render_templates.py WalletCrx
 rm -rf WalletCrx/static
-cp -r static WalletCrx/static
+cp -r build/static WalletCrx/static
 rm -rf WalletCrx/static/fonts/*.svg  # .woff are enough for crx
 rm -rf WalletCrx/static/sound/*.wav  # .mp3 are enough for crx
 rm WalletCrx/static/js/cdv-plugin-fb-connect.js  # cordova only
@@ -45,7 +45,7 @@ cp WalletCordova/www/greenaddress.it/static/wallet/network.js /tmp/network.js
 cp WalletCordova/www/greenaddress.it/static/wallet/config.js /tmp/config.js
 python render_templates.py -a WalletCordova/www/greenaddress.it
 rm -rf WalletCordova/www/greenaddress.it/static
-cp -r static WalletCordova/www/greenaddress.it/static
+cp -r build/static WalletCordova/www/greenaddress.it/static
 rm -rf WalletCordova/www/greenaddress.it/static/js/jsqrcode  # crx only
 rm -rf WalletCordova/www/greenaddress.it/static/js/btchip-js-api  # crx only
 
