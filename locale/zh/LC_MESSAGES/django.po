@@ -53,7 +53,7 @@ msgid "About us"
 msgstr "关于我们"
 
 #: templates/wallet/nav.html:4 templates/wallet/nav.html:11
-#: templates/wallet/partials/wallet_settings.html:104
+#: templates/wallet/partials/wallet_settings.html:112
 #: templates/wallet/partials/wallet_transactions.html:4
 msgid "Transactions"
 msgstr "交易"
@@ -81,12 +81,12 @@ msgid "General"
 msgstr "常规设置"
 
 #: templates/wallet/nav.html:12
-#: templates/wallet/partials/wallet_settings.html:279
+#: templates/wallet/partials/wallet_settings.html:287
 msgid "Security"
 msgstr "安全"
 
 #: templates/wallet/nav.html:13
-#: templates/wallet/partials/wallet_settings.html:655
+#: templates/wallet/partials/wallet_settings.html:663
 #, fuzzy
 msgid "Accounts"
 msgstr "添加帐户"
@@ -314,13 +314,13 @@ msgstr "服务条款"
 #: templates/wallet/partials/wallet_2fa.html:33
 #: templates/wallet/partials/wallet_receive.html:64
 #: templates/wallet/partials/wallet_receive.html:87
-#: templates/wallet/partials/wallet_settings.html:475
+#: templates/wallet/partials/wallet_settings.html:483
 #: templates/wallet/partials/signuplogin/header_pay.html:32
 msgid "Show QR Code"
 msgstr "显示 QR 码"
 
 #: templates/wallet/partials/signup_1_init.html:64
-#: templates/wallet/partials/wallet_settings.html:599
+#: templates/wallet/partials/wallet_settings.html:607
 msgid "Write to NFC tag"
 msgstr "写入 NFC 标签"
 
@@ -458,12 +458,12 @@ msgid "To have a secure but quick access from this device set your PIN"
 msgstr "To have a secure but quick access from this device set your PIN"
 
 #: templates/wallet/partials/signup_3_pin.html:18
-#: templates/wallet/partials/wallet_settings.html:381
+#: templates/wallet/partials/wallet_settings.html:389
 msgid "PIN number"
 msgstr "PIN 码"
 
 #: templates/wallet/partials/signup_3_pin.html:22
-#: templates/wallet/partials/wallet_settings.html:368
+#: templates/wallet/partials/wallet_settings.html:376
 msgid "4-15 digits number"
 msgstr "4-15 digits number"
 
@@ -506,7 +506,7 @@ msgid "Grant access to your wallet in watch-only mode"
 msgstr "授权在唯读模式下存取你的钱包"
 
 #: templates/wallet/partials/signup_4_oauth.html:23
-#: templates/wallet/partials/wallet_settings.html:434
+#: templates/wallet/partials/wallet_settings.html:442
 #: templates/wallet/partials/signuplogin/base.html:73
 msgid "Custom Login"
 msgstr "自定义登录"
@@ -596,7 +596,7 @@ msgid "Remember to store it in a safe place!"
 msgstr "记得将它存储在一个安全的地方 ！"
 
 #: templates/wallet/partials/wallet_2fa.html:13
-#: templates/wallet/partials/wallet_settings.html:536
+#: templates/wallet/partials/wallet_settings.html:544
 msgid "Phone"
 msgstr "电话"
 
@@ -646,10 +646,10 @@ msgstr "验证码"
 #: templates/wallet/partials/wallet_2fa.html:101
 #: templates/wallet/partials/wallet_2fa.html:143
 #: templates/wallet/partials/wallet_2fa.html:185
-#: templates/wallet/partials/wallet_settings.html:307
-#: templates/wallet/partials/wallet_settings.html:481
-#: templates/wallet/partials/wallet_settings.html:521
-#: templates/wallet/partials/wallet_settings.html:561
+#: templates/wallet/partials/wallet_settings.html:315
+#: templates/wallet/partials/wallet_settings.html:489
+#: templates/wallet/partials/wallet_settings.html:529
+#: templates/wallet/partials/wallet_settings.html:569
 msgid "Please enter received code"
 msgstr "请输入收到的代码"
 
@@ -660,11 +660,11 @@ msgstr "请输入收到的代码"
 #: templates/wallet/partials/wallet_2fa.html:145
 #: templates/wallet/partials/wallet_2fa.html:167
 #: templates/wallet/partials/wallet_2fa.html:187
-#: templates/wallet/partials/wallet_settings.html:483
-#: templates/wallet/partials/wallet_settings.html:507
-#: templates/wallet/partials/wallet_settings.html:523
-#: templates/wallet/partials/wallet_settings.html:547
-#: templates/wallet/partials/wallet_settings.html:563
+#: templates/wallet/partials/wallet_settings.html:491
+#: templates/wallet/partials/wallet_settings.html:515
+#: templates/wallet/partials/wallet_settings.html:531
+#: templates/wallet/partials/wallet_settings.html:555
+#: templates/wallet/partials/wallet_settings.html:571
 msgid "Enable"
 msgstr "启用"
 
@@ -673,7 +673,7 @@ msgid "Email two factor authentication is enabled."
 msgstr "已启用电子邮件双因素身份验证。"
 
 #: templates/wallet/partials/wallet_2fa.html:74
-#: templates/wallet/partials/wallet_settings.html:292
+#: templates/wallet/partials/wallet_settings.html:300
 msgid "Your email address"
 msgstr "您的电子邮件地址"
 
@@ -692,7 +692,7 @@ msgstr ""
 "code."
 
 #: templates/wallet/partials/wallet_2fa.html:96
-#: templates/wallet/partials/wallet_settings.html:302
+#: templates/wallet/partials/wallet_settings.html:310
 msgid "Email code"
 msgstr "电子邮件的代码"
 
@@ -720,9 +720,9 @@ msgstr "电子邮件的代码"
 #: templates/wallet/partials/wallet_modal_verify_mnemonic.html:18
 #: templates/wallet/partials/wallet_receive.html:104
 #: templates/wallet/partials/wallet_send.html:52
-#: templates/wallet/partials/wallet_settings.html:483
-#: templates/wallet/partials/wallet_settings.html:523
-#: templates/wallet/partials/wallet_settings.html:563
+#: templates/wallet/partials/wallet_settings.html:491
+#: templates/wallet/partials/wallet_settings.html:531
+#: templates/wallet/partials/wallet_settings.html:571
 #: templates/wallet/partials/signuplogin/base.html:39
 #: templates/wallet/partials/signuplogin/modal_decryption_password.html:23
 #: templates/wallet/partials/signuplogin/modal_encryption_password.html:33
@@ -736,15 +736,15 @@ msgstr "SMS两步验证已启用。"
 
 #: templates/wallet/partials/wallet_2fa.html:119
 #: templates/wallet/partials/wallet_2fa.html:161
-#: templates/wallet/partials/wallet_settings.html:500
-#: templates/wallet/partials/wallet_settings.html:540
+#: templates/wallet/partials/wallet_settings.html:508
+#: templates/wallet/partials/wallet_settings.html:548
 msgid "Your phone number"
 msgstr "您的电话号码"
 
 #: templates/wallet/partials/wallet_2fa.html:123
 #: templates/wallet/partials/wallet_2fa.html:165
-#: templates/wallet/partials/wallet_settings.html:505
-#: templates/wallet/partials/wallet_settings.html:545
+#: templates/wallet/partials/wallet_settings.html:513
+#: templates/wallet/partials/wallet_settings.html:553
 msgid "+NN... Please enter your phone"
 msgstr "+ NN...请输入您的电话"
 
@@ -755,7 +755,7 @@ msgid ""
 msgstr "您需要提供一个短信代码来设置两步验证。<br>请检查您的电话并提供代码。"
 
 #: templates/wallet/partials/wallet_2fa.html:138
-#: templates/wallet/partials/wallet_settings.html:516
+#: templates/wallet/partials/wallet_settings.html:524
 msgid "SMS code"
 msgstr "短信代码"
 
@@ -770,7 +770,7 @@ msgid ""
 msgstr "您需要提供一个短信代码来设置两步验证。<br>请检查您的电话并提供代码。"
 
 #: templates/wallet/partials/wallet_2fa.html:180
-#: templates/wallet/partials/wallet_settings.html:556
+#: templates/wallet/partials/wallet_settings.html:564
 msgid "Phone code"
 msgstr "电话代码"
 
@@ -780,8 +780,8 @@ msgstr "添加新条目"
 
 #: templates/wallet/partials/wallet_address_book.html:27
 #: templates/wallet/partials/wallet_address_book.html:45
-#: templates/wallet/partials/wallet_settings.html:679
-#: templates/wallet/partials/wallet_settings.html:735
+#: templates/wallet/partials/wallet_settings.html:687
+#: templates/wallet/partials/wallet_settings.html:743
 msgid "Name"
 msgstr "名称"
 
@@ -1000,7 +1000,7 @@ msgstr "收件人"
 #: templates/wallet/partials/wallet_modal_tx_redeem.html:17
 #: templates/wallet/partials/wallet_receive.html:24
 #: templates/wallet/partials/wallet_send.html:81
-#: templates/wallet/partials/wallet_settings.html:628
+#: templates/wallet/partials/wallet_settings.html:636
 msgid "Amount"
 msgstr "金额"
 
@@ -1044,7 +1044,7 @@ msgid "Transaction hash, output number"
 msgstr "交易哈希值，输出数"
 
 #: templates/wallet/partials/wallet_modal_expiring_soon.html:9
-#: templates/wallet/partials/wallet_settings.html:162
+#: templates/wallet/partials/wallet_settings.html:170
 msgid "nLockTime"
 msgstr "nLockTime"
 
@@ -1053,8 +1053,8 @@ msgid "Please send the Facebook message."
 msgstr "请发送 Facebook 消息。"
 
 #: templates/wallet/partials/wallet_modal_fb_message.html:6
-#: templates/wallet/partials/wallet_settings.html:694
-#: templates/wallet/partials/wallet_settings.html:750
+#: templates/wallet/partials/wallet_settings.html:702
+#: templates/wallet/partials/wallet_settings.html:758
 msgid "Send"
 msgstr "发送"
 
@@ -1348,10 +1348,10 @@ msgstr "Memo"
 
 #: templates/wallet/partials/wallet_modal_tx_details.html:21
 #: templates/wallet/partials/wallet_modal_tx_limits.html:41
-#: templates/wallet/partials/wallet_settings.html:293
-#: templates/wallet/partials/wallet_settings.html:584
-#: templates/wallet/partials/wallet_settings.html:693
-#: templates/wallet/partials/wallet_settings.html:749
+#: templates/wallet/partials/wallet_settings.html:301
+#: templates/wallet/partials/wallet_settings.html:592
+#: templates/wallet/partials/wallet_settings.html:701
+#: templates/wallet/partials/wallet_settings.html:757
 msgid "Save"
 msgstr "保存"
 
@@ -1418,20 +1418,20 @@ msgid ""
 msgstr ""
 
 #: templates/wallet/partials/wallet_modal_tx_limits.html:9
-#: templates/wallet/partials/wallet_settings.html:199
+#: templates/wallet/partials/wallet_settings.html:207
 msgid "(current currency)"
 msgstr "(current currency)"
 
 #: templates/wallet/partials/wallet_modal_tx_limits.html:11
 #: templates/wallet/partials/wallet_send.html:76
-#: templates/wallet/partials/wallet_settings.html:154
-#: templates/wallet/partials/wallet_settings.html:177
-#: templates/wallet/partials/wallet_settings.html:200
+#: templates/wallet/partials/wallet_settings.html:162
+#: templates/wallet/partials/wallet_settings.html:185
+#: templates/wallet/partials/wallet_settings.html:208
 msgid "NOTE"
 msgstr "请注意"
 
 #: templates/wallet/partials/wallet_modal_tx_limits.html:11
-#: templates/wallet/partials/wallet_settings.html:200
+#: templates/wallet/partials/wallet_settings.html:208
 msgid ""
 "Using currency values for limits assumes you can trust your pricing source "
 "to provide correct values."
@@ -1440,7 +1440,7 @@ msgstr ""
 "to provide correct values."
 
 #: templates/wallet/partials/wallet_modal_tx_limits.html:33
-#: templates/wallet/partials/wallet_settings.html:213
+#: templates/wallet/partials/wallet_settings.html:221
 msgid ""
 "This limit will be decreased with each transaction and you will need to "
 "\"refill\" it manually by changing this value."
@@ -1689,43 +1689,43 @@ msgstr "定价要使用的源"
 msgid "Show amounts in"
 msgstr "显示金额"
 
-#: templates/wallet/partials/wallet_settings.html:44
+#: templates/wallet/partials/wallet_settings.html:52
 msgid "Sound"
 msgstr "声音"
 
-#: templates/wallet/partials/wallet_settings.html:45
+#: templates/wallet/partials/wallet_settings.html:53
 msgid "Enable or disable sounds"
 msgstr "启用或禁用声音"
 
-#: templates/wallet/partials/wallet_settings.html:53
+#: templates/wallet/partials/wallet_settings.html:61
 msgid "Enable sounds"
 msgstr "启用声音"
 
-#: templates/wallet/partials/wallet_settings.html:62
+#: templates/wallet/partials/wallet_settings.html:70
 msgid "Language"
 msgstr "语言"
 
-#: templates/wallet/partials/wallet_settings.html:63
+#: templates/wallet/partials/wallet_settings.html:71
 msgid "Change language to"
 msgstr "更改语言"
 
-#: templates/wallet/partials/wallet_settings.html:92
+#: templates/wallet/partials/wallet_settings.html:100
 msgid "Link handler"
 msgstr "链接处理程序"
 
-#: templates/wallet/partials/wallet_settings.html:93
+#: templates/wallet/partials/wallet_settings.html:101
 msgid "Use GreenAddress to handle bitcoin: links."
 msgstr "使用 GreenAddress 来处理比特币： 链接。"
 
-#: templates/wallet/partials/wallet_settings.html:96
+#: templates/wallet/partials/wallet_settings.html:104
 msgid "Enable Handler"
 msgstr "启用处理程序"
 
-#: templates/wallet/partials/wallet_settings.html:108
+#: templates/wallet/partials/wallet_settings.html:116
 msgid "Notifications"
 msgstr "通知"
 
-#: templates/wallet/partials/wallet_settings.html:109
+#: templates/wallet/partials/wallet_settings.html:117
 msgid ""
 "Notifications allow for improved security when configured for outgoing and "
 "for most up to date information when configured for incoming"
@@ -1733,30 +1733,30 @@ msgstr ""
 "Notifications allow for improved security when configured for outgoing and "
 "for most up to date information when configured for incoming"
 
-#: templates/wallet/partials/wallet_settings.html:115
+#: templates/wallet/partials/wallet_settings.html:123
 msgid "Send incoming transaction notification by"
 msgstr "Send incoming transaction notification by"
 
-#: templates/wallet/partials/wallet_settings.html:121
-#: templates/wallet/partials/wallet_settings.html:141
+#: templates/wallet/partials/wallet_settings.html:129
+#: templates/wallet/partials/wallet_settings.html:149
 msgid "email"
 msgstr "电子邮件"
 
-#: templates/wallet/partials/wallet_settings.html:128
-#: templates/wallet/partials/wallet_settings.html:148
-#: templates/wallet/partials/wallet_settings.html:496
+#: templates/wallet/partials/wallet_settings.html:136
+#: templates/wallet/partials/wallet_settings.html:156
+#: templates/wallet/partials/wallet_settings.html:504
 msgid "SMS"
 msgstr "短信"
 
-#: templates/wallet/partials/wallet_settings.html:135
+#: templates/wallet/partials/wallet_settings.html:143
 msgid "Send outgoing transaction notification by"
 msgstr "Send outgoing transaction notification by"
 
-#: templates/wallet/partials/wallet_settings.html:154
+#: templates/wallet/partials/wallet_settings.html:162
 msgid "You need to have a confirmed email enabled for this feature to work."
 msgstr "You need to have a confirmed email enabled for this feature to work."
 
-#: templates/wallet/partials/wallet_settings.html:163
+#: templates/wallet/partials/wallet_settings.html:171
 msgid ""
 "nLockTime transactions allow you to redeem your deposited funds without "
 "GreenAddress' signature after pre-defined number of blocks"
@@ -1764,15 +1764,15 @@ msgstr ""
 "nLockTime transactions allow you to redeem your deposited funds without "
 "GreenAddress' signature after pre-defined number of blocks"
 
-#: templates/wallet/partials/wallet_settings.html:169
+#: templates/wallet/partials/wallet_settings.html:177
 msgid "Allow redeeming funds without GreenAddress' signature after"
 msgstr "Allow redeeming funds without GreenAddress' signature after"
 
-#: templates/wallet/partials/wallet_settings.html:171
+#: templates/wallet/partials/wallet_settings.html:179
 msgid "blocks"
 msgstr "块"
 
-#: templates/wallet/partials/wallet_settings.html:177
+#: templates/wallet/partials/wallet_settings.html:185
 msgid ""
 "Both outgoing and incoming transaction notifications must be enabled for "
 "this feature to work."
@@ -1780,19 +1780,19 @@ msgstr ""
 "Both outgoing and incoming transaction notifications must be enabled for "
 "this feature to work."
 
-#: templates/wallet/partials/wallet_settings.html:180
+#: templates/wallet/partials/wallet_settings.html:188
 msgid "Show outputs expiring soon"
 msgstr "显示即将到期的输出"
 
-#: templates/wallet/partials/wallet_settings.html:181
+#: templates/wallet/partials/wallet_settings.html:189
 msgid "Send all nLockTime transactions by email"
 msgstr "Send all nLockTime transactions by email"
 
-#: templates/wallet/partials/wallet_settings.html:189
+#: templates/wallet/partials/wallet_settings.html:197
 msgid "Spending limits"
 msgstr "花费限制"
 
-#: templates/wallet/partials/wallet_settings.html:190
+#: templates/wallet/partials/wallet_settings.html:198
 msgid ""
 "Set some limits for which you won't be asked for two factor for super "
 "userfriendly payments."
@@ -1800,7 +1800,7 @@ msgstr ""
 "Set some limits for which you won't be asked for two factor for super "
 "userfriendly payments."
 
-#: templates/wallet/partials/wallet_settings.html:193
+#: templates/wallet/partials/wallet_settings.html:201
 msgid ""
 "You can provide amount (BTC or fiat) limits of transactions that you can "
 "make without using two factor authentication"
@@ -1808,26 +1808,26 @@ msgstr ""
 "You can provide amount (BTC or fiat) limits of transactions that you can "
 "make without using two factor authentication"
 
-#: templates/wallet/partials/wallet_settings.html:218
+#: templates/wallet/partials/wallet_settings.html:226
 msgid "Change limits"
 msgstr "Change limits"
 
-#: templates/wallet/partials/wallet_settings.html:225
+#: templates/wallet/partials/wallet_settings.html:233
 msgid "Privacy"
 msgstr "隐私"
 
-#: templates/wallet/partials/wallet_settings.html:226
+#: templates/wallet/partials/wallet_settings.html:234
 msgid ""
 "Decide who can send you money directly to your GreenAddress wallet, and who "
 "can see your name when receiving money from you"
 msgstr ""
 "决定谁可以直接寄钱给你 GreenAddress 的钱包，谁收到钱的时候可以看到你的名字"
 
-#: templates/wallet/partials/wallet_settings.html:231
+#: templates/wallet/partials/wallet_settings.html:239
 msgid "Allow sending to my wallet via email/Reddit"
 msgstr "允许通过电子邮件/Reddit发送到我的钱包"
 
-#: templates/wallet/partials/wallet_settings.html:232
+#: templates/wallet/partials/wallet_settings.html:240
 msgid ""
 "(NOTE: at this moment addressbook is not supported for Reddit contacts, so "
 "choosing 'Addressbook contacts' will disallow sending to you wallet directly "
@@ -1837,25 +1837,25 @@ msgstr ""
 "choosing 'Addressbook contacts' will disallow sending to you wallet directly "
 "using your Reddit handle)"
 
-#: templates/wallet/partials/wallet_settings.html:234
-#: templates/wallet/partials/wallet_settings.html:245
+#: templates/wallet/partials/wallet_settings.html:242
+#: templates/wallet/partials/wallet_settings.html:253
 msgid "Everyone"
 msgstr "所有的人"
 
-#: templates/wallet/partials/wallet_settings.html:235
+#: templates/wallet/partials/wallet_settings.html:243
 msgid "Addressbook contacts"
 msgstr "地址簿里的联系人"
 
-#: templates/wallet/partials/wallet_settings.html:236
-#: templates/wallet/partials/wallet_settings.html:247
+#: templates/wallet/partials/wallet_settings.html:244
+#: templates/wallet/partials/wallet_settings.html:255
 msgid "No one"
 msgstr "没有人"
 
-#: templates/wallet/partials/wallet_settings.html:242
+#: templates/wallet/partials/wallet_settings.html:250
 msgid "Show my email/Reddit handle as sender to "
 msgstr "Show my email/Reddit handle as sender to "
 
-#: templates/wallet/partials/wallet_settings.html:243
+#: templates/wallet/partials/wallet_settings.html:251
 msgid ""
 "(NOTE: at this moment addressbook is not supported for Reddit contacts, so "
 "choosing 'Mutually added in addressbook' will cause you to be never visible "
@@ -1865,31 +1865,31 @@ msgstr ""
 "choosing 'Mutually added in addressbook' will cause you to be never visible "
 "as sender when using Reddit handle for sending)"
 
-#: templates/wallet/partials/wallet_settings.html:246
+#: templates/wallet/partials/wallet_settings.html:254
 msgid "Mutually added in addressbook"
 msgstr "在通讯簿中相互添加"
 
-#: templates/wallet/partials/wallet_settings.html:256
+#: templates/wallet/partials/wallet_settings.html:264
 #, fuzzy
 msgid "Transaction replacement"
 msgstr "交易细节"
 
-#: templates/wallet/partials/wallet_settings.html:257
+#: templates/wallet/partials/wallet_settings.html:265
 msgid ""
 "Transaction replacement functionality allows re-sending unconfirmed "
 "transactions with higher fees to speed up confirmation progress."
 msgstr ""
 
-#: templates/wallet/partials/wallet_settings.html:269
+#: templates/wallet/partials/wallet_settings.html:277
 msgid "Allow to increase the fee for outgoing transactions"
 msgstr ""
 
-#: templates/wallet/partials/wallet_settings.html:283
-#: templates/wallet/partials/wallet_settings.html:459
+#: templates/wallet/partials/wallet_settings.html:291
+#: templates/wallet/partials/wallet_settings.html:467
 msgid "Email"
 msgstr "电子邮件"
 
-#: templates/wallet/partials/wallet_settings.html:284
+#: templates/wallet/partials/wallet_settings.html:292
 msgid ""
 "Set your email address for transactions notifications, two factor "
 "authentication, and nLockTime transactions."
@@ -1897,28 +1897,28 @@ msgstr ""
 "Set your email address for transactions notifications, two factor "
 "authentication, and nLockTime transactions."
 
-#: templates/wallet/partials/wallet_settings.html:289
+#: templates/wallet/partials/wallet_settings.html:297
 msgid "Change email address"
 msgstr "更改电子邮件地址"
 
-#: templates/wallet/partials/wallet_settings.html:290
+#: templates/wallet/partials/wallet_settings.html:298
 msgid "Set email address"
 msgstr "设置电子邮件地址"
 
-#: templates/wallet/partials/wallet_settings.html:298
+#: templates/wallet/partials/wallet_settings.html:306
 msgid ""
 "You need to provide confirmation code from your email to allow using it."
 "<br>              Please check your email and provide the code."
 msgstr ""
 "您需要提供电子邮件里收到的代码才能使用。<br>请检查您的电子邮件，并提供代码。"
 
-#: templates/wallet/partials/wallet_settings.html:309
-#: templates/wallet/partials/wallet_settings.html:370
-#: templates/wallet/partials/wallet_settings.html:385
+#: templates/wallet/partials/wallet_settings.html:317
+#: templates/wallet/partials/wallet_settings.html:378
+#: templates/wallet/partials/wallet_settings.html:393
 msgid "Confirm"
 msgstr "确认"
 
-#: templates/wallet/partials/wallet_settings.html:315
+#: templates/wallet/partials/wallet_settings.html:323
 msgid ""
 "The code is valid only for 5 minutes, so you can request another one if "
 "necessary."
@@ -1926,77 +1926,77 @@ msgstr ""
 "The code is valid only for 5 minutes, so you can request another one if "
 "necessary."
 
-#: templates/wallet/partials/wallet_settings.html:315
+#: templates/wallet/partials/wallet_settings.html:323
 msgid "Request another code"
 msgstr "Request another code"
 
-#: templates/wallet/partials/wallet_settings.html:323
+#: templates/wallet/partials/wallet_settings.html:331
 msgid "PGP"
 msgstr ""
 
-#: templates/wallet/partials/wallet_settings.html:324
+#: templates/wallet/partials/wallet_settings.html:332
 msgid "Set your Pretty Good Privacy public key for improved privacy."
 msgstr ""
 
-#: templates/wallet/partials/wallet_settings.html:332
+#: templates/wallet/partials/wallet_settings.html:340
 msgid "View/Edit Public Key"
 msgstr ""
 
-#: templates/wallet/partials/wallet_settings.html:341
+#: templates/wallet/partials/wallet_settings.html:349
 msgid "Add Public Key"
 msgstr ""
 
-#: templates/wallet/partials/wallet_settings.html:351
+#: templates/wallet/partials/wallet_settings.html:359
 msgid "Quick login"
 msgstr "快速登录"
 
-#: templates/wallet/partials/wallet_settings.html:352
+#: templates/wallet/partials/wallet_settings.html:360
 msgid "Enable a simple PIN to quickly access your wallet from this device."
 msgstr "Enable a simple PIN to quickly access your wallet from this device."
 
-#: templates/wallet/partials/wallet_settings.html:361
+#: templates/wallet/partials/wallet_settings.html:369
 msgid "Enable quick login on this device"
 msgstr "启用在此设备上的快速登录"
 
-#: templates/wallet/partials/wallet_settings.html:365
+#: templates/wallet/partials/wallet_settings.html:373
 msgid "Change PIN number"
 msgstr "更改 PIN 号码"
 
-#: templates/wallet/partials/wallet_settings.html:366
+#: templates/wallet/partials/wallet_settings.html:374
 msgid "Set PIN number"
 msgstr "设置的 PIN 号码"
 
-#: templates/wallet/partials/wallet_settings.html:375
+#: templates/wallet/partials/wallet_settings.html:383
 msgid "Disable quick login on all devices"
 msgstr "禁用所有设备上的快速登录"
 
-#: templates/wallet/partials/wallet_settings.html:379
+#: templates/wallet/partials/wallet_settings.html:387
 msgid "set PIN to"
 msgstr "将PIN设置为"
 
-#: templates/wallet/partials/wallet_settings.html:384
+#: templates/wallet/partials/wallet_settings.html:392
 msgid "Remove"
 msgstr "删除"
 
-#: templates/wallet/partials/wallet_settings.html:395
+#: templates/wallet/partials/wallet_settings.html:403
 msgid "Touch ID"
 msgstr ""
 
-#: templates/wallet/partials/wallet_settings.html:396
+#: templates/wallet/partials/wallet_settings.html:404
 #, fuzzy
 msgid "Enable Touch ID to quickly access your wallet from this device."
 msgstr "Enable a simple PIN to quickly access your wallet from this device."
 
-#: templates/wallet/partials/wallet_settings.html:404
+#: templates/wallet/partials/wallet_settings.html:412
 #, fuzzy
 msgid "Enable Touch ID on this device"
 msgstr "启用在此设备上的快速登录"
 
-#: templates/wallet/partials/wallet_settings.html:413
+#: templates/wallet/partials/wallet_settings.html:421
 msgid "Link your own third party accounts"
 msgstr "链接你自己的第三方账户"
 
-#: templates/wallet/partials/wallet_settings.html:414
+#: templates/wallet/partials/wallet_settings.html:422
 msgid ""
 "Allow social payments and watch-only login to your wallet via your own third "
 "party accounts."
@@ -2004,33 +2004,33 @@ msgstr ""
 "Allow social payments and watch-only login to your wallet via your own third "
 "party accounts."
 
-#: templates/wallet/partials/wallet_settings.html:440
+#: templates/wallet/partials/wallet_settings.html:448
 msgid "Username"
 msgstr "用户名"
 
-#: templates/wallet/partials/wallet_settings.html:441
+#: templates/wallet/partials/wallet_settings.html:449
 #: templates/wallet/partials/signuplogin/modal_decryption_password.html:8
 #: templates/wallet/partials/signuplogin/modal_encryption_password.html:10
 msgid "Password"
 msgstr "密码"
 
-#: templates/wallet/partials/wallet_settings.html:450
+#: templates/wallet/partials/wallet_settings.html:458
 msgid "Two factor authentication"
 msgstr "两步验证"
 
-#: templates/wallet/partials/wallet_settings.html:451
+#: templates/wallet/partials/wallet_settings.html:459
 msgid "Set any or all two factor: you can choose which one when needed!"
 msgstr "Set any or all two factor: you can choose which one when needed!"
 
-#: templates/wallet/partials/wallet_settings.html:451
+#: templates/wallet/partials/wallet_settings.html:459
 msgid "Enable two or back up the given code where applicable."
 msgstr ""
 
-#: templates/wallet/partials/wallet_settings.html:469
+#: templates/wallet/partials/wallet_settings.html:477
 msgid "Google Authenticator"
 msgstr "Google 身份验证器"
 
-#: templates/wallet/partials/wallet_settings.html:472
+#: templates/wallet/partials/wallet_settings.html:480
 msgid ""
 "You need to provide one Google Authenticator code to set up the two factor "
 "authentication.<br>                    Please scan the QR code below, and "
@@ -2040,17 +2040,17 @@ msgstr ""
 "authentication.<br>                    Please scan the QR code below, and "
 "provide the code."
 
-#: templates/wallet/partials/wallet_settings.html:476
+#: templates/wallet/partials/wallet_settings.html:484
 msgid "Code"
 msgstr "代码"
 
-#: templates/wallet/partials/wallet_settings.html:513
+#: templates/wallet/partials/wallet_settings.html:521
 msgid ""
 "You need to provide one SMS code to set up the two factor authentication."
 "<br>                    Please check your phone and provide the code."
 msgstr "您需要提供一个短信代码来设置两步验证。<br>请检查您的电话并提供代码。"
 
-#: templates/wallet/partials/wallet_settings.html:553
+#: templates/wallet/partials/wallet_settings.html:561
 msgid ""
 "You need to provide one phone code to set up the two factor authentication."
 "<br>                    Please check your phone and provide the code."
@@ -2058,50 +2058,50 @@ msgstr ""
 "You need to provide one phone code to set up the two factor authentication."
 "<br>                    Please check your phone and provide the code."
 
-#: templates/wallet/partials/wallet_settings.html:575
+#: templates/wallet/partials/wallet_settings.html:583
 msgid "Auto logout"
 msgstr "自动退出"
 
-#: templates/wallet/partials/wallet_settings.html:576
+#: templates/wallet/partials/wallet_settings.html:584
 msgid "Configure auto logout after some inactivity timeout"
 msgstr "Configure auto logout after some inactivity timeout"
 
-#: templates/wallet/partials/wallet_settings.html:580
+#: templates/wallet/partials/wallet_settings.html:588
 msgid "Minutes"
 msgstr "分钟"
 
-#: templates/wallet/partials/wallet_settings.html:582
+#: templates/wallet/partials/wallet_settings.html:590
 msgid "Timeout minutes"
 msgstr "超时（分钟）"
 
-#: templates/wallet/partials/wallet_settings.html:592
-#: templates/wallet/partials/wallet_settings.html:596
+#: templates/wallet/partials/wallet_settings.html:600
+#: templates/wallet/partials/wallet_settings.html:604
 msgid "Show mnemonic"
 msgstr "显示助记符"
 
-#: templates/wallet/partials/wallet_settings.html:593
+#: templates/wallet/partials/wallet_settings.html:601
 msgid ""
 "Display your mnemonic for account recovery or cloning on another device."
 msgstr ""
 "Display your mnemonic for account recovery or cloning on another device."
 
-#: templates/wallet/partials/wallet_settings.html:597
+#: templates/wallet/partials/wallet_settings.html:605
 msgid "Show encrypted mnemonic"
 msgstr "Show encrypted mnemonic"
 
-#: templates/wallet/partials/wallet_settings.html:600
+#: templates/wallet/partials/wallet_settings.html:608
 msgid "Write encrypted to NFC tag"
 msgstr "Write encrypted to NFC tag"
 
-#: templates/wallet/partials/wallet_settings.html:603
+#: templates/wallet/partials/wallet_settings.html:611
 msgid "Write to a hardware wallet"
 msgstr "Write to a hardware wallet"
 
-#: templates/wallet/partials/wallet_settings.html:611
+#: templates/wallet/partials/wallet_settings.html:619
 msgid "Delayed payments"
 msgstr "延迟的付款"
 
-#: templates/wallet/partials/wallet_settings.html:612
+#: templates/wallet/partials/wallet_settings.html:620
 msgid ""
 "Delay transaction for super ease of mind: works best in conjuction with "
 "outgoing notifications."
@@ -2109,81 +2109,81 @@ msgstr ""
 "Delay transaction for super ease of mind: works best in conjuction with "
 "outgoing notifications."
 
-#: templates/wallet/partials/wallet_settings.html:620
+#: templates/wallet/partials/wallet_settings.html:628
 msgid "Enable delayed payments"
 msgstr "启用延迟付款"
 
-#: templates/wallet/partials/wallet_settings.html:621
+#: templates/wallet/partials/wallet_settings.html:629
 msgid "Coming soon"
 msgstr "即将到来"
 
-#: templates/wallet/partials/wallet_settings.html:626
+#: templates/wallet/partials/wallet_settings.html:634
 msgid "Delay payments of"
 msgstr "延迟付款"
 
-#: templates/wallet/partials/wallet_settings.html:644
-#: templates/wallet/partials/wallet_settings.html:648
+#: templates/wallet/partials/wallet_settings.html:652
+#: templates/wallet/partials/wallet_settings.html:656
 msgid "Remove account"
 msgstr "删除帐户"
 
-#: templates/wallet/partials/wallet_settings.html:645
+#: templates/wallet/partials/wallet_settings.html:653
 msgid "You can remove your account with all associated data here."
 msgstr "You can remove your account with all associated data here."
 
-#: templates/wallet/partials/wallet_settings.html:659
+#: templates/wallet/partials/wallet_settings.html:667
 #, fuzzy
 msgid "Simple accounts"
 msgstr "删除帐户"
 
-#: templates/wallet/partials/wallet_settings.html:660
+#: templates/wallet/partials/wallet_settings.html:668
 msgid ""
 "Create accounts that allow you to separate your funds. Each account will "
 "have its own receiving addresses."
 msgstr ""
 
-#: templates/wallet/partials/wallet_settings.html:665
+#: templates/wallet/partials/wallet_settings.html:673
 msgid "Create an account with the following label:"
 msgstr ""
 
-#: templates/wallet/partials/wallet_settings.html:668
-#: templates/wallet/partials/wallet_settings.html:717
+#: templates/wallet/partials/wallet_settings.html:676
+#: templates/wallet/partials/wallet_settings.html:725
 msgid "Label"
 msgstr ""
 
-#: templates/wallet/partials/wallet_settings.html:670
-#: templates/wallet/partials/wallet_settings.html:719
+#: templates/wallet/partials/wallet_settings.html:678
+#: templates/wallet/partials/wallet_settings.html:727
 msgid "Create"
 msgstr ""
 
-#: templates/wallet/partials/wallet_settings.html:676
+#: templates/wallet/partials/wallet_settings.html:684
 #, fuzzy
 msgid "Your simple accounts:"
 msgstr "删除帐户"
 
-#: templates/wallet/partials/wallet_settings.html:680
-#: templates/wallet/partials/wallet_settings.html:736
+#: templates/wallet/partials/wallet_settings.html:688
+#: templates/wallet/partials/wallet_settings.html:744
 #, fuzzy
 msgid "Actions"
 msgstr "交易"
 
-#: templates/wallet/partials/wallet_settings.html:692
-#: templates/wallet/partials/wallet_settings.html:748
+#: templates/wallet/partials/wallet_settings.html:700
+#: templates/wallet/partials/wallet_settings.html:756
 #, fuzzy
 msgid "Rename"
 msgstr "用户名"
 
-#: templates/wallet/partials/wallet_settings.html:695
-#: templates/wallet/partials/wallet_settings.html:751
+#: templates/wallet/partials/wallet_settings.html:703
+#: templates/wallet/partials/wallet_settings.html:759
 #, fuzzy
 msgid "Receive"
 msgstr "收钱"
 
-#: templates/wallet/partials/wallet_settings.html:704
+#: templates/wallet/partials/wallet_settings.html:712
 #, fuzzy
 msgid "2of3 accounts"
 msgstr "删除帐户"
 
-#: templates/wallet/partials/wallet_settings.html:706
+#: templates/wallet/partials/wallet_settings.html:714
 msgid ""
 "Create accounts that allow you to access your funds at any time even without "
 "access to GreenAddress, using additional offline recovery key.<br/"
@@ -2193,7 +2193,7 @@ msgid ""
 "protect them from double spending."
 msgstr ""
 
-#: templates/wallet/partials/wallet_settings.html:708
+#: templates/wallet/partials/wallet_settings.html:716
 msgid ""
 "Create accounts that allow you to access your funds at any time even without "
 "access to GreenAddress, using additional offline recovery key.<br/"
@@ -2201,19 +2201,19 @@ msgid ""
 "accounts because GreenAddress can't protect them from double spending."
 msgstr ""
 
-#: templates/wallet/partials/wallet_settings.html:714
+#: templates/wallet/partials/wallet_settings.html:722
 msgid "Create a 2of3 account with the following label:"
 msgstr ""
 
-#: templates/wallet/partials/wallet_settings.html:726
+#: templates/wallet/partials/wallet_settings.html:734
 msgid "Optionally provide your custom recovery xpub:"
 msgstr ""
 
-#: templates/wallet/partials/wallet_settings.html:728
+#: templates/wallet/partials/wallet_settings.html:736
 msgid "xpub"
 msgstr ""
 
-#: templates/wallet/partials/wallet_settings.html:732
+#: templates/wallet/partials/wallet_settings.html:740
 #, fuzzy
 msgid "Your 2of3 accounts:"
 msgstr "删除帐户"
