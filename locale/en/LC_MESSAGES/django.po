@@ -526,6 +526,7 @@ msgstr ""
 
 #: templates/wallet/partials/signup_nfc_modal.html:16
 #: templates/wallet/partials/signup_qr_modal.html:7
+#: templates/wallet/partials/wallet_modal_btchip_fup.html:15
 #: templates/wallet/partials/wallet_modal_btchip_setup.html:25
 #: templates/wallet/partials/wallet_modal_expiring_soon.html:20
 #: templates/wallet/partials/wallet_modal_gauth_qr.html:12
@@ -652,7 +653,6 @@ msgstr ""
 #: templates/wallet/partials/wallet_address_book.html:54
 #: templates/wallet/partials/wallet_address_book.html:69
 #: templates/wallet/partials/wallet_modal_2fa.html:31
-#: templates/wallet/partials/wallet_modal_btchip_fup.html:10
 #: templates/wallet/partials/wallet_modal_btchip_pin.html:22
 #: templates/wallet/partials/wallet_modal_confirm_tx.html:34
 #: templates/wallet/partials/wallet_modal_custom_login.html:25
@@ -818,16 +818,12 @@ msgstr ""
 msgid "OK"
 msgstr ""
 
-#: templates/wallet/partials/wallet_modal_btchip_fup.html:5
-msgid "Do you want to upgrade firmware now?"
+#: templates/wallet/partials/wallet_modal_btchip_fup.html:6
+msgid "To upgrade your firmware, please use the following Chrome extension: "
 msgstr ""
 
-#: templates/wallet/partials/wallet_modal_btchip_fup.html:11
-msgid "Upgrade"
-msgstr ""
-
-#: templates/wallet/partials/wallet_modal_btchip_fup.html:17
-msgid "Close the firmware upgrade window"
+#: templates/wallet/partials/wallet_modal_btchip_fup.html:8
+msgid "Ledger Wallet"
 msgstr ""
 
 #: templates/wallet/partials/wallet_modal_btchip_pin.html:4
