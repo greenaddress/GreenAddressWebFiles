@@ -2,11 +2,12 @@ var gulp = require('gulp');
 
 require('./assets');
 require('./browserify');
+require('./css');
 require('./templates');
 require('./watch');
 
 // tasks for file types
-gulp.task('css', []);
+gulp.task('css', ['build-css']);
 gulp.task('js', ['browserify']);
 
 // build, watch, default
