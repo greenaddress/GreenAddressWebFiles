@@ -3018,7 +3018,6 @@ greenWalletServices.factory('focus', ['$rootScope', '$timeout', 'cordovaReady', 
                             canvas.height = img.height;
                             context.drawImage(img, 0, 0, img.width, img.height);
                         }
-                        debugger;
                         qrcode.decode(canvas.toDataURL('image/png'));
                     }
 

@@ -6,9 +6,34 @@
 <script type="text/javascript">FB_APP_ID = '{{ FB_APP_ID }}';REDDIT_APP_ID = '{{ REDDIT_APP_ID }}';</script>
 {% endif %}
 {% endif %}
-{% if cdvapp %}<script src="{{STATIC_URL}}/js/typedarray.js"></script>  <!-- for android 4.1 -->
-<script src="{{STATIC_URL}}/js/plugins/com.cordova.plugin.softkeyboard/www/softkeyboard.js"></script>{% endif %}
-{% include "wallet/scripts.generated.html" %}
+{% if cdvapp %}
+<script src="{{STATIC_URL}}/js/typedarray.js"></script>  <!-- for android 4.1 -->
+<script src="{{STATIC_URL}}/js/plugins/com.cordova.plugin.softkeyboard/www/softkeyboard.js"></script>
+{% endif %}
+<script type="text/javascript" src="{{STATIC_URL}}/js/index.js"></script>
+<!-- We manually extend these libraries and therefore cannot use the version from npm -->
+<script type="text/javascript" src="{{STATIC_URL}}/js/bitcoinjs.min.js"></script>
+<script type="text/javascript" src="{{STATIC_URL}}/js/bitcoinjs_util.js"></script>
+{% if not cdvapp %}
+<!-- our application only supports to debundled web version, we need to conform to the new API style to use this lib correctly -->
+<script type="text/javascript" src="{{STATIC_URL}}/js/jsqrcode/grid.js"></script>
+<script type="text/javascript" src="{{STATIC_URL}}/js/jsqrcode/version.js"></script>
+<script type="text/javascript" src="{{STATIC_URL}}/js/jsqrcode/detector.js"></script>
+<script type="text/javascript" src="{{STATIC_URL}}/js/jsqrcode/formatinf.js"></script>
+<script type="text/javascript" src="{{STATIC_URL}}/js/jsqrcode/errorlevel.js"></script>
+<script type="text/javascript" src="{{STATIC_URL}}/js/jsqrcode/bitmat.js"></script>
+<script type="text/javascript" src="{{STATIC_URL}}/js/jsqrcode/datablock.js"></script>
+<script type="text/javascript" src="{{STATIC_URL}}/js/jsqrcode/bmparser.js"></script>
+<script type="text/javascript" src="{{STATIC_URL}}/js/jsqrcode/datamask.js"></script>
+<script type="text/javascript" src="{{STATIC_URL}}/js/jsqrcode/rsdecoder.js"></script>
+<script type="text/javascript" src="{{STATIC_URL}}/js/jsqrcode/gf256poly.js"></script>
+<script type="text/javascript" src="{{STATIC_URL}}/js/jsqrcode/gf256.js"></script>
+<script type="text/javascript" src="{{STATIC_URL}}/js/jsqrcode/decoder.js"></script>
+<script type="text/javascript" src="{{STATIC_URL}}/js/jsqrcode/qrcode.js"></script>
+<script type="text/javascript" src="{{STATIC_URL}}/js/jsqrcode/findpat.js"></script>
+<script type="text/javascript" src="{{STATIC_URL}}/js/jsqrcode/alignpat.js"></script>
+<script type="text/javascript" src="{{STATIC_URL}}/js/jsqrcode/databr.js"></script>
+{% endif %}
 {% if cdvapp %}
   <script src="{{STATIC_URL}}/js/greenwallet/signup/nfc.js"></script>
 {% endif %}
