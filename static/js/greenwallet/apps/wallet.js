@@ -6,14 +6,7 @@ if (window.cordova) {
     localStorage.hasWallet = true;  // enables redirect to wallet from front page (see js/greenaddress.js)
 }
 var greenWalletApp = angular.module('greenWalletApp', deps)
-.controller('SignupController', ['$scope', '$injector', '$controller', function($scope, $injector, $controller) {
-    var signupApp = require('./signup');
-    // injector method takes an array of modules as the first argument
-    // if you want your controller to be able to use components from
-    // any of your other modules, make sure you include it together with 'ng'
-    // Furthermore we need to pass on the $scope as it's unique to this controller
-    $injector.invoke(signupApp, this, {'$scope': $scope});
-}])
+.controller('SignupController', require('./signup'))
 .constant('branches', {
 	REGULAR: 1,
     EXTERNAL: 2,
