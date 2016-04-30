@@ -3,10 +3,18 @@ language: python
 python:
   - "2.7"
 
+env:
+  - TRAVIS_NODE_VERSION="4"
+
 before_install:
   - openssl aes-256-cbc -K $encrypted_50e73d583398_key -iv $encrypted_50e73d583398_iv -in keys.tar.enc -out keys.tar -d
 
 install:
-  - pip install jinja2
+  - rm -rf ~/.nvm && git clone https://github.com/creationix/nvm.git ~/.nvm && (cd ~/.nvm && git checkout `git describe --abbrev=0 --tags`) && source ~/.nvm/nvm.sh && nvm install $TRAVIS_NODE_VERSION
+  - npm install
+  - pip install -r requirements.txt
 
-script: "./build_and_push_all.sh"
+script: 
+  - npm run build
+  - "./build_and_push_all.sh"
+  
