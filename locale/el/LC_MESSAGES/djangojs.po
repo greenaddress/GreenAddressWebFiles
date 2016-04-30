@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: greenaddress-wallet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-04-30 09:46+0000\n"
+"POT-Creation-Date: 2016-04-30 10:07+0000\n"
 "PO-Revision-Date: 2014-08-20 10:12-0400\n"
 "Last-Translator: GreenAddress <info@greenaddress.it>\n"
 "Language-Team: Greek\n"
@@ -344,9 +344,9 @@ msgstr "Old BTChip firmware version detected. Please upgrade to at least %s."
 
 #: static/js/greenwallet/services.js.c:3897
 #: static/js/greenwallet/signuplogin/controllers.js.c:114
-#: static/js/greenwallet/transactions/controllers.js.c:512
+#: static/js/greenwallet/transactions/controllers.js.c:514
 #: WalletCrx/static/js/index.js.c:56805 WalletCrx/static/js/index.js.c:58785
-#: WalletCrx/static/js/index.js.c:59713
+#: WalletCrx/static/js/index.js.c:59715
 #: WalletCordova/www/greenaddress.it/static/js/index.js.c:56805
 #: WalletCordova/www/greenaddress.it/static/js/index.js.c:58785
 #: WalletCordova/www/greenaddress.it/static/js/index.js.c:59713
@@ -354,8 +354,8 @@ msgid "Please provide a password."
 msgstr "Please provide a password."
 
 #: static/js/greenwallet/services.js.c:3901
-#: static/js/greenwallet/transactions/controllers.js.c:516
-#: WalletCrx/static/js/index.js.c:56809 WalletCrx/static/js/index.js.c:59717
+#: static/js/greenwallet/transactions/controllers.js.c:518
+#: WalletCrx/static/js/index.js.c:56809 WalletCrx/static/js/index.js.c:59719
 #: WalletCordova/www/greenaddress.it/static/js/index.js.c:56809
 #: WalletCordova/www/greenaddress.it/static/js/index.js.c:59717
 msgid "Passwords do not match."
