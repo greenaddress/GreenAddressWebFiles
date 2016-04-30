@@ -52,8 +52,8 @@ rm -rf WalletCordova/www/greenaddress.it/static/js/btchip-js-api  # crx only
 # Cordova actually requires a subset of btchip files:
 mkdir -p WalletCordova/www/greenaddress.it/static/js/btchip-js-api/api
 mkdir -p WalletCordova/www/greenaddress.it/static/js/btchip-js-api/thirdparty
-cp static/js/btchip-js-api/api/{ByteString,Convert,GlobalConstants}.js WalletCordova/www/greenaddress.it/static/js/btchip-js-api/api
-cp -r static/js/btchip-js-api/thirdparty/{async,class,q} WalletCordova/www/greenaddress.it/static/js/btchip-js-api/thirdparty
+cp build/static/js/btchip-js-api/api/{ByteString,Convert,GlobalConstants}.js WalletCordova/www/greenaddress.it/static/js/btchip-js-api/api
+cp -r build/static/js/btchip-js-api/thirdparty/{async,class,q} WalletCordova/www/greenaddress.it/static/js/btchip-js-api/thirdparty
 
 rm WalletCordova/static/js/{greenaddress,instant}.js  # web only
 mkdir -p WalletCordova/www/greenaddress.it/static/wallet >/dev/null
