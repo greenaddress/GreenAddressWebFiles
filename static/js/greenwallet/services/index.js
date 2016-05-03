@@ -9,6 +9,8 @@ module.exports = Services;
 // it's easier to just maintain this list manually,
 // also you can swap out implementations if you want based on runtime logic
 var serviceMap = {
+  autotimeout: require('./autotimeout'),
+  blind: require('./blind'),
   crypto: require('./crypto'),
   focus: require('./focus'),
   notices: require('./notices')
