@@ -70,7 +70,8 @@
       "static/js/greenwallet/signup/nfc.js",
       "static/js/greenwallet/signuplogin/controllers.js",
       "static/js/greenwallet/transactions/controllers.js",
-      "static/js/greenwallet/settings/controllers.js"
+      "static/js/greenwallet/settings/controllers.js",
+      "static/js/greenwallet/services/wallets.js"
     ]
   }
 }
