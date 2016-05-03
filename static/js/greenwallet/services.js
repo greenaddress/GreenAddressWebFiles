@@ -1,160 +1,11 @@
+var angular = require('angular');
 var greenWalletServices = angular.module('greenWalletServices', []);
 module.exports = greenWalletServices;
 
 require('./services/index')(greenWalletServices);
 
-greenWalletServices.factory('focus', ['$rootScope', '$timeout', 'cordovaReady', function ($rootScope, $timeout, cordovaReady) {
-   return function(name) {
-        $timeout(function (){
-            $rootScope.$broadcast('focusOn', name);
-            /* doesn't work very well
-            if (window.cordova) {
-                cordovaReady(function() {
-                    window.plugins.SoftKeyboard.show();
-                })();
-            } */
-        });
-   }
-}]).factory('crypto', ['cordovaReady', '$q', function(cordovaReady, $q) {
-    var pbkdf2_iterations = 10; //Not ideal, but limitations of using javascript
-    var cryptoService = {};
-    cryptoService.encrypt = function(data, password) {
-        if (window.cordova && cordova.platformId == 'ios') {
-            var deferred = $q.defer();
-            cordovaReady(function() {
-                cordova.exec(function(param) {
-                    deferred.resolve(param);
-                }, function(fail) {
-                    console.log('cryptoService.encrypt failed: ' + fail)
-                    deferred.resolve();
-                }, "AES", "encrypt", [data, password]);
-            })();
-            return deferred.promise;
-        } else {
-            var salt = Bitcoin.randombytes(16);
-            var key256Bits = Bitcoin.pbkdf2.pbkdf2Sync(
-                password,
-                salt,
-                pbkdf2_iterations,
-                256/8
-            );
-            var cipher = Bitcoin.aes.createCipheriv(
-                'aes-256-cbc',
-                key256Bits,
-                salt
-            );
-            cipher.end(data);
-            return $q.when(Bitcoin.Buffer.Buffer.concat([
-                salt, cipher.read()
-            ]).toString('base64'));
-        }
-    }
-    cryptoService.decrypt = function(data, password) {
-        if (window.cordova && cordova.platformId == 'ios') {
-            var deferred = $q.defer();
-            cordovaReady(function() {
-                cordova.exec(function(param) {
-                    deferred.resolve(param);
-                }, function(fail) {
-                    console.log('cryptoService.encrypt failed: ' + fail)
-                    deferred.resolve();
-                }, "AES", "decrypt", [data, password]);
-            })();
-            return deferred.promise;
-        } else {
-            try {
-                var parsed_data = new Bitcoin.Buffer.Buffer(data, 'base64');
-                var salt = parsed_data.slice(0, 16);
-                parsed_data = parsed_data.slice(16);
-                var key256Bits = Bitcoin.pbkdf2.pbkdf2Sync(
-                    password,
-                    salt,
-                    pbkdf2_iterations,
-                    256/8
-                );
-                var cipher = Bitcoin.aes.createDecipheriv(
-                    'aes-256-cbc',
-                    key256Bits,
-                    salt
-                );
-                cipher.setAutoPadding(false);
-                cipher.end(parsed_data);
-                var decoded = cipher.read();
-                // ignore padding bytes for backwards compatibility,
-                // because our old implementation used the iso10126 padding:
-                var padding = decoded[decoded.length-1];
-                decoded = decoded.slice(0, decoded.length-padding);
-                if (decoded != null) {
-                    return $q.when(decoded.toString('utf-8'));
-                };
-            } catch (e) {
-                console.log(e);
-            }
-            return $q.when();
-        }
-    }
-    return cryptoService;
-}]).factory('autotimeout', ['$timeout', '$document', function($timeout, $document) {
-    var timeoutms = 1000;
-    var autotimeoutService = {promise: false, callbacks: []};
-
-    var notifyObservers = function(){
-        angular.forEach(autotimeoutService['callbacks'], function(callback){
-            callback();
-        });
-    };
-    var reset = function(amountminutes) {
-        autotimeoutService.left = amountminutes * 1000 * 60;
-    };
-
-    var countdown = function() {
-        if (autotimeoutService.left <= 0) {
-            autotimeoutService.stop();
-            var is_chrome_app = window.chrome && chrome.storage;
-            if (is_chrome_app) {
-                chrome.runtime.reload();
-            } else {
-                window.location.reload();
-            }
-        } else {
-            autotimeoutService.left = autotimeoutService.left - timeoutms;
-            notifyObservers();
-            autotimeoutService.promise = $timeout(countdown, timeoutms);
-        }
-    };
-
-    autotimeoutService.registerObserverCallback = function(callback){
-        autotimeoutService['callbacks'].push(callback);
-    };
-
-    autotimeoutService.stop = function() {
-        $document.find('body').off('mousemove keydown DOMMouseScroll mousewheel mousedown touchstart');
-        if (autotimeoutService.promise) {
-            $timeout.cancel(autotimeoutService.promise);
-            autotimeoutService.promise = false;
-        }
-    };
-
-    autotimeoutService.start = function(amountminutes) {
-        autotimeoutService.stop();
-        if (amountminutes != 0) {
-            reset(amountminutes);
-            autotimeoutService.promise = $timeout(countdown, timeoutms);
-            $document.find('body').on('mousemove keydown DOMMouseScroll mousewheel mousedown touchstart', function() {
-                try {
-                    reset(amountminutes);
-                } catch(err) {
-                    // already logged out
-                    console.log(err);
-                    //autotimeoutService.stop();
-                }
-            });
-        }
-    };
-
-    return autotimeoutService;
-
-}]).factory('blind', ['branches', function(branches) {
+greenWalletServices
+  .factory('blind', ['branches', function(branches) {
     var service = {};
     service._unblindOutValue = function($scope, out, scanning_key) {
         var secexp_buf = scanning_key.d.toBuffer();
@@ -383,6 +234,7 @@ greenWalletServices.factory('focus', ['$rootScope', '$timeout', 'cordovaReady', 
             d.resolve(data);
         }).catch(function(e) { d.reject(e); });
         return d.promise.catch(function(err) {
+            console.log(err);
             if (err && err.uri == 'http://greenaddressit.com/error#doublelogin') {
                 return handle_double_login(function() {
                     if (double_login_callback) double_login_callback();

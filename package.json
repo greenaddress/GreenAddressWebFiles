@@ -4,10 +4,11 @@
   "description": "Shared web files used by the Cordova and Chrome apps.",
   "main": "static/js/index.js",
   "scripts": {
-    "test": "./node_modules/.bin/tape './static/**/test.js' | ./node_modules/.bin/tap-spec",
-    "build": "./node_modules/.bin/gulp build",
+    "testbuild": "npm run test && npm run build",
+    "test": "semistandard && tape './static/**/*test.js' | tap-spec",
+    "build": "gulp build",
     "sync": "rsync -av ./build/ ../WalletCrx/",
-    "watch": "./node_modules/.bin/gulp"
+    "watch": "gulp"
   },
   "repository": {
     "type": "git",
@@ -42,5 +43,34 @@
     "global": "^4.3.0",
     "has-chrome-storage": "^0.1.0",
     "raf": "^3.2.0"
+  },
+  "semistandard": {
+    "ignore": [
+      "static/external/",
+      "static/js/lib/",
+      "static/js/greenwallet/app.js",
+      "static/js/greenwallet/apps/signup.js",
+      "static/js/greenwallet/apps/wallet.js",
+      "static/js/greenwallet/controllers.js",
+      "static/js/greenwallet/decode_raw_tx.js",
+      "static/js/greenwallet/directives.js",
+      "static/js/greenwallet/hdwallet.js",
+      "static/js/greenwallet/info/controllers.js",
+      "static/js/greenwallet/init.js",
+      "static/js/greenwallet/mnemonics/mnemonic_seed.js",
+      "static/js/greenwallet/mnemonics/mnemonic_seed_worker.js",
+      "static/js/greenwallet/mnemonics/services.js",
+      "static/js/greenwallet/receive/controllers.js",
+      "static/js/greenwallet/send/controllers.js",
+      "static/js/greenwallet/services.js",
+      "static/js/greenwallet/services/index.js",
+      "static/js/greenwallet/settings/directives.js",
+      "static/js/greenwallet/signup/bip38.js",
+      "static/js/greenwallet/signup/bip38_worker.js",
+      "static/js/greenwallet/signup/nfc.js",
+      "static/js/greenwallet/signuplogin/controllers.js",
+      "static/js/greenwallet/transactions/controllers.js",
+      "static/js/greenwallet/settings/controllers.js"
+    ]
   }
 }

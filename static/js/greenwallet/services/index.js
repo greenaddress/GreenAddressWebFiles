@@ -9,6 +9,8 @@ module.exports = Services;
 // it's easier to just maintain this list manually,
 // also you can swap out implementations if you want based on runtime logic
 var serviceMap = {
+  crypto: require('./crypto'),
+  focus: require('./focus'),
   notices: require('./notices')
 };
 
@@ -20,4 +22,4 @@ function Services (module) {
       (service.dependencies || []).concat(service)
     );
   });
-};
+}
