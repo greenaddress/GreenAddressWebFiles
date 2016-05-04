@@ -20,6 +20,7 @@ var serviceMap = {
   focus: require('./focus'),
   gaEvent: require('./gaEvent'),
   hostname: require('./hostname'),
+  hw_detector: require('./hw_detector'),
   notices: require('./notices'),
   parseKeyValue: require('./parseKeyValue'),
   parse_bitcoin_uri: require('./parse_bitcoin_uri'),
@@ -29,6 +30,7 @@ var serviceMap = {
   user_agent: require('./user_agent'),
   wallets: require('./wallets'),
   qrcode: require('./qrcode'),
+  trezor: require('./trezor'),
   tx_sender: require('./tx_sender')
 };
 
