@@ -3,7 +3,6 @@ var window = require('global/window');
 var Module = window.Module;
 var setValue = window.setValue;
 var getValue = window.getValue;
-var Bitcoin = window.Bitcoin;
 
 module.exports = factory;
 
@@ -12,6 +11,7 @@ factory.dependencies = ['$q', 'branches'];
 function factory ($q, branches) {
   var service = {};
   service._unblindOutValue = function ($scope, out, scanning_key) {
+    var Bitcoin = window.Bitcoin;
     var secexp_buf = scanning_key.d.toBuffer();
     var secexp = Module._malloc(32);
     var nonce = Module._malloc(33);

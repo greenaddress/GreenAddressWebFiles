@@ -1,6 +1,5 @@
 var window = require('global/window');
 var cordova = window.cordova;
-var Bitcoin = window.Bitcoin;
 
 module.exports = factory;
 
@@ -10,6 +9,7 @@ function factory (cordovaReady, $q) {
   var pbkdf2_iterations = 10; // Not ideal, but limitations of using javascript
   var cryptoService = {};
   cryptoService.encrypt = function (data, password) {
+    var Bitcoin = window.Bitcoin;
     if (window.cordova && cordova.platformId === 'ios') {
       var deferred = $q.defer();
       cordovaReady(function () {
@@ -41,6 +41,7 @@ function factory (cordovaReady, $q) {
     }
   };
   cryptoService.decrypt = function (data, password) {
+    var Bitcoin = window.Bitcoin;
     if (window.cordova && cordova.platformId === 'ios') {
       var deferred = $q.defer();
       cordovaReady(function () {

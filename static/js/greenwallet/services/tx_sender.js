@@ -4,9 +4,8 @@ var Electrum = window.Electrum;
 var gettext = window.gettext;
 var autobahn = window.autobahn;
 var wss_url = window.wss_url;
-var Bitcoin = window.Bitcoin;
-var cur_net = window.cur_net;
 var dev_d = window.dev_d;
+var Bitcoin = window.Bitcoin;
 var ByteString = window.ByteString;
 var HEX = window.HEX;
 
@@ -272,7 +271,7 @@ function factory ($q, $rootScope, cordovaReady, $http, notices, gaEvent, $locati
                 $q.when(subhd.keyPair.sign(challenge_bytes)).then(function (signature) {
                   d_main.resolve(device_id().then(function (devid) {
                     if (session_for_login && session_for_login.nc === nconn) {
-                      if (!cur_net.isAlpha) {
+                      if (!window.cur_net.isAlpha) {
                         signature = [signature.r.toString(), signature.s.toString()];
                       }
                       var args = [
