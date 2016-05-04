@@ -9,10 +9,12 @@ module.exports = Services;
 // it's easier to just maintain this list manually,
 // also you can swap out implementations if you want based on runtime logic
 var serviceMap = {
+  addressbook: require('./addressbook'),
   autotimeout: require('./autotimeout'),
   blind: require('./blind'),
   cordovaReady: require('./cordovaReady'),
   crypto: require('./crypto'),
+  device_id: require('./device_id'),
   facebook: require('./facebook'),
   focus: require('./focus'),
   gaEvent: require('./gaEvent'),
@@ -22,6 +24,7 @@ var serviceMap = {
   parse_bitcoin_uri: require('./parse_bitcoin_uri'),
   reddit: require('./reddit'),
   storage: require('./storage'),
+  user_agent: require('./user_agent'),
   wallets: require('./wallets'),
   tx_sender: require('./tx_sender')
 };
