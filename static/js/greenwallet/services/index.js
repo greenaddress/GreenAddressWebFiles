@@ -11,10 +11,17 @@ module.exports = Services;
 var serviceMap = {
   autotimeout: require('./autotimeout'),
   blind: require('./blind'),
+  cordovaReady: require('./cordovaReady'),
   crypto: require('./crypto'),
   facebook: require('./facebook'),
   focus: require('./focus'),
+  gaEvent: require('./gaEvent'),
+  hostname: require('./hostname'),
   notices: require('./notices'),
+  parseKeyValue: require('./parseKeyValue'),
+  parse_bitcoin_uri: require('./parse_bitcoin_uri'),
+  reddit: require('./reddit'),
+  storage: require('./storage'),
   wallets: require('./wallets'),
   tx_sender: require('./tx_sender')
 };
