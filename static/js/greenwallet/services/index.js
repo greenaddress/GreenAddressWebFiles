@@ -28,6 +28,7 @@ var serviceMap = {
   storage: require('./storage'),
   user_agent: require('./user_agent'),
   wallets: require('./wallets'),
+  qrcode: require('./qrcode'),
   tx_sender: require('./tx_sender')
 };
 
