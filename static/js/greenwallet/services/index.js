@@ -12,8 +12,11 @@ var serviceMap = {
   autotimeout: require('./autotimeout'),
   blind: require('./blind'),
   crypto: require('./crypto'),
+  facebook: require('./facebook'),
   focus: require('./focus'),
-  notices: require('./notices')
+  notices: require('./notices'),
+  wallets: require('./wallets'),
+  tx_sender: require('./tx_sender')
 };
 
 function Services (module) {

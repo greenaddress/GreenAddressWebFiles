@@ -66,7 +66,7 @@ def start():
     filenames = find_all_files(".", [".py"], IGNORED_DIRS)
     filenames_html = []
     filenames_html += find_all_files('templates', [".html"], IGNORED_DIRS)
-    filenames_js = find_all_files(".", [".js"], IGNORED_DIRS)
+    filenames_js = find_all_files("./build/static/", [".js"], IGNORED_DIRS)
 
     # Run xgettext.
     server_msgs = cleanup_msgs(run_gettext(filenames, for_js=False), True)

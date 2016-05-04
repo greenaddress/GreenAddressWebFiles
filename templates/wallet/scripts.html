@@ -10,7 +10,6 @@
 <script src="{{STATIC_URL}}/js/typedarray.js"></script>  <!-- for android 4.1 -->
 <script src="{{STATIC_URL}}/js/plugins/com.cordova.plugin.softkeyboard/www/softkeyboard.js"></script>
 {% endif %}
-<script type="text/javascript" src="{{STATIC_URL}}/js/index.js"></script>
 <!-- We manually extend these libraries and therefore cannot use the version from npm -->
 <script type="text/javascript" src="{{STATIC_URL}}/js/bitcoinjs.min.js"></script>
 <script type="text/javascript" src="{{STATIC_URL}}/js/bitcoinjs_util.js"></script>
@@ -34,9 +33,6 @@
 <script type="text/javascript" src="{{STATIC_URL}}/js/jsqrcode/alignpat.js"></script>
 <script type="text/javascript" src="{{STATIC_URL}}/js/jsqrcode/databr.js"></script>
 {% endif %}
-{% if cdvapp %}
-  <script src="{{STATIC_URL}}/js/greenwallet/signup/nfc.js"></script>
-{% endif %}
 {% if crapp or cdvapp %}
 <script src="{{STATIC_URL}}/js/btchip-js-api/thirdparty/class/inheritance.min.js"></script>
 <script src="{{STATIC_URL}}/js/btchip-js-api/api/GlobalConstants.js"></script>
@@ -58,4 +54,8 @@
 <script src="/static/js/btchip-js-api/api/BTChip.js"></script>
 
 <script src="/static/js/trezor-hid.js"></script>
+{% endif %}
+<script type="text/javascript" src="{{STATIC_URL}}/js/index.js"></script>
+{% if cdvapp %}
+  <script src="{{STATIC_URL}}/js/greenwallet/signup/nfc.js"></script>
 {% endif %}
