@@ -1,7 +1,6 @@
-// expects an angular module
-// attaches all of the services to it!
+var angular = require('angular');
 
-module.exports = Services;
+module.exports = Service;
 
 // these are all the services exposed when this runs
 // we would just iterate over the FS and include them all,
@@ -18,6 +17,7 @@ var serviceMap = {
   cordovaReady: require('./cordovaReady'),
   crypto: require('./crypto'),
   device_id: require('./device_id'),
+  encode_key: require('./encode_key'),
   facebook: require('./facebook'),
   focus: require('./focus'),
   gaEvent: require('./gaEvent'),
@@ -36,7 +36,10 @@ var serviceMap = {
   tx_sender: require('./tx_sender')
 };
 
-function Services (module) {
+// takes in the module and returns all the services
+function Service () {
+  var module = angular.module('greenWalletServices', []);
+
   Object.keys(serviceMap).forEach(function (serviceName) {
     var service = serviceMap[serviceName];
     module.factory(
