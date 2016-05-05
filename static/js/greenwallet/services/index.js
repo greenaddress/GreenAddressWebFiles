@@ -11,7 +11,9 @@ module.exports = Services;
 var serviceMap = {
   addressbook: require('./addressbook'),
   autotimeout: require('./autotimeout'),
+  bip38: require('./bip38'),
   blind: require('./blind'),
+  btchip: require('./btchip'),
   clipboard: require('./clipboard'),
   cordovaReady: require('./cordovaReady'),
   crypto: require('./crypto'),

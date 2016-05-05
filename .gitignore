@@ -12,3 +12,4 @@ gettext_finder.pyc
 jslex.pyc
 static/wallet
 manifest_mainnet.json
+npm-debug.log
