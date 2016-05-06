@@ -50,9 +50,32 @@ function factory ($q, $interval, $uibModal, $rootScope, mnemonics, notices, focu
     };
     return {
       app: {
+        callQueue: [],
+        makeFirstCall: function () {
+          var next = function () {
+            this.callQueue.shift();
+            if (this.callQueue.length) {
+              this.makeFirstCall();
+            }
+          }.bind(this);
+          var call = this.callQueue[0];
+          cordova.exec(function (result) {
+            call[0](result);
+            next();
+          }, function (fail) {
+            call[1](fail);
+            next();
+          }, 'BTChip', call[2], call[3]);
+        },
+        queuedCordovaCall: function (cb, eb, func, args) {
+          this.callQueue.push([cb, eb, func, args]);
+          if (this.callQueue.length === 1) {
+            this.makeFirstCall();
+          }
+        },
         getFirmwareVersion_async: function () {
           var d = Q.defer();
-          cordova.exec(function (result) {
+          this.queuedCordovaCall(function (result) {
             result = new ByteString(result, HEX);
             d.resolve({
               compressedPublicKeys: result.byteAt(0) === 0x01,
@@ -60,24 +83,24 @@ function factory ($q, $interval, $uibModal, $rootScope, mnemonics, notices, focu
             });
           }, function (fail) {
             d.reject(fail);
-          }, 'BTChip', 'getFirmwareVersion', []);
+          }, 'getFirmwareVersion', []);
           return d.promise;
         },
         verifyPin_async: function (pin) {
           if (this.pin_verified) return $q.when();
           var that = this;
           var d = Q.defer();
-          cordova.exec(function (result) {
+          this.queuedCordovaCall(function (result) {
             that.pin_verified = true;
             d.resolve();
           }, function (fail) {
             d.reject(fail);
-          }, 'BTChip', 'verifyPin', [pin.toString(HEX)]);
+          }, 'verifyPin', [pin.toString(HEX)]);
           return d.promise;
         },
         getWalletPublicKey_async: function (path) {
           var d = Q.defer();
-          cordova.exec(function (result) {
+          this.queuedCordovaCall(function (result) {
             d.resolve({
               bitcoinAddress: {value: result.bitcoinAddress},
               chainCode: new ByteString(result.chainCode, HEX),
@@ -85,25 +108,25 @@ function factory ($q, $interval, $uibModal, $rootScope, mnemonics, notices, focu
             });
           }, function (fail) {
             d.reject(fail);
-          }, 'BTChip', 'getWalletPublicKey', [path]);
+          }, 'getWalletPublicKey', [path]);
           return d.promise;
         },
         signMessagePrepare_async: function (path, msg) {
           var d = Q.defer();
-          cordova.exec(function (result) {
+          this.queuedCordovaCall(function (result) {
             d.resolve(result);
           }, function (fail) {
             d.reject(fail);
-          }, 'BTChip', 'signMessagePrepare', [path, msg.toString(HEX)]);
+          }, 'signMessagePrepare', [path, msg.toString(HEX)]);
           return d.promise;
         },
         signMessageSign_async: function (pin) {
           var d = Q.defer();
-          cordova.exec(function (result) {
+          this.queuedCordovaCall(function (result) {
             d.resolve(new ByteString(result, HEX));
           }, function (fail) {
             d.reject(fail);
-          }, 'BTChip', 'signMessageSign', [pin.toString(HEX)]);
+          }, 'signMessageSign', [pin.toString(HEX)]);
           return d.promise;
         },
         gaStartUntrustedHashTransactionInput_async: function (newTransaction, tx, i) {
@@ -119,29 +142,29 @@ function factory ($q, $interval, $uibModal, $rootScope, mnemonics, notices, focu
             inputs.push(txhash + outpointAndSequence);
           }
           var script = tx.ins[i].script.toString('hex');
-          cordova.exec(function (result) {
+          this.queuedCordovaCall(function (result) {
             d.resolve(result);
           }, function (fail) {
             d.reject(fail);
-          }, 'BTChip', 'startUntrustedTransaction', [newTransaction, i, inputs, script]);
+          }, 'startUntrustedTransaction', [newTransaction, i, inputs, script]);
           return d.promise;
         },
         gaUntrustedHashTransactionInputFinalizeFull_async: function (tx) {
           var d = Q.defer();
-          cordova.exec(function (result) {
+          this.queuedCordovaCall(function (result) {
             d.resolve(result);
           }, function (fail) {
             d.reject(fail);
-          }, 'BTChip', 'finalizeInputFull', [tx.serializeOutputs().toString('hex')]);
+          }, 'finalizeInputFull', [tx.serializeOutputs().toString('hex')]);
           return d.promise;
         },
         signTransaction_async: function (path, transactionAuthorization, lockTime) {
           var d = Q.defer();
-          cordova.exec(function (result) {
+          this.queuedCordovaCall(function (result) {
             d.resolve(new ByteString(result, HEX));
           }, function (fail) {
             d.reject(fail);
-          }, 'BTChip', 'untrustedHashSign', [path, lockTime]);
+          }, 'untrustedHashSign', [path, lockTime]);
           return d.promise;
         }
       },
