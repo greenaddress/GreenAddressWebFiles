@@ -6,7 +6,7 @@ angular.module('greenWalletInfoControllers',
         function InfoController($scope, wallets, tx_sender, $uibModal, $q, notices, $location, gaEvent, cordovaReady, $timeout, $rootScope) {
     if(!wallets.requireWallet($scope)) return;
 
-    $scope.search = {query: null, today: new Date().toISOString(),
+    $scope.search = {query: null, today: new Date(),
         open_picker: function($event, name) {
             $event.preventDefault();
             $event.stopPropagation();
