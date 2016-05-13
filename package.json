@@ -21,7 +21,6 @@
   },
   "homepage": "https://github.com/greenaddress/GreenAddressWebFiles#readme",
   "devDependencies": {
-    "angular-node": "^1.3.2",
     "gulp": "^3.9.1",
     "gulp-browserify": "^0.5.1",
     "gulp-clean": "^0.3.2",
