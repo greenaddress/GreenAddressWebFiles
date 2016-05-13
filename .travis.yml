@@ -5,6 +5,7 @@ python:
 
 env:
   - TRAVIS_NODE_VERSION="4"
+  - CXX=g++-4.8
 
 before_install:
   - openssl aes-256-cbc -K $encrypted_50e73d583398_key -iv $encrypted_50e73d583398_iv -in keys.tar.enc -out keys.tar -d
@@ -17,4 +18,11 @@ install:
 script: 
   - npm run build
   - "./build_and_push_all.sh"
-  
+
+addons:
+  apt:
+    sources:
+    - ubuntu-toolchain-r-test
+    packages:
+    - gcc-4.8
+    - g++-4.8
