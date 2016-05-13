@@ -4,10 +4,11 @@
   "description": "Shared web files used by the Cordova and Chrome apps.",
   "main": "static/js/index.js",
   "scripts": {
-    "test": "./node_modules/.bin/tape './static/**/test.js' | ./node_modules/.bin/tap-spec",
-    "build": "./node_modules/.bin/gulp build",
+    "testbuild": "npm run test && npm run build",
+    "test": "semistandard && tape './static/**/*test.js' | tap-spec",
+    "build": "gulp build",
     "sync": "rsync -av ./build/ ../WalletCrx/",
-    "watch": "./node_modules/.bin/gulp"
+    "watch": "gulp"
   },
   "repository": {
     "type": "git",
@@ -20,6 +21,7 @@
   },
   "homepage": "https://github.com/greenaddress/GreenAddressWebFiles#readme",
   "devDependencies": {
+    "angular-node": "^1.3.2",
     "gulp": "^3.9.1",
     "gulp-browserify": "^0.5.1",
     "gulp-clean": "^0.3.2",
@@ -27,8 +29,10 @@
     "gulp-run": "^1.6.12",
     "merge-stream": "^1.0.0",
     "proxyquire": "^1.7.4",
+    "semistandard": "^7.0.5",
     "tap-spec": "^4.1.1",
-    "tape": "^4.5.1"
+    "tape": "^4.5.1",
+    "zuul": "^3.10.1"
   },
   "dependencies": {
     "angular": "^1.4.8",
@@ -37,10 +41,43 @@
     "angular-scroll": "^1.0.0",
     "angular-touch": "^1.4.8",
     "angular-ui-bootstrap": "^1.3.1",
+    "any-storage": "^0.2.0",
+    "ap": "^0.2.0",
     "bitcoinjs-lib": "^2.1.0",
     "crossfilter": "^1.3.12",
     "global": "^4.3.0",
     "has-chrome-storage": "^0.1.0",
+    "q": "^1.4.1",
     "raf": "^3.2.0"
+  },
+  "semistandard": {
+    "ignore": [
+      "static/external/",
+      "static/js/lib/",
+      "static/js/greenwallet/app.js",
+      "static/js/greenwallet/apps/signup.js",
+      "static/js/greenwallet/apps/wallet.js",
+      "static/js/greenwallet/controllers.js",
+      "static/js/greenwallet/decode_raw_tx.js",
+      "static/js/greenwallet/directives.js",
+      "static/js/greenwallet/hdwallet.js",
+      "static/js/greenwallet/info/controllers.js",
+      "static/js/greenwallet/init.js",
+      "static/js/greenwallet/mnemonics/mnemonic_seed.js",
+      "static/js/greenwallet/mnemonics/mnemonic_seed_worker.js",
+      "static/js/greenwallet/mnemonics/services.js",
+      "static/js/greenwallet/receive/controllers.js",
+      "static/js/greenwallet/send/controllers.js",
+      "static/js/greenwallet/services.js",
+      "static/js/greenwallet/services/index.js",
+      "static/js/greenwallet/settings/directives.js",
+      "static/js/greenwallet/signup/bip38.js",
+      "static/js/greenwallet/signup/bip38_worker.js",
+      "static/js/greenwallet/signup/nfc.js",
+      "static/js/greenwallet/signuplogin/controllers.js",
+      "static/js/greenwallet/transactions/controllers.js",
+      "static/js/greenwallet/settings/controllers.js",
+      "static/js/greenwallet/services/wallets.js"
+    ]
   }
 }

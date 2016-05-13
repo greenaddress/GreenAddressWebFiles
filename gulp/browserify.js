@@ -2,7 +2,6 @@ var gulp = require('gulp');
 var merge = require('merge-stream');
 var browserify = require('gulp-browserify');
 var clean = require('gulp-clean');
-var rename = require('gulp-rename');
 
 gulp.task('clean-js', function () {
   return gulp.src(['build/static/js/'], {read: false})
@@ -22,7 +21,7 @@ gulp.task('browserify', ['clean-js'], function () {
 
   var mnonic = gulp.src(['static/js/greenwallet/mnemonics/**/*'])
     .pipe(gulp.dest('build/static/js/greenwallet/mnemonics/'));
-    
+
   var signupWorker = gulp.src(['static/js/greenwallet/signup/**/*'])
     .pipe(gulp.dest('build/static/js/greenwallet/signup/'));
 
