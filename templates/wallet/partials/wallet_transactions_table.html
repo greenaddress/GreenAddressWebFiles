@@ -7,7 +7,7 @@
         <i ng-show="sorting.order_by == 'ts'" class="glyphicon"
         ng-class="{'glyphicon-chevron-down': sorting.reversed, 'glyphicon-chevron-up': !sorting.reversed}"></i> {{ _("Date") }}</a></th>
       <th>{{ _("Description") }}</th>
-      <th class="text-right"><a href="" ng-click="sorting.order_by == 'value' ? (sorting.reversed = !sorting.reversed) : (sorting.order_by = 'value'); filtered_transactions.sort_by(sorting);"><i ng-show="sorting.order_by == 'value'" class="glyphicon"
+      <th class="text-right"><a href="" {% if not MULTIASSET %}ng-click="sorting.order_by == 'value' ? (sorting.reversed = !sorting.reversed) : (sorting.order_by = 'value'); filtered_transactions.sort_by(sorting);"{% endif %}><i ng-show="sorting.order_by == 'value'" class="glyphicon"
         ng-class="{'glyphicon-chevron-down': sorting.reversed, 'glyphicon-chevron-up': !sorting.reversed}"></i>{% if MULTIASSET %}{{ _("Value") }}{% else %}(( wallet.unit )){% endif %}</a></th>
     </tr>
   </thead>
@@ -93,11 +93,31 @@
         </div>
       </td>
       <td class="amount" ng-style="{opacity: (!transaction.replaced_by && !transaction.replacement_of.length && transaction.double_spent_by !== undefined) ? 0.3 : 1}">
-        <span class="amount" ng-class="{'amount-plus': transaction.positive, 'amount-minus': transaction.negative}" ng-hide="!transaction.nonzero && transaction.redeemable">(( transaction.value|format_btc_nounit:wallet.unit ))</span>
-        <span class="amount amount-redeemable" ng-show="!transaction.nonzero && transaction.redeemable">(( transaction.redeemable_value|format_btc_nounit:wallet.unit ))</span>{% if MULTIASSET %}
-        (( transaction.asset_name ))
-        {% else %}<br>
-        <span class="amount info" ng-class="{'amount-plus': transaction.positive, 'amount-minus': transaction.negative}">(( transaction.value_fiat|number:2 )) (( filtered_transactions.fiat_currency ))</span>{% endif %}
+
+        {% if MULTIASSET %}
+          <span
+                ng-repeat="asset in transaction.asset_values"
+                ng-class="{'amount-plus': asset.value > 0, 'amount-minus': asset.value < 0}"
+                class="amount">
+              <span ng-show="asset.apply_unit">(( asset.value|format_btc:wallet.unit ))</span>
+              <span ng-show="!asset.apply_unit">(( asset.value|format_btc_nounit:"bits" )) (( asset.name ))</span>
+              <br/>
+          </span>
+        {% else %}
+          <span
+                class="amount"
+                ng-class="{'amount-plus': transaction.positive, 'amount-minus': transaction.negative}"
+                ng-hide="!transaction.nonzero && transaction.redeemable">
+              (( transaction.value|format_btc_nounit:wallet.unit ))
+          </span>
+          <span
+                class="amount amount-redeemable"
+                ng-show="!transaction.nonzero && transaction.redeemable">
+              (( transaction.redeemable_value|format_btc_nounit:wallet.unit ))
+          </span>
+          <br>
+          <span class="amount info" ng-class="{'amount-plus': transaction.positive, 'amount-minus': transaction.negative}">(( transaction.value_fiat|number:2 )) (( filtered_transactions.fiat_currency ))</span>
+        {% endif %}
       </td>
     </tr>
     <tr ng-show="loading_txs && !filtered_transactions.list">

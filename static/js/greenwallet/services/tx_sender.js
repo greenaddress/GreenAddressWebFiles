@@ -9,6 +9,8 @@ var Bitcoin = window.Bitcoin;
 var ByteString = window.ByteString;
 var HEX = window.HEX;
 
+var GAAssetsWallet = require('wallet').GA.AssetsWallet;
+
 module.exports = factory;
 
 factory.dependencies = ['$q',
@@ -20,10 +22,11 @@ factory.dependencies = ['$q',
   '$location',
   'autotimeout',
   'device_id',
-  'btchip'
+  'btchip',
+  'mnemonics'
 ];
 
-function factory ($q, $rootScope, cordovaReady, $http, notices, gaEvent, $location, autotimeout, device_id, btchip) {
+function factory ($q, $rootScope, cordovaReady, $http, notices, gaEvent, $location, autotimeout, device_id, btchip, mnemonics) {
   var txSenderService = {};
   // disable electrum setup
   if (false && window.Electrum) {
@@ -53,6 +56,19 @@ function factory ($q, $rootScope, cordovaReady, $http, notices, gaEvent, $locati
         $rootScope.$broadcast('fee_estimate', event[0]);
       });
   };
+  txSenderService.waitForConnection = function() {
+    if (session) {
+      return $q.when();
+    } else {
+      if (disconnected) {
+        disconnected = false;
+        connect(global_login_d);
+      }
+      var d = $q.defer();
+      calls.push([null, d]);
+      return d.promise;
+    }
+  }
   txSenderService.call = function () {
     var d = $q.defer();
     if (session) {
@@ -80,6 +96,7 @@ function factory ($q, $rootScope, cordovaReady, $http, notices, gaEvent, $locati
             });
             connection.close();
             connection = session = session_for_login = null;
+            txSenderService.gawallet = null;
             connecting = false;
             connect(global_login_d);
             return;
@@ -123,6 +140,7 @@ function factory ($q, $rootScope, cordovaReady, $http, notices, gaEvent, $locati
           connection.close(); // reconnect on resume
         }
         session = session_for_login = null;
+        txSenderService.gawallet = null;
         disconnected = true;
         txSenderService.wallet.update_balance();
       }, false);
@@ -187,7 +205,12 @@ function factory ($q, $rootScope, cordovaReady, $http, notices, gaEvent, $locati
       }
       while (calls.length) {
         item = calls.shift();
-        item[1].resolve(txSenderService.call.apply(session, item[0]));
+        if (item[0]) {
+          item[1].resolve(txSenderService.call.apply(session, item[0]));
+        } else {
+          // no call required, just the connection (the waitForConnection case)
+          item[1].resolve();
+        }
       }
     }, function (err) {
       // missed calls queue - reject them as well
@@ -221,6 +244,7 @@ function factory ($q, $rootScope, cordovaReady, $http, notices, gaEvent, $locati
       });
       connection.onclose = function () {
         session = session_for_login = null;
+        txSenderService.gawallet = null;
         disconnected = true;
       };
       connection.onopen = function (s) {
@@ -244,7 +268,7 @@ function factory ($q, $rootScope, cordovaReady, $http, notices, gaEvent, $locati
   var waiting_for_device = false;
 
   // @TODO: refactor indentation hell to be function
-  txSenderService.login = function (logout, force_relogin, user_agent) {
+  txSenderService.login = function (logout, force_relogin, user_agent, path_seed, path) {
     var d_main = $q.defer();
     var d;
     if (txSenderService.logged_in && !force_relogin) {
@@ -285,6 +309,25 @@ function factory ($q, $rootScope, cordovaReady, $http, notices, gaEvent, $locati
                         .then(function (data) {
                           if (data) {
                             txSenderService.logged_in = data;
+
+                            var gaPath;
+                            if (data.gait_path) {
+                              gaPath = data.gait_path;
+                            } else if (path) {
+                              gaPath = path;
+                            } else if (path_seed) {
+                              gaPath = mnemonics.seedToPath(path_seed);
+                            }
+
+                            txSenderService.gawallet = new GAAssetsWallet({
+                              existingSession: {
+                                session: session_for_login,
+                                hdwallet: txSenderService.hdwallet,
+                                gaPath: gaPath,
+                                loginData: data
+                              }
+                            });
+
                             onLogin(data);
                             return data;
                           } else {
@@ -449,6 +492,7 @@ function factory ($q, $rootScope, cordovaReady, $http, notices, gaEvent, $locati
     if (session) {
       connection.close();
       session = session_for_login = null;
+      txSenderService.gawallet = null;
       disconnected = true;
     }
     for (var key in calls_missed) {

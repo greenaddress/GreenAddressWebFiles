@@ -1,6 +1,7 @@
 var gulp = require('gulp');
 var merge = require('merge-stream');
 var browserify = require('gulp-browserify');
+var browserResolve = require('browser-resolve');
 var clean = require('gulp-clean');
 
 gulp.task('clean-js', function () {
@@ -12,7 +13,14 @@ gulp.task('browserify', ['clean-js'], function () {
   // Single entry point to browserify
   var browserified = gulp.src('static/js/index.js')
     .pipe(browserify({
-      insertGlobals: true
+      insertGlobals: true,
+      resolve: function (a, b, cb) {
+        if (a === 'secp256k1-alpha') {
+          cb(null, './secp256k1-shim.js');
+        } else {
+          browserResolve(a, b, cb);
+        }
+      }
     }))
     .pipe(gulp.dest('build/static/js/'));
 
