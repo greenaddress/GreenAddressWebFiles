@@ -10,7 +10,8 @@ module.exports = {
 extend(GAUtxoFactory.prototype, {
   listAllUtxo: listAllUtxo,
   getRawTx: getRawTx,
-  getRootHDKey: getRootHDKey
+  getRootHDKey: getRootHDKey,
+  createUtxoForPointer: createUtxoForPointer
 });
 
 extend(GAUtxo.prototype, {
@@ -36,11 +37,16 @@ function GAUtxoFactory (gaService, options) {
 }
 
 function listAllUtxo () {
+  var args =[
+    0, /* include 0-confs */
+    this.subaccount.pointer || 0,  /* subaccount */
+  ];
+  if (this.options.asset) {
+    args.push(this.options.asset)
+  }
   return this.gaService.call(
     'com.greenaddress.txs.get_all_unspent_outputs',
-    [0, /* include 0-confs */
-     this.subaccount.pointer || 0,  /* subaccount */
-     this.options.asset ? this.options.asset.id : null]
+    args
   ).then(function (utxos) {
     return utxos.map(function (utxo) {
       return new this.UtxoClass(
@@ -51,6 +57,18 @@ function listAllUtxo () {
       );
     }.bind(this));
   }.bind(this));
+}
+
+function createUtxoForPointer (pointer) {
+  return new this.UtxoClass(
+    this.gaService,
+    {pointer: pointer,
+     subaccount: this.subaccount.pointer,
+     txhash: ''},
+    {pubHDWallet: this.pubHDWallet,
+     privHDWallet: this.privHDWallet,
+     subaccount: this.subaccount}
+  );
 }
 
 function getRawTx (txhash) {

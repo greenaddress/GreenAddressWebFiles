@@ -197,13 +197,27 @@ angular.module('greenWalletReceiveControllers',
             var args = [
                 'com.greenaddress.vault.fund',
                 $scope.wallet.current_subaccount,
-                confidential
+                true /* return_pointer */
             ];
             if (confidential) {
                 // old server doesn't support the 4th argument
                 args.push(true);
             }
             tx_sender.call.apply(tx_sender, args).then(function(data) {
+                var assetConstructors = tx_sender.gawallet.txConstructors[ $scope.wallet.current_asset ];
+                var constructor = assetConstructors[ $scope.wallet.current_subaccount || null ];
+                return Promise.all([
+                    constructor.utxoFactory.createUtxoForPointer(data.pointer).getPrevScript(),
+                    Promise.resolve(data)
+                ]);
+            }).then(function(expectedAndData) {
+              var expectedScript = expectedAndData[0];
+              var data = expectedAndData[1];
+              if (expectedScript.toString('hex') !== data.script) {
+                 throw new Error("Invalid script returned");
+              }
+              return confidential ? data : data.script;
+            }).then(function(data) {
                 var address;
                 if (confidential) {
                     var key = $q.when($scope.wallet.hdwallet);
@@ -270,6 +284,9 @@ angular.module('greenWalletReceiveControllers',
                     }
                 });
                 if (show_qr) $scope.show_url_qr($scope.receive.bitcoin_uri);
+            }).catch(function (err) {
+                notices.makeNotice('error', err ? (err.message || err) : 'Unknown error occurred');
+                console.log(err);
             });
         }
     }
