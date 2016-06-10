@@ -10,6 +10,7 @@ var ByteString = window.ByteString;
 var HEX = window.HEX;
 
 var GAAssetsWallet = require('wallet').GA.AssetsWallet;
+var GAWallet = require('wallet').GA.GAWallet;
 
 module.exports = factory;
 
@@ -319,7 +320,8 @@ function factory ($q, $rootScope, cordovaReady, $http, notices, gaEvent, $locati
                               gaPath = mnemonics.seedToPath(path_seed);
                             }
 
-                            txSenderService.gawallet = new GAAssetsWallet({
+                            var WalletClass = cur_net.isAlphaMultiasset ? GAAssetsWallet : GAWallet;
+                            txSenderService.gawallet = new WalletClass({
                               existingSession: {
                                 session: session_for_login,
                                 hdwallet: txSenderService.hdwallet,

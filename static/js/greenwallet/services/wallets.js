@@ -134,11 +134,13 @@ function factory ($q, $rootScope, tx_sender, $location, notices, $uibModal,
         $scope.wallet.subaccounts = [
           {pointer: 0, name: gettext('Main')}
         ].concat(data.subaccounts);
-        $scope.wallet.assets = data.assets;
-        $scope.wallet.current_subaccount = $scope.wallet.appearance.current_subaccount || 0;
-        if (cur_net.isAlphaMultiasset) {
-          $scope.wallet.current_asset = $scope.wallet.appearance.current_asset || 1;
+        if (cur_net.isAlphaMultiAsset) {
+          $scope.wallet.assets = data.assets;
+        } else {
+          $scope.wallet.assets = {undefined: {name: 'BTC'}};
         }
+        $scope.wallet.current_subaccount = $scope.wallet.appearance.current_subaccount || 0;
+        $scope.wallet.current_asset = $scope.wallet.appearance.current_asset || 1;
         $scope.wallet.unit = $scope.wallet.appearance.unit || 'mBTC';
         $scope.wallet.cache_password = data.cache_password;
         $scope.wallet.fiat_exchange = data.exchange;
