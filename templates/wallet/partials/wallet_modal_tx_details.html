@@ -60,7 +60,12 @@
         <tr><th>{{ _("Address") }}</th><th>{{ _("Amount") }}</th></tr>
         <tr ng-repeat="input in selected_transaction.inputs|limitTo:10">
             <td>(( input.ad ))</td>
+          {% if MULTIASSET %}
+            <td ng-if="input.value !== null && input.asset_id == 1">(( input.value | format_btc:wallet.unit ))</td>
+            <td ng-if="input.value !== null && input.asset_id != 1">(( input.value )) (( wallet.assets[input.asset_id].name ))</td>
+          {% else %}
             <td ng-if="input.value !== null">(( input.value | format_btc:wallet.unit ))</td>
+          {% endif %}
             <td ng-if="input.value === null">{{ _("Confidential") }}</td>
         </tr>
     </table>
@@ -73,7 +78,12 @@
         <tr><th>{{ _("Address") }}</th><th>{{ _("Amount") }}</th></tr>
         <tr ng-repeat="output in selected_transaction.outputs|limitTo:10">
             <td>(( output.ad ))</td>
+          {% if MULTIASSET %}
+            <td ng-if="output.value !== null && output.asset_id == 1">(( output.value | format_btc:wallet.unit ))</td>
+            <td ng-if="output.value !== null && output.asset_id != 1">(( output.value )) (( wallet.assets[output.asset_id].name ))</td>
+          {% else %}
             <td ng-if="output.value !== null">(( output.value | format_btc:wallet.unit ))</td>
+          {% endif %}
             <td ng-if="output.value === null">{{ _("Confidential") }}</td>
         </tr>
     </table>

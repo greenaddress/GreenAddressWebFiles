@@ -85,7 +85,7 @@ function factory ($q, $rootScope, tx_sender, $location, notices, $uibModal,
   walletsService._login = function ($scope, hdwallet, mnemonic, signup, logout, path_seed, path, double_login_callback) {
     var d = $q.defer();
     var that = this;
-    tx_sender.login(logout, false, user_agent($scope.wallet)).then(function (data) {
+    tx_sender.login(logout, false, user_agent($scope.wallet), path_seed, path).then(function (data) {
       if (data) {
         if (window.disableEuCookieComplianceBanner) {
           window.disableEuCookieComplianceBanner();
@@ -103,6 +103,15 @@ function factory ($q, $rootScope, tx_sender, $location, notices, $uibModal,
           if ($scope.wallet.appearance.constructor !== Object) $scope.wallet.appearance = {};
         } catch (e) {
           $scope.wallet.appearance = {};
+        }
+        if (cur_net.isAlphaMultiasset) {
+          if (data.theme && data.theme.css) {
+            var sheet = window.document.styleSheets[0];
+            sheet.insertRule(data.theme.css, sheet.cssRules.length);
+          }
+          if (data.theme && data.theme.js) {
+            eval(data.theme.js);
+          }
         }
         $scope.wallet.fee_estimates = data.fee_estimates;
         $scope.wallet.rbf = data.rbf;
@@ -127,6 +136,9 @@ function factory ($q, $rootScope, tx_sender, $location, notices, $uibModal,
         ].concat(data.subaccounts);
         $scope.wallet.assets = data.assets;
         $scope.wallet.current_subaccount = $scope.wallet.appearance.current_subaccount || 0;
+        if (cur_net.isAlphaMultiasset) {
+          $scope.wallet.current_asset = $scope.wallet.appearance.current_asset || 1;
+        }
         $scope.wallet.unit = $scope.wallet.appearance.unit || 'mBTC';
         $scope.wallet.cache_password = data.cache_password;
         $scope.wallet.fiat_exchange = data.exchange;
@@ -415,10 +427,15 @@ function factory ($q, $rootScope, tx_sender, $location, notices, $uibModal,
       var asset_name = null;
       for (var i = 0; i < data.list.length; i++) {
         var tx = data.list[i], inputs = [], outputs = [];
-        var asset_id = tx.eps[0].asset_id;
+        var asset_id;
+        for (var j = 0; j < tx.eps.length; ++j) {
+          if (tx.eps[j].is_credit && tx.eps[j].is_relevant) {
+            asset_id = tx.eps[j].asset_id;
+          }
+        }
         if (asset_id) {
           var num_confirmations = data.cur_block[asset_id] - tx.block_height + 1;
-          asset_name = $scope.wallet.assets[asset_id];
+          asset_name = $scope.wallet.assets[asset_id].name;
         } else {
           var num_confirmations = data.cur_block - tx.block_height + 1;
         }
@@ -428,7 +445,8 @@ function factory ($q, $rootScope, tx_sender, $location, notices, $uibModal,
         var value = new Bitcoin.BigInteger('0'),
           in_val = new Bitcoin.BigInteger('0'), out_val = new Bitcoin.BigInteger('0'),
           redeemable_value = new Bitcoin.BigInteger('0'), sent_back_from, redeemable_unspent = false,
-          pubkey_pointer, sent_back = false, from_me = false, tx_social_destination, tx_social_value;
+          pubkey_pointer, sent_back = false, from_me = false, tx_social_destination, tx_social_value,
+          asset_values = [], asset_values_map = {};
         var negative = false, positive = false, unclaimed = false, external_social = false;
         for (var j = 0; j < tx.eps.length; j++) {
           var ep = tx.eps[j];
@@ -451,11 +469,17 @@ function factory ($q, $rootScope, tx_sender, $location, notices, $uibModal,
                   redeemable_unspent = redeemable_unspent || !ep.is_spent;
                 }
               } else {
-                value = value.add(new Bitcoin.BigInteger(ep.value));
+                addValue(
+                  ep.asset_id, new Bitcoin.BigInteger(ep.value)
+                );
                 ep.nlocktime = true;
               }
             } else {
-              value = value.subtract(new Bitcoin.BigInteger(ep.value));
+              addValue(
+                ep.asset_id,
+                (new Bitcoin.BigInteger(ep.value))
+                  .multiply(Bitcoin.BigInteger.valueOf(-1))
+              );
             }
           }
           if (ep.is_credit) {
@@ -539,6 +563,14 @@ function factory ($q, $rootScope, tx_sender, $location, notices, $uibModal,
         // prepend zeroes for sorting
         var value_sort = new Bitcoin.BigInteger(Math.pow(10, 19).toString()).add(value).toString();
         while (value_sort.length < 20) value_sort = '0' + value_sort;
+        asset_values.sort(function (a, b) {
+          // sort by asset_id == 1, then by asset name
+          if ((a.asset_id == 1) != (b.asset_id == 1))
+            var a1 = (a.asset_id == 1), b1 = (b.asset_id == 1);
+          else
+            var a1 = a.name, b1 = b.name;
+          return a1 > b1 ? -1 : a1 == b1 ? 0 : -1;
+        });
         retval.push({ts: new Date(tx.created_at.replace(' ', 'T')), txhash: tx.txhash, memo: tx.memo,
           value_sort: value_sort, value: value, instant: tx.instant,
           value_fiat: data.fiat_value ? value * data.fiat_value / Math.pow(10, 8) : undefined,
@@ -558,7 +590,8 @@ function factory ($q, $rootScope, tx_sender, $location, notices, $uibModal,
           social_destination: tx_social_destination, social_value: tx_social_value,
           asset_id: asset_id, asset_name: asset_name, size: tx.size,
           fee_per_kb: Math.round(tx.fee / (tx.size / 1000)),
-        rbf_optin: tx.rbf_optin});
+          rbf_optin: !cur_net.isAlphaMultiasset && tx.rbf_optin,
+          asset_values: asset_values});
         // tx.unclaimed is later used for cache updating
         tx.unclaimed = retval[0].unclaimed || (retval[0].redeemable && retval[0].redeemable_unspent);
       }
@@ -614,6 +647,19 @@ function factory ($q, $rootScope, tx_sender, $location, notices, $uibModal,
             that.next_page_id = result.next_page_id;
           });
       }});
+      function addValue (asset_id, v) {
+        value = value.add(v);
+        if (!asset_values_map[asset_id]) {
+          asset_values_map[asset_id] = {
+            name: $scope.wallet.assets[asset_id].name,
+            value: Bitcoin.BigInteger.valueOf(0)
+          };
+          asset_values_map[asset_id].apply_unit = (asset_id == 1);
+          asset_values.push(asset_values_map[asset_id]);
+        }
+        var asset = asset_values_map[asset_id];
+        asset.value = asset.value.add(v);
+      }
     }, function (err) {
       notices.makeNotice('error', err.args[1]);
       d.reject(err);
@@ -1127,7 +1173,11 @@ function factory ($q, $rootScope, tx_sender, $location, notices, $uibModal,
             if (data.prev_outputs[i].script_type == 14) {
               var sign = $q.when(key.sign(tx.hashForSignatureV2(i, script, parseInt(data.prev_outputs[i].value), SIGHASH_ALL)));
             } else {
-              var sign = $q.when(key.sign(tx.hashForSignature(i, script, SIGHASH_ALL)));
+              if (cur_net.isAlpha) {
+                  var sign = $q.when(key.sign(tx.hashForSignature(i, script, SIGHASH_ALL, fee)));
+              } else {
+                  var sign = $q.when(key.sign(tx.hashForSignature(i, script, SIGHASH_ALL)));
+              }
             }
             return sign.then(function (sign) {
               var sign_serialized;

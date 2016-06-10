@@ -81,7 +81,15 @@
         <label class="col-sm-2 control-label" for="amount">{{ _("Amount") }}</label>
         <div class="col-sm-10">
           <div class="row">
-            <div class="col-xs-6 col-sm-5 col-md-4">
+            {% if MULTIASSET %}
+            <div class="col-xs-7 col-sm-4 col-md-4">
+              <div class="input-group">
+                <span class="input-group-addon">{{ _("Asset") }}</span>
+                <select class="form-control" ng-model="wallet.current_asset" ng-options="--key as value.name for (key, value) in wallet.assets"></select>
+              </div>
+            </div>
+            {% endif %}
+            <div class="col-xs-7 col-sm-4 col-md-4">
               <div class="input-group">
                 <span class="input-group-addon">((wallet.unit))</span>
                 {% if not cdvapp %}
@@ -92,7 +100,8 @@
                 {% endif %}
               </div>
             </div>
-            <div class="col-xs-6 col-sm-5 col-md-4">
+            {% if not MULTIASSET %}
+            <div class="col-xs-7 col-sm-4 col-md-4">
               <div class="input-group">
                 <span class="input-group-addon">(( wallet.fiat_currency ))</span>
                 {% if not cdvapp %}
@@ -103,6 +112,7 @@
                 {% endif %}
               </div>
             </div>
+            {% endif %}
           </div>
         </div>
       </div>
@@ -163,9 +173,11 @@
         <div class="col-sm-offset-2 col-sm-10">
           <label class="text-petty radio-inline" style="padding:0 5px 0 0; display: inline-block;">
             {{ _("Network fee will be added to the amount") }} <br />
+            {% if not MULTIASSET %}
             {{ _("Rate is") }} <div style="display:inline" ng-include="'{{BASE_URL}}/'+LANG+'/wallet/partials/wallet_fiat_price.html'"></div>
                 <a class="btn btn-default btn-sm" style="min-width: 35px !important; width: 35px !important" ng-click="wallet.update_balance()" ng-hide="wallet.balance_updating"><i class="glyphicon glyphicon-refresh"></i></a>
                 <a class="btn btn-default btn-sm" style="min-width: 35px !important; width: 35px !important" ng-show="wallet.balance_updating"><i class="glyphicon spin"></i></a>
+            {% endif %}
           </label>
         </div>
       </div>

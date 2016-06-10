@@ -154,27 +154,35 @@ angular.module('greenWalletControllers', [])
                 var that = this;
                 that.balance_updating = true;
                 if (!cur_net.isAlpha) {
-                    tx_sender.call('com.greenaddress.txs.get_balance', $scope.wallet.current_subaccount)
-                        .then(function(data) {
-                            that.final_balance = data.satoshi;
-                            that.fiat_currency = data.fiat_currency;
-                            that.fiat_value = data.fiat_value;
-                            that.fiat_rate = data.fiat_exchange;
-                            // copy in .fiat to allow passing to format_fiat filter
-                            // without running the digest cycle too often
-                            // (having an object here instead of JSON representation
-                            //  causes calling format_fiat repeatedly)
-                            that.fiat = JSON.stringify({rate: data.fiat_exchange,
-                                                        currency: data.fiat_currency});
-                            that.fiat_last_fetch = 1*((new Date).getTime()/1000).toFixed();
-                            that.fiat_exchange_extended = exchanges[$scope.wallet.fiat_exchange];
-                            if (first) {
-                                $scope.$broadcast('first_balance_updated');
-                            }
-                        })
-                        .finally(function() {
-                            updating = that.balance_updating = false;
-                        });
+                    var args = [
+                        'com.greenaddress.txs.get_balance',
+                        $scope.wallet.current_subaccount
+                    ];
+                    if (cur_net.isAlphaMultiasset) {
+                        args.push(0);  // confs
+                        args.push($scope.wallet.current_asset);
+                    }
+                    tx_sender.call.apply(
+                        tx_sender, args
+                    ).then(function(data) {
+                        that.final_balance = data.satoshi;
+                        that.fiat_currency = data.fiat_currency;
+                        that.fiat_value = data.fiat_value;
+                        that.fiat_rate = data.fiat_exchange;
+                        // copy in .fiat to allow passing to format_fiat filter
+                        // without running the digest cycle too often
+                        // (having an object here instead of JSON representation
+                        //  causes calling format_fiat repeatedly)
+                        that.fiat = JSON.stringify({rate: data.fiat_exchange,
+                                                    currency: data.fiat_currency});
+                        that.fiat_last_fetch = 1*((new Date).getTime()/1000).toFixed();
+                        that.fiat_exchange_extended = exchanges[$scope.wallet.fiat_exchange];
+                        if (first) {
+                            $scope.$broadcast('first_balance_updated');
+                        }
+                    }).finally(function() {
+                        updating = that.balance_updating = false;
+                    });
                 } else {
                     $scope.wallet.utxo = {};
                     var final_balances = {};
@@ -185,7 +193,9 @@ angular.module('greenWalletControllers', [])
                     }
                     tx_sender.call(
                         'com.greenaddress.txs.get_all_unspent_outputs',
-                        0   // include zero-confs
+                        0, // include zero-confs
+                        null, // all subaccounts
+                        $scope.wallet.current_asset
                     ).then(function(utxos) {
                         var rawtx_ds = [];
                         for (var i = 0; i < utxos.length; ++i) {
@@ -219,6 +229,11 @@ angular.module('greenWalletControllers', [])
                                         function(value) {
                                     if (value !== null) {
                                         return {value: value};
+                                    }
+                                    if (tx.outs[rawtx.pt_idx].value > 0) {
+                                        return {
+                                          value: tx.outs[rawtx.pt_idx].value
+                                        };
                                     }
                                     return blind.unblindOutValue(
                                         $scope, tx.outs[rawtx.pt_idx],
@@ -298,9 +313,19 @@ angular.module('greenWalletControllers', [])
             wallets.updateAppearance($scope, "current_subaccount", newValue);
         }
     });
+    $scope.$watch('wallet.current_asset', function(newValue, oldValue) {
+        if (newValue !== oldValue && newValue !== undefined) {
+            wallets.updateAppearance($scope, "current_asset", newValue);
+        }
+    });
     wallets.set_last_fiat_update($scope);
     $scope.processWalletVars();
     $scope.$watch('wallet.current_subaccount', function(newValue, oldValue) {
+        if (newValue != oldValue &&
+                newValue !== undefined &&  // newValue === undefined on relogin
+                oldValue !== undefined) $scope.wallet.update_balance();
+    })
+    $scope.$watch('wallet.current_asset', function(newValue, oldValue) {
         if (newValue != oldValue &&
                 newValue !== undefined &&  // newValue === undefined on relogin
                 oldValue !== undefined) $scope.wallet.update_balance();

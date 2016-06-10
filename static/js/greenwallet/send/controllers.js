@@ -1,3 +1,5 @@
+var AssetsTransaction = require('wallet').bitcoinup.AssetsTransaction;
+var bufferEquals = require('buffer-equals');
 angular.module('greenWalletSendControllers',
     ['greenWalletServices'])
 .controller('SendController', ['$scope', 'wallets', 'tx_sender', 'cordovaReady', 'notices', 'branches', 'facebook', 'wallets', '$routeParams', 'hostname', 'gaEvent', 'reddit', '$uibModal', '$location', '$rootScope', '$q', 'parse_bitcoin_uri', 'qrcode', 'sound', 'encode_key',
@@ -5,6 +7,16 @@ angular.module('greenWalletSendControllers',
     if (!wallets.requireWallet($scope)) return;
 
     var _verify_tx = function(that, rawtx, destination, satoshis, change_pointer, no_electrum) {
+        if (cur_net.isAlphaMultiasset) {
+            // FIXME: get rid of this function altogether: when we construct
+            //        all transactions client-side, there is no need for
+            //        verification anymore
+            //        (originally disabled for multiasset because we don't
+            //         have multiasset transaction parsing implemented
+            //         client-side)
+            return $q.resolve(true);
+        }
+
         var d = $q.defer();
         var tx = Bitcoin.contrib.transactionFromHex(rawtx);
 
@@ -31,7 +43,8 @@ angular.module('greenWalletSendControllers',
             }
         }
 
-        if (tx.outs.length < 1 || tx.outs.length > 2) {
+        if (tx.outs.length < 1 ||
+                tx.outs.length > (cur_net.isAlphaMultiasset ? 3 : 2)) {
             return $q.reject(tx.outs.length + gettext(' is not a valid number of outputs'));
         }
 
@@ -518,6 +531,9 @@ angular.module('greenWalletSendControllers',
                     priv_data.allow_random_change = true;
                     priv_data.memo = that.memo;
                     priv_data.subaccount = $scope.wallet.current_subaccount;
+                    if (cur_net.isAlphaMultiasset) {
+                        priv_data.asset_id = $scope.wallet.current_asset;
+                    }
                     if (that.spend_all) satoshis = $scope.wallet.final_balance;
                     tx_sender.call("com.greenaddress.vault.prepare_tx", satoshis, to_addr, add_fee, priv_data).then(function(data) {
                         var d_verify = verify_tx(that, data.tx, key.getAddress().toString(), satoshis, data.change_pointer).catch(function(error) {
@@ -568,10 +584,102 @@ angular.module('greenWalletSendControllers',
             var parsed_uri = parse_bitcoin_uri(to_addr);
             if (parsed_uri.recipient) to_addr = parsed_uri.recipient;
             var decoded = Bitcoin.bs58check.decode(to_addr);
+            var isConfidential = (decoded[0] == 25 || decoded[0] == 10);
             var satoshis =
                 this.spend_all ? "ALL" : this.amount_to_satoshis(this.amount);
             $rootScope.is_loading += 1;
-            if (decoded[0] == 25 || decoded[0] == 10) {  // confidential tx
+            if (cur_net.isAlphaMultiasset) {
+                var constructor;
+                var subaccount = $scope.wallet.current_subaccount || null;
+                // We need to do waitForConnection here because the new "walletjs" transaction sending implementation
+                // depends on the "old connection" being up -- in sevices/tx_sender.js the gawallet is cleared
+                // on disconnection, and in general gawallet is set only when connection is set.
+                // (This fixes a bug which causes transaction sending to be impossible after disconnection from server
+                //  when the 'Review & Send Money' button is clicked while still disconnected, and reconnection happens
+                //  too late.)
+                tx_sender.waitForConnection().then(function() {
+                    return tx_sender.gawallet.loggedIn;
+                }).then(function() {
+                    constructor = tx_sender.gawallet.txConstructors[$scope.wallet.current_asset][subaccount];
+                    // constructors are only available when connected
+                    var refresh = [constructor.refreshUtxo()];
+                    var feeConstructor;
+                    if ($scope.wallet.current_asset !== 1) {
+                        feeConstructor = tx_sender.gawallet.txConstructors[ 1 ][subaccount];
+                        refresh.push(feeConstructor.refreshUtxo());
+                    }
+                    return $q.all(refresh);
+                }).then(function() {
+                    var destination;
+                    if (isConfidential) {
+                        destination = {
+                            value: +satoshis,
+                            ctDestination: {
+                                b58: to_addr, network: cur_net
+                            }
+                        }
+                    } else {
+                        destination = {
+                            value: +satoshis,
+                            scriptPubKey: Bitcoin.bitcoin.address.toOutputScript(
+                                to_addr, cur_net
+                            )
+                        }
+                    }
+                    return constructor.constructTx([destination]).then(function(tx) {
+                        var fee = calculateFee(tx.tx);
+                        var amountWithFee = +satoshis + (
+                            $scope.wallet.current_asset === 1 ?
+                                calculateFee(tx.tx) : 0
+                        );
+                        var assetName = $scope.wallet.assets[
+                            $scope.wallet.current_asset
+                        ].name;
+                        return wallets.get_two_factor_code(
+                            $scope, 'send_raw_tx', isConfidential ? null : {
+                                amount: amountWithFee,
+                                change_idx: tx.changeIdx,
+                                fee: fee,
+                                asset: assetName,
+                                recipient: to_addr
+                            }
+                        ).then(function(twofac_data) {
+                            if (twofac_data && !isConfidential) {
+                                twofac_data.send_raw_tx_amount = amountWithFee;
+                                twofac_data.send_raw_tx_change_idx = tx.changeIdx;
+                                twofac_data.send_raw_tx_fee = fee;
+                                twofac_data.send_raw_tx_asset = assetName;
+                                twofac_data.send_raw_tx_recipient = to_addr;
+                            }
+                            priv_data = {};
+                            if (this.memo) {
+                                priv_data.memo = this.memo;
+                            }
+                            return tx_sender.call(
+                                'com.greenaddress.vault.send_raw_tx',
+                                tx.tx.toString('hex'),
+                                twofac_data,
+                                priv_data
+                            );
+                        }.bind(this));
+
+                        function calculateFee (tx_) {
+                            var tx = AssetsTransaction.fromHex(tx_.toString('hex'));
+                            for (var i = 0; i < tx.tx.fees.length; ++i) {
+                              console.log(tx.tx)
+                              if (tx.tx.fees[i]) return tx.tx.fees[i];
+                            }
+                        }
+                    }.bind(this)).then(function() {
+                        $location.url('/info/');
+                    });
+                }.bind(this)).catch(function(e) {
+                    notices.makeNotice('error', gettext('Transaction failed: ') + e && e.args && e.args[1]);
+                }).finally(function() {
+                    that.sending = false;
+                });
+                return;
+            } else if (isConfidential) {
                 wallets.send_confidential_tx($scope, decoded, satoshis)
                         .finally(function() {
                     $rootScope.decrementLoading();
@@ -588,6 +696,9 @@ angular.module('greenWalletSendControllers',
             var priv_data = {rbf_optin: $scope.wallet.appearance.replace_by_fee && !that.instant,
                              instant: that.instant, allow_random_change: true, memo: this.memo,
                 subaccount: $scope.wallet.current_subaccount, prevouts_mode: 'http'};
+            if (cur_net.isAlphaMultiasset) {
+                priv_data.asset_id = $scope.wallet.current_asset;
+            }
             if (that.spend_all) satoshis = $scope.wallet.final_balance;
             tx_sender.call("com.greenaddress.vault.prepare_tx", satoshis, to_addr, this.get_add_fee(), priv_data).then(function(data) {
                 var d_verify = verify_tx(that, data.tx, to_addr, satoshis, data.change_pointer).catch(function(error) {

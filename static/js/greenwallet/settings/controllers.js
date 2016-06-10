@@ -1387,6 +1387,15 @@ angular.module('greenWalletSettingsControllers',
                                 hdhex_recovery.pub,
                                 hdhex_recovery.chaincode
                             ).then(function(receiving_id) {
+                                if (tx_sender.gawallet) {
+                                    tx_sender.gawallet.setupSubAccount({
+                                        name: that.new_2of3_label,
+                                        pointer: min_unused_pointer,
+                                        '2of3_backup_pubkey': hdhex_recovery.pub,
+                                        '2of3_backup_chaincode': hdhex_recovery.chaincode,
+                                        type: '2of3'
+                                    });
+                                }
                                 $uibModal.open({
                                     templateUrl: BASE_URL+'/'+LANG+'/wallet/partials/wallet_modal_mnemonic.html',
                                     scope: scope
@@ -1421,6 +1430,13 @@ angular.module('greenWalletSettingsControllers',
                     hdhex.pub,
                     hdhex.chaincode
                 ).then(function(receiving_id) {
+                    if (tx_sender.gawallet) {
+                        tx_sender.gawallet.setupSubAccount({
+                            name: that.new_label,
+                            pointer: min_unused_pointer,
+                            type: 'simple'
+                        });
+                    }
                     that.existing.push({type: 'simple', name: that.new_label,
                         pointer: min_unused_pointer, receiving_id: receiving_id})
                     that.new_label = '';
