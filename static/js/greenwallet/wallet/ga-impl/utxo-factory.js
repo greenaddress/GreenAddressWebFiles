@@ -1,5 +1,6 @@
 var bitcoin = require('bitcoinjs-lib');
 var extend = require('xtend/mutable');
+
 var SchnorrSigningKey = require('../bitcoinup').SchnorrSigningKey;
 
 module.exports = {
@@ -9,19 +10,14 @@ module.exports = {
 
 extend(GAUtxoFactory.prototype, {
   listAllUtxo: listAllUtxo,
-  getRawTx: getRawTx,
-  getRootHDKey: getRootHDKey,
-  createUtxoForPointer: createUtxoForPointer
+  getRawTx: getRawTx
 });
 
 extend(GAUtxo.prototype, {
-  getPubKey: utxoGetPubKey,
-  getBackupPubKey: utxoGetBackupPubKey,
   getSigningKey: utxoGetSigningKey,
   getPrevScript: utxoGetPrevScript,
   getPrevScriptLength: utxoGetPrevScriptLength,
-  getValue: utxoGetValue,
-  _getKey: _utxoGetKey
+  getValue: utxoGetValue
 });
 
 function GAUtxoFactory (gaService, options) {
@@ -29,15 +25,12 @@ function GAUtxoFactory (gaService, options) {
   this.gaService = gaService;
   this.UtxoClass = this.options.utxoClass || GAUtxo;
 
-  // optimisation for non-subaccounts subkeys and slow hardware wallets
-  // (we don't need the priv-derivation to derive non-subaccount subkeys)
-  this.pubHDWallet = options.pubHDWallet;
-  this.privHDWallet = options.privHDWallet;
   this.subaccount = options.subaccount;
+  this.scriptFactory = options.scriptFactory;
 }
 
 function listAllUtxo () {
-  var args =[
+  var args = [
     0, /* include 0-confs */
     this.subaccount.pointer || 0,  /* subaccount */
   ];
@@ -51,24 +44,11 @@ function listAllUtxo () {
     return utxos.map(function (utxo) {
       return new this.UtxoClass(
         this.gaService, utxo,
-        {pubHDWallet: this.pubHDWallet,
-         privHDWallet: this.privHDWallet,
-         subaccount: this.subaccount}
+        {scriptFactory: this.scriptFactory,
+         subaccountPointer: this.subaccount.pointer}
       );
     }.bind(this));
   }.bind(this));
-}
-
-function createUtxoForPointer (pointer) {
-  return new this.UtxoClass(
-    this.gaService,
-    {pointer: pointer,
-     subaccount: this.subaccount.pointer,
-     txhash: ''},
-    {pubHDWallet: this.pubHDWallet,
-     privHDWallet: this.privHDWallet,
-     subaccount: this.subaccount}
-  );
 }
 
 function getRawTx (txhash) {
@@ -88,25 +68,8 @@ function GAUtxo (gaService, utxo, options) {
   this.value = +utxo.value;
   this.raw = utxo;
 
-  this.pubHDWallet = options.pubHDWallet;
-  this.privHDWallet = options.privHDWallet;
-
+  this.scriptFactory = options.scriptFactory;
   this.subaccount = options.subaccount;
-  if (this.subaccount.type === '2of3') {
-    this.backupHDWallet = new SchnorrSigningKey(new bitcoin.HDNode(
-      bitcoin.ECPair.fromPublicKeyBuffer(
-        new Buffer(this.subaccount['2of3_backup_pubkey'], 'hex'),
-        this.pubHDWallet.hdnode.keyPair.network
-      ),
-      new Buffer(this.subaccount['2of3_backup_chaincode'], 'hex')
-    ));
-  }
-}
-
-function _getSubaccountHDKey (hdwallet, subaccount) {
-  return hdwallet.deriveHardened(3).then(function (hd) {
-    return hd.deriveHardened(subaccount);
-  });
 }
 
 function getRootHDKey () {
@@ -117,72 +80,16 @@ function getRootHDKey () {
   }
 }
 
-function _utxoGetKey (priv, otherOne) {
-  var key;
-  if (this.raw.subaccount &&
-    this.raw.subaccount === this.subaccount.pointer &&
-    this.subaccountHdWallet) {
-    key = Promise.resolve(this.subaccountHdWallet);
-  } else if (this.raw.subaccount) {
-    key = _getSubaccountHDKey(priv, this.raw.subaccount);
-    // derive subaccount only once and cache it to avoid deriving the same
-    // key multiple times
-    if (this.raw.subaccount === this.subaccount.pointer) {
-      key = key.then(function (hd) {
-        this.subaccountHdWallet = hd;
-        return hd;
-      }.bind(this));
-    }
-  } else {
-    key = Promise.resolve(otherOne);
-  }
-  return key.then(function (hd) {
-    return hd.derive(1);
-  }).then(function (hd) {
-    return hd.derive(this.raw.pointer);
-  }.bind(this));
-}
-
-function utxoGetPubKey () {
-  // priv only for subaccounts -- avoid involving hw wallets when not necessary
-  return this._getKey(this.privHDWallet, this.pubHDWallet);
-}
-
-function utxoGetBackupPubKey () {
-  if (!this.backupHDWallet) {
-    return Promise.resolve();
-  }
-  return this.backupHDWallet.derive(1).then(function (branch) {
-    return branch.derive(this.raw.pointer);
-  }.bind(this));
+function utxoGetPrevScript () {
+  return this.gaScriptFactory.createScriptForSubaccountAndPointer(
+    this.subaccount, this.raw.pointer
+  );
 }
 
 function utxoGetSigningKey () {
-  // always priv, even when it's not a subaccount
-  return this._getKey(this.privHDWallet, this.privHDWallet);
-}
-
-function utxoGetPrevScript () {
-  var gaNode = this.gaService.getGAHDNode(this.raw.subaccount);
-  gaNode = gaNode.derive(this.raw.pointer);
-  var myKey = this.getPubKey();
-  var backupKey = this.getBackupPubKey();
-
-  return Promise.all([myKey, backupKey]).then(function (keys) {
-    var chunks = [
-      bitcoin.opcodes.OP_2,
-      gaNode.getPublicKeyBuffer(),
-      keys[0].getPublicKeyBuffer()
-    ];
-    if (keys[1]) {
-      chunks.push(keys[1].getPublicKeyBuffer());
-      chunks.push(bitcoin.opcodes.OP_3);
-    } else {
-      chunks.push(bitcoin.opcodes.OP_2);
-    }
-    chunks.push(bitcoin.opcodes.OP_CHECKMULTISIG);
-    return bitcoin.script.compile(chunks);
-  });
+  return this.gaScriptFactory.keysManager.getSigningKey(
+    this.subaccount.pointer, this.raw.pointer
+  )
 }
 
 function utxoGetValue () {

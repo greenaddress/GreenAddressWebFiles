@@ -9,7 +9,8 @@ extend(SchnorrSigningKey.prototype, {
   getAddress: getAddress,
   getPublicKeyBuffer: getPublicKeyBuffer,
   derive: derive,
-  deriveHardened: deriveHardened
+  deriveHardened: deriveHardened,
+  neutered: neutered
 });
 SchnorrSigningKey.secp256k1 = secp256k1;
 SchnorrSigningKey.getSecp256k1Ctx = checkContext;
@@ -66,12 +67,18 @@ function getPublicKeyBuffer () {
 }
 
 function derive (i) {
+  // hdnode can be async (if patched by GA), but doesn't have to (bitcoinjs)
   return Promise.resolve(this.hdnode.derive(i)).then(function (hd) {
     return new SchnorrSigningKey(hd);
   });
 }
 
+function neutered () {
+  return Promise.resolve(new SchnorrSigningKey(this.hdnode.neutered()));
+}
+
 function deriveHardened (i) {
+  // hdnode can be async (if patched by GA), but doesn't have to (bitcoinjs)
   return Promise.resolve(this.hdnode.deriveHardened(i)).then(function (hd) {
     return new SchnorrSigningKey(hd);
   });

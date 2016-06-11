@@ -17,13 +17,14 @@ function GAWallet () {
 }
 
 function setupSubAccount (subaccount) {
+  this.subaccounts.push(subaccount);
+  
   var changeAddrFactory = new GAAddressFactory(
     this.service, this.hdwallet, {subaccountPointer: subaccount.pointer}
   );
   var utxoFactory = new GAUtxoFactory(
     this.service,
-    {privHDWallet: this.hdwallet,
-     pubHDWallet: this.hdwallet,
+    {scriptFactory: this.scriptFactory,
      subaccount: subaccount}
   );
   if (this.txConstructors[ 1 ] === undefined) {

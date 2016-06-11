@@ -2,11 +2,14 @@ var bitcoinup = require('../bitcoinup');
 var extend = require('xtend/mutable');
 
 var GAService = require('./service');
+var GAKeysManager = require('./keys-manager');
+var GAScriptFactory = require('./script-factory');
 
 module.exports = BaseWallet;
 
 extend(BaseWallet.prototype, {
-  _loginHDWallet: _loginHDWallet
+  _loginHDWallet: _loginHDWallet,
+  getSubaccountByPointer: getSubaccountByPointer
 });
 
 function BaseWallet (options) {
@@ -30,12 +33,19 @@ function BaseWallet (options) {
     this.loggedIn = Promise.resolve(options.existingSession.loginData);
   }
 
+  this.keysManager = new GAKeysManager({
+    gaService: this.service,
+    privHDWallet: this.hdwallet,
+    pubHDWallet: this.hdwallet
+  });
+  this.scriptFactory = new GAScriptFactory(this.keysManager);
+
   this.loggedIn = this.loggedIn.then(function (data) {
     // TxConstructor calls the service, so it needs to be constructed only
     // after login succeeds:
     this.txConstructors = {};
-    var subaccounts = data.subaccounts;
-    subaccounts.push({
+    this.subaccounts = data.subaccounts;
+    this.subaccounts.push({
       name: 'Main',
       pointer: null,
       type: 'main'
@@ -52,4 +62,10 @@ function _loginHDWallet (mnemonic) {
   return new Promise(function (resolve, reject) {
     this.service.connect(this.hdwallet, mnemonic, resolve, reject);
   }.bind(this));
+}
+
+function getSubaccountByPointer (pointer) {
+  return this.subaccounts.filter(function (subaccount) {
+    return subaccount.pointer == pointer;
+  })[0];
 }
