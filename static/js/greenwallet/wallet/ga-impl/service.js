@@ -11,7 +11,6 @@ module.exports = GAService;
 
 extend(GAService.prototype, {
   deriveHD: deriveHD,
-  getGAHDNode: getGAHDNode,
   connect: connect,
   disconnect: disconnect,
   call: call
@@ -112,23 +111,4 @@ function disconnect () {
 
 function call (uri, args) {
   return this.session.call(uri, args);
-}
-
-function _subpath (hd, pathBuffer) {
-  var copy = new Buffer(pathBuffer);
-  for (var i = 0; i < 32; i++) {
-    hd = hd.derive(+BigInteger.fromBuffer(copy.slice(0, 2)));
-    copy = copy.slice(2);
-  }
-  return hd;
-}
-
-function getGAHDNode (subaccount) {
-  var gaNode = this.gaHDNode;
-  if (subaccount) {
-    gaNode = _subpath(gaNode.derive(3), this.gaPath).derive(subaccount);
-  } else {
-    gaNode = _subpath(gaNode.derive(1), this.gaPath);
-  }
-  return gaNode;
 }

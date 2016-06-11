@@ -7,6 +7,7 @@ module.exports = AssetsTxConstructor;
 AssetsTxConstructor.prototype = new TxConstructor();
 extend(AssetsTxConstructor.prototype, {
   refreshUtxo: refreshUtxo,
+  createPrevScriptForPointer: createPrevScriptForPointer,
   _collectOutputs: _collectOutputs,
   _initializeNeededValue: _initializeNeededValue,
   _increaseNeededValue: _increaseNeededValue
@@ -79,4 +80,16 @@ function refreshUtxo () {
     }.bind(this));
   }.bind(this));
   return this.utxoDeferred;
+}
+
+function createPrevScriptForPointer () {
+  return new this.UtxoClass(
+    this.gaService,
+    {pointer: pointer,
+     subaccount: this.subaccount.pointer,
+     txhash: ''},
+    {pubHDWallet: this.pubHDWallet,
+     privHDWallet: this.privHDWallet,
+     subaccount: this.subaccount}
+  );
 }

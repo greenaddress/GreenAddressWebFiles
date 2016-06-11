@@ -48,6 +48,8 @@ function makeAssetsClassWithDefaultAsssetId (assetId) {
 }
 
 function setupSubAccount (subaccount) {
+  this.subaccounts.push(subaccount);
+  
   var changeAddrFactory = new GAAddressFactory(
     this.service, this.hdwallet, {subaccountPointer: subaccount.pointer}
   );
@@ -67,8 +69,7 @@ function setupSubAccount (subaccount) {
           utxoFactory: new GAUtxoFactory(
             this.service,
             {utxoClass: GAConfidentialUtxo,
-             privHDWallet: this.hdwallet,
-             pubHDWallet: this.hdwallet,
+             scriptFactory: this.scriptFactory,
              subaccount: subaccount}
           ),
           changeAddrFactory: changeAddrFactory,
@@ -90,15 +91,13 @@ function setupSubAccount (subaccount) {
           this.service,
           {asset: asset,
            utxoClass: GAConfidentialUtxo,
-           privHDWallet: this.hdwallet,
-           pubHDWallet: this.hdwallet,
+           scriptFactory: this.scriptFactory,
            subaccount: subaccount}
         ),
         feeUtxoFactory: new GAUtxoFactory(
           this.service,
           {utxoClass: GAConfidentialUtxo,
-           privHDWallet: this.hdwallet,
-           pubHDWallet: this.hdwallet,
+           scriptFactory: this.scriptFactory,
            subaccount: subaccount}),
         changeAddrFactory: changeAddrFactory,
         feeChangeAddrFactory: changeAddrFactory,

@@ -204,12 +204,14 @@ angular.module('greenWalletReceiveControllers',
                 args.push(true);
             }
             tx_sender.call.apply(tx_sender, args).then(function(data) {
-                var assetConstructors = tx_sender.gawallet.txConstructors[ $scope.wallet.current_asset ];
-                var constructor = assetConstructors[ $scope.wallet.current_subaccount || null ];
-                return Promise.all([
-                    constructor.utxoFactory.createUtxoForPointer(data.pointer).getPrevScript(),
-                    Promise.resolve(data)
-                ]);
+                var gaSubaccount = tx_sender.gawallet.getSubaccountByPointer(
+                    $scope.wallet.current_subaccount || null
+                );
+                var scriptFactory = tx_sender.gawallet.scriptFactory;
+                var expectedScript = scriptFactory.createScriptForSubaccountAndPointer(
+                    gaSubaccount, data.pointer
+                );
+                return Promise.all([expectedScript, Promise.resolve(data)]);
             }).then(function(expectedAndData) {
               var expectedScript = expectedAndData[0];
               var data = expectedAndData[1];
