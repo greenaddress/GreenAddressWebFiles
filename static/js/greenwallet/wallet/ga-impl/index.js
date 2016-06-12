@@ -3,5 +3,7 @@ module.exports = {
   AssetsWallet: require('./assets-wallet'),
   Service: require('./service'),
   UtxoFactory: require('./utxo-factory').GAUtxoFactory,
-  Utxo: require('./utxo-factory').GAUtxo
+  Utxo: require('./utxo-factory').GAUtxo,
+  GAScriptFactory: require('./script-factory'),
+  GAKeysManager: require('./keys-manager')
 };

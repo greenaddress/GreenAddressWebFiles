@@ -14,7 +14,7 @@ extend(GAUtxoFactory.prototype, {
 });
 
 extend(GAUtxo.prototype, {
-  getSigningKey: utxoGetSigningKey,
+  getMyPrivateKey: utxoGetMyPrivateKey,
   getPrevScript: utxoGetPrevScript,
   getPrevScriptLength: utxoGetPrevScriptLength,
   getValue: utxoGetValue
@@ -32,10 +32,10 @@ function GAUtxoFactory (gaService, options) {
 function listAllUtxo () {
   var args = [
     0, /* include 0-confs */
-    this.subaccount.pointer || 0,  /* subaccount */
+    this.subaccount.pointer || 0  /* subaccount */
   ];
   if (this.options.asset) {
-    args.push(this.options.asset)
+    args.push(this.options.asset.id);
   }
   return this.gaService.call(
     'com.greenaddress.txs.get_all_unspent_outputs',
@@ -45,7 +45,7 @@ function listAllUtxo () {
       return new this.UtxoClass(
         this.gaService, utxo,
         {scriptFactory: this.scriptFactory,
-         subaccountPointer: this.subaccount.pointer}
+         subaccount: this.subaccount}
       );
     }.bind(this));
   }.bind(this));
@@ -72,24 +72,16 @@ function GAUtxo (gaService, utxo, options) {
   this.subaccount = options.subaccount;
 }
 
-function getRootHDKey () {
-  if (this.subaccount.pointer) {
-    return _getSubaccountHDKey(this.privHDWallet, this.subaccount.pointer);
-  } else {
-    return Promise.resolve(this.privHDWallet);
-  }
-}
-
 function utxoGetPrevScript () {
-  return this.gaScriptFactory.createScriptForSubaccountAndPointer(
+  return this.scriptFactory.createScriptForSubaccountAndPointer(
     this.subaccount, this.raw.pointer
   );
 }
 
-function utxoGetSigningKey () {
-  return this.gaScriptFactory.keysManager.getSigningKey(
+function utxoGetMyPrivateKey () {
+  return this.scriptFactory.keysManager.getMyPrivateKey(
     this.subaccount.pointer, this.raw.pointer
-  )
+  );
 }
 
 function utxoGetValue () {
@@ -97,7 +89,7 @@ function utxoGetValue () {
 }
 
 function utxoGetPrevScriptLength () {
-  var numKeys = this.backupHDWallet ? 3 : 2;
+  var numKeys = this.subaccount.type === '2of3' ? 3 : 2;
   return 1 +  // OP_2
          numKeys * 35 +  // keys pushdata
          2;  // OP_[23] OP_CHECKMULTISIG

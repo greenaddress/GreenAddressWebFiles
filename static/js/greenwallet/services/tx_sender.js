@@ -311,13 +311,13 @@ function factory ($q, $rootScope, cordovaReady, $http, notices, gaEvent, $locati
                           if (data) {
                             txSenderService.logged_in = data;
 
-                            var gaPath;
+                            var gaUserPath;
                             if (data.gait_path) {
-                              gaPath = data.gait_path;
+                              gaUserPath = data.gait_path;
                             } else if (path) {
-                              gaPath = path;
+                              gaUserPath = path;
                             } else if (path_seed) {
-                              gaPath = mnemonics.seedToPath(path_seed);
+                              gaUserPath = mnemonics.seedToPath(path_seed);
                             }
 
                             var WalletClass = cur_net.isAlphaMultiasset ? GAAssetsWallet : GAWallet;
@@ -325,7 +325,7 @@ function factory ($q, $rootScope, cordovaReady, $http, notices, gaEvent, $locati
                               existingSession: {
                                 session: session_for_login,
                                 hdwallet: txSenderService.hdwallet,
-                                gaPath: gaPath,
+                                gaUserPath: gaUserPath,
                                 loginData: data
                               }
                             });

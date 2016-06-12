@@ -1,9 +1,5 @@
 var window = require('global/window');
 
-var Module = window.Module;
-var setValue = window.setValue;
-var getValue = window.getValue;
-
 module.exports = factory;
 
 factory.dependencies = ['$q', 'branches'];
@@ -11,6 +7,11 @@ factory.dependencies = ['$q', 'branches'];
 function factory ($q, branches) {
   var service = {};
   service._unblindOutValue = function ($scope, out, scanning_key) {
+    // (these are loaded asynchronously from secp256k1 js in bitcoinjs_util.js)
+    var Module = window.Module;
+    var setValue = window.setValue;
+    var getValue = window.getValue;
+
     var Bitcoin = window.Bitcoin;
     var secexp_buf = scanning_key.d.toBuffer();
     var secexp = Module._malloc(32);

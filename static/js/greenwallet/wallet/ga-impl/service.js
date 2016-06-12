@@ -81,7 +81,7 @@ function connect (hd, mnemonic, cb, eb) {
           } else {
             // data contains some wallet configuration data
             if (data.gait_path) {
-              this.gaPath = new Buffer(data.gait_path, 'hex');
+              this.gaUserPath = new Buffer(data.gait_path, 'hex');
               cb(data);
             } else {
               // first login -- we need to set up the path
@@ -90,7 +90,7 @@ function connect (hd, mnemonic, cb, eb) {
                 'com.greenaddress.login.set_gait_path', [pathHex]
               ).then(function () {
                 data.gait_path = pathHex;
-                this.gaPath = new Buffer(pathHex, 'hex');
+                this.gaUserPath = new Buffer(pathHex, 'hex');
                 cb(data);
               }.bind(this), eb);
             }

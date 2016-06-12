@@ -5,21 +5,21 @@ module.exports = GAKeysManager;
 
 extend(GAKeysManager.prototype, {
   _getKey: _getKey,
-  getGAPubKey: getGAPubKey,
-  getMyPubKey: getMyPubKey,
-  getSigningKey: getSigningKey
+  getGAPublicKey: getGAPublicKey,
+  getMyPublicKey: getMyPublicKey,
+  getMyPrivateKey: getMyPrivateKey,
+  getSubaccountRootKey: getSubaccountRootKey
 });
 
 function GAKeysManager (options) {
   this.gaHDNode = options.gaService.gaHDNode;
-  this.gaPath = options.gaService.gaPath;
+  this.gaUserPath = options.gaService.gaUserPath;
 
   // optimisation for non-subaccounts subkeys and slow hardware wallets
   // (we don't need the priv-derivation to derive non-subaccount subkeys)
   this.pubHDWallet = options.pubHDWallet;
   this.privHDWallet = options.privHDWallet;
 }
-
 
 function _subpath (hd, pathBuffer) {
   var copy = new Buffer(pathBuffer);
@@ -30,18 +30,18 @@ function _subpath (hd, pathBuffer) {
   return hd;
 }
 
-function getGAPubKey (subaccountPointer, pointer) {
+function getGAPublicKey (subaccountPointer, pointer) {
   var gaNode = this.gaHDNode;
   if (subaccountPointer) {
-    gaNode = _subpath(gaNode.derive(3), this.gaPath).derive(subaccountPointer);
+    gaNode = _subpath(gaNode.derive(3), this.gaUserPath).derive(subaccountPointer);
   } else {
-    gaNode = _subpath(gaNode.derive(1), this.gaPath);
+    gaNode = _subpath(gaNode.derive(1), this.gaUserPath);
   }
   return gaNode.derive(pointer);
 }
 
-function _getSubaccountHDKey (hdwallet, subaccountPointer) {
-  return hdwallet.deriveHardened(3).then(function (hd) {
+function getSubaccountRootKey (subaccountPointer) {
+  return this.privHDWallet.deriveHardened(3).then(function (hd) {
     return hd.deriveHardened(subaccountPointer);
   });
 }
@@ -50,9 +50,9 @@ function _getKey (signing, subaccountPointer, pointer) {
   var key;
   // TODO: subaccount key caching (to avoid deriving via hw wallet multiple times)
   if (subaccountPointer) {
-    key = _getSubaccountHDKey(this.privHDWallet, subaccountPointer);
+    key = this.getSubaccountRootKey(subaccountPointer);
     if (!signing) {
-      key = key.then(function(hd) { 
+      key = key.then(function (hd) {
         return hd.neutered();
       });
     }
@@ -66,12 +66,12 @@ function _getKey (signing, subaccountPointer, pointer) {
   }.bind(this));
 }
 
-function getMyPubKey (subaccountPointer, pointer) {
+function getMyPublicKey (subaccountPointer, pointer) {
   // priv only for subaccounts -- avoid involving hw wallets when not necessary
   return this._getKey(false, subaccountPointer, pointer);
 }
 
-function getSigningKey (subaccountPointer, pointer) {
+function getMyPrivateKey (subaccountPointer, pointer) {
   // always priv, even when it's not a subaccount
   return this._getKey(true, subaccountPointer, pointer);
 }

@@ -110,7 +110,8 @@ function _unblindOutValue () {
   var SUBACCOUNT = 3;
   var BLINDED = 5;
 
-  var key = Promise.resolve(this.privHDWallet);
+  var key = Promise.resolve(this.scriptFactory.keysManager.privHDWallet);
+  // TODO: this belongs to keysManager
   if (this.raw.subaccount) {
     key = key.then(function (key) {
       return key.deriveHardened(SUBACCOUNT);

@@ -49,7 +49,7 @@ function makeAssetsClassWithDefaultAsssetId (assetId) {
 
 function setupSubAccount (subaccount) {
   this.subaccounts.push(subaccount);
-  
+
   var changeAddrFactory = new GAAddressFactory(
     this.service, this.hdwallet, {subaccountPointer: subaccount.pointer}
   );
@@ -62,6 +62,7 @@ function setupSubAccount (subaccount) {
     if (this.txConstructors[ asset.id ] === undefined) {
       this.txConstructors[ asset.id ] = {};
     }
+
     if (asset.id === 1) {
       // feeasset
       this.txConstructors[ asset.id ][ subaccount.pointer ] = new TxConstructor(
