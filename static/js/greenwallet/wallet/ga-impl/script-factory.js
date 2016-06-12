@@ -16,19 +16,19 @@ function GAScriptFactory (keysManager) {
   this.keysManager = keysManager;
 }
 
-function _createGAScript (subaccountPointer, pointer, backupKey) {
-  var gaKey = this.keysManager.getGAPubKey(subaccountPointer, pointer);
-  var myKey = this.keysManager.getMyPubKey(subaccountPointer, pointer);
+function _createGAScript (subaccountPointer, pointer, myRecoveryKey) {
+  var gaKey = this.keysManager.getGAPublicKey(subaccountPointer, pointer);
+  var myKey = this.keysManager.getMyPublicKey(subaccountPointer, pointer);
 
-  if (backupKey) {
-    backupKey = backupKey.derive(1).then(function (branch) {
+  if (myRecoveryKey) {
+    myRecoveryKey = myRecoveryKey.derive(1).then(function (branch) {
       return branch.derive(pointer);
     }.bind(this));
   } else {
-    backupKey = Promise.resolve();
+    myRecoveryKey = Promise.resolve();
   }
 
-  return Promise.all([myKey, backupKey]).then(function (keys) {
+  return Promise.all([myKey, myRecoveryKey]).then(function (keys) {
     var chunks = [
       bitcoin.opcodes.OP_2,
       gaKey.getPublicKeyBuffer(),
@@ -49,9 +49,9 @@ function create2of2Script (subaccountPointer, pointer) {
   return this._createGAScript(subaccountPointer, pointer, null);
 }
 
-function create2of3Script (subaccountPointer, pointer, backupKey) {
-  if (!backupKey) throw new Error('Missing backup key');
-  return this._createGAScript(subaccountPointer, pointer, backupKey);
+function create2of3Script (subaccountPointer, pointer, recoveryKey) {
+  if (!recoveryKey) throw new Error('Missing recovery key');
+  return this._createGAScript(subaccountPointer, pointer, recoveryKey);
 }
 
 function createScriptForSubaccountAndPointer (subaccount, pointer) {

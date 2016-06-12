@@ -29,16 +29,9 @@ function BaseWallet (options) {
       options.existingSession.hdwallet
     );
     this.service.session = options.existingSession.session;
-    this.service.gaPath = new Buffer(options.existingSession.gaPath, 'hex');
+    this.service.gaUserPath = new Buffer(options.existingSession.gaUserPath, 'hex');
     this.loggedIn = Promise.resolve(options.existingSession.loginData);
   }
-
-  this.keysManager = new GAKeysManager({
-    gaService: this.service,
-    privHDWallet: this.hdwallet,
-    pubHDWallet: this.hdwallet
-  });
-  this.scriptFactory = new GAScriptFactory(this.keysManager);
 
   this.loggedIn = this.loggedIn.then(function (data) {
     // TxConstructor calls the service, so it needs to be constructed only
@@ -51,9 +44,19 @@ function BaseWallet (options) {
       type: 'main'
     });
     this.assets = data.assets;
-    subaccounts.forEach(function (subaccount) {
+
+    // scriptFactory is required by setupSubAccount below:
+    this.keysManager = new GAKeysManager({
+      gaService: this.service,
+      privHDWallet: this.hdwallet,
+      pubHDWallet: this.hdwallet
+    });
+    this.scriptFactory = new GAScriptFactory(this.keysManager);
+
+    this.subaccounts.forEach(function (subaccount) {
       this.setupSubAccount(subaccount);
     }.bind(this));
+
     return data;
   }.bind(this));
 }
@@ -66,6 +69,6 @@ function _loginHDWallet (mnemonic) {
 
 function getSubaccountByPointer (pointer) {
   return this.subaccounts.filter(function (subaccount) {
-    return subaccount.pointer == pointer;
+    return subaccount.pointer === pointer;
   })[0];
 }

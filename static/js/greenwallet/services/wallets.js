@@ -134,7 +134,7 @@ function factory ($q, $rootScope, tx_sender, $location, notices, $uibModal,
         $scope.wallet.subaccounts = [
           {pointer: 0, name: gettext('Main')}
         ].concat(data.subaccounts);
-        if (cur_net.isAlphaMultiAsset) {
+        if (cur_net.isAlphaMultiasset) {
           $scope.wallet.assets = data.assets;
         } else {
           $scope.wallet.assets = {undefined: {name: 'BTC'}};

@@ -496,7 +496,7 @@ function replaceOutput (idx, outScript, value, fee, assetId) {
 function signInput (i) {
   var prevOut = this.tx.ins[i].prevOut;
   return Promise.all(
-    [prevOut.getPrevScript(), prevOut.getSigningKey()]
+    [prevOut.getPrevScript(), prevOut.getMyPrivateKey()]
   ).then(function (values) {
     var prevScript = values[0];
     var signingKey = values[1];

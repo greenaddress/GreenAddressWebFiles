@@ -5,6 +5,8 @@ var extend = require('xtend/mutable');
 var test = require('tape');
 var proxy = require('proxyquire');
 var GAUtxo = require('./ga-impl').Utxo;
+var GAScriptFactory = require('./ga-impl').GAScriptFactory;
+var GAKeysManager = require('./ga-impl').GAKeysManager;
 
 var mockUtxoFactory = {
   listAllUtxo: mockListAllUtxo
@@ -20,10 +22,10 @@ var mockFeeEstimatesFactory = {
 };
 
 extend(MockUtxo.prototype, {
-  getPubKey: GAUtxo.prototype.getPubKey,
-  getSigningKey: GAUtxo.prototype.getSigningKey,
+  getMyPrivateKey: GAUtxo.prototype.getMyPrivateKey,
   getPrevScript: GAUtxo.prototype.getPrevScript,
   getPrevScriptLength: GAUtxo.prototype.getPrevScriptLength,
+  getValue: GAUtxo.prototype.getValue,
   _getKey: GAUtxo.prototype._getKey
 });
 
@@ -33,19 +35,24 @@ function MockUtxo (utxo) {
   this.value = +utxo.value;
   this.raw = utxo;
 
-  // mock the hd keys
-  this.gaService = {
-    getGAHDNode: function () {
-      return this.pubHDWallet.hdnode;
-    }.bind(this)
-  };
+  this.subaccount = {name: 'Main', pointer: null, type: 'main'};
 
-  this.pubHDWallet = new bitcoinup.SchnorrSigningKey(
+  var pubHDWallet = new bitcoinup.SchnorrSigningKey(
     bitcoin.HDNode.fromSeedHex(
       new Buffer(new Array(16)), bitcoin.networks.testnet
     )
   );
-  this.privHDWallet = this.pubHDWallet;
+  var privHDWallet = pubHDWallet;
+  var keysManager = new GAKeysManager({
+    gaService: {},
+    pubHDWallet: pubHDWallet,
+    privHDWallet: privHDWallet
+  });
+  // mock the ga hd keys
+  keysManager.getGAPublicKey = function () {
+    return pubHDWallet;
+  };
+  this.scriptFactory = new GAScriptFactory(keysManager);
 }
 
 test('construct tx', function (t) {
@@ -53,36 +60,37 @@ test('construct tx', function (t) {
     return testChangeOutput(t, 1);
   }).then(function () {
     t.end();
-  }, t.fail);
+  }, function (e) { console.log(e.stack); t.fail(e); });
 });
 
 function testChangeOutput (t, idx) {
   var expected = [
     '01000000017f26be0b0bd7a00a87970df6b6c811a6faef8d721f13676a32987096b5bb' +
-    '9405000000008d00010041fc04e59f9a8c8fa9c1eca16bac056817525c1e546db05af6' +
-    '377670027c24425748961d54287cc424b95372056f83aa9f9382d6aef676aeaf81f135' +
-    'bbef01e02a01475221022b8989e24ecd8339c856ac385ced4ac3e3ec3cbe4120cceaa4' +
-    '0d0edd70a420e52102276463a2a65e26c3d617af43baf7bf10d3426f66162491fb2f89' +
+    '9405000000008d0001004145c24aaf8f979e8a05f623a1908484157e08ff9d6d5013fa' +
+    'ad5217e7b1610079dbd7acc9813668dbc49946b3247da47b13961182a005e563dfea9b' +
+    'b93c41614c0147522102be99138b48b430a8ee40bf8b56c8ebc584c363774010a9bfe5' +
+    '49a87126e617462102276463a2a65e26c3d617af43baf7bf10d3426f66162491fb2f89' +
     '3bb1fd1ed7fe52aeffffffff02c6110000000000000000000000000000020000000000' +
-    '00000000000000000000000000000000000000000000000035a4775400001d339e4c32' +
-    '8e6d88757a2e8eb7689896ced7bd77faa5fba3870845504bdb5c0917a914dce6977353' +
+    '00000000000000000000000000000000000000000000000035a477540000095cdb4b50' +
+    '450887a3fba5fa77bdd7ce969868b78e2e7a75886d8e324c9e331d17a914dce6977353' +
     '0780cbcf0fd40e54c5dd5c302728e98700000000000000000000000000000000000000' +
-    '000000000000000000000000271000001d339e4c328e6d88757a2e8eb7689896ced7bd' +
-    '77faa5fba3870845504bdb5c0917a9144098810ba97acf098d778c36538ec82d7516b4' +
+    '00000000000000000000000027100000095cdb4b50450887a3fba5fa77bdd7ce969868' +
+    'b78e2e7a75886d8e324c9e331d17a9144098810ba97acf098d778c36538ec82d7516b4' +
     'e28700000000',
     '01000000017f26be0b0bd7a00a87970df6b6c811a6faef8d721f13676a32987096b5bb' +
-    '9405000000008d00010041fdffa0a73c0c4355b1ac512e478255f97595ccea0d1d855e' +
-    'b4509820b730ca2eafa68bec21b3c1bd69ce6f6b6fbbe1a3a4aadb9b5d4444adeb25e3' +
-    'b95d3d1c6201475221022b8989e24ecd8339c856ac385ced4ac3e3ec3cbe4120cceaa4' +
-    '0d0edd70a420e52102276463a2a65e26c3d617af43baf7bf10d3426f66162491fb2f89' +
+    '9405000000008d00010041ecc15149330ff11c07c135b446b408d511230049fcc29ef9' +
+    '1368560c78982128a354e72d849f4058011235226a98bcb887a2be2cd9fffa27a49789' +
+    '72546792f00147522102be99138b48b430a8ee40bf8b56c8ebc584c363774010a9bfe5' +
+    '49a87126e617462102276463a2a65e26c3d617af43baf7bf10d3426f66162491fb2f89' +
     '3bb1fd1ed7fe52aeffffffff020000000000000000c611000000000000020000000000' +
-    '0000000000000000000000000000000000000000000000000000271000001d339e4c32' +
-    '8e6d88757a2e8eb7689896ced7bd77faa5fba3870845504bdb5c0917a9144098810ba9' +
+    '000000000000000000000000000000000000000000000000000027100000095cdb4b50' +
+    '450887a3fba5fa77bdd7ce969868b78e2e7a75886d8e324c9e331d17a9144098810ba9' +
     '7acf098d778c36538ec82d7516b4e28700000000000000000000000000000000000000' +
-    '0000000000000000000035a4775400001d339e4c328e6d88757a2e8eb7689896ced7bd' +
-    '77faa5fba3870845504bdb5c0917a914dce69773530780cbcf0fd40e54c5dd5c302728' +
-    'e98700000000'
+    '0000000000000000000035a477540000095cdb4b50450887a3fba5fa77bdd7ce969868' +
+    'b78e2e7a75886d8e324c9e331d17a914dce69773530780cbcf0fd40e54c5dd5c302728' +
+    'e98700000000',
   ][idx];
+  console.log(expected)
   var constructor = new TxConstructor({
     utxoFactory: mockUtxoFactory,
     changeAddrFactory: mockAddressFactory,
@@ -91,15 +99,22 @@ function testChangeOutput (t, idx) {
       'crypto': {randomBytes: function () { return new Buffer([idx]); }}
     })
   });
+  var assetNetworkId = new Buffer(
+    '095cdb4b50450887a3fba5fa77bdd7ce969868b78e2e7a75886d8e324c9e331d',
+    'hex'
+  );
+  constructor.buildOptions = {
+    assetNetworkId: assetNetworkId,
+    feeNetworkId: assetNetworkId
+  };
   return constructor.constructTx([
     {value: 10000,
      scriptPubKey: bitcoin.address.toOutputScript(
        '2My8mvjL6r9BpvY11N95jRKdTV4roXvbQQZ', bitcoin.networks.testnet
      )}
   ]).then(function (tx) {
-    t.equal(tx.toString('hex'), expected, 'change output at index=' + idx);
-  }, t.fail);
-}
+    t.equal(tx.tx.toString('hex'), expected, 'change output at index=' + idx);
+  }, function (e) { console.log(e.stack); t.fail(e); });}
 
 function mockListAllUtxo () {
   return Promise.resolve([
