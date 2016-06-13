@@ -8,6 +8,7 @@ extend(GAKeysManager.prototype, {
   getGAPublicKey: getGAPublicKey,
   getMyPublicKey: getMyPublicKey,
   getMyPrivateKey: getMyPrivateKey,
+  getMyScanningKey: getMyScanningKey,
   getSubaccountRootKey: getSubaccountRootKey
 });
 
@@ -46,7 +47,10 @@ function getSubaccountRootKey (subaccountPointer) {
   });
 }
 
-function _getKey (signing, subaccountPointer, pointer) {
+function _getKey (signing, subaccountPointer, pointer, keyBranch) {
+  if (keyBranch === undefined) {
+    keyBranch = 1; // REGULAR
+  }
   var key;
   // TODO: subaccount key caching (to avoid deriving via hw wallet multiple times)
   if (subaccountPointer) {
@@ -59,10 +63,17 @@ function _getKey (signing, subaccountPointer, pointer) {
   } else {
     key = Promise.resolve(signing ? this.privHDWallet : this.pubHDWallet);
   }
+  var deriveFuncName;
+  if (keyBranch === 5) {
+    // scanning keys are all hardened
+    deriveFuncName = 'deriveHardened';
+  } else {
+    deriveFuncName = 'derive';
+  }
   return key.then(function (hd) {
-    return hd.derive(1);
+    return hd[deriveFuncName](keyBranch);
   }).then(function (hd) {
-    return hd.derive(pointer);
+    return hd[deriveFuncName](pointer);
   }.bind(this));
 }
 
@@ -74,4 +85,9 @@ function getMyPublicKey (subaccountPointer, pointer) {
 function getMyPrivateKey (subaccountPointer, pointer) {
   // always priv, even when it's not a subaccount
   return this._getKey(true, subaccountPointer, pointer);
+}
+
+function getMyScanningKey (subaccountPointer, pointer) {
+  // always priv, even when it's not a subaccount
+  return this._getKey(true, subaccountPointer, pointer, 5 /* = BLINDED branch */);
 }

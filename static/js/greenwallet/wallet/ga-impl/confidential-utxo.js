@@ -107,25 +107,12 @@ function _unblindOutValueInner (scanningKey) {
 }
 
 function _unblindOutValue () {
-  var SUBACCOUNT = 3;
-  var BLINDED = 5;
-
-  var key = Promise.resolve(this.scriptFactory.keysManager.privHDWallet);
-  // TODO: this belongs to keysManager
-  if (this.raw.subaccount) {
-    key = key.then(function (key) {
-      return key.deriveHardened(SUBACCOUNT);
-    }).then(function (key) {
-      return key.deriveHardened(this.raw.subaccount);
-    }.bind(this));
-  }
-  return key.then(function (key) {
-    return key.deriveHardened(BLINDED);
-  }).then(function (branch) {
-    return branch.deriveHardened(this.raw.pointer);
-  }.bind(this)).then(function (scanningNode) {
+  return this.scriptFactory.keysManager.getMyScanningKey(
+    this.raw.subaccount,
+    this.raw.pointer
+  ).then(function (scanningNode) {
     return this._unblindOutValueInner(
-     scanningNode.hdnode.keyPair
+      scanningNode.hdnode.keyPair
     );
   }.bind(this));
 }
