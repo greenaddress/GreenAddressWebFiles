@@ -43,7 +43,7 @@ function listAllUtxo () {
   ).then(function (utxos) {
     return utxos.map(function (utxo) {
       return new this.UtxoClass(
-        this.gaService, utxo,
+        utxo,
         {scriptFactory: this.scriptFactory,
          subaccount: this.subaccount}
       );
@@ -58,10 +58,8 @@ function getRawTx (txhash) {
   );
 }
 
-function GAUtxo (gaService, utxo, options) {
-  if (!gaService) return; // allow subclassing
-
-  this.gaService = gaService;
+function GAUtxo (utxo, options) {
+  if (!utxo) return; // allow subclassing
 
   this.prevHash = [].reverse.call(new Buffer(utxo.txhash, 'hex'));
   this.ptIdx = utxo.pt_idx;

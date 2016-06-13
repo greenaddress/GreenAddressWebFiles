@@ -13,8 +13,8 @@ extend(GAConfidentialUtxo.prototype, {
   _unblindOutValue: _unblindOutValue
 });
 
-function GAConfidentialUtxo (service, utxo, options) {
-  GAUtxo.call(this, service, utxo, options);
+function GAConfidentialUtxo (utxo, options) {
+  GAUtxo.call(this, utxo, options);
   if (this.raw.commitment) {
     this.raw.commitment = new Buffer(this.raw.commitment, 'hex');
     this.raw.nonce_commitment = new Buffer(this.raw.nonce_commitment, 'hex');
