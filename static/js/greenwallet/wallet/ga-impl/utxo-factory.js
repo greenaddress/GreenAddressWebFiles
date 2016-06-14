@@ -26,7 +26,6 @@ function GAUtxoFactory (gaService, options) {
   this.UtxoClass = this.options.utxoClass || GAUtxo;
 
   this.subaccount = options.subaccount;
-  this.scriptFactory = options.scriptFactory;
 }
 
 function listAllUtxo () {
@@ -44,8 +43,7 @@ function listAllUtxo () {
     return utxos.map(function (utxo) {
       return new this.UtxoClass(
         utxo,
-        {scriptFactory: this.scriptFactory,
-         subaccount: this.subaccount}
+        this.options
       );
     }.bind(this));
   }.bind(this));

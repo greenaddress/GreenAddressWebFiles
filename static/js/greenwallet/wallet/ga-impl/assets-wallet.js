@@ -15,8 +15,9 @@ GAAssetsWallet.prototype = new BaseWallet();
 extend(GAAssetsWallet.prototype, {
   setupSubAccount: setupSubAccount
 });
-function GAAssetsWallet () {
-  BaseWallet.apply(this, arguments);
+function GAAssetsWallet (options) {
+  BaseWallet.call(this, options);
+  this.unblindedCache = options.unblindedCache;
 }
 
 function makeAssetsClassWithDefaultAsssetId (assetId) {
@@ -71,6 +72,7 @@ function setupSubAccount (subaccount) {
             this.service,
             {utxoClass: GAConfidentialUtxo,
              scriptFactory: this.scriptFactory,
+             unblindedCache: this.unblindedCache,
              subaccount: subaccount}
           ),
           changeAddrFactory: changeAddrFactory,
@@ -93,6 +95,7 @@ function setupSubAccount (subaccount) {
           {asset: asset,
            utxoClass: GAConfidentialUtxo,
            scriptFactory: this.scriptFactory,
+           unblindedCache: this.unblindedCache,
            subaccount: subaccount}
         ),
         feeUtxoFactory: new GAUtxoFactory(

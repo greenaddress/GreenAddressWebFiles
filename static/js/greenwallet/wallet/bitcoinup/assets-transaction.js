@@ -1047,6 +1047,7 @@ function build (options) {
   this.clearOutputs();
   this.isCT = {};
 
+  var blindingFactorsInProgress = [];
   options.prevOutputs.map(function (prevOut) {
     this.addInput({
       txHash: prevOut.prevHash,
@@ -1054,10 +1055,14 @@ function build (options) {
       prevValue: prevOut.value,
       prevOut: prevOut
     });
-    if (prevOut.blindingFactor) {
+    if (!prevOut.value) {
       this.isCT[prevOut.assetNetworkId.toString('hex')] = true;
       this.tx.ins[ this.tx.ins.length - 1 ].prevOutRaw = prevOut.raw;
-      this.tx.ins[ this.tx.ins.length - 1 ].blindingFactor = prevOut.blindingFactor;
+      (function (currentInput) {
+        blindingFactorsInProgress.push(prevOut.unblindOutValue().then(function (res) {
+          currentInput.blindingFactor = res.blinding_factor_out;
+        }));
+      })(this.tx.ins[ this.tx.ins.length - 1 ]);
     }
   }.bind(this));
 
@@ -1087,9 +1092,11 @@ function build (options) {
     }
   }.bind(this));
 
-  this._rebuildCT();
+  return Promise.all(blindingFactorsInProgress).then(function() {
+    this._rebuildCT();
 
-  return this._addFeeAndChange(options);
+    return this._addFeeAndChange(options);
+  }.bind(this));
 }
 
 function signAll (options) {
@@ -1103,7 +1110,9 @@ function signAll (options) {
         return this.signInput(i);
       }.bind(this)).then(function (sig) {
         if (options.signingProgressCallback) {
-          options.signingProgressCallback(100 * (i + 1) / this.tx.ins.length);
+          options.signingProgressCallback(Math.round(
+            100 * (i + 1) / this.tx.ins.length
+          ));
         }
         return sig;
       }.bind(this));
