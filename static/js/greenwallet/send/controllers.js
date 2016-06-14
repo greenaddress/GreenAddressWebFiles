@@ -330,6 +330,7 @@ angular.module('greenWalletSendControllers',
     };
     $scope.send_tx = {
         _signing_progress_cb: function(progress) {
+            this.signing = true;
             this.signing_percentage = Math.max(this.signing_percentage, progress);
         },
         add_fee: {'party': 'sender',
@@ -626,7 +627,11 @@ angular.module('greenWalletSendControllers',
                             )
                         }
                     }
-                    return constructor.constructTx([destination]).then(function(tx) {
+                    return constructor.constructTx(
+                          [destination],
+                          {signingProgressCallback:
+                              that._signing_progress_cb.bind(that)}
+                    ).then(function(tx) {
                         var fee = calculateFee(tx.tx);
                         var amountWithFee = +satoshis + (
                             $scope.wallet.current_asset === 1 ?

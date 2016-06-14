@@ -1092,12 +1092,20 @@ function build (options) {
   return this._addFeeAndChange(options);
 }
 
-function signAll () {
+function signAll (options) {
   var ret = Promise.resolve();
+  if (options.signingProgressCallback) {
+    options.signingProgressCallback(0);
+  }
   for (var i = 0; i < this.tx.ins.length; ++i) {
     (function (i) {
       ret = ret.then(function () {
         return this.signInput(i);
+      }.bind(this)).then(function (sig) {
+        if (options.signingProgressCallback) {
+          options.signingProgressCallback(100 * (i + 1) / this.tx.ins.length);
+        }
+        return sig;
       }.bind(this));
     }).call(this, i);
   }
