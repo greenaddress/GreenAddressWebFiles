@@ -60,12 +60,12 @@ function _collectOutputs (values, options) {
   });
 }
 
-function _initializeNeededValue (outputsWithAmounts, feeEstimate) {
+function _initializeNeededValue (outputsWithAmounts, options, feeEstimate) {
   // 16b is very conservative
   // (just version[4b]+num_inputs[1b]+num_outputs[1b]+one_output[10b]
   var initialFeeEstimate = 16 * feeEstimate / 1000;
   return {asset: TxConstructor.prototype._initializeNeededValue.call(
-            this, outputsWithAmounts
+            this, outputsWithAmounts, options, feeEstimate
           ),
           fee: initialFeeEstimate};
 }

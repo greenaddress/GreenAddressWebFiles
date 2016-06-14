@@ -818,6 +818,41 @@ function _addFeeAndChange (options) {
   var ret = Promise.resolve({changeIdx: -1});  // -1 indicates no change
 
   return prevoutsValueDeferred.then(function (prevoutsValue) {
+    if (options.subtractFeeFromOut) {
+      if (this.tx.outs.length > 1) {
+        throw new Error('subtractFeeFromOut not supported for multiple outputs');
+      }
+
+      if (prevoutsValue < fee) {
+        // only the fee is required if we subtract from outputs
+        return Promise.resolve([ fee, changeCache ]);
+      }
+
+      this.replaceOutput(
+        0,
+        this.tx.outs[0].script,
+        prevoutsValue - fee,
+        fee,
+        options.feeNetworkId
+      );
+
+      if (!this.isCT[ options.feeNetworkId.toString('hex') ]) {
+        return Promise.resolve();
+      }
+
+      if (!this.tx.outs[ 0 ].valueToBlind) {
+        throw new Error('Sweeping from CT addresses is supported only to CT destination addresses');
+      }
+
+      this.tx.outs[ 0 ].valueToBlind = this.tx.outs[ 0 ].value;
+      this.tx.outs[ 0 ].value = 0;
+      this._rebuildCT();
+
+      var iterateFee = getIterateFee(0, 0, this.tx.outs[0].script, true);
+      // check if CT made the tx large enough to increase the fee
+      return iterateFee.bind(this)();
+    }
+
     if (prevoutsValue < requiredValue + fee) {
       // not enough -- return a request to fetch more prevouts
       return Promise.resolve([ requiredValue + fee, changeCache ]);
@@ -843,31 +878,41 @@ function _addFeeAndChange (options) {
         options.changeAddrFactory
       );
     }.bind(this)).then(function (changeIdx) {
+      var iterateFee = getIterateFee(requiredValue, changeIdx, changeCache);
+
+      return iterateFee.call(this).then(function (ret) {
+        return ret || { changeIdx: changeIdx };
+      });
+    }.bind(this));
+
+    function getIterateFee (requiredValueForFee, changeIdx, changeScript, doNotChangeScanningKey) {
+      return iterateFee;
+
       function iterateFee () {
         if (fee >= Math.round(
-          feeEstimate * this.estimateSignedLength() / 1000
-        )) {
+            feeEstimate * this.estimateSignedLength() / 1000
+          )) {
           return Promise.resolve();
         }
 
         fee = Math.round(feeEstimate * this.estimateSignedLength() / 1000);
 
-        if (prevoutsValue === requiredValue + fee) {
-          // After adding the change output, which made the transaction larger,
+        if (prevoutsValue === requiredValueForFee + fee) {
+          // After adding the change output or CT data, which made the transaction larger,
           // the prevouts match exactly the fee, but we now have change which
           // cannot be zero.
           // In such case increase the fee to have at least minimum change value.
           fee += 2730;
         }
 
-        if (prevoutsValue < requiredValue + fee) {
-          return Promise.resolve([ requiredValue + fee, changeCache ]);
+        if (prevoutsValue < requiredValueForFee + fee) {
+          return Promise.resolve([ requiredValueForFee + fee, changeCache ]);
         }
 
         this.replaceOutput(
           changeIdx,
-          changeCache,
-          prevoutsValue - (requiredValue + fee),
+          changeScript,
+          prevoutsValue - (requiredValueForFee + fee),
           fee,
           options.feeNetworkId
         );
@@ -878,23 +923,23 @@ function _addFeeAndChange (options) {
 
         this.tx.outs[ changeIdx ].valueToBlind = this.tx.outs[ changeIdx ].value;
         this.tx.outs[ changeIdx ].value = 0;
-        return options.changeAddrFactory.getScanningKeyForScript(
-          this.tx.outs[ changeIdx ].script
-        ).then(function (k) {
-          this.tx.outs[ changeIdx ].scanningPubkey = (
-            k.hdnode.keyPair.getPublicKeyBuffer()
-          );
+        if (doNotChangeScanningKey) {
           this._rebuildCT();
-        }.bind(this)).then(
-          iterateFee.bind(this)
-        );
+          return iterateFee.bind(this)();
+        } else {
+          return options.changeAddrFactory.getScanningKeyForScript(
+            this.tx.outs[ changeIdx ].script
+          ).then(function (k) {
+            this.tx.outs[ changeIdx ].scanningPubkey = (
+              k.hdnode.keyPair.getPublicKeyBuffer()
+            );
+            this._rebuildCT();
+          }.bind(this)).then(
+            iterateFee.bind(this)
+          );
+        }
       }
-
-      return iterateFee.call(this).then(function (ret) {
-        return ret || { changeIdx: changeIdx };
-      });
-    }.bind(this));
-
+    }
     return ret;
   }.bind(this));
 }
@@ -1092,7 +1137,7 @@ function build (options) {
     }
   }.bind(this));
 
-  return Promise.all(blindingFactorsInProgress).then(function() {
+  return Promise.all(blindingFactorsInProgress).then(function () {
     this._rebuildCT();
 
     return this._addFeeAndChange(options);
