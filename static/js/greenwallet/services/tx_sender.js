@@ -24,10 +24,11 @@ factory.dependencies = ['$q',
   'autotimeout',
   'device_id',
   'btchip',
-  'mnemonics'
+  'mnemonics',
+  'storage'
 ];
 
-function factory ($q, $rootScope, cordovaReady, $http, notices, gaEvent, $location, autotimeout, device_id, btchip, mnemonics) {
+function factory ($q, $rootScope, cordovaReady, $http, notices, gaEvent, $location, autotimeout, device_id, btchip, mnemonics, storage) {
   var txSenderService = {};
   // disable electrum setup
   if (false && window.Electrum) {
@@ -327,6 +328,26 @@ function factory ($q, $rootScope, cordovaReady, $http, notices, gaEvent, $locati
                                 hdwallet: txSenderService.hdwallet,
                                 gaUserPath: gaUserPath,
                                 loginData: data
+                              },
+                              unblindedCache: {
+                                _key: function (txhash, pt_idx) {
+                                  var rev = [].reverse.call(new Bitcoin.Buffer.Buffer(txhash));
+                                  return (
+                                    'unblinded_value_' + rev.toString('hex') +
+                                    ':' + pt_idx
+                                  );
+                                },
+                                getValue: function (txhash, pt_idx) {
+                                  return storage.get(this._key(txhash, pt_idx)).then(function (val) {
+                                    return +val;  // convert to a number
+                                  });
+                                },
+                                setValue: function (txhash, pt_idx, value) {
+                                  return storage.set(
+                                    this._key(txhash, pt_idx),
+                                    value
+                                  );
+                                }
                               }
                             });
 

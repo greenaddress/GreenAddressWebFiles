@@ -472,22 +472,22 @@ function factory ($q, $rootScope, tx_sender, $location, notices, $uibModal,
                 }
               } else {
                 addValue(
-                  ep.asset_id, new Bitcoin.BigInteger(ep.value)
+                  ep.asset_id, new Bitcoin.BigInteger(''+ep.value)
                 );
                 ep.nlocktime = true;
               }
             } else {
               addValue(
                 ep.asset_id,
-                (new Bitcoin.BigInteger(ep.value))
+                (new Bitcoin.BigInteger(''+ep.value))
                   .multiply(Bitcoin.BigInteger.valueOf(-1))
               );
             }
           }
           if (ep.is_credit) {
             outputs.push(ep);
-            out_val = out_val.add(new Bitcoin.BigInteger(ep.value));
-          } else { inputs.push(ep); in_val = in_val.add(new Bitcoin.BigInteger(ep.value)); }
+            out_val = out_val.add(new Bitcoin.BigInteger(''+ep.value));
+          } else { inputs.push(ep); in_val = in_val.add(new Bitcoin.BigInteger(''+ep.value)); }
         }
         if (value.compareTo(new Bitcoin.BigInteger('0')) > 0 || redeemable_value.compareTo(new Bitcoin.BigInteger('0')) > 0) {
           positive = true;

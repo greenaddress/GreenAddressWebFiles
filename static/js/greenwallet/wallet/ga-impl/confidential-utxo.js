@@ -10,7 +10,7 @@ GAConfidentialUtxo.prototype = new GAUtxo();
 extend(GAConfidentialUtxo.prototype, {
   getValue: getValue,
   _unblindOutValueInner: _unblindOutValueInner,
-  _unblindOutValue: _unblindOutValue
+  unblindOutValue: unblindOutValue
 });
 
 function GAConfidentialUtxo (utxo, options) {
@@ -20,6 +20,7 @@ function GAConfidentialUtxo (utxo, options) {
     this.raw.nonce_commitment = new Buffer(this.raw.nonce_commitment, 'hex');
     this.raw.range_proof = new Buffer(this.raw.range_proof, 'hex');
   }
+  this.unblindedCache = options.unblindedCache;
 }
 
 function _unblindOutValueInner (scanningKey) {
@@ -106,7 +107,13 @@ function _unblindOutValueInner (scanningKey) {
   };
 }
 
-function _unblindOutValue () {
+function unblindOutValue () {
+  if (this.blindingFactor) {
+    return Promise.resolve({
+      blinding_factor_out: this.blindingFactor,
+      value: this.value
+    });
+  }
   return this.scriptFactory.keysManager.getMyScanningKey(
     this.raw.subaccount,
     this.raw.pointer
@@ -114,16 +121,31 @@ function _unblindOutValue () {
     return this._unblindOutValueInner(
       scanningNode.hdnode.keyPair
     );
-  }.bind(this));
+  }.bind(this)).then(function (res) {
+    this.blindingFactor = res.blinding_factor_out;
+    this.value = res.value;
+    return res;
+  });
 }
 
 function getValue () {
   if (this.value) {
     return Promise.resolve(this.value);
   } else {
-    return this._unblindOutValue().then(function(res) {
-      this.blindingFactor = res.blinding_factor_out;
-      return res.value;
+    var cachedValue = Promise.resolve(null);
+    if (this.unblindedCache) {
+      cachedValue = this.unblindedCache.getValue(this.prevHash, this.ptIdx);
+    }
+    return cachedValue.then(function (value) {
+      if (value !== null) {
+        return value;
+      }
+      return this.unblindOutValue().then(function (res) {
+        if (this.unblindedCache) {
+          this.unblindedCache.setValue(this.prevHash, this.ptIdx, res.value);
+        }
+        return res.value;
+      }.bind(this));
     }.bind(this));
   }
 }
