@@ -1,6 +1,7 @@
 var bitcoinup = require('../bitcoinup/index.js');
 var TxConstructor = require('../tx-constructor');
 var extend = require('xtend/mutable');
+var extendCopy = require('xtend');
 
 module.exports = AssetsTxConstructor;
 
@@ -49,7 +50,7 @@ function _collectOutputs (values, options) {
     this.buildOptions.feeNetworkId,
     values.fee,
     'not enough money for fee',
-    options
+    extendCopy(options, {isFeeAsset: true})
   )(this.feeUtxo).then(function (feeUtxo) {
     Array.prototype.push.apply(ret, feeUtxo);
   }));
@@ -59,11 +60,14 @@ function _collectOutputs (values, options) {
   });
 }
 
-function _initializeNeededValue (outputsWithAmounts) {
+function _initializeNeededValue (outputsWithAmounts, feeEstimate) {
+  // 16b is very conservative
+  // (just version[4b]+num_inputs[1b]+num_outputs[1b]+one_output[10b]
+  var initialFeeEstimate = 16 * feeEstimate / 1000;
   return {asset: TxConstructor.prototype._initializeNeededValue.call(
             this, outputsWithAmounts
           ),
-          fee: 0};
+          fee: initialFeeEstimate};
 }
 
 function _increaseNeededValue (oldVal, newVal) {

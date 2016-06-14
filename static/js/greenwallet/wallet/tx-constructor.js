@@ -1,5 +1,6 @@
 var bitcoinup = require('./bitcoinup/index.js');
 var extend = require('xtend/mutable');
+var extendCopy = require('xtend');
 
 module.exports = TxConstructor;
 
@@ -43,6 +44,9 @@ function _makeUtxoFilter (assetNetworkId, requiredValue, message, options) {
               return curTotal;
             }
             collected.push(utxos[ i ]);
+            if (options.increaseNeededValueForEachOutputBy && options.isFeeAsset) {
+              requiredValue += options.increaseNeededValueForEachOutputBy;
+            }
             return curTotal + nextValue;
           });
         });
@@ -64,16 +68,22 @@ function _makeUtxoFilter (assetNetworkId, requiredValue, message, options) {
 function _collectOutputs (requiredValue, options) {
   options = options || {};
   return _makeUtxoFilter(
-    this.buildOptions.feeNetworkId, requiredValue, 'not enough money', options
+    this.buildOptions.feeNetworkId,
+    requiredValue,
+    'not enough money',
+    extendCopy(options, {isFeeAsset: true})
   )(this.utxo);
 }
 
-function _initializeNeededValue (outputsWithAmounts) {
+function _initializeNeededValue (outputsWithAmounts, feeEstimate) {
   var total = 0;
   outputsWithAmounts.forEach(function (output) {
     total += output.value;
   });
-  return total;
+  // 16b is very conservative
+  // (just version[4b]+num_inputs[1b]+num_outputs[1b]+one_output[10b]
+  var initialFeeEstimate = 16 * feeEstimate / 1000;
+  return total + initialFeeEstimate;
 }
 
 function _increaseNeededValue (oldVal, newVal) {
@@ -87,26 +97,40 @@ function _constructTx (outputsWithAmounts, options) {
   // 2. create the transaction, looping until we have enough inputs provided
   var tx = new this.Transaction();
   var builtTxData;
-  var oldNeededValue = this._initializeNeededValue(outputsWithAmounts);
-  return tx.build(extend({
-    outputsWithAmounts: outputsWithAmounts,
-    // start with no inputs to get the first estimate of required value which
-    // is then processed by `iterate` below:
-    prevOutputs: [],
-    feeEstimate: feeEstimate,
-    getChangeOutScript: this.changeAddrFactory.getNextOutputScript.bind(
-      this.changeAddrFactory
-    )
-  }, this.buildOptions, options)).then(
-    iterate.bind(this)
-  ).then(
-    // 3. sign the transaction
-    tx.signAll.bind(tx, options)
-  ).then(function () {
-    return extend({
-      tx: tx.toBuffer()
-    }, builtTxData);
-  });
+  var oldNeededValue = (
+    this._initializeNeededValue(outputsWithAmounts, feeEstimate)
+  );
+  return this._collectOutputs(
+    oldNeededValue, extendCopy(
+      options, {
+        // 42 is very conservative
+        // (just prevout[32b]+previdx[4b]+seq[4b]+len[1b]+script[1b])
+        // -- for sure the accuracy could be improved for CT, where
+        // transactions become much larger due to rangeproofs
+        increaseNeededValueForEachOutputBy: 42 * feeEstimate / 1000
+      })
+  ).then(function (prevOutputs) {
+    return tx.build(extend({
+      outputsWithAmounts: outputsWithAmounts,
+      // start with inputs set based on needed value, which likely doesn't
+      // include all the necessary fees -- it can be increased later by the
+      // `iterate` call below:
+      prevOutputs: prevOutputs,
+      feeEstimate: feeEstimate,
+      getChangeOutScript: this.changeAddrFactory.getNextOutputScript.bind(
+        this.changeAddrFactory
+      )
+    }, this.buildOptions, options)).then(
+      iterate.bind(this)
+    ).then(
+      // 3. sign the transaction
+      tx.signAll.bind(tx, options)
+    ).then(function () {
+      return extend({
+        tx: tx.toBuffer()
+      }, builtTxData);
+    });
+  }.bind(this));
 
   function iterate (neededValueAndChange) {
     if (Object.prototype.toString.call(neededValueAndChange) ===
