@@ -101,7 +101,7 @@ function _constructTx (outputsWithAmounts, options) {
     iterate.bind(this)
   ).then(
     // 3. sign the transaction
-    tx.signAll.bind(tx)
+    tx.signAll.bind(tx, options)
   ).then(function () {
     return extend({
       tx: tx.toBuffer()
@@ -144,7 +144,7 @@ function _constructTx (outputsWithAmounts, options) {
 
 function constructTx (outputsWithAmounts, options) {
   return this.utxoDeferred.then(function () {
-    return this._constructTx(outputsWithAmounts, options);
+    return this._constructTx(outputsWithAmounts, options || {});
   }.bind(this));
 }
 
