@@ -614,28 +614,34 @@ angular.module('greenWalletSendControllers',
                     var destination;
                     if (isConfidential) {
                         destination = {
-                            value: +satoshis,
+                            value: satoshis === 'ALL' ?
+                                $scope.wallet.final_balance : +satoshis,
                             ctDestination: {
                                 b58: to_addr, network: cur_net
                             }
                         }
                     } else {
                         destination = {
-                            value: +satoshis,
+                            value: satoshis === 'ALL' ?
+                                $scope.wallet.final_balance : +satoshis,
                             scriptPubKey: Bitcoin.bitcoin.address.toOutputScript(
                                 to_addr, cur_net
                             )
                         }
                     }
                     return constructor.constructTx(
-                          [destination],
-                          {signingProgressCallback:
-                              that._signing_progress_cb.bind(that)}
+                          [destination], {
+                              signingProgressCallback:
+                                  that._signing_progress_cb.bind(that),
+                              subtractFeeFromOut: satoshis === 'ALL'
+                          }
                     ).then(function(tx) {
                         var fee = calculateFee(tx.tx);
-                        var amountWithFee = +satoshis + (
-                            $scope.wallet.current_asset === 1 ?
-                                calculateFee(tx.tx) : 0
+                        var outAmount = satoshis === 'ALL' ?
+                            AssetsTransaction.fromHex(tx.tx.toString('hex')).tx.outs[0].value
+                            : satoshis;
+                        var amountWithFee = +outAmount + (
+                            $scope.wallet.current_asset === 1 ? fee : 0
                         );
                         var assetName = $scope.wallet.assets[
                             $scope.wallet.current_asset
@@ -643,7 +649,9 @@ angular.module('greenWalletSendControllers',
                         return wallets.get_two_factor_code(
                             $scope, 'send_raw_tx', isConfidential ? null : {
                                 amount: amountWithFee,
-                                change_idx: tx.changeIdx,
+                                // fake change idx for ALL to allow backend to
+                                // ignore our wallet outs if we sweep to ourselves
+                                change_idx: satoshis === 'ALL' ? 1 : tx.changeIdx,
                                 fee: fee,
                                 asset: assetName,
                                 recipient: to_addr
@@ -651,7 +659,8 @@ angular.module('greenWalletSendControllers',
                         ).then(function(twofac_data) {
                             if (twofac_data && !isConfidential) {
                                 twofac_data.send_raw_tx_amount = amountWithFee;
-                                twofac_data.send_raw_tx_change_idx = tx.changeIdx;
+                                // fake change idx for ALL, as above
+                                twofac_data.send_raw_tx_change_idx = satoshis === 'ALL' ? 1 : tx.changeIdx;
                                 twofac_data.send_raw_tx_fee = fee;
                                 twofac_data.send_raw_tx_asset = assetName;
                                 twofac_data.send_raw_tx_recipient = to_addr;
@@ -671,7 +680,6 @@ angular.module('greenWalletSendControllers',
                         function calculateFee (tx_) {
                             var tx = AssetsTransaction.fromHex(tx_.toString('hex'));
                             for (var i = 0; i < tx.tx.fees.length; ++i) {
-                              console.log(tx.tx)
                               if (tx.tx.fees[i]) return tx.tx.fees[i];
                             }
                         }
@@ -679,7 +687,9 @@ angular.module('greenWalletSendControllers',
                         $location.url('/info/');
                     });
                 }.bind(this)).catch(function(e) {
-                    notices.makeNotice('error', gettext('Transaction failed: ') + e && e.args && e.args[1]);
+                    notices.makeNotice('error', gettext('Transaction failed: ') + e && (
+                      e.message || (e.args && e.args[1])
+                    ));
                 }).finally(function() {
                     that.sending = false;
                 });

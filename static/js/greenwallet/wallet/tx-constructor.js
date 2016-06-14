@@ -44,7 +44,9 @@ function _makeUtxoFilter (assetNetworkId, requiredValue, message, options) {
               return curTotal;
             }
             collected.push(utxos[ i ]);
-            if (options.increaseNeededValueForEachOutputBy && options.isFeeAsset) {
+            if (!options.subtractFeeFromOut &&
+                options.increaseNeededValueForEachOutputBy &&
+                options.isFeeAsset) {
               requiredValue += options.increaseNeededValueForEachOutputBy;
             }
             return curTotal + nextValue;
@@ -75,7 +77,7 @@ function _collectOutputs (requiredValue, options) {
   )(this.utxo);
 }
 
-function _initializeNeededValue (outputsWithAmounts, feeEstimate) {
+function _initializeNeededValue (outputsWithAmounts, options, feeEstimate) {
   var total = 0;
   outputsWithAmounts.forEach(function (output) {
     total += output.value;
@@ -83,7 +85,7 @@ function _initializeNeededValue (outputsWithAmounts, feeEstimate) {
   // 16b is very conservative
   // (just version[4b]+num_inputs[1b]+num_outputs[1b]+one_output[10b]
   var initialFeeEstimate = 16 * feeEstimate / 1000;
-  return total + initialFeeEstimate;
+  return total + (options.subtractFeeFromOut ? 0 : initialFeeEstimate);
 }
 
 function _increaseNeededValue (oldVal, newVal) {
@@ -98,7 +100,7 @@ function _constructTx (outputsWithAmounts, options) {
   var tx = new this.Transaction();
   var builtTxData;
   var oldNeededValue = (
-    this._initializeNeededValue(outputsWithAmounts, feeEstimate)
+    this._initializeNeededValue(outputsWithAmounts, options, feeEstimate)
   );
   return this._collectOutputs(
     oldNeededValue, extendCopy(
