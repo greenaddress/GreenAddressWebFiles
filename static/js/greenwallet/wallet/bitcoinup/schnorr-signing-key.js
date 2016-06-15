@@ -1,6 +1,10 @@
+var bitcoin = require('bitcoinjs-lib');
+var bip39 = require('bip39');
 var extend = require('xtend/mutable');
+var pbkdf2 = require('pbkdf2').pbkdf2Sync;
 var secp256k1 = require('secp256k1-alpha');
 var secp256k1ctx = null;
+var sha512 = require('sha512');
 
 module.exports = SchnorrSigningKey;
 
@@ -10,13 +14,17 @@ extend(SchnorrSigningKey.prototype, {
   getPublicKeyBuffer: getPublicKeyBuffer,
   derive: derive,
   deriveHardened: deriveHardened,
+  _derivePathSeed: _derivePathSeed,
+  derivePath: derivePath,
   neutered: neutered
 });
 SchnorrSigningKey.secp256k1 = secp256k1;
 SchnorrSigningKey.getSecp256k1Ctx = checkContext;
+SchnorrSigningKey.fromMnemonic = fromMnemonic;
 
-function SchnorrSigningKey (hdnode) {
+function SchnorrSigningKey (hdnode, mnemonic) {
   this.hdnode = hdnode;
+  this.mnemonic = mnemonic;
 }
 
 function signHash (msgIn) {
@@ -93,3 +101,23 @@ function checkContext () {
   return secp256k1ctx;
 }
 
+function fromMnemonic (mnemonic, netName) {
+  var curNet = bitcoin.networks[netName || 'testnet'];
+  var seed = bip39.mnemonicToSeedHex(mnemonic);  // this is slow, perhaps move to a webworker
+  return Promise.resolve(
+    new SchnorrSigningKey(bitcoin.HDNode.fromSeedHex(seed, curNet), mnemonic)
+  );
+}
+
+function _derivePathSeed () {
+  var mnemonicBuffer = new Buffer(this.mnemonic, 'utf8');
+  var saltBuffer = new Buffer('greenaddress_path', 'utf8');
+
+  return pbkdf2(mnemonicBuffer, saltBuffer, 2048, 64, 'sha512');
+}
+
+function derivePath () {
+  var seedBuffer = this.derivePathSeed();
+  var hasher = sha512.hmac('GreenAddress.it HD wallet path');
+  return Promise.resolve(hasher.finalize(seedBuffer));
+}

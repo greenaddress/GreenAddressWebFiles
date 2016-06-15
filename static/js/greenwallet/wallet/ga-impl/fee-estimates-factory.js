@@ -12,7 +12,6 @@ function GAFeeEstimatesFactory (gaService, initialEstimates) {
   gaService.session.subscribe('com.greenaddress.fee_estimates',
     function (event) {
       this.estimates = event[0];
-      console.log(event[0])
     }.bind(this)
   );
 }

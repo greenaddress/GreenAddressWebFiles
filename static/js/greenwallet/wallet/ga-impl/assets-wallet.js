@@ -51,7 +51,7 @@ function setupSubAccount (subaccount) {
   this.subaccounts.push(subaccount);
 
   var changeAddrFactory = new GAAddressFactory(
-    this.service, this.hdwallet, {subaccountPointer: subaccount.pointer}
+    this.service, this.signingWallet, {subaccountPointer: subaccount.pointer}
   );
   Object.keys(this.assets).forEach(function (assetId) {
     var asset = {
