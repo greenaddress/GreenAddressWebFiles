@@ -4,7 +4,6 @@ var TxConstructor = require('../tx-constructor');
 var BaseWallet = require('./base-wallet');
 var GAUtxoFactory = require('./utxo-factory').GAUtxoFactory;
 var GAAddressFactory = require('./address-factory');
-var GAFeeEstimatesProvider = require('./fee-estimates-factory');
 
 module.exports = GAWallet;
 
@@ -35,7 +34,7 @@ function setupSubAccount (subaccount) {
     {
       utxoFactory: utxoFactory,
       changeAddrFactory: changeAddrFactory,
-      feeEstimatesFactory: new GAFeeEstimatesProvider(this.service)
+      feeEstimatesFactory: this.feeEstimatesFactory
     }
   );
 }

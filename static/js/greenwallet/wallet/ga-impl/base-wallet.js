@@ -4,6 +4,7 @@ var extend = require('xtend/mutable');
 var GAService = require('./service');
 var GAKeysManager = require('./keys-manager');
 var GAScriptFactory = require('./script-factory');
+var GAFeeEstimatesFactory = require('./fee-estimates-factory');
 
 module.exports = BaseWallet;
 
@@ -44,6 +45,9 @@ function BaseWallet (options) {
       type: 'main'
     });
     this.assets = data.assets;
+    this.feeEstimatesFactory = new GAFeeEstimatesFactory(
+      this.service, data.fee_estimates
+    );
 
     // scriptFactory is required by setupSubAccount below:
     this.keysManager = new GAKeysManager({

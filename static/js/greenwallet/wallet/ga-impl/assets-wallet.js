@@ -7,7 +7,6 @@ var BaseWallet = require('./base-wallet');
 var GAUtxoFactory = require('./utxo-factory').GAUtxoFactory;
 var GAConfidentialUtxo = require('./confidential-utxo');
 var GAAddressFactory = require('./address-factory');
-var GAFeeEstimatesProvider = require('./fee-estimates-factory');
 
 module.exports = GAAssetsWallet;
 
@@ -76,7 +75,7 @@ function setupSubAccount (subaccount) {
              subaccount: subaccount}
           ),
           changeAddrFactory: changeAddrFactory,
-          feeEstimatesFactory: new GAFeeEstimatesProvider(this.service),
+          feeEstimatesFactory: this.feeEstimatesFactory,
           transactionClass: makeAssetsClassWithDefaultAsssetId(
             asset.networkId
           )
@@ -105,7 +104,7 @@ function setupSubAccount (subaccount) {
            subaccount: subaccount}),
         changeAddrFactory: changeAddrFactory,
         feeChangeAddrFactory: changeAddrFactory,
-        feeEstimatesFactory: new GAFeeEstimatesProvider(this.service),
+        feeEstimatesFactory: this.feeEstimatesFactory,
         assetNetworkId: asset.networkId,
         feeNetworkId: new Buffer(this.assets[1].network_id, 'hex')
       });
