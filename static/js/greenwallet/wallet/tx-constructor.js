@@ -16,15 +16,14 @@ extend(TxConstructor.prototype, {
 });
 TxConstructor._makeUtxoFilter = _makeUtxoFilter;
 
-function TxConstructor (dependencies) {
-  if (!dependencies) return; // allow inheritance
+function TxConstructor (options) {
+  if (!options) return; // allow inheritance
 
-  this.utxoFactory = dependencies.utxoFactory;
-  this.changeAddrFactory = dependencies.changeAddrFactory;
-  this.feeEstimatesFactory = dependencies.feeEstimatesFactory;
-  this.Transaction = dependencies.transactionClass || bitcoinup.Transaction;
+  this.utxoFactory = options.utxoFactory;
+  this.changeAddrFactory = options.changeAddrFactory;
+  this.feeEstimatesFactory = options.feeEstimatesFactory;
+  this.Transaction = options.transactionClass || bitcoinup.Transaction;
   this.buildOptions = {};
-  this.refreshUtxo();
 }
 
 function _makeUtxoFilter (assetNetworkId, requiredValue, message, options) {
@@ -169,6 +168,9 @@ function _constructTx (outputsWithAmounts, options) {
 }
 
 function constructTx (outputsWithAmounts, options) {
+  if (!this.utxoDeferred) {
+    this.refreshUtxo();
+  }
   return this.utxoDeferred.then(function () {
     return this._constructTx(outputsWithAmounts, options || {});
   }.bind(this));
@@ -188,6 +190,9 @@ function _getBalance () {
 }
 
 function getBalance () {
+  if (!this.utxoDeferred) {
+    this.refreshUtxo();
+  }
   return this.utxoDeferred.then(function () {
     return this._getBalance();
   }.bind(this));
