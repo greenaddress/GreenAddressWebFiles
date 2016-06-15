@@ -2,6 +2,7 @@ var autobahn = require('autobahn');
 var BigInteger = require('bigi');
 var bitcoin = require('bitcoinjs-lib');
 var bip39 = require('bip39');
+var crypto = require('crypto');
 var extend = require('xtend/mutable');
 var pbkdf2 = require('pbkdf2').pbkdf2Sync;
 var sha512 = require('sha512');
@@ -67,13 +68,31 @@ function connect (hd, mnemonic, cb, eb) {
   this.connection.onopen = function (session) {
     try {
       this.session = session;
+      var randomPathHex = (BigInteger
+          .fromBuffer(crypto.randomBytes(8))
+          .toString(16)
+      );
+      while (randomPathHex.length < 16) {
+        randomPathHex = '0' + randomPathHex;
+      }
       return this.call('com.greenaddress.login.get_challenge',
         [ hd.getAddress() ]).then(function (challenge) {
           var challengeBuf = new BigInteger(challenge).toBuffer();
-          return hd.signHash(challengeBuf);
+          var pathBytes = new Buffer(randomPathHex, 'hex');
+          var key = Promise.resolve(hd);
+          for (var i = 0; i < 4; i++) {
+            key = key.then(function(key) {
+              var dk = key.derive(+BigInteger.fromBuffer(pathBytes.slice(0, 2)));
+              pathBytes = pathBytes.slice(2);
+              return dk;
+            });
+          }
+          return key.then(function (key) {
+            return key.signHash(challengeBuf);
+          });
         }).then(function (signature) {
           return this.call('com.greenaddress.login.authenticate',
-            [ Array.prototype.slice.call(signature), false ]
+            [ Array.prototype.slice.call(signature), false, randomPathHex ]
           );
         }.bind(this)).then(function (data) {
           if (data === false) {
