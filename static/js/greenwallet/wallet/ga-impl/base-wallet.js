@@ -5,6 +5,7 @@ var GAService = require('./service');
 var GAKeysManager = require('./keys-manager');
 var GAScriptFactory = require('./script-factory');
 var GAFeeEstimatesFactory = require('./fee-estimates-factory');
+var SchnorrSigningKey = bitcoinup.SchnorrSigningKey;
 
 module.exports = BaseWallet;
 
@@ -18,16 +19,16 @@ function BaseWallet (options) {
 
   this.service = new GAService();
 
-  if (options.mnemonic) {
-    this.loggedIn = this.service.deriveHD(
-      options.mnemonic
-    ).then(function (hdwallet) {
-      this.hdwallet = hdwallet;
-      return this._loginHDWallet(options.mnemonic);
+  if (options.signingWallet) {
+    this.loggedIn = Promise.resolve(
+      options.signingWallet
+    ).then(function (signingWallet) {
+      this.signingWallet = signingWallet;
+      return this._loginHDWallet();
     }.bind(this));
   } else if (options.existingSession) {
-    this.hdwallet = new bitcoinup.SchnorrSigningKey(
-      options.existingSession.hdwallet
+    this.signingWallet = new bitcoinup.SchnorrSigningKey(
+      options.existingSession.hdwallet, options.existingSession.mnemonic
     );
     this.service.session = options.existingSession.session;
     this.service.gaUserPath = new Buffer(options.existingSession.gaUserPath, 'hex');
@@ -52,8 +53,8 @@ function BaseWallet (options) {
     // scriptFactory is required by setupSubAccount below:
     this.keysManager = new GAKeysManager({
       gaService: this.service,
-      privHDWallet: this.hdwallet,
-      pubHDWallet: this.hdwallet
+      privHDWallet: this.signingWallet,
+      pubHDWallet: this.signingWallet
     });
     this.scriptFactory = new GAScriptFactory(this.keysManager);
 
@@ -65,9 +66,9 @@ function BaseWallet (options) {
   }.bind(this));
 }
 
-function _loginHDWallet (mnemonic) {
+function _loginHDWallet () {
   return new Promise(function (resolve, reject) {
-    this.service.connect(this.hdwallet, mnemonic, resolve, reject);
+    this.service.connect(this.signingWallet, resolve, reject);
   }.bind(this));
 }
 

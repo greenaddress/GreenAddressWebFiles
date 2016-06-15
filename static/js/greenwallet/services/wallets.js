@@ -85,7 +85,7 @@ function factory ($q, $rootScope, tx_sender, $location, notices, $uibModal,
   walletsService._login = function ($scope, hdwallet, mnemonic, signup, logout, path_seed, path, double_login_callback) {
     var d = $q.defer();
     var that = this;
-    tx_sender.login(logout, false, user_agent($scope.wallet), path_seed, path).then(function (data) {
+    tx_sender.login(logout, false, user_agent($scope.wallet), path_seed, path, mnemonic).then(function (data) {
       if (data) {
         if (window.disableEuCookieComplianceBanner) {
           window.disableEuCookieComplianceBanner();

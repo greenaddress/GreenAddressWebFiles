@@ -270,7 +270,7 @@ function factory ($q, $rootScope, cordovaReady, $http, notices, gaEvent, $locati
   var waiting_for_device = false;
 
   // @TODO: refactor indentation hell to be function
-  txSenderService.login = function (logout, force_relogin, user_agent, path_seed, path) {
+  txSenderService.login = function (logout, force_relogin, user_agent, path_seed, path, mnemonic) {
     var d_main = $q.defer();
     var d;
     if (txSenderService.logged_in && !force_relogin) {
@@ -326,6 +326,7 @@ function factory ($q, $rootScope, cordovaReady, $http, notices, gaEvent, $locati
                               existingSession: {
                                 session: session_for_login,
                                 hdwallet: txSenderService.hdwallet,
+                                mnemonic: mnemonic,
                                 gaUserPath: gaUserPath,
                                 loginData: data
                               },

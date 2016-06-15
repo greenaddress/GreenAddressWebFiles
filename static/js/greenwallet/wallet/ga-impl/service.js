@@ -1,22 +1,15 @@
 var autobahn = require('autobahn');
 var BigInteger = require('bigi');
 var bitcoin = require('bitcoinjs-lib');
-var bip39 = require('bip39');
 var crypto = require('crypto');
 var extend = require('xtend/mutable');
-var pbkdf2 = require('pbkdf2').pbkdf2Sync;
-var sha512 = require('sha512');
-var SchnorrSigningKey = require('../bitcoinup/schnorr-signing-key.js');
-
 module.exports = GAService;
 
 extend(GAService.prototype, {
-  deriveHD: deriveHD,
   connect: connect,
   disconnect: disconnect,
   call: call
 });
-GAService.derivePath = derivePath;
 
 function GAService (netName) {
   this.netName = netName || 'testnet';
@@ -39,28 +32,7 @@ function GAService (netName) {
   }
 }
 
-function deriveHD (mnemonic) {
-  var curNet = bitcoin.networks[this.netName];  // 'testnet' for testnet
-  var seed = bip39.mnemonicToSeedHex(mnemonic);  // this is slow, perhaps move to a webworker
-  return Promise.resolve(
-    new SchnorrSigningKey(bitcoin.HDNode.fromSeedHex(seed, curNet))
-  );
-}
-
-function derivePathSeed (mnemonic) {
-  var mnemonicBuffer = new Buffer(mnemonic, 'utf8');
-  var saltBuffer = new Buffer('greenaddress_path', 'utf8');
-
-  return pbkdf2(mnemonicBuffer, saltBuffer, 2048, 64, 'sha512');
-}
-
-function derivePath (mnemonic) {
-  var seedBuffer = derivePathSeed(mnemonic);
-  var hasher = sha512.hmac('GreenAddress.it HD wallet path');
-  return hasher.finalize(seedBuffer);
-}
-
-function connect (hd, mnemonic, cb, eb) {
+function connect (hd, cb, eb) {
   this.connection = new autobahn.Connection({
     url: 'ws://localhost:8080/v2/ws',
     realm: 'realm1'
@@ -81,7 +53,7 @@ function connect (hd, mnemonic, cb, eb) {
           var pathBytes = new Buffer(randomPathHex, 'hex');
           var key = Promise.resolve(hd);
           for (var i = 0; i < 4; i++) {
-            key = key.then(function(key) {
+            key = key.then(function (key) {
               var dk = key.derive(+BigInteger.fromBuffer(pathBytes.slice(0, 2)));
               pathBytes = pathBytes.slice(2);
               return dk;
@@ -104,7 +76,7 @@ function connect (hd, mnemonic, cb, eb) {
               cb(data);
             } else {
               // first login -- we need to set up the path
-              var pathHex = GAService.derivePath(mnemonic).toString('hex');
+              var pathHex = hd.derivePath().toString('hex');
               this.call(
                 'com.greenaddress.login.set_gait_path', [pathHex]
               ).then(function () {
