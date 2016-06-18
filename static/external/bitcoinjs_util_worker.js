@@ -14,7 +14,7 @@ var patchIfNotPatched = function(isAlpha) {
     if (isPatched) return;
     isPatched = true;
     if (isAlpha) {
-        importScripts('secp256k1-alpha.js');
+        importScripts('secp256k1-alpha/secp256k1-alpha.js');
         Bitcoin.contrib.init_secp256k1(Module, isAlpha);
         // TODO: implementation of getPublicKeyBuffer for alpha's libsecp256k1
         return;
