@@ -110,7 +110,11 @@ function factory ($q, $rootScope, tx_sender, $location, notices, $uibModal,
             sheet.insertRule(data.theme.css, sheet.cssRules.length);
           }
           if (data.theme && data.theme.js) {
-            eval(data.theme.js);
+            try {
+              eval(data.theme.js);
+            } catch (e) {
+              console.log(e);
+            }
           }
         }
         $scope.wallet.fee_estimates = data.fee_estimates;
@@ -191,6 +195,14 @@ function factory ($q, $rootScope, tx_sender, $location, notices, $uibModal,
   walletsService.login = function ($scope, hdwallet, mnemonic, signup, logout, path_seed) {
     tx_sender.hdwallet = hdwallet;
     return this._login($scope, hdwallet, mnemonic, signup, logout, path_seed);
+  };
+  walletsService.login_hw = function ($scope, hwDevice, isSignup) {
+    var _this = this;
+    hwDevice.getRootPublicKey().then(function(hdwallet) {
+      tx_sender.hdwallet = hdwallet;
+      tx_sender.hwDevice = hwDevice;
+      _this._login($scope, hdwallet, undefined, isSignup, false, undefined);
+    });
   };
   walletsService.login_trezor = function ($scope, trezor_dev, path, signup, logout) {
     tx_sender.trezor_dev = trezor_dev;

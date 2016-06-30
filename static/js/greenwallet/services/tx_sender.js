@@ -378,8 +378,11 @@ function factory ($q, $rootScope, cordovaReady, $http, notices, gaEvent, $locati
         if (waiting_for_device) return;
         var trezor_dev = txSenderService.trezor_dev;
         var btchip_dev = txSenderService.btchip;
+        var hwDevice = txSenderService.hwDevice;
         var get_pubkey = function () {
-          if (trezor_dev) {
+          if (hwDevice) {
+            return $q.when(txSenderService.hdwallet.keyPair.getAddress());
+          } else if (trezor_dev) {
             return $q.when(txSenderService.trezor_address);
           } else {
             return $q.when(txSenderService.btchip_address);
@@ -387,7 +390,9 @@ function factory ($q, $rootScope, cordovaReady, $http, notices, gaEvent, $locati
         };
         get_pubkey().then(function (addr) {
           if (session_for_login) {
-            if (trezor_dev) {
+            if (hwDevice) {
+              dev_d = $q.when(dev_d)
+            } else if (trezor_dev) {
               dev_d = $q.when(trezor_dev);
             } else {
               dev_d = btchip.getDevice(false, true,
@@ -400,12 +405,20 @@ function factory ($q, $rootScope, cordovaReady, $http, notices, gaEvent, $locati
             }
             waiting_for_device = true;
             var challenge_arg_resolves_main = false;
+            var getChallengeArguments = function() {
+              if (hwDevice) {
+                return hwDevice.getChallengeArguments();
+              } else {
+                return Promise.when(['com.greenaddress.login.get_trezor_challenge', addr, !trezor_dev]);
+              }
+            };
             dev_d = dev_d.then(function () {
               if (session_for_login) {
-                return session_for_login.call(
-                  'com.greenaddress.login.get_trezor_challenge',
-                  [addr, !trezor_dev]
-                );
+                return getChallengeArguments().then(function (args) {
+                  return session_for_login.call(
+                    args[0], args.slice(1)
+                  );
+                });
               } else if (!connecting) {
                 waiting_for_device = false;
                 disconnected = false;
@@ -427,7 +440,26 @@ function factory ($q, $rootScope, cordovaReady, $http, notices, gaEvent, $locati
               // 0x4741 = 18241 = 256*G + A in ASCII
               var path = [0x4741b11e];
 
-              if (trezor_dev) {
+              if (hwDevice) {
+                return hwDevice.signMessage(path, msg).then(function(res) {
+                  return Promise.all([Promise.resolve(res), device_id()]);
+                }).then(function (resAndId) {
+                  var res = resAndId[0];
+                  var devid = resAndId[1];
+                  return session_for_login.call('com.greenaddress.login.authenticate', [
+                    [res.r.toString(), res.s.toString(), res.i.toString()],
+                    logout || false,
+                    'GA',
+                    devid
+                  ]).then(function (data) {
+                    if (data) {
+                      txSenderService.logged_in = data;
+                      onLogin(data);
+                      return data;
+                    } else { return $q.reject(gettext('Login failed')); }
+                  });
+                });
+              } else if (trezor_dev) {
                 trezor_dev.signing = true;
                 return trezor_dev._typedCommonCall('SignMessage', 'MessageSignature',
                   {'message': msg, address_n: path})

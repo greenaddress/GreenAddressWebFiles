@@ -1,3 +1,6 @@
+var HWWallet = require('wallet').GA.HWWallet;
+var allHwWallets = require('wallet').GA.allHwWallets;
+
 angular.module('greenWalletSignupLoginControllers', ['greenWalletMnemonicsServices'])
 .controller('SignupLoginController', ['$scope', '$uibModal', 'focus', 'wallets', 'notices', 'mnemonics', '$location', 'cordovaReady', 'facebook', 'tx_sender', 'crypto', 'gaEvent', 'reddit', 'storage', 'qrcode', '$timeout', '$q', 'trezor', 'bip38', 'btchip', '$interval', '$rootScope',
         function SignupLoginController($scope, $uibModal, focus, wallets, notices, mnemonics, $location, cordovaReady, facebook, tx_sender, crypto, gaEvent, reddit, storage, qrcode, $timeout, $q, trezor, bip38, btchip, $interval, $rootScope) {
@@ -330,7 +333,7 @@ angular.module('greenWalletSignupLoginControllers', ['greenWalletMnemonicsServic
         });
     };
 
-    var trezor_dev = null;
+    var hwDevice = null;
 
     var login_with_trezor = function() {
         $scope.logging_in = true;
@@ -348,6 +351,8 @@ angular.module('greenWalletSignupLoginControllers', ['greenWalletMnemonicsServic
 
     $scope.login_with_hw = function() {
         gaEvent('Login', 'HardwareLogin');
+        wallets.login_hw($scope, hwDevice);
+        return;
         if (trezor_dev) { login_with_trezor(); return; }
         btchip.getDevice().then(function(btchip_dev) {
             btchip.promptPin('', function(err, pin) {
@@ -403,6 +408,9 @@ angular.module('greenWalletSignupLoginControllers', ['greenWalletMnemonicsServic
     };
 
     var template = gettext("{hardware_wallet_name} Login");
+
+
+/*
     btchip.getDevice('retry').then(function(btchip) {
         btchip.dongle.disconnect_async();
         state.hw_detected = template.replace('{hardware_wallet_name}', 'BTChip');
@@ -412,6 +420,22 @@ angular.module('greenWalletSignupLoginControllers', ['greenWalletMnemonicsServic
         state.hw_detected = template.replace('{hardware_wallet_name}', 'TREZOR');
         trezor_dev = trezor;
     })
+*/
+
+
+    var checkForHwWallets = function () {
+        allHwWallets.forEach(function (hw) {
+            hw.checkForDevices(cur_net);
+        });
+        HWWallet.currentWallet.then(function (dev) {
+            state.hw_detected = template.replace('{hardware_wallet_name}', dev.deviceTypeName);
+            hwDevice = dev;
+        }, function (err) {
+            notices.makeNotice('error', err.message);
+            checkForHwWallets();
+        });
+    };
+    checkForHwWallets();
 
     $scope.read_qr_code = function read_qr_code($event) {
         gaEvent('Login', 'QrScanClicked');
