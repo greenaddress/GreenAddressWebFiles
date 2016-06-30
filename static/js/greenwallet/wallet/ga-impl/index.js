@@ -5,5 +5,8 @@ module.exports = {
   UtxoFactory: require('./utxo-factory').GAUtxoFactory,
   Utxo: require('./utxo-factory').GAUtxo,
   GAScriptFactory: require('./script-factory'),
-  GAKeysManager: require('./keys-manager')
+  GAKeysManager: require('./keys-manager'),
+  HWWallet: require('./hw-wallet'),
+  TrezorHWWallet: require('./trezor-hw-wallet'),
+  allHwWallets: require('./all-hw-wallets')
 };
