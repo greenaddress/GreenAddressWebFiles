@@ -91,7 +91,7 @@
             {% endif %}
             <div class="col-xs-7 col-sm-4 col-md-4">
               <div class="input-group">
-                <span class="input-group-addon">((wallet.unit))</span>
+                <span ng-show="wallet.current_asset == 1" class="input-group-addon">((wallet.unit))</span>
                 {% if not cdvapp %}
                     <input ng-disabled="send_tx.recipient.amount || send_tx.spend_all" class="form-control" type="text" ng-model="send_tx.amount" placeholder="0.0000" />
                 {% else %}
