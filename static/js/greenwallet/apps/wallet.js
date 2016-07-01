@@ -1,3 +1,7 @@
+var window = require('global/window');
+
+var BASE_URL = window.BASE_URL;
+
 var deps = ['greenWalletBaseApp', 'ngRoute', 'ui.bootstrap', 'greenWalletDirectives', 'greenWalletControllers',
      'greenWalletInfoControllers', 'greenWalletSettingsControllers', 'greenWalletTransactionsControllers',
      'greenWalletReceiveControllers', 'greenWalletSendControllers', 'greenWalletSignupLoginControllers', 'ja.qr'];
