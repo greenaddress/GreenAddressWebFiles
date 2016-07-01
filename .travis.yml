@@ -14,7 +14,8 @@ install:
   - npm install
   - pip install -r requirements.txt
 
-script: 
+script:
+  - npm run test
   - npm run build
   - "./build_and_push_all.sh"
 
