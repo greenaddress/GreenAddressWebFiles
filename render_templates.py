@@ -44,10 +44,11 @@ def escapejs(txt):
 
 
 class TemplatesRenderer(object):
-    def __init__(self, hostname, outdir, cdvapp):
+    def __init__(self, hostname, outdir, cdvapp, multi_asset):
         self.hostname = hostname
         self.outdir = outdir
         self.cdvapp = cdvapp
+        self.multi_asset = multi_asset
         self.env = gettext_finder.jinja_env
         self.trs = {}
         for lang in gettext_finder.GETTEXT_LANGUAGES:
@@ -81,6 +82,7 @@ class TemplatesRenderer(object):
             'STATIC_URL': '../static' if self.cdvapp else '/static',
             'DEVELOPMENT': True,
             'PATH_NO_LANG': output,
+            'MULTIASSET': self.multi_asset,
             'cdvapp': self.cdvapp,
             'crapp': not self.cdvapp
         }
@@ -153,6 +155,10 @@ def main():
         help="Optional hostname of deployment (not used for Cordova/crx)")
     parser.add_argument('--cordova', '-a', action='store_true',
         help="Build HTML for Cordova project")
+    parser.add_argument('--multiasset', '-m', action='store_true',
+        help="Build HTML for MultiAsset functionality")
+
+    # multi_asset
 
     if render_templates_deployment:
         TEMPLATES.update(render_templates_deployment.TEMPLATES)
@@ -170,6 +176,7 @@ def main():
         hostname=args.hostname,
         outdir=args.outdir,
         cdvapp=args.cordova,
+        multi_asset=args.multiasset,
     )
 
     for output, templates in TEMPLATES.iteritems():
