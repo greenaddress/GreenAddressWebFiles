@@ -152,6 +152,7 @@ angular.module('greenWalletSignupLoginControllers', ['greenWalletMnemonicsServic
             });
             return;
         }
+        state.mnemonic = state.mnemonic.trim();
         var encrypted = state.mnemonic.split(" ").length == 27;
         gaEvent('Login', encrypted ? 'MnemonicLogin' : 'MnemonicEncryptedLogin');
         state.mnemonic_error = state.login_error = undefined;
