@@ -2,8 +2,8 @@
   <ul>
     <li class="menu-header"><img src="{{STATIC_URL}}/img/logos/logo-greenaddress-white.png" alt="GreenAddress" /> GreenAddress</li>
     <li path="/info"><a href="#/info">{{ _("Transactions") }}</a></li>
-    <li ng-show="wallet.hdwallet.keyPair.d || wallet.trezor_dev || wallet.btchip" path="/send"><a href="#/send">{{ _("Send Money") }}</a></li>
-    <li path="/receive"><a href="#/receive">{{ _("Receive Money") }}</a></li>
+    <li ng-show="wallet.hdwallet.keyPair.d || wallet.trezor_dev || wallet.btchip" path="/send"><a href="#/send">{{ _("Send") }}</a></li>
+    <li path="/receive"><a href="#/receive">{{ _("Receive") }}</a></li>
     <li path="/address-book"><a href="#/address-book">{{ _("Address Book") }}</a></li>
     <li ng-show="wallet.hdwallet.keyPair.d || wallet.trezor_dev || wallet.btchip" path="/settings" class="menu-settings"><a href="#/settings">{{ _("Settings") }}</a></li>
 
