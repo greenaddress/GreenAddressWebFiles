@@ -64,10 +64,12 @@
                     <div class="text-center" ng-show="!wallet.send_to_receiving_id && !has_payreq && state.toggleshowpin && !(state.seed_progress && !state.login_error)">
                         <hr>
                         <div class="subtitle">{{ _("Log in to Watch-Only mode") }}</div>
+                        {% if not MULTIASSET %}
                         {% if not crapp %}
                         <a href="" ng-click="login_with_facebook()" class="btn btn-facebook"><i class="icon-facebook"></i> Facebook</a>
                         {% if not include_cordova and not cdvapp %}
                         <a href="" ng-click="login_with_reddit()" class="btn btn-reddit"><i class="icon-reddit"></i> Reddit</a>
+                        {% endif %}
                         {% endif %}
                         {% endif %}
                         <a href="" ng-class="{disabled: logging_in}" ng-click="login_with_custom()" class="btn btn-default"><i class="glyphicon glyphicon-lock"></i> {{ _("Custom Login") }}</a>
