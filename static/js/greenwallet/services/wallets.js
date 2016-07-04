@@ -439,7 +439,12 @@ function factory ($q, $rootScope, tx_sender, $location, notices, $uibModal,
       var retval = [];
       var any_unconfirmed_seen = false;
       var asset_name = null;
+      // this used to be shadowed over and over and we relied on variable hoisting for it to work
+      // that's confusing, just define it here and assign it below
+      var description;
       for (var i = 0; i < data.list.length; i++) {
+        // description is reused in every iteration of the loop, so lets just null it out at first just in case
+        description = null;
         var tx = data.list[i], inputs = [], outputs = [];
         var asset_id;
         for (var j = 0; j < tx.eps.length; ++j) {
@@ -503,10 +508,13 @@ function factory ($q, $rootScope, tx_sender, $location, notices, $uibModal,
         }
         if (value.compareTo(new Bitcoin.BigInteger('0')) > 0 || redeemable_value.compareTo(new Bitcoin.BigInteger('0')) > 0) {
           positive = true;
-          if (redeemable_value.compareTo(new Bitcoin.BigInteger('0')) > 0) {
-            var description = gettext('Back from ') + sent_back_from;
+
+          if (tx.issuance) {
+            description = gettext('Asset Issuance');
+          } else if (redeemable_value.compareTo(new Bitcoin.BigInteger('0')) > 0) {
+            description = gettext('Back from ') + sent_back_from;
           } else {
-            var description = gettext('From ');
+            description = gettext('From ');
             var addresses = [];
             for (var j = 0; j < tx.eps.length; j++) {
               var ep = tx.eps[j];
@@ -531,7 +539,7 @@ function factory ($q, $rootScope, tx_sender, $location, notices, $uibModal,
         } else {
           negative = value.compareTo(new Bitcoin.BigInteger('0')) < 0;
           var addresses = [];
-          var description = gettext('To ');
+          description = gettext('To ');
           for (var j = 0; j < tx.eps.length; j++) {
             var ep = tx.eps[j];
             if (ep.is_credit && (!ep.is_relevant || ep.social_destination)) {
@@ -605,6 +613,7 @@ function factory ($q, $rootScope, tx_sender, $location, notices, $uibModal,
           asset_id: asset_id, asset_name: asset_name, size: tx.size,
           fee_per_kb: Math.round(tx.fee / (tx.size / 1000)),
           rbf_optin: !cur_net.isAlphaMultiasset && tx.rbf_optin,
+          issuance: tx.issuance,
           asset_values: asset_values});
         // tx.unclaimed is later used for cache updating
         tx.unclaimed = retval[0].unclaimed || (retval[0].redeemable && retval[0].redeemable_unspent);
