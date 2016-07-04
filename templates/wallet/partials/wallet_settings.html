@@ -424,6 +424,7 @@
   </div>
   <div class="col-md-9">
     <form role="form" ng-show="thirdparty.loaded" ng-controller="ThirdPartyController" ng-submit="thirdparty.customstate.save()">
+    {% if not MULTIASSET %}
     {% if not crapp %}
       <button ng-disabled="thirdparty.toggling_fb || thirdparty.fbstate.logging_in" class="btn btn-block-xs btn-facebook" ng-click="thirdparty.fbstate.enabled=!thirdparty.fbstate.enabled"><i class="icon-facebook"></i> Facebook</button>
       <label class="switch">
@@ -439,6 +440,7 @@
       </label>
       <hr>
       {% endif %}
+    {% endif %}
     {% endif %}
       <button class="btn btn-block-xs btn-default" ng-click="thirdparty.customstate.enabled=!thirdparty.customstate.enabled" ng-disabled="thirdparty.toggling_custom"><i class="glyphicon glyphicon-lock"></i> {{ _("Custom Login") }}</button>
       <label class="switch">
