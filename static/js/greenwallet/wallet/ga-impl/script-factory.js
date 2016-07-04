@@ -23,7 +23,7 @@ function _createGAScript (subaccountPointer, pointer, myRecoveryKey) {
   if (myRecoveryKey) {
     myRecoveryKey = myRecoveryKey.derive(1).then(function (branch) {
       return branch.derive(pointer);
-    }.bind(this));
+    });
   } else {
     myRecoveryKey = Promise.resolve();
   }

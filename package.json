@@ -57,6 +57,7 @@
   },
   "semistandard": {
     "ignore": [
+      "bitcoinjs-browserify/",
       "static/external/",
       "static/js/lib/",
       "static/js/greenwallet/app.js",

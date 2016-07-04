@@ -1,5 +1,8 @@
 var bitcoin = require('bitcoinjs-lib');
 var extend = require('xtend/mutable');
+var window = require('global/window');
+
+var gettext = window.gettext;
 
 var HWWallet = require('./hw-wallet');
 
@@ -74,7 +77,7 @@ function getRootPublicKey () {
     return this.device.getPublicKey([]).then(function (pubkey) {
       var pk = pubkey.message.node.public_key;
       pk = pk.toHex ? pk.toHex() : pk;
-      var keyPair = new bitcoin.ECPair.fromPublicKeyBuffer(
+      var keyPair = bitcoin.ECPair.fromPublicKeyBuffer(
         new Buffer(pk, 'hex'),
         _this.network
       );
@@ -99,8 +102,8 @@ function signMessage (path, message) {
 }
 
 function getChallengeArguments () {
-  return this.getRootPublicKey().then(function(hdWallet) {
-    return [ "com.greenaddress.login.get_trezor_challenge", hdWallet.keyPair.getAddress(), true ];
+  return this.getRootPublicKey().then(function (hdWallet) {
+    return [ 'com.greenaddress.login.get_trezor_challenge', hdWallet.keyPair.getAddress(), true ];
   });
 }
 
@@ -127,7 +130,6 @@ function checkForDevices (network) {
           TrezorHWWallet.isChecking = false;
 
           trezor_api.open(devices[0]).then(function (dev_) {
-
             dev_.initialize().then(function (init_res) {
               var outdated = false;
               if (init_res.message.major_version < 1) outdated = true;

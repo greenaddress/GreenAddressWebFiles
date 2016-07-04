@@ -74,7 +74,7 @@ function _getKey (signing, subaccountPointer, pointer, keyBranch) {
     return hd[deriveFuncName](keyBranch);
   }).then(function (hd) {
     return hd[deriveFuncName](pointer);
-  }.bind(this));
+  });
 }
 
 function getMyPublicKey (subaccountPointer, pointer) {

@@ -88,9 +88,9 @@ function testChangeOutput (t, idx) {
     '7acf098d778c36538ec82d7516b4e28700000000000000000000000000000000000000' +
     '0000000000000000000035a477540000095cdb4b50450887a3fba5fa77bdd7ce969868' +
     'b78e2e7a75886d8e324c9e331d17a914dce69773530780cbcf0fd40e54c5dd5c302728' +
-    'e98700000000',
+    'e98700000000'
   ][idx];
-  console.log(expected)
+  console.log(expected);
   var constructor = new TxConstructor({
     utxoFactory: mockUtxoFactory,
     changeAddrFactory: mockAddressFactory,
@@ -109,12 +109,13 @@ function testChangeOutput (t, idx) {
   };
   return constructor.constructTx([
     {value: 10000,
-     scriptPubKey: bitcoin.address.toOutputScript(
-       '2My8mvjL6r9BpvY11N95jRKdTV4roXvbQQZ', bitcoin.networks.testnet
-     )}
+      scriptPubKey: bitcoin.address.toOutputScript(
+        '2My8mvjL6r9BpvY11N95jRKdTV4roXvbQQZ', bitcoin.networks.testnet
+    )}
   ]).then(function (tx) {
     t.equal(tx.tx.toString('hex'), expected, 'change output at index=' + idx);
-  }, function (e) { console.log(e.stack); t.fail(e); });}
+  }, function (e) { console.log(e.stack); t.fail(e); });
+}
 
 function mockListAllUtxo () {
   return Promise.resolve([
@@ -124,20 +125,20 @@ function mockListAllUtxo () {
       value: '899985450',
       block_height: null,
       txhash: '0594bbb5967098326a67131f728deffaa611c8b6f60d97870aa0d70b0bbe267f',
-      pointer: 2 },
+    pointer: 2 },
     { asset_id: 1,
       pt_idx: 1,
       subaccount: 0,
       value: '10000',
       block_height: null,
       txhash: '0594bbb5967098326a67131f728deffaa611c8b6f60d97870aa0d70b0bbe267f',
-      pointer: 1 }
+    pointer: 1 }
   ].map(function (data) { return new MockUtxo(data); }));
 }
 
 function mockGetNextOutputScript () {
   var toHash = (
-    '522102964e7b79e43e0df9f5f82862383692dd7ba28cf59ea964ab6ba4add1ccaf55e82' +
+  '522102964e7b79e43e0df9f5f82862383692dd7ba28cf59ea964ab6ba4add1ccaf55e82' +
     '103ea09b3d655fdffc09870d0bc514c45ffbbde3ec9699412f918b3f037341905d452ae'
   );
   return Promise.resolve(bitcoin.script.scriptHashOutput(

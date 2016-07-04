@@ -5,7 +5,6 @@ var GAService = require('./service');
 var GAKeysManager = require('./keys-manager');
 var GAScriptFactory = require('./script-factory');
 var GAFeeEstimatesFactory = require('./fee-estimates-factory');
-var SchnorrSigningKey = bitcoinup.SchnorrSigningKey;
 
 module.exports = BaseWallet;
 

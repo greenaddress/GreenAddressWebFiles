@@ -1,9 +1,11 @@
 var window = require('global/window');
+var document = require('global/document');
 
 var Electrum = window.Electrum;
 var gettext = window.gettext;
 var autobahn = window.autobahn;
 var wss_url = window.wss_url;
+var cur_net = window.cur_net;
 var dev_d = window.dev_d;
 var Bitcoin = window.Bitcoin;
 var ByteString = window.ByteString;
@@ -29,7 +31,15 @@ factory.dependencies = ['$q',
 ];
 
 function factory ($q, $rootScope, cordovaReady, $http, notices, gaEvent, $location, autotimeout, device_id, btchip, mnemonics, storage) {
-  var txSenderService = {};
+  var txSenderService = {
+    waitForConnection: waitForConnection,
+    call: call,
+    logged_in: false,
+    login: login,
+    logout: logout,
+    loginWatchOnly: loginWatchOnly,
+    change_pin: change_pin
+  };
   // disable electrum setup
   if (false && window.Electrum) {
     if (window.cordova) {
@@ -46,7 +56,40 @@ function factory ($q, $rootScope, cordovaReady, $http, notices, gaEvent, $locati
   var calls_missed = {};
   var calls_counter = 0;
   var global_login_d;
-  var onLogin = function (data) {
+  var isMobile = /Android|iPhone|iPad|iPod|Opera Mini/i.test(navigator.userAgent);
+  var attempt_login = false;
+  var disconnected = false;
+  var connecting = false;
+  var nconn = 0;
+  var waiting_for_device = false;
+
+  if (window.cordova) {
+    cordovaReady(function () {
+      document.addEventListener('resume', function () {
+        if (!txSenderService.wallet || !txSenderService.logged_in) return;
+        if (session || session_for_login) {
+          connection.close(); // reconnect on resume
+        }
+        session = session_for_login = null;
+        txSenderService.gawallet = null;
+        disconnected = true;
+        txSenderService.wallet.update_balance();
+      }, false);
+    })();
+  } else if (isMobile && typeof document.addEventListener !== undefined) {
+    // reconnect on tab shown in mobile browsers
+    document.addEventListener('visibilitychange', function () {
+      if (!document.hidden && txSenderService.wallet && txSenderService.logged_in) {
+        txSenderService.wallet.update_balance();
+      }
+    }, false);
+  }
+
+  cordovaReady(connect)();
+
+  return txSenderService;
+
+  function onLogin (data) {
     var s = session || session_for_login;
     s.subscribe('com.greenaddress.txs.wallet_' + data.receiving_id,
       function (event) {
@@ -57,8 +100,8 @@ function factory ($q, $rootScope, cordovaReady, $http, notices, gaEvent, $locati
       function (event) {
         $rootScope.$broadcast('fee_estimate', event[0]);
       });
-  };
-  txSenderService.waitForConnection = function() {
+  }
+  function waitForConnection () {
     if (session) {
       return $q.when();
     } else {
@@ -71,7 +114,7 @@ function factory ($q, $rootScope, cordovaReady, $http, notices, gaEvent, $locati
       return d.promise;
     }
   }
-  txSenderService.call = function () {
+  function call () {
     var d = $q.defer();
     if (session) {
       var cur_call = calls_counter++;
@@ -132,31 +175,8 @@ function factory ($q, $rootScope, cordovaReady, $http, notices, gaEvent, $locati
       calls.push([arguments, d]);
     }
     return d.promise;
-  };
-  var isMobile = /Android|iPhone|iPad|iPod|Opera Mini/i.test(navigator.userAgent);
-  if (window.cordova) {
-    cordovaReady(function () {
-      document.addEventListener('resume', function () {
-        if (!txSenderService.wallet || !txSenderService.logged_in) return;
-        if (session || session_for_login) {
-          connection.close(); // reconnect on resume
-        }
-        session = session_for_login = null;
-        txSenderService.gawallet = null;
-        disconnected = true;
-        txSenderService.wallet.update_balance();
-      }, false);
-    })();
-  } else if (isMobile && typeof document.addEventListener !== undefined) {
-    // reconnect on tab shown in mobile browsers
-    document.addEventListener('visibilitychange', function () {
-      if (!document.hidden && txSenderService.wallet && txSenderService.logged_in) {
-        txSenderService.wallet.update_balance();
-      }
-    }, false);
   }
-  var attempt_login = false;
-  var onAuthed = function (s, login_d) {
+  function onAuthed (s, login_d) {
     session_for_login = s;
     session_for_login.subscribe('com.greenaddress.blocks', function (event) {
       $rootScope.$broadcast('block', event[0]);
@@ -224,11 +244,8 @@ function factory ($q, $rootScope, cordovaReady, $http, notices, gaEvent, $locati
         }
       });
     });
-  };
-  var disconnected = false;
-  var connecting = false;
-  var nconn = 0;
-  var connect = function (login_d) {
+  }
+  function connect (login_d) {
     global_login_d = login_d;
     if (connecting) return;
     connecting = true;
@@ -264,13 +281,9 @@ function factory ($q, $rootScope, cordovaReady, $http, notices, gaEvent, $locati
       };
       connection.open();
     }
-  };
-  cordovaReady(connect)();
-  txSenderService.logged_in = false;
-  var waiting_for_device = false;
-
+  }
   // @TODO: refactor indentation hell to be function
-  txSenderService.login = function (logout, force_relogin, user_agent, path_seed, path, mnemonic) {
+  function login (logout, force_relogin, user_agent, path_seed, path, mnemonic) {
     var d_main = $q.defer();
     var d;
     if (txSenderService.logged_in && !force_relogin) {
@@ -332,13 +345,13 @@ function factory ($q, $rootScope, cordovaReady, $http, notices, gaEvent, $locati
                                 _key: function (txhash, pt_idx) {
                                   var rev = [].reverse.call(new Bitcoin.Buffer.Buffer(txhash));
                                   return (
-                                    'unblinded_value_' + rev.toString('hex') +
-                                    ':' + pt_idx
+                                  'unblinded_value_' + rev.toString('hex') +
+                                  ':' + pt_idx
                                   );
                                 },
                                 getValue: function (txhash, pt_idx) {
                                   return storage.get(this._key(txhash, pt_idx)).then(function (val) {
-                                    return +val;  // convert to a number
+                                    return +val; // convert to a number
                                   });
                                 },
                                 setValue: function (txhash, pt_idx, value) {
@@ -389,7 +402,7 @@ function factory ($q, $rootScope, cordovaReady, $http, notices, gaEvent, $locati
         get_pubkey().then(function (addr) {
           if (session_for_login) {
             if (hwDevice) {
-              dev_d = $q.when(dev_d)
+              dev_d = $q.when(dev_d);
             } else if (trezor_dev) {
               dev_d = $q.when(trezor_dev);
             } else {
@@ -403,7 +416,7 @@ function factory ($q, $rootScope, cordovaReady, $http, notices, gaEvent, $locati
             }
             waiting_for_device = true;
             var challenge_arg_resolves_main = false;
-            var getChallengeArguments = function() {
+            var getChallengeArguments = function () {
               if (hwDevice) {
                 return hwDevice.getChallengeArguments();
               } else {
@@ -439,7 +452,7 @@ function factory ($q, $rootScope, cordovaReady, $http, notices, gaEvent, $locati
               var path = [0x4741b11e];
 
               if (hwDevice) {
-                return hwDevice.signMessage(path, msg).then(function(res) {
+                return hwDevice.signMessage(path, msg).then(function (res) {
                   return Promise.all([Promise.resolve(res), device_id()]);
                 }).then(function (resAndId) {
                   var res = resAndId[0];
@@ -541,8 +554,8 @@ function factory ($q, $rootScope, cordovaReady, $http, notices, gaEvent, $locati
       }
     }
     return d_main.promise;
-  };
-  txSenderService.logout = function () {
+  }
+  function logout () {
     if (session) {
       connection.close();
       session = session_for_login = null;
@@ -564,8 +577,8 @@ function factory ($q, $rootScope, cordovaReady, $http, notices, gaEvent, $locati
     txSenderService.pin_ident = undefined;
     txSenderService.has_pin = undefined;
     if (txSenderService.wallet) txSenderService.wallet.clear();
-  };
-  txSenderService.loginWatchOnly = function (token_type, token, logout) {
+  }
+  function loginWatchOnly (token_type, token, logout) {
     var d = $q.defer();
     txSenderService.call('com.greenaddress.login.watch_only', token_type, token, logout || false)
       .then(function (data) {
@@ -576,8 +589,8 @@ function factory ($q, $rootScope, cordovaReady, $http, notices, gaEvent, $locati
         d.reject(err);
       });
     return d.promise;
-  };
-  txSenderService.change_pin = function (new_pin) {
+  }
+  function change_pin (new_pin) {
     return txSenderService.call('com.greenaddress.pin.change_pin_login', new_pin, txSenderService.pin_ident)
       .then(function (res) {
         // keep new pin for reconnection handling
@@ -587,6 +600,5 @@ function factory ($q, $rootScope, cordovaReady, $http, notices, gaEvent, $locati
           txSenderService.pin = new_pin;
         }
       });
-  };
-  return txSenderService;
+  }
 }

@@ -9,9 +9,12 @@ var bufferutils = bitcoin.bufferutils;
 var opcodes = bitcoin.opcodes;
 var Buffer = require('buffer').Buffer;
 var extend = require('xtend/mutable');
+var window = require('global/window');
 var SchnorrSigningKey = require('./schnorr-signing-key');
 
 var Transaction = require('./transaction');
+
+var VALUE_UINT64_MAX = window.VALUE_UINT64_MAX;
 
 module.exports = AssetsTransaction;
 
@@ -46,35 +49,35 @@ extend(AssetsTransaction.prototype, {
 AssetsTransaction.fromHex = fromHex;
 
 /* C&P from bitcoin.types: */
-var typeforce = require('typeforce')
+var typeforce = require('typeforce');
 
 function nBuffer (value, n) {
-  typeforce(types.Buffer, value)
-  if (value.length !== n) throw new Error('Expected ' + (n * 8) + '-bit Buffer, got ' + (value.length * 8) + '-bit Buffer')
-  return true
+  typeforce(types.Buffer, value);
+  if (value.length !== n) throw new Error('Expected ' + (n * 8) + '-bit Buffer, got ' + (value.length * 8) + '-bit Buffer');
+  return true;
 }
 
-function Hash160bit (value) { return nBuffer(value, 20) }
-function Hash256bit (value) { return nBuffer(value, 32) }
-function Buffer256bit (value) { return nBuffer(value, 32) }
+function Hash160bit (value) { return nBuffer(value, 20); }
+function Hash256bit (value) { return nBuffer(value, 32); }
+function Buffer256bit (value) { return nBuffer(value, 32); }
 
-var UINT53_MAX = Math.pow(2, 53) - 1
-function UInt2 (value) { return (value & 3) === value }
-function UInt8 (value) { return (value & 0xff) === value }
-function UInt32 (value) { return (value >>> 0) === value }
+var UINT53_MAX = Math.pow(2, 53) - 1;
+function UInt2 (value) { return (value & 3) === value; }
+function UInt8 (value) { return (value & 0xff) === value; }
+function UInt32 (value) { return (value >>> 0) === value; }
 function UInt53 (value) {
   return typeforce.Number(value) &&
-    value >= 0 &&
-    value <= UINT53_MAX &&
-    Math.floor(value) === value
+  value >= 0 &&
+  value <= UINT53_MAX &&
+  Math.floor(value) === value;
 }
 
 // external dependent types
-var BigInt = typeforce.quacksLike('BigInteger')
-var ECPoint = typeforce.quacksLike('Point')
+var BigInt = typeforce.quacksLike('BigInteger');
+var ECPoint = typeforce.quacksLike('Point');
 
 // exposed, external API
-var ECSignature = typeforce.compile({ r: BigInt, s: BigInt })
+var ECSignature = typeforce.compile({ r: BigInt, s: BigInt });
 var Network = typeforce.compile({
   messagePrefix: typeforce.oneOf(typeforce.Buffer, typeforce.String),
   bip32: {
@@ -85,7 +88,7 @@ var Network = typeforce.compile({
   scriptHash: UInt8,
   wif: UInt8,
   dustThreshold: UInt53
-})
+});
 
 // extend typeforce types with ours
 var types = {
@@ -100,19 +103,19 @@ var types = {
   UInt8: UInt8,
   UInt32: UInt32,
   UInt53: UInt53
-}
+};
 
 for (var typeName in typeforce) {
-  types[typeName] = typeforce[typeName]
+  types[typeName] = typeforce[typeName];
 }
 /* END C&P from bitcoin.types */
 
 function signedByteLength (signInIndex) {
   var forSigning = signInIndex !== -1;
   function scriptSize (someScript) {
-    var length = someScript.length
+    var length = someScript.length;
 
-    return bufferutils.varIntSize(length) + length
+    return bufferutils.varIntSize(length) + length;
   }
 
   var forSigningInputLenDelta = 0;
@@ -120,30 +123,38 @@ function signedByteLength (signInIndex) {
     var signIn = this.ins[signInIndex];
     forSigningInputLenDelta =
       (33 + (signIn.prevOutRaw
-                  ? scriptSize(signIn.prevOutRaw.range_proof) +
-                    scriptSize(signIn.prevOutRaw.nonce_commitment)
-                  : 2));
+        ? scriptSize(signIn.prevOutRaw.range_proof) +
+        scriptSize(signIn.prevOutRaw.nonce_commitment)
+        : 2));
   }
 
   return (
-    8 +
-    bufferutils.varIntSize(this.ins.length) +
-    bufferutils.varIntSize(this.outs.length) +
-    (forSigning ? 0 :
-      (bufferutils.varIntSize(this.outs.length) + this.outs.length * 8)) +
-    this.ins.reduce(function (sum, input) {
-      return sum + 40 + scriptSize(input.script) + forSigningInputLenDelta
-    }, 0) +
-    this.outs.reduce(function (sum, output) {
-      return sum + 33 + scriptSize(output.script) +
-        (forSigning ? 32 :
-          ((output.range_proof ? scriptSize(output.range_proof) : 1) +
-           (output.nonce_commitment ? scriptSize(output.nonce_commitment) : 1))
-        ) +
-        32 // asset id
-      }, 0
-    )
+  8 +
+  bufferutils.varIntSize(this.ins.length) +
+  bufferutils.varIntSize(this.outs.length) +
+  (forSigning
+    ? 0
+    : (bufferutils.varIntSize(this.outs.length) + this.outs.length * 8)) +
+  this.ins.reduce(function (sum, input) {
+    return sum + 40 + scriptSize(input.script) + forSigningInputLenDelta;
+  }, 0) +
+  this.outs.reduce(function (sum, output) {
+    return sum + 33 + scriptSize(output.script) +
+    (forSigning
+      ? 32
+      : (
+        (output.range_proof
+          ? scriptSize(output.range_proof)
+          : 1) +
+        (output.nonce_commitment
+          ? scriptSize(output.nonce_commitment)
+          : 1)
+        )
+    ) +
+    32; // asset id
+  }, 0
   )
+  );
 }
 
 function byteLength () {
@@ -151,9 +162,9 @@ function byteLength () {
 }
 
 function clone () {
-  var newTx = new AssetsTransactionImpl()
-  newTx.version = this.version
-  newTx.locktime = this.locktime
+  var newTx = new AssetsTransactionImpl();
+  newTx.version = this.version;
+  newTx.locktime = this.locktime;
 
   newTx.ins = this.ins.map(function (txIn) {
     return {
@@ -164,8 +175,8 @@ function clone () {
       prevValue: txIn.prevValue,
       prevOut: txIn.prevOut,
       prevOutRaw: txIn.prevOutRaw
-    }
-  })
+    };
+  });
 
   newTx.outs = this.outs.map(function (txOut) {
     return {
@@ -175,47 +186,47 @@ function clone () {
       range_proof: txOut.range_proof,
       nonce_commitment: txOut.nonce_commitment,
       asset_id: txOut.asset_id
-    }
-  })
+    };
+  });
 
-  return newTx
+  return newTx;
 }
 
 function toBufferForSigning (signInIndex) {
-  var buffer = new Buffer(this.signedByteLength(signInIndex))
-  var forSigning = signInIndex != -1;
+  var buffer = new Buffer(this.signedByteLength(signInIndex));
+  var forSigning = signInIndex !== -1;
 
-  var offset = 0
+  var offset = 0;
   function writeSlice (slice) {
-    slice.copy(buffer, offset)
-    offset += slice.length
+    slice.copy(buffer, offset);
+    offset += slice.length;
   }
 
   function writeUInt32 (i) {
-    buffer.writeUInt32LE(i, offset)
-    offset += 4
+    buffer.writeUInt32LE(i, offset);
+    offset += 4;
   }
 
   function writeUInt64 (i) {
-    bufferutils.writeUInt64LE(buffer, i, offset)
-    offset += 8
+    bufferutils.writeUInt64LE(buffer, i, offset);
+    offset += 8;
   }
 
   function writeVarInt (i) {
-    var n = bufferutils.writeVarInt(buffer, i, offset)
-    offset += n
+    var n = bufferutils.writeVarInt(buffer, i, offset);
+    offset += n;
   }
 
-  writeUInt32(this.version)
-  writeVarInt(this.ins.length)
+  writeUInt32(this.version);
+  writeVarInt(this.ins.length);
 
   if (forSigning) {
     var signIn = this.ins[signInIndex];
   }
 
   this.ins.forEach(function (txIn) {
-    writeSlice(txIn.hash)
-    writeUInt32(txIn.index)
+    writeSlice(txIn.hash);
+    writeUInt32(txIn.index);
     if (forSigning) {
       if (signIn.prevOutRaw) {
         writeSlice(signIn.prevOutRaw.commitment);
@@ -224,7 +235,7 @@ function toBufferForSigning (signInIndex) {
         writeVarInt(signIn.prevOutRaw.nonce_commitment.length);
         writeSlice(signIn.prevOutRaw.nonce_commitment);
       } else {
-        writeSlice(new Buffer(new Array(33-8)));
+        writeSlice(new Buffer(new Array(33 - 8)));
         var valBuf = new Buffer(8);
         bufferutils.writeUInt64LE(valBuf, signIn.prevValue, 0);
         writeSlice(bufferutils.reverse(valBuf));
@@ -232,10 +243,10 @@ function toBufferForSigning (signInIndex) {
         writeVarInt(0);
       }
     }
-    writeVarInt(txIn.script.length)
-    writeSlice(txIn.script)
-    writeUInt32(txIn.sequence)
-  })
+    writeVarInt(txIn.script.length);
+    writeSlice(txIn.script);
+    writeUInt32(txIn.sequence);
+  });
 
   if (!forSigning) {
     writeVarInt(this.outs.length);
@@ -244,17 +255,18 @@ function toBufferForSigning (signInIndex) {
     });
   }
 
-  writeVarInt(this.outs.length)
+  writeVarInt(this.outs.length);
   this.outs.forEach(function (txOut) {
+    var hash256 = null;
     if (txOut.commitment) {
       writeSlice(txOut.commitment);
     } else if (!txOut.valueBuffer) {
-      writeSlice(new Buffer(new Array(33-8)));
+      writeSlice(new Buffer(new Array(33 - 8)));
       var valBuf = new Buffer(8);
       bufferutils.writeUInt64LE(valBuf, txOut.value, 0);
       writeSlice(bufferutils.reverse(valBuf));
     } else {
-      writeSlice(txOut.valueBuffer)
+      writeSlice(txOut.valueBuffer);
     }
 
     if (forSigning) {
@@ -273,9 +285,9 @@ function toBufferForSigning (signInIndex) {
         toHashOffset += bufferutils.writeVarInt(toHash, txOut.nonce_commitment.length, toHashOffset);
         txOut.nonce_commitment.copy(toHash, toHashOffset);
 
-        var hash256 = bcrypto.hash256(toHash);
+        hash256 = bcrypto.hash256(toHash);
       } else {
-        var hash256 = bcrypto.hash256(new Buffer([0, 0]));
+        hash256 = bcrypto.hash256(new Buffer([0, 0]));
       }
       writeSlice(hash256);
     } else {
@@ -288,62 +300,62 @@ function toBufferForSigning (signInIndex) {
     if (txOut.asset_id) {
       writeSlice(txOut.asset_id);
     } else {
-      writeSlice(new Buffer(new Array(32)));  // fill with zeroes
+      writeSlice(new Buffer(new Array(32))); // fill with zeroes
     }
 
-    writeVarInt(txOut.script.length)
-    writeSlice(txOut.script)
-  })
+    writeVarInt(txOut.script.length);
+    writeSlice(txOut.script);
+  });
 
-  writeUInt32(this.locktime)
-  return buffer
+  writeUInt32(this.locktime);
+  return buffer;
 }
 
 function toBuffer () {
   return this.toBufferForSigning(-1);
 }
 
-function fromHexImpl(tx, hex, __noStrict) {
+function fromHexImpl (tx, hex, __noStrict) {
   var buffer = new Buffer(hex, 'hex');
 
-  var offset = 0
+  var offset = 0;
   function readSlice (n) {
-    offset += n
-    return buffer.slice(offset - n, offset)
+    offset += n;
+    return buffer.slice(offset - n, offset);
   }
 
   function readUInt32 () {
-    var i = buffer.readUInt32LE(offset)
-    offset += 4
-    return i
+    var i = buffer.readUInt32LE(offset);
+    offset += 4;
+    return i;
   }
 
   function readUInt64 () {
-    var i = bufferutils.readUInt64LE(buffer, offset)
-    offset += 8
-    return i
+    var i = bufferutils.readUInt64LE(buffer, offset);
+    offset += 8;
+    return i;
   }
 
   function readVarInt () {
-    var vi = bufferutils.readVarInt(buffer, offset)
-    offset += vi.size
-    return vi.number
+    var vi = bufferutils.readVarInt(buffer, offset);
+    offset += vi.size;
+    return vi.number;
   }
 
   function readScript () {
-    return readSlice(readVarInt())
+    return readSlice(readVarInt());
   }
 
-  tx.version = readUInt32()
+  tx.version = readUInt32();
 
-  var vinLen = readVarInt()
+  var vinLen = readVarInt();
   for (var i = 0; i < vinLen; ++i) {
     tx.ins.push({
       hash: readSlice(32),
       index: readUInt32(),
       script: readScript(),
       sequence: readUInt32()
-    })
+    });
   }
 
   tx.fees = [];
@@ -353,11 +365,11 @@ function fromHexImpl(tx, hex, __noStrict) {
     tx.fees.push(readUInt64());
   }
 
-  var voutLen = readVarInt()
+  var voutLen = readVarInt();
   for (i = 0; i < voutLen; ++i) {
     var commitment = readSlice(33);
     var value;
-    if (commitment[0] == 0) {
+    if (commitment[0] === 0) {
       var valueBuf = new Buffer(commitment.slice(-8));
       value = bufferutils.readUInt64LE(
         bitcoin.bufferutils.reverse(valueBuf),
@@ -377,89 +389,89 @@ function fromHexImpl(tx, hex, __noStrict) {
       range_proof: range_proof,
       nonce_commitment: nonce_commitment,
       commitment: commitment
-    })
+    });
   }
 
-  tx.locktime = readUInt32()
+  tx.locktime = readUInt32();
 
-  if (__noStrict) return tx
-  if (offset !== buffer.length) throw new Error('Transaction has unexpected data')
+  if (__noStrict) return tx;
+  if (offset !== buffer.length) throw new Error('Transaction has unexpected data');
 
-  return tx
+  return tx;
 }
 
 var EMPTY_SCRIPT = new Buffer(0);
 var ONE = new Buffer('0000000000000000000000000000000000000000000000000000000000000001', 'hex');
 
 function hashForSignature (inIndex, prevOutScript, hashType) {
-  typeforce(types.tuple(types.UInt32, types.Buffer, /* types.UInt8 */ types.Number), arguments)
+  typeforce(types.tuple(types.UInt32, types.Buffer, /* types.UInt8 */ types.Number), arguments);
 
   // https://github.com/bitcoin/bitcoin/blob/master/src/test/sighash_tests.cpp#L29
-  if (inIndex >= this.ins.length) return ONE
+  if (inIndex >= this.ins.length) return ONE;
 
-  var txTmp = this.clone()
+  var txTmp = this.clone();
 
   // in case concatenating two scripts ends up with two codeseparators,
   // or an extra one at the end, this prevents all those possible incompatibilities.
   var hashScript = bscript.compile(bscript.decompile(prevOutScript).filter(function (x) {
-    return x !== opcodes.OP_CODESEPARATOR
-  }))
-  var i
+    return x !== opcodes.OP_CODESEPARATOR;
+  }));
+  var i;
 
   // blank out other inputs' signatures
-  txTmp.ins.forEach(function (input) { input.script = EMPTY_SCRIPT })
-  txTmp.ins[inIndex].script = hashScript
+  txTmp.ins.forEach(function (input) { input.script = EMPTY_SCRIPT; });
+  txTmp.ins[inIndex].script = hashScript;
 
   // blank out some of the inputs
   if ((hashType & 0x1f) === Transaction.SIGHASH_NONE) {
     // wildcard payee
-    txTmp.outs = []
+    txTmp.outs = [];
 
     // let the others update at will
     txTmp.ins.forEach(function (input, i) {
       if (i !== inIndex) {
-        input.sequence = 0
+        input.sequence = 0;
       }
-    })
+    });
   } else if ((hashType & 0x1f) === Transaction.SIGHASH_SINGLE) {
-    var nOut = inIndex
+    var nOut = inIndex;
 
     // only lock-in the txOut payee at same index as txIn
     // https://github.com/bitcoin/bitcoin/blob/master/src/test/sighash_tests.cpp#L60
-    if (nOut >= this.outs.length) return ONE
+    if (nOut >= this.outs.length) return ONE;
 
-    txTmp.outs = txTmp.outs.slice(0, nOut + 1)
+    txTmp.outs = txTmp.outs.slice(0, nOut + 1);
 
     // blank all other outputs (clear scriptPubKey, value === -1)
     var stubOut = {
       script: EMPTY_SCRIPT,
       valueBuffer: VALUE_UINT64_MAX
-    }
+    };
 
     for (i = 0; i < nOut; i++) {
-      txTmp.outs[i] = stubOut
+      txTmp.outs[i] = stubOut;
     }
 
     // let the others update at will
     txTmp.ins.forEach(function (input, i) {
       if (i !== inIndex) {
-        input.sequence = 0
+        input.sequence = 0;
       }
-    })
+    });
   }
 
   // blank out other inputs completely, not recommended for open transactions
   if (hashType & Transaction.SIGHASH_ANYONECANPAY) {
-    txTmp.ins[0] = txTmp.ins[inIndex]
-    txTmp.ins = txTmp.ins.slice(0, 1)
+    txTmp.ins[0] = txTmp.ins[inIndex];
+    txTmp.ins = txTmp.ins.slice(0, 1);
   }
 
   // serialize and hash
-  var buffer = new Buffer(txTmp.signedByteLength(inIndex) + 4)
-  buffer.writeInt32LE(hashType, buffer.length - 4)
-  txTmp.toBufferForSigning(inIndex).copy(buffer, 0)
+  var buffer = new Buffer(txTmp.signedByteLength(inIndex) + 4);
+  buffer.writeInt32LE(hashType, buffer.length - 4);
+  txTmp.toBufferForSigning(inIndex).copy(buffer, 0);
 
-  return bcrypto.hash256(buffer)
+  return bcrypto.hash256(buffer);
 }
 
 function AssetsTransaction () {
@@ -525,7 +537,7 @@ function _rebuildCT () {
     var outputsCount = 0;
     this.tx.ins.forEach(function (input) {
       if (input.prevOut.assetNetworkId.toString('hex') === k &&
-          input.blindingFactor) {
+        input.blindingFactor) {
         inputsCount += 1;
       }
     });
@@ -555,7 +567,7 @@ function _addChangeOutput (script, value, assetNetworkId) {
   //    to avoid easy tracing of coins with constant change index.
   var changeIdx = (
     +BigInteger.fromBuffer(crypto.randomBytes(4))
-  ) % (this.getOutputsCount() + 1);
+    ) % (this.getOutputsCount() + 1);
 
   // 2. add the output at the index
   if (changeIdx === this.getOutputsCount()) {
@@ -674,9 +686,9 @@ function _addFeeAndChangeWithAsset (options) {
       var anyCTAssetOuts = false;
       for (i = 0; i < this.getOutputsCount(); ++i) {
         if (bufferEquals(
-              this.tx.outs[ i ].asset_id,
-              options.assetNetworkId) &&
-            this.tx.outs[ i ].commitment) {
+            this.tx.outs[ i ].asset_id,
+            options.assetNetworkId) &&
+          this.tx.outs[ i ].commitment) {
           anyCTAssetOuts = true;
           break;
         }
@@ -728,8 +740,8 @@ function _addFeeAndChangeWithAsset (options) {
 
         function iterateFee () {
           if (requiredValues.fee >= Math.round(
-            feeEstimate * this.estimateSignedLength() / 1000
-          )) {
+              feeEstimate * this.estimateSignedLength() / 1000
+            )) {
             return Promise.resolve();
           }
 
@@ -815,7 +827,7 @@ function _addFeeAndChange (options) {
 
   // 4. make sure fee is right
   var fee = Math.round(feeEstimate * this.estimateSignedLength() / 1000);
-  var ret = Promise.resolve({changeIdx: -1});  // -1 indicates no change
+  var ret = Promise.resolve({changeIdx: -1}); // -1 indicates no change
 
   return prevoutsValueDeferred.then(function (prevoutsValue) {
     if (options.subtractFeeFromOut) {
@@ -955,8 +967,8 @@ function _calcCTOutData (outputIdx, ctState) {
     var i;
     for (i = 0; i < this.tx.ins.length; ++i) {
       if (this.tx.ins[i].blindingFactor &&
-          this.tx.ins[i].prevOut.assetNetworkId.toString('hex') ===
-            ctState.assetIdHex) {
+        this.tx.ins[i].prevOut.assetNetworkId.toString('hex') ===
+        ctState.assetIdHex) {
         blindingFactors.push(this.tx.ins[i].blindingFactor);
       }
     }
@@ -966,7 +978,7 @@ function _calcCTOutData (outputIdx, ctState) {
     for (i = 0; i < allCount; ++i) {
       var j;
       if (i < ctState.blindedInputsCount) {
-        secp256k1.setValue(blindptrs + 4*i, blindingFactors[i], '*');
+        secp256k1.setValue(blindptrs + 4 * i, blindingFactors[i], '*');
       } else {
         var cur = secp256k1._malloc(32);
         secp256k1.setValue(blindptrs + 4 * i, cur, '*');
@@ -979,38 +991,37 @@ function _calcCTOutData (outputIdx, ctState) {
     ctState.blindptrs = blindptrs;
   }
 
-  if (ctState.outputIdx == ctState.blindedOutputsCount - 1) {
-    if (1 != secp256k1._secp256k1_pedersen_blind_sum(
-      secp256k1_ctx,
-      secp256k1.getValue(ctState.blindptrs + 4 * (allCount - 1), '*'),
-      ctState.blindptrs,
-      allCount - 1,
-      ctState.blindedInputsCount
-    )) {
+  if (ctState.outputIdx === ctState.blindedOutputsCount - 1) {
+    if (secp256k1._secp256k1_pedersen_blind_sum(
+        secp256k1_ctx,
+        secp256k1.getValue(ctState.blindptrs + 4 * (allCount - 1), '*'),
+        ctState.blindptrs,
+        allCount - 1,
+        ctState.blindedInputsCount
+      ) !== 1) {
       throw new Error('secp256k1 pedersen blind sum failed');
     }
   }
   var commitment = secp256k1._malloc(33);
   var curOutput = this.tx.outs[outputIdx];
-  if (1 != secp256k1._secp256k1_pedersen_commit(
-    secp256k1_ctx,
-    commitment,
-    secp256k1.getValue(ctState.blindptrs + ctState.curBlindptr, '*'),
-    curOutput.valueToBlind % Math.pow(2, 32),
-    Math.floor(curOutput.valueToBlind / Math.pow(2, 32))
-  )) {
+  if (secp256k1._secp256k1_pedersen_commit(
+      secp256k1_ctx,
+      commitment,
+      secp256k1.getValue(ctState.blindptrs + ctState.curBlindptr, '*'),
+      curOutput.valueToBlind % Math.pow(2, 32),
+      Math.floor(curOutput.valueToBlind / Math.pow(2, 32))
+    ) !== 1) {
     throw new Error('secp256k1 Pedersen commit failed');
   }
-  var j;
   var rangeproof_len = secp256k1._malloc(4);
   var len = 5134;
   var rangeproof = secp256k1._malloc(len);
-  var rangeproof_len_buf = new BigInteger(''+len).toBuffer();
+  var rangeproof_len_buf = new BigInteger('' + len).toBuffer();
   while (rangeproof_len_buf.length < 4) {
     rangeproof_len_buf = Buffer.concat([new Buffer([0]), rangeproof_len_buf]);
   }
   for (j = 0; j < 4; ++j) {
-    secp256k1.setValue(rangeproof_len+j, rangeproof_len_buf[4-j-1], 'i8');
+    secp256k1.setValue(rangeproof_len + j, rangeproof_len_buf[4 - j - 1], 'i8');
   }
   var ephemeral_key = bitcoin.ECPair.makeRandom({rng: crypto.randomBytes});
   var secexp_buf = ephemeral_key.d.toBuffer();
@@ -1019,25 +1030,25 @@ function _calcCTOutData (outputIdx, ctState) {
   var nonce_res = secp256k1._malloc(32);
   var pubkey_p = secp256k1._malloc(64);
   for (j = 0; j < 32; ++j) {
-    secp256k1.setValue(secexp+j, secexp_buf[j], 'i8');
+    secp256k1.setValue(secexp + j, secexp_buf[j], 'i8');
   }
   for (j = 0; j < 33; ++j) {
-    secp256k1.setValue(nonce+j, curOutput.scanningPubkey[j], 'i8');
+    secp256k1.setValue(nonce + j, curOutput.scanningPubkey[j], 'i8');
   }
-  if (1 != secp256k1._secp256k1_ec_pubkey_parse(
-    secp256k1_ctx,
-    pubkey_p,
-    nonce,
-    33
-  )) {
+  if (secp256k1._secp256k1_ec_pubkey_parse(
+      secp256k1_ctx,
+      pubkey_p,
+      nonce,
+      33
+    ) !== 1) {
     throw new Error('secp256k1 EC pubkey parse failed');
   }
-  if (1 != secp256k1._secp256k1_ecdh(
-    secp256k1_ctx,
-    nonce_res,
-    pubkey_p,
-    secexp
-  )) {
+  if (secp256k1._secp256k1_ecdh(
+      secp256k1_ctx,
+      nonce_res,
+      pubkey_p,
+      secexp
+    ) !== 1) {
     throw new Error('secp256k1 ECDH failed');
   }
   var nonce_buf = new Buffer(32);
@@ -1045,36 +1056,36 @@ function _calcCTOutData (outputIdx, ctState) {
     nonce_buf[j] = secp256k1.getValue(nonce_res + j, 'i8') & 0xff;
   }
   nonce_buf = bitcoin.crypto.sha256(nonce_buf);
-  for (var j = 0; j < 32; ++j) {
+  for (j = 0; j < 32; ++j) {
     secp256k1.setValue(nonce_res + j, nonce_buf[j], 'i8');
   }
-  if (1 != secp256k1._secp256k1_rangeproof_sign(
-    secp256k1_ctx,
-    rangeproof,
-    rangeproof_len,
-    0, 0,
-    commitment,
-    secp256k1.getValue(ctState.blindptrs + ctState.curBlindptr, '*'),
-    nonce_res,
-    0, 32,
-    curOutput.valueToBlind % Math.pow(2, 32),
-    Math.floor(curOutput.valueToBlind / Math.pow(2, 32))
-  )) {
+  if (secp256k1._secp256k1_rangeproof_sign(
+      secp256k1_ctx,
+      rangeproof,
+      rangeproof_len,
+      0, 0,
+      commitment,
+      secp256k1.getValue(ctState.blindptrs + ctState.curBlindptr, '*'),
+      nonce_res,
+      0, 32,
+      curOutput.valueToBlind % Math.pow(2, 32),
+      Math.floor(curOutput.valueToBlind / Math.pow(2, 32))
+    ) !== 1) {
     throw new Error('secp256k1 rangeproof sign failed');
   }
   for (j = 0; j < 4; ++j) {
-    rangeproof_len_buf[4-j-1] = secp256k1.getValue(
-      rangeproof_len+j, 'i8'
-    ) & 0xff;
+    rangeproof_len_buf[4 - j - 1] = secp256k1.getValue(
+        rangeproof_len + j, 'i8'
+      ) & 0xff;
   }
   len = +BigInteger(rangeproof_len_buf);
   var commitmentBuf = new Buffer(33);
   for (j = 0; j < 33; ++j) {
-      commitmentBuf[j] = secp256k1.getValue(commitment + j, 'i8') & 0xff;
+    commitmentBuf[j] = secp256k1.getValue(commitment + j, 'i8') & 0xff;
   }
   var rangeProofBuf = new Buffer(len);
   for (j = 0; j < len; ++j) {
-    rangeProofBuf[j] = secp256k1.getValue(rangeproof+j, 'i8') & 0xff;
+    rangeProofBuf[j] = secp256k1.getValue(rangeproof + j, 'i8') & 0xff;
   }
   ctState.curBlindptr += 4;
   ctState.outputIdx += 1;

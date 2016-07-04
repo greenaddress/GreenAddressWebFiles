@@ -1,4 +1,3 @@
-var extend = require('xtend/mutable');
 
 module.exports = HWWallet;
 

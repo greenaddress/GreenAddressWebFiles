@@ -54,7 +54,7 @@ function setupSubAccount (subaccount) {
   );
   Object.keys(this.assets).forEach(function (assetId) {
     var asset = {
-      id: Number.parseInt(assetId),
+      id: Number(assetId),
       name: this.assets[assetId].name,
       networkId: new Buffer(this.assets[assetId].network_id, 'hex')
     };

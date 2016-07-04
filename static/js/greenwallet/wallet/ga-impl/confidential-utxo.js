@@ -32,38 +32,39 @@ function _unblindOutValueInner (scanningKey) {
   var nonce = secp256k1._malloc(33);
   var nonce_res = secp256k1._malloc(32);
   var pubkey_p = secp256k1._malloc(64);
+  var i;
   var p_arr = Array.prototype.slice.call(
-    new BigInteger(''+pubkey_p).toBuffer()
+    new BigInteger('' + pubkey_p).toBuffer()
   );
   while (p_arr.length < 4) p_arr.unshift(0);
-  for (var i = 0; i < 32; ++i) {
-    secp256k1.setValue(secexp+i, secexp_buf[i], 'i8');
+  for (i = 0; i < 32; ++i) {
+    secp256k1.setValue(secexp + i, secexp_buf[i], 'i8');
   }
-  for (var i = 0; i < 33; ++i) {
+  for (i = 0; i < 33; ++i) {
     secp256k1.setValue(nonce + i, this.raw.nonce_commitment[i], 'i8');
   }
-  if (1 != secp256k1._secp256k1_ec_pubkey_parse(
-    secp256k1_ctx,
-    pubkey_p,
-    nonce,
-    33
-  )) {
+  if (secp256k1._secp256k1_ec_pubkey_parse(
+      secp256k1_ctx,
+      pubkey_p,
+      nonce,
+      33
+    ) !== 1) {
     throw new Error('secp256k1 EC pubkey parse failed');
   }
-  if (1 != secp256k1._secp256k1_ecdh(
+  if (secp256k1._secp256k1_ecdh(
       secp256k1_ctx,
       nonce_res,
       pubkey_p,
       secexp
-  )) {
-      throw new Error('secp256k1 ECDH failed');
+    ) !== 1) {
+    throw new Error('secp256k1 ECDH failed');
   }
   var nonce_buf = new Buffer(32);
-  for (var i = 0; i < 32; ++i) {
+  for (i = 0; i < 32; ++i) {
     nonce_buf[i] = secp256k1.getValue(nonce_res + i, 'i8') & 0xff;
   }
   nonce_buf = bitcoin.crypto.sha256(nonce_buf);
-  for (var i = 0; i < 32; ++i) {
+  for (i = 0; i < 32; ++i) {
     secp256k1.setValue(nonce_res + i, nonce_buf[i], 'i8');
   }
   var blinding_factor_out = secp256k1._malloc(32);
@@ -73,11 +74,11 @@ function _unblindOutValueInner (scanningKey) {
   var msg_out = secp256k1._malloc(4096);
   var msg_size = secp256k1._malloc(4);
   var commitment = secp256k1._malloc(33);
-  for (var i = 0; i < 33; ++i) {
+  for (i = 0; i < 33; ++i) {
     secp256k1.setValue(commitment + i, this.raw.commitment[i], 'i8');
   }
   var range_proof = secp256k1._malloc(this.raw.range_proof.length);
-  for (var i = 0; i < this.raw.range_proof.length; ++i) {
+  for (i = 0; i < this.raw.range_proof.length; ++i) {
     secp256k1.setValue(range_proof + i, this.raw.range_proof[i], 'i8');
   }
   var rewindRes = secp256k1._secp256k1_rangeproof_rewind(
@@ -93,12 +94,12 @@ function _unblindOutValueInner (scanningKey) {
     range_proof,
     this.raw.range_proof.length
   );
-  if (rewindRes != 1) {
-    throw "Invalid transaction."
+  if (rewindRes !== 1) {
+    throw new Error('Invalid transaction.');
   }
   var ret = [];
-  for (var i = 0; i < 8; ++i) {
-    ret[8-i-1] = secp256k1.getValue(amount_out+i, 'i8') & 0xff;
+  for (i = 0; i < 8; ++i) {
+    ret[8 - i - 1] = secp256k1.getValue(amount_out + i, 'i8') & 0xff;
   }
   var val = BigInteger.fromBuffer(new Buffer(ret));
   return {
@@ -129,6 +130,7 @@ function unblindOutValue () {
 }
 
 function getValue () {
+  var _this = this;
   if (this.value) {
     return Promise.resolve(this.value);
   } else {
@@ -140,12 +142,12 @@ function getValue () {
       if (value !== null) {
         return value;
       }
-      return this.unblindOutValue().then(function (res) {
-        if (this.unblindedCache) {
-          this.unblindedCache.setValue(this.prevHash, this.ptIdx, res.value);
+      return _this.unblindOutValue().then(function (res) {
+        if (_this.unblindedCache) {
+          _this.unblindedCache.setValue(_this.prevHash, _this.ptIdx, res.value);
         }
         return res.value;
-      }.bind(this));
-    }.bind(this));
+      });
+    });
   }
 }

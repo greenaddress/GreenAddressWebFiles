@@ -1,7 +1,4 @@
-var bitcoin = require('bitcoinjs-lib');
 var extend = require('xtend/mutable');
-
-var SchnorrSigningKey = require('../bitcoinup').SchnorrSigningKey;
 
 module.exports = {
   'GAUtxoFactory': GAUtxoFactory,
