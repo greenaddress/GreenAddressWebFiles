@@ -297,9 +297,7 @@ function factory ($q, $rootScope, cordovaReady, $http, notices, gaEvent, $locati
                 $q.when(subhd.keyPair.sign(challenge_bytes)).then(function (signature) {
                   d_main.resolve(device_id().then(function (devid) {
                     if (session_for_login && session_for_login.nc === nconn) {
-                      if (!window.cur_net.isAlpha) {
-                        signature = [signature.r.toString(), signature.s.toString()];
-                      }
+                      signature = [signature.r.toString(), signature.s.toString()];
                       var args = [
                         signature,
                         logout || false,
