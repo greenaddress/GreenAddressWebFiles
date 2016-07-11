@@ -49,7 +49,7 @@ function signHash (msgIn) {
       secp256k1.setValue(msg + i, msgIn[i], 'i8');
     }
     if (secp256k1._secp256k1_schnorr_sign(
-      secp256k1ctx, msg, sig, seckey, 0, 0
+      secp256k1ctx, sig, msg, seckey, 0, 0
     ) !== 1) {
       reject('secp256k1 Schnorr sign failed');
     }
@@ -93,8 +93,15 @@ function deriveHardened (i) {
 }
 
 function checkContext () {
+  var SECP256K1_FLAGS_BIT_CONTEXT_VERIFY = (1 << 8);
+  var SECP256K1_FLAGS_BIT_CONTEXT_SIGN = (1 << 9);
+  var SECP256K1_FLAGS_TYPE_CONTEXT = (1 << 0);
+  var SECP256K1_CONTEXT_VERIFY = (SECP256K1_FLAGS_TYPE_CONTEXT | SECP256K1_FLAGS_BIT_CONTEXT_VERIFY);
+  var SECP256K1_CONTEXT_SIGN = (SECP256K1_FLAGS_TYPE_CONTEXT | SECP256K1_FLAGS_BIT_CONTEXT_SIGN);
   if (secp256k1ctx === null) {
-    secp256k1ctx = secp256k1._secp256k1_context_create(3);
+    secp256k1ctx = secp256k1._secp256k1_context_create(
+      SECP256K1_CONTEXT_VERIFY | SECP256K1_CONTEXT_SIGN
+    );
     secp256k1._secp256k1_pedersen_context_initialize(secp256k1ctx);
     secp256k1._secp256k1_rangeproof_context_initialize(secp256k1ctx);
   }
