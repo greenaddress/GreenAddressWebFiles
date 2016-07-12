@@ -351,8 +351,11 @@ angular.module('greenWalletSignupLoginControllers', ['greenWalletMnemonicsServic
 
     $scope.login_with_hw = function() {
         gaEvent('Login', 'HardwareLogin');
-        wallets.login_hw($scope, hwDevice);
-        return;
+        if (cur_net.useNewWalletJs) {
+            // new refactored implementation, unfinished
+            wallets.login_hw($scope, hwDevice);
+            return;
+        }
         if (trezor_dev) { login_with_trezor(); return; }
         btchip.getDevice().then(function(btchip_dev) {
             btchip.promptPin('', function(err, pin) {
@@ -409,33 +412,32 @@ angular.module('greenWalletSignupLoginControllers', ['greenWalletMnemonicsServic
 
     var template = gettext("{hardware_wallet_name} Login");
 
-
-/*
-    btchip.getDevice('retry').then(function(btchip) {
-        btchip.dongle.disconnect_async();
-        state.hw_detected = template.replace('{hardware_wallet_name}', 'BTChip');
-    });
-
-    trezor.getDevice('retry', true).then(function(trezor) {
-        state.hw_detected = template.replace('{hardware_wallet_name}', 'TREZOR');
-        trezor_dev = trezor;
-    })
-*/
-
-
-    var checkForHwWallets = function () {
-        allHwWallets.forEach(function (hw) {
-            hw.checkForDevices(cur_net);
+    if (cur_net.useNewWalletJs) {
+        // new refactored implementation, unfinished
+        var checkForHwWallets = function () {
+            allHwWallets.forEach(function (hw) {
+                hw.checkForDevices(cur_net);
+            });
+            HWWallet.currentWallet.then(function (dev) {
+                state.hw_detected = template.replace('{hardware_wallet_name}', dev.deviceTypeName);
+                hwDevice = dev;
+            }, function (err) {
+                notices.makeNotice('error', err.message);
+                checkForHwWallets();
+            });
+        };
+        checkForHwWallets();
+    } else {
+        btchip.getDevice('retry').then(function (btchip) {
+            btchip.dongle.disconnect_async();
+            state.hw_detected = template.replace('{hardware_wallet_name}', 'BTChip');
         });
-        HWWallet.currentWallet.then(function (dev) {
-            state.hw_detected = template.replace('{hardware_wallet_name}', dev.deviceTypeName);
-            hwDevice = dev;
-        }, function (err) {
-            notices.makeNotice('error', err.message);
-            checkForHwWallets();
+
+        trezor.getDevice('retry', true).then(function (trezor) {
+            state.hw_detected = template.replace('{hardware_wallet_name}', 'TREZOR');
+            trezor_dev = trezor;
         });
-    };
-    checkForHwWallets();
+    }
 
     $scope.read_qr_code = function read_qr_code($event) {
         gaEvent('Login', 'QrScanClicked');
