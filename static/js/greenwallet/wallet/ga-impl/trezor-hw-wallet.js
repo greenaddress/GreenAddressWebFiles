@@ -5,7 +5,7 @@ var HWWallet = require('./hw-wallet');
 
 module.exports = TrezorHWWallet;
 
-TrezorHWWallet.prototype = new HWWallet();
+TrezorHWWallet.prototype = Object.create(HWWallet.prototype);
 extend(TrezorHWWallet.prototype, {
   deviceTypeName: 'TREZOR',
   promptPin: promptPin,

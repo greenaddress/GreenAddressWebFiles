@@ -19,7 +19,7 @@ function AssetsTransactionImpl () {
   bitcoin.Transaction.apply(this, arguments);
 }
 
-AssetsTransactionImpl.prototype = new bitcoin.Transaction();
+AssetsTransactionImpl.prototype = Object.create(bitcoin.Transaction.prototype);
 extend(AssetsTransactionImpl.prototype, {
   byteLength: byteLength,
   signedByteLength: signedByteLength,
@@ -29,7 +29,7 @@ extend(AssetsTransactionImpl.prototype, {
   hashForSignature: hashForSignature
 });
 
-AssetsTransaction.prototype = new Transaction();
+AssetsTransaction.prototype = Object.create(Transaction.prototype);
 extend(AssetsTransaction.prototype, {
   build: build,
   _addFeeAndChange: _addFeeAndChange,

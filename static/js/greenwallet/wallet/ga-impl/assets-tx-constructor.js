@@ -5,7 +5,7 @@ var extendCopy = require('xtend');
 
 module.exports = AssetsTxConstructor;
 
-AssetsTxConstructor.prototype = new TxConstructor();
+AssetsTxConstructor.prototype = Object.create(TxConstructor.prototype);
 extend(AssetsTxConstructor.prototype, {
   refreshUtxo: refreshUtxo,
   _collectOutputs: _collectOutputs,

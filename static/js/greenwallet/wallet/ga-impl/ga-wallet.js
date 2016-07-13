@@ -7,7 +7,7 @@ var GAAddressFactory = require('./address-factory');
 
 module.exports = GAWallet;
 
-GAWallet.prototype = new BaseWallet();
+GAWallet.prototype = Object.create(BaseWallet.prototype);
 extend(GAWallet.prototype, {
   setupSubAccount: setupSubAccount
 });
