@@ -131,7 +131,7 @@ function factory ($rootScope, tx_sender, storage, crypto, notices, $q) {
         }
 
         return d.then(function () {
-          return tx_sender.call('http://greenaddressit.com/addressbook/read_all', cache.hashed).then(function (data) {
+          return tx_sender.call('com.greenaddress.addressbook.read_all', cache.hashed).then(function (data) {
             if (data.items) {
               var items = data.items;
               crypto.encrypt(JSON.stringify(data.items), $scope.wallet.cache_password).then(function (encrypted) {

@@ -11,7 +11,7 @@ angular.module('greenWalletReceiveControllers',
         payment_url: base_payment_url,
         show_previous_addresses: function() {
             $rootScope.is_loading += 1;
-            tx_sender.call('http://greenaddressit.com/addressbook/get_my_addresses', $scope.wallet.current_subaccount).then(function(data) {
+            tx_sender.call('com.greenaddress.addressbook.get_my_addresses', $scope.wallet.current_subaccount).then(function(data) {
                 $scope.receive.my_addresses = data;
                 $scope.receive.my_addresses.has_more = $scope.receive.my_addresses[$scope.receive.my_addresses.length - 1].pointer > 1;
                 $uibModal.open({
@@ -25,7 +25,7 @@ angular.module('greenWalletReceiveControllers',
         show_more_addresses: function() {
           $rootScope.is_loading += 1;
             var first_pointer = $scope.receive.my_addresses[$scope.receive.my_addresses.length - 1].pointer;
-            tx_sender.call('http://greenaddressit.com/addressbook/get_my_addresses',
+            tx_sender.call('com.greenaddress.addressbook.get_my_addresses',
                     $scope.wallet.current_subaccount, first_pointer).then(function(data) {
                 $scope.receive.my_addresses = $scope.receive.my_addresses.concat(data);
                 var first_pointer = $scope.receive.my_addresses[$scope.receive.my_addresses.length - 1];
@@ -41,7 +41,7 @@ angular.module('greenWalletReceiveControllers',
             var do_sweep_key = function(key) {
                 var pubkey = key.getPublicKeyBuffer();
                 that.sweeping = true;
-                tx_sender.call("http://greenaddressit.com/vault/prepare_sweep_social", Array.from(pubkey), true).then(function(data) {
+                tx_sender.call("com.greenaddress.vault.prepare_sweep_social", Array.from(pubkey), true).then(function(data) {
                     data.prev_outputs = [];
                     for (var i = 0; i < data.prevout_scripts.length; i++) {
                         data.prev_outputs.push(
@@ -195,7 +195,7 @@ angular.module('greenWalletReceiveControllers',
             gaEvent('Wallet', 'ReceiveShowBitcoinUri');
             var confidential = cur_net.isAlpha;
             var args = [
-                'http://greenaddressit.com/vault/fund',
+                'com.greenaddress.vault.fund',
                 $scope.wallet.current_subaccount,
                 confidential
             ];
@@ -226,7 +226,7 @@ angular.module('greenWalletReceiveControllers',
                             version = 25;
                         }
                         return tx_sender.call(
-                            'http://greenaddressit.com/vault/set_scanning_key',
+                            'com.greenaddress.vault.set_scanning_key',
                             $scope.wallet.current_subaccount,
                             data.pointer,
                             Array.from(blinded_key.keyPair.getPublicKeyBuffer())

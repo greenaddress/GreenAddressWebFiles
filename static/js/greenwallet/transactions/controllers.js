@@ -124,7 +124,7 @@ angular.module('greenWalletTransactionsControllers',
             return key.deriveHardened(transaction.pubkey_pointer);
         });
         return key.then(function(key) {
-            return tx_sender.call("http://greenaddressit.com/vault/prepare_sweep_social",
+            return tx_sender.call("com.greenaddress.vault.prepare_sweep_social",
                     Array.from(key.keyPair.getPublicKeyBuffer()), false, $scope.wallet.current_subaccount).then(function(data) {
                 data.prev_outputs = [];
                 for (var i = 0; i < data.prevout_scripts.length; i++) {
@@ -222,7 +222,7 @@ angular.module('greenWalletTransactionsControllers',
         var builder_d;
         if (remainingFeeDelta > 0) {
             builder_d = tx_sender.call(
-                'http://greenaddressit.com/txs/get_all_unspent_outputs',
+                'com.greenaddress.txs.get_all_unspent_outputs',
                 1,  // do not include zero-confs (RBF requirement)
                 $scope.wallet.current_subaccount
             ).then(function(utxos) {
@@ -236,7 +236,7 @@ angular.module('greenWalletTransactionsControllers',
                 if (remainingFeeDelta < 0) {
                     // new change output needs to be added
                     change_d = tx_sender.call(
-                        'http://greenaddressit.com/vault/fund',
+                        'com.greenaddress.vault.fund',
                         $scope.wallet.current_subaccount, true, true
                     ).then(function(data) {
                         change_pointer = data.pointer;
@@ -353,7 +353,7 @@ angular.module('greenWalletTransactionsControllers',
                         inp.hash
                     ).toString('hex');
                     return tx_sender.call(
-                        'http://greenaddressit.com/txs/get_raw_output',
+                        'com.greenaddress.txs.get_raw_output',
                         reversed_hex
                     ).then(function(rawtx) {
                         prevouts_rawtxs[reversed_hex] = rawtx;
@@ -394,7 +394,7 @@ angular.module('greenWalletTransactionsControllers',
                         builder.inputs[i].hashType = 1;
                     }
                     return tx_sender.call(
-                        'http://greenaddressit.com/vault/send_raw_tx',
+                        'com.greenaddress.vault.send_raw_tx',
                         builder.build().toHex(), twofac_data
                     ).then(function(data) {
                         if (data.limit_decrease) {
@@ -437,7 +437,7 @@ angular.module('greenWalletTransactionsControllers',
             // nothing to do
             tx.changing_memo = false;
         } else {
-            tx_sender.call('http://greenaddressit.com/txs/change_memo', tx.txhash, tx.new_memo).then(function() {
+            tx_sender.call('com.greenaddress.txs.change_memo', tx.txhash, tx.new_memo).then(function() {
                 tx.memo = tx.new_memo;
                 tx.changing_memo = false;
             }, function(err) {
@@ -475,7 +475,7 @@ angular.module('greenWalletTransactionsControllers',
             transaction.current_estimate = current_estimate;
         }
         if (transaction.has_payment_request && !transaction.payment_request) {
-            tx_sender.call('http://greenaddressit.com/txs/get_payment_request', transaction.txhash).then(function(payreq_b64) {
+            tx_sender.call('com.greenaddress.txs.get_payment_request', transaction.txhash).then(function(payreq_b64) {
                 transaction.payment_request = 'data:application/bitcoin-paymentrequest;base64,' + payreq_b64;
             });
         }

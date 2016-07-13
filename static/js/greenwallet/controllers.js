@@ -89,7 +89,7 @@ angular.module('greenWalletControllers', [])
             } else {
                 var hash_or_pubkey = Bitcoin.bitcoin.ECPair.fromWIF(redeem_key).getPublicKeyBuffer();
             }
-            tx_sender.call('http://greenaddressit.com/txs/get_redeem_message',
+            tx_sender.call('com.greenaddress.txs.get_redeem_message',
                     type, Array.from(hash_or_pubkey)).then(function(message) {
                 $scope.wallet.redeem_message = message;
             });
@@ -122,7 +122,7 @@ angular.module('greenWalletControllers', [])
                 $scope.wallet.send_to_receiving_id = undefined;  // ignore address from the URI if 'r' is present
                 $scope.payreq_loading = true;
                 $scope.has_payreq = true;
-                return tx_sender.call('http://greenaddressit.com/vault/process_bip0070_url', parsed.r).then(function(data) {
+                return tx_sender.call('com.greenaddress.vault.process_bip0070_url', parsed.r).then(function(data) {
                     $scope.payreq_loading = false;
                     var amount = 0;
                     for (var i = 0; i < data.outputs.length; i++) {
@@ -154,7 +154,7 @@ angular.module('greenWalletControllers', [])
                 var that = this;
                 that.balance_updating = true;
                 if (!cur_net.isAlpha) {
-                    tx_sender.call('http://greenaddressit.com/txs/get_balance', $scope.wallet.current_subaccount)
+                    tx_sender.call('com.greenaddress.txs.get_balance', $scope.wallet.current_subaccount)
                         .then(function(data) {
                             that.final_balance = data.satoshi;
                             that.fiat_currency = data.fiat_currency;
@@ -184,14 +184,14 @@ angular.module('greenWalletControllers', [])
                         final_balances[subaccount.pointer] = 0;
                     }
                     tx_sender.call(
-                        'http://greenaddressit.com/txs/get_all_unspent_outputs',
+                        'com.greenaddress.txs.get_all_unspent_outputs',
                         0   // include zero-confs
                     ).then(function(utxos) {
                         var rawtx_ds = [];
                         for (var i = 0; i < utxos.length; ++i) {
                             (function(utxo) {
                                 rawtx_ds.push(tx_sender.call(
-                                    'http://greenaddressit.com/txs/get_raw_unspent_output',
+                                    'com.greenaddress.txs.get_raw_unspent_output',
                                     utxo.txhash, utxo.asset_id
                                 ).then(function(rawtx) {
                                     return {
@@ -246,7 +246,7 @@ angular.module('greenWalletControllers', [])
                         }
                         return $q.all(unblind_ds);
                     }).then(function() {
-                        return tx_sender.call('http://greenaddressit.com/txs/get_balance', $scope.wallet.current_subaccount).then(function(data) {
+                        return tx_sender.call('com.greenaddress.txs.get_balance', $scope.wallet.current_subaccount).then(function(data) {
                             that.final_balance = final_balances[$scope.wallet.current_subaccount];
                             that.fiat_currency = data.fiat_currency;
                             that.fiat_value = data.fiat_value;
@@ -320,7 +320,7 @@ angular.module('greenWalletControllers', [])
                 notices.makeNotice('success', gettext('Bitcoin transaction received!'));
                 sound.play(BASE_URL + "/static/sound/coinreceived.mp3", $scope);
             }
-        });        
+        });
         if ($scope.wallet.expired_deposits && $scope.wallet.expired_deposits.length) {
             $scope.redeposit_modal = $uibModal.open({
                 templateUrl: BASE_URL+'/'+LANG+'/wallet/partials/wallet_modal_redeposit.html',
@@ -338,7 +338,7 @@ angular.module('greenWalletControllers', [])
             } else {
                 gaEvent('ReceivePage', 'ShowBitcoinUri');
                 $scope.generating_bitcoin_uri = true;
-                tx_sender.call('http://greenaddressit.com/vault/fund_receiving_id',
+                tx_sender.call('com.greenaddress.vault.fund_receiving_id',
                                $scope.wallet.send_to_receiving_id).then(function(p2sh) {
                     $scope.bitcoin_uri = 'bitcoin:' + p2sh;
                     if ($scope.wallet.send_to_receiving_id_amount) {
@@ -420,7 +420,7 @@ angular.module('greenWalletControllers', [])
         for (var i = 0; i < txos.length; ++i) {
             txos_in.push([txos[i].txhash, txos[i].out_n]);
         }
-        tx_sender.call("http://greenaddressit.com/vault/prepare_redeposit", txos_in,
+        tx_sender.call('com.greenaddress.vault.prepare_redeposit', txos_in,
                 {rbf_optin: $scope.wallet.appearance.replace_by_fee, prevouts_mode: 'http'}).then(function(data) {
             wallets.sign_and_send_tx($scope, data, false, twofac_data).then(function() {
                 deferred.resolve();
@@ -444,7 +444,7 @@ angular.module('greenWalletControllers', [])
     };
     $scope.redeposit_multiple_tx = function() {
         $scope.redepositing = true;
-        return tx_sender.call("http://greenaddressit.com/vault/prepare_redeposit",
+        return tx_sender.call("com.greenaddress.vault.prepare_redeposit",
                 [[$scope.wallet.expired_deposits[0].txhash, $scope.wallet.expired_deposits[0].out_n]],
                 {rbf_optin: $scope.wallet.appearance.replace_by_fee,
                  prevouts_mode: 'http'}).then(function() {

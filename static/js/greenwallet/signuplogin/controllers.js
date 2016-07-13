@@ -433,7 +433,7 @@ angular.module('greenWalletSignupLoginControllers', ['greenWalletMnemonicsServic
     $scope.use_pin = function(storage_suffix) {
         storage_suffix = storage_suffix || '';
         notices.setLoadingText("Checking PIN");
-        return tx_sender.call('http://greenaddressit.com/pin/get_password', use_pin_data.pin, state['pin_ident'+storage_suffix]).then(
+        return tx_sender.call('com.greenaddress.pin.get_password', use_pin_data.pin, state['pin_ident'+storage_suffix]).then(
             function(password) {
                 if (!password) {
                     gaEvent('Login', 'PinLoginFailed', 'empty password');

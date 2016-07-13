@@ -24,7 +24,7 @@ angular.module('greenWalletInfoControllers',
 
     $scope.wallet.has_graph = true;  // element needs to be initially visible to allow computing width
     var update_graph = function() {
-        tx_sender.call("http://greenaddressit.com/txs/get_daily_balance_chart", $scope.wallet.current_subaccount).then(function(balances_arr) {
+        tx_sender.call("com.greenaddress.txs.get_daily_balance_chart", $scope.wallet.current_subaccount).then(function(balances_arr) {
             if (!document.getElementById('btc_graph')) {
                 // not in 'Transactions' tab anymore - don't do anything to avoid breaking it
                 return;
@@ -250,7 +250,7 @@ angular.module('greenWalletInfoControllers',
                 {compressed: true,
                  network: cur_net}
             );
-            tx_sender.call("http://greenaddressit.com/vault/prepare_sweep_social",
+            tx_sender.call("com.greenaddress.vault.prepare_sweep_social",
                     Array.from(key.getPublicKeyBuffer())).then(function(data) {
                 data.prev_outputs = [];
                 for (var i = 0; i < data.prevout_scripts.length; i++) {

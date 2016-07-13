@@ -61,7 +61,7 @@ angular.module('greenWalletSettingsControllers',
     };
     $scope.enable_twofac_gauth = function() {
         notices.setLoadingText("Validating code");
-        return tx_sender.call('http://greenaddressit.com/twofactor/enable_gauth', twofactor_state.twofac_gauth_code, $scope.twofac_data).then(
+        return tx_sender.call('com.greenaddress.twofactor.enable_gauth', twofactor_state.twofac_gauth_code, $scope.twofac_data).then(
             function() {
                 gaEvent('Wallet', 'EnableGauth2FASuccessful');
                 notices.makeNotice('success', 'Enabled Google Authenticator');
@@ -78,7 +78,7 @@ angular.module('greenWalletSettingsControllers',
     $scope.disable_2fa = function(type, twofac_data) {
         notices.setLoadingText("Validating code");
         if (type == 'gauth') {
-            return tx_sender.call('http://greenaddressit.com/twofactor/disable_gauth', twofac_data).then(
+            return tx_sender.call('com.greenaddress.twofactor.disable_gauth', twofac_data).then(
                 function() {
                     gaEvent('Wallet', 'DisableGauth2FASuccessful');
                     twofactor_state.disable_2fa_code = '';
@@ -91,7 +91,7 @@ angular.module('greenWalletSettingsControllers',
                     return $q.reject(err);
                 })
         } else if (type == 'email') {
-            return tx_sender.call('http://greenaddressit.com/twofactor/disable_email', twofac_data).then(
+            return tx_sender.call('com.greenaddress.twofactor.disable_email', twofac_data).then(
                 function() {
                     gaEvent('Wallet', 'DisableEmail2FASuccessful');
                     twofactor_state.disable_2fa_code = '';
@@ -105,7 +105,7 @@ angular.module('greenWalletSettingsControllers',
                     return $q.reject(err);
                 })
         } else if (type == 'sms') {
-            return tx_sender.call('http://greenaddressit.com/twofactor/disable_sms', twofac_data).then(
+            return tx_sender.call('com.greenaddress.twofactor.disable_sms', twofac_data).then(
                 function() {
                     gaEvent('Wallet', 'DisableSMS2FASuccessful');
                     twofactor_state.disable_2fa_code = '';
@@ -119,7 +119,7 @@ angular.module('greenWalletSettingsControllers',
                     return $q.reject(err);
                 })
         } else if (type == 'phone') {
-            return tx_sender.call('http://greenaddressit.com/twofactor/disable_phone', twofac_data).then(
+            return tx_sender.call('com.greenaddress.twofactor.disable_phone', twofac_data).then(
                 function() {
                     gaEvent('Wallet', 'DisablePhone2FASuccessful');
                     twofactor_state.disable_2fa_code = '';
@@ -137,7 +137,7 @@ angular.module('greenWalletSettingsControllers',
     $scope.start_enabling_email = function(twofac_data) {
         if (twofactor_state.enabling_email) return;
         twofactor_state.enabling_email = true;
-        return tx_sender.call('http://greenaddressit.com/twofactor/init_enable_email', twofactor_state.new_twofac_email, twofac_data).then(
+        return tx_sender.call('com.greenaddress.twofactor.init_enable_email', twofactor_state.new_twofac_email, twofac_data).then(
             function() {
                 gaEvent('Wallet', 'StartEnablingEmail2FASuccessful');
                 twofactor_state.email_set = true;
@@ -172,14 +172,14 @@ angular.module('greenWalletSettingsControllers',
             notices.makeNotice('error', err.args[1]);
             return $q.reject(err);
         };
-        return tx_sender.call('http://greenaddressit.com/twofactor/enable_email'+suffix, arg).then(
+        return tx_sender.call('com.greenaddress.twofactor.enable_email'+suffix, arg).then(
             onSuccess,
             function(err) {
                 if ($scope.wallet.signup && err.args[0] == "http://greenaddressit.com/error#alreadyexists") {
                     return $uibModal.open({
                         templateUrl: BASE_URL+'/'+LANG+'/wallet/partials/wallet_modal_reset_email.html'
                     }).result.then(function() {
-                        return tx_sender.call('http://greenaddressit.com/twofactor/enable_email',
+                        return tx_sender.call('com.greenaddress.twofactor.enable_email',
                             arg, twofactor_state.new_twofac_email).then(onSuccess, onFail);
                     });
                 } else {
@@ -190,7 +190,7 @@ angular.module('greenWalletSettingsControllers',
     $scope.start_enabling_sms = function(twofac_data) {
         if (twofactor_state.enabling_sms) return;
         twofactor_state.enabling_sms = true;
-        return tx_sender.call('http://greenaddressit.com/twofactor/init_enable_sms', twofactor_state.new_twofac_sms, twofac_data).then(
+        return tx_sender.call('com.greenaddress.twofactor.init_enable_sms', twofactor_state.new_twofac_sms, twofac_data).then(
             function() {
                 gaEvent('Wallet', 'StartEnablingSMS2FASuccessful');
                 twofactor_state.sms_set = true;
@@ -207,7 +207,7 @@ angular.module('greenWalletSettingsControllers',
     };
     $scope.enable_twofac_sms = function() {
         notices.setLoadingText("Validating code");
-        return tx_sender.call('http://greenaddressit.com/twofactor/enable_sms', twofactor_state.twofac_sms_code).then(
+        return tx_sender.call('com.greenaddress.twofactor.enable_sms', twofactor_state.twofac_sms_code).then(
             function() {
                 gaEvent('Wallet', 'EnableSMS2FASuccessful');
                 notices.makeNotice('success', 'Enabled SMS two factor authentication');
@@ -223,7 +223,7 @@ angular.module('greenWalletSettingsControllers',
     $scope.start_enabling_phone = function(twofac_data) {
         if (twofactor_state.enabling_phone) return;
         twofactor_state.enabling_phone = true;
-        return tx_sender.call('http://greenaddressit.com/twofactor/init_enable_phone', twofactor_state.new_twofac_phone, twofac_data).then(
+        return tx_sender.call('com.greenaddress.twofactor.init_enable_phone', twofactor_state.new_twofac_phone, twofac_data).then(
             function() {
                 gaEvent('Wallet', 'StartEnablingPhone2FASuccessful');
                 twofactor_state.phone_set = true;
@@ -239,7 +239,7 @@ angular.module('greenWalletSettingsControllers',
     };
     $scope.enable_twofac_phone = function() {
         notices.setLoadingText("Validating code");
-        return tx_sender.call('http://greenaddressit.com/twofactor/enable_phone', twofactor_state.twofac_phone_code).then(
+        return tx_sender.call('com.greenaddress.twofactor.enable_phone', twofactor_state.twofac_phone_code).then(
             function() {
                 gaEvent('Wallet', 'EnablePhone2FASuccessful');
                 notices.makeNotice('success', 'Enabled phone two factor authentication');
@@ -293,7 +293,7 @@ angular.module('greenWalletSettingsControllers',
                     $scope.twofac_data = twofac_data;
                     return $scope['enable_twofac_'+type]();
                 } else {
-                    return tx_sender.call('http://greenaddressit.com/twofactor/request_proxy', type, twofac_data).then(function(data) {
+                    return tx_sender.call('com.greenaddress.twofactor.request_proxy', type, twofac_data).then(function(data) {
                         $scope.twofactor_state['toggling_'+type] = 'initial';
                         $scope.twofac_data = {'method': 'proxy', 'code': data};
                     }, function(err) {
@@ -340,7 +340,7 @@ angular.module('greenWalletSettingsControllers',
                 this.updating_nlocktime_blocks = true;
                 var that = this;
                 wallets.get_two_factor_code($scope, 'change_nlocktime', {'value': that.blocks_new}).then(function(twofac_data) {
-                    return tx_sender.call('http://greenaddressit.com/login/set_nlocktime', that.blocks_new, twofac_data).then(function() {
+                    return tx_sender.call('com.greenaddress.login.set_nlocktime', that.blocks_new, twofac_data).then(function() {
                         $scope.wallet.nlocktime_blocks = that.blocks = that.blocks_new;
                         notices.makeNotice('success', gettext('nLockTime settings updated successfully'));
                     }, function(err) {
@@ -393,7 +393,7 @@ angular.module('greenWalletSettingsControllers',
         },
         expiring_soon_modal: function() {
             gaEvent('Wallet', 'ExpiringSoonModal');
-            tx_sender.call('http://greenaddressit.com/txs/upcoming_nlocktime').then(function(data) {
+            tx_sender.call('com.greenaddress.txs.upcoming_nlocktime').then(function(data) {
                 $scope.soon_nlocktimes = data;
                 $scope.soon_nlocktimes.estimate_days = function(nlocktime_at) {
                     var remaining_blocks = nlocktime_at - this.cur_block;
@@ -412,7 +412,7 @@ angular.module('greenWalletSettingsControllers',
             var that = this;
             that.sending_nlocktime = true;
             gaEvent('Wallet', 'SendNlocktimeByEmail');
-            tx_sender.call('http://greenaddressit.com/txs/send_nlocktime').then(function(data) {
+            tx_sender.call('com.greenaddress.txs.send_nlocktime').then(function(data) {
                 notices.makeNotice('success', gettext('Email sent'));
             }, function(err) {
                 notices.makeNotice('error', err.args[1]);
@@ -420,7 +420,7 @@ angular.module('greenWalletSettingsControllers',
         }
     };
     $scope.settings.available_units = ['BTC', 'mBTC', 'µBTC', 'bits'];
-    tx_sender.call('http://greenaddressit.com/login/available_currencies').then(function(data) {
+    tx_sender.call('com.greenaddress.login.available_currencies').then(function(data) {
         $scope.settings.pricing_sources = [];
         for (var i = 0; i < data.all.length; i++) {
             var currency = data.all[i];
@@ -473,12 +473,12 @@ angular.module('greenWalletSettingsControllers',
             $timeout(function() { settings.pricing_source = oldValue; });
             settings.updating_pricing_source = true;
             var update = function() {
-                tx_sender.call('http://greenaddressit.com/login/set_pricing_source', currency, exchange).then(function() {
+                tx_sender.call('com.greenaddress.login.set_pricing_source', currency, exchange).then(function() {
                     gaEvent('Wallet', 'PricingSourceChanged', newValue);
                     $scope.wallet.fiat_currency = currency;
                     $scope.wallet.fiat_exchange = exchange;
                     $scope.wallet.update_balance();
-                    tx_sender.call("http://greenaddressit.com/login/get_spending_limits").then(function(data) {
+                    tx_sender.call("com.greenaddress.login.get_spending_limits").then(function(data) {
                         // we reset limits if we change currency source while limits are fiat
                         $scope.wallet.limits.per_tx = data.per_tx;
                         $scope.wallet.limits.total = data.total;
@@ -513,7 +513,7 @@ angular.module('greenWalletSettingsControllers',
         if (oldValue !== newValue && !settings.updating_currency && newValue != $scope.wallet.fiat_currency) {
             settings.currency = oldValue;
             settings.updating_currency = true;
-            tx_sender.call('http://greenaddressit.com/login/set_currency', newValue).then(function() {
+            tx_sender.call('com.greenaddress.login.set_currency', newValue).then(function() {
                 gaEvent('Wallet', 'CurrencyChanged', newValue);
                 $scope.wallet.fiat_currency = newValue;
                 $scope.wallet.update_balance();
@@ -553,7 +553,7 @@ angular.module('greenWalletSettingsControllers',
         if (oldValue !== newValue && !settings.updating_exchange && newValue != $scope.wallet.fiat_exchange) {
             settings.exchange = oldValue;
             settings.updating_exchange = true;
-            tx_sender.call('http://greenaddressit.com/login/set_exchange', newValue).then(function() {
+            tx_sender.call('com.greenaddress.login.set_exchange', newValue).then(function() {
                 gaEvent('Wallet', 'ExchangeChanged', newValue);
                 $scope.wallet.fiat_exchange = newValue;
                 $scope.wallet.update_balance();
@@ -648,7 +648,7 @@ angular.module('greenWalletSettingsControllers',
             templateUrl: BASE_URL+'/'+LANG+'/wallet/partials/wallet_modal_remove_account.html',
         }).result.then(function() {
             wallets.get_two_factor_code($scope, 'remove_account', {}).then(function(twofac_data) {
-                return tx_sender.call('http://greenaddressit.com/login/remove_account', twofac_data).then(function() {
+                return tx_sender.call('com.greenaddress.login.remove_account', twofac_data).then(function() {
                     tx_sender.logout();
                     storage.remove('pin_ident');
                     storage.remove('pin_chaincode');
@@ -668,7 +668,7 @@ angular.module('greenWalletSettingsControllers',
         }
         settings.setting_email = true;
         wallets.get_two_factor_code($scope, 'set_email', {'address': settings.new_email}).then(function(twofac_data) {
-            return tx_sender.call('http://greenaddressit.com/twofactor/set_email', settings.new_email, twofac_data).then(function() {
+            return tx_sender.call('com.greenaddress.twofactor.set_email', settings.new_email, twofac_data).then(function() {
                 wallets.getTwoFacConfig($scope, true);  // refresh twofac config
                 notices.makeNotice('success', gettext('Email sent'));
             }).catch(function(err) {
@@ -678,7 +678,7 @@ angular.module('greenWalletSettingsControllers',
         }).finally(function() { settings.setting_email = false; });
     };
     $scope.confirm_email = function() {
-        tx_sender.call('http://greenaddressit.com/twofactor/activate_email', settings.email_confirmation_code).then(function() {
+        tx_sender.call('com.greenaddress.twofactor.activate_email', settings.email_confirmation_code).then(function() {
             wallets.getTwoFacConfig($scope, true);  // refresh twofac config
             notices.makeNotice('success', gettext('Email confirmed'))
         }).catch(function(err) {
@@ -701,7 +701,7 @@ angular.module('greenWalletSettingsControllers',
             var upkey = 'updating_' + key;
             $scope.privacy[upkey] = true;
             $scope.privacy[key] = oldValue;
-            tx_sender.call('http://greenaddressit.com/login/change_settings', 'privacy.' + key, parseInt(newValue)).then(function() {
+            tx_sender.call('com.greenaddress.login.change_settings', 'privacy.' + key, parseInt(newValue)).then(function() {
                 $scope.wallet.privacy[key] = newValue;
                 $scope.privacy[upkey] = false;
                 $scope.privacy[key] = newValue;
@@ -748,7 +748,7 @@ angular.module('greenWalletSettingsControllers',
     };
     $scope.delete = function(address) {
         gaEvent('Wallet', 'AddressBookDeleteItem');
-        tx_sender.call('http://greenaddressit.com/addressbook/delete_entry', address).then(function() {
+        tx_sender.call('com.greenaddress.addressbook.delete_entry', address).then(function() {
             var filtered_items = [];
             angular.forEach(addressbook.items, function(value) {
                 if (value.address != address) {
@@ -771,11 +771,11 @@ angular.module('greenWalletSettingsControllers',
                     break;
                 }
             }
-            var d = tx_sender.call('http://greenaddressit.com/txs/rename_subaccount', pointer, name).then(function() {
+            var d = tx_sender.call('com.greenaddress.txs.rename_subaccount', pointer, name).then(function() {
                 $scope.wallet.subaccounts[i].name = name;
             });
         } else {
-            var d = tx_sender.call('http://greenaddressit.com/addressbook/edit_entry', address, name, 0)
+            var d = tx_sender.call('com.greenaddress.addressbook.edit_entry', address, name, 0)
         }
         d.then(function(data) {
             gaEvent('Wallet', 'AddressBookItemRenamed');
@@ -799,7 +799,7 @@ angular.module('greenWalletSettingsControllers',
         if (item.address.indexOf('@') != -1) {
             item.type = 'email';
         }
-        tx_sender.call('http://greenaddressit.com/addressbook/add_entry',
+        tx_sender.call('com.greenaddress.addressbook.add_entry',
                 item.address, item.name, 0).then(function(data) {
             if (!data) {
                 gaEvent('Wallet', 'AddressBookItemAddFailed', '!data');
@@ -963,7 +963,7 @@ angular.module('greenWalletSettingsControllers',
             if (!$scope.quicklogin.started_unsetting) {
                 $scope.quicklogin.started_unsetting = true;
                 $scope.quicklogin.enabled = true;  // not yet disabled
-                tx_sender.call('http://greenaddressit.com/pin/remove_pin_login',
+                tx_sender.call('com.greenaddress.pin.remove_pin_login',
                         $scope.quicklogin.device_ident).then(function(data) {
                     gaEvent('Wallet', 'QuickLoginRemoved');
                     delete tx_sender.pin_ident;  // don't try using pin on reconnect
@@ -1015,7 +1015,7 @@ angular.module('greenWalletSettingsControllers',
     };
     $scope.remove_all_pin_logins = function() {
         $scope.quicklogin.started_unsetting = true;
-        tx_sender.call('http://greenaddressit.com/pin/remove_all_pin_logins').then(function() {
+        tx_sender.call('com.greenaddress.pin.remove_all_pin_logins').then(function() {
             gaEvent('Wallet', 'AllPinLoginsRemoved');
             $scope.quicklogin.enabled = false;
             $scope.quicklogin.device_ident = undefined;
@@ -1040,7 +1040,7 @@ angular.module('greenWalletSettingsControllers',
         toggle_fb: function() {
             var that = this;
             if (this.fbstate.enabled) {
-                tx_sender.call('http://greenaddressit.com/addressbook/disable_sync', 'facebook').then(function(data) {
+                tx_sender.call('com.greenaddress.addressbook.disable_sync', 'facebook').then(function(data) {
                     gaEvent('Wallet', 'FbSyncDisabled');
                     that.toggling_fb = 2;
                     that.fbstate.enabled = false;
@@ -1055,7 +1055,7 @@ angular.module('greenWalletSettingsControllers',
                 facebook.login(that.fbstate).then(function() {
                     var auth = FB.getAuthResponse();
                     if (that.fbstate.logged_in) {
-                        tx_sender.call('http://greenaddressit.com/addressbook/sync_fb', auth.accessToken).then(function() {
+                        tx_sender.call('com.greenaddress.addressbook.sync_fb', auth.accessToken).then(function() {
                             gaEvent('Wallet', 'FbSyncEnabled');
                             notices.makeNotice('success', gettext('Facebook integration enabled'));
                             that.toggling_fb = 2;
@@ -1074,7 +1074,7 @@ angular.module('greenWalletSettingsControllers',
         toggle_reddit: function() {
             var that = this;
             if (this.redditstate.enabled) {
-                tx_sender.call('http://greenaddressit.com/addressbook/disable_sync', 'reddit').then(function(data) {
+                tx_sender.call('com.greenaddress.addressbook.disable_sync', 'reddit').then(function(data) {
                     gaEvent('Wallet', 'RedditSyncDisabled');
                     that.toggling_reddit = 2;
                     that.redditstate.enabled = false;
@@ -1088,7 +1088,7 @@ angular.module('greenWalletSettingsControllers',
                 gaEvent('Wallet', 'RedditSyncEnableAttempt');
                 reddit.getToken('identity').then(function(token) {
                     if (token) {
-                        tx_sender.call('http://greenaddressit.com/addressbook/sync_reddit', token).then(function() {
+                        tx_sender.call('com.greenaddress.addressbook.sync_reddit', token).then(function() {
                             gaEvent('Wallet', 'RedditSyncEnabled');
                             notices.makeNotice('success', gettext('Reddit integration enabled'));
                             that.toggling_reddit = 2;
@@ -1108,7 +1108,7 @@ angular.module('greenWalletSettingsControllers',
             var that = this;
             var change = (that.toggling_custom == 'changing');
             if (this.customstate.enabled && !change) {
-                tx_sender.call('http://greenaddressit.com/addressbook/disable_sync', 'custom').then(function(data) {
+                tx_sender.call('com.greenaddress.addressbook.disable_sync', 'custom').then(function(data) {
                     gaEvent('Wallet', 'CustomLoginDisabled');
                     that.customstate.enabled = false;
                     that.customstate.username = that.customstate.password = null;
@@ -1120,7 +1120,7 @@ angular.module('greenWalletSettingsControllers',
                 });
             } else {
                 gaEvent('Wallet', 'CustomLoginEnableAttempt');
-                tx_sender.call('http://greenaddressit.com/addressbook/sync_custom', that.customstate.username,
+                tx_sender.call('com.greenaddress.addressbook.sync_custom', that.customstate.username,
                         that.customstate.password).then(function() {
                     gaEvent('Wallet', 'CustomLoginEnabled');
                     if (that.customstate.enabled) {
@@ -1140,7 +1140,7 @@ angular.module('greenWalletSettingsControllers',
             }
         }
     };
-    tx_sender.call('http://greenaddressit.com/addressbook/get_sync_status').then(function(data) {
+    tx_sender.call('com.greenaddress.addressbook.get_sync_status').then(function(data) {
         $scope.thirdparty.fbstate.enabled = data.fb;
         $scope.thirdparty.redditstate.enabled = data.reddit;
         $scope.thirdparty.customstate.username = data.username;
@@ -1242,12 +1242,12 @@ angular.module('greenWalletSettingsControllers',
                 data.total > $scope.wallet.limits.total) {
             var do_change = function() {
                 return wallets.get_two_factor_code($scope, 'change_tx_limits', data).then(function(twofac_data) {
-                    return tx_sender.call('http://greenaddressit.com/login/change_settings', 'tx_limits', data, twofac_data);
+                    return tx_sender.call('com.greenaddress.login.change_settings', 'tx_limits', data, twofac_data);
                 });
             }
         } else {
             var do_change = function() {
-                return tx_sender.call('http://greenaddressit.com/login/change_settings', 'tx_limits', data);
+                return tx_sender.call('com.greenaddress.login.change_settings', 'tx_limits', data);
             }
         }
         $scope.limits_editor.saving = true;
@@ -1379,7 +1379,7 @@ angular.module('greenWalletSettingsControllers',
                             var hdhex_recovery_d = that._derive_hd(min_unused_pointer, hdwallet)
                         }
                         return hdhex_recovery_d.then(function(hdhex_recovery) {
-                            return tx_sender.call('http://greenaddressit.com/txs/create_subaccount',
+                            return tx_sender.call('com.greenaddress.txs.create_subaccount',
                                 min_unused_pointer,
                                 that.new_2of3_label,
                                 hdhex.pub,
@@ -1415,7 +1415,7 @@ angular.module('greenWalletSettingsControllers',
             else if ($scope.wallet.trezor_dev) var derive_fun = that._derive_trezor;
             else var derive_fun = that._derive_btchip;
             derive_fun(min_unused_pointer).then(function(hdhex) {
-                return tx_sender.call('http://greenaddressit.com/txs/create_subaccount',
+                return tx_sender.call('com.greenaddress.txs.create_subaccount',
                     min_unused_pointer,
                     that.new_label,
                     hdhex.pub,
@@ -1440,7 +1440,7 @@ angular.module('greenWalletSettingsControllers',
                 // nothing to do
                 subaccount.renaming = false;
             } else {
-                tx_sender.call('http://greenaddressit.com/txs/rename_subaccount',
+                tx_sender.call('com.greenaddress.txs.rename_subaccount',
                         subaccount.pointer, subaccount.new_name).then(function() {
                     subaccount.name = subaccount.new_name;
                     subaccount.renaming = false;
@@ -1494,7 +1494,7 @@ angular.module('greenWalletSettingsControllers',
                 $scope.touchId.started_unsetting = true;
                 $scope.touchId.enabled = true;  // not yet disabled
                 return storage.get('pin_ident_touchid').then(function(devid) {
-                    tx_sender.call('http://greenaddressit.com/pin/remove_pin_login',
+                    tx_sender.call('com.greenaddress.pin.remove_pin_login',
                         devid).then(function(data) {
                         cordova.exec(function(param) {
                             $scope.$apply(function() {

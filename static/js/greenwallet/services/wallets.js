@@ -66,7 +66,7 @@ function factory ($q, $rootScope, tx_sender, $location, notices, $uibModal,
   walletsService.updateAppearance = function ($scope, key, value) {
     var oldValue = $scope.wallet.appearance[key];
     $scope.wallet.appearance[key] = value;
-    return tx_sender.call('http://greenaddressit.com/login/set_appearance', JSON.stringify($scope.wallet.appearance)).catch(function (e) {
+    return tx_sender.call('com.greenaddress.login.set_appearance', JSON.stringify($scope.wallet.appearance)).catch(function (e) {
       $scope.wallet.appearance[key] = oldValue;
       return $q.reject(e);
     });
@@ -143,7 +143,7 @@ function factory ($q, $rootScope, tx_sender, $location, notices, $uibModal,
           $scope.wallet.gait_path = mnemonics.seedToPath(path_seed);
         }
         if (!data.gait_path) { // *NOTE*: don't change the path after signup, because it *will* cause locked funds
-          tx_sender.call('http://greenaddressit.com/login/set_gait_path', $scope.wallet.gait_path).catch(function (err) {
+          tx_sender.call('com.greenaddress.login.set_gait_path', $scope.wallet.gait_path).catch(function (err) {
             if (err.uri !== 'http://api.wamp.ws/error#NoSuchRPCEndpoint') {
               notices.makeNotice('error', 'Please contact support (reference "sgp_error ' + err.args[1] + '")');
             } else {
@@ -369,7 +369,7 @@ function factory ($q, $rootScope, tx_sender, $location, notices, $uibModal,
     if (end) end.setDate(end.getDate() + 1);
     var date_range_iso = date_range && [date_range[0] && date_range[0].toISOString(),
       end && end.toISOString()];
-    var args = ['http://greenaddressit.com/txs/get_list_v2',
+    var args = ['com.greenaddress.txs.get_list_v2',
       page_id, query, sort_by, date_range_iso, subaccount];
     if (cur_net.isAlpha) {
       // return prev data
@@ -672,7 +672,7 @@ function factory ($q, $rootScope, tx_sender, $location, notices, $uibModal,
     if (change_value.compareTo(Bitcoin.BigInteger.ZERO) > 0) {
       input_blinds_and_change.push(
         tx_sender.call(
-          'http://greenaddressit.com/vault/fund',
+          'com.greenaddress.vault.fund',
           $scope.wallet.current_subaccount, true, true
         ).then(function (data) {
           var key = $q.when($scope.wallet.hdwallet);
@@ -689,7 +689,7 @@ function factory ($q, $rootScope, tx_sender, $location, notices, $uibModal,
             return branch.deriveHardened(data.pointer);
           }).then(function (blinded_key) {
             return tx_sender.call(
-              'http://greenaddressit.com/vault/set_scanning_key',
+              'com.greenaddress.vault.set_scanning_key',
               $scope.wallet.current_subaccount,
               data.pointer,
               Array.from(blinded_key.keyPair.getPublicKeyBuffer())
@@ -940,7 +940,7 @@ function factory ($q, $rootScope, tx_sender, $location, notices, $uibModal,
           $scope, 'send_raw_tx'
         ).then(function (twofac_data) {
           return tx_sender.call(
-            'http://greenaddressit.com/vault/send_raw_tx',
+            'com.greenaddress.vault.send_raw_tx',
             tx.build().toHex(+fee),
             twofac_data
           );
@@ -1449,10 +1449,10 @@ function factory ($q, $rootScope, tx_sender, $location, notices, $uibModal,
         }
       }).then(function (signatures_twofactor) {
         var signatures = signatures_twofactor[0], twofactor = signatures_twofactor[1];
-        tx_sender.call('http://greenaddressit.com/vault/send_tx', signatures, twofactor || null).then(function (data) {
+        tx_sender.call('com.greenaddress.vault.send_tx', signatures, twofactor || null).then(function (data) {
           d.resolve();
           if (!twofactor && $scope) {
-            tx_sender.call('http://greenaddressit.com/login/get_spending_limits').then(function (data) {
+            tx_sender.call('com.greenaddress.login.get_spending_limits').then(function (data) {
               $scope.wallet.limits.total = data.total;
             });
           }
@@ -1475,7 +1475,7 @@ function factory ($q, $rootScope, tx_sender, $location, notices, $uibModal,
     if ($scope.wallet.twofac !== undefined && !force) {
       d.resolve($scope.wallet.twofac);
     } else {
-      tx_sender.call('http://greenaddressit.com/twofactor/get_config').then(function (data) {
+      tx_sender.call('com.greenaddress.twofactor.get_config').then(function (data) {
         $scope.wallet.twofac = data;
         d.resolve($scope.wallet.twofac);
       });
@@ -1506,7 +1506,7 @@ function factory ($q, $rootScope, tx_sender, $location, notices, $uibModal,
           request_code: function () {
             var that = this;
             this.requesting_code = true;
-            return tx_sender.call('http://greenaddressit.com/twofactor/request_' + this.twofactor_method,
+            return tx_sender.call('com.greenaddress.twofactor.request_' + this.twofactor_method,
               action, data).then(function () {
               that.codes_requested[that.twofactor_method] = true;
               that.requesting_code = false;
@@ -1524,7 +1524,7 @@ function factory ($q, $rootScope, tx_sender, $location, notices, $uibModal,
           modal.opened.then(function () { focus('twoFactorModal'); });
           deferred.resolve(modal.result.then(function (twofac_data) {
             if (twofac_data.method == 'gauth' && redeposit) {
-              return tx_sender.call('http://greenaddressit.com/twofactor/request_redeposit_proxy', twofac_data).then(function (data) {
+              return tx_sender.call('com.greenaddress.twofactor.request_redeposit_proxy', twofac_data).then(function (data) {
                 return {'method': 'proxy', 'code': data};
               });
             } else {
@@ -1632,7 +1632,7 @@ function factory ($q, $rootScope, tx_sender, $location, notices, $uibModal,
     suffix = suffix || '';
     var do_create = function () {
       var deferred = $q.defer();
-      tx_sender.call('http://greenaddressit.com/pin/set_pin_login', pin, 'Primary').then(
+      tx_sender.call('com.greenaddress.pin.set_pin_login', pin, 'Primary').then(
         function (data) {
           if (data) {
             var pin_ident = tx_sender['pin_ident' + suffix] = data;
@@ -1641,7 +1641,7 @@ function factory ($q, $rootScope, tx_sender, $location, notices, $uibModal,
               'pin_chaincode' + suffix,
               $scope.wallet.hdwallet.chainCode.toString('hex')
             );
-            tx_sender.call('http://greenaddressit.com/pin/get_password', pin, data).then(
+            tx_sender.call('com.greenaddress.pin.get_password', pin, data).then(
               function (password) {
                 if (!$scope.wallet.hdwallet.seed_hex) {
                   deferred.reject(gettext('Internal error') + ': Missing seed');

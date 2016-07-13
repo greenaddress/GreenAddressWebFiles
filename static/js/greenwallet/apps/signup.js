@@ -172,7 +172,7 @@ function SignupController($scope, $location, mnemonics, tx_sender, notices, wall
                                     }
                                 }
                                 hd_promise.then(function(hd) {
-                                    tx_sender.call('http://greenaddressit.com/login/register',
+                                    tx_sender.call('com.greenaddress.login.register',
                                             hd.master_public, hd.master_chaincode,
                                             user_agent($scope.wallet)).then(function(data) {
                                         if (hd.btchip_pubkey) {
@@ -233,7 +233,7 @@ function SignupController($scope, $location, mnemonics, tx_sender, notices, wall
                     $scope.$apply(function() {
                         var trezor_chaincode = pubkey.message.node.chain_code;
                         var trezor_pubkey = pubkey.message.node.public_key;
-                        tx_sender.call('http://greenaddressit.com/login/register',
+                        tx_sender.call('com.greenaddress.login.register',
                             trezor_pubkey, trezor_chaincode,
                             user_agent($scope.wallet)).then(try_login, try_login);
                     });
@@ -308,7 +308,7 @@ function SignupController($scope, $location, mnemonics, tx_sender, notices, wall
         facebook.login($scope.signup.fbloginstate).then(function() {
             var auth = FB.getAuthResponse();
             $scope.signup.social_in_progress = true;
-            tx_sender.call('http://greenaddressit.com/addressbook/sync_fb', auth.accessToken).then(function() {
+            tx_sender.call('com.greenaddress.addressbook.sync_fb', auth.accessToken).then(function() {
                 gaEvent('Signup', 'FbSyncEnabled');
                 $scope.signup.social_in_progress = false;
                 $scope.signup.any_social_done = true;
@@ -325,7 +325,7 @@ function SignupController($scope, $location, mnemonics, tx_sender, notices, wall
     $scope.signup.customlogin = function() {
         gaEvent('Signup', 'CustomLoginClicked');
         $scope.got_username_password = function(username, password) {
-            tx_sender.call('http://greenaddressit.com/addressbook/sync_custom', username, password).then(function() {
+            tx_sender.call('com.greenaddress.addressbook.sync_custom', username, password).then(function() {
                 gaEvent('Signup', 'CustomLoginEnabled');
                 notices.makeNotice('success', gettext('Custom login enabled'));
                 $scope.signup.any_social_done = true;
@@ -352,7 +352,7 @@ function SignupController($scope, $location, mnemonics, tx_sender, notices, wall
         d.then(function(token) {
             if (token) {
                 $scope.signup.social_in_progress = true;
-                tx_sender.call('http://greenaddressit.com/addressbook/sync_reddit', token).then(function() {
+                tx_sender.call('com.greenaddress.addressbook.sync_reddit', token).then(function() {
                     gaEvent('Signup', 'RedditSyncEnabled');
                     $scope.signup.social_in_progress = false;
                     $scope.signup.any_social_done = true;

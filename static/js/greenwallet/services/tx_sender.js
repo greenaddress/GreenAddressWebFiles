@@ -469,7 +469,7 @@ function factory ($q, $rootScope, cordovaReady, $http, notices, gaEvent, $locati
   };
   txSenderService.loginWatchOnly = function (token_type, token, logout) {
     var d = $q.defer();
-    txSenderService.call('http://greenaddressit.com/login/watch_only', token_type, token, logout || false)
+    txSenderService.call('com.greenaddress.login.watch_only', token_type, token, logout || false)
       .then(function (data) {
         txSenderService.watch_only = [token_type, token];
         onLogin(data);
@@ -480,7 +480,7 @@ function factory ($q, $rootScope, cordovaReady, $http, notices, gaEvent, $locati
     return d.promise;
   };
   txSenderService.change_pin = function (new_pin) {
-    return txSenderService.call('http://greenaddressit.com/pin/change_pin_login', new_pin, txSenderService.pin_ident)
+    return txSenderService.call('com.greenaddress.pin.change_pin_login', new_pin, txSenderService.pin_ident)
       .then(function (res) {
         // keep new pin for reconnection handling
         if (!res) {
