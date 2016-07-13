@@ -6,7 +6,7 @@ var SchnorrSigningKey = require('../bitcoinup').SchnorrSigningKey;
 
 module.exports = GAConfidentialUtxo;
 
-GAConfidentialUtxo.prototype = new GAUtxo();
+GAConfidentialUtxo.prototype = Object.create(GAUtxo.prototype);
 extend(GAConfidentialUtxo.prototype, {
   getValue: getValue,
   _unblindOutValueInner: _unblindOutValueInner,

@@ -10,7 +10,7 @@ var GAAddressFactory = require('./address-factory');
 
 module.exports = GAAssetsWallet;
 
-GAAssetsWallet.prototype = new BaseWallet();
+GAAssetsWallet.prototype = Object.create(BaseWallet.prototype);
 extend(GAAssetsWallet.prototype, {
   setupSubAccount: setupSubAccount
 });
@@ -20,8 +20,7 @@ function GAAssetsWallet (options) {
 }
 
 function makeAssetsClassWithDefaultAsssetId (assetId) {
-  AssetsTransactionWithDefaultAsset.prototype =
-    new bitcoinup.AssetsTransaction();
+  AssetsTransactionWithDefaultAsset.prototype = Object.create(bitcoinup.AssetsTransaction.prototype);
 
   extend(AssetsTransactionWithDefaultAsset.prototype, {
     addOutput: addOutput,
