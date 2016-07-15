@@ -1,4 +1,5 @@
 var window = require('global/window');
+var is_chrome_app = require('has-chrome-storage');
 
 ///@TODO Refactor this file, it's huge and crazy. Also get it to pass lint
 
@@ -104,7 +105,7 @@ function factory ($q, $rootScope, tx_sender, $location, notices, $uibModal,
         } catch (e) {
           $scope.wallet.appearance = {};
         }
-        if (cur_net.isAlphaMultiasset) {
+        if (cur_net.isAlphaMultiasset && !window.cordova && !is_chrome_app) {
           if (data.theme && data.theme.css) {
             var sheet = window.document.styleSheets[0];
             sheet.insertRule(data.theme.css, sheet.cssRules.length);
