@@ -55,10 +55,11 @@ function factory ($timeout, $document) {
   }
 
   function reset (amountminutes) {
-    autotimeoutService.left = amountminutes * 1000 * 60;
+    autotimeoutService.left = Math.round(amountminutes * 1000 * 60);
   }
 
   function countdown () {
+    autotimeoutService.left = autotimeoutService.left - timeoutms;
     if (autotimeoutService.left <= 0) {
       autotimeoutService.stop();
       if (require('has-chrome-storage')) {
@@ -67,7 +68,6 @@ function factory ($timeout, $document) {
         window.location.reload();
       }
     } else {
-      autotimeoutService.left = autotimeoutService.left - timeoutms;
       notifyObservers();
       autotimeoutService.promise = $timeout(countdown, timeoutms);
     }

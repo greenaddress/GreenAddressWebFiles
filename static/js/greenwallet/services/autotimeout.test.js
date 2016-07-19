@@ -47,19 +47,22 @@ test('auto timeout', function (t) {
     t.ok(true, 'handler runs ' + secondsLeft + 's left');
     if (secondsLeft === 1 && wakeHandler) {
       t.doesNotThrow(wakeHandler, 'wake handler works');
-      t.equal(~~autotimeout.left, 4000, 'starts count over');
+      t.equal(autotimeout.left, 4000, 'starts count over');
       // don't wake anymore
       wakeHandler = null;
     }
   });
 
   autotimeout.start(5 / 60);
-  t.equal(~~autotimeout.left, 5000, 'exposes time remaining');
+  t.equal(autotimeout.left, ~~autotimeout.left, 'rounds time remaining');
+  t.equal(autotimeout.left, 5000, 'exposes time remaining');
   autotimeout.start(4 / 60);
-  t.equal(~~autotimeout.left, 4000, 'exposes time remaining');
+  t.equal(autotimeout.left, ~~autotimeout.left, 'rounds time remaining');
+  t.equal(autotimeout.left, 4000, 'exposes time remaining');
 
   // activate reload method
   window.location.reload = function () {
     t.ok(true, 'calls reload');
+    t.end();
   };
 });
