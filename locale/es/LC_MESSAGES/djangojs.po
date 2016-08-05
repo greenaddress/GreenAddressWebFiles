@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: greenaddress-wallet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-07-15 15:25+0000\n"
+"POT-Creation-Date: 2016-08-05 17:29+0000\n"
 "PO-Revision-Date: 2014-09-18 17:48-0400\n"
 "Last-Translator: GreenAddress <info@greenaddress.it>\n"
 "Language-Team: Spanish\n"
@@ -30,245 +30,245 @@ msgstr "Más información"
 msgid "Invalid WIF key"
 msgstr "Clave WIF Inválida"
 
-#: build/static/js/index.js.c:73260 build/static/js/index.js.c:110254
+#: build/static/js/index.js.c:73711 build/static/js/index.js.c:110701
 msgid ""
 "Outdated firmware. Please upgrade to at least 1.3.0 at http://mytrezor.com/"
 msgstr ""
 
-#: build/static/js/index.js.c:73278
+#: build/static/js/index.js.c:73729
 #, fuzzy
 msgid "TREZOR plugin load failed!"
 msgstr "Error en la transacción:"
 
-#: build/static/js/index.js.c:102873
+#: build/static/js/index.js.c:103320
 #, c-format
 msgid "Please go to %s first to set up your device."
 msgstr ""
 
-#: build/static/js/index.js.c:102932 build/static/js/index.js.c:108704
-#: build/static/js/index.js.c:114795
+#: build/static/js/index.js.c:103379 build/static/js/index.js.c:109151
+#: build/static/js/index.js.c:115254
 msgid "Invalid PIN"
 msgstr "PIN inválido"
 
-#: build/static/js/index.js.c:102934 build/static/js/index.js.c:108706
-#: build/static/js/index.js.c:108716 build/static/js/index.js.c:114803
+#: build/static/js/index.js.c:103381 build/static/js/index.js.c:109153
+#: build/static/js/index.js.c:109163 build/static/js/index.js.c:115262
 msgid "Dongle is not set up"
 msgstr "El Dongle no está configurado"
 
-#: build/static/js/index.js.c:102936 build/static/js/index.js.c:108708
-#: build/static/js/index.js.c:114805
+#: build/static/js/index.js.c:103383 build/static/js/index.js.c:109155
+#: build/static/js/index.js.c:115264
 msgid "Dongle is locked - reconnect the dongle and retry"
 msgstr ""
 "El Dongle está bloqueado - vuelva a conectar el dongle e inténtelo de nuevo"
 
-#: build/static/js/index.js.c:103024
+#: build/static/js/index.js.c:103471
 msgid "You were already registered, so we logged you in."
 msgstr ""
 
-#: build/static/js/index.js.c:103149 build/static/js/index.js.c:113882
+#: build/static/js/index.js.c:103596 build/static/js/index.js.c:114341
 msgid "Custom login enabled"
 msgstr "Sesión personalizada habilitada"
 
-#: build/static/js/index.js.c:103244
+#: build/static/js/index.js.c:103691
 #, fuzzy
 msgid "Mnemonic not available when using hardware wallet seed"
 msgstr "Indicio de clave no disponible cuando se usa una semilla de BTChip"
 
-#: build/static/js/index.js.c:103529
+#: build/static/js/index.js.c:103976
 msgid "You need to log out to update cache."
 msgstr "Necesita cerrar la sesión para actualizar la caché."
 
-#: build/static/js/index.js.c:103623 build/static/js/index.js.c:107945
+#: build/static/js/index.js.c:104070 build/static/js/index.js.c:108392
 msgid "Failed processing payment protocol request:"
 msgstr "Fallo al procesar solicitud de protocolo de pago:"
 
-#: build/static/js/index.js.c:103786
+#: build/static/js/index.js.c:104233
 msgid "Electrum setup failed"
 msgstr "Configuración de Electrum fallida"
 
-#: build/static/js/index.js.c:103831
+#: build/static/js/index.js.c:104278
 msgid "Bitcoin transaction received!"
 msgstr "¡Se recibió una transacción de Bitcoin!"
 
-#: build/static/js/index.js.c:103892
+#: build/static/js/index.js.c:104339
 msgid "Please provide this word"
 msgstr "Por favor proporcione esta palabra"
 
-#: build/static/js/index.js.c:103895
+#: build/static/js/index.js.c:104342
 msgid "Incorrect word"
 msgstr "Palabra incorrecta"
 
-#: build/static/js/index.js.c:103950 build/static/js/index.js.c:103974
+#: build/static/js/index.js.c:104397 build/static/js/index.js.c:104421
 msgid "Re-depositing successful!"
 msgstr "Re-depósito exitoso!"
 
-#: build/static/js/index.js.c:106237
+#: build/static/js/index.js.c:106684
 msgid "Not enough data to draw the graph"
 msgstr "No hay suficientes datos para dibujar el gráfico"
 
-#: build/static/js/index.js.c:106287
+#: build/static/js/index.js.c:106734
 #, fuzzy
 msgid "1 confirmation"
 msgstr "Más información"
 
-#: build/static/js/index.js.c:106288
+#: build/static/js/index.js.c:106735
 #, fuzzy, c-format
 msgid "%s confirmations"
 msgstr "Más información"
 
-#: build/static/js/index.js.c:106400 build/static/js/index.js.c:106773
+#: build/static/js/index.js.c:106847 build/static/js/index.js.c:107220
 msgid "Not a valid encrypted private key"
 msgstr "La clave privada encriptada no es válida"
 
-#: build/static/js/index.js.c:106401 build/static/js/index.js.c:106836
-#: build/static/js/index.js.c:106843 build/static/js/index.js.c:106860
+#: build/static/js/index.js.c:106848 build/static/js/index.js.c:107283
+#: build/static/js/index.js.c:107290 build/static/js/index.js.c:107307
 msgid "Not a valid private key"
 msgstr "La clave privada no es válida"
 
-#: build/static/js/index.js.c:106402 build/static/js/index.js.c:106774
+#: build/static/js/index.js.c:106849 build/static/js/index.js.c:107221
 msgid "Invalid passphrase"
 msgstr "Clave inválida"
 
-#: build/static/js/index.js.c:106419
+#: build/static/js/index.js.c:106866
 msgid "Funds redeemed"
 msgstr "Fondos redimidos"
 
-#: build/static/js/index.js.c:106422
+#: build/static/js/index.js.c:106869
 msgid "Already redeemed"
 msgstr "Redimidos"
 
-#: build/static/js/index.js.c:106752
+#: build/static/js/index.js.c:107199
 msgid "Funds swept"
 msgstr "Fondos barridos"
 
-#: build/static/js/index.js.c:106760
+#: build/static/js/index.js.c:107207
 msgid "Already swept or no funds found"
 msgstr "Ya barrido o no posee fondos"
 
-#: build/static/js/index.js.c:107093
+#: build/static/js/index.js.c:107540
 msgid "Checksum validation failed!"
 msgstr "Error al validar Checksum!"
 
-#: build/static/js/index.js.c:107101
+#: build/static/js/index.js.c:107548
 msgid "Version "
 msgstr "Versión"
 
-#: build/static/js/index.js.c:107107
+#: build/static/js/index.js.c:107554
 msgid " is not a valid number of outputs"
 msgstr " no es número válido de salidas"
 
-#: build/static/js/index.js.c:107222
+#: build/static/js/index.js.c:107669
 msgid "Missing change P2SH script"
 msgstr "Falta el cambio del script P2SH"
 
-#: build/static/js/index.js.c:107225
+#: build/static/js/index.js.c:107672
 msgid "change OP_HASH160 missing"
 msgstr "Cambio en OP_HASH160 faltante"
 
-#: build/static/js/index.js.c:107226
+#: build/static/js/index.js.c:107673
 msgid "change OP_EQUAL missing"
 msgstr "Cambio en OP_EQUAL faltante"
 
-#: build/static/js/index.js.c:107243
+#: build/static/js/index.js.c:107690
 msgid "Invalid pubkey hash script length"
 msgstr "Hash script de llave pública inválido"
 
-#: build/static/js/index.js.c:107244
+#: build/static/js/index.js.c:107691
 msgid "OP_DUP missing"
 msgstr "OP_DUP no existe"
 
-#: build/static/js/index.js.c:107245
+#: build/static/js/index.js.c:107692
 msgid "OP_HASH160 missing"
 msgstr "OP_HASH160 no existe"
 
-#: build/static/js/index.js.c:107246
+#: build/static/js/index.js.c:107693
 msgid "Invalid pubkey hash"
 msgstr "Hash de clave pública inválido"
 
-#: build/static/js/index.js.c:107247
+#: build/static/js/index.js.c:107694
 msgid "OP_EQUALVERIFY missing"
 msgstr "OP_EQUALVERIFY no existe"
 
-#: build/static/js/index.js.c:107248
+#: build/static/js/index.js.c:107695
 msgid "OP_CHECKSIG missing"
 msgstr "OP_CHECKSIG no existe"
 
-#: build/static/js/index.js.c:107250
+#: build/static/js/index.js.c:107697
 msgid "Invalid out P2SH script length"
 msgstr "Longitud de script de salida P2SH inválida"
 
-#: build/static/js/index.js.c:107251
+#: build/static/js/index.js.c:107698
 msgid "out OP_HASH160 missing"
 msgstr "Salida en OP_HASH160 faltante"
 
-#: build/static/js/index.js.c:107252
+#: build/static/js/index.js.c:107699
 msgid "Invalid out P2SH hash"
 msgstr "Hash P2SH de salida inválido"
 
-#: build/static/js/index.js.c:107253
+#: build/static/js/index.js.c:107700
 msgid "out OP_EQUAL missing"
 msgstr "Salida OP_EQUAL no existe"
 
-#: build/static/js/index.js.c:107260 build/static/js/index.js.c:107312
+#: build/static/js/index.js.c:107707 build/static/js/index.js.c:107759
 msgid "Invalid output value"
 msgstr "Valor de salida inválido"
 
-#: build/static/js/index.js.c:107289
+#: build/static/js/index.js.c:107736
 msgid "Missing input"
 msgstr "No existen entradas"
 
-#: build/static/js/index.js.c:107294
+#: build/static/js/index.js.c:107741
 msgid "Inputs value is not larger than zero"
 msgstr "El valor no es mayor a cero"
 
-#: build/static/js/index.js.c:107319
+#: build/static/js/index.js.c:107766
 msgid "Fee is too large (%1, expected at most %2)"
 msgstr "Comisión muy alta (se recomienda 1% o 2% como mucho) "
 
-#: build/static/js/index.js.c:107323
+#: build/static/js/index.js.c:107770
 msgid "Fee is too small (%1, expected at least %2)"
 msgstr "Comisión muy baja  (1 %, se esperaba al menos 2%)"
 
-#: build/static/js/index.js.c:107430
+#: build/static/js/index.js.c:107877
 msgid "Facebook login failed"
 msgstr "Error al iniciar sesión vía Facebook"
 
-#: build/static/js/index.js.c:107453
+#: build/static/js/index.js.c:107900
 msgid "Transaction reversed!"
 msgstr "Transacción revertida!"
 
-#: build/static/js/index.js.c:107469 build/static/js/index.js.c:113167
-#: build/static/js/index.js.c:113424
+#: build/static/js/index.js.c:107916 build/static/js/index.js.c:113626
+#: build/static/js/index.js.c:113883
 msgid "Email sent"
 msgstr "El email ha sido enviado"
 
-#: build/static/js/index.js.c:107473
+#: build/static/js/index.js.c:107920
 msgid "Failed sending email"
 msgstr "Error al enviar email"
 
-#: build/static/js/index.js.c:107497
+#: build/static/js/index.js.c:107944
 msgid "Reddit message sent"
 msgstr "Mensaje de Reddit enviado"
 
-#: build/static/js/index.js.c:107502
+#: build/static/js/index.js.c:107949
 msgid "Failed sending Reddit message"
 msgstr "Error enviando mensaje de Reddit"
 
-#: build/static/js/index.js.c:107556
+#: build/static/js/index.js.c:108003
 msgid "Transaction amount must be at least 0.1543mBTC to allow redemption fee"
 msgstr ""
 "El monto de la transacción debe ser al menos 0.1543mBTC para permitir el "
 "pago de la redención"
 
-#: build/static/js/index.js.c:107602 build/static/js/index.js.c:107780
+#: build/static/js/index.js.c:108049 build/static/js/index.js.c:108227
 msgid "Transaction verification failed: "
 msgstr "Error en la verificación de la transacción:"
 
-#: build/static/js/index.js.c:107749 build/static/js/index.js.c:112514
+#: build/static/js/index.js.c:108196 build/static/js/index.js.c:112973
 msgid "Transaction failed: "
 msgstr "Error en la transacción:"
 
-#: build/static/js/index.js.c:107810
+#: build/static/js/index.js.c:108257
 msgid ""
 "Sorry, vouchers and social transactions are not supported with hardware "
 "wallets."
@@ -276,332 +276,332 @@ msgstr ""
 "Lo sentimos, los cupones y transacciones sociales no están soportadas con "
 "las wallets físicas."
 
-#: build/static/js/index.js.c:107855
+#: build/static/js/index.js.c:108302
 msgid "Invalid amount"
 msgstr "Monto inválido"
 
-#: build/static/js/index.js.c:107864
+#: build/static/js/index.js.c:108311
 msgid "Please provide a recipient"
 msgstr "Por favor ingrese un recipiente"
 
-#: build/static/js/index.js.c:108157
+#: build/static/js/index.js.c:108604
 msgid "Error reading address book: "
 msgstr "Error leyendo libreta de direcciones:"
 
-#: build/static/js/index.js.c:108324 build/static/js/index.js.c:114518
-#: build/static/js/index.js.c:115472
+#: build/static/js/index.js.c:108771 build/static/js/index.js.c:114977
+#: build/static/js/index.js.c:115931
 msgid "Please provide a password."
 msgstr "Por favor proporcione una contraseña."
 
-#: build/static/js/index.js.c:108328 build/static/js/index.js.c:115476
+#: build/static/js/index.js.c:108775 build/static/js/index.js.c:115935
 msgid "Passwords do not match."
 msgstr "Las contraseñas no coinciden."
 
-#: build/static/js/index.js.c:108678
+#: build/static/js/index.js.c:109125
 msgid "BTChip communication failed"
 msgstr "Error al validar Checksum!"
 
-#: build/static/js/index.js.c:108719
+#: build/static/js/index.js.c:109166
 msgid "Dongle is locked - remove the dongle and retry"
 msgstr "El Dongle está bloqueado - retire el dongle e inténtelo de nuevo"
 
-#: build/static/js/index.js.c:108890
+#: build/static/js/index.js.c:109337
 #, c-format
 msgid "Old BTChip firmware version detected. Please upgrade to at least %s."
 msgstr ""
 "Versión antigua de firmware de BTChip detectada. Por favor actualice al "
 "menos a %s."
 
-#: build/static/js/index.js.c:109063
+#: build/static/js/index.js.c:109510
 msgid "Copied"
 msgstr "Copiado"
 
-#: build/static/js/index.js.c:109065
+#: build/static/js/index.js.c:109512
 msgid "Error copying"
 msgstr "Error copiando"
 
-#: build/static/js/index.js.c:109634
+#: build/static/js/index.js.c:110081
 msgid ""
 "Not enough money, you need ${missing_satoshis} more ${unit} to cover the "
 "transaction and fee"
 msgstr ""
 
-#: build/static/js/index.js.c:109841
+#: build/static/js/index.js.c:110288
 msgid "Cancelled"
 msgstr "Cancelado"
 
-#: build/static/js/index.js.c:109843
+#: build/static/js/index.js.c:110290
 msgid "Invalid format"
 msgstr "Formato inválido"
 
-#: build/static/js/index.js.c:109854
+#: build/static/js/index.js.c:110301
 msgid ""
 "Could not process the QR code, the image may be blurry. Please try again."
 msgstr ""
 "No se pudo procesar el código QR, la imágen puede estar borrosa. Por favor "
 "inténtelo nuevamente."
 
-#: build/static/js/index.js.c:109885
+#: build/static/js/index.js.c:110332
 msgid "Access denied. Retry to scan from file."
 msgstr "Acceso denegado. Reintente escanear desde archivo."
 
-#: build/static/js/index.js.c:109891
+#: build/static/js/index.js.c:110338
 msgid "You must provide only one image file."
 msgstr "Debe proporcionar sólo un archivo de imagen."
 
-#: build/static/js/index.js.c:110177
+#: build/static/js/index.js.c:110624
 msgid ""
 "Device could not be opened. Make sure you don't have any TREZOR client "
 "running in another tab or browser window!"
 msgstr ""
 
-#: build/static/js/index.js.c:110454
+#: build/static/js/index.js.c:110944
 msgid "Session expired. Please try again."
 msgstr ""
 
-#: build/static/js/index.js.c:110475
+#: build/static/js/index.js.c:110965
 #, c-format
 msgid "Request timed out (%s)"
 msgstr "Tiempo de solicitud agotado (%s)"
 
-#: build/static/js/index.js.c:110483
+#: build/static/js/index.js.c:110973
 #, fuzzy
 msgid "Problem with connection detected. Please try again."
 msgstr ""
 "Problema con la conexión a Internet detectado. Por favor inténtelo "
 "nuevamente."
 
-#: build/static/js/index.js.c:110545
+#: build/static/js/index.js.c:111012
 msgid "An error has occured which forced us to log you out."
 msgstr "Ha ocurrido un error que nos forzó a cerrar tu sesión."
 
-#: build/static/js/index.js.c:110714 build/static/js/index.js.c:110815
-#: build/static/js/index.js.c:110840 build/static/js/index.js.c:110878
-#: build/static/js/index.js.c:111166
+#: build/static/js/index.js.c:111174 build/static/js/index.js.c:111275
+#: build/static/js/index.js.c:111300 build/static/js/index.js.c:111338
+#: build/static/js/index.js.c:111625
 msgid "Login failed"
 msgstr "Error al iniciar sesión"
 
-#: build/static/js/index.js.c:110943
+#: build/static/js/index.js.c:111403
 #, fuzzy
 msgid "Changing PIN failed."
 msgstr "Error al iniciar sesión"
 
-#: build/static/js/index.js.c:111115 build/static/js/index.js.c:111276
+#: build/static/js/index.js.c:111574 build/static/js/index.js.c:111735
 msgid "Main"
 msgstr ""
 
-#: build/static/js/index.js.c:111309 build/static/js/index.js.c:112035
+#: build/static/js/index.js.c:111768 build/static/js/index.js.c:112494
 msgid "Voucher"
 msgstr "Cupón"
 
-#: build/static/js/index.js.c:111489
+#: build/static/js/index.js.c:111948
 msgid "Asset Issuance"
 msgstr ""
 
-#: build/static/js/index.js.c:111491
+#: build/static/js/index.js.c:111950
 msgid "Back from "
 msgstr "Volver de "
 
-#: build/static/js/index.js.c:111493
+#: build/static/js/index.js.c:111952
 msgid "From "
 msgstr "De "
 
-#: build/static/js/index.js.c:111518
+#: build/static/js/index.js.c:111977
 msgid "To "
 msgstr "A "
 
-#: build/static/js/index.js.c:111553
+#: build/static/js/index.js.c:112012
 msgid "Sent back to "
 msgstr "Re-enviar a"
 
-#: build/static/js/index.js.c:111556
+#: build/static/js/index.js.c:112015
 msgid "Re-deposited"
 msgstr "Re-depositado"
 
-#: build/static/js/index.js.c:111622
+#: build/static/js/index.js.c:112081
 #, fuzzy, c-format
 msgid "Time,Description,satoshis,%s,txhash,fee,memo"
 msgstr "Tiempo,Descripción,satoshis"
 
-#: build/static/js/index.js.c:111690 build/static/js/index.js.c:115210
+#: build/static/js/index.js.c:112149 build/static/js/index.js.c:115669
 msgid "Not enough money"
 msgstr ""
 
-#: build/static/js/index.js.c:112510
+#: build/static/js/index.js.c:112969
 msgid "Bitcoin transaction sent!"
 msgstr "Transacción de Bitcoin enviada!"
 
-#: build/static/js/index.js.c:112542
+#: build/static/js/index.js.c:113001
 msgid "Phone"
 msgstr "Teléfono"
 
-#: build/static/js/index.js.c:112696
+#: build/static/js/index.js.c:113155
 msgid "Internal error"
 msgstr "Error interno"
 
-#: build/static/js/index.js.c:112713
+#: build/static/js/index.js.c:113172
 msgid "Failed retrieving password."
 msgstr "Error al obtener contraseña."
 
-#: build/static/js/index.js.c:113077
+#: build/static/js/index.js.c:113536
 #, c-format
 msgid "(about %s days: 1 day ≈ 144 blocks)"
 msgstr "(aprox. %s días: 1 día ≈ 144 bloques)"
 
-#: build/static/js/index.js.c:113096
+#: build/static/js/index.js.c:113555
 msgid "nLockTime settings updated successfully"
 msgstr "Configuración de nLockTime actualizada exitosamente"
 
-#: build/static/js/index.js.c:113151
+#: build/static/js/index.js.c:113610
 msgid "Already expired"
 msgstr "Expiradas"
 
-#: build/static/js/index.js.c:113152
+#: build/static/js/index.js.c:113611
 #, c-format
 msgid "in about %s days"
 msgstr "en alrededor de %s días"
 
-#: build/static/js/index.js.c:113203
+#: build/static/js/index.js.c:113662
 msgid "You need to log out for language changes to be applied."
 msgstr "Necesita cerrar la sesión para que el cambio de idioma sea aplicado."
 
-#: build/static/js/index.js.c:113211
+#: build/static/js/index.js.c:113670
 msgid "Error changing language:"
 msgstr "Error cambiando el idioma:"
 
-#: build/static/js/index.js.c:113243 build/static/js/index.js.c:113277
-#: build/static/js/index.js.c:113317
+#: build/static/js/index.js.c:113702 build/static/js/index.js.c:113736
+#: build/static/js/index.js.c:113776
 msgid "{1} supports only the following currencies: {2}"
 msgstr "{1} soporta únicamente las siguientes monedas: {2}"
 
-#: build/static/js/index.js.c:113367
+#: build/static/js/index.js.c:113826
 msgid "Sent handler registration request"
 msgstr "Solicitud de registración de controlador enviada"
 
-#: build/static/js/index.js.c:113395
+#: build/static/js/index.js.c:113854
 msgid "Cannot remove an account with non-zero balance"
 msgstr "No se puede eliminar una cuenta con un balance distinto a cero"
 
-#: build/static/js/index.js.c:113417
+#: build/static/js/index.js.c:113876
 msgid "You can't change your email address while you have email 2FA enabled"
 msgstr ""
 "No puede cambiar su dirección de correo electrónico mientras tenga la "
 "protección 2FA activa"
 
-#: build/static/js/index.js.c:113434
+#: build/static/js/index.js.c:113893
 msgid "Email confirmed"
 msgstr "Correo electrónico confirmado"
 
-#: build/static/js/index.js.c:113563
+#: build/static/js/index.js.c:114022
 msgid "New item saved"
 msgstr "Nuevo item guardado"
 
-#: build/static/js/index.js.c:113569
+#: build/static/js/index.js.c:114028
 msgid "Error saving item: "
 msgstr "Error guardando item:"
 
-#: build/static/js/index.js.c:113726
+#: build/static/js/index.js.c:114185
 msgid "PIN removed"
 msgstr "PIN eliminado"
 
-#: build/static/js/index.js.c:113758
+#: build/static/js/index.js.c:114217
 msgid "PIN changed"
 msgstr "PIN cambiado"
 
-#: build/static/js/index.js.c:113762
+#: build/static/js/index.js.c:114221
 msgid "PIN set"
 msgstr "PIN configurado"
 
-#: build/static/js/index.js.c:113777
+#: build/static/js/index.js.c:114236
 msgid "All PINs removed"
 msgstr "Todas las claves PIN eliminadas"
 
-#: build/static/js/index.js.c:113798
+#: build/static/js/index.js.c:114257
 msgid "Facebook integration disabled"
 msgstr "Integración con Facebook deshabilitada"
 
-#: build/static/js/index.js.c:113811
+#: build/static/js/index.js.c:114270
 msgid "Facebook integration enabled"
 msgstr "Integración con Facebook habilitada"
 
-#: build/static/js/index.js.c:113832
+#: build/static/js/index.js.c:114291
 msgid "Reddit integration disabled"
 msgstr "Integración con Reddit deshabilitada"
 
-#: build/static/js/index.js.c:113844
+#: build/static/js/index.js.c:114303
 msgid "Reddit integration enabled"
 msgstr "Integración con Reddit habilitada"
 
-#: build/static/js/index.js.c:113866
+#: build/static/js/index.js.c:114325
 msgid "Custom login disabled"
 msgstr "Sesión Personalizada deshabilitada"
 
-#: build/static/js/index.js.c:113879
+#: build/static/js/index.js.c:114338
 msgid "Custom login changed"
 msgstr "Sesión personalizada modificada"
 
-#: build/static/js/index.js.c:113899 build/static/js/index.js.c:113932
-#: build/static/js/index.js.c:113940
+#: build/static/js/index.js.c:114358 build/static/js/index.js.c:114391
+#: build/static/js/index.js.c:114399
 msgid "Change"
 msgstr "Cambiar"
 
-#: build/static/js/index.js.c:113899 build/static/js/index.js.c:113932
-#: build/static/js/index.js.c:113940
+#: build/static/js/index.js.c:114358 build/static/js/index.js.c:114391
+#: build/static/js/index.js.c:114399
 msgid "Save"
 msgstr "Guardar"
 
-#: build/static/js/index.js.c:114007
+#: build/static/js/index.js.c:114466
 msgid "Limits updated successfully"
 msgstr "Límites actualizados con éxito"
 
-#: build/static/js/index.js.c:114214
+#: build/static/js/index.js.c:114673
 msgid "Renamed successfully"
 msgstr "Límites actualizados con éxito"
 
-#: build/static/js/index.js.c:114415
+#: build/static/js/index.js.c:114874
 msgid "Create new Wallet"
 msgstr "Crear nueva Wallet"
 
-#: build/static/js/index.js.c:114425
+#: build/static/js/index.js.c:114884
 msgid "Launch the App"
 msgstr ""
 
-#: build/static/js/index.js.c:114431
+#: build/static/js/index.js.c:114890
 msgid "Install the App"
 msgstr ""
 
-#: build/static/js/index.js.c:114692
+#: build/static/js/index.js.c:115151
 msgid "Unknown error"
 msgstr "Error desconocido"
 
-#: build/static/js/index.js.c:114797
+#: build/static/js/index.js.c:115256
 msgid "Invalid PIN, 2 retries left"
 msgstr ""
 
-#: build/static/js/index.js.c:114799
+#: build/static/js/index.js.c:115258
 #, fuzzy
 msgid "Invalid PIN, 1 retry left"
 msgstr "PIN inválido"
 
-#: build/static/js/index.js.c:114801
+#: build/static/js/index.js.c:115260
 #, fuzzy
 msgid "Invalid PIN, dongle wiped"
 msgstr "PIN inválido"
 
-#: build/static/js/index.js.c:114814
+#: build/static/js/index.js.c:115273
 msgid "{hardware_wallet_name} Login"
 msgstr ""
 
-#: build/static/js/index.js.c:114923
+#: build/static/js/index.js.c:115382
 msgid "Wallet decryption failed"
 msgstr "Falló la decriptación de Wallet"
 
-#: build/static/js/index.js.c:114932
+#: build/static/js/index.js.c:115391
 #, c-format
 msgid "%s attempts left."
 msgstr "%s intentos restantes."
 
-#: build/static/js/index.js.c:114934
+#: build/static/js/index.js.c:115393
 msgid "0 attempts left - PIN removed."
 msgstr "0 intentos restantes - PIN eliminado."
 
