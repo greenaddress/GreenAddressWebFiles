@@ -1030,80 +1030,11 @@ angular.module('greenWalletSettingsControllers',
             notices.makeNotice('error', err.args[1]);
         });
     }
-}]).controller('ThirdPartyController', ['$scope', 'tx_sender', 'notices', 'facebook', 'gaEvent', '$q', 'reddit',
-        function($scope, tx_sender, notices, facebook, gaEvent, $q, reddit) {
+}]).controller('ThirdPartyController', ['$scope', 'tx_sender', 'notices', 'gaEvent', '$q',
+        function($scope, tx_sender, notices, gaEvent, $q) {
     $scope.thirdparty = {
         loaded: false,
-        fbstate: {},
-        redditstate: {},
         customstate: {},
-        toggle_fb: function() {
-            var that = this;
-            if (this.fbstate.enabled) {
-                tx_sender.call('com.greenaddress.addressbook.disable_sync', 'facebook').then(function(data) {
-                    gaEvent('Wallet', 'FbSyncDisabled');
-                    that.toggling_fb = 2;
-                    that.fbstate.enabled = false;
-                    notices.makeNotice('success', gettext('Facebook integration disabled'));
-                }, function(err) {
-                    gaEvent('Wallet', 'FbSyncDisableFailed', err.args[1]);
-                    that.toggling_fb = false;
-                    notices.makeNotice('error', err.args[1]);
-                });
-            } else {
-                gaEvent('Wallet', 'FbSyncEnableAttempt');
-                facebook.login(that.fbstate).then(function() {
-                    var auth = FB.getAuthResponse();
-                    if (that.fbstate.logged_in) {
-                        tx_sender.call('com.greenaddress.addressbook.sync_fb', auth.accessToken).then(function() {
-                            gaEvent('Wallet', 'FbSyncEnabled');
-                            notices.makeNotice('success', gettext('Facebook integration enabled'));
-                            that.toggling_fb = 2;
-                            that.fbstate.enabled = true;
-                        }, function(err) {
-                            gaEvent('Wallet', 'FbSyncEnableFailed');
-                            notices.makeNotice('error', err.args[1]);
-                            that.toggling_fb = false;
-                        });
-                    } else {
-                        that.toggling_fb = false;
-                    }
-                });
-            }
-        },
-        toggle_reddit: function() {
-            var that = this;
-            if (this.redditstate.enabled) {
-                tx_sender.call('com.greenaddress.addressbook.disable_sync', 'reddit').then(function(data) {
-                    gaEvent('Wallet', 'RedditSyncDisabled');
-                    that.toggling_reddit = 2;
-                    that.redditstate.enabled = false;
-                    notices.makeNotice('success', gettext('Reddit integration disabled'));
-                }, function(err) {
-                    gaEvent('Wallet', 'RedditSyncDisableFailed', err.args[1]);
-                    that.toggling_reddit = false;
-                    notices.makeNotice('error', err.args[1]);
-                });
-            } else {
-                gaEvent('Wallet', 'RedditSyncEnableAttempt');
-                reddit.getToken('identity').then(function(token) {
-                    if (token) {
-                        tx_sender.call('com.greenaddress.addressbook.sync_reddit', token).then(function() {
-                            gaEvent('Wallet', 'RedditSyncEnabled');
-                            notices.makeNotice('success', gettext('Reddit integration enabled'));
-                            that.toggling_reddit = 2;
-                            that.redditstate.enabled = true;
-                        }, function(err) {
-                            gaEvent('Wallet', 'RedditSyncEnableFailed');
-                            notices.makeNotice('error', err.args[1]);
-                            that.toggling_reddit = false;
-                        });
-                    } else {
-                        that.toggling_reddit = false;
-                    }
-                });
-            }
-        },
         toggle_custom: function() {
             var that = this;
             var change = (that.toggling_custom == 'changing');
@@ -1141,32 +1072,10 @@ angular.module('greenWalletSettingsControllers',
         }
     };
     tx_sender.call('com.greenaddress.addressbook.get_sync_status').then(function(data) {
-        $scope.thirdparty.fbstate.enabled = data.fb;
-        $scope.thirdparty.redditstate.enabled = data.reddit;
         $scope.thirdparty.customstate.username = data.username;
         $scope.thirdparty.customstate.enabled = data.username ? true : false;
         $scope.thirdparty.customstate.save_button_label = data.username ? gettext('Change') : gettext('Save');
         $scope.thirdparty.loaded = true;
-        $scope.$watch('thirdparty.fbstate.enabled', function(newValue, oldValue) {
-            if (newValue === oldValue || $scope.thirdparty.toggling_fb === true) return;
-            if ($scope.thirdparty.toggling_fb == 2) {
-                $scope.thirdparty.toggling_fb = false;
-                return;
-            }
-            $scope.thirdparty.fbstate.enabled = oldValue;
-            $scope.thirdparty.toggling_fb = true;
-            $scope.thirdparty.toggle_fb();
-        });
-        $scope.$watch('thirdparty.redditstate.enabled', function(newValue, oldValue) {
-            if (newValue === oldValue || $scope.thirdparty.toggling_reddit === true) return;
-            if ($scope.thirdparty.toggling_reddit == 2) {
-                $scope.thirdparty.toggling_reddit = false;
-                return;
-            }
-            $scope.thirdparty.redditstate.enabled = oldValue;
-            $scope.thirdparty.toggling_reddit = true;
-            $scope.thirdparty.toggle_reddit();
-        });
         $scope.thirdparty.customstate.save = function() {
             // step 2 - actually enable (disabling the inputs while server processes the request)
             var was_enabled = $scope.thirdparty.customstate.enabled;

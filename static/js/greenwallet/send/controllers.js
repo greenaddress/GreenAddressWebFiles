@@ -2,8 +2,8 @@ var AssetsTransaction = require('wallet').bitcoinup.AssetsTransaction;
 var bufferEquals = require('buffer-equals');
 angular.module('greenWalletSendControllers',
     ['greenWalletServices'])
-.controller('SendController', ['$scope', 'wallets', 'tx_sender', 'cordovaReady', 'notices', 'branches', 'facebook', 'wallets', '$routeParams', 'hostname', 'gaEvent', 'reddit', '$uibModal', '$location', '$rootScope', '$q', 'parse_bitcoin_uri', 'qrcode', 'sound', 'encode_key',
-         function SendController($scope, wallets, tx_sender, cordovaReady, notices, branches, facebook, wallets, $routeParams, hostname, gaEvent, reddit, $uibModal, $location, $rootScope, $q, parse_bitcoin_uri, qrcode, sound, encode_key) {
+.controller('SendController', ['$scope', 'wallets', 'tx_sender', 'cordovaReady', 'notices', 'branches', 'wallets', '$routeParams', 'hostname', 'gaEvent', '$uibModal', '$location', '$rootScope', '$q', 'parse_bitcoin_uri', 'qrcode', 'sound', 'encode_key',
+         function SendController($scope, wallets, tx_sender, cordovaReady, notices, branches, wallets, $routeParams, hostname, gaEvent, $uibModal, $location, $rootScope, $q, parse_bitcoin_uri, qrcode, sound, encode_key) {
     if (!wallets.requireWallet($scope)) return;
 
     var _verify_tx = function(that, rawtx, destination, satoshis, change_pointer, no_electrum) {
@@ -354,54 +354,6 @@ angular.module('greenWalletSendControllers',
         stop_scanning_qr_code: function() {
             qrcode.stop_scanning($scope);
         },
-        do_send_fb: function(that, enckey, satoshis, key, pointer) {
-            var that = this;
-            $scope.send_fb_via_fb = function() {
-                $scope.send_fb_via_fb_clicked = true;
-                $rootScope.is_loading += 1;
-                facebook.login({}).then(function() {
-                    $rootScope.decrementLoading();
-                    FB.ui({
-                        method: 'send',
-                        link: 'https://' + hostname + '/redeem/?amount=' + satoshis + '#/redeem/' + enckey,
-                        to: that.recipient.address
-                    });
-                }, function() {
-                    $rootScope.decrementLoading();
-                    notices.makeNotice('error', gettext('Facebook login failed'));
-                });
-
-            }
-            $scope.send_fb_via_fb_clicked = false;
-            $rootScope.decrementLoading();
-            $uibModal.open({
-                templateUrl: BASE_URL+'/'+LANG+'/wallet/partials/wallet_modal_fb_message.html',
-                scope: $scope
-            }).result.then(function() {
-                $location.url('/info/');
-            }, function() {
-                // cancel - reverse the tx
-                $rootScope.is_loading += 1;
-                tx_sender.call("com.greenaddress.vault.prepare_sweep_social",
-                        Array.from(key.keyPair.getPublicKeyBuffer()), false).then(function(data) {
-                    data.prev_outputs = [];
-                    for (var i = 0; i < data.prevout_scripts.length; i++) {
-                        data.prev_outputs.push(
-                            {branch: branches.EXTERNAL, pointer: pointer,
-                             script: data.prevout_scripts[i]})
-                    }
-                    that.signing = true;
-                    wallets.sign_and_send_tx($scope, data, true, null, gettext('Transaction reversed!'), that._signing_progress_cb.bind(that)).finally(function() {
-                        $rootScope.decrementLoading();
-                        $location.url('/info/');
-                    });  // priv_der=true
-                }, function(error) {
-                    $rootScope.decrementLoading();
-                    gaEvent('Wallet', 'TransactionsTabRedeemFailed', error.args[1]);
-                    notices.makeNotice('error', error.args[1]);
-                });
-            });
-        },
         do_send_email: function(that, enckey, satoshis) {
             return tx_sender.call("com.greenaddress.vault.send_email", that.recipient.address,
                     'https://' + hostname + '/redeem/?amount=' + satoshis + '#/redeem/' + enckey).then(
@@ -429,21 +381,6 @@ angular.module('greenWalletSendControllers',
             }).result.finally(function() { $location.url('/info/'); });
             $rootScope.decrementLoading();
         },
-        do_send_reddit: function(that, enckey, satoshis) {
-            if ($scope.wallet.send_from) $scope.wallet.send_from = null;
-            return tx_sender.call("com.greenaddress.vault.send_reddit", that.recipient.address,
-                    'https://' + hostname + '/redeem/?amount=' + satoshis + '#/redeem/' + enckey).then(
-                function(json) {
-                    $rootScope.decrementLoading();
-                    notices.makeNotice('success', gettext('Reddit message sent'));
-                    sound.play(BASE_URL + "/static/sound/coinsent.mp3", $scope);
-                    $location.url('/info/');
-                }, function(err) {
-                    $rootScope.decrementLoading();
-                    notices.makeNotice('error', gettext('Failed sending Reddit message') + ': ' + err.args[1]);
-                }
-            );
-        },
         _send_social_ga: function(satoshis) {
             var that = this, to_addr = {type: this.recipient.type, id: that.recipient.address};
             var priv_data = {
@@ -454,7 +391,6 @@ angular.module('greenWalletSendControllers',
             if (that.recipient.address != that.recipient.name) {
                 priv_data.social_destination = that.recipient.name;
             }
-            if ($scope.wallet.send_from) priv_data.reddit_from = $scope.wallet.send_from;
             priv_data.allow_random_change = true;
             priv_data.memo = this.memo;
             priv_data.subaccount = $scope.wallet.current_subaccount;
@@ -524,7 +460,6 @@ angular.module('greenWalletSendControllers',
                                  external_private: true,
                                  instant: that.instant,
                                  prevouts_mode: 'http'};
-                if ($scope.wallet.send_from) priv_data.reddit_from = $scope.wallet.send_from;
                 that._encrypt_key(key.keyPair).then(function(b58) {
                     if (that.voucher && that.passphrase) {
                         priv_data.encrypted_key_hash = Array.from(Bitcoin.bitcoin.crypto.hash160(b58));
@@ -731,21 +666,6 @@ angular.module('greenWalletSendControllers',
                 }
             }).finally(function() { $rootScope.decrementLoading(); that.sending = false; });;
         },
-        send_to_reddit: function() {
-            var that = this;
-            tx_sender.call("com.greenaddress.addressbook.reddit_user_has_wallet", this.recipient.address.replace('reddit:', '')).then(function(has_wallet) {
-                that.recipient.address = that.recipient.address.replace('reddit:', '');
-                if (has_wallet) {
-                    var satoshis = that.amount_to_satoshis(that.amount);
-                    that._send_social_ga(satoshis);
-                } else {
-                    that._send_social(that.do_send_reddit);
-                }
-            }, function(error) {
-                that.sending = false;
-                notices.makeNotice('error', error.args[1]);
-            });
-        },
         send_social: function(do_send) {
             var fail_hardware = function() {
                 notices.makeNotice('error', gettext('Sorry, vouchers and social transactions are not supported with hardware wallets.'))
@@ -758,9 +678,6 @@ angular.module('greenWalletSendControllers',
             }
             var that = this;
             var name = this.recipient.address;
-            if (this.recipient.type == 'reddit') {
-                name = name.replace('reddit:', '');
-            }
             tx_sender.call("com.greenaddress.addressbook.user_has_wallet", this.recipient.type, name).then(function(has_wallet) {
                 that.recipient.address = name;
                 if (has_wallet) {
@@ -813,18 +730,12 @@ angular.module('greenWalletSendControllers',
                 setTimeout(function() { document.body.scrollTop = document.body.scrollHeight; }, 0);
             }
             this.signing_percentage = 0;
-            if (this.recipient.type == 'facebook') {
-                gaEvent('Wallet', 'SendToFacebook');
-                this.send_social(this.do_send_fb.bind(this));
-            } else if (this.recipient.type == 'email') {
+            if (this.recipient.type == 'email') {
                 gaEvent('Wallet', 'SendToEmail');
                 this.send_social(this.do_send_email.bind(this));
             } else if (this.recipient.type == 'address' || this.recipient.type == 'subaccount') {
                 gaEvent('Wallet', 'SendToAddress');
                 this.send_address();
-            } else if (this.recipient.type == 'reddit') {
-                gaEvent('Wallet', 'SendToReddit');
-                this.send_social(this.do_send_reddit.bind(this));
             } else if (this.recipient.type == 'payreq') {
                 gaEvent('Wallet', 'SendToPaymentRequestSent');
                 this.send_to_payreq();
@@ -833,23 +744,18 @@ angular.module('greenWalletSendControllers',
                     gaEvent('Wallet', 'SendToNewEmail');
                     this.recipient = {type: 'email', name: this.recipient, address: this.recipient};
                     this.send_social(this.do_send_email.bind(this));
-                } else if (this.recipient.indexOf('reddit:') == 0) {
-                    gaEvent('Wallet', 'SendToNewReddit');
-                    this.recipient = {type: 'reddit', name: this.recipient, address: this.recipient};
-                    this.send_social(this.do_send_reddit.bind(this));
                 } else {
                     gaEvent('Wallet', 'SendToNewAddress');
                     this.send_address();
                 }
             } else {
-                alert('Unsupported recipient type');
+                alert('Deprecated recipient type');
             }
         },
         recipient_is_btcaddr: function() {
             return !this.recipient ||
                 (this.recipient.constructor === String &&
-                    this.recipient.indexOf('@') == -1 &&
-                    this.recipient.indexOf('reddit') != 0) ||
+                    this.recipient.indexOf('@') == -1) ||
                 this.recipient.type == 'address' ||
                 this.recipient.type == 'payreq' ||
                 this.recipient.has_wallet;
@@ -916,7 +822,7 @@ angular.module('greenWalletSendControllers',
             gaEvent('Wallet', 'SendToReceivingId');
             var receiving_id = $scope.wallet.send_to_receiving_id;
             $scope.wallet.send_to_receiving_id = undefined;
-            recipient_override = {name: receiving_id, address: receiving_id, type: receiving_id.indexOf('reddit:') == -1 ? 'address' : 'reddit',
+            recipient_override = {name: receiving_id, address: receiving_id, type: 'address',
                                   amount: $scope.wallet.send_to_receiving_id_amount};
         } else if ($scope.wallet.send_to_payment_request) {
             gaEvent('Wallet', 'SendToPaymentRequestOpened');

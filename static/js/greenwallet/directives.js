@@ -71,10 +71,6 @@ angular.module('greenWalletDirectives', [])
             }
         });
     };
-}]).directive('fbParse', ['facebook', function(facebook) {
-   return function(scope, elem, attr) {
-       FB.XFBML.parse(elem[0]);
-   };
 }]).directive('gaClickNoTouch', ['$parse', function($parse) {
     return {
         compile: function($element, attr) {

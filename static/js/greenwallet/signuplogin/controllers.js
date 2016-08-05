@@ -2,8 +2,8 @@ var HWWallet = require('wallet').GA.HWWallet;
 var allHwWallets = require('wallet').GA.allHwWallets;
 
 angular.module('greenWalletSignupLoginControllers', ['greenWalletMnemonicsServices'])
-.controller('SignupLoginController', ['$scope', '$uibModal', 'focus', 'wallets', 'notices', 'mnemonics', '$location', 'cordovaReady', 'facebook', 'tx_sender', 'crypto', 'gaEvent', 'reddit', 'storage', 'qrcode', '$timeout', '$q', 'trezor', 'bip38', 'btchip', '$interval', '$rootScope',
-        function SignupLoginController($scope, $uibModal, focus, wallets, notices, mnemonics, $location, cordovaReady, facebook, tx_sender, crypto, gaEvent, reddit, storage, qrcode, $timeout, $q, trezor, bip38, btchip, $interval, $rootScope) {
+.controller('SignupLoginController', ['$scope', '$uibModal', 'focus', 'wallets', 'notices', 'mnemonics', '$location', 'cordovaReady', 'tx_sender', 'crypto', 'gaEvent', 'storage', 'qrcode', '$timeout', '$q', 'trezor', 'bip38', 'btchip', '$interval', '$rootScope',
+        function SignupLoginController($scope, $uibModal, focus, wallets, notices, mnemonics, $location, cordovaReady, tx_sender, crypto, gaEvent, storage, qrcode, $timeout, $q, trezor, bip38, btchip, $interval, $rootScope) {
 
     if (window.GlobalWalletControllerInitVars) {
         // in case user goes back from send to login and back to send, we want to display the
@@ -11,7 +11,7 @@ angular.module('greenWalletSignupLoginControllers', ['greenWalletMnemonicsServic
         window.WalletControllerInitVars = window.GlobalWalletControllerInitVars;
     }
 
-    $scope.create_new_wallet_label = gettext("Create new Wallet");
+    $scope.install_run_app_label = "";
     var appInstalled = false;
     if (!(cur_net.isAlpha || cur_net.isSegwit) && window.chrome && chrome.app && !chrome.storage) {
         if (chrome.runtime) {
@@ -21,15 +21,15 @@ angular.module('greenWalletSignupLoginControllers', ['greenWalletMnemonicsServic
                     appInstalled = (response == "GreenAddress installed");
                     if (appInstalled) {
                         $scope.$apply(function() {
-                            $scope.create_new_wallet_label = gettext("Launch the App")
+                            $scope.install_run_app_label = gettext("Launch the Chrome App")
                         });
                     }
                 }
             );
         }
-        $scope.create_new_wallet_label = gettext("Install the App")
+        $scope.install_run_app_label = gettext("Install the Chrome App")
     }
-    $scope.create_new_wallet = function(ev) {
+    $scope.install_run_app = function(ev) {
         if (!(cur_net.isAlpha || cur_net.isSegwit) && window.chrome && chrome.app && !chrome.storage) {
             // !chrome.storage means we're not inside the chrome app
             ev.preventDefault();
@@ -273,44 +273,6 @@ angular.module('greenWalletSignupLoginControllers', ['greenWalletMnemonicsServic
                 notices.makeNotice('error', error.args[1]);
             });
         }
-    };
-
-    state.fbloginstate = {};
-    $scope.login_with_facebook = function() {
-        gaEvent('Login', 'FacebookLogin');
-        facebook.login(state.fbloginstate).then(function(succeeded) {
-            wallets.loginWatchOnly($scope, 'facebook', FB.getAuthResponse().accessToken).then(function() {
-                gaEvent('Login', 'FacebookLoginSucceeded');
-            }).catch(function(e) {
-                if (e && e.args[0] == "http://greenaddressit.com/error#usernotfound") {
-                    gaEvent('Login', 'FacebookLoginRedirectedToOnboarding');
-                    $scope.wallet.signup_fb_prelogged_in = true;
-                    $location.path('/create');
-                } else {
-                    gaEvent('Login', 'FacebookLoginFailed', e && e.args[1] || e);
-                    notices.makeNotice('error', e ? (e.args[1] || e) : gettext('Unknown error'));
-                }
-            });
-        });
-    };
-
-    $scope.login_with_reddit = function() {
-        gaEvent('Login', 'RedditLogin');
-        reddit.getToken('identity').then(function(token) {
-            if (!token) return;
-            wallets.loginWatchOnly($scope, 'reddit', token).then(function() {
-                gaEvent('Login', 'RedditLoginSucceeded');
-            }).catch(function(e) {
-                if (e.uri == "http://greenaddressit.com/error#usernotfound") {
-                    gaEvent('Login', 'RedditLoginRedirectedToOnboarding');
-                    $scope.wallet.signup_reddit_prelogged_in = token;
-                    $location.path('/create');
-                } else {
-                    gaEvent('Login', 'RedditLoginFailed', e.args[1]);
-                    notices.makeNotice('error', e.args[1]);
-                }
-            });
-        });
     };
 
     $scope.login_with_custom = function() {

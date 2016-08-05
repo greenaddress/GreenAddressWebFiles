@@ -49,8 +49,6 @@
     <link href="{{STATIC_URL}}/css/greenaddress.css" rel="stylesheet" />
     {% if include_cordova or cdvapp %}
         <script type="text/javascript" src="../../cordova.js"></script>
-        <script type="text/javascript" src="{{STATIC_URL}}/js/cdv-plugin-fb-connect.js"></script>
-        <script type="text/javascript" src="{{STATIC_URL}}/js/facebook-js-sdk.js"></script>
         <script type="text/javascript" src="{{STATIC_URL}}/js/common_cordova_handlers.js"></script>
         {% if not cdvapp %}<script>var path_with_no_lang = '{{PATH_NO_LANG}}';</script>{% endif %}
     {% endif %}

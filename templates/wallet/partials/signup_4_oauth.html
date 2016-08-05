@@ -11,23 +11,13 @@
             </div>
 
             <div class="create-modal-body">
-                <div class="title">{{ _("Pay or get paid by social networks") }}<br><small>{{ _("Grant access to your wallet in watch-only mode") }}</small></div>
+                <div class="title">{{ _("Custom login") }}<br><small>{{ _("Grant access to your wallet in watch-only mode") }}</small></div>
                 <hr>
                 <div class="text-center">
-                {% if not crapp %}
-                    <button ng-click="signup.fblogin()" class="btn btn-facebook" ng-class="{'btn-sync':signup.fbloginstate.synchronized}" ng-disabled="signup.fbloginstate.synchronized"><i class="icon-facebook"></i> Facebook</button>
-                    {% if not include_cordova and not cdvapp %}
-                    <button ng-click="signup.redditlogin()" class="btn btn-reddit" ng-class="{'btn-sync':signup.redditloginstate.synchronized}" ng-disabled="signup.redditloginstate.synchronized"><i class="icon-reddit"></i> Reddit</button>
-                    {% endif %}
-                {% endif %}
                 <button ng-click="signup.customlogin()" class="btn btn-default" ng-class="{'btn-sync':signup.customloginstate.synchronized}" ng-disabled="signup.customloginstate.synchronized"><i class="glyphicon glyphicon-lock"></i> {{ _("Custom Login") }}</button>
                 </div>
                 <hr>
                 <p>{% trans %}If you like you can access your Wallet in Watch-Only mode via simple login. When you login in this way you access a completely separate "area" of your wallet, in no way it can be compromised and payments cannot be made{% endtrans %}</p>
-                
-                {% if not crapp %}
-                <p>{% trans %}Plus use your email or your Facebook name to receive payments! No more long and complicated addresses to remember and communicate. That means that you can easily login in 'watch-only mode' safely from any wi-fi, on the go or even at Starbucks!{% endtrans %}</p>
-                {% endif %}
             </div>
 
             <div class="create-modal-footer">

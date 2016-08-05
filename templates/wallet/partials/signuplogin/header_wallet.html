@@ -1,3 +1,10 @@
 {% if not cdvapp %}
+{% if WEBWALLET_MODE == "FULL" %}
 <div ng-show="!(state.seed_progress && !state.login_error)" class="title">{{ _("Welcome to GreenAddress!") }}<br><small>{{ _("Please log in to use your Wallet") }}</small></div>
+{% else %}
+<div class="title">
+  {{ _("For improved security please login via our desktop or mobile apps") }}<br>
+  <small>{{ _("Locally installed apps are generally more secure than websites") }}</small>
+</div>
+{% endif %}
 {% endif %}
