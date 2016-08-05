@@ -9,11 +9,9 @@ module.exports = [
     'notices',
     'wallets',
     '$window',
-    'facebook',
     '$uibModal',
     'gaEvent',
     '$q',
-    'reddit',
     'storage',
     'trezor',
     'btchip',
@@ -25,7 +23,7 @@ module.exports = [
     SignupController
 ];
 
-function SignupController($scope, $location, mnemonics, tx_sender, notices, wallets, $window, facebook, $uibModal, gaEvent, $q, reddit, storage, trezor, btchip, bip38, $interval, $sce, hw_detector, user_agent) {
+function SignupController($scope, $location, mnemonics, tx_sender, notices, wallets, $window, $uibModal, gaEvent, $q, storage, trezor, btchip, bip38, $interval, $sce, hw_detector, user_agent) {
     // some Android devices have window.WebSocket defined and yet still don't support WebSockets
     var isUnsupportedAndroid = navigator.userAgent.match(/Android 4.0/i) ||
                                navigator.userAgent.match(/Android 4.1/i) ||
@@ -135,10 +133,8 @@ function SignupController($scope, $location, mnemonics, tx_sender, notices, wall
         })
     }
 
-    if (signup.fbloginstate === undefined) {
+    if (signup.customloginstate === undefined) {
         secured_confirmed = $q.defer();
-        signup.fbloginstate = {};
-        signup.redditloginstate = {};
         signup.customloginstate = {};
         if (!signup.is_trezor)
             signup.seed_progress = 0;
@@ -193,12 +189,6 @@ function SignupController($scope, $location, mnemonics, tx_sender, notices, wall
                                         }
                                         login_d.then(function(data) {
                                             gaEvent('Signup', 'LoggedIn');
-                                            if ($scope.wallet.signup_fb_prelogged_in) {
-                                                $scope.signup.fblogin();
-                                            }
-                                            if ($scope.wallet.signup_reddit_prelogged_in) {
-                                                $scope.signup.redditlogin($scope.wallet.signup_reddit_prelogged_in);
-                                            }
                                             $scope.signup.logged_in = data;
                                             if (!data) $scope.signup.login_failed = true;
                                             if (data && !data.first_login) {
@@ -248,12 +238,6 @@ function SignupController($scope, $location, mnemonics, tx_sender, notices, wall
                     path = Bitcoin.CryptoJS.enc.Hex.stringify(path);
                     wallets.login_trezor($scope, trezor_dev, path, true, false).then(function(data) {
                         gaEvent('Signup', 'LoggedIn');
-                        if ($scope.wallet.signup_fb_prelogged_in) {
-                            $scope.signup.fblogin();
-                        }
-                        if ($scope.wallet.signup_reddit_prelogged_in) {
-                            $scope.signup.redditlogin($scope.wallet.signup_reddit_prelogged_in);
-                        }
                         $scope.signup.logged_in = data;
                         if (!data) $scope.signup.login_failed = true;
                     });
@@ -303,25 +287,6 @@ function SignupController($scope, $location, mnemonics, tx_sender, notices, wall
 
     };
 
-    $scope.signup.fblogin = function() {
-        gaEvent('Signup', 'FbLoginClicked');
-        facebook.login($scope.signup.fbloginstate).then(function() {
-            var auth = FB.getAuthResponse();
-            $scope.signup.social_in_progress = true;
-            tx_sender.call('com.greenaddress.addressbook.sync_fb', auth.accessToken).then(function() {
-                gaEvent('Signup', 'FbSyncEnabled');
-                $scope.signup.social_in_progress = false;
-                $scope.signup.any_social_done = true;
-                $scope.signup.fbloginstate.synchronized = true;
-            }, function(err) {
-                gaEvent('Signup', 'FbSyncFailed', err.args[1]);
-                notices.makeNotice('error', err.args[1]);
-                $scope.signup.social_in_progress = false;
-                $scope.signup.fbloginstate.logged_in = false;
-            });
-        });
-    };
-
     $scope.signup.customlogin = function() {
         gaEvent('Signup', 'CustomLoginClicked');
         $scope.got_username_password = function(username, password) {
@@ -341,31 +306,6 @@ function SignupController($scope, $location, mnemonics, tx_sender, notices, wall
             scope: $scope
         });
     }
-
-    $scope.signup.redditlogin = function(token) {
-        gaEvent('Signup', 'RedditLoginClicked');
-        if (token) {
-            var d = $q.when(token);
-        } else {
-            var d = reddit.getToken('identity');
-        }
-        d.then(function(token) {
-            if (token) {
-                $scope.signup.social_in_progress = true;
-                tx_sender.call('com.greenaddress.addressbook.sync_reddit', token).then(function() {
-                    gaEvent('Signup', 'RedditSyncEnabled');
-                    $scope.signup.social_in_progress = false;
-                    $scope.signup.any_social_done = true;
-                    $scope.signup.redditloginstate.synchronized = true;
-                }, function(err) {
-                    gaEvent('Signup', 'RedditSyncEnableFailed');
-                    notices.makeNotice('error', err.args[1]);
-                    $scope.signup.social_in_progress = false;
-                    that.toggling_reddit = false;
-                });
-            }
-        });
-    };
 
     $scope.signup.qrmodal = function() {
         gaEvent('Signup', 'QrModal');
