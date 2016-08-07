@@ -5,7 +5,6 @@ var Electrum = window.Electrum;
 var gettext = window.gettext;
 var autobahn = window.autobahn;
 var wss_url = window.wss_url;
-var cur_net = window.cur_net;
 var dev_d = window.dev_d;
 var Bitcoin = window.Bitcoin;
 var ByteString = window.ByteString;
@@ -332,7 +331,7 @@ function factory ($q, $rootScope, cordovaReady, $http, notices, gaEvent, $locati
                               gaUserPath = mnemonics.seedToPath(path_seed);
                             }
 
-                            var WalletClass = cur_net.isAlphaMultiasset ? GAAssetsWallet : GAWallet;
+                            var WalletClass = window.cur_net.isAlphaMultiasset ? GAAssetsWallet : GAWallet;
                             txSenderService.gawallet = new WalletClass({
                               existingSession: {
                                 session: session_for_login,
