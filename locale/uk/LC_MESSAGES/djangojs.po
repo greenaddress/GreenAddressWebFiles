@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: greenaddress-wallet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-08-05 18:20+0000\n"
+"POT-Creation-Date: 2016-08-07 18:33+0000\n"
 "PO-Revision-Date: 2014-08-20 10:26-0400\n"
 "Last-Translator: GreenAddress <info@greenaddress.it>\n"
 "Language-Team: Ukrainian\n"
@@ -47,17 +47,17 @@ msgid "Please go to %s first to set up your device."
 msgstr ""
 
 #: build/static/js/index.js.c:103379 build/static/js/index.js.c:109151
-#: build/static/js/index.js.c:115254
+#: build/static/js/index.js.c:115253
 msgid "Invalid PIN"
 msgstr "Invalid PIN"
 
 #: build/static/js/index.js.c:103381 build/static/js/index.js.c:109153
-#: build/static/js/index.js.c:109163 build/static/js/index.js.c:115262
+#: build/static/js/index.js.c:109163 build/static/js/index.js.c:115261
 msgid "Dongle is not set up"
 msgstr "Dongle is not set up"
 
 #: build/static/js/index.js.c:103383 build/static/js/index.js.c:109155
-#: build/static/js/index.js.c:115264
+#: build/static/js/index.js.c:115263
 msgid "Dongle is locked - reconnect the dongle and retry"
 msgstr "Dongle is locked - reconnect the dongle and retry"
 
@@ -65,7 +65,7 @@ msgstr "Dongle is locked - reconnect the dongle and retry"
 msgid "You were already registered, so we logged you in."
 msgstr ""
 
-#: build/static/js/index.js.c:103596 build/static/js/index.js.c:114341
+#: build/static/js/index.js.c:103596 build/static/js/index.js.c:114340
 msgid "Custom login enabled"
 msgstr "Спеціальний логін дозволений"
 
@@ -236,8 +236,8 @@ msgstr "Не вдалося ввійти за допомогою Facebook"
 msgid "Transaction reversed!"
 msgstr "Транзакція анульована!"
 
-#: build/static/js/index.js.c:107916 build/static/js/index.js.c:113626
-#: build/static/js/index.js.c:113883
+#: build/static/js/index.js.c:107916 build/static/js/index.js.c:113625
+#: build/static/js/index.js.c:113882
 msgid "Email sent"
 msgstr "Email відправлено"
 
@@ -261,7 +261,7 @@ msgstr "Transaction amount must be at least 0.1543mBTC to allow redemption fee"
 msgid "Transaction verification failed: "
 msgstr "Збій перевірки транзакції: "
 
-#: build/static/js/index.js.c:108196 build/static/js/index.js.c:112973
+#: build/static/js/index.js.c:108196 build/static/js/index.js.c:112972
 msgid "Transaction failed: "
 msgstr "Збій транзакції: "
 
@@ -285,12 +285,12 @@ msgstr "Будь ласка, додайте отримувача"
 msgid "Error reading address book: "
 msgstr "Помилка при зчитуванні адресної книги: "
 
-#: build/static/js/index.js.c:108771 build/static/js/index.js.c:114977
-#: build/static/js/index.js.c:115931
+#: build/static/js/index.js.c:108771 build/static/js/index.js.c:114976
+#: build/static/js/index.js.c:115930
 msgid "Please provide a password."
 msgstr "Please provide a password."
 
-#: build/static/js/index.js.c:108775 build/static/js/index.js.c:115935
+#: build/static/js/index.js.c:108775 build/static/js/index.js.c:115934
 msgid "Passwords do not match."
 msgstr "Passwords do not match."
 
@@ -351,250 +351,250 @@ msgid ""
 "running in another tab or browser window!"
 msgstr ""
 
-#: build/static/js/index.js.c:110944
+#: build/static/js/index.js.c:110943
 msgid "Session expired. Please try again."
 msgstr ""
 
-#: build/static/js/index.js.c:110965
+#: build/static/js/index.js.c:110964
 #, c-format
 msgid "Request timed out (%s)"
 msgstr ""
 
-#: build/static/js/index.js.c:110973
+#: build/static/js/index.js.c:110972
 #, fuzzy
 msgid "Problem with connection detected. Please try again."
 msgstr "Problem with Internet connection detected. Please try again."
 
-#: build/static/js/index.js.c:111012
+#: build/static/js/index.js.c:111011
 msgid "An error has occured which forced us to log you out."
 msgstr "Сталася помилка, яка змушує нас закрити Вашу сесію."
 
-#: build/static/js/index.js.c:111174 build/static/js/index.js.c:111275
-#: build/static/js/index.js.c:111300 build/static/js/index.js.c:111338
-#: build/static/js/index.js.c:111625
+#: build/static/js/index.js.c:111173 build/static/js/index.js.c:111274
+#: build/static/js/index.js.c:111299 build/static/js/index.js.c:111337
+#: build/static/js/index.js.c:111624
 msgid "Login failed"
 msgstr "Не вдалося увійти"
 
-#: build/static/js/index.js.c:111403
+#: build/static/js/index.js.c:111402
 #, fuzzy
 msgid "Changing PIN failed."
 msgstr "Не вдалося увійти"
 
-#: build/static/js/index.js.c:111574 build/static/js/index.js.c:111735
+#: build/static/js/index.js.c:111573 build/static/js/index.js.c:111734
 msgid "Main"
 msgstr ""
 
-#: build/static/js/index.js.c:111768 build/static/js/index.js.c:112494
+#: build/static/js/index.js.c:111767 build/static/js/index.js.c:112493
 msgid "Voucher"
 msgstr "Voucher"
 
-#: build/static/js/index.js.c:111948
+#: build/static/js/index.js.c:111947
 msgid "Asset Issuance"
 msgstr ""
 
-#: build/static/js/index.js.c:111950
+#: build/static/js/index.js.c:111949
 msgid "Back from "
 msgstr "Back from "
 
-#: build/static/js/index.js.c:111952
+#: build/static/js/index.js.c:111951
 msgid "From "
 msgstr "From "
 
-#: build/static/js/index.js.c:111977
+#: build/static/js/index.js.c:111976
 msgid "To "
 msgstr "To "
 
-#: build/static/js/index.js.c:112012
+#: build/static/js/index.js.c:112011
 msgid "Sent back to "
 msgstr "Відправлено назад на "
 
-#: build/static/js/index.js.c:112015
+#: build/static/js/index.js.c:112014
 msgid "Re-deposited"
 msgstr "Покладено на депозит повторно"
 
-#: build/static/js/index.js.c:112081
+#: build/static/js/index.js.c:112080
 #, fuzzy, c-format
 msgid "Time,Description,satoshis,%s,txhash,fee,memo"
 msgstr "Час, Опис, сатоші"
 
-#: build/static/js/index.js.c:112149 build/static/js/index.js.c:115669
+#: build/static/js/index.js.c:112148 build/static/js/index.js.c:115668
 msgid "Not enough money"
 msgstr ""
 
-#: build/static/js/index.js.c:112969
+#: build/static/js/index.js.c:112968
 msgid "Bitcoin transaction sent!"
 msgstr "Bitcoin транзакція відправлена!"
 
-#: build/static/js/index.js.c:113001
+#: build/static/js/index.js.c:113000
 msgid "Phone"
 msgstr "Телефон"
 
-#: build/static/js/index.js.c:113155
+#: build/static/js/index.js.c:113154
 msgid "Internal error"
 msgstr "Internal error"
 
-#: build/static/js/index.js.c:113172
+#: build/static/js/index.js.c:113171
 msgid "Failed retrieving password."
 msgstr "Помилка при отриманні пароля."
 
-#: build/static/js/index.js.c:113536
+#: build/static/js/index.js.c:113535
 #, c-format
 msgid "(about %s days: 1 day ≈ 144 blocks)"
 msgstr "(близько %s днів: 1 день ≈ 144 блоків)"
 
-#: build/static/js/index.js.c:113555
+#: build/static/js/index.js.c:113554
 msgid "nLockTime settings updated successfully"
 msgstr "nLockTime параметри успішно оновлені"
 
-#: build/static/js/index.js.c:113610
+#: build/static/js/index.js.c:113609
 msgid "Already expired"
 msgstr "Вже минув термін"
 
-#: build/static/js/index.js.c:113611
+#: build/static/js/index.js.c:113610
 #, c-format
 msgid "in about %s days"
 msgstr "через близько %s днів"
 
-#: build/static/js/index.js.c:113662
+#: build/static/js/index.js.c:113661
 msgid "You need to log out for language changes to be applied."
 msgstr "Вам потрібно вийти, щоб зміни набули силу."
 
-#: build/static/js/index.js.c:113670
+#: build/static/js/index.js.c:113669
 msgid "Error changing language:"
 msgstr "Помилка вибору мови:"
 
-#: build/static/js/index.js.c:113702 build/static/js/index.js.c:113736
-#: build/static/js/index.js.c:113776
+#: build/static/js/index.js.c:113701 build/static/js/index.js.c:113735
+#: build/static/js/index.js.c:113775
 msgid "{1} supports only the following currencies: {2}"
 msgstr "{1} підтримує тільки наступні валюти: {2}"
 
-#: build/static/js/index.js.c:113826
+#: build/static/js/index.js.c:113825
 msgid "Sent handler registration request"
 msgstr "Sent handler registration request"
 
-#: build/static/js/index.js.c:113854
+#: build/static/js/index.js.c:113853
 msgid "Cannot remove an account with non-zero balance"
 msgstr "Cannot remove an account with non-zero balance"
 
-#: build/static/js/index.js.c:113876
+#: build/static/js/index.js.c:113875
 msgid "You can't change your email address while you have email 2FA enabled"
 msgstr "You can't change your email address while you have email 2FA enabled"
 
-#: build/static/js/index.js.c:113893
+#: build/static/js/index.js.c:113892
 msgid "Email confirmed"
 msgstr "Email confirmed"
 
-#: build/static/js/index.js.c:114022
+#: build/static/js/index.js.c:114021
 msgid "New item saved"
 msgstr "Новий елемент збережений"
 
-#: build/static/js/index.js.c:114028
+#: build/static/js/index.js.c:114027
 msgid "Error saving item: "
 msgstr "Помилка при збереженні елементу: "
 
-#: build/static/js/index.js.c:114185
+#: build/static/js/index.js.c:114184
 msgid "PIN removed"
 msgstr "PIN-код видалений"
 
-#: build/static/js/index.js.c:114217
+#: build/static/js/index.js.c:114216
 msgid "PIN changed"
 msgstr "PIN-код змінений"
 
-#: build/static/js/index.js.c:114221
+#: build/static/js/index.js.c:114220
 msgid "PIN set"
 msgstr "PIN-код встановлений"
 
-#: build/static/js/index.js.c:114236
+#: build/static/js/index.js.c:114235
 msgid "All PINs removed"
 msgstr "Всі PIN-коди видалені"
 
-#: build/static/js/index.js.c:114257
+#: build/static/js/index.js.c:114256
 msgid "Facebook integration disabled"
 msgstr "Інтеграція с Facebook заборонена"
 
-#: build/static/js/index.js.c:114270
+#: build/static/js/index.js.c:114269
 msgid "Facebook integration enabled"
 msgstr "Інтеграция з Facebook дозволена"
 
-#: build/static/js/index.js.c:114291
+#: build/static/js/index.js.c:114290
 msgid "Reddit integration disabled"
 msgstr "Інтеграція з Reddit заборонена"
 
-#: build/static/js/index.js.c:114303
+#: build/static/js/index.js.c:114302
 msgid "Reddit integration enabled"
 msgstr "Інтеграція с Reddit дозволена"
 
-#: build/static/js/index.js.c:114325
+#: build/static/js/index.js.c:114324
 msgid "Custom login disabled"
 msgstr "Спеціальний вхід заборонений"
 
-#: build/static/js/index.js.c:114338
+#: build/static/js/index.js.c:114337
 msgid "Custom login changed"
 msgstr "Спеціальний вхід дозволений"
 
-#: build/static/js/index.js.c:114358 build/static/js/index.js.c:114391
-#: build/static/js/index.js.c:114399
+#: build/static/js/index.js.c:114357 build/static/js/index.js.c:114390
+#: build/static/js/index.js.c:114398
 msgid "Change"
 msgstr "Решта"
 
-#: build/static/js/index.js.c:114358 build/static/js/index.js.c:114391
-#: build/static/js/index.js.c:114399
+#: build/static/js/index.js.c:114357 build/static/js/index.js.c:114390
+#: build/static/js/index.js.c:114398
 msgid "Save"
 msgstr "Зберегти"
 
-#: build/static/js/index.js.c:114466
+#: build/static/js/index.js.c:114465
 msgid "Limits updated successfully"
 msgstr "Limits updated successfully"
 
-#: build/static/js/index.js.c:114673
+#: build/static/js/index.js.c:114672
 #, fuzzy
 msgid "Renamed successfully"
 msgstr "Limits updated successfully"
 
-#: build/static/js/index.js.c:114874
+#: build/static/js/index.js.c:114873
 msgid "Create new Wallet"
 msgstr "Створити новий гаманець"
 
-#: build/static/js/index.js.c:114884
+#: build/static/js/index.js.c:114883
 msgid "Launch the App"
 msgstr ""
 
-#: build/static/js/index.js.c:114890
+#: build/static/js/index.js.c:114889
 msgid "Install the App"
 msgstr ""
 
-#: build/static/js/index.js.c:115151
+#: build/static/js/index.js.c:115150
 msgid "Unknown error"
 msgstr "Невідома помилка"
 
-#: build/static/js/index.js.c:115256
+#: build/static/js/index.js.c:115255
 msgid "Invalid PIN, 2 retries left"
 msgstr ""
 
-#: build/static/js/index.js.c:115258
+#: build/static/js/index.js.c:115257
 #, fuzzy
 msgid "Invalid PIN, 1 retry left"
 msgstr "Invalid PIN"
 
-#: build/static/js/index.js.c:115260
+#: build/static/js/index.js.c:115259
 #, fuzzy
 msgid "Invalid PIN, dongle wiped"
 msgstr "Invalid PIN"
 
-#: build/static/js/index.js.c:115273
+#: build/static/js/index.js.c:115272
 msgid "{hardware_wallet_name} Login"
 msgstr ""
 
-#: build/static/js/index.js.c:115382
+#: build/static/js/index.js.c:115381
 msgid "Wallet decryption failed"
 msgstr "Не вдалося дешифрувати гаманець"
 
-#: build/static/js/index.js.c:115391
+#: build/static/js/index.js.c:115390
 #, c-format
 msgid "%s attempts left."
 msgstr ""
 
-#: build/static/js/index.js.c:115393
+#: build/static/js/index.js.c:115392
 msgid "0 attempts left - PIN removed."
 msgstr ""
 
