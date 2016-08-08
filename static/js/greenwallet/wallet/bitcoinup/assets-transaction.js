@@ -512,7 +512,7 @@ function signInput (i) {
   ).then(function (values) {
     var prevScript = values[0];
     var signingKey = values[1];
-    return signingKey.signHash(
+    return signingKey.signHashSchnorr(
       this.tx.hashForSignature(i, prevScript, 1)
     ).then(function (sig) {
       this.tx.ins[i].script = bitcoin.script.compile([].concat(

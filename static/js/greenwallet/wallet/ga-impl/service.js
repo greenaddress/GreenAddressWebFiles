@@ -64,7 +64,7 @@ function connect (hd, cb, eb) {
           });
         }).then(function (signature) {
           return this.call('com.greenaddress.login.authenticate',
-            [ Array.prototype.slice.call(signature), false, randomPathHex ]
+            [ [signature.r.toString(), signature.s.toString()], false, randomPathHex ]
           );
         }.bind(this)).then(function (data) {
           if (data === false) {

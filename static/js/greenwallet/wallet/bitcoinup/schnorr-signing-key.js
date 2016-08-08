@@ -9,7 +9,9 @@ var sha512 = require('sha512');
 module.exports = SchnorrSigningKey;
 
 extend(SchnorrSigningKey.prototype, {
+  _signHash: _signHash,
   signHash: signHash,
+  signHashSchnorr: signHashSchnorr,
   getAddress: getAddress,
   getPublicKeyBuffer: getPublicKeyBuffer,
   derive: derive,
@@ -27,11 +29,18 @@ function SchnorrSigningKey (hdnode, mnemonic) {
   this.mnemonic = mnemonic;
 }
 
-function signHash (msgIn) {
+function _signHash (msgIn, schnorr) {
   checkContext();
+  var _this = this;
   return new Promise(function (resolve, reject) {
-    var key = this.hdnode.keyPair;
-    var sig = secp256k1._malloc(64);
+    var key = _this.hdnode.keyPair;
+    var sig, siglenPointer;
+    if (schnorr) {
+      sig = secp256k1._malloc(64);
+    } else {
+      sig = secp256k1._malloc(128);
+      siglenPointer = secp256k1._malloc(4);
+    }
     var msg = secp256k1._malloc(32);
     var seckey = secp256k1._malloc(32);
     var start = key.d.toByteArray().length - 32;
@@ -44,26 +53,64 @@ function signHash (msgIn) {
     }
 
     secp256k1.writeArrayToMemory(slice, seckey);
+    if (!schnorr) {
+      secp256k1.setValue(siglenPointer, 128, 'i32');
+    }
     var i;
     for (i = 0; i < 32; ++i) {
       secp256k1.setValue(msg + i, msgIn[i], 'i8');
     }
-    if (secp256k1._secp256k1_schnorr_sign(
-      secp256k1ctx, sig, msg, seckey, 0, 0
-    ) !== 1) {
-      reject('secp256k1 Schnorr sign failed');
+    var len = -1;
+    if (schnorr) {
+      if (secp256k1._secp256k1_schnorr_sign(
+          secp256k1ctx, sig, msg, seckey, 0, 0
+      ) !== 1) {
+        reject('secp256k1 Schnorr sign failed');
+      } else {
+        len = 64;
+      }
+    } else {
+      len = -1;
+      var sigOpaque = secp256k1._malloc(64);
+      if (secp256k1._secp256k1_ecdsa_sign(
+          secp256k1ctx, sigOpaque, msg, seckey, 0, 0
+      ) !== 1) {
+        reject('secp256k1 ECDSA sign failed');
+      } else if (secp256k1._secp256k1_ecdsa_signature_serialize_der(
+                 secp256k1ctx, sig, siglenPointer, sigOpaque
+      ) !== 1) {
+        reject('secp256k1 ECDSA signature serialize failed');
+      } else {
+        len = secp256k1.getValue(siglenPointer, 'i32');
+      }
+      secp256k1._free(sigOpaque);
     }
-    var len = 64;
-    var ret = new Buffer(len);
-    for (i = 0; i < len; ++i) {
-      ret.writeUInt8(secp256k1.getValue(sig + i, 'i8') & 0xff, i);
+    if (len !== -1) {
+      var ret = new Buffer(len);
+      for (i = 0; i < len; ++i) {
+        ret.writeUInt8(secp256k1.getValue(sig + i, 'i8') & 0xff, i);
+      }
+      if (schnorr) {
+        resolve(ret);
+      } else {
+        resolve(bitcoin.ECSignature.fromDER(ret));
+      }
     }
     secp256k1._free(sig);
+    if (!schnorr) {
+      secp256k1._free(siglenPointer);
+    }
     secp256k1._free(msg);
     secp256k1._free(seckey);
+  });
+}
 
-    resolve(ret);
-  }.bind(this));
+function signHash (msgIn) {
+  return this._signHash(msgIn, false);
+}
+
+function signHashSchnorr (msgIn) {
+  return this._signHash(msgIn, true);
 }
 
 function getAddress () {
