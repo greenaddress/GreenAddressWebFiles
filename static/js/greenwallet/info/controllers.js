@@ -214,9 +214,9 @@ angular.module('greenWalletInfoControllers',
         if (!$scope.filtered_transactions || !$scope.filtered_transactions.list || !$scope.filtered_transactions.list.length) return;
         $scope.$apply(function() {
             for (var i = 0; i < $scope.filtered_transactions.list.length; i++) {
-                if (data.asset_id &&
-                    data.asset_id !=
-                        $scope.filtered_transactions.list[i].asset_id) {
+                if (data.ga_asset_id &&
+                    data.ga_asset_id !=
+                        $scope.filtered_transactions.list[i].ga_asset_id) {
                     // different asset id
                     continue;
                 }

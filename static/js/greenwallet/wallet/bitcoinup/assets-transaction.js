@@ -185,7 +185,7 @@ function clone () {
       commitment: txOut.commitment,
       range_proof: txOut.range_proof,
       nonce_commitment: txOut.nonce_commitment,
-      asset_id: txOut.asset_id
+      assetHash: txOut.assetHash
     };
   });
 
@@ -297,8 +297,8 @@ function toBufferForSigning (signInIndex) {
       if (txOut.nonce_commitment) writeSlice(txOut.nonce_commitment);
     }
 
-    if (txOut.asset_id) {
-      writeSlice(txOut.asset_id);
+    if (txOut.assetHash) {
+      writeSlice(txOut.assetHash);
     } else {
       writeSlice(new Buffer(new Array(32))); // fill with zeroes
     }
@@ -381,9 +381,9 @@ function fromHexImpl (tx, hex, __noStrict) {
     }
     var range_proof = readScript();
     var nonce_commitment = readScript();
-    var asset_id = readSlice(32);
+    var assetHash = readSlice(32);
     tx.outs.push({
-      asset_id: asset_id,
+      assetHash: assetHash,
       value: value,
       script: readScript(),
       range_proof: range_proof,
@@ -494,7 +494,7 @@ function addOutput (outScript, value, fee, assetId) {
   var idx = this.tx.addOutput(outScript, value);
   var ret = this.tx.outs[idx];
   ret.fee = fee;
-  ret.asset_id = assetId;
+  ret.assetHash = assetId;
   return ret;
 }
 
@@ -502,7 +502,7 @@ function replaceOutput (idx, outScript, value, fee, assetId) {
   this.tx.outs[idx].script = outScript;
   this.tx.outs[idx].value = value;
   this.tx.outs[idx].fee = fee;
-  this.tx.outs[idx].asset_id = assetId;
+  this.tx.outs[idx].assetHash = assetId;
 }
 
 function signInput (i) {
@@ -542,7 +542,7 @@ function _rebuildCT () {
       }
     });
     this.tx.outs.forEach(function (out) {
-      if (out.asset_id.toString('hex') === k && out.valueToBlind) {
+      if (out.assetHash.toString('hex') === k && out.valueToBlind) {
         outputsCount += 1;
       }
     });
@@ -553,7 +553,7 @@ function _rebuildCT () {
       outputIdx: 0
     };
     this.tx.outs.forEach(function (out, idx) {
-      if (out.asset_id.toString('hex') !== k || !out.valueToBlind) {
+      if (out.assetHash.toString('hex') !== k || !out.valueToBlind) {
         return;
       }
       var extendWith = this._calcCTOutData(idx, ctState);
@@ -577,14 +577,14 @@ function _addChangeOutput (script, value, assetNetworkId) {
     for (var i = 0; i < this.getOutputsCount(); ++i) {
       if (i === changeIdx) {
         newOutputs.push({
-          script: script, value: value, fee: 0, asset_id: assetNetworkId
+          script: script, value: value, fee: 0, assetHash: assetNetworkId
         });
       }
       newOutputs.push(this.getOutput(i));
     }
     this.clearOutputs();
     newOutputs.forEach(function (out) {
-      var newOut = this.addOutput(out.script, out.value, out.fee, out.asset_id);
+      var newOut = this.addOutput(out.script, out.value, out.fee, out.assetHash);
 
       // keep old CT data in case of non-CT asset change being added:
       newOut.commitment = out.commitment;
@@ -686,7 +686,7 @@ function _addFeeAndChangeWithAsset (options) {
       var anyCTAssetOuts = false;
       for (i = 0; i < this.getOutputsCount(); ++i) {
         if (bufferEquals(
-            this.tx.outs[ i ].asset_id,
+            this.tx.outs[ i ].assetHash,
             options.assetNetworkId) &&
           this.tx.outs[ i ].commitment) {
           anyCTAssetOuts = true;

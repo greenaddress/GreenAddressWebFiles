@@ -447,15 +447,15 @@ function factory ($q, $rootScope, tx_sender, $location, notices, $uibModal,
         // description is reused in every iteration of the loop, so lets just null it out at first just in case
         description = null;
         var tx = data.list[i], inputs = [], outputs = [];
-        var asset_id;
+        var ga_asset_id;
         for (var j = 0; j < tx.eps.length; ++j) {
           if (tx.eps[j].is_credit && tx.eps[j].is_relevant) {
-            asset_id = tx.eps[j].asset_id;
+            ga_asset_id = tx.eps[j].ga_asset_id;
           }
         }
-        if (asset_id) {
-          var num_confirmations = data.cur_block[asset_id] - tx.block_height + 1;
-          asset_name = $scope.wallet.assets[asset_id].name;
+        if (ga_asset_id) {
+          var num_confirmations = data.cur_block[ga_asset_id] - tx.block_height + 1;
+          asset_name = $scope.wallet.assets[ga_asset_id].name;
         } else {
           var num_confirmations = data.cur_block - tx.block_height + 1;
         }
@@ -490,13 +490,13 @@ function factory ($q, $rootScope, tx_sender, $location, notices, $uibModal,
                 }
               } else {
                 addValue(
-                  ep.asset_id, new Bitcoin.BigInteger(''+ep.value)
+                  ep.ga_asset_id, new Bitcoin.BigInteger(''+ep.value)
                 );
                 ep.nlocktime = true;
               }
             } else {
               addValue(
-                ep.asset_id,
+                ep.ga_asset_id,
                 (new Bitcoin.BigInteger(''+ep.value))
                   .multiply(Bitcoin.BigInteger.valueOf(-1))
               );
@@ -587,9 +587,9 @@ function factory ($q, $rootScope, tx_sender, $location, notices, $uibModal,
         var value_sort = new Bitcoin.BigInteger(Math.pow(10, 19).toString()).add(value).toString();
         while (value_sort.length < 20) value_sort = '0' + value_sort;
         asset_values.sort(function (a, b) {
-          // sort by asset_id == 1, then by asset name
-          if ((a.asset_id == 1) != (b.asset_id == 1))
-            var a1 = (a.asset_id == 1), b1 = (b.asset_id == 1);
+          // sort by ga_asset_id == 1, then by asset name
+          if ((a.ga_asset_id == 1) != (b.ga_asset_id == 1))
+            var a1 = (a.ga_asset_id == 1), b1 = (b.ga_asset_id == 1);
           else
             var a1 = a.name, b1 = b.name;
           return a1 > b1 ? -1 : a1 == b1 ? 0 : -1;
@@ -611,7 +611,7 @@ function factory ($q, $rootScope, tx_sender, $location, notices, $uibModal,
           replacement_of: [],
           rawtx: cur_net.isAlpha ? data.data[tx.txhash] : tx.data,
           social_destination: tx_social_destination, social_value: tx_social_value,
-          asset_id: asset_id, asset_name: asset_name, size: tx.size,
+          ga_asset_id: ga_asset_id, asset_name: asset_name, size: tx.size,
           fee_per_kb: Math.round(tx.fee / (tx.size / 1000)),
           rbf_optin: !cur_net.isAlphaMultiasset && tx.rbf_optin,
           issuance: tx.issuance,
@@ -671,17 +671,17 @@ function factory ($q, $rootScope, tx_sender, $location, notices, $uibModal,
             that.next_page_id = result.next_page_id;
           });
       }});
-      function addValue (asset_id, v) {
+      function addValue (ga_asset_id, v) {
         value = value.add(v);
-        if (!asset_values_map[asset_id]) {
-          asset_values_map[asset_id] = {
-            name: $scope.wallet.assets[asset_id].name,
+        if (!asset_values_map[ga_asset_id]) {
+          asset_values_map[ga_asset_id] = {
+            name: $scope.wallet.assets[ga_asset_id].name,
             value: Bitcoin.BigInteger.valueOf(0)
           };
-          asset_values_map[asset_id].apply_unit = (asset_id == 1);
-          asset_values.push(asset_values_map[asset_id]);
+          asset_values_map[ga_asset_id].apply_unit = (ga_asset_id == 1);
+          asset_values.push(asset_values_map[ga_asset_id]);
         }
-        var asset = asset_values_map[asset_id];
+        var asset = asset_values_map[ga_asset_id];
         asset.value = asset.value.add(v);
       }
     }, function (err) {

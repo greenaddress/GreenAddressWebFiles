@@ -119,14 +119,14 @@ function testChangeOutput (t, idx) {
 
 function mockListAllUtxo () {
   return Promise.resolve([
-    { asset_id: 1,
+    { ga_asset_id: 1,
       pt_idx: 0,
       subaccount: 0,
       value: '899985450',
       block_height: null,
       txhash: '0594bbb5967098326a67131f728deffaa611c8b6f60d97870aa0d70b0bbe267f',
     pointer: 2 },
-    { asset_id: 1,
+    { ga_asset_id: 1,
       pt_idx: 1,
       subaccount: 0,
       value: '10000',
