@@ -533,7 +533,7 @@ angular.module('greenWalletSendControllers',
                     priv_data.memo = that.memo;
                     priv_data.subaccount = $scope.wallet.current_subaccount;
                     if (cur_net.isAlphaMultiasset) {
-                        priv_data.asset_id = $scope.wallet.current_asset;
+                        priv_data.ga_asset_id = $scope.wallet.current_asset;
                     }
                     if (that.spend_all) satoshis = $scope.wallet.final_balance;
                     tx_sender.call("com.greenaddress.vault.prepare_tx", satoshis, to_addr, add_fee, priv_data).then(function(data) {
@@ -712,7 +712,7 @@ angular.module('greenWalletSendControllers',
                              instant: that.instant, allow_random_change: true, memo: this.memo,
                 subaccount: $scope.wallet.current_subaccount, prevouts_mode: 'http'};
             if (cur_net.isAlphaMultiasset) {
-                priv_data.asset_id = $scope.wallet.current_asset;
+                priv_data.ga_asset_id = $scope.wallet.current_asset;
             }
             if (that.spend_all) satoshis = $scope.wallet.final_balance;
             tx_sender.call("com.greenaddress.vault.prepare_tx", satoshis, to_addr, this.get_add_fee(), priv_data).then(function(data) {

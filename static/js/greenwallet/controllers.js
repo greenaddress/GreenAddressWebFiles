@@ -202,7 +202,7 @@ angular.module('greenWalletControllers', [])
                             (function(utxo) {
                                 rawtx_ds.push(tx_sender.call(
                                     'com.greenaddress.txs.get_raw_unspent_output',
-                                    utxo.txhash, utxo.asset_id
+                                    utxo.txhash, utxo.ga_asset_id
                                 ).then(function(rawtx) {
                                     return {
                                         txhash: utxo.txhash,
