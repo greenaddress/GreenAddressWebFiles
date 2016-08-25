@@ -40,8 +40,6 @@ extend(AssetsTransaction.prototype, {
   _addChangeOutput: _addChangeOutput,
   _rebuildCT: _rebuildCT,
   _calcCTOutData: _calcCTOutData,
-  signAll: signAll,
-  signInput: signInput,
   addInput: addInput,
   addOutput: addOutput,
   replaceOutput: replaceOutput
@@ -503,28 +501,6 @@ function replaceOutput (idx, outScript, value, fee, assetId) {
   this.tx.outs[idx].value = value;
   this.tx.outs[idx].fee = fee;
   this.tx.outs[idx].assetHash = assetId;
-}
-
-function signInput (i) {
-  var prevOut = this.tx.ins[i].prevOut;
-  return Promise.all(
-    [prevOut.getPrevScript(), prevOut.getMyPrivateKey()]
-  ).then(function (values) {
-    var prevScript = values[0];
-    var signingKey = values[1];
-    return signingKey.signHashSchnorr(
-      this.tx.hashForSignature(i, prevScript, 1)
-    ).then(function (sig) {
-      this.tx.ins[i].script = bitcoin.script.compile([].concat(
-        bitcoin.opcodes.OP_0, // OP_0 required for multisig
-        new Buffer([0]), // to be replaced by backend with server's sig
-        new Buffer([].concat(
-          Array.prototype.slice.call(sig), [1]
-        )), // our signature with SIGHASH_ALL
-        prevScript
-      ));
-    }.bind(this));
-  }.bind(this));
 }
 
 function _rebuildCT () {
@@ -1153,26 +1129,4 @@ function build (options) {
 
     return this._addFeeAndChange(options);
   }.bind(this));
-}
-
-function signAll (options) {
-  var ret = Promise.resolve();
-  if (options.signingProgressCallback) {
-    options.signingProgressCallback(0);
-  }
-  for (var i = 0; i < this.tx.ins.length; ++i) {
-    (function (i) {
-      ret = ret.then(function () {
-        return this.signInput(i);
-      }.bind(this)).then(function (sig) {
-        if (options.signingProgressCallback) {
-          options.signingProgressCallback(Math.round(
-            100 * (i + 1) / this.tx.ins.length
-          ));
-        }
-        return sig;
-      }.bind(this));
-    }).call(this, i);
-  }
-  return ret;
 }

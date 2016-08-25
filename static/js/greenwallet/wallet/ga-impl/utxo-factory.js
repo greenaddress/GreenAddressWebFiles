@@ -11,8 +11,6 @@ extend(GAUtxoFactory.prototype, {
 });
 
 extend(GAUtxo.prototype, {
-  getMyPrivateKey: utxoGetMyPrivateKey,
-  getPrevScript: utxoGetPrevScript,
   getPrevScriptLength: utxoGetPrevScriptLength,
   getValue: utxoGetValue
 });
@@ -61,20 +59,11 @@ function GAUtxo (utxo, options) {
   this.value = +utxo.value;
   this.raw = utxo;
 
+  // FIXME: scriptFactory is not used for signing anymore, just for CT
+  //  - perhaps find a way to get rid of this dependency here too, and move
+  //    CT decryption somewhere outside?
   this.scriptFactory = options.scriptFactory;
   this.subaccount = options.subaccount;
-}
-
-function utxoGetPrevScript () {
-  return this.scriptFactory.createScriptForSubaccountAndPointer(
-    this.subaccount, this.raw.pointer
-  );
-}
-
-function utxoGetMyPrivateKey () {
-  return this.scriptFactory.keysManager.getMyPrivateKey(
-    this.subaccount.pointer, this.raw.pointer
-  );
 }
 
 function utxoGetValue () {

@@ -19,6 +19,7 @@ TxConstructor._makeUtxoFilter = _makeUtxoFilter;
 function TxConstructor (options) {
   if (!options) return; // allow inheritance
 
+  this.signingWallet = options.signingWallet;
   this.utxoFactory = options.utxoFactory;
   this.changeAddrFactory = options.changeAddrFactory;
   this.feeEstimatesFactory = options.feeEstimatesFactory;
@@ -125,7 +126,7 @@ function _constructTx (outputsWithAmounts, options) {
       iterate.bind(this)
     ).then(
       // 3. sign the transaction
-      tx.signAll.bind(tx, options)
+      this.signingWallet.signTransaction.bind(this.signingWallet, tx, options)
     ).then(function () {
       return extend({
         tx: tx.toBuffer()

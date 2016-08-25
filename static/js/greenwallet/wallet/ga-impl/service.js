@@ -1,7 +1,5 @@
 var autobahn = require('autobahn');
-var BigInteger = require('bigi');
 var bitcoin = require('bitcoinjs-lib');
-var crypto = require('crypto');
 var extend = require('xtend/mutable');
 module.exports = GAService;
 
@@ -32,7 +30,7 @@ function GAService (netName) {
   }
 }
 
-function connect (hd, cb, eb) {
+function connect (signingWallet, cb, eb) {
   this.connection = new autobahn.Connection({
     url: 'ws://localhost:8080/v2/ws',
     realm: 'realm1'
@@ -40,29 +38,12 @@ function connect (hd, cb, eb) {
   this.connection.onopen = function (session) {
     try {
       this.session = session;
-      var randomPathHex = (BigInteger
-          .fromBuffer(crypto.randomBytes(8))
-          .toString(16)
-      );
-      while (randomPathHex.length < 16) {
-        randomPathHex = '0' + randomPathHex;
-      }
       return this.call('com.greenaddress.login.get_challenge',
-        [ hd.getAddress() ]).then(function (challenge) {
-          var challengeBuf = new BigInteger(challenge).toBuffer();
-          var pathBytes = new Buffer(randomPathHex, 'hex');
-          var key = Promise.resolve(hd);
-          for (var i = 0; i < 4; i++) {
-            key = key.then(function (key) {
-              var dk = key.derive(+BigInteger.fromBuffer(pathBytes.slice(0, 2)));
-              pathBytes = pathBytes.slice(2);
-              return dk;
-            });
-          }
-          return key.then(function (key) {
-            return key.signHash(challengeBuf);
-          });
-        }).then(function (signature) {
+        signingWallet.getChallengeArguments()).then(function (challenge) {
+          return signingWallet.signChallenge(challenge);
+        }).then(function (signed) {
+          var signature = signed.signature;
+          var randomPathHex = signed.path;
           return this.call('com.greenaddress.login.authenticate',
             [ [signature.r.toString(), signature.s.toString()], false, randomPathHex ]
           );

@@ -66,6 +66,7 @@ function setupSubAccount (subaccount) {
       // feeasset
       this.txConstructors[ asset.id ][ subaccount.pointer ] = new TxConstructor(
         {
+          signingWallet: this.signingWallet,
           utxoFactory: new GAUtxoFactory(
             this.service,
             {utxoClass: GAConfidentialUtxo,
@@ -88,6 +89,7 @@ function setupSubAccount (subaccount) {
     } else {
       // nonfeeasset
       this.txConstructors[ asset.id ][ subaccount.pointer ] = new AssetsTxConstructor({
+        signingWallet: this.signingWallet,
         utxoFactory: new GAUtxoFactory(
           this.service,
           {asset: asset,

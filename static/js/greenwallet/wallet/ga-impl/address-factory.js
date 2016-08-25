@@ -9,9 +9,9 @@ extend(GAAddressFactory.prototype, {
   getScanningKeyForScript: getScanningKeyForScript
 });
 
-function GAAddressFactory (gaService, hdWallet, options) {
+function GAAddressFactory (gaService, signingWallet, options) {
   this.gaService = gaService;
-  this.hdWallet = hdWallet;
+  this.signingWallet = signingWallet;
   this.scriptToPointer = {};
   this.subaccountPointer = options.subaccountPointer || null;
 }
@@ -40,11 +40,12 @@ function getNextAddress () {
 
 function getScanningKeyForScript (script) {
   var pointer = this.scriptToPointer[script.toString('hex')];
+  var rootHdWallet = this.signingWallet.keysManager.privHDWallet; // FIXME: hw wallets
   var hd;
   if (this.subaccountPointer && this.subaccountHdWallet) {
     hd = Promise.resolve(this.subaccountHdWallet);
   } else if (this.subaccountPointer) {
-    hd = this.hdWallet.deriveHardened(
+    hd = rootHdWallet.deriveHardened(
       3
     ).then(function (hd) {
       return hd.deriveHardened(this.subaccountPointer);
@@ -55,7 +56,7 @@ function getScanningKeyForScript (script) {
       return hd;
     }.bind(this));
   } else {
-    hd = Promise.resolve(this.hdWallet);
+    hd = Promise.resolve(rootHdWallet);
   }
   return hd.then(function (hd) {
     return hd.deriveHardened(5);

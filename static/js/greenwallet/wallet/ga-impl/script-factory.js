@@ -9,7 +9,8 @@ extend(GAScriptFactory.prototype, {
   _createGAScript: _createGAScript,
   create2of2Script: create2of2Script,
   create2of3Script: create2of3Script,
-  createScriptForSubaccountAndPointer: createScriptForSubaccountAndPointer
+  createScriptForSubaccountAndPointer: createScriptForSubaccountAndPointer,
+  getUtxoPrevScript: getUtxoPrevScript
 });
 
 function GAScriptFactory (keysManager) {
@@ -74,4 +75,10 @@ function createScriptForSubaccountAndPointer (subaccount, pointer) {
       pointer
     );
   }
+}
+
+function getUtxoPrevScript (utxo) {
+  return this.createScriptForSubaccountAndPointer(
+    utxo.subaccount, utxo.raw.pointer
+  );
 }

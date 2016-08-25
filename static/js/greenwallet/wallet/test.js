@@ -5,8 +5,7 @@ var extend = require('xtend/mutable');
 var test = require('tape');
 var proxy = require('proxyquire');
 var GAUtxo = require('./ga-impl').Utxo;
-var GAScriptFactory = require('./ga-impl').GAScriptFactory;
-var GAKeysManager = require('./ga-impl').GAKeysManager;
+var GAHashSwSigningWallet = require('./ga-impl').HashSwSigningWallet;
 
 var mockUtxoFactory = {
   listAllUtxo: mockListAllUtxo
@@ -29,6 +28,13 @@ extend(MockUtxo.prototype, {
   _getKey: GAUtxo.prototype._getKey
 });
 
+var pubHDWallet = new bitcoinup.SchnorrSigningKey(
+  bitcoin.HDNode.fromSeedHex(
+    new Buffer(new Array(16)).toString('hex'), bitcoin.networks.testnet
+  )
+);
+var privHDWallet = pubHDWallet;
+
 function MockUtxo (utxo) {
   this.prevHash = [].reverse.call(new Buffer(utxo.txhash, 'hex'));
   this.ptIdx = utxo.pt_idx;
@@ -36,24 +42,15 @@ function MockUtxo (utxo) {
   this.raw = utxo;
 
   this.subaccount = {name: 'Main', pointer: null, type: 'main'};
-
-  var pubHDWallet = new bitcoinup.SchnorrSigningKey(
-    bitcoin.HDNode.fromSeedHex(
-      new Buffer(new Array(16)).toString('hex'), bitcoin.networks.testnet
-    )
-  );
-  var privHDWallet = pubHDWallet;
-  var keysManager = new GAKeysManager({
-    gaService: {},
-    pubHDWallet: pubHDWallet,
-    privHDWallet: privHDWallet
-  });
-  // mock the ga hd keys
-  keysManager.getGAPublicKey = function () {
-    return pubHDWallet;
-  };
-  this.scriptFactory = new GAScriptFactory(keysManager);
 }
+
+var mockSigningWallet = new GAHashSwSigningWallet({
+  hd: privHDWallet
+});
+
+mockSigningWallet.keysManager.getGAPublicKey = function () {
+  return pubHDWallet;
+};
 
 test('construct tx', function (t) {
   testChangeOutput(t, 0).then(function () {
@@ -92,6 +89,7 @@ function testChangeOutput (t, idx) {
   ][idx];
   console.log(expected);
   var constructor = new TxConstructor({
+    signingWallet: mockSigningWallet,
     utxoFactory: mockUtxoFactory,
     changeAddrFactory: mockAddressFactory,
     feeEstimatesFactory: mockFeeEstimatesFactory,

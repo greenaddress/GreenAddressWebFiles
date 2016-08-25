@@ -9,12 +9,12 @@ extend(GAKeysManager.prototype, {
   getMyPublicKey: getMyPublicKey,
   getMyPrivateKey: getMyPrivateKey,
   getMyScanningKey: getMyScanningKey,
-  getSubaccountRootKey: getSubaccountRootKey
+  getSubaccountRootKey: getSubaccountRootKey,
+  getUtxoPrivateKey: getUtxoPrivateKey
 });
 
 function GAKeysManager (options) {
-  this.gaHDNode = options.gaService.gaHDNode;
-  this.gaUserPath = options.gaService.gaUserPath;
+  this.gaService = options.gaService;
 
   // optimisation for non-subaccounts subkeys and slow hardware wallets
   // (we don't need the priv-derivation to derive non-subaccount subkeys)
@@ -32,11 +32,15 @@ function _subpath (hd, pathBuffer) {
 }
 
 function getGAPublicKey (subaccountPointer, pointer) {
-  var gaNode = this.gaHDNode;
+  var gaNode = this.gaService.gaHDNode;
   if (subaccountPointer) {
-    gaNode = _subpath(gaNode.derive(3), this.gaUserPath).derive(subaccountPointer);
+    gaNode = _subpath(
+      gaNode.derive(3), this.gaService.gaUserPath
+    ).derive(subaccountPointer);
   } else {
-    gaNode = _subpath(gaNode.derive(1), this.gaUserPath);
+    gaNode = _subpath(
+      gaNode.derive(1), this.gaService.gaUserPath
+    );
   }
   return gaNode.derive(pointer);
 }
@@ -90,4 +94,10 @@ function getMyPrivateKey (subaccountPointer, pointer) {
 function getMyScanningKey (subaccountPointer, pointer) {
   // always priv, even when it's not a subaccount
   return this._getKey(true, subaccountPointer, pointer, 5 /* = BLINDED branch */);
+}
+
+function getUtxoPrivateKey (utxo) {
+  return this.getMyPrivateKey(
+    utxo.subaccount.pointer, utxo.raw.pointer
+  );
 }
