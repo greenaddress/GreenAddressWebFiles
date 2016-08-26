@@ -11,7 +11,8 @@ extend(HashSwSigningWallet.prototype, {
   getChallengeArguments: getChallengeArguments,
   signChallenge: signChallenge,
   signTransaction: signTransaction,
-  signInput: signInput
+  signInput: signInput,
+  derivePath: derivePath
 });
 
 function HashSwSigningWallet (options) {
@@ -24,7 +25,10 @@ function HashSwSigningWallet (options) {
 }
 
 function getChallengeArguments () {
-  return [ this.keysManager.pubHDWallet.getAddress() ];
+  return Promise.resolve([
+    'com.greenaddress.login.get_challenge',
+    this.keysManager.pubHDWallet.getAddress()
+  ]);
 }
 
 function signChallenge (challenge) {
@@ -93,4 +97,8 @@ function signInput (tx, i) {
       ));
     });
   });
+}
+
+function derivePath () {
+  return Promise.resolve(this.keysManager.privHDWallet.derivePath());
 }
