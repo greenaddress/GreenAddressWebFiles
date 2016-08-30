@@ -1,5 +1,9 @@
-var HWWallet = require('wallet').GA.HWWallet;
 var allHwWallets = require('wallet').GA.allHwWallets;
+var AssetsWallet = require('wallet').GA.AssetsWallet;
+var GAWallet = require('wallet').GA.GAWallet;
+var HashSwSigningWallet = require('wallet').GA.HashSwSigningWallet;
+var HWWallet = require('wallet').GA.HWWallet;
+var SchnorrSigningKey = require('wallet').bitcoinup.SchnorrSigningKey;
 
 angular.module('greenWalletSignupLoginControllers', ['greenWalletMnemonicsServices'])
 .controller('SignupLoginController', ['$scope', '$uibModal', 'focus', 'wallets', 'notices', 'mnemonics', '$location', 'cordovaReady', 'tx_sender', 'crypto', 'gaEvent', 'storage', 'qrcode', '$timeout', '$q', 'trezor', 'bip38', 'btchip', '$interval', '$rootScope',
@@ -453,6 +457,39 @@ angular.module('greenWalletSignupLoginControllers', ['greenWalletMnemonicsServic
                     if(decoded && JSON.parse(decoded).seed) {
                         gaEvent('Login', 'PinLoginSucceeded');
                         var parsed = JSON.parse(decoded);
+                        return $q.when(Bitcoin.bitcoin.HDNode.fromSeedHex(parsed.seed, cur_net)).then(function(hd) {
+                            var WalletClass = window.cur_net.isAlphaMultiasset ? AssetsWallet : GAWallet;
+                            // FIXME: the whole call here probably can be moved
+                            //        inside the wallets service, and be shared
+                            //        with mnemonic login:
+                            return wallets.newLogin($scope, new WalletClass({
+                                SigningWalletClass: HashSwSigningWallet,
+                                signingWalletOptions: {
+                                    hd: new SchnorrSigningKey(
+                                        hd, {
+                                            mnemonic: parsed.mnemonic,
+                                            pathSeed: new Bitcoin.Buffer.Buffer(parsed.path_seed, 'hex')
+                                        }
+                                    ),
+                                    schnorrTx: cur_net.isAlpha
+                                },
+                                gaService: tx_sender.gaService
+                            })).then(function () {
+                                tx_sender.gaWallet.signingWallet.getChainCode().then(
+                                    check_storage_chaincode
+                                );
+                                if (!parsed.path_seed) {
+                                    // cache the path seed (for old PINs that didn't include it)
+                                    return tx_sender.gaWallet.signingWallet.keysManager.privHDWallet.derivePathSeed().then(function(path_seed) {
+                                        parsed.path_seed = path_seed.toString('hex');
+                                        crypto.encrypt(JSON.stringify(parsed), password).then(function (encrypted) {
+                                            storage.set('encrypted_seed' + storage_suffix, encrypted);
+                                        })
+                                    });
+                                }
+                            });
+                        });
+
                         if (!parsed.path_seed && parsed.mnemonic) {
                             // FIXME: if path_seed and mnemonics is missing, we
                             // should calculate the path_seed from seed
@@ -462,7 +499,6 @@ angular.module('greenWalletSignupLoginControllers', ['greenWalletMnemonicsServic
                                 crypto.encrypt(JSON.stringify(parsed), password).then(function(encrypted) {
                                     storage.set('encrypted_seed'+storage_suffix, encrypted);
                                 })
-                                var path = mnemonics.seedToPath(path_seed);
                                 return $q.when(Bitcoin.bitcoin.HDNode.fromSeedHex(parsed.seed, cur_net)).then(function(hdwallet) {
                                     hdwallet.seed_hex = parsed.seed;
                                     check_storage_chaincode(hdwallet.chainCode);

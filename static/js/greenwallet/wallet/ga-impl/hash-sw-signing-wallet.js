@@ -12,7 +12,8 @@ extend(HashSwSigningWallet.prototype, {
   signChallenge: signChallenge,
   signTransaction: signTransaction,
   signInput: signInput,
-  derivePath: derivePath
+  derivePath: derivePath,
+  getChainCode: getChainCode
 });
 
 function HashSwSigningWallet (options) {
@@ -23,6 +24,7 @@ function HashSwSigningWallet (options) {
   });
   this.scriptFactory = new GAScriptFactory(this.keysManager);
   this.schnorrTx = options.schnorrTx;
+  this.mnemonic = options.hd.mnemonic;
 }
 
 function getChallengeArguments () {
@@ -110,4 +112,8 @@ function signInput (tx, i) {
 
 function derivePath () {
   return Promise.resolve(this.keysManager.privHDWallet.derivePath());
+}
+
+function getChainCode () {
+  return Promise.resolve(this.keysManager.pubHDWallet.getChainCode());
 }

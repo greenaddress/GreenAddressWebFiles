@@ -10,7 +10,8 @@ var Bitcoin = window.Bitcoin;
 var ByteString = window.ByteString;
 var HEX = window.HEX;
 
-var GAAssetsWallet = require('wallet').GA.AssetsWallet;
+var AssetsWallet = require('wallet').GA.AssetsWallet;
+var GAService = require('wallet').GA.GAService;
 var GAWallet = require('wallet').GA.GAWallet;
 
 module.exports = factory;
@@ -31,14 +32,18 @@ factory.dependencies = ['$q',
 
 function factory ($q, $rootScope, cordovaReady, $http, notices, gaEvent, $location, autotimeout, device_id, btchip, mnemonics, storage) {
   var txSenderService = {
-    waitForConnection: waitForConnection,
     call: call,
     logged_in: false,
     login: login,
     logout: logout,
     loginWatchOnly: loginWatchOnly,
-    change_pin: change_pin
+    change_pin: change_pin,
+    gaService: new GAService(
+      cur_net === Bitcoin.bitcoin.networks.testnet ? 'testnet' : 'mainnet',
+      {wsUrl: wss_url}
+    )
   };
+
   // disable electrum setup
   if (false && window.Electrum) {
     if (window.cordova) {
@@ -100,80 +105,10 @@ function factory ($q, $rootScope, cordovaReady, $http, notices, gaEvent, $locati
         $rootScope.$broadcast('fee_estimate', event[0]);
       });
   }
-  function waitForConnection () {
-    if (session) {
-      return $q.when();
-    } else {
-      if (disconnected) {
-        disconnected = false;
-        connect(global_login_d);
-      }
-      var d = $q.defer();
-      calls.push([null, d]);
-      return d.promise;
-    }
-  }
   function call () {
-    var d = $q.defer();
-    if (session) {
-      var cur_call = calls_counter++;
-      calls_missed[cur_call] = [arguments, d]; // will be called on new session
-      try {
-        var uri = arguments[0].replace('http://greenaddressit.com/', 'com.greenaddress.').replace('/', '.');
-        session.call(uri, Array.prototype.slice.call(arguments, 1)).then(function (data) {
-          if (!calls_missed[cur_call]) {
-            // avoid resolving the same call twice
-            return;
-          }
-          delete calls_missed[cur_call];
-          d.resolve(data);
-        }, function (err) {
-          if (err.args[0] === 'http://greenaddressit.com/error#internal' && err.args[1] === 'Authentication required') {
-            return; // keep in missed calls queue for after login
-          }
-          if (err.args[0] === 'http://greenaddressit.com/error#sessionexpired') {
-            d.reject({
-              args: [
-                err.args[0],
-                gettext('Session expired. Please try again.')
-              ]
-            });
-            connection.close();
-            connection = session = session_for_login = null;
-            txSenderService.gawallet = null;
-            connecting = false;
-            connect(global_login_d);
-            return;
-          }
-          if (!calls_missed[cur_call]) return; // avoid resolving the same call twice
-          delete calls_missed[cur_call];
-          d.reject(err);
-        });
-        var args = arguments;
-        var timeout;
-        if (args[0] === 'com.greenaddress.vault.prepare_sweep_social') timeout = 40000;
-        else timeout = 10000;
-        setTimeout(function () {
-          delete calls_missed[cur_call];
-          $rootScope.safeApply(function () {
-            d.reject({desc: gettext('Request timed out (%s)')
-                .replace('%s', args[0].split('/').slice(3).join('/'))
-            });
-          });
-        }, timeout);
-      } catch (e) {
-        // if (!calls_missed[cur_call]) return  // avoid resolving the same call twice
-        delete calls_missed[cur_call];
-        d.reject(gettext('Problem with connection detected. Please try again.'));
-      }
-    } else {
-      if (disconnected) {
-        disconnected = false;
-        connect(global_login_d);
-      }
-      calls.push([arguments, d]);
-    }
-    return d.promise;
+    return txSenderService.gaService.call(
+      arguments[0], Array.prototype.slice.call(arguments, 1)
+    );
   }
   function onAuthed (s, login_d) {
     session_for_login = s;
@@ -245,41 +180,7 @@ function factory ($q, $rootScope, cordovaReady, $http, notices, gaEvent, $locati
     });
   }
   function connect (login_d) {
-    global_login_d = login_d;
-    if (connecting) return;
-    connecting = true;
-    nconn += 1;
-    // var retries = 60
-    // var everConnected = false
-
-    doConnect(nconn);
-
-    function doConnect (nc) {
-      connection = new autobahn.Connection({
-        url: wss_url,
-        realm: 'realm1',
-        use_deferred: $q.defer
-      });
-      connection.onclose = function () {
-        session = session_for_login = null;
-        txSenderService.gawallet = null;
-        disconnected = true;
-      };
-      connection.onopen = function (s) {
-        s.caller_disclose_me = true;
-        // everConnected = true
-        if (nc !== nconn) {
-          // newer connection created - close the old one
-          s.close();
-          return;
-        }
-        s.nc = nc;
-        connecting = false;
-        global_login_d = undefined;
-        onAuthed(s, login_d, nc);
-      };
-      connection.open();
-    }
+    txSenderService.gaService.connect();
   }
   // @TODO: refactor indentation hell to be function
   function login (logout, force_relogin, user_agent, path_seed, path, mnemonic) {
@@ -331,7 +232,7 @@ function factory ($q, $rootScope, cordovaReady, $http, notices, gaEvent, $locati
                               gaUserPath = mnemonics.seedToPath(path_seed);
                             }
 
-                            var WalletClass = window.cur_net.isAlphaMultiasset ? GAAssetsWallet : GAWallet;
+                            var WalletClass = window.cur_net.isAlphaMultiasset ? AssetsWallet : GAWallet;
                             txSenderService.gawallet = new WalletClass({
                               existingSession: {
                                 session: session_for_login,

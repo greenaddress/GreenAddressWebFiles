@@ -13,10 +13,11 @@ extend(SchnorrSigningKey.prototype, {
   signHash: signHash,
   signHashSchnorr: signHashSchnorr,
   getAddress: getAddress,
+  getChainCode: getChainCode,
   getPublicKeyBuffer: getPublicKeyBuffer,
   derive: derive,
   deriveHardened: deriveHardened,
-  _derivePathSeed: _derivePathSeed,
+  derivePathSeed: derivePathSeed,
   derivePath: derivePath,
   neutered: neutered
 });
@@ -24,9 +25,11 @@ SchnorrSigningKey.secp256k1 = secp256k1;
 SchnorrSigningKey.getSecp256k1Ctx = checkContext;
 SchnorrSigningKey.fromMnemonic = fromMnemonic;
 
-function SchnorrSigningKey (hdnode, mnemonic) {
+function SchnorrSigningKey (hdnode, options) {
+  options = options || {};
   this.hdnode = hdnode;
-  this.mnemonic = mnemonic;
+  this.mnemonic = options.mnemonic;
+  this.pathSeed = options.pathSeed;
 }
 
 function _signHash (msgIn, schnorr) {
@@ -117,6 +120,10 @@ function getAddress () {
   return this.hdnode.keyPair.getAddress().toString();
 }
 
+function getChainCode () {
+  return this.hdnode.chainCode;
+}
+
 function getPublicKeyBuffer () {
   return this.hdnode.keyPair.getPublicKeyBuffer();
 }
@@ -159,15 +166,20 @@ function fromMnemonic (mnemonic, netName) {
   var curNet = bitcoin.networks[netName || 'testnet'];
   var seed = bip39.mnemonicToSeedHex(mnemonic);  // this is slow, perhaps move to a webworker
   return Promise.resolve(
-    new SchnorrSigningKey(bitcoin.HDNode.fromSeedHex(seed, curNet), mnemonic)
+    new SchnorrSigningKey(
+      bitcoin.HDNode.fromSeedHex(seed, curNet), {mnemonic: mnemonic}
+    )
   );
 }
 
-function _derivePathSeed () {
-  var mnemonicBuffer = new Buffer(this.mnemonic, 'utf8');
-  var saltBuffer = new Buffer('greenaddress_path', 'utf8');
+function derivePathSeed () {
+  if (!this.pathSeed) {
+    var mnemonicBuffer = new Buffer(this.mnemonic, 'utf8');
+    var saltBuffer = new Buffer('greenaddress_path', 'utf8');
 
-  return pbkdf2(mnemonicBuffer, saltBuffer, 2048, 64, 'sha512');
+    this.pathSeed = pbkdf2(mnemonicBuffer, saltBuffer, 2048, 64, 'sha512');
+  }
+  return this.pathSeed;
 }
 
 function derivePath () {

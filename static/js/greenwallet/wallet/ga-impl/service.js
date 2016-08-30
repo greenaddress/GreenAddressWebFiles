@@ -6,10 +6,12 @@ module.exports = GAService;
 extend(GAService.prototype, {
   connect: connect,
   disconnect: disconnect,
-  call: call
+  call: call,
+  login: login
 });
 
-function GAService (netName) {
+function GAService (netName, options) {
+  options = options || {};
   this.netName = netName || 'testnet';
   if (this.netName === 'testnet') {
     this.gaHDNode = new bitcoin.HDNode(
@@ -28,17 +30,19 @@ function GAService (netName) {
       )
     );
   }
+  this.wsUrl = options.wsUrl || 'ws://localhost:8080/v2/ws';
 }
 
-function connect (signingWallet, cb, eb) {
-  this.connection = new autobahn.Connection({
-    url: 'ws://localhost:8080/v2/ws',
-    realm: 'realm1'
-  });
+function login (signingWallet, cb, eb) {
   var _this = this;
-  this.connection.onopen = function (session) {
+  if (this._connectInProgress) {
+    this._signingWallet = signingWallet;
+    this._loginCb = cb;
+    this._loginEb = eb;
+  } else if (!this.session) {
+    this.connect(signingWallet, cb, eb);
+  } else {
     try {
-      _this.session = session;
       return signingWallet.getChallengeArguments().then(function (args) {
         return _this.call.call(_this, args[ 0 ], args.slice(1)); // eslint-disable-line
       }).then(function (challenge) {
@@ -47,7 +51,7 @@ function connect (signingWallet, cb, eb) {
         var signature = signed.signature;
         var randomPathHex = signed.path;
         return _this.call('com.greenaddress.login.authenticate',
-          [ [signature.r.toString(), signature.s.toString()], false, randomPathHex ]
+          [ [ signature.r.toString(), signature.s.toString() ], false, randomPathHex ]
         );
       }).then(function (data) {
         if (data === false) {
@@ -59,6 +63,8 @@ function connect (signingWallet, cb, eb) {
             cb(data);
           } else {
             // first login -- we need to set up the path
+            // *NOTE*: don't change the path after signup, because it *will*
+            //         cause locked funds
             var pathPromise = signingWallet.derivePath();
             return pathPromise.then(function (path) {
               var pathHex = path.toString('hex');
@@ -76,6 +82,28 @@ function connect (signingWallet, cb, eb) {
     } catch (e) {
       eb(e);
     }
+  }
+}
+
+function connect (signingWallet, cb, eb) {
+  this.connection = new autobahn.Connection({
+    url: this.wsUrl,
+    realm: 'realm1'
+  });
+  this._connectInProgress = true;
+  this._signingWallet = signingWallet;
+  this._loginCb = cb;
+  this._loginEb = eb;
+  var _this = this;
+  this.connection.onopen = function (session) {
+    _this.session = session;
+    delete _this._connectInProgress;
+    if (_this._signingWallet) {
+      _this.login(_this._signingWallet, _this._loginCb, _this._loginEb);
+    }
+    delete _this._signingWallet;
+    delete _this._loginCb;
+    delete _this._loginEb;
   };
   this.connection.onclose = eb;
   this.connection.open();

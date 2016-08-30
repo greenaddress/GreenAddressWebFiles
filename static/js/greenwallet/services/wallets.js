@@ -83,6 +83,92 @@ function factory ($q, $rootScope, tx_sender, $location, notices, $uibModal,
       $location.url('/info');
     }
   };
+  walletsService.newLogin = function ($scope, gaWallet, options) {
+    // FIXME: C&P from _login mostly, _login needs to be removed
+    options = options || {};
+    var d = $q.defer();
+    gaWallet.loggedIn.then(function (data) {
+      if (data) {
+        if (window.disableEuCookieComplianceBanner) {
+          window.disableEuCookieComplianceBanner();
+        }
+        if (gaWallet.signingWallet.keysManager) {
+          tx_sender.hdwallet = gaWallet.signingWallet.keysManager.privHDWallet.hdnode;
+          $scope.wallet.hdwallet = tx_sender.hdwallet;
+        }
+        tx_sender.wallet = $scope.wallet;
+        tx_sender.gaWallet = gaWallet;
+        $scope.wallet.mnemonic = gaWallet.signingWallet.mnemonic;
+        if (data.last_login) {
+          $scope.wallet.last_login = data.last_login;
+        }
+        try {
+          $scope.wallet.appearance = JSON.parse(data.appearance);
+          if ($scope.wallet.appearance.constructor !== Object) $scope.wallet.appearance = {};
+        } catch (e) {
+          $scope.wallet.appearance = {};
+        }
+        if (cur_net.isAlphaMultiasset && !window.cordova && !is_chrome_app) {
+          if (data.theme && data.theme.css) {
+            var sheet = window.document.styleSheets[0];
+            sheet.insertRule(data.theme.css, sheet.cssRules.length);
+          }
+          if (data.theme && data.theme.js) {
+            try {
+              eval(data.theme.js);
+            } catch (e) {
+              console.log(e);
+            }
+          }
+        }
+        $scope.wallet.fee_estimates = data.fee_estimates;
+        $scope.wallet.rbf = data.rbf;
+        if (!('sound' in $scope.wallet.appearance)) {
+          $scope.wallet.appearance.sound = true;
+        }
+        if (!('pgp' in $scope.wallet.appearance)) {
+          $scope.wallet.appearance.pgp = '';
+        }
+        if (!('altimeout' in $scope.wallet.appearance)) {
+          $scope.wallet.appearance.altimeout = 20;
+        }
+        if (data.rbf && !('replace_by_fee' in $scope.wallet.appearance)) {
+          $scope.wallet.appearance.replace_by_fee = data.rbf;
+        }
+        sound.play(BASE_URL + '/static/sound/coinreceived.mp3', $scope);
+        autotimeout.start($scope.wallet.appearance.altimeout);
+        $scope.wallet.privacy = data.privacy;
+        $scope.wallet.limits = data.limits;
+        $scope.wallet.subaccounts = [
+          {pointer: 0, name: gettext('Main')}
+        ].concat(data.subaccounts);
+        if (cur_net.isAlphaMultiasset) {
+          $scope.wallet.assets = data.assets;
+        } else {
+          $scope.wallet.assets = {undefined: {name: 'BTC'}};
+        }
+        $scope.wallet.current_subaccount = $scope.wallet.appearance.current_subaccount || 0;
+        $scope.wallet.current_asset = $scope.wallet.appearance.current_asset || 1;
+        $scope.wallet.unit = $scope.wallet.appearance.unit || 'mBTC';
+        $scope.wallet.cache_password = data.cache_password;
+        $scope.wallet.fiat_exchange = data.exchange;
+        $scope.wallet.fiat_exchange_extended = $scope.exchanges[data.exchange];
+        $scope.wallet.receiving_id = data.receiving_id;
+        $scope.wallet.expired_deposits = data.expired_deposits;
+        $scope.wallet.nlocktime_blocks = data.nlocktime_blocks;
+        $scope.wallet.gait_path = data.gait_path;
+        if (!options.signup) { // don't change URL on initial login in signup
+          openInitialPage($scope.wallet, data.has_txs);
+        }
+        $rootScope.$broadcast('login');
+      } else if (!options.signup) { // signup has its own error handling
+        d.reject();
+        return;
+      }
+      d.resolve(data);
+    }).catch(function (e) { d.reject(e); });
+    return d.promise;
+  };
   walletsService._login = function ($scope, hdwallet, mnemonic, signup, logout, path_seed, path, double_login_callback) {
     var d = $q.defer();
     var that = this;

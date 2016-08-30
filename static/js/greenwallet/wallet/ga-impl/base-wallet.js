@@ -15,7 +15,9 @@ extend(BaseWallet.prototype, {
 function BaseWallet (options) {
   if (!options) return;  // allow subclassing
 
-  this.service = new GAService();
+  this.service = options.gaService || new GAService(
+    options.netName || 'testnet', options
+  );
 
   if (options.SigningWalletClass) {
     var signingWallet = new options.SigningWalletClass(
@@ -63,7 +65,7 @@ function BaseWallet (options) {
 
 function _loginHDWallet () {
   return new Promise(function (resolve, reject) {
-    this.service.connect(this.signingWallet, resolve, reject);
+    this.service.login(this.signingWallet, resolve, reject);
   }.bind(this));
 }
 
