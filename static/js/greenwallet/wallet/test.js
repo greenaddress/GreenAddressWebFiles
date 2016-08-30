@@ -45,7 +45,8 @@ function MockUtxo (utxo) {
 }
 
 var mockSigningWallet = new GAHashSwSigningWallet({
-  hd: privHDWallet
+  hd: privHDWallet,
+  schnorrTx: true
 });
 
 mockSigningWallet.keysManager.getGAPublicKey = function () {

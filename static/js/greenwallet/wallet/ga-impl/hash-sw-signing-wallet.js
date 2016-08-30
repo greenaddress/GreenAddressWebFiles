@@ -22,6 +22,7 @@ function HashSwSigningWallet (options) {
     pubHDWallet: options.hd
   });
   this.scriptFactory = new GAScriptFactory(this.keysManager);
+  this.schnorrTx = options.schnorrTx;
 }
 
 function getChallengeArguments () {
@@ -78,15 +79,23 @@ function signTransaction (tx, options) {
 
 function signInput (tx, i) {
   var prevOut = tx.ins[i].prevOut;
+  var _this = this;
   return Promise.all(
     [this.scriptFactory.getUtxoPrevScript(prevOut),
      this.keysManager.getUtxoPrivateKey(prevOut)]
   ).then(function (values) {
     var prevScript = values[0];
     var signingKey = values[1];
-    return signingKey.signHashSchnorr(
+    var signFunction = (_this.schnorrTx
+      ? signingKey.signHashSchnorr
+      : signingKey.signHash
+    ).bind(signingKey);
+    return signFunction(
       tx.hashForSignature(i, prevScript, 1)
     ).then(function (sig) {
+      if (!_this.schnorrTx) {
+        sig = sig.toDER();
+      }
       tx.ins[i].script = bitcoin.script.compile([].concat(
         bitcoin.opcodes.OP_0, // OP_0 required for multisig
         new Buffer([0]), // to be replaced by backend with server's sig
