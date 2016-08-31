@@ -4,7 +4,7 @@ var window = require('global/window');
 
 var gettext = window.gettext;
 
-var HWWallet = require('./hw-wallet');
+var HWWallet = require('./base-hw-wallet');
 
 module.exports = TrezorHWWallet;
 

@@ -3,7 +3,7 @@ var extend = require('xtend/mutable');
 
 var GAService = require('./service');
 var GAFeeEstimatesFactory = require('./fee-estimates-factory');
-var GAHashSwSigningWallet = require('./hash-sw-signing-wallet');
+var GAHashSwSigningWallet = require('./signing-wallets/hash-sw-signing-wallet');
 
 module.exports = BaseWallet;
 

@@ -6,9 +6,9 @@ module.exports = {
   Utxo: require('./utxo-factory').GAUtxo,
   GAScriptFactory: require('./script-factory'),
   GAService: require('./service'),
-  GAKeysManager: require('./keys-manager'),
-  HashSwSigningWallet: require('./hash-sw-signing-wallet'),
-  HWWallet: require('./hw-wallet'),
-  TrezorHWWallet: require('./trezor-hw-wallet'),
+  SWKeysManager: require('./keys-managers/sw-keys-manager'),
+  HashSwSigningWallet: require('./signing-wallets/hash-sw-signing-wallet'),
+  BaseHWWallet: require('./hw-wallets/base-hw-wallet'),
+  TrezorHWWallet: require('./hw-wallets/trezor-hw-wallet'),
   allHwWallets: require('./all-hw-wallets')
 };

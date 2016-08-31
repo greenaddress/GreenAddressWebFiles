@@ -1,5 +1,5 @@
 var allHwWallets = require('wallet').GA.allHwWallets;
-var HWWallet = require('wallet').GA.HWWallet;
+var BaseHWWallet = require('wallet').GA.BaseHWWallet;
 
 angular.module('greenWalletSignupLoginControllers', ['greenWalletMnemonicsServices'])
 .controller('SignupLoginController', ['$scope', '$uibModal', 'focus', 'wallets', 'notices', 'mnemonics', '$location', 'cordovaReady', 'tx_sender', 'crypto', 'gaEvent', 'storage', 'storage_keys', 'qrcode', '$timeout', '$q', 'trezor', 'bip38', 'btchip', '$interval', '$rootScope',
@@ -400,7 +400,7 @@ angular.module('greenWalletSignupLoginControllers', ['greenWalletMnemonicsServic
             allHwWallets.forEach(function (hw) {
                 hw.checkForDevices(cur_net);
             });
-            HWWallet.currentWallet.then(function (dev) {
+            BaseHWWallet.currentWallet.then(function (dev) {
                 state.hw_detected = template.replace('{hardware_wallet_name}', dev.deviceTypeName);
                 hwDevice = dev;
             }, function (err) {

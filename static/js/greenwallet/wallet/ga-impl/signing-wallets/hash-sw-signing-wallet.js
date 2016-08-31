@@ -2,8 +2,8 @@ var BigInteger = require('bigi');
 var bitcoin = require('bitcoinjs-lib');
 var crypto = require('crypto');
 var extend = require('xtend/mutable');
-var GAKeysManager = require('./keys-manager');
-var GAScriptFactory = require('./script-factory');
+var KeysManager = require('./../keys-managers/sw-keys-manager');
+var ScriptFactory = require('./../script-factory');
 
 module.exports = HashSwSigningWallet;
 
@@ -17,12 +17,12 @@ extend(HashSwSigningWallet.prototype, {
 });
 
 function HashSwSigningWallet (options) {
-  this.keysManager = new GAKeysManager({
+  this.keysManager = new KeysManager({
     gaService: options.gaService,
     privHDWallet: options.hd,
     pubHDWallet: options.hd
   });
-  this.scriptFactory = new GAScriptFactory(this.keysManager);
+  this.scriptFactory = new ScriptFactory(this.keysManager);
   this.schnorrTx = options.schnorrTx;
   this.mnemonic = options.hd.mnemonic;
 }

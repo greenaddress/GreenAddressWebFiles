@@ -1,48 +1,21 @@
-var BigInteger = require('bigi');
+var BaseKeysManager = require('./base-keys-manager');
 var extend = require('xtend/mutable');
 
-module.exports = GAKeysManager;
+module.exports = SWKeysManager;
 
-extend(GAKeysManager.prototype, {
+SWKeysManager.prototype = Object.create(BaseKeysManager.prototype);
+extend(SWKeysManager.prototype, {
   _getKey: _getKey,
-  getGAPublicKey: getGAPublicKey,
-  getMyPublicKey: getMyPublicKey,
   getMyPrivateKey: getMyPrivateKey,
   getMyScanningKey: getMyScanningKey,
   getSubaccountRootKey: getSubaccountRootKey,
   getUtxoPrivateKey: getUtxoPrivateKey
 });
 
-function GAKeysManager (options) {
-  this.gaService = options.gaService;
+function SWKeysManager (options) {
+  BaseKeysManager.call(this, options);
 
-  // optimisation for non-subaccounts subkeys and slow hardware wallets
-  // (we don't need the priv-derivation to derive non-subaccount subkeys)
-  this.pubHDWallet = options.pubHDWallet;
   this.privHDWallet = options.privHDWallet;
-}
-
-function _subpath (hd, pathBuffer) {
-  var copy = new Buffer(pathBuffer);
-  for (var i = 0; i < 32; i++) {
-    hd = hd.derive(+BigInteger.fromBuffer(copy.slice(0, 2)));
-    copy = copy.slice(2);
-  }
-  return hd;
-}
-
-function getGAPublicKey (subaccountPointer, pointer) {
-  var gaNode = this.gaService.gaHDNode;
-  if (subaccountPointer) {
-    gaNode = _subpath(
-      gaNode.derive(3), this.gaService.gaUserPath
-    ).derive(subaccountPointer);
-  } else {
-    gaNode = _subpath(
-      gaNode.derive(1), this.gaService.gaUserPath
-    );
-  }
-  return gaNode.derive(pointer);
 }
 
 function getSubaccountRootKey (subaccountPointer) {
@@ -56,7 +29,6 @@ function _getKey (signing, subaccountPointer, pointer, keyBranch) {
     keyBranch = 1; // REGULAR
   }
   var key;
-  // TODO: subaccount key caching (to avoid deriving via hw wallet multiple times)
   if (subaccountPointer) {
     key = this.getSubaccountRootKey(subaccountPointer);
     if (!signing) {
@@ -79,11 +51,6 @@ function _getKey (signing, subaccountPointer, pointer, keyBranch) {
   }).then(function (hd) {
     return hd[deriveFuncName](pointer);
   });
-}
-
-function getMyPublicKey (subaccountPointer, pointer) {
-  // priv only for subaccounts -- avoid involving hw wallets when not necessary
-  return this._getKey(false, subaccountPointer, pointer);
 }
 
 function getMyPrivateKey (subaccountPointer, pointer) {
