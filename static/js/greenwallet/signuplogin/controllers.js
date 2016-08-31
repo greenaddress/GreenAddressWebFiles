@@ -1,9 +1,5 @@
 var allHwWallets = require('wallet').GA.allHwWallets;
-var AssetsWallet = require('wallet').GA.AssetsWallet;
-var GAWallet = require('wallet').GA.GAWallet;
-var HashSwSigningWallet = require('wallet').GA.HashSwSigningWallet;
 var HWWallet = require('wallet').GA.HWWallet;
-var SchnorrSigningKey = require('wallet').bitcoinup.SchnorrSigningKey;
 
 angular.module('greenWalletSignupLoginControllers', ['greenWalletMnemonicsServices'])
 .controller('SignupLoginController', ['$scope', '$uibModal', 'focus', 'wallets', 'notices', 'mnemonics', '$location', 'cordovaReady', 'tx_sender', 'crypto', 'gaEvent', 'storage', 'qrcode', '$timeout', '$q', 'trezor', 'bip38', 'btchip', '$interval', '$rootScope',
@@ -194,16 +190,18 @@ angular.module('greenWalletSignupLoginControllers', ['greenWalletMnemonicsServic
         }
         return login_data_d.then(function(data) {
             return $q.when(Bitcoin.bitcoin.HDNode.fromSeedHex(data.seed, cur_net)).then(function(hdwallet) {
-                hdwallet.seed_hex = data.seed;
                 // seed, mnemonic, and path seed required already here for PIN setup below
-                $scope.wallet.hdwallet = hdwallet;
-                $scope.wallet.mnemonic = data.mnemonic;
-                $scope.wallet.gait_path_seed = data.path_seed;
                 $scope.wallet.logged_in_with_encrypted_mnemonics = encrypted;
                 state.seed_progress = 100;
                 state.seed = data.seed;
                 var do_login = function() {
-                    return wallets.login($scope, hdwallet, data.mnemonic, false, false, data.path_seed).then(function(data) {
+                    return wallets.loginWithHDWallet(
+                        $scope, hdwallet, {
+                            mnemonic: state.mnemonic,
+                            seed: new Bitcoin.Buffer.Buffer(data.seed, 'hex'),
+                            pathSeed: new Bitcoin.Buffer.Buffer(data.path_seed, 'hex')
+                        }
+                    ).then(function(data) {
                         if (!data) {
                             gaEvent('Login', 'MnemonicLoginFailed');
                             state.login_error = true;
@@ -458,23 +456,13 @@ angular.module('greenWalletSignupLoginControllers', ['greenWalletMnemonicsServic
                         gaEvent('Login', 'PinLoginSucceeded');
                         var parsed = JSON.parse(decoded);
                         return $q.when(Bitcoin.bitcoin.HDNode.fromSeedHex(parsed.seed, cur_net)).then(function(hd) {
-                            var WalletClass = window.cur_net.isAlphaMultiasset ? AssetsWallet : GAWallet;
-                            // FIXME: the whole call here probably can be moved
-                            //        inside the wallets service, and be shared
-                            //        with mnemonic login:
-                            return wallets.newLogin($scope, new WalletClass({
-                                SigningWalletClass: HashSwSigningWallet,
-                                signingWalletOptions: {
-                                    hd: new SchnorrSigningKey(
-                                        hd, {
-                                            mnemonic: parsed.mnemonic,
-                                            pathSeed: new Bitcoin.Buffer.Buffer(parsed.path_seed, 'hex')
-                                        }
-                                    ),
-                                    schnorrTx: cur_net.isAlpha
-                                },
-                                gaService: tx_sender.gaService
-                            })).then(function () {
+                            return wallets.loginWithHDWallet(
+                                $scope, hd, {
+                                    mnemonic: parsed.mnemonic,
+                                    seed: new Bitcoin.Buffer.Buffer(parsed.seed, 'hex'),
+                                    pathSeed: new Bitcoin.Buffer.Buffer(parsed.path_seed, 'hex')
+                                }
+                            ).then(function () {
                                 tx_sender.gaWallet.signingWallet.getChainCode().then(
                                     check_storage_chaincode
                                 );
@@ -489,31 +477,6 @@ angular.module('greenWalletSignupLoginControllers', ['greenWalletMnemonicsServic
                                 }
                             });
                         });
-
-                        if (!parsed.path_seed && parsed.mnemonic) {
-                            // FIXME: if path_seed and mnemonics is missing, we
-                            // should calculate the path_seed from seed
-                            // (hw wallets)
-                            return mnemonics.toSeed(parsed.mnemonic, 'greenaddress_path').then(function(path_seed) {
-                                parsed.path_seed = path_seed;
-                                crypto.encrypt(JSON.stringify(parsed), password).then(function(encrypted) {
-                                    storage.set('encrypted_seed'+storage_suffix, encrypted);
-                                })
-                                return $q.when(Bitcoin.bitcoin.HDNode.fromSeedHex(parsed.seed, cur_net)).then(function(hdwallet) {
-                                    hdwallet.seed_hex = parsed.seed;
-                                    check_storage_chaincode(hdwallet.chainCode);
-                                    return wallets.login($scope, hdwallet, state.mnemonic, false, false, path_seed);
-                                });
-                            }, undefined, function(progress) {
-                                state.seed_progress = progress;
-                            });
-                        } else {
-                            return $q.when(Bitcoin.bitcoin.HDNode.fromSeedHex(parsed.seed, cur_net)).then(function(hdwallet) {
-                                check_storage_chaincode(hdwallet.chainCode);
-                                hdwallet.seed_hex = parsed.seed;
-                                return wallets.login($scope, hdwallet, parsed.mnemonic, false, false, parsed.path_seed);
-                            });
-                        }
                     } else {
                         gaEvent('Login', 'PinLoginFailed', 'Wallet decryption failed');
                         state.login_error = true;

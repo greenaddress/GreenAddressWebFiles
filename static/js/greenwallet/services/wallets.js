@@ -1,5 +1,9 @@
 var window = require('global/window');
 var is_chrome_app = require('has-chrome-storage');
+var AssetsWallet = require('wallet').GA.AssetsWallet;
+var GAWallet = require('wallet').GA.GAWallet;
+var HashSwSigningWallet = require('wallet').GA.HashSwSigningWallet;
+var SchnorrSigningKey = require('wallet').bitcoinup.SchnorrSigningKey;
 
 ///@TODO Refactor this file, it's huge and crazy. Also get it to pass lint
 
@@ -82,6 +86,18 @@ function factory ($q, $rootScope, tx_sender, $location, notices, $uibModal,
     } else {
       $location.url('/info');
     }
+  };
+  walletsService.loginWithHDWallet = function ($scope, hd, options) {
+    options = options || {};
+    var WalletClass = window.cur_net.isAlphaMultiasset ? AssetsWallet : GAWallet;
+    return walletsService.newLogin($scope, new WalletClass({
+      SigningWalletClass: HashSwSigningWallet,
+      signingWalletOptions: {
+        hd: new SchnorrSigningKey(hd, options),
+        schnorrTx: cur_net.isAlpha
+      },
+      gaService: tx_sender.gaService
+    }))
   };
   walletsService.newLogin = function ($scope, gaWallet, options) {
     // FIXME: C&P from _login mostly, _login needs to be removed

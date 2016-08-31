@@ -30,6 +30,7 @@ function SchnorrSigningKey (hdnode, options) {
   this.hdnode = hdnode;
   this.mnemonic = options.mnemonic;
   this.pathSeed = options.pathSeed;
+  this.seed = options.seed;
 }
 
 function _signHash (msgIn, schnorr) {
