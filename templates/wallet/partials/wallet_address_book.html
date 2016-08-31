@@ -6,7 +6,7 @@
   </div>
 </div>
 <div ng-controller="AddressBookController">
-<div class="row" ng-show="wallet.hdwallet.keyPair.d || wallet.trezor_dev || wallet.btchip">
+<div class="row" ng-show="wallet.hdwallet.keyPair.d || wallet.hwDevice">
   <div class="col-md-12">
     <div class="header-options">
       <a href="" ng-click="add()"><i class="glyphicon glyphicon-plus-sign"></i> {{ _("Add new entry") }}</a>
@@ -26,7 +26,7 @@
 				<th></th>
 				<th><a href="">{{ _("Name") }}</a></th>
 				<th><a href="">{{ _("Address") }}</a></th>
-				<th ng-show="wallet.hdwallet.keyPair.d || wallet.trezor_dev || wallet.btchip"></th>
+				<th ng-show="wallet.hdwallet.keyPair.d || wallet.hwDevice"></th>
 			</thead>
 	  {% if not include_cordova and not cdvapp %}
       <tfoot>
