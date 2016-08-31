@@ -335,7 +335,7 @@ angular.module('greenWalletSignupLoginControllers', ['greenWalletMnemonicsServic
         gaEvent('Login', 'HardwareLogin');
         if (cur_net.useNewWalletJs) {
             // new refactored implementation, unfinished
-            wallets.login_hw($scope, hwDevice);
+            wallets.loginWithHWWallet($scope, hwDevice);
             return;
         }
         if (trezor_dev) { login_with_trezor(); return; }

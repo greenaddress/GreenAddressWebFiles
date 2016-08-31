@@ -20,7 +20,7 @@ extend(TrezorHWWallet.prototype, {
   registerButtonCallback: registerButtonCallback,
   registerErrorCallback: registerErrorCallback,
   getChallengeArguments: getChallengeArguments,
-  getRootPublicKey: getRootPublicKey,
+  getPublicKey: getPublicKey,
   signMessage: signMessage
 });
 TrezorHWWallet.checkForDevices = checkForDevices;
@@ -69,12 +69,22 @@ function registerErrorCallback (cb) {
   this.errorCb = cb;
 }
 
-function getRootPublicKey () {
+function getPublicKey (path) {
+  path = path || '';
+  var pathArray = [];
+  path.split('/').forEach(function (index) {
+    if (!index.length) return;
+    if (index.indexOf("'") === index.length - 1) {
+      pathArray.push((~~index.slice(0, -1)) + 0x80000000);
+    } else {
+      pathArray.push(~~index);
+    }
+  });
   var _this = this;
-  if (this.rootPublicKey) {
+  if (path.length === 0 && this.rootPublicKey) {
     return Promise.resolve(this.rootPublicKey);
   } else {
-    return this.device.getPublicKey([]).then(function (pubkey) {
+    return this.device.getPublicKey(pathArray).then(function (pubkey) {
       var pk = pubkey.message.node.public_key;
       pk = pk.toHex ? pk.toHex() : pk;
       var keyPair = bitcoin.ECPair.fromPublicKeyBuffer(
@@ -85,13 +95,16 @@ function getRootPublicKey () {
       cc = cc.toHex ? cc.toHex() : cc;
       var chainCode = new Buffer(cc, 'hex');
       var hdwallet = new bitcoin.HDNode(keyPair, chainCode);
-      _this.rootPublicKey = hdwallet;
+      if (path.length === 0) {
+        _this.rootPublicKey = hdwallet;
+      }
       return hdwallet;
     });
   }
 }
 
 function signMessage (path, message) {
+  message = new Buffer(message, 'utf8').toString('hex');
   return this.device._typedCommonCall('SignMessage', 'MessageSignature', {'message': message, address_n: path})
     .then(function (res) {
       var sig = res.message.signature;
@@ -102,7 +115,8 @@ function signMessage (path, message) {
 }
 
 function getChallengeArguments () {
-  return this.getRootPublicKey().then(function (hdWallet) {
+  var _this = this;
+  return this.getPublicKey().then(function (hdWallet) {
     return [ 'com.greenaddress.login.get_trezor_challenge', hdWallet.keyPair.getAddress(), true ];
   });
 }

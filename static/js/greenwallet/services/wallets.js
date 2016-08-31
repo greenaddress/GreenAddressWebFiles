@@ -3,6 +3,7 @@ var is_chrome_app = require('has-chrome-storage');
 var AssetsWallet = require('wallet').GA.AssetsWallet;
 var GAWallet = require('wallet').GA.GAWallet;
 var HashSwSigningWallet = require('wallet').GA.HashSwSigningWallet;
+var HwSigningWallet = require('wallet').GA.HwSigningWallet;
 var SchnorrSigningKey = require('wallet').bitcoinup.SchnorrSigningKey;
 
 ///@TODO Refactor this file, it's huge and crazy. Also get it to pass lint
@@ -100,6 +101,23 @@ function factory ($q, $rootScope, tx_sender, $location, notices, $uibModal,
       gaService: tx_sender.gaService
     }), options);
   };
+  walletsService.loginWithHWWallet = function ($scope, hwDevice, options) {
+    options = options || {};
+    var WalletClass = window.cur_net.isAlphaMultiasset ? AssetsWallet : GAWallet;
+    return hwDevice.getPublicKey().then(function(hdwallet) {
+      // we use wallet.hdwallet to check if we're logged in in many places:
+      $scope.wallet.hdwallet = hdwallet;
+      tx_sender.hwDevice = hwDevice;
+      return walletsService.newLogin($scope, new WalletClass({
+        SigningWalletClass: HwSigningWallet,
+        signingWalletOptions: {
+          hw: hwDevice,
+          pubHDWallet: hdwallet
+        },
+        gaService: tx_sender.gaService
+      }), options);
+    });
+  };
   walletsService.newLogin = function ($scope, gaWallet, options) {
     // FIXME: C&P from _login mostly, _login needs to be removed
     options = options || {};
@@ -109,7 +127,7 @@ function factory ($q, $rootScope, tx_sender, $location, notices, $uibModal,
         if (window.disableEuCookieComplianceBanner) {
           window.disableEuCookieComplianceBanner();
         }
-        if (gaWallet.signingWallet.keysManager) {
+        if (gaWallet.signingWallet.keysManager.privHDWallet) {
           // we use wallet.hdwallet to check if we're logged in in many places:
           $scope.wallet.hdwallet = gaWallet.signingWallet.keysManager.privHDWallet.hdnode;
         }
@@ -185,7 +203,11 @@ function factory ($q, $rootScope, tx_sender, $location, notices, $uibModal,
       }
       d.resolve(data);
     }).catch(function (e) { d.reject(e); });
-    return d.promise;
+    return d.promise.catch(function (err) {
+      console.log(err);
+      notices.makeNotice('error', gettext('Login failed') + (err && err.args && err.args[1] && (': ' + err.args[1]) || ''));
+      return $q.reject(err);
+    });
   };
   walletsService._login = function ($scope, hdwallet, mnemonic, signup, logout, path_seed, path, double_login_callback) {
     var d = $q.defer();
@@ -300,14 +322,6 @@ function factory ($q, $rootScope, tx_sender, $location, notices, $uibModal,
   walletsService.login = function ($scope, hdwallet, mnemonic, signup, logout, path_seed) {
     tx_sender.hdwallet = hdwallet;
     return this._login($scope, hdwallet, mnemonic, signup, logout, path_seed);
-  };
-  walletsService.login_hw = function ($scope, hwDevice, isSignup) {
-    var _this = this;
-    hwDevice.getRootPublicKey().then(function(hdwallet) {
-      tx_sender.hdwallet = hdwallet;
-      tx_sender.hwDevice = hwDevice;
-      _this._login($scope, hdwallet, undefined, isSignup, false, undefined);
-    });
   };
   walletsService.login_trezor = function ($scope, trezor_dev, path, signup, logout) {
     tx_sender.trezor_dev = trezor_dev;

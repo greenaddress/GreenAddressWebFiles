@@ -51,7 +51,7 @@ function login (signingWallet, cb, eb) {
         var signature = signed.signature;
         var randomPathHex = signed.path;
         return _this.call('com.greenaddress.login.authenticate',
-          [ [ signature.r.toString(), signature.s.toString() ], false, randomPathHex ]
+          [ signature, false, randomPathHex ]
         );
       }).then(function (data) {
         if (data === false) {

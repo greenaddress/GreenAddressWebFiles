@@ -52,6 +52,7 @@ function signChallenge (challenge) {
   return key.then(function (key) {
     return key.signHash(challengeBuf);
   }).then(function (signature) {
+    signature = [ signature.r.toString(), signature.s.toString() ];
     return {signature: signature, path: randomPathHex};
   });
 }
