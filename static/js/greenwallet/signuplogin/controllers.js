@@ -42,6 +42,8 @@ angular.module('greenWalletSignupLoginControllers', ['greenWalletMnemonicsServic
         }
     }
 
+    storage.set(storage_keys.LAST_VISIT, new Date().toISOString());
+
     var state = {};
     storage.get([
             storage_keys.PIN_ID+'_touchid',
