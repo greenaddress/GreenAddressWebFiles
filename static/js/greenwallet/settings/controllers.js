@@ -319,8 +319,8 @@ angular.module('greenWalletSettingsControllers',
     setup_2fa('sms');
     setup_2fa('phone');
     setup_2fa('gauth');
-}]).controller('SettingsController', ['$scope', '$q', 'wallets', 'tx_sender', 'notices', '$uibModal', 'gaEvent', 'storage', '$location', '$timeout', 'bip38', 'mnemonics', 'btchip', 'trezor', 'hw_detector',
-        function SettingsController($scope, $q, wallets, tx_sender, notices, $uibModal, gaEvent, storage, $location, $timeout, bip38, mnemonics, btchip, trezor, hw_detector) {
+}]).controller('SettingsController', ['$scope', '$q', 'wallets', 'tx_sender', 'notices', '$uibModal', 'gaEvent', 'storage', '$location', 'storage_keys', '$timeout', 'bip38', 'mnemonics', 'btchip', 'trezor', 'hw_detector',
+        function SettingsController($scope, $q, wallets, tx_sender, notices, $uibModal, gaEvent, storage, storage_keys, $location, $timeout, bip38, mnemonics, btchip, trezor, hw_detector) {
     if (!wallets.requireWallet($scope)) return;
     var userfriendly_blocks = function(num) {
         return gettext("(about %s days: 1 day ≈ 144 blocks)").replace("%s", Math.round(num/144));
@@ -451,7 +451,7 @@ angular.module('greenWalletSettingsControllers',
         var is_chrome_app = window.chrome && chrome.storage;
         wallets.askForLogout($scope, gettext('You need to log out for language changes to be applied.')).then(function() {
             if (is_chrome_app) {
-                storage.set('language', newValue);
+                storage.set(storage_keys.LANGUAGE, newValue);
                 chrome.runtime.sendMessage({changeLang: true, lang: newValue});
             } else if (window.cordova) {
                 plugins.appPreferences.store(function() {
@@ -650,9 +650,9 @@ angular.module('greenWalletSettingsControllers',
             wallets.get_two_factor_code($scope, 'remove_account', {}).then(function(twofac_data) {
                 return tx_sender.call('com.greenaddress.login.remove_account', twofac_data).then(function() {
                     tx_sender.logout();
-                    storage.remove('pin_ident');
-                    storage.remove('pin_chaincode');
-                    storage.remove('encrypted_seed');
+                    storage.remove(storage_keys.PIN_ID);
+                    storage.remove(storage_keys.PIN_CHAINCODE);
+                    storage.remove(storage_keys.ENCRYPTED_SEED);
                     $location.path('/');
                 }).catch(function(err) {
                     notices.makeNotice('error', err.args[1]);
@@ -924,8 +924,8 @@ angular.module('greenWalletSettingsControllers',
             $scope.pgp = $scope.wallet.appearance.pgp;
         });
     };
-}]).controller('QuickLoginController', ['$scope', 'tx_sender', 'notices', 'wallets', 'gaEvent', 'storage',
-        function QuickLoginController($scope, tx_sender, notices, wallets, gaEvent, storage) {
+}]).controller('QuickLoginController', ['$scope', 'tx_sender', 'notices', 'wallets', 'gaEvent', 'storage', 'storage_keys',
+        function QuickLoginController($scope, tx_sender, notices, wallets, gaEvent, storage, storage_keys) {
     if (!wallets.requireWallet($scope, true)) return;   // dontredirect=true because one redirect in SettingsController is enough
     if (tx_sender.pin_ident) {
         // logged in via PIN
@@ -935,12 +935,15 @@ angular.module('greenWalletSettingsControllers',
         };
         $scope.quicklogin.loaded = true;
     } else {
-        storage.get(['pin_chaincode', 'pin_ident']).then(function(res) {
-            if (res.pin_chaincode == $scope.wallet.hdwallet.chainCode.toString('hex')) {
+        storage.get([
+                storage_keys.PIN_CHAINCODE,
+                storage_keys.PIN_ID
+        ]).then(function(res) {
+            if (res[storage_keys.PIN_CHAINCODE] == $scope.wallet.hdwallet.chainCode.toString('hex')) {
                 // PIN for the same user as currently logged in (via mnemonic)
                 $scope.quicklogin = {
                     enabled: true,
-                    device_ident: res.pin_ident
+                    device_ident: res[storage_keys.PIN_ID]
                 };
             } else {
                 $scope.quicklogin = {};
@@ -969,9 +972,9 @@ angular.module('greenWalletSettingsControllers',
                     delete tx_sender.pin_ident;  // don't try using pin on reconnect
                     $scope.quicklogin.enabled = false;
                     $scope.quicklogin.device_ident = undefined;
-                    storage.remove('pin_ident');
-                    storage.remove('pin_chaincode');
-                    storage.remove('encrypted_seed');
+                    storage.remove(storage_keys.PIN_ID);
+                    storage.remove(storage_keys.PIN_CHAINCODE);
+                    storage.remove(storage_keys.ENCRYPTED_SEED);
                     notices.makeNotice('success', gettext('PIN removed'));
                 }, function(err) {
                     gaEvent('Wallet', 'QuickLoginRemoveFailed', err.args[1]);
@@ -1020,9 +1023,9 @@ angular.module('greenWalletSettingsControllers',
             $scope.quicklogin.enabled = false;
             $scope.quicklogin.device_ident = undefined;
             delete tx_sender.pin_ident;  // don't try using pin on reconnect
-            storage.remove('pin_ident');
-            storage.remove('pin_chaincode');
-            storage.remove('encrypted_seed');
+            storage.remove(storage_keys.PIN_ID);
+            storage.remove(storage_keys.PIN_CHAINCODE);
+            storage.remove(storage_keys.ENCRYPTED_SEED);
             notices.makeNotice('success', gettext('All PINs removed'));
         }, function(err) {
             gaEvent('Wallet', 'AllPinLoginsRemoveFailed', err.args[1]);
@@ -1384,13 +1387,13 @@ angular.module('greenWalletSettingsControllers',
             $location.path('/receive');
         }
     };
-}]).controller('TouchIdController', ['$scope', 'tx_sender', 'wallets', 'notices', 'storage',
-        function($scope, tx_sender, wallets, notices, storage) {
+}]).controller('TouchIdController', ['$scope', 'tx_sender', 'wallets', 'notices', 'storage', 'storage_keys',
+        function($scope, tx_sender, wallets, notices, storage, storage_keys) {
     var touchId = $scope.touchId = {
         isAvailable: false,
         enabled: false
     };
-    storage.get('pin_ident_touchid').then(function(devid) {
+    storage.get(storage_keys.PIN_ID+'_touchid').then(function(devid) {
         if (devid) {
             touchId.enabled = true;
         }
@@ -1418,13 +1421,13 @@ angular.module('greenWalletSettingsControllers',
             if (!$scope.touchId.started_unsetting) {
                 $scope.touchId.started_unsetting = true;
                 $scope.touchId.enabled = true;  // not yet disabled
-                return storage.get('pin_ident_touchid').then(function(devid) {
+                return storage.get(storage_keys.PIN_ID+'_touchid').then(function(devid) {
                     tx_sender.call('com.greenaddress.pin.remove_pin_login',
                         devid).then(function(data) {
                         cordova.exec(function(param) {
                             $scope.$apply(function() {
-                                storage.remove('pin_ident_touchid')
-                                storage.remove('encrypted_seed_touchid')
+                                storage.remove(storage_keys.PIN_ID+'_touchid')
+                                storage.remove(storage_keys.ENCRYPTED_SEED+'_touchid')
                                 $scope.touchId.enabled = false;
                             });
                         }, function(fail) {

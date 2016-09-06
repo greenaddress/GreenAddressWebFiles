@@ -24,6 +24,16 @@ var greenWalletApp = angular.module('greenWalletApp', deps)
     UNKNOWN: 100,
     PAYMENTREQUEST: 110
 })
+.constant('storage_keys', {
+    ADDRBOOK_CACHE: '%saddressbook',
+    DEVICE_ID: 'device_id',
+    ENCRYPTED_SEED: 'encrypted_seed',
+    LANGUAGE: 'language',
+    LAST_VISIT: 'pin_chaincode',
+    PIN_CHAINCODE: 'pin_chaincode',
+    PIN_ID: 'pin_ident',
+    PIN_REFUSED: 'pin_refused'
+})
 .config(['$routeProvider', '$provide', function config($routeProvider, $provide) {
     $routeProvider
         .when('/', {

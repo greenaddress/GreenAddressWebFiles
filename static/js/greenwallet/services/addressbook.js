@@ -5,9 +5,9 @@ var gettext = window.gettext;
 
 module.exports = factory;
 
-factory.dependencies = ['$rootScope', 'tx_sender', 'storage', 'crypto', 'notices', '$q'];
+factory.dependencies = ['$rootScope', 'tx_sender', 'storage', 'storage_keys', 'crypto', 'notices', '$q'];
 
-function factory ($rootScope, tx_sender, storage, crypto, notices, $q) {
+function factory ($rootScope, tx_sender, storage, storage_keys, crypto, notices, $q) {
   var PER_PAGE = 15;
   return {
     items: [],
@@ -104,7 +104,9 @@ function factory ($rootScope, tx_sender, storage, crypto, notices, $q) {
       that.populate_csv();
     },
     load: function ($scope, $routeParams) {
-      var addressbook_key = $scope.wallet.receiving_id + 'addressbook';
+      var addressbook_key = storage_keys.ADDRBOOK_CACHE.replace(
+        '%s', $scope.wallet.receiving_id
+      );
       var that = this;
       return storage.get(addressbook_key).then(function (cache) {
         try {

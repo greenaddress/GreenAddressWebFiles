@@ -2,8 +2,8 @@ var allHwWallets = require('wallet').GA.allHwWallets;
 var HWWallet = require('wallet').GA.HWWallet;
 
 angular.module('greenWalletSignupLoginControllers', ['greenWalletMnemonicsServices'])
-.controller('SignupLoginController', ['$scope', '$uibModal', 'focus', 'wallets', 'notices', 'mnemonics', '$location', 'cordovaReady', 'tx_sender', 'crypto', 'gaEvent', 'storage', 'qrcode', '$timeout', '$q', 'trezor', 'bip38', 'btchip', '$interval', '$rootScope',
-        function SignupLoginController($scope, $uibModal, focus, wallets, notices, mnemonics, $location, cordovaReady, tx_sender, crypto, gaEvent, storage, qrcode, $timeout, $q, trezor, bip38, btchip, $interval, $rootScope) {
+.controller('SignupLoginController', ['$scope', '$uibModal', 'focus', 'wallets', 'notices', 'mnemonics', '$location', 'cordovaReady', 'tx_sender', 'crypto', 'gaEvent', 'storage', 'storage_keys', 'qrcode', '$timeout', '$q', 'trezor', 'bip38', 'btchip', '$interval', '$rootScope',
+        function SignupLoginController($scope, $uibModal, focus, wallets, notices, mnemonics, $location, cordovaReady, tx_sender, crypto, gaEvent, storage, storage_keys, qrcode, $timeout, $q, trezor, bip38, btchip, $interval, $rootScope) {
 
     if (window.GlobalWalletControllerInitVars) {
         // in case user goes back from send to login and back to send, we want to display the
@@ -47,14 +47,17 @@ angular.module('greenWalletSignupLoginControllers', ['greenWalletMnemonicsServic
 
     var state = {};
     storage.get([
-            'pin_ident_touchid', 'encrypted_seed_touchid',
-            'pin_ident', 'encrypted_seed', 'pin_refused']
-            ).then(function(data) {
-        if (data.pin_ident_touchid) {
+            storage_keys.PIN_ID+'_touchid',
+            storage_keys.ENCRYPTED_SEED+'_touchid',
+            storage_keys.PIN_ID,
+            storage_keys.ENCRYPTED_SEED,
+            storage_keys.PIN_REFUSED
+    ]).then(function(data) {
+        if (data[storage_keys.PIN_ID+'_touchid']) {
             document.addEventListener('deviceready', function() {
                 cordova.exec(function(param) {
                     $scope.$apply(function() {
-                        use_pin_data.pin = data;
+                        use_pin_data.pin = param;
                         $scope.logging_in = true;
                         setTimeout(function() {
                             $scope.use_pin('_touchid').finally(function() {
@@ -62,19 +65,20 @@ angular.module('greenWalletSignupLoginControllers', ['greenWalletMnemonicsServic
                             });
                         }, 0);
                     });
-                    use_pin_data.pin = param;
                 }, function(fail) {
                     console.log('CDVTouchId.getSecret failed: ' + fail)
                 }, "CDVTouchId", "getSecret", []);
             });
         }
-        tx_sender.has_pin = state.has_pin = !!(data.pin_ident && data.encrypted_seed);
-        state.refused_pin = data.pin_refused || storage.noLocalStorage;  // don't show the PIN popup if no storage is available
-        state.pin_ident = data.pin_ident;
-        state.pin_ident_touchid = data.pin_ident_touchid;
+        tx_sender.has_pin = state.has_pin = !!(
+            data[storage_keys.PIN_ID] && data[storage_keys.ENCRYPTED_SEED]
+        );
+        state.refused_pin = data[storage_keys.PIN_REFUSED] || storage.noLocalStorage;  // don't show the PIN popup if no storage is available
+        state.pin_ident = data[storage_keys.PIN_ID];
+        state.pin_ident_touchid = data[storage_keys.PIN_ID+'_touchid'];
         state.toggleshowpin = !state.has_pin;
-        state.encrypted_seed = data.encrypted_seed;
-        state.encrypted_seed_touchid = data.encrypted_seed_touchid;
+        state.encrypted_seed = data[storage_keys.ENCRYPTED_SEED];
+        state.encrypted_seed_touchid = data[storage_keys.ENCRYPTED_SEED+'_touchid'];
         $timeout(function() {
             if (state.has_pin) {
                 focus('pin');
@@ -85,9 +89,9 @@ angular.module('greenWalletSignupLoginControllers', ['greenWalletMnemonicsServic
 
         if (state.has_pin && window.cordova && cordova.platformId == 'android') {
             cordovaReady(function() {
-                cordova.exec(function(data) {
+                cordova.exec(function(param) {
                     $scope.$apply(function() {
-                        use_pin_data.pin = data;
+                        use_pin_data.pin = param;
                         $scope.logging_in = true;
                         $scope.use_pin().finally(function() {
                             $scope.logging_in = false;
@@ -218,7 +222,7 @@ angular.module('greenWalletSignupLoginControllers', ['greenWalletMnemonicsServic
                     });
                     modal.opened.then(function() { focus("pinModal"); });
                     return modal.result.then(do_login, function() {
-                        storage.set('pin_refused', true);
+                        storage.set(storage_keys.PIN_REFUSED, true);
                         return do_login();
                     })
                 } else {
@@ -442,10 +446,10 @@ angular.module('greenWalletSignupLoginControllers', ['greenWalletMnemonicsServic
                     tx_sender.pin_ident = state.pin_ident;
                 }
                 var check_storage_chaincode = function (chainCode) {
-                    storage.get('pin_chaincode'+storage_suffix).then(function(chaincode) {
+                    storage.get(storage_keys.PIN_CHAINCODE+storage_suffix).then(function(chaincode) {
                         if (!chaincode) {
                             storage.set(
-                                'pin_chaincode'+storage_suffix,
+                                storage_keys.PIN_CHAINCODE+storage_suffix,
                                 chainCode.toString('hex')
                             );
                         }
@@ -471,7 +475,7 @@ angular.module('greenWalletSignupLoginControllers', ['greenWalletMnemonicsServic
                                     return tx_sender.gaWallet.signingWallet.keysManager.privHDWallet.derivePathSeed().then(function(path_seed) {
                                         parsed.path_seed = path_seed.toString('hex');
                                         crypto.encrypt(JSON.stringify(parsed), password).then(function (encrypted) {
-                                            storage.set('encrypted_seed' + storage_suffix, encrypted);
+                                            storage.set(storage_keys.ENCRYPTED_SEED+storage_suffix, encrypted);
                                         })
                                     });
                                 }
@@ -492,9 +496,9 @@ angular.module('greenWalletSignupLoginControllers', ['greenWalletMnemonicsServic
                         suffix = '; ' + gettext('%s attempts left.').replace('%s', pin_attempts_left);
                     } else {
                         suffix = '; ' + gettext('0 attempts left - PIN removed.').replace('%s', pin_attempts_left);
-                        storage.remove('pin_ident'+storage_suffix);
-                        storage.remove('pin_chaincode'+storage_suffix);
-                        storage.remove('encrypted_seed'+storage_suffix);
+                        storage.remove(storage_keys.PIN_ID+storage_suffix);
+                        storage.remove(storage_keys.PIN_CHAINCODE+storage_suffix);
+                        storage.remove(storage_keys.ENCRYPTED_SEED+storage_suffix);
                         state.has_pin = false;
                         state.toggleshowpin = true;
                         delete use_pin_data.pin;
