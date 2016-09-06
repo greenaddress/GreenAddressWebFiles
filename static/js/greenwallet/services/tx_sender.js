@@ -490,15 +490,18 @@ function factory ($q, $rootScope, cordovaReady, $http, notices, gaEvent, $locati
       });
     return d.promise;
   }
-  function change_pin (new_pin) {
-    return txSenderService.call('com.greenaddress.pin.change_pin_login', new_pin, txSenderService.pin_ident)
-      .then(function (res) {
-        // keep new pin for reconnection handling
-        if (!res) {
-          return $q.reject(gettext('Changing PIN failed.'));
-        } else {
-          txSenderService.pin = new_pin;
-        }
-      });
+  function change_pin (new_pin, device_ident) {
+    return txSenderService.call(
+      'com.greenaddress.pin.change_pin_login',
+      new_pin,
+      device_ident || txSenderService.pin_ident
+    ).then(function (res) {
+      // keep new pin for reconnection handling
+      if (!res) {
+        return $q.reject(gettext('Changing PIN failed.'));
+      } else {
+        txSenderService.pin = new_pin;
+      }
+    });
   }
 }
