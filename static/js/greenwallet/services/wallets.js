@@ -77,7 +77,7 @@ function factory ($q, $rootScope, tx_sender, $location, notices, $uibModal,
       return $q.reject(e);
     });
   };
-  var openInitialPage = function (wallet, has_txs) {
+  walletsService.openInitialPage = function (wallet, has_txs) {
     if ($location.search().redir) {
       $location.url($location.search().redir);
     } else if (!has_txs) {
@@ -98,7 +98,7 @@ function factory ($q, $rootScope, tx_sender, $location, notices, $uibModal,
         schnorrTx: cur_net.isAlpha
       },
       gaService: tx_sender.gaService
-    }))
+    }), options);
   };
   walletsService.newLogin = function ($scope, gaWallet, options) {
     // FIXME: C&P from _login mostly, _login needs to be removed
@@ -110,8 +110,8 @@ function factory ($q, $rootScope, tx_sender, $location, notices, $uibModal,
           window.disableEuCookieComplianceBanner();
         }
         if (gaWallet.signingWallet.keysManager) {
-          tx_sender.hdwallet = gaWallet.signingWallet.keysManager.privHDWallet.hdnode;
-          $scope.wallet.hdwallet = tx_sender.hdwallet;
+          // we use wallet.hdwallet to check if we're logged in in many places:
+          $scope.wallet.hdwallet = gaWallet.signingWallet.keysManager.privHDWallet.hdnode;
         }
         tx_sender.wallet = $scope.wallet;
         tx_sender.gaWallet = gaWallet;
@@ -174,8 +174,9 @@ function factory ($q, $rootScope, tx_sender, $location, notices, $uibModal,
         $scope.wallet.expired_deposits = data.expired_deposits;
         $scope.wallet.nlocktime_blocks = data.nlocktime_blocks;
         $scope.wallet.gait_path = data.gait_path;
-        if (!options.signup) { // don't change URL on initial login in signup
-          openInitialPage($scope.wallet, data.has_txs);
+        if (!options.signup && !options.needsPINSetup) {
+          // don't change URL on initial login in signup or PIN setup
+          walletsService.openInitialPage($scope.wallet, data.has_txs);
         }
         $rootScope.$broadcast('login');
       } else if (!options.signup) { // signup has its own error handling
@@ -274,7 +275,7 @@ function factory ($q, $rootScope, tx_sender, $location, notices, $uibModal,
           });
         }
         if (!signup) { // don't change URL on initial login in signup
-          openInitialPage($scope.wallet, data.has_txs);
+          walletsService.openInitialPage($scope.wallet, data.has_txs);
         }
         $rootScope.$broadcast('login');
       } else if (!signup) { // signup has its own error handling
@@ -1807,59 +1808,47 @@ function factory ($q, $rootScope, tx_sender, $location, notices, $uibModal,
   };
   walletsService.create_pin = function (pin, $scope, suffix) {
     suffix = suffix || '';
-    var privHDWallet = $scope.wallet.hdwallet;
+    var privHDWallet = tx_sender.gaWallet.signingWallet.keysManager.privHDWallet;
     if (!privHDWallet.seed) {
       return $q.reject(gettext('Internal error') + ': Missing seed');
     }
-    if (tx_sender.logged_in) { // already logged in
-      return do_create();
-    } else {
-      return $q.when(Bitcoin.bitcoin.HDNode.fromSeedHex($scope.wallet.hdwallet.seed_hex, cur_net)).then(function (hdwallet) {
-        hdwallet.seed_hex = $scope.wallet.hdwallet.seed_hex;
-        return walletsService.login($scope || {wallet: {}}, hdwallet,
-          $scope.wallet.mnemonic, false, false, $scope.wallet.gait_path_seed).then(function () {
-          return do_create();
-        });
-    }
     var pin_ident;
-    function do_create () {
+    return tx_sender.call(
+      'com.greenaddress.pin.set_pin_login', pin, 'Primary'
+    ).then(function (value_id) {
+      if (!value_id) {
+        return $q.reject(gettext('Failed creating PIN.'));
+      }
+      pin_ident = tx_sender[ 'pin_ident'+suffix ] = value_id;
+      storage.set(storage_keys.PIN_ID+suffix, pin_ident);
+      storage.set(
+        storage_keys.PIN_CHAINCODE+suffix,
+        $scope.wallet.hdwallet.chainCode.toString('hex')
+      );
       return tx_sender.call(
-        'com.greenaddress.pin.set_pin_login', pin, 'Primary'
-      ).then(function (value_id) {
-        if (!value_id) {
-          return $q.reject(gettext('Failed creating PIN.'));
-        }
-        pin_ident = tx_sender[ 'pin_ident'+suffix ] = value_id;
-        storage.set(storage_keys.PIN_ID+suffix, pin_ident);
-        storage.set(
-          storage_keys.PIN_CHAINCODE+suffix,
-          $scope.wallet.hdwallet.chainCode.toString('hex')
-        );
-        return tx_sender.call(
-          'com.greenaddress.pin.get_password', pin, value_id
-        );
-      }).then(function (password) {
-        if (!password) {
-          return $q.reject(gettext('Failed retrieving password.'));
-        }
-        var value_raw = JSON.stringify({
-          'seed': privHDWallet.seed.toString('hex'),
-          'path_seed': privHDWallet.pathSeed.toString('hex'),
-          'mnemonic':  privHDWallet.mnemonic
-        });
-        crypto.encrypt(value_raw, password).then(function (value_set) {
-          storage.set(storage_keys.ENCRYPTED_SEED+suffix, value_set);
-          if (!suffix) {
-            // chaincode is not used for Touch ID
-            storage.set(storage_keys.PIN_CHAINCODE, value_set);
-          }
-        });
-        tx_sender.pin = pin;
-        return pin_ident;
-      }).catch(function(err) {
-        return $q.reject(err.args ? err.args[0] : err);
+        'com.greenaddress.pin.get_password', pin, value_id
+      );
+    }).then(function (password) {
+      if (!password) {
+        return $q.reject(gettext('Failed retrieving password.'));
+      }
+      var value_raw = JSON.stringify({
+        'seed': privHDWallet.seed.toString('hex'),
+        'path_seed': privHDWallet.pathSeed.toString('hex'),
+        'mnemonic':  privHDWallet.mnemonic
       });
-    }
+      crypto.encrypt(value_raw, password).then(function (value_set) {
+        storage.set(storage_keys.ENCRYPTED_SEED+suffix, value_set);
+        if (!suffix) {
+          // chaincode is not used for Touch ID
+          storage.set(storage_keys.PIN_CHAINCODE, value_set);
+        }
+      });
+      tx_sender.pin = pin;
+      return pin_ident;
+    }).catch(function(err) {
+      return $q.reject(err.args ? err.args[0] : err);
+    });
   };
   walletsService.askForLogout = function ($scope, text) {
     $scope.ask_for_logout_text = text;

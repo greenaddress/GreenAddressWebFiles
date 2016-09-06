@@ -207,36 +207,40 @@ angular.module('greenWalletSignupLoginControllers', ['greenWalletMnemonicsServic
                 $scope.wallet.logged_in_with_encrypted_mnemonics = encrypted;
                 state.seed_progress = 100;
                 state.seed = data.seed;
-                var do_login = function() {
-                    return wallets.loginWithHDWallet(
-                        $scope, hdwallet, {
-                            mnemonic: state.mnemonic,
-                            seed: new Bitcoin.Buffer.Buffer(data.seed, 'hex'),
-                            pathSeed: new Bitcoin.Buffer.Buffer(data.path_seed, 'hex')
-                        }
-                    ).then(function(data) {
-                        if (!data) {
-                            gaEvent('Login', 'MnemonicLoginFailed');
-                            state.login_error = true;
-                        } else {
-                            gaEvent('Login', 'MnemonicLoginSucceeded');
-                        }
-                    });
-                };
-                if (!state.has_pin && !state.refused_pin) {
-                    gaEvent('Login', 'MnemonicLoginPinModalShown');
-                    modal = $uibModal.open({
-                        templateUrl: BASE_URL+'/'+LANG+'/wallet/partials/wallet_modal_pin.html',
-                        scope: $scope
-                    });
-                    modal.opened.then(function() { focus("pinModal"); });
-                    return modal.result.then(do_login, function() {
-                        storage.set(storage_keys.PIN_REFUSED, true);
-                        return do_login();
-                    })
-                } else {
-                    return do_login();
-                }
+                var needsPINSetup = !state.has_pin && !state.refused_pin;
+                return wallets.loginWithHDWallet(
+                    $scope, hdwallet, {
+                        mnemonic: state.mnemonic,
+                        seed: new Bitcoin.Buffer.Buffer(data.seed, 'hex'),
+                        pathSeed: new Bitcoin.Buffer.Buffer(data.path_seed, 'hex'),
+                        // conditionally disable automatic redirect to the
+                        // initial wallet page, to avoid closing the PIN modal:
+                        needsPINSetup: needsPINSetup
+                    }
+                ).then(function(data) {
+                    if (!data) {
+                        gaEvent('Login', 'MnemonicLoginFailed');
+                        state.login_error = true;
+                    } else {
+                        gaEvent('Login', 'MnemonicLoginSucceeded');
+                    }
+                    return data;
+                }).then(function (data) {
+                    if (data && needsPINSetup) {
+                        gaEvent('Login', 'MnemonicLoginPinModalShown');
+                        modal = $uibModal.open({
+                            templateUrl: BASE_URL+'/'+LANG+'/wallet/partials/wallet_modal_pin.html',
+                            scope: $scope
+                        });
+                        modal.opened.then(function() { focus("pinModal"); });
+                        return modal.result.then(function() {
+                            storage.set(storage_keys.PIN_REFUSED, true);
+                            // Open initial page only after the modal is closed,
+                            // otherwise it'd close itself on navigation.
+                            wallets.openInitialPage($scope.wallet, data.has_txs);
+                        });
+                    }
+                });
             });
         }, function(e) {
             gaEvent('Login', 'MnemonicError', e);
