@@ -1014,7 +1014,10 @@ angular.module('greenWalletSettingsControllers',
         if ($scope.quicklogin.device_ident) {  // change the existing PIN
             gaEvent('Wallet', 'PinChangeAttempt');
             success_message = gettext('PIN changed');
-            tx_sender.change_pin($scope.quicklogin.new_pin).then(success, error);
+            tx_sender.change_pin(
+                $scope.quicklogin.new_pin,
+                $scope.quicklogin.device_ident
+            ).then(success, error);
         } else {  // create a brand new PIN
             gaEvent('Wallet', 'NewPinSetAttempt');
             success_message = gettext('PIN set');
