@@ -20,6 +20,7 @@ factory.dependencies = [
   'crypto',
   'gaEvent',
   'storage',
+  'storage_keys',
   'mnemonics',
   'addressbook',
   'autotimeout',
@@ -34,9 +35,9 @@ factory.dependencies = [
 ];
 
 function factory ($q, $rootScope, tx_sender, $location, notices, $uibModal,
-  focus, crypto, gaEvent, storage, mnemonics, addressbook, autotimeout,
-  social_types, sound, $interval, $timeout, branches, user_agent, $http,
-  blind) {
+  focus, crypto, gaEvent, storage, storage_keys, mnemonics, addressbook,
+  autotimeout, social_types, sound, $interval, $timeout, branches, user_agent,
+  $http, blind) {
   var walletsService = {};
   var handle_double_login = function (retry_fun) {
     return $uibModal.open({
@@ -1636,9 +1637,9 @@ function factory ($q, $rootScope, tx_sender, $location, notices, $uibModal,
         function (data) {
           if (data) {
             var pin_ident = tx_sender['pin_ident' + suffix] = data;
-            storage.set('pin_ident' + suffix, pin_ident);
+            storage.set(storage_keys.PIN_ID+suffix, pin_ident);
             storage.set(
-              'pin_chaincode' + suffix,
+              storage_keys.PIN_CHAINCODE+suffix,
               $scope.wallet.hdwallet.chainCode.toString('hex')
             );
             tx_sender.call('http://greenaddressit.com/pin/get_password', pin, data).then(
@@ -1652,10 +1653,10 @@ function factory ($q, $rootScope, tx_sender, $location, notices, $uibModal,
                     'path_seed': $scope.wallet.gait_path_seed,
                   'mnemonic': $scope.wallet.mnemonic});
                   crypto.encrypt(data, password).then(function (encrypted) {
-                    storage.set('encrypted_seed' + suffix, encrypted);
+                    storage.set(storage_keys.ENCRYPTED_SEED+suffix, encrypted);
                     if (!suffix) {
                       // chaincode is not used for Touch ID
-                      storage.set('pin_chaincode', data);
+                      storage.set(storage_keys.PIN_CHAINCODE, data);
                     }
                   });
                   tx_sender.pin = pin;
