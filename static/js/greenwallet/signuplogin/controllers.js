@@ -71,11 +71,18 @@ angular.module('greenWalletSignupLoginControllers', ['greenWalletMnemonicsServic
             data[storage_keys.PIN_ID] && data[storage_keys.ENCRYPTED_SEED]
         );
         state.refused_pin = data[storage_keys.PIN_REFUSED] || storage.noLocalStorage;  // don't show the PIN popup if no storage is available
-        state.pin_ident = data[storage_keys.PIN_ID];
-        state.pin_ident_touchid = data[storage_keys.PIN_ID+'_touchid'];
         state.toggleshowpin = !state.has_pin;
-        state.encrypted_seed = data[storage_keys.ENCRYPTED_SEED];
-        state.encrypted_seed_touchid = data[storage_keys.ENCRYPTED_SEED+'_touchid'];
+        // Setup errors can cause ident to be set, but encrypted_seed to be
+        // missing, so we set the ident only if encrypted_seed is set too,
+        // to avoid wrongfully assuming the PIN is set.
+        if (state.has_pin) {
+            state.pin_ident = data[storage_keys.PIN_ID];
+            state.encrypted_seed = data[storage_keys.ENCRYPTED_SEED];
+        }
+        if (data.pin_ident_touchid && data.encrypted_seed_touchid) {
+            state.pin_ident_touchid = data[storage_keys.PIN_ID+'_touchid'];
+            state.encrypted_seed_touchid = data[storage_keys.ENCRYPTED_SEED+'_touchid'];
+        }
         $timeout(function() {
             if (state.has_pin) {
                 focus('pin');

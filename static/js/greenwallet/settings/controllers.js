@@ -937,9 +937,15 @@ angular.module('greenWalletSettingsControllers',
     } else {
         storage.get([
                 storage_keys.PIN_CHAINCODE,
-                storage_keys.PIN_ID
+                storage_keys.PIN_ID,
+                storage_keys.ENCRYPTED_SEED
         ]).then(function(res) {
-            if (res[storage_keys.PIN_CHAINCODE] == $scope.wallet.hdwallet.chainCode.toString('hex')) {
+            // Setup errors can cause ident/chaincode to be set, but
+            // encrypted_seed to be missing, so we need to check all 3 values
+            // to be sure the PIN is enabled.
+            if (res[storage_keys.ENCRYPTED_SEED] && res[storage_keys.PIN_ID] &&
+                res[storage_keys.PIN_CHAINCODE] === $scope.wallet.hdwallet.chainCode.toString('hex')
+            ) {
                 // PIN for the same user as currently logged in (via mnemonic)
                 $scope.quicklogin = {
                     enabled: true,
