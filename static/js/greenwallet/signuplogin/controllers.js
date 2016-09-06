@@ -278,8 +278,9 @@ angular.module('greenWalletSignupLoginControllers', ['greenWalletMnemonicsServic
                 gaEvent('Login', 'PinSet');
                 modal.close();
             }, function(error) {
-                gaEvent('Login', 'PinSettingError', error.args[1]);
-                notices.makeNotice('error', error.args[1]);
+                var message = (error && error.args) ? error.args[1] : error;
+                gaEvent('Login', 'PinSettingError', message);
+                notices.makeNotice('error', message);
             });
         }
     };

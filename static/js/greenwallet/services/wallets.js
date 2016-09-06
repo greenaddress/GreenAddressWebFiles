@@ -1631,61 +1631,59 @@ function factory ($q, $rootScope, tx_sender, $location, notices, $uibModal,
   };
   walletsService.create_pin = function (pin, $scope, suffix) {
     suffix = suffix || '';
-    var do_create = function () {
-      var deferred = $q.defer();
-      tx_sender.call('http://greenaddressit.com/pin/set_pin_login', pin, 'Primary').then(
-        function (data) {
-          if (data) {
-            var pin_ident = tx_sender['pin_ident' + suffix] = data;
-            storage.set(storage_keys.PIN_ID+suffix, pin_ident);
-            storage.set(
-              storage_keys.PIN_CHAINCODE+suffix,
-              $scope.wallet.hdwallet.chainCode.toString('hex')
-            );
-            tx_sender.call('http://greenaddressit.com/pin/get_password', pin, data).then(
-              function (password) {
-                if (!$scope.wallet.hdwallet.seed_hex) {
-                  deferred.reject(gettext('Internal error') + ': Missing seed');
-                  return;
-                }
-                if (password) {
-                  var data = JSON.stringify({'seed': $scope.wallet.hdwallet.seed_hex,
-                    'path_seed': $scope.wallet.gait_path_seed,
-                  'mnemonic': $scope.wallet.mnemonic});
-                  crypto.encrypt(data, password).then(function (encrypted) {
-                    storage.set(storage_keys.ENCRYPTED_SEED+suffix, encrypted);
-                    if (!suffix) {
-                      // chaincode is not used for Touch ID
-                      storage.set(storage_keys.PIN_CHAINCODE, data);
-                    }
-                  });
-                  tx_sender.pin = pin;
-                  deferred.resolve(pin_ident);
-                } else {
-                  deferred.reject(gettext('Failed retrieving password.'));
-                }
-              }, function (err) {
-                deferred.reject(err.args[1]);
-              });
-          } else {
-            deferred.reject();
-          }
-        }, function (err) {
-          deferred.reject(err.args[1]);
-        }
-      );
-      return deferred.promise;
-    };
-    if (!tx_sender.logged_in) {
-      return $q.when(Bitcoin.bitcoin.HDNode.fromSeedHex($scope.wallet.hdwallet.seed_hex, cur_net)).then(function (hdwallet) {
-        hdwallet.seed_hex = $scope.wallet.hdwallet.seed_hex;
+    var privHDWallet = $scope.wallet.hdwallet;
+    if (!privHDWallet.seed_hex) {
+      return $q.reject(gettext('Internal error') + ': Missing seed');
+    }
+    if (tx_sender.logged_in) { // already logged in
+      return do_create();
+    } else {
+      return $q.when(Bitcoin.bitcoin.HDNode.fromSeedHex(privHDWallet.seed_hex, cur_net)).then(function (hdwallet) {
+        hdwallet.seed_hex = privHDWallet.seed_hex;
         return walletsService.login($scope || {wallet: {}}, hdwallet,
           $scope.wallet.mnemonic, false, false, $scope.wallet.gait_path_seed).then(function () {
           return do_create();
         });
       });
-    } else { // already logged in
-      return do_create();
+    }
+    var pin_ident;
+    function do_create () {
+      return tx_sender.call(
+        'com.greenaddress.pin.set_pin_login', pin, 'Primary'
+      ).then(function (value_id) {
+        if (!value_id) {
+          return $q.reject(gettext('Failed creating PIN.'));
+        }
+        pin_ident = tx_sender[ 'pin_ident'+suffix ] = value_id;
+        storage.set(storage_keys.PIN_ID+suffix, pin_ident);
+        storage.set(
+          storage_keys.PIN_CHAINCODE+suffix,
+          privHDWallet.chainCode.toString('hex')
+        );
+        return tx_sender.call(
+          'com.greenaddress.pin.get_password', pin, value_id
+        );
+      }).then(function (password) {
+        if (!password) {
+          return $q.reject(gettext('Failed retrieving password.'));
+        }
+        var value_raw = JSON.stringify({
+          'seed': privHDWallet.seed_hex,
+          'path_seed': $scope.wallet.gait_path_seed,
+          'mnemonic':  $scope.wallet.mnemonic
+        });
+        crypto.encrypt(value_raw, password).then(function (value_set) {
+          storage.set(storage_keys.ENCRYPTED_SEED+suffix, value_set);
+          if (!suffix) {
+            // chaincode is not used for Touch ID
+            storage.set(storage_keys.PIN_CHAINCODE, value_set);
+          }
+        });
+        tx_sender.pin = pin;
+        return pin_ident;
+      }).catch(function(err) {
+        return $q.reject(err.args ? err.args[0] : err);
+      });
     }
   };
   walletsService.askForLogout = function ($scope, text) {
