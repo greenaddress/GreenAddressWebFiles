@@ -3,6 +3,8 @@ module.exports = HWWallet;
 
 HWWallet.register = register;
 HWWallet.registerError = registerError;
+HWWallet.guiCallbacks = {};
+HWWallet.registerGUICallback = registerGUICallback;
 HWWallet.currentWallet = new Promise(function (resolve, reject) {
   HWWallet.resolveCurrentWallet = resolve;
   HWWallet.rejectCurrentWallet = reject;
@@ -28,4 +30,8 @@ function registerError (error) {
       HWWallet.rejectCurrentWallet = reject;
     });
   }
+}
+
+function registerGUICallback (name, cb) {
+  HWWallet.guiCallbacks[name] = cb;
 }

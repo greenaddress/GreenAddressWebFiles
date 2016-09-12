@@ -1,9 +1,9 @@
-var allHwWallets = require('wallet').GA.allHwWallets;
-var BaseHWWallet = require('wallet').GA.BaseHWWallet;
-
 angular.module('greenWalletSignupLoginControllers', ['greenWalletMnemonicsServices'])
-.controller('SignupLoginController', ['$scope', '$uibModal', 'focus', 'wallets', 'notices', 'mnemonics', '$location', 'cordovaReady', 'tx_sender', 'crypto', 'gaEvent', 'storage', 'storage_keys', 'qrcode', '$timeout', '$q', 'trezor', 'bip38', 'btchip', '$interval', '$rootScope',
-        function SignupLoginController($scope, $uibModal, focus, wallets, notices, mnemonics, $location, cordovaReady, tx_sender, crypto, gaEvent, storage, storage_keys, qrcode, $timeout, $q, trezor, bip38, btchip, $interval, $rootScope) {
+.controller('SignupLoginController', ['$scope', '$uibModal', 'focus', 'wallets', 'notices', 'mnemonics', '$location', 'cordovaReady', 'tx_sender', 'crypto', 'gaEvent', 'storage', 'storage_keys', 'qrcode', '$timeout', '$q', 'trezor', 'bip38', 'btchip', '$interval', '$rootScope', 'hw_wallets',
+        function SignupLoginController($scope, $uibModal, focus, wallets, notices, mnemonics, $location, cordovaReady, tx_sender, crypto, gaEvent, storage, storage_keys, qrcode, $timeout, $q, trezor, bip38, btchip, $interval, $rootScope, hw_wallets) {
+
+    var allHwWallets = hw_wallets.allHwWallets;
+    var BaseHWWallet = hw_wallets.BaseHWWallet;
 
     if (window.GlobalWalletControllerInitVars) {
         // in case user goes back from send to login and back to send, we want to display the
@@ -397,10 +397,7 @@ angular.module('greenWalletSignupLoginControllers', ['greenWalletMnemonicsServic
     if (cur_net.useNewWalletJs) {
         // new refactored implementation, unfinished
         var checkForHwWallets = function () {
-            allHwWallets.forEach(function (hw) {
-                hw.checkForDevices(cur_net);
-            });
-            BaseHWWallet.currentWallet.then(function (dev) {
+            hw_wallets.checkDevices(cur_net).then(function (dev) {
                 state.hw_detected = template.replace('{hardware_wallet_name}', dev.deviceTypeName);
                 hwDevice = dev;
             }, function (err) {

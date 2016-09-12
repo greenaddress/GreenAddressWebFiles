@@ -15394,9 +15394,7 @@ Trezor.prototype.open = function (device) {
                 reject(chrome.runtime.lastError.message);
             } else {
                 var session = new Session(connection.connectionId);
-                session.initialize().then(function(result) {
-                    resolve(session);
-                });
+                resolve(session);
             }
         });
     });

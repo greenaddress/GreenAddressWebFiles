@@ -319,8 +319,8 @@ angular.module('greenWalletSettingsControllers',
     setup_2fa('sms');
     setup_2fa('phone');
     setup_2fa('gauth');
-}]).controller('SettingsController', ['$scope', '$q', 'wallets', 'tx_sender', 'notices', '$uibModal', 'gaEvent', 'storage', '$location', 'storage_keys', '$timeout', 'bip38', 'mnemonics', 'btchip', 'trezor', 'hw_detector',
-        function SettingsController($scope, $q, wallets, tx_sender, notices, $uibModal, gaEvent, storage, storage_keys, $location, $timeout, bip38, mnemonics, btchip, trezor, hw_detector) {
+}]).controller('SettingsController', ['$scope', '$q', 'wallets', 'tx_sender', 'notices', '$uibModal', 'gaEvent', 'storage', '$location', 'storage_keys', '$timeout', 'bip38', 'mnemonics', 'hw_wallets',
+        function SettingsController($scope, $q, wallets, tx_sender, notices, $uibModal, gaEvent, storage, storage_keys, $location, $timeout, bip38, mnemonics, hw_wallets) {
     if (!wallets.requireWallet($scope)) return;
     var userfriendly_blocks = function(num) {
         return gettext("(about %s days: 1 day ≈ 144 blocks)").replace("%s", Math.round(num/144));
@@ -378,18 +378,9 @@ angular.module('greenWalletSettingsControllers',
             });
         },
         usbmodal: function() {
-            var is_chrome_app = window.chrome && chrome.storage;
-            if (is_chrome_app) {
-                hw_detector.waitForHwWallet().then(function() {
-                    trezor.getDevice(true).then(function() {
-                        trezor.recovery($scope.wallet.mnemonic);
-                    }, function() {
-                        btchip.setupSeed($scope.wallet.mnemonic);
-                    });
-                })
-            } else {
-                trezor.recovery($scope.wallet.mnemonic);
-            }
+            hw_wallets.waitForHwWallet(cur_net).then(function (dev) {
+                dev.setupSeed($scope.wallet.mnemonic);
+            });
         },
         expiring_soon_modal: function() {
             gaEvent('Wallet', 'ExpiringSoonModal');

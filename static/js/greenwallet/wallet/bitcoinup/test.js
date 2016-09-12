@@ -6,7 +6,7 @@ var testKey = new SchnorrSigningKey(bitcoin.HDNode.fromSeedHex(
   new Buffer(new Array(16)), bitcoin.networks.testnet
 ));
 
-test('sign with plain ecdsa', function(t) {
+test('sign with plain ecdsa', function (t) {
   testKey.signHash(new Uint8Array(32)).then(function (signature) {
     t.equal(
       signature.r.toString(),
@@ -22,7 +22,7 @@ test('sign with plain ecdsa', function(t) {
   }).catch(t.fail);
 });
 
-test('sign with Schnorr', function(t) {
+test('sign with Schnorr', function (t) {
   testKey.signHashSchnorr(new Uint8Array(32)).then(function (signature) {
     t.equal(
       signature.toString('hex'),

@@ -21,7 +21,7 @@ var serviceMap = {
   focus: require('./focus'),
   gaEvent: require('./gaEvent'),
   hostname: require('./hostname'),
-  hw_detector: require('./hw_detector'),
+  hw_wallets: require('./hw_wallets'),
   notices: require('./notices'),
   parseKeyValue: require('./parseKeyValue'),
   parse_bitcoin_uri: require('./parse_bitcoin_uri'),

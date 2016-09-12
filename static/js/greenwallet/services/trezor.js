@@ -1,4 +1,5 @@
 var angular = require('angular');
+var BaseHWWallet = require('wallet').GA.BaseHWWallet;
 var window = require('global/window');
 
 var BASE_URL = window.BASE_URL;
@@ -11,6 +12,33 @@ factory.dependencies = ['$q', '$interval', '$uibModal', 'notices', '$rootScope',
 
 function factory ($q, $interval, $uibModal, notices, $rootScope, focus) {
   var trezor_api, transport, trezor;
+
+  BaseHWWallet.registerGUICallback('trezorSetupModal', showSetupModal);
+
+  function showSetupModal (options) {
+    // show a modal asking the user to either setup a HW device, or reset/reuse
+    // it if it's already set up. return an object (modal) allowing closing the
+    // modal with close() method.
+    var scope = $rootScope.$new();
+    scope.trezor = {
+      already_setup: options.alreadySetup,
+      setting_up: false,
+      use_gait_mnemonic: options.usingMnemonic,
+      store: function () {
+        this.setting_up = true;
+        options.finalize();
+      },
+      reuse: function () {
+        options.reuse();
+      }
+    };
+    var modal = $uibModal.open({
+      templateUrl: BASE_URL + '/' + LANG + '/wallet/partials/wallet_modal_trezor_setup.html',
+      scope: scope
+    });
+    modal.result.catch(function () { options.cancel(); });
+    return modal;
+  }
 
   var promptPin = function (type, callback) {
     var scope, modal;
@@ -176,64 +204,6 @@ function factory ($q, $interval, $uibModal, notices, $rootScope, focus) {
         deferred.reject({pluginLoadFailed: true});
       });
       return deferred.promise;
-    },
-    recovery: function (mnemonic) {
-      return this.getDevice().then(function (dev) {
-        return dev.wipeDevice().then(function (res) {
-          return dev.loadDevice({mnemonic: mnemonic});
-        });
-      });
-    },
-    setupSeed: function (mnemonic) {
-      var scope = $rootScope.$new();
-      var d = $q.defer();
-      var trezor_dev;
-      var modal;
-      var service = this;
-      scope.trezor = {
-        use_gait_mnemonic: !!mnemonic,
-        store: function () {
-          this.setting_up = true;
-          var store_d;
-          if (mnemonic) {
-            store_d = service.recovery(mnemonic);
-          } else {
-            store_d = trezor_dev.resetDevice({strength: 256});
-          }
-          store_d.then(function () {
-            modal.close();
-            d.resolve();
-          }).catch(function (err) {
-            this.setting_up = false;
-            if (err.message) return; // handled by handleError in services.js
-            notices.makeNotice('error', err);
-          });
-        },
-        reuse: function () {
-          modal.close();
-          d.resolve();
-        }
-      };
-      var do_modal = function () {
-        modal = $uibModal.open({
-          templateUrl: BASE_URL + '/' + LANG + '/wallet/partials/wallet_modal_trezor_setup.html',
-          scope: scope
-        });
-        modal.result.catch(function () { d.reject(); });
-      };
-      this.getDevice().then(function (trezor_dev_) {
-        trezor_dev = trezor_dev_;
-        trezor_dev.getPublicKey([]).then(function (pk) {
-          scope.trezor.already_setup = true;
-          do_modal();
-        }, function (err) {
-          if (err.code !== 11) { // Failure_NotInitialized
-            notices.makeNotice('error', err.message);
-          }
-          do_modal();
-        });
-      });
-      return d.promise;
     }
   };
 }
