@@ -173,9 +173,7 @@ function factory ($q, $rootScope, tx_sender, $location, notices, $uibModal,
         autotimeout.start($scope.wallet.appearance.altimeout);
         $scope.wallet.privacy = data.privacy;
         $scope.wallet.limits = data.limits;
-        $scope.wallet.subaccounts = [
-          {pointer: 0, name: gettext('Main')}
-        ].concat(data.subaccounts);
+        $scope.wallet.subaccounts = data.subaccounts;
         if (cur_net.isAlphaMultiasset) {
           $scope.wallet.assets = data.assets;
         } else {
