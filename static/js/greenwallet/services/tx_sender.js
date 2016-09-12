@@ -3,7 +3,6 @@ var document = require('global/document');
 
 var Electrum = window.Electrum;
 var gettext = window.gettext;
-var autobahn = window.autobahn;
 var wss_url = window.wss_url;
 var dev_d = window.dev_d;
 var Bitcoin = window.Bitcoin;
@@ -39,7 +38,7 @@ function factory ($q, $rootScope, cordovaReady, $http, notices, gaEvent, $locati
     loginWatchOnly: loginWatchOnly,
     change_pin: change_pin,
     gaService: new GAService(
-      cur_net === Bitcoin.bitcoin.networks.testnet ? 'testnet' : 'mainnet',
+      window.cur_net === Bitcoin.bitcoin.networks.testnet ? 'testnet' : 'mainnet',
       {wsUrl: wss_url}
     )
   };
@@ -58,11 +57,8 @@ function factory ($q, $rootScope, cordovaReady, $http, notices, gaEvent, $locati
   var session_for_login;
   var calls = [];
   var calls_missed = {};
-  var calls_counter = 0;
-  var global_login_d;
   var isMobile = /Android|iPhone|iPad|iPod|Opera Mini/i.test(navigator.userAgent);
   var attempt_login = false;
-  var disconnected = false;
   var connecting = false;
   var nconn = 0;
   var waiting_for_device = false;

@@ -105,11 +105,6 @@ function factory ($q, $rootScope, tx_sender, $location, notices, $uibModal,
     options = options || {};
     var WalletClass = window.cur_net.isAlphaMultiasset ? AssetsWallet : GAWallet;
     return hwDevice.getPublicKey().then(function(hdwallet) {
-      // we use wallet.hdwallet to check if we're logged in in many places:
-      $scope.wallet.hdwallet = hdwallet;
-      // we use hwDevice for such checks too:
-      $scope.wallet.hwDevice = hwDevice;
-      tx_sender.hwDevice = hwDevice;
       return walletsService.newLogin($scope, new WalletClass({
         SigningWalletClass: HwSigningWallet,
         signingWalletOptions: { hw: hwDevice, hd: hdwallet },
@@ -129,6 +124,11 @@ function factory ($q, $rootScope, tx_sender, $location, notices, $uibModal,
         if (gaWallet.signingWallet.keysManager.privHDWallet) {
           // we use wallet.hdwallet to check if we're logged in in many places:
           $scope.wallet.hdwallet = gaWallet.signingWallet.keysManager.privHDWallet.hdnode;
+        }
+        if (gaWallet.signingWallet.hw) {
+          $scope.wallet.hdwallet = gaWallet.signingWallet.keysManager.pubHDWallet.hdnode;
+          // we use hwDevice for such checks too:
+          $scope.wallet.hwDevice = gaWallet.signingWallet.hw;
         }
         tx_sender.wallet = $scope.wallet;
         tx_sender.gaWallet = gaWallet;

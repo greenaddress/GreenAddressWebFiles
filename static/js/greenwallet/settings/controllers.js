@@ -1204,7 +1204,9 @@ angular.module('greenWalletSettingsControllers',
             while (max256int_hex.length < 256/4) max256int_hex += 'F';
             var TWOPOWER256 = new Bitcoin.BigInteger(max256int_hex, 16).add(Bitcoin.BigInteger.ONE);
             if (that.new_2of3_xpub) {
-                var hdwallet_2of3_d = $q.when(Bitcoin.HDWallet.fromBase58(that.new_2of3_xpub));
+                var hdwallet_2of3_d = $q.when(Bitcoin.bitcoin.HDNode.fromBase58(
+                    that.new_2of3_xpub, [cur_net]
+                ));
             } else {
                 entropy = Bitcoin.randombytes(32);
                 while (entropy.length < 32) entropy.unshift(0);
@@ -1237,31 +1239,37 @@ angular.module('greenWalletSettingsControllers',
                 that.generating_2of3_seed = false;
 
                 var min_unused_pointer = that._get_min_unused_pointer();
-                if ($scope.wallet.hdwallet.keyPair.d) var derive_fun = that._derive_hd;
-                else if ($scope.wallet.trezor_dev) var derive_fun = that._derive_trezor;
-                else var derive_fun = that._derive_btchip;
                 return derive_xpub(min_unused_pointer).then(function(ga_xpub) {
                     var scope = angular.extend($scope.$new(), {
                         mnemonic_2of3: mnemonic,
                         xpub_2of3: hdwallet.neutered().toBase58(),
                         xpub_ga_2of3: ga_xpub
                     });
-                    return derive_fun(min_unused_pointer).then(function(hdhex) {
+                    return tx_sender.gaWallet.scriptFactory.keysManager.getSubaccountRootKey(
+                        min_unused_pointer
+                    ).then(function(hd) {
                         if (that.new_2of3_xpub) {
                             // we can't priv-derive 3'/subaccount' from a public key
                             var hdhex_recovery_d = $q.when({
-                                pub: Bitcoin.bs58check.decode(hdwallet.keyPair.toWIF()).toString('hex'),
+                                pub: hdwallet.keyPair.getPublicKeyBuffer().toString('hex'),
                                 chaincode: hdwallet.chainCode.toString('hex')
                             });
                         } else {
-                            var hdhex_recovery_d = that._derive_hd(min_unused_pointer, hdwallet)
+                            var hdhex_recovery_d = hdwallet.deriveHardened(3).then(function(hdRec) {
+                                return hdRec.deriveHardened(min_unused_pointer);
+                            }).then(function(hdRec) {
+                                return {
+                                    pub: hdRec.keyPair.getPublicKeyBuffer().toString('hex'),
+                                    chaincode: hdRec.chainCode.toString('hex')
+                                };
+                            })
                         }
                         return hdhex_recovery_d.then(function(hdhex_recovery) {
                             return tx_sender.call('com.greenaddress.txs.create_subaccount',
                                 min_unused_pointer,
                                 that.new_2of3_label,
-                                hdhex.pub,
-                                hdhex.chaincode,
+                                hd.hdnode.keyPair.getPublicKeyBuffer().toString('hex'),
+                                hd.hdnode.chainCode.toString('hex'),
                                 hdhex_recovery.pub,
                                 hdhex_recovery.chaincode
                             ).then(function(receiving_id) {

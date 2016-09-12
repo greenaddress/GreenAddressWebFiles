@@ -1,5 +1,6 @@
 var bitcoin = require('bitcoinjs-lib');
 var extend = require('xtend/mutable');
+var SchnorrSigningKey = require('../../bitcoinup/schnorr-signing-key');
 var window = require('global/window');
 
 var gettext = window.gettext;
@@ -100,7 +101,7 @@ function getPublicKey (path) {
         if (path.length === 0) {
           _this.rootPublicKey = hdwallet;
         }
-        return hdwallet;
+        return new SchnorrSigningKey(hdwallet);
       });
     }
   });

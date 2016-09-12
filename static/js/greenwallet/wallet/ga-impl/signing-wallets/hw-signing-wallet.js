@@ -1,5 +1,3 @@
-var BigInteger = require('bigi');
-var bitcoin = require('bitcoinjs-lib');
 var crypto = require('crypto');
 var extend = require('xtend/mutable');
 var HWKeysManager = require('./../keys-managers/hw-keys-manager');
