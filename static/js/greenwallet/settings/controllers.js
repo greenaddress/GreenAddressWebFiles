@@ -1195,40 +1195,6 @@ angular.module('greenWalletSettingsControllers',
             }
             return min_unused_pointer;
         },
-        _derive_hd: function(pointer, hdwallet) {
-            var hdwallet_ = hdwallet || $scope.wallet.hdwallet;
-            return $q.when(hdwallet_.deriveHardened(3)).then(function(k) {
-                return $q.when(k.deriveHardened(pointer)).then(function(k) {
-                    return {
-                        pub: k.keyPair.getPublicKeyBuffer().toString('hex'),
-                        chaincode: k.chainCode.toString('hex')
-                    };
-                });
-            });
-        },
-        _derive_btchip: function(pointer) {
-            return $scope.wallet.btchip.app.getWalletPublicKey_async("3'/"+pointer+"'").then(function(result) {
-                var pub = new Bitcoin.bitcoin.ECPair.fromPublicKeyBuffer(
-                    new Bitcoin.Buffer.Buffer(result.publicKey.toString(HEX), 'hex')
-                );
-                pub.compressed = true;
-                return {
-                    pub: pub.getPublicKeyBuffer().toString('hex'),
-                    chaincode: result.chainCode.toString(HEX)
-                };
-            });
-        },
-        _derive_trezor: function(pointer) {
-            return $scope.wallet.trezor_dev.getPublicKey([3 + 0x80000000, pointer + 0x80000000]).then(function(result) {
-                var cc = result.message.node.chain_code, pk = result.message.node.public_key;
-                cc = cc.toHex ? cc.toHex() : cc;
-                pk = pk.toHex ? pk.toHex() : pk;
-                return {
-                    pub: pk,
-                    chaincode: cc
-                };
-            })
-        },
         create_new_2of3: function() {
             var that = this, min_unused_pointer = null, pointers = [];
             that.adding_subwallet = true;
@@ -1332,15 +1298,14 @@ angular.module('greenWalletSettingsControllers',
         create_new: function() {
             var that = this, min_unused_pointer = this._get_min_unused_pointer();
             that.adding_subwallet = true;
-            if ($scope.wallet.hdwallet.keyPair.d) var derive_fun = that._derive_hd;
-            else if ($scope.wallet.trezor_dev) var derive_fun = that._derive_trezor;
-            else var derive_fun = that._derive_btchip;
-            derive_fun(min_unused_pointer).then(function(hdhex) {
+            tx_sender.gaWallet.scriptFactory.keysManager.getSubaccountRootKey(
+                min_unused_pointer
+            ).then(function (hd) {
                 return tx_sender.call('com.greenaddress.txs.create_subaccount',
                     min_unused_pointer,
                     that.new_label,
-                    hdhex.pub,
-                    hdhex.chaincode
+                    hd.hdnode.keyPair.getPublicKeyBuffer().toString('hex'),
+                    hd.hdnode.chainCode.toString('hex')
                 ).then(function(receiving_id) {
                     if (tx_sender.gawallet) {
                         tx_sender.gawallet.setupSubAccount({
