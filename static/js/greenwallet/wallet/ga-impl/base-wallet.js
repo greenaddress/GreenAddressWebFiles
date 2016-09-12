@@ -41,12 +41,6 @@ function BaseWallet (options) {
     // TxConstructor calls the service, so it needs to be constructed only
     // after login succeeds:
     this.txConstructors = {};
-    this.subaccounts = data.subaccounts;
-    this.subaccounts.push({
-      name: 'Main',
-      pointer: null,
-      type: 'main'
-    });
     this.assets = data.assets;
     this.feeEstimatesFactory = new GAFeeEstimatesFactory(
       this.service, data.fee_estimates
@@ -55,7 +49,13 @@ function BaseWallet (options) {
     // scriptFactory is required by setupSubAccount below:
     this.scriptFactory = this.signingWallet.scriptFactory;
 
-    this.subaccounts.forEach(function (subaccount) {
+    this.subaccounts = [];
+    this.setupSubAccount({
+      name: 'Main',
+      pointer: null,
+      type: 'main'
+    });
+    data.subaccounts.forEach(function (subaccount) {
       this.setupSubAccount(subaccount);
     }.bind(this));
 
