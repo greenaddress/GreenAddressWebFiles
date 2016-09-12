@@ -19,7 +19,8 @@ function HWKeysManager (options) {
 }
 
 function getSubaccountRootKey (subaccountPointer) {
-  throw new Error('not implemented');
+  // TODO caching
+  return this.hw.getPublicKey("3'/" + subaccountPointer + "'");
 }
 
 function _getKey (signing, subaccountPointer, pointer, keyBranch) {
