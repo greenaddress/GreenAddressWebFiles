@@ -204,10 +204,10 @@ angular.module('greenWalletReceiveControllers',
                 args.push(true);
             }
             tx_sender.call.apply(tx_sender, args).then(function(data) {
-                var gaSubaccount = tx_sender.gawallet.getSubaccountByPointer(
+                var gaSubaccount = tx_sender.gaWallet.getSubaccountByPointer(
                     $scope.wallet.current_subaccount || null
                 );
-                var scriptFactory = tx_sender.gawallet.scriptFactory;
+                var scriptFactory = tx_sender.gaWallet.scriptFactory;
                 var expectedScript = scriptFactory.createScriptForSubaccountAndPointer(
                     gaSubaccount, data.pointer
                 );

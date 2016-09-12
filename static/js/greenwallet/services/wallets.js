@@ -112,10 +112,7 @@ function factory ($q, $rootScope, tx_sender, $location, notices, $uibModal,
       tx_sender.hwDevice = hwDevice;
       return walletsService.newLogin($scope, new WalletClass({
         SigningWalletClass: HwSigningWallet,
-        signingWalletOptions: {
-          hw: hwDevice,
-          pubHDWallet: hdwallet
-        },
+        signingWalletOptions: { hw: hwDevice, hd: hdwallet },
         gaService: tx_sender.gaService
       }), options);
     });
