@@ -55,10 +55,8 @@ function factory ($q, $rootScope, cordovaReady, $http, notices, gaEvent, $locati
   var connection;
   var session;
   var session_for_login;
-  var calls = [];
   var calls_missed = {};
   var isMobile = /Android|iPhone|iPad|iPod|Opera Mini/i.test(navigator.userAgent);
-  var attempt_login = false;
   var connecting = false;
   var nconn = 0;
   var waiting_for_device = false;
@@ -72,7 +70,6 @@ function factory ($q, $rootScope, cordovaReady, $http, notices, gaEvent, $locati
         }
         session = session_for_login = null;
         txSenderService.gawallet = null;
-        disconnected = true;
         txSenderService.wallet.update_balance();
       }, false);
     })();
@@ -106,75 +103,6 @@ function factory ($q, $rootScope, cordovaReady, $http, notices, gaEvent, $locati
       arguments[0], Array.prototype.slice.call(arguments, 1)
     );
   }
-  function onAuthed (s, login_d) {
-    session_for_login = s;
-    session_for_login.subscribe('com.greenaddress.blocks', function (event) {
-      $rootScope.$broadcast('block', event[0]);
-    });
-    var d;
-    var logging_in = false;
-    if (txSenderService.hdwallet && (txSenderService.logged_in || attempt_login)) {
-      d = txSenderService.login('if_same_device', true); // logout=if_same_device, force_relogin
-      logging_in = true;
-    } else if (txSenderService.watch_only) {
-      d = txSenderService.loginWatchOnly(txSenderService.watch_only[0], txSenderService.watch_only[1]);
-      logging_in = true;
-    } else {
-      d = $q.when(true);
-    }
-    d.catch(function (err) {
-      if (err.uri === 'http://greenaddressit.com/error#doublelogin') {
-        if (login_d) {
-          // login_d handler may want to handle double login by forcing logout
-          login_d.reject(err);
-          return;
-        }
-        autotimeout.stop();
-        if (txSenderService.wallet) txSenderService.wallet.clear();
-        $location.path('/concurrent_login');
-      } else {
-        console.log(err);
-        notices.makeNotice('error', gettext('An error has occured which forced us to log you out.'));
-        if (txSenderService.wallet) txSenderService.wallet.clear();
-        $location.path('/');
-      }
-    });
-    d.then(function (result) {
-      session = session_for_login;
-      if (logging_in && login_d) {
-        login_d.resolve(result);
-      }
-      var i;
-      var item;
-      // warning: Never made the following code async without a rewrite or it'll break
-      // object refs and stuff
-
-      // missed calls queues
-      for (i in calls_missed) {
-        item = calls_missed[i];
-        delete calls_missed[i];
-        item[1].resolve(txSenderService.call.apply(session, item[0]));
-      }
-      while (calls.length) {
-        item = calls.shift();
-        if (item[0]) {
-          item[1].resolve(txSenderService.call.apply(session, item[0]));
-        } else {
-          // no call required, just the connection (the waitForConnection case)
-          item[1].resolve();
-        }
-      }
-    }, function (err) {
-      // missed calls queue - reject them as well
-      // safeApply because txSenderService.login might've called $apply already
-      $rootScope.safeApply(function () {
-        while (calls.length) {
-          var item = calls.shift();
-          item[1].reject(err);
-        }
-      });
-    });
-  }
   function connect (login_d) {
     txSenderService.gaService.connect();
   }
@@ -186,7 +114,6 @@ function factory ($q, $rootScope, cordovaReady, $http, notices, gaEvent, $locati
       d_main.resolve(txSenderService.logged_in);
     } else {
       var hdwallet = txSenderService.hdwallet;
-      attempt_login = true;
       if (hdwallet.keyPair.d) {
         if (session_for_login) {
           session_for_login.call('com.greenaddress.login.get_challenge', [hdwallet.getAddress().toString()])
@@ -266,7 +193,6 @@ function factory ($q, $rootScope, cordovaReady, $http, notices, gaEvent, $locati
                           }
                         });
                     } else if (!connecting) {
-                      disconnected = false;
                       d = $q.defer();
                       connect(d);
                       d_main.resolve(d.promise);
@@ -276,7 +202,6 @@ function factory ($q, $rootScope, cordovaReady, $http, notices, gaEvent, $locati
               });
             });
         } else if (!connecting) {
-          disconnected = false;
           d = $q.defer();
           connect(d);
           d_main.resolve(d.promise);
@@ -328,7 +253,6 @@ function factory ($q, $rootScope, cordovaReady, $http, notices, gaEvent, $locati
                 });
               } else if (!connecting) {
                 waiting_for_device = false;
-                disconnected = false;
                 d = $q.defer();
                 connect(d);
                 challenge_arg_resolves_main = true;
@@ -429,7 +353,6 @@ function factory ($q, $rootScope, cordovaReady, $http, notices, gaEvent, $locati
                             } else { return $q.reject(gettext('Login failed')); }
                           });
                         } else if (!connecting) {
-                          disconnected = false;
                           d = $q.defer();
                           connect(d);
                           return d.promise;
@@ -441,7 +364,6 @@ function factory ($q, $rootScope, cordovaReady, $http, notices, gaEvent, $locati
               }
             }).finally(function () { waiting_for_device = false; }));
           } else if (!connecting) {
-            disconnected = false;
             d = $q.defer();
             connect(d);
             d_main.resolve(d.promise);
@@ -456,7 +378,6 @@ function factory ($q, $rootScope, cordovaReady, $http, notices, gaEvent, $locati
       connection.close();
       session = session_for_login = null;
       txSenderService.gawallet = null;
-      disconnected = true;
     }
     for (var key in calls_missed) {
       delete calls_missed[key];
@@ -464,9 +385,7 @@ function factory ($q, $rootScope, cordovaReady, $http, notices, gaEvent, $locati
     if (txSenderService.btchip) {
       txSenderService.btchip.dongle.disconnect_async();
     }
-    disconnected = true;
     txSenderService.logged_in = false;
-    attempt_login = false;
     txSenderService.hdwallet = undefined;
     txSenderService.trezor_dev = undefined;
     txSenderService.watch_only = undefined;

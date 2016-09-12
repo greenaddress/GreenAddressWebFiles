@@ -1,4 +1,3 @@
-var crypto = require('crypto');
 var extend = require('xtend/mutable');
 var HWKeysManager = require('./../keys-managers/hw-keys-manager');
 var ScriptFactory = require('./../script-factory');
