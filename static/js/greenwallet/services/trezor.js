@@ -14,6 +14,7 @@ function factory ($q, $interval, $uibModal, notices, $rootScope, focus) {
   var trezor_api, transport, trezor;
 
   BaseHWWallet.registerGUICallback('trezorSetupModal', showSetupModal);
+  BaseHWWallet.registerGUICallback('trezorPINPrompt', promptPin);
 
   function showSetupModal (options) {
     // show a modal asking the user to either setup a HW device, or reset/reuse
@@ -40,7 +41,7 @@ function factory ($q, $interval, $uibModal, notices, $rootScope, focus) {
     return modal;
   }
 
-  var promptPin = function (type, callback) {
+  function promptPin (type, callback) {
     var scope, modal;
     scope = angular.extend($rootScope.$new(), {
       pin: '',

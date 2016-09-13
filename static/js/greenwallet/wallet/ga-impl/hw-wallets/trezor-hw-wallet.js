@@ -27,10 +27,6 @@ TrezorHWWallet.promptPin = promptPin;
 TrezorHWWallet.promptPassphrase = promptPassphrase;
 TrezorHWWallet.handleButton = handleButton;
 TrezorHWWallet.handleError = handleError;
-TrezorHWWallet.registerPinCallback = registerPinCallback;
-TrezorHWWallet.registerPassphraseCallback = registerPassphraseCallback;
-TrezorHWWallet.registerButtonCallback = registerButtonCallback;
-TrezorHWWallet.registerErrorCallback = registerErrorCallback;
 
 function TrezorHWWallet (network) {
   this.network = network;
@@ -39,7 +35,9 @@ function TrezorHWWallet (network) {
 var trezor_api;
 
 function promptPin () {
-  if (this.pinCb) this.pinCb();
+  if (HWWallet.guiCallbacks.trezorPINPrompt) {
+    HWWallet.guiCallbacks.trezorPINPrompt.apply(null, arguments);
+  }
 }
 
 function promptPassphrase () {
@@ -52,22 +50,6 @@ function handleButton () {
 
 function handleError () {
   if (this.errorCb) this.errorCb();
-}
-
-function registerPinCallback (cb) {
-  this.pinCb = cb;
-}
-
-function registerPassphraseCallback (cb) {
-  this.passphraseCb = cb;
-}
-
-function registerButtonCallback (cb) {
-  this.buttonCb = cb;
-}
-
-function registerErrorCallback (cb) {
-  this.errorCb = cb;
 }
 
 function getPublicKey (path) {
