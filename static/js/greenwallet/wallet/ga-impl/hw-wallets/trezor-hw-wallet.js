@@ -32,13 +32,10 @@ function TrezorHWWallet (network) {
   this.network = network;
 }
 
-var trezor_api;
-
 function promptPin () {
   if (HWWallet.guiCallbacks.trezorPINPrompt) {
     HWWallet.guiCallbacks.trezorPINPrompt.apply(null, arguments);
   }
-
 }
 
 function promptPassphrase () {
@@ -119,15 +116,25 @@ function getChallengeArguments () {
 }
 
 function _checkForDevices (network, options) {
-  var tick, plugin_d;
-
-  if (trezor_api) {
-    plugin_d = Promise.resolve(trezor_api);
+  if (TrezorHWWallet.currentDevice) {
+    return TrezorHWWallet.currentDevice.getPublicKey([]).then(function () {
+      finishChecking();
+      cbAll(TrezorHWWallet.currentDevice, new TrezorHWWallet(network));
+    }, function () {
+      // disconnect old device to avoid repated callbacks
+      window.chrome.hid.disconnect(
+        TrezorHWWallet.currentDevice._connectionId,
+        doCheck
+      );
+    });
   } else {
-    plugin_d = window.trezor.load();
+    doCheck();
   }
-  plugin_d.then(function (api) {
-    trezor_api = api;
+
+  var tick;
+
+  function doCheck () {
+    var trezor_api = window.trezor.load();
     if (options.failOnMissing) {
       singleCheck();
     } else {
@@ -152,12 +159,7 @@ function _checkForDevices (network, options) {
             // don't initialize device twice
             return;
           }
-          TrezorHWWallet.isChecking = false;
-          TrezorHWWallet.needsModal = false;
-          if (TrezorHWWallet.checkingModal) {
-            TrezorHWWallet.checkingModal.close();
-            TrezorHWWallet.checkingModal = null;
-          }
+          finishChecking();
 
           trezor_api.open(devices[0]).then(function (dev_) {
             dev_.initialize().then(function (init_res) {
@@ -174,7 +176,7 @@ function _checkForDevices (network, options) {
                   recoverable: false
                 }, true);
               } else {
-                cbAll(dev_, new TrezorHWWallet(network));
+                cbAll(dev_, new TrezorHWWallet(network), true);
               }
             }).catch(ebAll);
           }, function (err) {
@@ -188,29 +190,25 @@ function _checkForDevices (network, options) {
         }
       });
     }
-  }).catch(function () {
-    HWWallet.registerError({
-      pluginLoadFailed: true,
-      message: gettext('TREZOR plugin load failed!'),
-      recoverable: false
-    });
-  });
+  }
 
-  function cbAll (device, wallet) {
-    device.on('pin', TrezorHWWallet.promptPin);
-    device.on('passphrase', TrezorHWWallet.promptPassphrase);
-    device.on('error', TrezorHWWallet.handleError);
-    device.on('button', TrezorHWWallet.handleButton);
-
-    if (TrezorHWWallet.currentDevice) {
-      // disconnect old device to avoid repated callbacks
-      window.chrome.hid.disconnect(
-        TrezorHWWallet.currentDevice._connectionId,
-        function () { _cbAll(device, wallet); }
-      );
-    } else {
-      _cbAll(device, wallet);
+  function finishChecking () {
+    TrezorHWWallet.isChecking = false;
+    TrezorHWWallet.needsModal = false;
+    if (TrezorHWWallet.checkingModal) {
+      TrezorHWWallet.checkingModal.close();
+      TrezorHWWallet.checkingModal = null;
     }
+  }
+  function cbAll (device, wallet, newDevice) {
+    if (newDevice) {
+      device.on('pin', TrezorHWWallet.promptPin);
+      device.on('passphrase', TrezorHWWallet.promptPassphrase);
+      device.on('error', TrezorHWWallet.handleError);
+      device.on('button', TrezorHWWallet.handleButton);
+    }
+
+    _cbAll(device, wallet);
   }
   function _cbAll (device, wallet) {
     TrezorHWWallet.currentDevice = device;

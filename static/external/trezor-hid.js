@@ -5,7 +5,7 @@ var Trezor = require('./trezor');
 
 module.exports = {
   load: function () {
-    return Promise.resolve(new Trezor.Trezor());
+    return new Trezor.Trezor();
   }
 }
 
