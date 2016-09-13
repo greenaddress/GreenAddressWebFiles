@@ -129,7 +129,7 @@ function _constructTx (outputsWithAmounts, options) {
       this.signingWallet.signTransaction.bind(this.signingWallet, tx, options)
     ).then(function () {
       return extend({
-        tx: tx.toBuffer()
+        tx: tx.tx
       }, builtTxData);
     });
   }.bind(this));

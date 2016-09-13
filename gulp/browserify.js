@@ -13,6 +13,7 @@ gulp.task('browserify', ['clean-js'], function () {
   // Single entry point to browserify
   var browserified = gulp.src('static/js/index.js')
     .pipe(browserify({
+      ignore: ['node-hid', '../../trezor-hid'],
       insertGlobals: true,
       resolve: function (a, b, cb) {
         if (a === 'secp256k1-alpha') {

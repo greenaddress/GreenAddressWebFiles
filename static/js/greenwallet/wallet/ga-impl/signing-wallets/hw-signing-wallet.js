@@ -39,7 +39,9 @@ function signChallenge (challenge) {
 }
 
 function signTransaction (tx, options) {
-  throw new Error('not implemented');
+  return this.hw.signTransaction(tx, extend({
+    keysManager: this.keysManager
+  }, options));
 }
 
 function derivePath () {

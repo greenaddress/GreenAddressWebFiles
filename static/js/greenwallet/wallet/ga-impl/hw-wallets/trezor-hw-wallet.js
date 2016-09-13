@@ -15,6 +15,7 @@ extend(TrezorHWWallet.prototype, {
   getChallengeArguments: getChallengeArguments,
   getPublicKey: getPublicKey,
   signMessage: signMessage,
+  signTransaction: signTransaction,
   setupSeed: setupSeed,
   _recovery: _recovery,
   getDevice: getDevice
@@ -109,6 +110,188 @@ function signMessage (path, message) {
   });
 }
 
+function signTransaction (tx, options) {
+  var _this = this;
+  var dev;
+  var fromHex;
+
+  var inputs = [];
+  tx = tx.tx;
+
+  return this.getDevice().then(function () {
+    dev = TrezorHWWallet.currentDevice;
+    fromHex = window.trezor.ByteBuffer.fromHex;
+
+    var inputs_d = Promise.resolve();
+    for (var i = 0; i < tx.ins.length; ++i) {
+      (function (i) {
+        inputs_d = inputs_d.then(function () {
+          return getPubKeys(tx.ins[ i ].prevOut);
+        }).then(function (pubKeys) {
+          inputs.push({
+            address_n: prevoutToPath(tx.ins[ i ].prevOut, false, false),
+            prev_hash: fromHex(
+              bitcoin.bufferutils.reverse(
+                tx.ins[ i ].hash
+              ).toString('hex')
+            ),
+            prev_index: tx.ins[ i ].index,
+            script_type: 1,  // SPENDMULTISIG
+            multisig: {
+              pubkeys: pubKeys,
+              m: 2
+            },
+            sequence: tx.ins[ i ].sequence
+          });
+        });
+      })(i);
+    }
+    return inputs_d;
+  }).then(function () {
+    var txs = [];
+
+    for (var i = 0; i < tx.ins.length; ++i) {
+      var parsed = bitcoin.Transaction.fromBuffer(tx.ins[ i ].prevOut.data);
+      txs.push({
+        hash: tx.ins[ i ].prevOut.raw.txhash,
+        version: parsed.version,
+        lock_time: parsed.locktime,
+        bin_outputs: convertOutsBin(parsed.outs),
+        inputs: convertIns(parsed.ins)
+      });
+    }
+
+    return dev.signTx(
+      inputs, convertOuts(), txs, {
+        coin_name: _this.network === bitcoin.networks.bitcoin
+          ? 'Bitcoin' : 'Testnet'
+      }
+    ).then(function (res) {
+      res = res.message.serialized;
+      var signed = bitcoin.Transaction.fromHex(res.serialized_tx);
+      tx.ins = signed.ins;
+    });
+  });
+
+  function prevoutToPath (prevOut, fromSubaccount, privDer) {
+    var path = [];
+    if (prevOut.subaccount.pointer && !fromSubaccount) {
+      path.push(3 + 0x80000000);  // branch=SUBACCOUNT
+      path.push(prevOut.subaccount.pointer + 0x80000000);
+    }
+    if (privDer) {
+      path.push(2 + 0x80000000);  // branch=EXTERNAL
+      path.push(prevOut.raw.pointer + 0x80000000);
+    } else {
+      path.push(1);  // branch=REGULAR
+      path.push(prevOut.raw.pointer);
+    }
+    return path;
+  }
+
+  function getPubKeys (prevOut, is2of3) {
+    var gahd = options.keysManager.getGAPublicKey(
+      prevOut.subaccount.pointer,
+      prevOut.raw.pointer
+    );
+    var gawallet = {
+      depth: 33,
+      child_num: 0,
+      fingerprint: 0,
+      chain_code: fromHex(gahd.chainCode.toString('hex')),
+      public_key: fromHex(gahd.keyPair.getPublicKeyBuffer().toString('hex'))
+    };
+    return options.keysManager.pubHDWallet.then(function (myhd) {
+      var mywallet = {
+        depth: 0,
+        child_num: 0,
+        fingerprint: 0,
+        chain_code: fromHex(myhd.hdnode.chainCode.toString('hex')),
+        public_key: fromHex(myhd.hdnode.keyPair.getPublicKeyBuffer().toString('hex'))
+      };
+      var ret = [
+        {
+          node: gawallet,
+          address_n: [prevOut.raw.pointer]
+        },
+        {
+          node: mywallet,
+          address_n: prevoutToPath(prevOut, false)
+        }
+      ];
+      if (is2of3) {
+        ret.push({
+          node: recovery_wallet,
+          address_n: prevoutToPath(prevOut, false)
+        });
+      }
+      return ret;
+    });
+  }
+
+  function convertOuts () {
+    return tx.outs.map(function (out) {
+      var TYPE_ADDR = 0;
+      var TYPE_P2SH = 1;
+      var TYPE_MULTISIG = 2;
+      var addr = bitcoin.address.fromOutputScript(out.script, _this.network);
+      var ret = {
+        amount: out.value,
+        address: addr,
+        script_type: bitcoin.script.isScriptHashOutput(
+          out.script
+        ) ? TYPE_P2SH : TYPE_ADDR
+      };
+      var change_addr = 'x', data = {x:1};
+      if (ret.address === change_addr) {
+        ret.script_type = TYPE_MULTISIG;
+        ret.multisig = {
+          pubkeys: get_pubkeys({
+            branch: 1,
+            pointer: data.change_pointer
+          }, is_2of3),
+          m: 2
+        };
+      } else if (data.out_pointers && data.out_pointers.length == 1) {
+        // FIXME: perhaps at some point implement the case of 'single redeposit transaction',
+        // which is a bit complicated because different outputs can be from different
+        // subaccounts
+        ret.script_type = TYPE_MULTISIG;
+        ret.multisig = {
+          pubkeys: get_pubkeys({
+            branch: 1,
+            pointer: data.out_pointers[0].pointer
+          }, is_2of3),
+          m: 2
+        };
+      }
+      return ret;
+    });
+  };
+  function convertIns (ins) {
+    return ins.map(function (inp) {
+      return {
+        prev_hash: fromHex(
+          bitcoin.bufferutils.reverse(
+            inp.hash
+          ).toString('hex')
+        ),
+        prev_index: inp.index,
+        script_sig: fromHex(inp.script.toString('hex')),
+        sequence: inp.sequence
+      };
+    });
+  };
+  function convertOutsBin (outs) {
+    return outs.map(function (out) {
+      return {
+        amount: out.value,
+        script_pubkey: fromHex(out.script.toString('hex'))
+      };
+    });
+  };
+}
+
 function getChallengeArguments () {
   return this.getPublicKey().then(function (hdWallet) {
     return [ 'com.greenaddress.login.get_trezor_challenge', hdWallet.keyPair.getAddress(), true ];
@@ -134,7 +317,10 @@ function _checkForDevices (network, options) {
   var tick;
 
   function doCheck () {
-    var trezor_api = window.trezor.load();
+    if (!window.trezor) {
+      window.trezor = require('../../trezor-hid');
+    }
+    var trezor_api = window.trezor.load(options.hidImpl);
     if (options.failOnMissing) {
       singleCheck();
     } else {
@@ -222,6 +408,7 @@ function _checkForDevices (network, options) {
     HWWallet.register(wallet);
   }
   function ebAll (error, options) {
+    console.log(error.stack);
     HWWallet.registerError(error);
     TrezorHWWallet.missingCbsOnce.forEach(function (data) {
       var i = data[0];
@@ -257,8 +444,18 @@ function _checkForDevices (network, options) {
 function checkForDevices (network, options) {
   options = options || {};
 
-  var is_chrome_app = require('has-chrome-storage');
-  if (!is_chrome_app) return;
+  var isChromeApp = require('has-chrome-storage');
+  var nodeHid;
+  try {
+    nodeHid = require('node-hid');
+  } catch (e) { }
+  if (!isChromeApp && !nodeHid) {
+    return Promise.reject('No Trezor support present');
+  }
+
+  if (nodeHid) {
+    options.hidImpl = 'node';
+  }
 
   if (options.failOnMissing && options.modal) {
     // modal implies some form of waiting

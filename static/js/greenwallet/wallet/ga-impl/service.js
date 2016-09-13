@@ -1,6 +1,7 @@
 var autobahn = require('autobahn');
 var bitcoin = require('bitcoinjs-lib');
 var extend = require('xtend/mutable');
+var SchnorrSigningKey = require('../bitcoinup/schnorr-signing-key');
 module.exports = GAService;
 
 extend(GAService.prototype, {
@@ -12,6 +13,7 @@ extend(GAService.prototype, {
 
 function GAService (netName, options) {
   options = options || {};
+  this.gaUserPath = options.gaUserPath;
   this.netName = netName || 'testnet';
   if (this.netName === 'testnet') {
     this.gaHDNode = new bitcoin.HDNode(
