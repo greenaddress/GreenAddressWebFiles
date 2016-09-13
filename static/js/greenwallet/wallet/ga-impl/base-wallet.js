@@ -52,7 +52,7 @@ function BaseWallet (options) {
     this.subaccounts = [];
     this.setupSubAccount({
       name: 'Main',
-      pointer: null,
+      pointer: 0,
       type: 'main'
     });
     data.subaccounts.forEach(function (subaccount) {

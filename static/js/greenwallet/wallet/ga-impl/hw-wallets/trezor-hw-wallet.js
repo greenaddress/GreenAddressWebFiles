@@ -191,7 +191,7 @@ function _checkForDevices (network, options) {
               } else {
                 cbAll(dev_, new TrezorHWWallet(network));
               }
-            });
+            }).catch(ebAll);
           }, function (err) {
             console.error(err.stack || err);
             ebAll('Opening device failed', true);
