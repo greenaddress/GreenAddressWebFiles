@@ -336,7 +336,7 @@ angular.module('greenWalletSignupLoginControllers', ['greenWalletMnemonicsServic
         if (cur_net.useNewWalletJs) {
             // new refactored implementation, unfinished
             wallets.loginWithHWWallet($scope, hwDevice).catch(function(err) {
-                notices.makeMessage('error', err);
+                notices.makeNotice('error', err);
             });
             return;
         }

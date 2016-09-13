@@ -35614,7 +35614,9 @@ Session.prototype.parseHeadersAndCreateByteBuffer = function(first_msg) {
     var messageType = msg.readUint16();
     var messageLength = msg.readUint32();
     var messageBuffer = new ByteBuffer(messageLength);
-    messageBuffer.append(msg);
+    if (messageLength > 0) {
+        messageBuffer.append(msg);
+    }
 
     return [messageType, messageLength, messageBuffer];
 }

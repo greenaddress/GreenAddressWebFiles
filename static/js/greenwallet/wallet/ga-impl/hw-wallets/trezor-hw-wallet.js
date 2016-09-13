@@ -38,10 +38,13 @@ function promptPin () {
   if (HWWallet.guiCallbacks.trezorPINPrompt) {
     HWWallet.guiCallbacks.trezorPINPrompt.apply(null, arguments);
   }
+
 }
 
 function promptPassphrase () {
-  if (this.passphraseCb) this.passphraseCb();
+  if (HWWallet.guiCallbacks.trezorPassphrasePrompt) {
+    HWWallet.guiCallbacks.trezorPassphrasePrompt.apply(null, arguments);
+  }
 }
 
 function handleButton () {
