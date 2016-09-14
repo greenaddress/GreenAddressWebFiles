@@ -547,13 +547,16 @@ function _addChangeOutput (script, value, assetNetworkId) {
 
   // 2. add the output at the index
   if (changeIdx === this.getOutputsCount()) {
-    this.addOutput(script, value, 0, assetNetworkId);
+    var changeOut = this.addOutput(script.outScript, value, 0, assetNetworkId);
+    changeOut.pointer = script.pointer;
+    changeOut.subaccountPointer = script.subaccountPointer;
   } else {
     var newOutputs = [];
     for (var i = 0; i < this.getOutputsCount(); ++i) {
       if (i === changeIdx) {
         newOutputs.push({
-          script: script, value: value, fee: 0, assetHash: assetNetworkId
+          script: script.outScript, value: value, fee: 0, assetHash: assetNetworkId,
+          pointer: script.pointer, subaccountPointer: script.subaccountPointer
         });
       }
       newOutputs.push(this.getOutput(i));
@@ -561,6 +564,9 @@ function _addChangeOutput (script, value, assetNetworkId) {
     this.clearOutputs();
     newOutputs.forEach(function (out) {
       var newOut = this.addOutput(out.script, out.value, out.fee, out.assetHash);
+
+      newOut.pointer = out.pointer;
+      newOut.subaccountPointer = out.subaccountPointer;
 
       // keep old CT data in case of non-CT asset change being added:
       newOut.commitment = out.commitment;
@@ -740,7 +746,7 @@ function _addFeeAndChangeWithAsset (options) {
           // 5. update with the final fee and set the fee field in the output:
           this.replaceOutput(
             changeIdx,
-            changeCache.feeChange,
+            changeCache.feeChange.outScript,
             prevoutsFeeTotal - requiredValues.fee,
             requiredValues.fee,
             options.feeNetworkId

@@ -4,6 +4,7 @@ var extend = require('xtend/mutable');
 module.exports = BaseKeysManager;
 
 extend(BaseKeysManager.prototype, {
+  getGASubAccountPubKey: getGASubAccountPubKey,
   getGAPublicKey: getGAPublicKey,
   getMyPublicKey: getMyPublicKey
 });
@@ -25,7 +26,7 @@ function _subpath (hd, pathBuffer) {
   return hd;
 }
 
-function getGAPublicKey (subaccountPointer, pointer) {
+function getGASubAccountPubKey (subaccountPointer) {
   var gaNode = this.gaService.gaHDNode;
   if (subaccountPointer) {
     gaNode = _subpath(
@@ -36,7 +37,11 @@ function getGAPublicKey (subaccountPointer, pointer) {
       gaNode.derive(1), this.gaService.gaUserPath
     );
   }
-  return gaNode.derive(pointer);
+  return gaNode;
+}
+
+function getGAPublicKey (subaccountPointer, pointer) {
+  return this.getGASubAccountPubKey(subaccountPointer).derive(pointer);
 }
 
 function getMyPublicKey (subaccountPointer, pointer) {

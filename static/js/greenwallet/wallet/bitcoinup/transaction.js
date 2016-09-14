@@ -105,7 +105,7 @@ function fromHex (hex) {
   return ret;
 }
 
-function _addChangeOutput (script, value, assetNetworkId) {
+function _addChangeOutput (script, value) {
   // 1. Generate random change output index. It is done for privacy reasons,
   //    to avoid easy tracing of coins with constant change index.
   var changeIdx = (
@@ -114,29 +114,25 @@ function _addChangeOutput (script, value, assetNetworkId) {
 
   // 2. add the output at the index
   if (changeIdx === this.getOutputsCount()) {
-    this.addOutput(script, value, 0, assetNetworkId);
+    var changeOut = this.addOutput(script.outScript, value, 0);
+    changeOut.pointer = script.pointer;
+    changeOut.subaccountPointer = script.subaccountPointer;
   } else {
     var newOutputs = [];
     for (var i = 0; i < this.getOutputsCount(); ++i) {
       if (i === changeIdx) {
         newOutputs.push({
-          script: script, value: value, fee: 0, assetHash: assetNetworkId
+          script: script.outScript, value: value, fee: 0,
+          pointer: script.pointer, subaccountPointer: script.subaccountPointer
         });
       }
       newOutputs.push(this.getOutput(i));
     }
     this.clearOutputs();
     newOutputs.forEach(function (out) {
-      var newOut = this.addOutput(out.script, out.value, out.fee, out.assetHash);
-
-      // keep old CT data in case of non-CT asset change being added:
-      newOut.commitment = out.commitment;
-      newOut.nonce_commitment = out.nonce_commitment;
-      newOut.range_proof = out.range_proof;
-
-      // keep data necessary to re-generate CT data too:
-      newOut.valueToBlind = out.valueToBlind;
-      newOut.scanningPubkey = out.scanningPubkey;
+      var newOut = this.addOutput(out.script, out.value, out.fee);
+      newOut.pointer = out.pointer;
+      newOut.subaccountPointer = out.subaccountPointer;
     }.bind(this));
   }
 
@@ -251,7 +247,7 @@ function _addFeeAndChange (options) {
 
         this.replaceOutput(
           changeIdx,
-          changeScript,
+          changeScript.outScript,
           prevoutsValue - (requiredValueForFee + fee),
           fee
         );
@@ -266,7 +262,6 @@ function _addFeeAndChange (options) {
 function build (options) {
   this.clearInputs();
   this.clearOutputs();
-
   options.prevOutputs.map(function (prevOut) {
     this.addInput({
       txHash: prevOut.prevHash,
@@ -280,8 +275,7 @@ function build (options) {
     this.addOutput(
       output.scriptPubKey,
       output.value,
-      0,
-      options.assetNetworkId
+      0
     );
   }.bind(this));
 

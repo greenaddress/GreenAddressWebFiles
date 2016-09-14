@@ -43,10 +43,10 @@ function MockUtxo (utxo) {
   this.prevHash = [].reverse.call(new Buffer(utxo.txhash, 'hex'));
   this.ptIdx = utxo.pt_idx;
   this.value = +utxo.value;
-  this.raw = utxo;
   this.data = utxo.data;
-
-  this.subaccount = {name: 'Main', pointer: null, type: 'main'};
+  this.subaccount = utxo.subaccount;
+  this.raw = utxo;
+  this.raw.subaccount = this.subaccount.pointer;
 }
 
 var mockSigningWallet = new HwSigningWallet({
@@ -62,7 +62,10 @@ var mockSigningWallet = new HwSigningWallet({
 var mockAddressFactory = new AddressFactory(
   {
     call: function () {
-      return mockSigningWallet.scriptFactory.create2of2Script(0, 1).then(function(script) {
+      mockAddressFactory.subaccountPointer = cur_subaccount.pointer;
+      return mockSigningWallet.scriptFactory.create2of2Script(
+        cur_subaccount.pointer, 1
+      ).then(function (script) {
         return {
           pointer: 1,
           script: script
@@ -84,36 +87,61 @@ test('wipe trezor', function (t) {
 });
 */
 test('construct tx', function (t) {
-  testChangeOutput(t, 0).then(function () {
-    return testChangeOutput(t, 1);
-  }).then(function () {
+  var runTests = [
+    // [subaccount, changeIdx]
+    [0, 0],
+    [0, 1],
+    [1, 0],
+    [1, 1]
+  ];
+  var test_d = Promise.resolve();
+  runTests.forEach(function (test) {
+    var subaccount = test[0];
+    var changeIdx = test[1];
+    test_d = test_d.then(function () {
+      return testChangeOutput(t, subaccount, changeIdx);
+    });
+  })
+  test_d.then(function () {
     t.end();
   }, function (e) { console.log(e.stack); t.fail(e); });
 });
 
-function testChangeOutput (t, idx) {
+function testChangeOutput (t, subaccount, changeIdx) {
   var expected = [
-    '010000000158caedb4a165113876d860c5c43e2f2ef854e1c66db3768ee5e4e95f33a3' +
-    'de7f0000000049004752210203d19c2b0dd5aa7b11974ced072755ecdfdd81426434ef' +
-    '61f20a0da73a7be1fd2103b324f0ccf03db6553aef5424fe221fa538c4d43c715f3bac' +
-    '0f350fb6d221a1c552aeffffffff029a7ca4350000000017a9148fbebcf42b4f8af0ad' +
-    'f61cef852fede3349a58b387102700000000000017a9144098810ba97acf098d778c36' +
-    '538ec82d7516b4e28700000000',
-    '010000000158caedb4a165113876d860c5c43e2f2ef854e1c66db3768ee5e4e95f33a3' +
-    'de7f0000000049004752210203d19c2b0dd5aa7b11974ced072755ecdfdd81426434ef' +
-    '61f20a0da73a7be1fd2103b324f0ccf03db6553aef5424fe221fa538c4d43c715f3bac' +
-    '0f350fb6d221a1c552aeffffffff02102700000000000017a9144098810ba97acf098d' +
-    '778c36538ec82d7516b4e2879a7ca4350000000017a9148fbebcf42b4f8af0adf61cef' +
-    '852fede3349a58b38700000000'
-  ][idx];
-  console.log(expected);
+    ['010000000158caedb4a165113876d860c5c43e2f2ef854e1c66db3768ee5e4e95f33a3de' +
+    '7f0000000049004752210390bc6488ae93f5b7e2dcb934f85a6b7e1d5930f06d3cec37e77' +
+    '88f19ea41b3e62103b324f0ccf03db6553aef5424fe221fa538c4d43c715f3bac0f350fb6' +
+    'd221a1c552aeffffffff029a7ca4350000000017a9148fbebcf42b4f8af0adf61cef852fe' +
+    'de3349a58b387102700000000000017a9144098810ba97acf098d778c36538ec82d7516b4' +
+    'e28700000000',
+    '010000000158caedb4a165113876d860c5c43e2f2ef854e1c66db3768ee5e4e95f33a3de7' +
+    'f0000000049004752210390bc6488ae93f5b7e2dcb934f85a6b7e1d5930f06d3cec37e778' +
+    '8f19ea41b3e62103b324f0ccf03db6553aef5424fe221fa538c4d43c715f3bac0f350fb6d' +
+    '221a1c552aeffffffff02102700000000000017a9144098810ba97acf098d778c36538ec8' +
+    '2d7516b4e2879a7ca4350000000017a9148fbebcf42b4f8af0adf61cef852fede3349a58b' +
+    '38700000000'],
+    ['010000000158caedb4a165113876d860c5c43e2f2ef854e1c66db3768ee5e4e95f33a3de' +
+    '7f00000000490047522102fe4767768d35e6f7e7a7c023923535d1b70552cb6a46dce21e4' +
+    'e74924717db91210374915ad1f9e5bdd20e9818ded99d59bd33cea0479d0c8810c31ecf6d' +
+    '2c76e6ad52aeffffffff029a7ca4350000000017a914327b4505d212c3a78460245e85101' +
+    '5b90d23c2c487102700000000000017a9144098810ba97acf098d778c36538ec82d7516b4' +
+    'e28700000000',
+    '010000000158caedb4a165113876d860c5c43e2f2ef854e1c66db3768ee5e4e95f33a3de7' +
+    'f00000000490047522102fe4767768d35e6f7e7a7c023923535d1b70552cb6a46dce21e4e' +
+    '74924717db91210374915ad1f9e5bdd20e9818ded99d59bd33cea0479d0c8810c31ecf6d2' +
+    'c76e6ad52aeffffffff02102700000000000017a9144098810ba97acf098d778c36538ec8' +
+    '2d7516b4e2879a7ca4350000000017a914327b4505d212c3a78460245e851015b90d23c2c' +
+    '48700000000']
+  ][subaccount][changeIdx];
+  cur_subaccount = subaccounts[subaccount];
   var constructor = new TxConstructor({
     signingWallet: mockSigningWallet,
     utxoFactory: mockUtxoFactory,
     changeAddrFactory: mockAddressFactory,
     feeEstimatesFactory: mockFeeEstimatesFactory,
     transactionClass: proxy('../../bitcoinup/transaction', {
-      'crypto': {randomBytes: function () { return new Buffer([idx]); }}
+      'crypto': {randomBytes: function () { return new Buffer([changeIdx]); }}
     })
   });
   var assetNetworkId = new Buffer(
@@ -130,9 +158,17 @@ function testChangeOutput (t, idx) {
         '2My8mvjL6r9BpvY11N95jRKdTV4roXvbQQZ', bitcoin.networks.testnet
       )}
   ]).then(function (tx) {
-    t.equal(tx.tx.toBuffer().toString('hex'), expected, 'change output at index=' + idx);
+    t.equal(
+      tx.tx.toBuffer().toString('hex'), expected,
+      'subaccount=' + subaccount + ', change output at index=' + changeIdx);
   }, function (e) { console.log(e.stack); t.fail(e); });
 }
+
+var subaccounts = [
+  {pointer: null, type: 'main'},
+  {pointer: 1, type: '2of2'}
+]
+var cur_subaccount = subaccounts[0];
 
 function mockListAllUtxo () {
   var tx = new bitcoin.Transaction();
@@ -143,11 +179,10 @@ function mockListAllUtxo () {
   );
   tx.addOutput(new Buffer('aa', 'hex'), 899985450);
   tx.addOutput(new Buffer('aa', 'hex'), 10000);
-  console.log(tx.toHex())
   return Promise.resolve([
     { ga_asset_id: 1,
       pt_idx: 0,
-      subaccount: 0,
+      subaccount: cur_subaccount,
       value: '899985450',
       block_height: null,
       txhash: tx.getId().toString('hex'),
@@ -155,29 +190,13 @@ function mockListAllUtxo () {
       data: tx.toBuffer() },
     { ga_asset_id: 1,
       pt_idx: 1,
-      subaccount: 0,
+      subaccount: cur_subaccount,
       value: '10000',
       block_height: null,
       txhash: tx.getId().toString('hex'),
       pointer: 1,
       data: tx.toBuffer() }
   ].map(function (data) { return new MockUtxo(data); }));
-}
-
-function mockGetNextOutputScript () {
-  var toHash = (
-    '522102964e7b79e43e0df9f5f82862383692dd7ba28cf59ea964ab6ba4add1ccaf55e82' +
-    '103ea09b3d655fdffc09870d0bc514c45ffbbde3ec9699412f918b3f037341905d452ae'
-  );
-  return Promise.resolve(bitcoin.script.scriptHashOutput(
-    bitcoin.crypto.hash160(new Buffer(toHash, 'hex'))
-  ));
-}
-
-function mockGetNextAddress () {
-  return this.getNextOutputScript().then(function (script) {
-    return bitcoin.address.fromOutputScript(script, bitcoin.networks.testnet);
-  });
 }
 
 function mockGetFeeEstimate () {

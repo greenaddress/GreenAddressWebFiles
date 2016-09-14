@@ -147,7 +147,9 @@ function signTransaction (tx, options) {
       })(i);
     }
     return inputs_d;
-  }).then(function () {
+  }).then(
+    convertOuts
+  ).then(function (outs) {
     var txs = [];
 
     for (var i = 0; i < tx.ins.length; ++i) {
@@ -162,7 +164,7 @@ function signTransaction (tx, options) {
     }
 
     return dev.signTx(
-      inputs, convertOuts(), txs, {
+      inputs, outs, txs, {
         coin_name: _this.network === bitcoin.networks.bitcoin
           ? 'Bitcoin' : 'Testnet'
       }
@@ -190,9 +192,8 @@ function signTransaction (tx, options) {
   }
 
   function getPubKeys (prevOut, is2of3) {
-    var gahd = options.keysManager.getGAPublicKey(
-      prevOut.subaccount.pointer,
-      prevOut.raw.pointer
+    var gahd = options.keysManager.getGASubAccountPubKey(
+      prevOut.subaccount.pointer
     );
     var gawallet = {
       depth: 33,
@@ -201,7 +202,10 @@ function signTransaction (tx, options) {
       chain_code: fromHex(gahd.chainCode.toString('hex')),
       public_key: fromHex(gahd.keyPair.getPublicKeyBuffer().toString('hex'))
     };
-    return options.keysManager.pubHDWallet.then(function (myhd) {
+    var myhd_d = options.keysManager.getSubaccountRootKey(
+      prevOut.subaccount.pointer
+    );
+    return myhd_d.then(function (myhd) {
       var mywallet = {
         depth: 0,
         child_num: 0,
@@ -216,13 +220,13 @@ function signTransaction (tx, options) {
         },
         {
           node: mywallet,
-          address_n: prevoutToPath(prevOut, false)
+          address_n: prevoutToPath(prevOut, true, false)
         }
       ];
       if (is2of3) {
         ret.push({
           node: recovery_wallet,
-          address_n: prevoutToPath(prevOut, false)
+          address_n: prevoutToPath(prevOut, true, false)
         });
       }
       return ret;
@@ -230,7 +234,8 @@ function signTransaction (tx, options) {
   }
 
   function convertOuts () {
-    return tx.outs.map(function (out) {
+    var d_ret = Promise.resolve();
+    var ret = tx.outs.map(function (out) {
       var TYPE_ADDR = 0;
       var TYPE_P2SH = 1;
       var TYPE_MULTISIG = 2;
@@ -242,32 +247,28 @@ function signTransaction (tx, options) {
           out.script
         ) ? TYPE_P2SH : TYPE_ADDR
       };
-      var change_addr = 'x', data = {x:1};
-      if (ret.address === change_addr) {
+      if (out.pointer !== undefined) {
         ret.script_type = TYPE_MULTISIG;
         ret.multisig = {
-          pubkeys: get_pubkeys({
-            branch: 1,
-            pointer: data.change_pointer
-          }, is_2of3),
+          pubkeys: 'TODO',
           m: 2
         };
-      } else if (data.out_pointers && data.out_pointers.length == 1) {
-        // FIXME: perhaps at some point implement the case of 'single redeposit transaction',
-        // which is a bit complicated because different outputs can be from different
-        // subaccounts
-        ret.script_type = TYPE_MULTISIG;
-        ret.multisig = {
-          pubkeys: get_pubkeys({
-            branch: 1,
-            pointer: data.out_pointers[0].pointer
-          }, is_2of3),
-          m: 2
-        };
+        d_ret = d_ret.then(function () {
+          return getPubKeys({
+            raw: {pointer: out.pointer},
+            subaccount: {pointer: out.subaccountPointer}
+          });
+        }).then(function (pubkeys) {
+          ret.multisig.pubkeys = pubkeys;
+        });
       }
       return ret;
     });
-  };
+    d_ret = d_ret.then(function () {
+      return ret;
+    });
+    return d_ret;
+  }
   function convertIns (ins) {
     return ins.map(function (inp) {
       return {
@@ -281,7 +282,7 @@ function signTransaction (tx, options) {
         sequence: inp.sequence
       };
     });
-  };
+  }
   function convertOutsBin (outs) {
     return outs.map(function (out) {
       return {
@@ -289,7 +290,7 @@ function signTransaction (tx, options) {
         script_pubkey: fromHex(out.script.toString('hex'))
       };
     });
-  };
+  }
 }
 
 function getChallengeArguments () {

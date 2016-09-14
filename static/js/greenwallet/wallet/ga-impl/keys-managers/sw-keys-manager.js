@@ -19,9 +19,13 @@ function SWKeysManager (options) {
 }
 
 function getSubaccountRootKey (subaccountPointer) {
-  return this.privHDWallet.deriveHardened(3).then(function (hd) {
-    return hd.deriveHardened(subaccountPointer);
-  });
+  if (subaccountPointer) {
+    return this.privHDWallet.deriveHardened(3).then(function (hd) {
+      return hd.deriveHardened(subaccountPointer);
+    });
+  } else {
+    return Promise.resolve(this.privHDWallet);
+  }
 }
 
 function _getKey (signing, subaccountPointer, pointer, keyBranch) {

@@ -119,7 +119,7 @@ function _constructTx (outputsWithAmounts, options) {
       // `iterate` call below:
       prevOutputs: prevOutputs,
       feeEstimate: feeEstimate,
-      getChangeOutScript: this.changeAddrFactory.getNextOutputScript.bind(
+      getChangeOutScript: this.changeAddrFactory.getNextOutputScriptWithPointer.bind(
         this.changeAddrFactory
       )
     }, this.buildOptions, options)).then(
@@ -149,7 +149,7 @@ function _constructTx (outputsWithAmounts, options) {
           outputsWithAmounts: outputsWithAmounts,
           prevOutputs: prevOutputs,
           feeEstimate: feeEstimate,
-          getChangeOutScript: this.changeAddrFactory.getNextOutputScript.bind(
+          getChangeOutScript: this.changeAddrFactory.getNextOutputScriptWithPointer.bind(
             this.changeAddrFactory
           ),
           // cache change out between calls, if any was generated, to avoid

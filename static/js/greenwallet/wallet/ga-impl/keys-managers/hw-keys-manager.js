@@ -20,7 +20,11 @@ function HWKeysManager (options) {
 
 function getSubaccountRootKey (subaccountPointer) {
   // TODO caching
-  return this.hw.getPublicKey("3'/" + subaccountPointer + "'");
+  if (subaccountPointer) {
+    return this.hw.getPublicKey("3'/" + subaccountPointer + "'");
+  } else {
+    return Promise.resolve(this.pubHDWallet);
+  }
 }
 
 function _getKey (signing, subaccountPointer, pointer, keyBranch) {

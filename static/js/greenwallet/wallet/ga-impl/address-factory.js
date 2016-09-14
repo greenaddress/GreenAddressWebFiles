@@ -6,6 +6,7 @@ module.exports = GAAddressFactory;
 extend(GAAddressFactory.prototype, {
   getNextAddress: getNextAddress,
   getNextOutputScript: getNextOutputScript,
+  getNextOutputScriptWithPointer: getNextOutputScriptWithPointer,
   getScanningKeyForScript: getScanningKeyForScript
 });
 
@@ -16,7 +17,7 @@ function GAAddressFactory (gaService, signingWallet, options) {
   this.subaccountPointer = options.subaccountPointer || null;
 }
 
-function getNextOutputScript () {
+function getNextOutputScriptWithPointer () {
   return this.gaService.call(
     'com.greenaddress.vault.fund',
     // TODO: verification against our keys
@@ -26,8 +27,18 @@ function getNextOutputScript () {
       bitcoin.crypto.hash160(new Buffer(script.script, 'hex'))
     );
     this.scriptToPointer[ret.toString('hex')] = script.pointer;
-    return ret;
+    return {
+      outScript: ret,
+      pointer: script.pointer,
+      subaccountPointer: this.subaccountPointer
+    };
   }.bind(this));
+}
+
+function getNextOutputScript () {
+  return this.getNextOutputWithPointer().then(function (res) {
+    return res.outScript;
+  });
 }
 
 function getNextAddress () {
@@ -40,6 +51,9 @@ function getNextAddress () {
 
 function getScanningKeyForScript (script) {
   var pointer = this.scriptToPointer[script.toString('hex')];
+  if (pointer === undefined) {
+    throw new Error('Missing pointer');
+  }
   var rootHdWallet = this.signingWallet.keysManager.privHDWallet; // FIXME: hw wallets
   var hd;
   if (this.subaccountPointer && this.subaccountHdWallet) {
