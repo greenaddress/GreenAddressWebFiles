@@ -96,14 +96,14 @@ function testChangeOutput (t, idx) {
     '010000000158caedb4a165113876d860c5c43e2f2ef854e1c66db3768ee5e4e95f33a3' +
     'de7f0000000049004752210203d19c2b0dd5aa7b11974ced072755ecdfdd81426434ef' +
     '61f20a0da73a7be1fd2103b324f0ccf03db6553aef5424fe221fa538c4d43c715f3bac' +
-    '0f350fb6d221a1c552aeffffffff025477a4350000000017a9148fbebcf42b4f8af0ad' +
+    '0f350fb6d221a1c552aeffffffff029a7ca4350000000017a9148fbebcf42b4f8af0ad' +
     'f61cef852fede3349a58b387102700000000000017a9144098810ba97acf098d778c36' +
     '538ec82d7516b4e28700000000',
     '010000000158caedb4a165113876d860c5c43e2f2ef854e1c66db3768ee5e4e95f33a3' +
     'de7f0000000049004752210203d19c2b0dd5aa7b11974ced072755ecdfdd81426434ef' +
     '61f20a0da73a7be1fd2103b324f0ccf03db6553aef5424fe221fa538c4d43c715f3bac' +
     '0f350fb6d221a1c552aeffffffff02102700000000000017a9144098810ba97acf098d' +
-    '778c36538ec82d7516b4e2875477a4350000000017a9148fbebcf42b4f8af0adf61cef' +
+    '778c36538ec82d7516b4e2879a7ca4350000000017a9148fbebcf42b4f8af0adf61cef' +
     '852fede3349a58b38700000000'
   ][idx];
   console.log(expected);
@@ -112,7 +112,7 @@ function testChangeOutput (t, idx) {
     utxoFactory: mockUtxoFactory,
     changeAddrFactory: mockAddressFactory,
     feeEstimatesFactory: mockFeeEstimatesFactory,
-    transactionClass: proxy('../../bitcoinup/assets-transaction', {
+    transactionClass: proxy('../../bitcoinup/transaction', {
       'crypto': {randomBytes: function () { return new Buffer([idx]); }}
     })
   });
@@ -130,7 +130,6 @@ function testChangeOutput (t, idx) {
         '2My8mvjL6r9BpvY11N95jRKdTV4roXvbQQZ', bitcoin.networks.testnet
       )}
   ]).then(function (tx) {
-    Object.setPrototypeOf(tx.tx, bitcoin.Transaction.prototype);
     t.equal(tx.tx.toBuffer().toString('hex'), expected, 'change output at index=' + idx);
   }, function (e) { console.log(e.stack); t.fail(e); });
 }
