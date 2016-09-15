@@ -20,7 +20,10 @@ extend(TrezorHWWallet.prototype, {
   _recovery: _recovery,
   getDevice: getDevice
 });
+TrezorHWWallet.pingDevice = pingDevice;
 TrezorHWWallet.checkForDevices = checkForDevices;
+TrezorHWWallet.listDevices = listDevices;
+TrezorHWWallet.openDevice = openDevice;
 TrezorHWWallet.foundCbs = [];
 TrezorHWWallet.missingCbs = [];
 TrezorHWWallet.missingCbsOnce = [];
@@ -333,146 +336,39 @@ function getChallengeArguments () {
   });
 }
 
-function _checkForDevices (network, options) {
-  if (TrezorHWWallet.currentDevice) {
-    return TrezorHWWallet.currentDevice.getPublicKey([]).then(function () {
-      finishChecking();
-      cbAll(TrezorHWWallet.currentDevice, new TrezorHWWallet(network));
-    }, function () {
-      // disconnect old device to avoid repated callbacks
-      window.chrome.hid.disconnect(
-        TrezorHWWallet.currentDevice._connectionId,
-        doCheck
-      );
-    });
-  } else {
-    doCheck();
+function pingDevice (device) {
+  return device.getPublicKey([]);
+}
+
+function listDevices (network, options) {
+  if (!window.trezor) {
+    window.trezor = require('../../hw-apis/trezor-hid');
   }
+  var trezor_api = window.trezor.load(options.hidImpl);
+  return trezor_api.devices();
+}
 
-  var tick;
-
-  function doCheck () {
-    if (!window.trezor) {
-      window.trezor = require('../../hw-apis/trezor-hid');
-    }
-    var trezor_api = window.trezor.load(options.hidImpl);
-    tick = setInterval(singleCheck, 1000);
-    function singleCheck () {
-      trezor_api.devices().then(function (devices) {
-        if (!devices.length) {
-          if (TrezorHWWallet.needsModal && !TrezorHWWallet.checkingModal) {
-            TrezorHWWallet.checkingModal = (
-              HWWallet.guiCallbacks.requireUsbDevice({reject: doCancel})
-            );
-          }
-        }
-        if (!devices.length) {
-          ebAll({missingDevice: true});
-        } else {
-          if (!TrezorHWWallet.isChecking) {
-            // don't initialize device twice
-            return;
-          }
-          finishChecking();
-
-          trezor_api.open(devices[0]).then(function (dev_) {
-            dev_.initialize().then(function (init_res) {
-              var outdated = false;
-              if (init_res.message.major_version < 1) outdated = true;
-              else if (init_res.message.major_version === 1 &&
-                init_res.message.minor_version < 3) outdated = true;
-              if (outdated) {
-                ebAll({
-                  outdatedFirmware: true,
-                  message: gettext(
-                    'Outdated firmware. Please upgrade to at least 1.3.0 at http://mytrezor.com/'
-                  ),
-                  recoverable: false
-                }, {all: true});
-              } else {
-                cbAll(dev_, new TrezorHWWallet(network), true);
-              }
-            }).catch(function(e) {
-              ebAll(e, {all: true})
-            });
-          }, function (err) {
-            console.error(err.stack || err);
-            ebAll('Opening device failed', {all: true});
-          });
-        }
-      }, function (err) {
-        if (err === 'No device found.') {
-          ebAll({missingDevice: true});
-        }
-      });
-    }
-  }
-
-  function finishChecking () {
-    TrezorHWWallet.isChecking = false;
-    TrezorHWWallet.needsModal = false;
-    if (TrezorHWWallet.checkingModal) {
-      TrezorHWWallet.checkingModal.close();
-      TrezorHWWallet.checkingModal = null;
-    }
-  }
-  function cbAll (device, wallet, newDevice) {
-    if (newDevice) {
-      device.on('pin', TrezorHWWallet.promptPin);
-      device.on('passphrase', TrezorHWWallet.promptPassphrase);
-      device.on('error', TrezorHWWallet.handleError);
-      device.on('button', TrezorHWWallet.handleButton);
-    }
-
-    _cbAll(device, wallet);
-  }
-  function _cbAll (device, wallet) {
-    TrezorHWWallet.currentDevice = device;
-    TrezorHWWallet.foundCbs.forEach(function (cb) {
-      cb(wallet);
-    });
-    TrezorHWWallet.foundCbs.length = 0;
-    TrezorHWWallet.missingCbsOnce.length = 0;
-    TrezorHWWallet.missingCbs.length = 0;
-    clearInterval(tick);
-    HWWallet.register(wallet);
-  }
-  function ebAll (error, options) {
-    options = options || {};
-    if (options.all) {
-      HWWallet.registerError(error);
-    }
-    TrezorHWWallet.missingCbsOnce.forEach(function (data) {
-      var i = data[0];
-      var cb = data[1];
-      TrezorHWWallet.foundCbs.splice(i, 1);
-      cb(error);
-    });
-    TrezorHWWallet.missingCbsOnce.length = 0;
-
-    var toSplice = [];
-    TrezorHWWallet.missingCbs.forEach(function (data, i) {
-      var j = data[0];
-      var cb = data[1];
-      var isModal = data[2];
-      if ((isModal && options.isModal) || options.all) {
-        toSplice.push(i);
-        TrezorHWWallet.foundCbs.splice(j, 1);
-        cb(error);
+function openDevice (network, options, device) {
+  var trezor_api = window.trezor.load(options.hidImpl);
+  return trezor_api.open(device).then(function (dev_) {
+    return dev_.initialize().then(function (init_res) {
+      var outdated = false;
+      if (init_res.message.major_version < 1) outdated = true;
+      else if (init_res.message.major_version === 1 &&
+        init_res.message.minor_version < 3) outdated = true;
+      if (outdated) {
+        return Promise.reject({
+          outdatedFirmware: true,
+          message: gettext(
+            'Outdated firmware. Please upgrade to at least 1.3.0 at http://mytrezor.com/'
+          ),
+          recoverable: false
+        });
+      } else {
+        return dev_;
       }
     });
-    for (var i = toSplice.length - 1; i >= 0; --i) {
-      TrezorHWWallet.missingCbs.splice(toSplice[i], 1);
-    }
-    if (TrezorHWWallet.missingCbs.length + TrezorHWWallet.missingCbsOnce.length === 0) {
-      clearInterval(tick);
-    }
-  }
-  function doCancel () {
-    TrezorHWWallet.isChecking = false;
-    TrezorHWWallet.checkingModal = null;
-    ebAll(gettext('Cancelled'), {isModal: true});
-  }
+  });
 }
 
 function checkForDevices (network, options) {
@@ -491,33 +387,7 @@ function checkForDevices (network, options) {
     options.hidImpl = 'node';
   }
 
-  if (options.failOnMissing && options.modal) {
-    // modal implies some form of waiting
-    throw new Error('Cannot set failOnMissing and modal simultaneously.');
-  }
-
-  // disable multiple repeated checking to avoid spamming the API, but allow
-  // checking again with failOnMissing. this allows having one global check
-  // + additional polling in case of such need
-  // (for example, GA has a global check on signup/login page, and polls
-  // additionally when user wants to initiate a hw wallet action without
-  // having a wallet connected)
-  if (!TrezorHWWallet.isChecking) {
-    TrezorHWWallet.isChecking = true;
-    _checkForDevices(network, options);
-  }
-  return new Promise(function (resolve, reject) {
-    var i = TrezorHWWallet.foundCbs.length;
-    TrezorHWWallet.foundCbs.push(resolve);
-    if (options.failOnMissing) {
-      TrezorHWWallet.missingCbsOnce.push([i, reject]);
-    } else {
-      TrezorHWWallet.missingCbs.push([i, reject, options.modal]);
-    }
-    if (options.modal) {
-      TrezorHWWallet.needsModal = true;
-    }
-  });
+  return HWWallet.checkForDevices(TrezorHWWallet, network, options);
 }
 
 function setupSeed (mnemonic) {
