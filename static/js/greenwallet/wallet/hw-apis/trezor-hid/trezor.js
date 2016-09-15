@@ -19,59 +19,11 @@ module.exports.ByteBuffer = ByteBuffer;
 var Trezor = module.exports.Trezor = function (hidImpl) {
     hidImpl = hidImpl || 'chrome';
     if (hidImpl === 'node') {
-        var nodeHid = require('node-hid');
-        this.hid = {
-            getDevices: nodeGetDevices,
-            connect: nodeConnect,
-            send: nodeSend,
-            sendFeatureReport: nodeSendFeatureReport,
-            receive: nodeReceive
-        };
+        this.hid = require('../node-hid-chrome-wrapper');
     } else if (hidImpl === 'chrome') {
         this.hid = chrome.hid;
     } else {
         throw new Error('hidImpl must be "chrome" or "node"');
-    }
-
-    function nodeGetDevices (options, cb) {
-        var ret = [];
-        options.filters.forEach(function (filter) {
-            try {
-                ret = ret.concat(nodeHid.devices(filter.vendorId, filter.deviceId));
-            } catch (e) {
-                console.log(e);
-            }
-        });
-        ret.forEach(function (dev) {
-            dev.deviceId = dev.path;
-        });
-        cb(ret);
-    }
-    function nodeConnect (deviceId, cb) {
-        cb({connectionId: new nodeHid.HID(deviceId)});
-    }
-    function nodeSend (dev, reportId, data, cb) {
-        data = Array.from(new Uint8Array(data));
-        if (reportId) {
-            data = [reportId].concat(data);
-        }
-        dev.write(data);
-        cb();
-    }
-    function nodeSendFeatureReport (dev, reportId, data, cb) {
-        data = Array.from(new Uint8Array(data));
-        if (reportId) {
-            data = [reportId].concat(data);
-        }
-        try {
-            dev.sendFeatureReport(data);
-        } catch (e) { }
-        cb();
-    }
-    function nodeReceive (dev, cb) {
-        dev.read(function (err, data) {
-            cb(0, data);
-        });
     }
 };
 
