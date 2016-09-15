@@ -49,34 +49,53 @@ function factory ($q, trezor, btchip, $timeout, $rootScope, $uibModal) {
 
       var modal;
       var check = function () {
-        var missingCount = 0;
-        var allCount = allHwWallets.length;
+        var toRace = [];
 
-        allHwWallets.forEach(function (hw) {
-          hw.checkForDevices(cur_net, {failOnMissing: true});
+        allHwWallets.forEach(function (hw, i) {
+          toRace.push(
+            hw.checkForDevices(cur_net, {failOnMissing: true}).catch(function (e) {
+              return $q.reject([i, e]);
+            })
+          );
         });
 
-        BaseHWWallet.currentWallet.then(function (device) {
+        race(toRace).then(cb, eb);
+
+        function race (promises) {
+          // missing from our Angular version
+          var deferred = $q.defer();
+          promises.forEach(function (promise) {
+            $q.when(promise).then(deferred.resolve, deferred.reject);
+          });
+          return deferred.promise;
+        }
+        function cb (device) {
           d.resolve(device);
           if (modal) {
             modal.close();
           }
-        }, function (err) {
+        }
+        function eb (err) {
+          var i = err[0];
+          err = err[1];
           if (!err || !err.missingDevice) {
             // retry only on missing device
             d.reject(err);
             d = null; // do not callback multiple times
           } else if (d) { // missing device + never callbacked (d != null)
-            missingCount += 1;
-            if (missingCount === allCount) {
+            toRace.splice(i, 1);
+            if (toRace.length === 0) {
               // show modal && retry on all confirmed missing
               if (!modal) {
                 modal = showRequireDeviceModal(d);
               }
               $timeout(check, 1000);
+            } else {
+              // wait for remaining wallets
+              $q.race(toRace).then(cb, eb);
             }
           }
-        });
+        }
       };
       check();
       return d.promise;

@@ -356,11 +356,7 @@ function _checkForDevices (network, options) {
       window.trezor = require('../../hw-apis/trezor-hid');
     }
     var trezor_api = window.trezor.load(options.hidImpl);
-    if (options.failOnMissing) {
-      singleCheck();
-    } else {
-      tick = setInterval(singleCheck, 1000);
-    }
+    tick = setInterval(singleCheck, 1000);
     function singleCheck () {
       trezor_api.devices().then(function (devices) {
         if (!devices.length) {
@@ -372,9 +368,6 @@ function _checkForDevices (network, options) {
         }
         if (!devices.length) {
           ebAll({missingDevice: true});
-          if (TrezorHWWallet.missingCbs.length + TrezorHWWallet.missingCbsOnce.length === 0) {
-            clearInterval(tick);
-          }
         } else {
           if (!TrezorHWWallet.isChecking) {
             // don't initialize device twice
@@ -395,18 +388,20 @@ function _checkForDevices (network, options) {
                     'Outdated firmware. Please upgrade to at least 1.3.0 at http://mytrezor.com/'
                   ),
                   recoverable: false
-                }, true);
+                }, {all: true});
               } else {
                 cbAll(dev_, new TrezorHWWallet(network), true);
               }
-            }).catch(ebAll);
+            }).catch(function(e) {
+              ebAll(e, {all: true})
+            });
           }, function (err) {
             console.error(err.stack || err);
-            ebAll('Opening device failed', true);
+            ebAll('Opening device failed', {all: true});
           });
         }
       }, function (err) {
-        if (err === 'No device found.' && options.failOnMissing) {
+        if (err === 'No device found.') {
           ebAll({missingDevice: true});
         }
       });
@@ -443,8 +438,10 @@ function _checkForDevices (network, options) {
     HWWallet.register(wallet);
   }
   function ebAll (error, options) {
-    console.log(error.stack);
-    HWWallet.registerError(error);
+    options = options || {};
+    if (options.all) {
+      HWWallet.registerError(error);
+    }
     TrezorHWWallet.missingCbsOnce.forEach(function (data) {
       var i = data[0];
       var cb = data[1];
@@ -461,13 +458,15 @@ function _checkForDevices (network, options) {
       if ((isModal && options.isModal) || options.all) {
         toSplice.push(i);
         TrezorHWWallet.foundCbs.splice(j, 1);
+        cb(error);
       }
-      cb(error);
     });
-    for (var i = toSplice.length; i >= 0; --i) {
+    for (var i = toSplice.length - 1; i >= 0; --i) {
       TrezorHWWallet.missingCbs.splice(toSplice[i], 1);
     }
-    clearInterval(tick);
+    if (TrezorHWWallet.missingCbs.length + TrezorHWWallet.missingCbsOnce.length === 0) {
+      clearInterval(tick);
+    }
   }
   function doCancel () {
     TrezorHWWallet.isChecking = false;

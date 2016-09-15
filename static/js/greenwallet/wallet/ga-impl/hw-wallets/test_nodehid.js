@@ -75,7 +75,6 @@ var mockAddressFactory = new AddressFactory(
   }, mockSigningWallet, {}
 );
 
-
 test('wipe trezor', function (t) {
   TrezorHwWallet.checkForDevices().then(function (dev) {
     HwWallet.registerGUICallback('trezorSetupModal', function (opts) {

@@ -23,12 +23,12 @@ function register (wallet) {
 function registerError (error) {
   if (HWWallet.resolveCurrentWallet) {
     HWWallet.rejectCurrentWallet(error);
-
-    // create a new promise after the old one got rejected:
-    HWWallet.currentWallet = new Promise(function (resolve, reject) {
-      HWWallet.resolveCurrentWallet = resolve;
-      HWWallet.rejectCurrentWallet = reject;
-    });
+    //
+    // // create a new promise after the old one got rejected:
+    // HWWallet.currentWallet = new Promise(function (resolve, reject) {
+    //   HWWallet.resolveCurrentWallet = resolve;
+    //   HWWallet.rejectCurrentWallet = reject;
+    // });
   }
 }
 

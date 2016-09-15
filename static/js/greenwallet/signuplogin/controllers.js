@@ -404,7 +404,7 @@ angular.module('greenWalletSignupLoginControllers', ['greenWalletMnemonicsServic
                 hwDevice = dev;
             }, function (err) {
                 notices.makeNotice('error', err.message);
-                checkForHwWallets();
+                setTimeout(1000, checkForHwWallets);
             });
         };
         checkForHwWallets();
