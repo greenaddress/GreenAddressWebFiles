@@ -461,7 +461,7 @@ function checkForDevices (network, options) {
     return Promise.reject('No Trezor support present');
   }
 
-  if (nodeHid) {
+  if (!isChromeApp) {
     options.hidImpl = 'node';
   }
 

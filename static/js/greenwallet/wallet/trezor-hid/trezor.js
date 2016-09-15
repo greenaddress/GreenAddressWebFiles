@@ -51,7 +51,7 @@ var Trezor = module.exports.Trezor = function (hidImpl) {
         cb({connectionId: new nodeHid.HID(deviceId)});
     }
     function nodeSend (dev, reportId, data, cb) {
-    	data = Array.from(new Uint8Array(data));
+        data = Array.from(new Uint8Array(data));
         if (reportId) {
             data = [reportId].concat(data);
         }
@@ -59,12 +59,12 @@ var Trezor = module.exports.Trezor = function (hidImpl) {
         cb();
     }
     function nodeSendFeatureReport (dev, reportId, data, cb) {
-    	data = Array.from(new Uint8Array(data));
+        data = Array.from(new Uint8Array(data));
         if (reportId) {
             data = [reportId].concat(data);
         }
         try {
-        	dev.sendFeatureReport(data);
+            dev.sendFeatureReport(data);
         } catch (e) { }
         cb();
     }
@@ -117,9 +117,9 @@ Trezor.prototype.open = function (device) {
                 reject(chrome.runtime.lastError.message);
             } else {
                 var session = new Session(
-                	self.hid,
+                    self.hid,
                     connection.connectionId,
-                    device.collections && device.collections[0].reportIds.length !== 0
+                    device.collections === undefined ? false : device.collections[0].reportIds.length !== 0
                 );
                 resolve(session);
             }
