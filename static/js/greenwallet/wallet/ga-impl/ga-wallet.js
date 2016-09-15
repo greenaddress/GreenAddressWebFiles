@@ -32,6 +32,7 @@ function setupSubAccount (subaccount) {
   // feeasset
   this.txConstructors[ 1 ][ subaccount.pointer ] = new TxConstructor(
     {
+      signingWallet: this.signingWallet,
       utxoFactory: utxoFactory,
       changeAddrFactory: changeAddrFactory,
       feeEstimatesFactory: this.feeEstimatesFactory

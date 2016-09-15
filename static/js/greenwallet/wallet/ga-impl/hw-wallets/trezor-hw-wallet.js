@@ -118,6 +118,7 @@ function signTransaction (tx, options) {
   var inputs = [];
   tx = tx.tx;
 
+  var fetch_d = fetchUtxo();  // fech in parallel with everything else
   return this.getDevice().then(function () {
     dev = TrezorHWWallet.currentDevice;
     fromHex = window.trezor.ByteBuffer.fromHex;
@@ -150,6 +151,10 @@ function signTransaction (tx, options) {
   }).then(
     convertOuts
   ).then(function (outs) {
+    return fetch_d.then(function () {
+      return outs;
+    });
+  }).then(function (outs) {
     var txs = [];
 
     for (var i = 0; i < tx.ins.length; ++i) {
@@ -171,9 +176,31 @@ function signTransaction (tx, options) {
     ).then(function (res) {
       res = res.message.serialized;
       var signed = bitcoin.Transaction.fromHex(res.serialized_tx);
+      for (var i = 0; i < tx.ins.length; ++i) {
+        signed.ins[i].prevOut = tx.ins[i].prevOut;
+        var decompiled = bitcoin.script.decompile(signed.ins[i].script);
+        signed.ins[i].script = bitcoin.script.compile([].concat(
+          bitcoin.opcodes.OP_0, // OP_0 required for multisig
+          new Buffer([0]), // to be replaced by backend with server's sig
+          new Buffer([].concat(
+            Array.prototype.slice.call(
+              new Buffer(res.signatures[0].toHex(), 'hex')
+            ), [1]
+          )), // our signature with SIGHASH_ALL
+          decompiled[1]  // prevScript
+        ));
+      }
       tx.ins = signed.ins;
     });
   });
+
+  function fetchUtxo () {
+    if (options.utxoFactory.fetchUtxoDataForTx) {
+      return options.utxoFactory.fetchUtxoDataForTx(tx);
+    } else {
+      return Promise.resolve();
+    }
+  }
 
   function prevoutToPath (prevOut, fromSubaccount, privDer) {
     var path = [];

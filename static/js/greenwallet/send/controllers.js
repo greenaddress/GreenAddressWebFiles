@@ -1,5 +1,3 @@
-var AssetsTransaction = require('wallet').bitcoinup.AssetsTransaction;
-var bufferEquals = require('buffer-equals');
 angular.module('greenWalletSendControllers',
     ['greenWalletServices'])
 .controller('SendController', ['$scope', 'wallets', 'tx_sender', 'cordovaReady', 'notices', 'branches', 'wallets', '$routeParams', 'hostname', 'gaEvent', '$uibModal', '$location', '$rootScope', '$q', 'parse_bitcoin_uri', 'qrcode', 'sound', 'encode_key',
@@ -524,33 +522,23 @@ angular.module('greenWalletSendControllers',
             var satoshis =
                 this.spend_all ? "ALL" : this.amount_to_satoshis(this.amount);
             $rootScope.is_loading += 1;
-            if (cur_net.isAlphaMultiasset) {
+            if (cur_net.useNewWalletJs || cur_net.isAlphaMultiasset) {
                 var constructor;
-                var subaccount = $scope.wallet.current_subaccount || null;
-                // We need to do waitForConnection here because the new "walletjs" transaction sending implementation
-                // depends on the "old connection" being up -- in sevices/tx_sender.js the gawallet is cleared
-                // on disconnection, and in general gawallet is set only when connection is set.
-                // (This fixes a bug which causes transaction sending to be impossible after disconnection from server
-                //  when the 'Review & Send Money' button is clicked while still disconnected, and reconnection happens
-                //  too late.)
-                tx_sender.waitForConnection().then(function() {
-                    return tx_sender.gawallet.loggedIn;
-                }).then(function() {
-                    constructor = tx_sender.gawallet.txConstructors[$scope.wallet.current_asset][subaccount];
-                    // constructors are only available when connected
-                    var refresh = [constructor.refreshUtxo()];
-                    var feeConstructor;
-                    if ($scope.wallet.current_asset !== 1) {
-                        feeConstructor = tx_sender.gawallet.txConstructors[ 1 ][subaccount];
-                        refresh.push(feeConstructor.refreshUtxo());
-                    }
-                    return $q.all(refresh);
-                }).then(function() {
+                var subaccount = $scope.wallet.current_subaccount || 0;
+                constructor = tx_sender.gaWallet.txConstructors[$scope.wallet.current_asset][subaccount];
+                // constructors are only available when connected
+                var refresh = [constructor.refreshUtxo()];
+                var feeConstructor;
+                if ($scope.wallet.current_asset !== 1) {
+                    feeConstructor = tx_sender.gaWallet.txConstructors[ 1 ][subaccount];
+                    refresh.push(feeConstructor.refreshUtxo());
+                }
+                return $q.all(refresh).then(function() {
                     var destination;
                     if (isConfidential) {
                         destination = {
                             value: satoshis === 'ALL' ?
-                                $scope.wallet.final_balance : +satoshis,
+                                +$scope.wallet.final_balance : +satoshis,
                             ctDestination: {
                                 b58: to_addr, network: cur_net
                             }
@@ -558,7 +546,7 @@ angular.module('greenWalletSendControllers',
                     } else {
                         destination = {
                             value: satoshis === 'ALL' ?
-                                $scope.wallet.final_balance : +satoshis,
+                                +$scope.wallet.final_balance : +satoshis,
                             scriptPubKey: Bitcoin.bitcoin.address.toOutputScript(
                                 to_addr, cur_net
                             )
@@ -573,14 +561,14 @@ angular.module('greenWalletSendControllers',
                     ).then(function(tx) {
                         var fee = calculateFee(tx.tx);
                         var outAmount = satoshis === 'ALL' ?
-                            AssetsTransaction.fromHex(tx.tx.toString('hex')).tx.outs[0].value
-                            : satoshis;
+                            tx.tx.outs[0].value : satoshis;
                         var amountWithFee = +outAmount + (
                             $scope.wallet.current_asset === 1 ? fee : 0
                         );
-                        var assetName = $scope.wallet.assets[
+                        var asset = $scope.wallet.assets[
                             $scope.wallet.current_asset
-                        ].name;
+                        ];
+                        var assetName = asset ? asset.name : 'BTC';
                         return wallets.get_two_factor_code(
                             $scope, 'send_raw_tx', isConfidential ? null : {
                                 amount: amountWithFee,
@@ -606,16 +594,23 @@ angular.module('greenWalletSendControllers',
                             }
                             return tx_sender.call(
                                 'com.greenaddress.vault.send_raw_tx',
-                                tx.tx.toString('hex'),
+                                tx.tx.toBuffer().toString('hex'),
                                 twofac_data,
                                 priv_data
                             );
                         }.bind(this));
 
-                        function calculateFee (tx_) {
-                            var tx = AssetsTransaction.fromHex(tx_.toString('hex'));
-                            for (var i = 0; i < tx.tx.fees.length; ++i) {
-                              if (tx.tx.fees[i]) return tx.tx.fees[i];
+                        function calculateFee (tx) {
+                            if (cur_net.isAlphaMultiasset) {
+                                for (var i = 0; i < tx.fees.length; ++i) {
+                                   if (tx.fees[ i ]) return tx.fees[ i ];
+                                }
+                            } else {
+                                return tx.ins.reduce(function (a, b) {
+                                  return a + b.prevOut.value;
+                                }, 0) - tx.outs.reduce(function (a, b) {
+                                  return a + b.value;
+                                }, 0);
                             }
                         }
                     }.bind(this)).then(function() {

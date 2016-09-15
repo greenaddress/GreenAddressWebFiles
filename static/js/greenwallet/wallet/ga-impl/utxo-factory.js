@@ -7,7 +7,8 @@ module.exports = {
 
 extend(GAUtxoFactory.prototype, {
   listAllUtxo: listAllUtxo,
-  getRawTx: getRawTx
+  getRawTx: getRawTx,
+  fetchUtxoDataForTx: fetchUtxoDataForTx
 });
 
 extend(GAUtxo.prototype, {
@@ -49,6 +50,19 @@ function getRawTx (txhash) {
     'com.greenaddress.txs.get_raw_unspent_output',
     [txhash] // include 0-confs
   );
+}
+
+function fetchUtxoDataForTx (tx) {
+  var _this = this;
+  var d_all = Promise.resolve();
+  tx.ins.forEach(function (inp) {
+    d_all = d_all.then(function () {
+      return _this.getRawTx(inp.prevOut.raw.txhash).then(function (data) {
+        inp.prevOut.data = new Buffer(data, 'hex');
+      });
+    });
+  });
+  return d_all;
 }
 
 function GAUtxo (utxo, options) {

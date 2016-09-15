@@ -126,7 +126,13 @@ function _constructTx (outputsWithAmounts, options) {
       iterate.bind(this)
     ).then(
       // 3. sign the transaction
-      this.signingWallet.signTransaction.bind(this.signingWallet, tx, options)
+      this.signingWallet.signTransaction.bind(
+        this.signingWallet,
+        tx,
+        extend({
+          utxoFactory: this.utxoFactory
+        }, options)
+      )
     ).then(function () {
       return extend({
         tx: tx.tx
