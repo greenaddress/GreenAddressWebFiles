@@ -14,14 +14,14 @@ function GAAddressFactory (gaService, signingWallet, options) {
   this.gaService = gaService;
   this.signingWallet = signingWallet;
   this.scriptToPointer = {};
-  this.subaccountPointer = options.subaccountPointer || null;
+  this.subaccount = options.subaccount || {pointer: null, type: 'main'};
 }
 
 function getNextOutputScriptWithPointer () {
   return this.gaService.call(
     'com.greenaddress.vault.fund',
     // TODO: verification against our keys
-    [this.subaccountPointer, /* return_pointer = */true]
+    [this.subaccount.pointer, /* return_pointer = */true]
   ).then(function (script) {
     var ret = bitcoin.script.scriptHashOutput(
       bitcoin.crypto.hash160(new Buffer(script.script, 'hex'))
@@ -30,7 +30,7 @@ function getNextOutputScriptWithPointer () {
     return {
       outScript: ret,
       pointer: script.pointer,
-      subaccountPointer: this.subaccountPointer
+      subaccount: this.subaccount
     };
   }.bind(this));
 }
@@ -56,13 +56,13 @@ function getScanningKeyForScript (script) {
   }
   var rootHdWallet = this.signingWallet.keysManager.privHDWallet; // FIXME: hw wallets
   var hd;
-  if (this.subaccountPointer && this.subaccountHdWallet) {
+  if (this.subaccount.pointer && this.subaccountHdWallet) {
     hd = Promise.resolve(this.subaccountHdWallet);
-  } else if (this.subaccountPointer) {
+  } else if (this.subaccount.pointer) {
     hd = rootHdWallet.deriveHardened(
       3
     ).then(function (hd) {
-      return hd.deriveHardened(this.subaccountPointer);
+      return hd.deriveHardened(this.subaccount.pointer);
     }.bind(this)).then(function (hd) {
       // derive subaccount only once and cache it to avoid deriving the same
       // key multiple times

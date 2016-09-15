@@ -116,14 +116,14 @@ function _addChangeOutput (script, value) {
   if (changeIdx === this.getOutputsCount()) {
     var changeOut = this.addOutput(script.outScript, value, 0);
     changeOut.pointer = script.pointer;
-    changeOut.subaccountPointer = script.subaccountPointer;
+    changeOut.subaccount = script.subaccount;
   } else {
     var newOutputs = [];
     for (var i = 0; i < this.getOutputsCount(); ++i) {
       if (i === changeIdx) {
         newOutputs.push({
           script: script.outScript, value: value, fee: 0,
-          pointer: script.pointer, subaccountPointer: script.subaccountPointer
+          pointer: script.pointer, subaccount: script.subaccount
         });
       }
       newOutputs.push(this.getOutput(i));
@@ -132,7 +132,7 @@ function _addChangeOutput (script, value) {
     newOutputs.forEach(function (out) {
       var newOut = this.addOutput(out.script, out.value, out.fee);
       newOut.pointer = out.pointer;
-      newOut.subaccountPointer = out.subaccountPointer;
+      newOut.subaccount = out.subaccount;
     }.bind(this));
   }
 

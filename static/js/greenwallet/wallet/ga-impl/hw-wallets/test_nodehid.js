@@ -62,7 +62,7 @@ var mockSigningWallet = new HwSigningWallet({
 var mockAddressFactory = new AddressFactory(
   {
     call: function () {
-      mockAddressFactory.subaccountPointer = cur_subaccount.pointer;
+      mockAddressFactory.subaccount = cur_subaccount;
       return mockSigningWallet.scriptFactory.create2of2Script(
         cur_subaccount.pointer, 1
       ).then(function (script) {
@@ -75,7 +75,7 @@ var mockAddressFactory = new AddressFactory(
   }, mockSigningWallet, {}
 );
 
-/*
+
 test('wipe trezor', function (t) {
   TrezorHwWallet.checkForDevices().then(function (dev) {
     HwWallet.registerGUICallback('trezorSetupModal', function (opts) {
@@ -85,14 +85,15 @@ test('wipe trezor', function (t) {
     return dev.setupSeed(mnemonic).then(t.end);
   }).catch(t.fail);
 });
-*/
+
 test('construct tx', function (t) {
   var runTests = [
     // [subaccount, changeIdx]
     [0, 0],
     [0, 1],
     [1, 0],
-    [1, 1]
+    [1, 1],
+    [2, 0]
   ];
   var test_d = Promise.resolve();
   runTests.forEach(function (test) {
@@ -101,7 +102,7 @@ test('construct tx', function (t) {
     test_d = test_d.then(function () {
       return testChangeOutput(t, subaccount, changeIdx);
     });
-  })
+  });
   test_d.then(function () {
     t.end();
   }, function (e) { console.log(e.stack); t.fail(e); });
@@ -132,7 +133,14 @@ function testChangeOutput (t, subaccount, changeIdx) {
     '74924717db91210374915ad1f9e5bdd20e9818ded99d59bd33cea0479d0c8810c31ecf6d2' +
     'c76e6ad52aeffffffff02102700000000000017a9144098810ba97acf098d778c36538ec8' +
     '2d7516b4e2879a7ca4350000000017a914327b4505d212c3a78460245e851015b90d23c2c' +
-    '48700000000']
+    '48700000000'],
+    ['010000000158caedb4a165113876d860c5c43e2f2ef854e1c66db3768ee5e4e95f33a3de' +
+    '7f000000006c004c6952210360c7e0273bcecbb311c4cd8b60d212ce15a29f436368e4f1e' +
+    '0ec0552e8eb42f7210327e443d836fee5927d04ad6e4bfae8579e8b0085a52917147c5eb4' +
+    '447ff9fe562103bd1d41bd846d5a20e199d8861aa1ce36a08b6e3b4259fb3766a57f39255' +
+    '786c453aeffffffff02327ba4350000000017a91462a6857cf25470a69ee22907f740193b' +
+    'ac5272bd87102700000000000017a9144098810ba97acf098d778c36538ec82d7516b4e28' +
+    '700000000']
   ][subaccount][changeIdx];
   cur_subaccount = subaccounts[subaccount];
   var constructor = new TxConstructor({
@@ -166,8 +174,11 @@ function testChangeOutput (t, subaccount, changeIdx) {
 
 var subaccounts = [
   {pointer: null, type: 'main'},
-  {pointer: 1, type: '2of2'}
-]
+  {pointer: 1, type: '2of2'},
+  {pointer: 2, type: '2of3',
+   '2of3_backup_chaincode': '4b6c6f7dce92180b1a66e86da1679153d8628ea619f2ba2a69395c3997ca39c3',
+   '2of3_backup_pubkey': '02a20a7954b65e22a481483935584dae338422ff957f8cd11a905fb7ceec707762'}
+];
 var cur_subaccount = subaccounts[0];
 
 function mockListAllUtxo () {

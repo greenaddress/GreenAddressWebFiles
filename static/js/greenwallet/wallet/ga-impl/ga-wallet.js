@@ -19,7 +19,7 @@ function setupSubAccount (subaccount) {
   this.subaccounts.push(subaccount);
 
   var changeAddrFactory = new GAAddressFactory(
-    this.service, this.hdwallet, {subaccountPointer: subaccount.pointer}
+    this.service, this.hdwallet, {subaccount: subaccount}
   );
   var utxoFactory = new GAUtxoFactory(
     this.service,

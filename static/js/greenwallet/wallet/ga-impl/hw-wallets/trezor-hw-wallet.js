@@ -191,7 +191,7 @@ function signTransaction (tx, options) {
     return path;
   }
 
-  function getPubKeys (prevOut, is2of3) {
+  function getPubKeys (prevOut) {
     var gahd = options.keysManager.getGASubAccountPubKey(
       prevOut.subaccount.pointer
     );
@@ -223,7 +223,14 @@ function signTransaction (tx, options) {
           address_n: prevoutToPath(prevOut, true, false)
         }
       ];
-      if (is2of3) {
+      if (prevOut.subaccount.type === '2of3') {
+        var recovery_wallet = {
+          depth: 0,
+          child_num: 0,
+          fingerprint: 0,
+          chain_code: fromHex(prevOut.subaccount['2of3_backup_chaincode']),
+          public_key: fromHex(prevOut.subaccount['2of3_backup_pubkey'])
+        };
         ret.push({
           node: recovery_wallet,
           address_n: prevoutToPath(prevOut, true, false)
@@ -256,7 +263,7 @@ function signTransaction (tx, options) {
         d_ret = d_ret.then(function () {
           return getPubKeys({
             raw: {pointer: out.pointer},
-            subaccount: {pointer: out.subaccountPointer}
+            subaccount: out.subaccount
           });
         }).then(function (pubkeys) {
           ret.multisig.pubkeys = pubkeys;

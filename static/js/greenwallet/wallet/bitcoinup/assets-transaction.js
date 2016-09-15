@@ -549,14 +549,14 @@ function _addChangeOutput (script, value, assetNetworkId) {
   if (changeIdx === this.getOutputsCount()) {
     var changeOut = this.addOutput(script.outScript, value, 0, assetNetworkId);
     changeOut.pointer = script.pointer;
-    changeOut.subaccountPointer = script.subaccountPointer;
+    changeOut.subaccount = script.subaccount;
   } else {
     var newOutputs = [];
     for (var i = 0; i < this.getOutputsCount(); ++i) {
       if (i === changeIdx) {
         newOutputs.push({
           script: script.outScript, value: value, fee: 0, assetHash: assetNetworkId,
-          pointer: script.pointer, subaccountPointer: script.subaccountPointer
+          pointer: script.pointer, subaccount: script.subaccount
         });
       }
       newOutputs.push(this.getOutput(i));
@@ -566,7 +566,7 @@ function _addChangeOutput (script, value, assetNetworkId) {
       var newOut = this.addOutput(out.script, out.value, out.fee, out.assetHash);
 
       newOut.pointer = out.pointer;
-      newOut.subaccountPointer = out.subaccountPointer;
+      newOut.subaccount = out.subaccount;
 
       // keep old CT data in case of non-CT asset change being added:
       newOut.commitment = out.commitment;
