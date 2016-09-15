@@ -19,7 +19,7 @@
   ],
   "main": "index.js",
   "scripts": {
-    "build": "./node_modules/.bin/browserify -i node-hid  -s trezor index.js -o ../../../../external/trezor-hid.js"
+    "build": "./node_modules/.bin/browserify -i node-hid  -s trezor index.js -o ../../../../../external/trezor-hid.js"
   },
   "devDependencies": {
     "browserify": "~3.32.0"

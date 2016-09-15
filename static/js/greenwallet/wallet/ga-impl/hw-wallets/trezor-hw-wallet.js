@@ -353,7 +353,7 @@ function _checkForDevices (network, options) {
 
   function doCheck () {
     if (!window.trezor) {
-      window.trezor = require('../../trezor-hid');
+      window.trezor = require('../../hw-apis/trezor-hid');
     }
     var trezor_api = window.trezor.load(options.hidImpl);
     if (options.failOnMissing) {
