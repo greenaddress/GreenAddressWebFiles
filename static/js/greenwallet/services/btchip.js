@@ -18,6 +18,7 @@ factory.dependencies = ['$q', '$interval', '$uibModal', '$rootScope', 'mnemonics
 
 function factory ($q, $interval, $uibModal, $rootScope, mnemonics, notices, focus, cordovaReady, $injector) {
   BaseHWWallet.registerGUICallback('ledgerSetupModal', showSetupModal);
+  BaseHWWallet.registerGUICallback('ledgerPINPrompt', showPINPrompt);
 
   function showSetupModal (options) {
     // show a modal asking the user to either setup a HW device, or reset/reuse
@@ -57,6 +58,55 @@ function factory ($q, $interval, $uibModal, $rootScope, mnemonics, notices, focu
     return modal;
   }
 
+  function showPINPrompt (callback) {
+    pinModalCallbacks.push({cb: callback, devnum: devnum});
+    if (pinModalCallbacks.length > 1) return; // modal already displayed
+    var scope, modal;
+
+    scope = angular.extend($rootScope.$new(), {
+      pin: '',
+      pinNotCancelable: pinNotCancelable
+    });
+    pinNotCancelable = false;
+
+    modal = $uibModal.open({
+      templateUrl: BASE_URL + '/' + LANG + '/wallet/partials/wallet_modal_btchip_pin.html',
+      size: 'sm',
+      windowClass: 'pinmodal',
+      backdrop: 'static',
+      keyboard: false,
+      scope: scope
+    });
+
+    focus('btchipPinModal');
+
+    return modal.result.then(
+      function (res) {
+        var oldCallbacks = pinModalCallbacks.slice();
+        var d = $q.when();
+        for (var i = 0; i < oldCallbacks.length; i++) {
+          if (oldCallbacks[i].devnum === devnum) {
+            d = queueCallback(i);
+          }
+        }
+        pinModalCallbacks = [];
+        return d;
+
+        function queueCallback (i) {
+          return d.then(function () {
+            return oldCallbacks[i].cb(null, res);
+          });
+        }
+      },
+      function (err) {
+        var oldCallbacks = pinModalCallbacks.slice();
+        for (var i = 0; i < oldCallbacks.length; i++) {
+          oldCallbacks[i].cb(err);
+        }
+        pinModalCallbacks = [];
+      }
+    );
+  }
 
   /* *@TODO
       This should be broken into 2 services
@@ -290,56 +340,6 @@ function factory ($q, $interval, $uibModal, $rootScope, mnemonics, notices, focu
         };
       });
       return btchip;
-    },
-    promptPin: function (type, callback) {
-      pinModalCallbacks.push({cb: callback, devnum: devnum});
-      if (pinModalCallbacks.length > 1) return; // modal already displayed
-      var scope, modal;
-
-      scope = angular.extend($rootScope.$new(), {
-        pin: '',
-        type: type,
-        pinNotCancelable: pinNotCancelable
-      });
-      pinNotCancelable = false;
-
-      modal = $uibModal.open({
-        templateUrl: BASE_URL + '/' + LANG + '/wallet/partials/wallet_modal_btchip_pin.html',
-        size: 'sm',
-        windowClass: 'pinmodal',
-        backdrop: 'static',
-        keyboard: false,
-        scope: scope
-      });
-
-      focus('btchipPinModal');
-
-      return modal.result.then(
-        function (res) {
-          var oldCallbacks = pinModalCallbacks.slice();
-          var d = $q.when();
-          for (var i = 0; i < oldCallbacks.length; i++) {
-            if (oldCallbacks[i].devnum === devnum) {
-              d = queueCallback(i);
-            }
-          }
-          pinModalCallbacks = [];
-          return d;
-
-          function queueCallback (i) {
-            return d.then(function () {
-              return oldCallbacks[i].cb(null, res);
-            });
-          }
-        },
-        function (err) {
-          var oldCallbacks = pinModalCallbacks.slice();
-          for (var i = 0; i < oldCallbacks.length; i++) {
-            oldCallbacks[i].cb(err);
-          }
-          pinModalCallbacks = [];
-        }
-      );
     },
     getDevice: function (noModal, modalNotDisableable, existing_device) {
       var service = this;

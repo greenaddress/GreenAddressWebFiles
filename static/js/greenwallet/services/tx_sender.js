@@ -269,7 +269,7 @@ function factory ($q, $rootScope, cordovaReady, $http, notices, gaEvent, $locati
               )).toString('hex');
               // btchip requires 0xB11E to skip HID authentication
               // 0x4741 = 18241 = 256*G + A in ASCII
-              var path = [0x4741b11e];
+              var path = 0x4741b11e;
 
               if (hwDevice) {
                 return hwDevice.signMessage(path, msg).then(function (res) {

@@ -54,22 +54,27 @@ function handleError () {
   if (this.errorCb) this.errorCb();
 }
 
+function _pathToArray (path) {
+  var pathArray = [];
+  path.split('/').forEach(function (index) {
+    if (!index.length) return;
+    if (index.indexOf("'") === index.length - 1) {
+      pathArray.push((~~index.slice(0, -1)) + 0x80000000);
+    } else {
+      pathArray.push(~~index);
+    }
+  });
+  return pathArray;
+}
+
 function getPublicKey (path) {
   var _this = this;
   return this.getDevice().then(function () {
     var dev = TrezorHWWallet.currentDevice;
     path = path || '';
-    var pathArray = [];
-    path.split('/').forEach(function (index) {
-      if (!index.length) return;
-      if (index.indexOf("'") === index.length - 1) {
-        pathArray.push((~~index.slice(0, -1)) + 0x80000000);
-      } else {
-        pathArray.push(~~index);
-      }
-    });
+    var pathArray = _pathToArray(path);
     if (path.length === 0 && _this.rootPublicKey) {
-      return Promise.resolve(_this.rootPublicKey);
+      return Promise.resolve(new SchnorrSigningKey(_this.rootPublicKey));
     } else {
       return dev.getPublicKey(pathArray).then(function (pubkey) {
         var pk = pubkey.message.node.public_key;
@@ -92,12 +97,13 @@ function getPublicKey (path) {
 }
 
 function signMessage (path, message) {
+  var pathArray = _pathToArray(path);
   message = new Buffer(message, 'utf8').toString('hex');
   return this.getDevice().then(function () {
     var dev = TrezorHWWallet.currentDevice;
     return dev._typedCommonCall('SignMessage', 'MessageSignature', {
       'message': message,
-      address_n: path
+      address_n: pathArray
     });
   }).then(function (res) {
     var sig = res.message.signature;
@@ -330,7 +336,7 @@ function signTransaction (tx, options) {
 
 function getChallengeArguments () {
   return this.getPublicKey().then(function (hdWallet) {
-    return [ 'com.greenaddress.login.get_trezor_challenge', hdWallet.keyPair.getAddress(), true ];
+    return [ 'com.greenaddress.login.get_trezor_challenge', hdWallet.hdnode.keyPair.getAddress(), true ];
   });
 }
 
