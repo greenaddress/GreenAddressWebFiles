@@ -383,7 +383,7 @@ function checkForDevices (network, options) {
   try {
     nodeHid = require('node-hid');
   } catch (e) { }
-  if (!isChromeApp && !(nodeHid && nodeHid.getDevices)) {
+  if (!isChromeApp && !(nodeHid && nodeHid.devices)) {
     return Promise.reject('No Trezor support present');
   }
 
