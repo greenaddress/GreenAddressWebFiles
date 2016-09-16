@@ -1,3 +1,5 @@
+var window = require('global/window');
+var gettext = window.gettext || function (s) { return s; };
 
 module.exports = HWWallet;
 
@@ -74,7 +76,7 @@ function _checkForDevices (Cls, network, options) {
           }
           Cls.openDevice(network, options, devices[0]).then(function (dev_) {
             cbAll(dev_, new Cls(network), true);
-          }).catch(function(e) {
+          }).catch(function (e) {
             ebAll(e, {all: true});
           });
         }

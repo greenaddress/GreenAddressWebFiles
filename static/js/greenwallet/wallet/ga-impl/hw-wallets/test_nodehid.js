@@ -11,6 +11,7 @@ var GAUtxo = require('../../ga-impl').Utxo;
 var HwSigningWallet = require('../../ga-impl').HwSigningWallet;
 var HwWallet = require('./base-hw-wallet');
 var TrezorHwWallet = require('./trezor-hw-wallet');
+// var LedgerHwWallet = require('./ledger-hw-wallet');
 
 var mockUtxoFactory = {
   listAllUtxo: mockListAllUtxo
@@ -49,8 +50,10 @@ function MockUtxo (utxo) {
   this.raw.subaccount = this.subaccount.pointer;
 }
 
+HwWallet.registerGUICallback('ledgerPINPrompt', function (cb) { cb(null, '1111'); });
 var mockSigningWallet = new HwSigningWallet({
-  hd: privHDWallet.neutered(),
+  hd: new bitcoinup.SchnorrSigningKey(privHDWallet.hdnode.neutered()),
+  // hw: new LedgerHwWallet(bitcoin.networks.testnet),
   hw: new TrezorHwWallet(bitcoin.networks.testnet),
   gaService: new GAService('testnet', {
     gaUserPath: new Buffer(
@@ -63,9 +66,25 @@ var mockAddressFactory = new AddressFactory(
   {
     call: function () {
       mockAddressFactory.subaccount = cur_subaccount;
-      return mockSigningWallet.scriptFactory.create2of2Script(
-        cur_subaccount.pointer, 1
-      ).then(function (script) {
+      var d;
+      if (cur_subaccount.type === '2of3') {
+        d = mockSigningWallet.scriptFactory.create2of3Script(
+          cur_subaccount.pointer, 1,
+          new bitcoinup.SchnorrSigningKey(
+            new bitcoin.HDNode(
+              bitcoin.ECPair.fromPublicKeyBuffer(
+                new Buffer(cur_subaccount['2of3_backup_pubkey'], 'hex')
+              ),
+              new Buffer(cur_subaccount['2of3_backup_chaincode'], 'hex')
+            )
+          )
+        );
+      } else {
+        d = mockSigningWallet.scriptFactory.create2of2Script(
+          cur_subaccount.pointer, 1
+        );
+      }
+      return d.then(function (script) {
         return {
           pointer: 1,
           script: script
@@ -75,7 +94,7 @@ var mockAddressFactory = new AddressFactory(
   }, mockSigningWallet, {}
 );
 
-test('wipe trezor', function (t) {
+test('wipe wallet', function (t) {
   TrezorHwWallet.checkForDevices().then(function (dev) {
     HwWallet.registerGUICallback('trezorSetupModal', function (opts) {
       opts.finalize();
@@ -147,8 +166,8 @@ function testChangeOutput (t, subaccount, changeIdx) {
     '2b541a828233e66f014c6952210360c7e0273bcecbb311c4cd8b60d212ce15a29f436368e' +
     '4f1e0ec0552e8eb42f7210327e443d836fee5927d04ad6e4bfae8579e8b0085a52917147c' +
     '5eb4447ff9fe562103bd1d41bd846d5a20e199d8861aa1ce36a08b6e3b4259fb3766a57f3' +
-    '9255786c453aeffffffff02327ba4350000000017a91462a6857cf25470a69ee22907f740' +
-    '193bac5272bd87102700000000000017a9144098810ba97acf098d778c36538ec82d7516b' +
+    '9255786c453aeffffffff02327ba4350000000017a91488378978395fbbeb7b953ae0ca0a' +
+    'f353f1861a9187102700000000000017a9144098810ba97acf098d778c36538ec82d7516b' +
     '4e28700000000']
   ][subaccount][changeIdx];
   cur_subaccount = subaccounts[subaccount];

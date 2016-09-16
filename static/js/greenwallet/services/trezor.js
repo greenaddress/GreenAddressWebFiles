@@ -62,7 +62,7 @@ function factory ($q, $interval, $uibModal, notices, $rootScope, focus) {
       function (res) { callback(null, res); },
       function (err) { callback(err); }
     );
-  };
+  }
 
   function promptPassphrase (callback) {
     var scope, modal;
@@ -84,7 +84,7 @@ function factory ($q, $interval, $uibModal, notices, $rootScope, focus) {
       function (res) { callback(null, res); },
       function (err) { callback(err); }
     );
-  };
+  }
 
   var handleError = function (e) {
     var message;

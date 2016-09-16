@@ -40,7 +40,8 @@ function signChallenge (challenge) {
 
 function signTransaction (tx, options) {
   return this.hw.signTransaction(tx, extend({
-    keysManager: this.keysManager
+    keysManager: this.keysManager,
+    scriptFactory: this.scriptFactory
   }, options));
 }
 

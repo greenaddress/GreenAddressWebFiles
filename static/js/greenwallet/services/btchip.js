@@ -32,7 +32,6 @@ function factory ($q, $interval, $uibModal, $rootScope, mnemonics, notices, focu
       storing: false,
       replug_required: false,
       reset: function () {
-        //this.resetting = false;
         this.resets_remaining = 3;
         this.resetting = true;
         this.replug_required = true;

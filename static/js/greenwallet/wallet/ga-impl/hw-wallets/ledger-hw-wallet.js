@@ -3,15 +3,13 @@ var bitcoin = require('bitcoinjs-lib');
 var extend = require('xtend/mutable');
 var SchnorrSigningKey = require('../../bitcoinup/schnorr-signing-key');
 var window = require('global/window');
-
-var gettext = window.gettext;
-
+var gettext = window.gettext || function (s) { return s; };
 var bip39 = require('bip39');
 var HWWallet = require('./base-hw-wallet');
-
 var BTChip = require('../../hw-apis/ledger-js/api/BTChip');
 var ChromeapiPlugupCardTerminalFactory = require('../../hw-apis/ledger-js/api/ChromeapiPlugupCardTerminalFactory');
 var ByteString = require('../../hw-apis/ledger-js/api/ByteString');
+var Convert = require('../../hw-apis/ledger-js/api/Convert');
 var ASCII = require('../../hw-apis/ledger-js/api/GlobalConstants').ASCII;
 var HEX = require('../../hw-apis/ledger-js/api/GlobalConstants').HEX;
 var cardFactory = new ChromeapiPlugupCardTerminalFactory();
@@ -24,7 +22,7 @@ extend(LedgerHWWallet.prototype, {
   getChallengeArguments: getChallengeArguments,
   getPublicKey: getPublicKey,
   signMessage: signMessage,
-  // signTransaction: signTransaction,
+  signTransaction: signTransaction,
   setupSeed: setupSeed,
   _recovery: _recovery,
   _resetRecovery: _resetRecovery
@@ -33,10 +31,6 @@ LedgerHWWallet.pingDevice = pingDevice;
 LedgerHWWallet.checkForDevices = checkForDevices;
 LedgerHWWallet.listDevices = listDevices;
 LedgerHWWallet.openDevice = openDevice;
-// LedgerHWWallet.promptPin = promptPin;
-// LedgerHWWallet.promptPassphrase = promptPassphrase;
-// LedgerHWWallet.handleButton = handleButton;
-// LedgerHWWallet.handleError = handleError;
 LedgerHWWallet.initDevice = initDevice;
 HWWallet.initSubclass(LedgerHWWallet);
 
@@ -67,7 +61,10 @@ function listDevices (network, options) {
 
 function openDevice (network, options, device) {
   return cardFactory.getCardTerminal(device).getCard_async().then(function (dongle) {
-    return new BTChip(dongle);
+    var ret = new BTChip(dongle);
+    return pingDevice(ret).then(function () {  // populate features
+      return ret;
+    });
   });
 }
 
@@ -81,7 +78,7 @@ function _setupWrappers (device) {
   ];
   WRAP_FUNCS.forEach(function (func_name) {
     var origFunc = device[func_name];
-    device[func_name+'_orig'] = origFunc;
+    device[func_name + '_orig'] = origFunc;
     device[func_name] = function () {
       var origArguments = arguments;
       var d;
@@ -97,7 +94,7 @@ function _setupWrappers (device) {
         if (!error || !error.indexOf || error.indexOf('Write failed') !== -1) {
           return Promise.reject(gettext('Ledger communication failed'));
         } else {
-          if (error.indexOf('6982') >= 0) {
+          if (error.indexOf && error.indexOf('6982') >= 0) {
             device.pin_verified = false;
             // setMsg("Dongle is locked - enter the PIN")
             return new Promise(function (resolve, reject) {
@@ -113,22 +110,24 @@ function _setupWrappers (device) {
                   return ret;
                 });
               }).fail(function (error) {
-                device.card.disconnect_async();
-                if (error.indexOf('6982') >= 0 || error.indexOf('63c') >= 0) {
+//                device.card.disconnect_async();
+                if (error.indexOf && (error.indexOf('6982') >= 0 || error.indexOf('63c') >= 0)) {
                   return Promise.reject(gettext('Invalid PIN'));
-                } else if (error.indexOf('6985') >= 0) {
+                } else if (error.indexOf && error.indexOf('6985') >= 0) {
                   return Promise.reject(gettext('Dongle is not set up'));
-                } else if (error.indexOf('6faa') >= 0) {
+                } else if (error.indexOf && error.indexOf('6faa') >= 0) {
                   return Promise.reject(gettext('Dongle is locked - reconnect the dongle and retry'));
                 } else {
                   return Promise.reject(error);
                 }
               });
             });
-          } else if (error.indexOf('6985') >= 0) {
+          } else if (error.indexOf && error.indexOf('6985') >= 0) {
             return Promise.reject(gettext('Dongle is not set up'));
-          } else if (error.indexOf('6faa') >= 0) {
+          } else if (error.indexOf && error.indexOf('6faa') >= 0) {
             return Promise.reject(gettext('Dongle is locked - remove the dongle and retry'));
+          } else {
+            return Promise.reject(error);
           }
         }
       });
@@ -367,4 +366,83 @@ function _resetRecovery (mnemonic, modal) {
       }
     });
   }
+}
+
+function _prevOutToPath (prevOut, privDer) {
+  var path = '';
+  if (prevOut.subaccount.pointer) {
+    path = "3'/" + prevOut.subaccount.pointer + "'/";
+  }
+  if (privDer) {
+    path += "2'/" + prevOut.raw.pointer + "'";  // branch=EXTERNAL
+  } else {
+    path += '1/' + prevOut.raw.pointer;  // branch=REGULAR
+  }
+  return path;
+}
+
+function _cloneTransactionForSignature (tx, connectedScript, inIndex) {
+  var txTmp = tx.clone();
+
+  // Blank out other inputs' signatures
+  txTmp.ins.forEach(function (txin) {
+    txin.script = new Buffer([]);
+  });
+
+  txTmp.ins[inIndex].script = connectedScript;
+
+  return txTmp;
+}
+
+function signTransaction (tx, options) {
+  tx = tx.tx;
+  return this.getDevice().then(function () {
+    var device = LedgerHWWallet.currentDevice;
+    var deferred = Promise.resolve();
+    var signed_n = 0;
+    var progress_cb;
+    tx.ins.forEach(function (inp, i) {
+      var path = _prevOutToPath(inp.prevOut);
+      deferred = deferred.then(function () {
+        return options.scriptFactory.getUtxoPrevScript(inp.prevOut);
+      }).then(function (script) {
+        return device.gaStartUntrustedHashTransactionInput_async(
+          i === 0,
+          _cloneTransactionForSignature(tx, script, i),
+          i
+        ).then(function (res) {
+          var this_ms = 0;
+          var this_expected_ms = 6500;
+          if (device.features.quickerVersion) this_expected_ms *= 0.55;
+          var interval = setInterval(function () {
+            this_ms += 100;
+            var progress = signed_n / tx.ins.length;
+            progress += (1 / tx.ins.length) * (this_ms / this_expected_ms);
+            if (progress_cb) progress_cb(Math.min(100, Math.round(100 * progress)));
+          }, 100);
+          return device.gaUntrustedHashTransactionInputFinalizeFull_async(tx).then(function (finished) {
+            return device.signTransaction_async(
+              path,
+              undefined,
+              // Cordova requires int, while crx requires ByteString:
+              window.cordova ? tx.locktime : new ByteString(Convert.toHexInt(tx.locktime), HEX)
+            ).then(function (sig) {
+              clearInterval(interval);
+              signed_n += 1;
+              inp.script = bitcoin.script.compile([].concat(
+                bitcoin.opcodes.OP_0, // OP_0 required for multisig
+                new Buffer([0]), // to be replaced by backend with server's sig
+                new Buffer('30' + sig.bytes(1).toString(HEX), 'hex'), // our sig
+                script  // prevScript
+              ));
+            });
+          }).catch(function (err) {
+            clearInterval(interval);
+            return Promise.reject(err);
+          });
+        });
+      });
+    });
+    return deferred;
+  });
 }

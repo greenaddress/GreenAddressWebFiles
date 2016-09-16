@@ -16,12 +16,14 @@ limitations under the License.
 *************************************************************************
 */
 
+var bitcoin = require('bitcoinjs-lib');
 var Class = require('../thirdparty/class/inheritance.min');
 var ByteString = require('./ByteString');
 var Card = require('./Card');
 var Convert = require('./Convert');
 var HEX = require('./GlobalConstants').HEX;
 var Q = require('../thirdparty/q/q.min');
+var async = require('../thirdparty/async/async.min')
 
 var BTChip = module.exports = Class.create({
 
@@ -399,8 +401,8 @@ var BTChip = module.exports = Class.create({
 
 	gaStartUntrustedHashTransactionInput_async: function(newTransaction, transaction) {
         var currentObject = this;
-	    var verBuf = new Bitcoin.Buffer.Buffer(4);
-	    verBuf.writeUInt32LE(transaction.version);
+	    var verBuf = new Buffer(4);
+	    verBuf.writeUInt32LE(transaction.version, 0);
         var version_hex = new ByteString(verBuf.toString('hex'), HEX);
 		var data = version_hex.concat(currentObject.createVarint(transaction['ins'].length));
         var deferred = Q.defer();
@@ -412,16 +414,16 @@ var BTChip = module.exports = Class.create({
                         data = new ByteString(Convert.toHexByte(0x00), HEX);
 
                         var txhash = input.hash.toString('hex');
-                        var idxBuf = new Bitcoin.Buffer.Buffer(4);
-                        idxBuf.writeUInt32LE(input.index);
+                        var idxBuf = new Buffer(4);
+                        idxBuf.writeUInt32LE(input.index, 0);
                         var idxHex = idxBuf.toString('hex');
                   		data = data.concat(new ByteString(txhash, HEX)).concat(new ByteString(idxHex, HEX));
 
                         var scriptBytes = new ByteString(input.script.toString('hex'), HEX);
                         data = data.concat(currentObject.createVarint(scriptBytes.length));
                         currentObject.startUntrustedHashTransactionInputRaw_async(newTransaction, false, data).then(function(result) {
-                          var seqBuf = new Bitcoin.Buffer.Buffer(4);
-                          seqBuf.writeUInt32LE(input.sequence);
+                          var seqBuf = new Buffer(4);
+                          seqBuf.writeUInt32LE(input.sequence, 0);
                           var seqHex = seqBuf.toString('hex');
                           data = scriptBytes.concat(new ByteString(seqHex, HEX));
                           currentObject.startUntrustedHashTransactionInputRaw_async(newTransaction, false, data).then(function (result) {
@@ -451,8 +453,8 @@ var BTChip = module.exports = Class.create({
 		return currentObject.untrustedHashTransactionInputFinalizeFullRaw_async(false, data).then(function (result) {
 			var data = new ByteString('', HEX);
 			transaction.outs.forEach(function(txout) {
-				var valBuf = new Bitcoin.Buffer.Buffer(8);
-				Bitcoin.bitcoin.bufferutils.writeUInt64LE(valBuf, txout.value, 0);
+				var valBuf = new Buffer(8);
+				bitcoin.bufferutils.writeUInt64LE(valBuf, txout.value, 0);
 			   	data = data.concat(new ByteString(valBuf.toString('hex'), HEX));
 		    	data = data.concat(currentObject.createVarint(txout.script.length))
 		    	data = data.concat(new ByteString(txout.script.toString('hex'), HEX));

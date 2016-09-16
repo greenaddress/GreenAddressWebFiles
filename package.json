@@ -83,7 +83,25 @@
       "static/js/greenwallet/signuplogin/controllers.js",
       "static/js/greenwallet/transactions/controllers.js",
       "static/js/greenwallet/settings/controllers.js",
-      "static/js/greenwallet/services/wallets.js"
+      "static/js/greenwallet/services/wallets.js",
+      "static/js/greenwallet/wallet/hw-apis/ledger-js/thirdparty/q/q.min.js",
+      "static/js/greenwallet/wallet/hw-apis/ledger-js/thirdparty/class/inheritance.min.js",
+      "static/js/greenwallet/wallet/hw-apis/ledger-js/thirdparty/async/async.min.js",
+      "static/js/greenwallet/wallet/hw-apis/ledger-js/api/Convert.js",
+      "static/js/greenwallet/wallet/hw-apis/ledger-js/api/CardTerminalFactory.js",
+      "static/js/greenwallet/wallet/hw-apis/ledger-js/api/ChromeapiPlugupCard.js",
+      "static/js/greenwallet/wallet/hw-apis/ledger-js/api/require.js",
+      "static/js/greenwallet/wallet/hw-apis/ledger-js/api/BTChip.js",
+      "static/js/greenwallet/wallet/hw-apis/ledger-js/api/GlobalConstants.js",
+      "static/js/greenwallet/wallet/hw-apis/ledger-js/api/ChromeapiPlugupCardTerminal.js",
+      "static/js/greenwallet/wallet/hw-apis/ledger-js/api/chromeDevice.js",
+      "static/js/greenwallet/wallet/hw-apis/ledger-js/api/ChromeapiPlugupCardTerminalFactory.js",
+      "static/js/greenwallet/wallet/hw-apis/ledger-js/api/ByteString.js",
+      "static/js/greenwallet/wallet/hw-apis/ledger-js/api/Card.js",
+      "static/js/greenwallet/wallet/hw-apis/ledger-js/api/CardTerminal.js",
+      "static/js/greenwallet/wallet/hw-apis/trezor-hid/index.js",
+      "static/js/greenwallet/wallet/hw-apis/trezor-hid/trezor.js",
+      "static/js/greenwallet/wallet/hw-apis/trezor-hid/messages_proto.js"
     ]
   }
 }
