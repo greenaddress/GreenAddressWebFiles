@@ -245,7 +245,7 @@ var ChromeapiPlugupCard = module.exports = Class.extend(Card, {
 						var receivePart = function() {
 							if (!currentObject.ledger) {
 								return currentObject.device.recv_async(64).then(function(result) {
-									received = received.concat(new ByteString(result.data, HEX));
+									received = received.concat(new ByteString(result.data||'', HEX));
 									if (firstReceived) {
 										firstReceived = false;
 										if ((received.length == 2) || (received.byteAt(0) != 0x61)) {
@@ -272,7 +272,7 @@ var ChromeapiPlugupCard = module.exports = Class.extend(Card, {
 							}
 							else {
 								return currentObject.device.recv_async(64).then(function(result) {
-									received = received.concat(new ByteString(result.data, HEX));
+									received = received.concat(new ByteString(result.data||'', HEX));
 									var response = unwrapResponseAPDU(0x0101, received, 64);
 									if (typeof response == "undefined") {
 										return receivePart();
@@ -290,7 +290,7 @@ var ChromeapiPlugupCard = module.exports = Class.extend(Card, {
 					}
 				}
 				performExchange().then(function(result) {
-					var resultBin = new ByteString(result.data, HEX);
+					var resultBin = new ByteString(result.data||'', HEX);
 					if (!currentObject.ledger) {
 						if (resultBin.length == 2 || resultBin.byteAt(0) != 0x61) {
 							deferred.promise.SW1 = resultBin.byteAt(0);

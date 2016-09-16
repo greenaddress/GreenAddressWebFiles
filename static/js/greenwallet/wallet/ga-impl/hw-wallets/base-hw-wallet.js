@@ -6,6 +6,7 @@ HWWallet.registerError = registerError;
 HWWallet.guiCallbacks = {};
 HWWallet.registerGUICallback = registerGUICallback;
 HWWallet.checkForDevices = checkForDevices;
+HWWallet.initSubclass = initSubclass;
 HWWallet.currentWallet = new Promise(function (resolve, reject) {
   HWWallet.resolveCurrentWallet = resolve;
   HWWallet.rejectCurrentWallet = reject;
@@ -24,12 +25,12 @@ function register (wallet) {
 function registerError (error) {
   if (HWWallet.resolveCurrentWallet) {
     HWWallet.rejectCurrentWallet(error);
-    //
-    // // create a new promise after the old one got rejected:
-    // HWWallet.currentWallet = new Promise(function (resolve, reject) {
-    //   HWWallet.resolveCurrentWallet = resolve;
-    //   HWWallet.rejectCurrentWallet = reject;
-    // });
+
+    // create a new promise after the old one got rejected:
+    HWWallet.currentWallet = new Promise(function (resolve, reject) {
+      HWWallet.resolveCurrentWallet = resolve;
+      HWWallet.rejectCurrentWallet = reject;
+    });
   }
 }
 
@@ -39,41 +40,38 @@ function registerGUICallback (name, cb) {
 
 function _checkForDevices (Cls, network, options) {
   if (Cls.currentDevice) {
+    var timeout = setTimeout(function () { failCurrent('Timeout'); }, 1000);
     return Cls.pingDevice(Cls.currentDevice).then(function () {
-      finishChecking();
+      clearTimeout(timeout);
       cbAll(Cls.currentDevice, new Cls(network));
-    }, function () {
-      // disconnect old device to avoid repated callbacks
-      window.chrome.hid.disconnect(
-        Cls.currentDevice._connectionId,
-        doCheck
-      );
-    });
+    }, failCurrent);
   } else {
     doCheck();
   }
-
   var tick;
+
+  function failCurrent (err) {
+    clearTimeout(timeout);
+    Cls.currentDevice = null;
+    ebAll(err, {all: true});
+    // disconnect old device to avoid repated callbacks
+    window.chrome.hid.disconnect(
+      Cls.currentDevice._connectionId
+    );
+  }
 
   function doCheck () {
     tick = setInterval(singleCheck, 1000);
     function singleCheck () {
       Cls.listDevices(network, options).then(function (devices) {
         if (!devices.length) {
-          if (Cls.needsModal && !Cls.checkingModal) {
-            Cls.checkingModal = (
-              HWWallet.guiCallbacks.requireUsbDevice({reject: doCancel})
-            );
-          }
-        }
-        if (!devices.length) {
+          createModalIfNeeded();
           ebAll({missingDevice: true});
         } else {
           if (!Cls.isChecking) {
             // don't initialize device twice
             return;
           }
-          finishChecking();
           Cls.openDevice(network, options, devices[0]).then(function (dev_) {
             cbAll(dev_, new Cls(network), true);
           }).catch(function(e) {
@@ -82,6 +80,7 @@ function _checkForDevices (Cls, network, options) {
         }
       }).catch(function (err) {
         if (err === 'No device found.') {
+          createModalIfNeeded();
           ebAll({missingDevice: true});
         } else {
           ebAll(err, {all: true});
@@ -90,6 +89,13 @@ function _checkForDevices (Cls, network, options) {
     }
   }
 
+  function createModalIfNeeded () {
+    if (Cls.needsModal && !Cls.checkingModal) {
+      Cls.checkingModal = (
+        HWWallet.guiCallbacks.requireUsbDevice({reject: doCancel})
+      );
+    }
+  }
   function finishChecking () {
     Cls.isChecking = false;
     Cls.needsModal = false;
@@ -99,16 +105,10 @@ function _checkForDevices (Cls, network, options) {
     }
   }
   function cbAll (device, wallet, newDevice) {
+    finishChecking();
     if (newDevice) {
-      device.on('pin', Cls.promptPin);
-      device.on('passphrase', Cls.promptPassphrase);
-      device.on('error', Cls.handleError);
-      device.on('button', Cls.handleButton);
+      Cls.initDevice(device);
     }
-
-    _cbAll(device, wallet);
-  }
-  function _cbAll (device, wallet) {
     Cls.currentDevice = device;
     Cls.foundCbs.forEach(function (cb) {
       cb(wallet);
@@ -147,12 +147,11 @@ function _checkForDevices (Cls, network, options) {
       Cls.missingCbs.splice(toSplice[i], 1);
     }
     if (Cls.missingCbs.length + Cls.missingCbsOnce.length === 0) {
+      finishChecking();
       clearInterval(tick);
     }
   }
   function doCancel () {
-    Cls.isChecking = false;
-    Cls.checkingModal = null;
     ebAll(gettext('Cancelled'), {isModal: true});
   }
 }
@@ -185,4 +184,14 @@ function checkForDevices (Cls, network, options) {
       Cls.needsModal = true;
     }
   });
+}
+
+function initSubclass (Cls) {
+  Cls.foundCbs = [];
+  Cls.missingCbs = [];
+  Cls.missingCbsOnce = [];
+
+  Cls.prototype.getDevice = function () {
+    return Cls.checkForDevices(this.network, { modal: true });
+  };
 }

@@ -379,7 +379,9 @@ angular.module('greenWalletSettingsControllers',
         },
         usbmodal: function() {
             hw_wallets.waitForHwWallet(cur_net).then(function (dev) {
-                dev.setupSeed($scope.wallet.mnemonic);
+                return dev.setupSeed($scope.wallet.mnemonic);
+            }).catch(function (err) {
+                notices.makeNotice('error', err);
             });
         },
         expiring_soon_modal: function() {

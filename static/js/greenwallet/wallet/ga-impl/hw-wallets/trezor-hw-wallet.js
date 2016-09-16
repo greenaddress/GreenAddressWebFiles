@@ -17,20 +17,18 @@ extend(TrezorHWWallet.prototype, {
   signMessage: signMessage,
   signTransaction: signTransaction,
   setupSeed: setupSeed,
-  _recovery: _recovery,
-  getDevice: getDevice
+  _recovery: _recovery
 });
 TrezorHWWallet.pingDevice = pingDevice;
 TrezorHWWallet.checkForDevices = checkForDevices;
 TrezorHWWallet.listDevices = listDevices;
 TrezorHWWallet.openDevice = openDevice;
-TrezorHWWallet.foundCbs = [];
-TrezorHWWallet.missingCbs = [];
-TrezorHWWallet.missingCbsOnce = [];
 TrezorHWWallet.promptPin = promptPin;
 TrezorHWWallet.promptPassphrase = promptPassphrase;
 TrezorHWWallet.handleButton = handleButton;
 TrezorHWWallet.handleError = handleError;
+TrezorHWWallet.initDevice = initDevice;
+HWWallet.initSubclass(TrezorHWWallet);
 
 function TrezorHWWallet (network) {
   this.network = network;
@@ -379,7 +377,7 @@ function checkForDevices (network, options) {
   try {
     nodeHid = require('node-hid');
   } catch (e) { }
-  if (!isChromeApp && !nodeHid) {
+  if (!isChromeApp && !(nodeHid && nodeHid.getDevices)) {
     return Promise.reject('No Trezor support present');
   }
 
@@ -423,7 +421,7 @@ function setupSeed (mnemonic) {
       if (mnemonic) {
         store_d = _this._recovery(mnemonic);
       } else {
-        store_d = TrezorHWWallet.device.resetDevice({ strength: 256 });
+        store_d = TrezorHWWallet.currentDevice.resetDevice({ strength: 256 });
       }
       return store_d.then(function () {
         modal.close();
@@ -455,6 +453,9 @@ function _recovery (mnemonic) {
   });
 }
 
-function getDevice () {
-  return TrezorHWWallet.checkForDevices(this.network, { modal: true });
+function initDevice (device) {
+  device.on('pin', TrezorHWWallet.promptPin);
+  device.on('passphrase', TrezorHWWallet.promptPassphrase);
+  device.on('error', TrezorHWWallet.handleError);
+  device.on('button', TrezorHWWallet.handleButton);
 }

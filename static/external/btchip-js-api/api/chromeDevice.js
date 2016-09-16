@@ -232,6 +232,11 @@ hidDevice.prototype.open = function(callback) {
     debug("Open hidDevice");
     debug(this.device);
     var currentDevice = this;
+    var exception = (chrome.runtime.lastError ? "error " + chrome.runtime.lastError : undefined);
+    if (exception) {
+      callback(false);
+      return;
+    }
     chrome.hid.connect(this.device.deviceId, function(handle) {
         if (!handle) {
           debug("failed to connect");
@@ -373,6 +378,10 @@ chromeDevice.prototype.open_async = function() {
   boundDevices.push(device);
   var id = boundDevices.length - 1;
   device.open(function(result) {
+    if (!result) {
+      deferred.reject();
+      return;
+    }
     deferred.resolve({
       deviceId: id
     });

@@ -50,6 +50,7 @@ function factory ($q, trezor, btchip, $timeout, $rootScope, $uibModal) {
       var modal;
       var check = function () {
         var toRace = [];
+        var spliced = [];
 
         allHwWallets.forEach(function (hw, i) {
           toRace.push(
@@ -77,6 +78,9 @@ function factory ($q, trezor, btchip, $timeout, $rootScope, $uibModal) {
         }
         function eb (err) {
           var i = err[0];
+          spliced.forEach(function (j) {
+            if (j < i) i -= 1;
+          });
           err = err[1];
           if (!err || !err.missingDevice) {
             // retry only on missing device
@@ -84,6 +88,7 @@ function factory ($q, trezor, btchip, $timeout, $rootScope, $uibModal) {
             d = null; // do not callback multiple times
           } else if (d) { // missing device + never callbacked (d != null)
             toRace.splice(i, 1);
+            spliced.push(i);
             if (toRace.length === 0) {
               // show modal && retry on all confirmed missing
               if (!modal) {
@@ -92,7 +97,7 @@ function factory ($q, trezor, btchip, $timeout, $rootScope, $uibModal) {
               $timeout(check, 1000);
             } else {
               // wait for remaining wallets
-              $q.race(toRace).then(cb, eb);
+              race(toRace).then(cb, eb);
             }
           }
         }

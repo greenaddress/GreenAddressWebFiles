@@ -25,6 +25,8 @@ if (!global.chrome) {
       sendMessage: function () { }
     }
   };
+} else {
+  var chrome = global.chrome;
 }
 
 var Q = require('../thirdparty/q/q.min')
@@ -187,7 +189,7 @@ winUSBDevice.enumerate = function(vid, pid, callback) {
     }
   }
   winUSBDevice.unclaimedDevices = [];
-  chrome.usb.findDevices({
+  global.chrome.usb.findDevices({
     vendorId: vid,
     productId: pid
   },

@@ -1,6 +1,7 @@
 var angular = require('angular');
 var window = require('global/window');
 
+var BaseHWWallet = require('wallet').GA.BaseHWWallet;
 var cordova = window.cordova;
 var ByteString = window.ByteString;
 var Bitcoin = window.Bitcoin;
@@ -16,6 +17,47 @@ module.exports = factory;
 factory.dependencies = ['$q', '$interval', '$uibModal', '$rootScope', 'mnemonics', 'notices', 'focus', 'cordovaReady', '$injector'];
 
 function factory ($q, $interval, $uibModal, $rootScope, mnemonics, notices, focus, cordovaReady, $injector) {
+  BaseHWWallet.registerGUICallback('ledgerSetupModal', showSetupModal);
+
+  function showSetupModal (options) {
+    // show a modal asking the user to either setup a HW device, or reset/reuse
+    // it if it's already set up. return an object (modal) allowing closing the
+    // modal with close() method.
+    var scope = $rootScope.$new();
+    scope.btchip = {
+      already_setup: options.alreadySetup,
+      gait_setup: false,
+      use_gait_mnemonic: options.usingMnemonic,
+      storing: false,
+      replug_required: false,
+      reset: function () {
+        //this.resetting = false;
+        this.resets_remaining = 3;
+        this.resetting = true;
+        this.replug_required = true;
+        options.reset();
+      },
+      store: function () {
+        options.finalize();
+      }
+    };
+    var modal = $uibModal.open({
+      templateUrl: BASE_URL + '/' + LANG + '/wallet/partials/wallet_modal_btchip_setup.html',
+      scope: scope
+    });
+    modal.result.catch(function () { options.cancel(); });
+    modal.attempt = function (num, replug_required) {
+      $rootScope.safeApply(function () {
+        scope.btchip.resets_remaining = num;
+        scope.btchip.replug_required = replug_required;
+        scope.btchip.resetting = replug_required;
+        scope.btchip.already_setup = replug_required;
+      });
+    };
+    return modal;
+  }
+
+
   /* *@TODO
       This should be broken into 2 services
       1 service should monitor and event based on the state of hardware wallets
@@ -425,142 +467,6 @@ function factory ($q, $interval, $uibModal, $rootScope, mnemonics, notices, focu
           });
         }
       }
-    },
-    setupSeed: function (mnemonic) {
-      var deferred = $q.defer();
-      var service = this;
-
-      this.getDevice().then(function (btchip_) {
-        var scope = $rootScope.$new();
-        var wrong_pin;
-        var btchip = btchip_;
-        scope.btchip = {
-          already_setup: false,
-          gait_setup: false,
-          use_gait_mnemonic: !!mnemonic,
-          storing: false,
-          seed_progress: 0,
-          reset: function () {
-            this.resetting = true;
-            this.resets_remaining = 3;
-            wrong_pin = '00000000000000000000000000000000';
-            var attempt = function () {
-              btchip.app.verifyPin_async(new ByteString(wrong_pin, ASCII)).then(function () {
-                wrong_pin = '1234';
-                attempt();
-              }).fail(function (error) {
-                $rootScope.$apply(function () {
-                  console.log('reset pin error ' + error);
-                  if (error.indexOf('6982') >= 0 || error.indexOf('63c') >= 0) {
-                    // setMsg("Dongle is locked - enter the PIN")
-                    if (error.indexOf('63c') >= 0) {
-                      scope.btchip.resets_remaining = Number.parseInt(error[error.indexOf('63c') + 3], 10);
-                    } else {
-                      scope.btchip.resets_remaining -= 1;
-                    }
-                  } else if (error.indexOf('6985') >= 0) {
-                    // var setupText = "Dongle is not set up"
-                    scope.btchip.resets_remaining = 0;
-                  }
-                  scope.btchip.replug_required = true;
-                  if (scope.btchip.resets_remaining) {
-                    service.getDevice('retry').then(function (btchip_) {
-                      btchip = btchip_;
-                      scope.btchip.replug_required = false;
-                      attempt();
-                    });
-                  } else {
-                    service.getDevice('retry').then(function (btchip_) {
-                      btchip = btchip_;
-                      scope.btchip.replug_required = false;
-                      scope.btchip.resetting = false;
-                      scope.btchip.already_setup = false;
-                    });
-                  }
-                });
-              });
-            };
-            attempt();
-          },
-          store: function () {
-            if (!mnemonic) {
-              this.setting_up = true;
-            } else {
-              this.storing = true;
-            }
-            service.promptPin('', function (err, pin) {
-              if (!pin || err) {
-                return;
-              }
-              var seed_deferred;
-              if (mnemonic) {
-                seed_deferred = mnemonics.toSeed(mnemonic);
-              } else {
-                seed_deferred = $q.when();
-              }
-              seed_deferred.then(function (seed) {
-                btchip.app.setupNew_async(
-                  0x01, // wallet mode
-
-                  0x02 | // deterministic signatures
-                  0x08, // skip second factor if consuming only P2SH inputs in a transaction
-
-                  window.cur_net.pubKeyHash,
-                  window.cur_net.scriptHash,
-                  new ByteString(pin, ASCII),
-                  undefined, // wipePin
-
-                  // undefined,  // keymapEncoding
-                  // true,  // restoreSeed
-                  seed && new ByteString(seed, HEX) // bip32Seed
-                ).then(function () {
-                  btchip.app.setKeymapEncoding_async().then(function () {
-                    $rootScope.$apply(function () {
-                      scope.btchip.storing = scope.btchip.setting_up = false;
-                      scope.btchip.gait_setup = true;
-                      scope.btchip.replug_for_backup = !mnemonic;
-                      deferred.resolve({pin: pin});
-                    });
-                  }).fail(function (error) {
-                    notices.makeNotice('error', error);
-                    console.log('setKeymapEncoding_async error: ' + error);
-                  });
-                }).fail(function (error) {
-                  notices.makeNotice('error', error);
-                  console.log('setupNew_async error: ' + error);
-                });
-              }, null, function (progress) {
-                scope.btchip.seed_progress = progress;
-              });
-            });
-          }
-        };
-        var do_modal = function () {
-          $uibModal.open({
-            templateUrl: BASE_URL + '/' + LANG + '/wallet/partials/wallet_modal_btchip_setup.html',
-            scope: scope
-          }).result.finally(function () {
-            btchip.dongle.disconnect_async();
-          });
-        };
-        btchip.app.getWalletPublicKey_async('').then(function (result) {
-          scope.btchip.already_setup = true;
-          do_modal();
-        }).fail(function (error) {
-          if (error.indexOf('6982') >= 0) {
-            // setMsg("Dongle is locked - enter the PIN")
-            scope.btchip.already_setup = true;
-          } else if (error.indexOf('6985') >= 0) {
-            // var setupText = "Dongle is not set up"
-          } else if (error.indexOf('6faa') >= 0) {
-            // setMsg("Dongle is locked - remove the dongle and retry")
-            scope.btchip.already_setup = true;
-          }
-          do_modal();
-        });
-      });
-
-      return deferred.promise;
     }
   };
 }
