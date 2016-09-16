@@ -114,7 +114,7 @@ function _setupWrappers (device) {
                 });
               }).fail(function (error) {
                 device.card.disconnect_async();
-                if (error.indexOf('6982') >= 0) {
+                if (error.indexOf('6982') >= 0 || error.indexOf('63c') >= 0) {
                   return Promise.reject(gettext('Invalid PIN'));
                 } else if (error.indexOf('6985') >= 0) {
                   return Promise.reject(gettext('Dongle is not set up'));
@@ -294,6 +294,15 @@ function setupSeed (mnemonic) {
 function _recovery (mnemonic) {
   var _this = this;
   return _this.getDevice().then(function () {
+    return new Promise(function (resolve, reject) {
+      HWWallet.guiCallbacks.ledgerPINPrompt(function (err, pin) {
+        if (err || !pin) {
+          return reject(err);
+        }
+        resolve(pin);
+      });
+    });
+  }).then(function (pin) {
     var hex = bip39.mnemonicToSeedHex(mnemonic);
     var ledger = LedgerHWWallet.currentDevice;
     return ledger.setupNew_async(
@@ -304,7 +313,7 @@ function _recovery (mnemonic) {
 
       _this.network.pubKeyHash,
       _this.network.scriptHash,
-      new ByteString('0000', ASCII),
+      new ByteString(pin, ASCII),
       undefined, // wipePin
 
       // undefined,  // keymapEncoding
