@@ -18,6 +18,11 @@ function GAWallet () {
 function setupSubAccount (subaccount) {
   this.subaccounts.push(subaccount);
 
+  if (!this.signingWallet) {
+    // watch only
+    return;
+  }
+
   var changeAddrFactory = new GAAddressFactory(
     this.service, this.hdwallet, {subaccount: subaccount}
   );

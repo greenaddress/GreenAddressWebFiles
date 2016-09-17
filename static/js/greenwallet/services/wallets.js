@@ -121,18 +121,21 @@ function factory ($q, $rootScope, tx_sender, $location, notices, $uibModal,
         if (window.disableEuCookieComplianceBanner) {
           window.disableEuCookieComplianceBanner();
         }
-        if (gaWallet.signingWallet.keysManager.privHDWallet) {
+        if (gaWallet.watchOnlyHDWallet) {
+          $scope.wallet.hdwallet = gaWallet.watchOnlyHDWallet;
+        } else if (gaWallet.signingWallet.keysManager.privHDWallet) {
           // we use wallet.hdwallet to check if we're logged in in many places:
           $scope.wallet.hdwallet = gaWallet.signingWallet.keysManager.privHDWallet.hdnode;
-        }
-        if (gaWallet.signingWallet.hw) {
+        } else if (gaWallet.signingWallet.hw) {
           $scope.wallet.hdwallet = gaWallet.signingWallet.keysManager.pubHDWallet.hdnode;
           // we use hwDevice for such checks too:
           $scope.wallet.hwDevice = gaWallet.signingWallet.hw;
         }
         tx_sender.wallet = $scope.wallet;
         tx_sender.gaWallet = gaWallet;
-        $scope.wallet.mnemonic = gaWallet.signingWallet.mnemonic;
+        if (gaWallet.signingWallet) {
+          $scope.wallet.mnemonic = gaWallet.signingWallet.mnemonic;
+        }
         if (data.last_login) {
           $scope.wallet.last_login = data.last_login;
         }
@@ -373,7 +376,20 @@ function factory ($q, $rootScope, tx_sender, $location, notices, $uibModal,
       return that._login($scope, hdwallet, undefined, signup, false, undefined, path, undefined, double_login_callback);
     });
   };
-  walletsService.loginWatchOnly = function ($scope, token_type, token, logout) {
+  walletsService.loginWatchOnly = function ($scope, tokenType, token) {
+    var WalletClass = window.cur_net.isAlphaMultiasset ? AssetsWallet : GAWallet;
+    return walletsService.newLogin($scope, new WalletClass({
+      watchOnly: {
+        tokenType: tokenType,
+        token: token
+      },
+      gaService: tx_sender.gaService
+    })).then(function (data) {
+      $scope.wallet.watchOnly = true;
+      return data;
+    });
+
+
     var promise = tx_sender.loginWatchOnly(token_type, token, logout), that = this;
     promise = promise.then(function (json) {
       // add simple watchOnly flag so that we don't need to check values manually

@@ -1,3 +1,4 @@
+var bitcoin = require ('bitcoinjs-lib');
 var bitcoinup = require('../bitcoinup');
 var extend = require('xtend/mutable');
 
@@ -9,6 +10,7 @@ module.exports = BaseWallet;
 
 extend(BaseWallet.prototype, {
   _loginHDWallet: _loginHDWallet,
+  _loginWatchOnly: _loginWatchOnly,
   getSubaccountByPointer: getSubaccountByPointer
 });
 
@@ -35,6 +37,8 @@ function BaseWallet (options) {
     this.service.session = options.existingSession.session;
     this.service.gaUserPath = new Buffer(options.existingSession.gaUserPath, 'hex');
     this.loggedIn = Promise.resolve(options.existingSession.loginData);
+  } else if (options.watchOnly) {
+    this.loggedIn = this._loginWatchOnly(options.watchOnly);
   }
 
   this.loggedIn = this.loggedIn.then(function (data) {
@@ -46,8 +50,17 @@ function BaseWallet (options) {
       this.service, data.fee_estimates
     );
 
-    // scriptFactory is required by setupSubAccount below:
-    this.scriptFactory = this.signingWallet.scriptFactory;
+    if (this.signingWallet) {
+      // scriptFactory is required by setupSubAccount below (for non watch-only):
+      this.scriptFactory = this.signingWallet.scriptFactory;
+    } else {
+      this.watchOnlyHDWallet = new bitcoin.HDNode(
+        bitcoin.ECPair.fromPublicKeyBuffer(
+          new Buffer(data.public_key, 'hex')
+        ),
+        new Buffer(data.chain_code, 'hex')
+      );
+    }
 
     this.subaccounts = [];
     this.setupSubAccount({
@@ -73,4 +86,12 @@ function getSubaccountByPointer (pointer) {
   return this.subaccounts.filter(function (subaccount) {
     return subaccount.pointer === pointer;
   })[0];
+}
+
+function _loginWatchOnly (options) {
+  return this.service.call(
+    'com.greenaddress.login.watch_only', [options.tokenType, options.token, false]
+  ).then(function (data) {
+    return JSON.parse(data);
+  });
 }

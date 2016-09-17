@@ -204,18 +204,27 @@ angular.module('greenWalletReceiveControllers',
                 args.push(true);
             }
             tx_sender.call.apply(tx_sender, args).then(function(data) {
-                var gaSubaccount = tx_sender.gaWallet.getSubaccountByPointer(
-                    $scope.wallet.current_subaccount
-                );
-                var scriptFactory = tx_sender.gaWallet.scriptFactory;
-                var expectedScript = scriptFactory.createScriptForSubaccountAndPointer(
-                    gaSubaccount, data.pointer
-                );
+                var expectedScript;
+                if (!tx_sender.gaWallet.scriptFactory) {
+                    expectedScript = Promise.resolve(null);
+                } else {
+                  var gaSubaccount = tx_sender.gaWallet.getSubaccountByPointer(
+                      $scope.wallet.current_subaccount
+                  );
+                  var scriptFactory = tx_sender.gaWallet.scriptFactory;
+                  expectedScript = scriptFactory.createScriptForSubaccountAndPointer(
+                      gaSubaccount, data.pointer
+                  );
+                }
                 return Promise.all([expectedScript, Promise.resolve(data)]);
             }).then(function(expectedAndData) {
               var expectedScript = expectedAndData[0];
               var data = expectedAndData[1];
-              if (expectedScript.toString('hex') !== data.script) {
+              if (!expectedScript) {
+                  if (!tx_sender.gaWallet.watchOnlyHDWallet) {
+                      throw new Error("Missing script in non watch-only mode.")
+                  }
+              } else if (expectedScript.toString('hex') !== data.script) {
                  throw new Error("Invalid script returned");
               }
               return confidential ? data : data.script;
