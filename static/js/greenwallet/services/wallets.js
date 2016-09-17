@@ -232,6 +232,10 @@ function factory ($q, $rootScope, tx_sender, $location, notices, $uibModal,
         function (event) {
           $rootScope.$broadcast('fee_estimate', event[0]);
         });
+      gaWallet.service.session.subscribe('com.greenaddress.blocks',
+        function (event) {
+          $rootScope.$broadcast('block', event[0]);
+        });
       d.resolve(data);
     }).catch(function (e) { d.reject(e); });
     return d.promise.catch(function (err) {
