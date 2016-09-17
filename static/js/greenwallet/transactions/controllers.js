@@ -102,9 +102,9 @@ angular.module('greenWalletTransactionsControllers',
                     remainingFeeDelta = 0;
                     newOuts.push(bumpedTx.outs[i]);
                     bumpedTx.outs[i].pointer = change_pointer;
-                    bumpedTx.outs[i].subaccount = $scope.wallet.subaccounts[
+                    bumpedTx.outs[i].subaccount = getSubaccount(
                         transaction.outputs[i].subaccount
-                    ];
+                    );
                 }
             } else {
                 // keep the original non-change output
@@ -179,9 +179,9 @@ angular.module('greenWalletTransactionsControllers',
                         );
                         var out = builder.tx.outs[builder.tx.outs.length - 1];
                         out.pointer = data.pointer;
-                        out.subaccount = $scope.wallet.subaccounts[
-                          $scope.wallet.current_subaccount
-                        ];
+                        out.subaccount = getSubaccount(
+                            $scope.wallet.current_subaccount
+                        );
                     }
                     var utxos_ds = [];
                     for (var i = 0; i < required_utxos.length; ++i) {
@@ -273,7 +273,7 @@ angular.module('greenWalletTransactionsControllers',
                 builder.tx.ins.forEach(function(inp, i) {
                   var prevOut = res[i];
                   inp.prevOut = {
-                    subaccount: $scope.wallet.subaccounts[$scope.wallet.current_subaccount],
+                    subaccount: getSubaccount($scope.wallet.current_subaccount),
                     raw: {
                       pointer: prevOut.pointer,
                       txhash: Bitcoin.bitcoin.bufferutils.reverse(
@@ -446,5 +446,16 @@ angular.module('greenWalletTransactionsControllers',
         $scope.search_visible = !$scope.search_visible;
     }
 
+
+    function getSubaccount (pointer) {
+        pointer = pointer || 0;
+        var subaccount = null;
+        $scope.wallet.subaccounts.forEach(function (sub) {
+            if (pointer === sub.pointer) {
+                subaccount = sub;
+            }
+        });
+        return subaccount;
+    }
 
 }]);
