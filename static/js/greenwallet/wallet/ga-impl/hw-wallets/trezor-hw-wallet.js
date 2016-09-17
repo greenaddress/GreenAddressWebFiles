@@ -191,7 +191,7 @@ function signTransaction (tx, options) {
           new Buffer([0]), // to be replaced by backend with server's sig
           new Buffer([].concat(
             Array.prototype.slice.call(
-              new Buffer(res.signatures[0].toHex(), 'hex')
+              new Buffer(res.signatures[i].toHex(), 'hex')
             ), [1]
           )), // our signature with SIGHASH_ALL
           decompiled[1]  // prevScript

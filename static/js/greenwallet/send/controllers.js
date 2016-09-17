@@ -556,7 +556,8 @@ angular.module('greenWalletSendControllers',
                           [destination], {
                               signingProgressCallback:
                                   that._signing_progress_cb.bind(that),
-                              subtractFeeFromOut: satoshis === 'ALL'
+                              subtractFeeFromOut: satoshis === 'ALL',
+                              rbfOptIn: $scope.wallet.appearance.replace_by_fee
                           }
                     ).then(function(tx) {
                         var fee = calculateFee(tx.tx);

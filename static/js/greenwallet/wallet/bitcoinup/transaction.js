@@ -267,7 +267,8 @@ function build (options) {
       txHash: prevOut.prevHash,
       vout: prevOut.ptIdx,
       prevValue: prevOut.value,
-      prevOut: prevOut
+      prevOut: prevOut,
+      sequence: options.rbfOptIn ? 0xFFFFFFFD : 0xFFFFFFFF
     });
   }.bind(this));
 
