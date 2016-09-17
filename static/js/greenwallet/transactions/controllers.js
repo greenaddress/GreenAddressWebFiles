@@ -101,6 +101,10 @@ angular.module('greenWalletTransactionsControllers',
                     bumpedTx.outs[i].value -= remainingFeeDelta;
                     remainingFeeDelta = 0;
                     newOuts.push(bumpedTx.outs[i]);
+                    bumpedTx.outs[i].pointer = change_pointer;
+                    bumpedTx.outs[i].subaccount = $scope.wallet.subaccounts[
+                        transaction.outputs[i].subaccount
+                    ];
                 }
             } else {
                 // keep the original non-change output
@@ -115,6 +119,11 @@ angular.module('greenWalletTransactionsControllers',
         // reset hashType to allow adding inputs/outputs
         for (var i = 0; i < builder.inputs.length; ++i) {
             delete builder.inputs[i].hashType;
+        }
+        // keep out pointers for Trezor change detection
+        for (var i = 0; i < builder.tx.outs.length; ++i) {
+            builder.tx.outs[i].pointer = bumpedTx.outs[i].pointer;
+            builder.tx.outs[i].subaccount = bumpedTx.outs[i].subaccount;
         }
         function setPrototypeOf (obj, proto) {
           obj.__proto__ = proto
@@ -168,6 +177,11 @@ angular.module('greenWalletTransactionsControllers',
                             ),
                             -remainingFeeDelta
                         );
+                        var out = builder.tx.outs[builder.tx.outs.length - 1];
+                        out.pointer = data.pointer;
+                        out.subaccount = $scope.wallet.subaccounts[
+                          $scope.wallet.current_subaccount
+                        ];
                     }
                     var utxos_ds = [];
                     for (var i = 0; i < required_utxos.length; ++i) {
@@ -297,7 +311,7 @@ angular.module('greenWalletTransactionsControllers',
                             $scope.wallet.limits.total -= data.limit_decrease;
                         }
                     });
-                }
+                };
 
                 // try without 2FA to see if it's required
                 // (could be bump amount under the user-defined 2FA threshold)
