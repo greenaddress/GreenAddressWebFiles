@@ -1,4 +1,5 @@
 var extend = require('xtend/mutable');
+var sha512 = require('sha512');
 var HWKeysManager = require('./../keys-managers/hw-keys-manager');
 var ScriptFactory = require('./../script-factory');
 
@@ -46,7 +47,13 @@ function signTransaction (tx, options) {
 }
 
 function derivePath () {
-  throw new Error('not implemented');
+  return this.hw.getPublicKey("18241'").then(function (pubkey) {
+    var extended = (
+      pubkey.hdnode.chainCode.toString('hex') +
+      pubkey.hdnode.keyPair.getPublicKeyBuffer().toString('hex')
+    );
+    return sha512.hmac('GreenAddress.it HD wallet path').finalize(extended);
+  });
 }
 
 function getChainCode () {

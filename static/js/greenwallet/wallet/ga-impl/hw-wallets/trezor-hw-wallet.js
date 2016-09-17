@@ -341,7 +341,7 @@ function getChallengeArguments () {
 }
 
 function pingDevice (device) {
-  return device.getPublicKey([]);
+  return device.initialize();
 }
 
 function listDevices (network, options) {

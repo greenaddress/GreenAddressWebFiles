@@ -1,4 +1,4 @@
-var signup = {};  // bleh (see comment below)
+var signup = {};
 var secured_confirmed;
 
 module.exports = [
@@ -13,17 +13,15 @@ module.exports = [
     'gaEvent',
     '$q',
     'storage',
-    'trezor',
-    'btchip',
     'bip38',
     '$interval',
     '$sce',
-    'hw_detector',
+    'hw_wallets',
     'user_agent',
     SignupController
 ];
 
-function SignupController($scope, $location, mnemonics, tx_sender, notices, wallets, $window, $uibModal, gaEvent, $q, storage, trezor, btchip, bip38, $interval, $sce, hw_detector, user_agent) {
+function SignupController($scope, $location, mnemonics, tx_sender, notices, wallets, $window, $uibModal, gaEvent, $q, storage, bip38, $interval, $sce, hw_wallets, user_agent) {
     // some Android devices have window.WebSocket defined and yet still don't support WebSockets
     var isUnsupportedAndroid = navigator.userAgent.match(/Android 4.0/i) ||
                                navigator.userAgent.match(/Android 4.1/i) ||
@@ -44,7 +42,7 @@ function SignupController($scope, $location, mnemonics, tx_sender, notices, wall
     var first_page = false;
     if (!$scope.wallet.signup) {  // clear for case of other signup done previously in the same browser/crx session
         first_page = true;
-        for (k in signup) {
+        for (var k in signup) {
             signup[k] = undefined;
         }
     }
@@ -68,7 +66,6 @@ function SignupController($scope, $location, mnemonics, tx_sender, notices, wall
         signup.is_trezor = false;
     }
     signup.noLocalStorage = storage.noLocalStorage;
-    // $scope.$digest();  // not sure why is this necessary, but i'm already too annoyed with this JS to find out...
     $scope.wallet.hidden = true;
     $scope.wallet.signup = true;
 
@@ -121,14 +118,12 @@ function SignupController($scope, $location, mnemonics, tx_sender, notices, wall
     }
 
     var signup_with_trezor = function(hd_deferred) {
-        trezor.getDevice().then(function(trezor_dev) {
-            trezor_dev.getPublicKey([]).then(function(result) {
-                var hdwallet = Bitcoin.bitcoin.HDNode.fromBase58(result.message.xpub);
-                hd_deferred.resolve({
-                    master_public: hdwallet.keyPair.getPublicKeyBuffer().toString('hex'),
-                    master_chaincode: hdwallet.chainCode.toString('hex'),
-                    trezor_dev: trezor_dev
-                })
+        hwDevice.getPublicKey().then(function(result) {
+            var hdwallet = result.hdnode;
+            hd_deferred.resolve({
+                master_public: hdwallet.keyPair.getPublicKeyBuffer().toString('hex'),
+                master_chaincode: hdwallet.chainCode.toString('hex'),
+                trezor_dev: trezor_dev
             })
         })
     }
@@ -161,31 +156,31 @@ function SignupController($scope, $location, mnemonics, tx_sender, notices, wall
                                 } else {
                                     // hw wallet
                                     var hd_deferred = $q.defer(), hd_promise = hd_deferred.promise;
-                                    if ($scope.signup.has_btchip) {
-                                        signup_with_btchip(hd_deferred);
-                                    } else {
+                                    if ($scope.signup.has_trezor) {
                                         signup_with_trezor(hd_deferred);
+                                    } else {
+                                        signup_with_btchip(hd_deferred);
                                     }
                                 }
                                 hd_promise.then(function(hd) {
                                     tx_sender.call('com.greenaddress.login.register',
                                             hd.master_public, hd.master_chaincode,
                                             user_agent($scope.wallet)).then(function(data) {
-                                        if (hd.btchip_pubkey) {
-                                            var login_d = wallets.login_btchip($scope, hd.btchip_dev, hd.btchip_pubkey, undefined, true);
-                                        } else if (hd.trezor_dev) {
-                                            var login_d = hd.trezor_dev.getPublicKey([18241 + 0x80000000]).then(function(pubkey) {
-                                                var cc = pubkey.message.node.chain_code, pk = pubkey.message.node.public_key;
-                                                cc = cc.toHex ? cc.toHex() : cc;
-                                                pk = pk.toHex ? pk.toHex() : pk;
-                                                var extended = cc.toUpperCase() + pk.toUpperCase();
-                                                extended = new Bitcoin.Buffer.Buffer(extended, 'hex');
-                                                var path = Bitcoin.hmac('sha512', 'GreenAddress.it HD wallet path').update(extended).digest();
-                                                path = path.toString('hex');
-                                                return wallets.login_trezor($scope, hd.trezor_dev, path, true, false);
-                                            });
+                                        if (hwDevice) {
+                                            var login_d = wallets.loginWithHWWallet(
+                                                $scope, hwDevice, {
+                                                    signup: true
+                                                }
+                                            );
                                         } else {
-                                            var login_d = wallets.login($scope, hdwallet, mnemonic, true, false, path_seed, undefined, true);
+                                            var login_d = wallets.loginWithHDWallet(
+                                                $scope, hdwallet, {
+                                                    mnemonic: mnemonic,
+                                                    seed: new Bitcoin.Buffer.Buffer(seed, 'hex'),
+                                                    pathSeed: new Bitcoin.Buffer.Buffer(path_seed, 'hex'),
+                                                    signup: true
+                                                }
+                                            )
                                         }
                                         login_d.then(function(data) {
                                             gaEvent('Signup', 'LoggedIn');
@@ -207,7 +202,7 @@ function SignupController($scope, $location, mnemonics, tx_sender, notices, wall
                     $scope.signup.unexpected_error = err;
                 }, function(progress) {
                     // any progress means the mnemonic is valid so we can display it
-                    if (!($scope.has_trezor || $scope.has_btchip)) {
+                    if (!($scope.signup.trezor_detected || $scope.has_btchip)) {
                         $scope.wallet.mnemonic = $scope.signup.mnemonic = mnemonic;
                         $scope.signup.seed_progress = Math.round(progress/2);
                     }
@@ -216,37 +211,8 @@ function SignupController($scope, $location, mnemonics, tx_sender, notices, wall
                 $scope.signup.unexpected_error = err.status || err;
             });
         };
-        if (signup.is_trezor) {
-            trezor.getDevice(true).then(function(dev) {
-                $scope.trezor_dev = trezor_dev = dev;
-                trezor_dev.getPublicKey([]).then(function(pubkey) {
-                    $scope.$apply(function() {
-                        var trezor_chaincode = pubkey.message.node.chain_code;
-                        var trezor_pubkey = pubkey.message.node.public_key;
-                        tx_sender.call('com.greenaddress.login.register',
-                            trezor_pubkey, trezor_chaincode,
-                            user_agent($scope.wallet)).then(try_login, try_login);
-                    });
-                });
-            });
 
-            var try_login = function() {
-                var path_seed = [];
-                trezor_dev.getPublicKey([18241 + 0x80000000]).then(function(pubkey) {
-                    var extended = pubkey.message.node.chain_code + pubkey.message.node.public_key;
-                    var path = Bitcoin.CryptoJS.HmacSHA512(extended, 'GreenAddress.it HD wallet path');
-                    path = Bitcoin.CryptoJS.enc.Hex.stringify(path);
-                    wallets.login_trezor($scope, trezor_dev, path, true, false).then(function(data) {
-                        gaEvent('Signup', 'LoggedIn');
-                        $scope.signup.logged_in = data;
-                        if (!data) $scope.signup.login_failed = true;
-                    });
-                });
-            };
-
-        } else {
-            generate_mnemonic();
-        }
+        generate_mnemonic();
     }
 
     $scope.signup.try_again = function() {
@@ -355,12 +321,22 @@ function SignupController($scope, $location, mnemonics, tx_sender, notices, wall
         })
     }
 
+    var hwDevice;
+
     $scope.signup.usb_hwseed_modal = function() {
         if (!is_chrome_app) { hw_detector.showModal(); return; }
         var that = this;
         that.hw_wallet_processing = true;
-        btchip.getDevice().then(function () {
-            return btchip.setupSeed().then(function(result) {
+        hw_wallets.waitForHwWallet().then(function (hwDevice_) {
+            if (hwDevice_.deviceTypeName === 'TREZOR') {
+                $scope.$apply(function () {
+                    that.hw_wallet_processing = false;
+                });
+                // special flow handled below
+                return;
+            }
+            hwDevice = hwDevice_;
+            return hwDevice.setupSeed().then(function(result) {
                 delete $scope.wallet.mnemonic;
                 $scope.signup.mnemonic = gettext('Mnemonic not available when using hardware wallet seed');
 
@@ -371,20 +347,28 @@ function SignupController($scope, $location, mnemonics, tx_sender, notices, wall
     }
 
     if (first_page) {
-        trezor.getDevice('retry').then(function (trezor_dev) {
-            if (secured_confirmed_resolved) return;
-            if (hw_detector.modal) {
-                hw_detector.success = true;
-                hw_detector.modal.close();
-            }
-            delete $scope.wallet.mnemonic;
-            trezor_dev.getPublicKey([]).then(function () {
-                $scope.signup.trezor_detected = true;
-                $scope.signup.has_trezor = true;
-            }).catch(function (e) {
-                if (e.code = "Failure_NotInitialized") {
+        hw_wallets.checkDevices().then(function (hwDevice_) {
+            if (secured_confirmed_resolved || hwDevice_.deviceTypeName !== 'TREZOR') return;
+            // if (hw_detector.modal) {
+            //     hw_detector.success = true;
+            //     hw_detector.modal.close();
+            // }
+            hwDevice = hwDevice_;
+            hwDevice.getPublicKey().then(function () {
+                $scope.$apply(function () {
+                    $scope.signup.has_trezor = true;;
+                    delete $scope.wallet.mnemonic;
                     $scope.signup.trezor_detected = true;
-                    $scope.signup.empty_trezor = true;
+                });
+            }).catch(function (e) {
+                if (e.code === "Failure_NotInitialized") {
+                    $scope.$apply(function () {
+                        $scope.signup.empty_trezor = true;;
+                        delete $scope.wallet.mnemonic;
+                        $scope.signup.trezor_detected = true;
+                    });
+                } else {
+                    notices.makeNotice('error', e);
                 }
             });
         });
