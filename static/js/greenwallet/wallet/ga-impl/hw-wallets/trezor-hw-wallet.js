@@ -274,6 +274,7 @@ function signTransaction (tx, options) {
     });
   }
 
+  var hasChange = false;
   function convertOuts () {
     var d_ret = Promise.resolve();
     var ret = tx.outs.map(function (out) {
@@ -288,7 +289,8 @@ function signTransaction (tx, options) {
           out.script
         ) ? TYPE_P2SH : TYPE_ADDR
       };
-      if (out.pointer !== undefined) {
+      if (out.pointer !== undefined && !hasChange) {
+        hasChange = true;  // Trezor allows only one change output
         ret.script_type = TYPE_MULTISIG;
         ret.multisig = {
           pubkeys: 'TODO',
