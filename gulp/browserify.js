@@ -1,8 +1,8 @@
 var gulp = require('gulp');
 var merge = require('merge-stream');
-var browserify = require('gulp-browserify');
-var browserResolve = require('browser-resolve');
+var browserify = require('browserify');
 var clean = require('gulp-clean');
+var source = require('vinyl-source-stream');
 
 gulp.task('clean-js', function () {
   return gulp.src(['build/static/js/'], {read: false})
@@ -11,18 +11,13 @@ gulp.task('clean-js', function () {
 
 gulp.task('browserify', ['clean-js'], function () {
   // Single entry point to browserify
-  var browserified = gulp.src('static/js/index.js')
-    .pipe(browserify({
-      ignore: ['node-hid', '../../hw-apis/trezor-hid'],
-      insertGlobals: true,
-      resolve: function (a, b, cb) {
-        if (a === 'secp256k1-alpha') {
-          cb(null, './secp256k1-shim.js');
-        } else {
-          browserResolve(a, b, cb);
-        }
-      }
-    }))
+  var browserified = browserify('static/js/index.js', {
+    insertGlobals: true
+  }).require('./secp256k1-shim.js', {expose: 'secp256k1-alpha'})
+    .ignore('node-hid')
+    .ignore(require.resolve('wallet/hw-apis/trezor-hid'))
+    .bundle()
+    .pipe(source('index.js'))
     .pipe(gulp.dest('build/static/js/'));
 
   var external = gulp.src('static/external/**/*')

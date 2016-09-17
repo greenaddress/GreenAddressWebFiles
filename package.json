@@ -21,9 +21,9 @@
   },
   "homepage": "https://github.com/greenaddress/GreenAddressWebFiles#readme",
   "devDependencies": {
-    "browser-resolve": "^1.11.2",
+    "browserify": "^13.1.0",
+    "bufferutil": "1.2.x",
     "gulp": "^3.9.1",
-    "gulp-browserify": "^0.5.1",
     "gulp-clean": "^0.3.2",
     "gulp-rename": "^1.2.2",
     "gulp-run": "^1.6.12",
@@ -32,10 +32,9 @@
     "semistandard": "^7.0.5",
     "tap-spec": "^4.1.1",
     "tape": "^4.5.1",
-    "zuul": "^3.10.1",
-
-    "bufferutil": "1.2.x",
-    "utf-8-validate": "1.2.x"
+    "utf-8-validate": "1.2.x",
+    "vinyl-source-stream": "^1.1.0",
+    "zuul": "^3.10.1"
   },
   "dependencies": {
     "angular": "^1.4.8",
