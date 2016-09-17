@@ -54,6 +54,12 @@ function factory ($q, $interval, $uibModal, $rootScope, mnemonics, notices, focu
         scope.btchip.already_setup = replug_required;
       });
     };
+    modal.replugForBackup = function () {
+      $rootScope.safeApply(function () {
+        scope.btchip.gait_setup = true;
+        scope.btchip.replug_for_backup = true;
+      });
+    };
     return modal;
   }
 

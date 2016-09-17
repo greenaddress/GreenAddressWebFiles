@@ -260,13 +260,13 @@ function setupSeed (mnemonic) {
 
       function finalize () {
         var store_d;
-        if (mnemonic) {
-          store_d = _this._recovery(mnemonic, modal);
-        } else {
-          store_d = LedgerHWWallet.currentDevice.resetDevice({ strength: 256 });
-        }
+        store_d = _this._recovery(mnemonic);
         return store_d.then(function () {
-          modal.close();
+          if (mnemonic) {
+            modal.close();
+          } else {
+            modal.replugForBackup();
+          }
           resolve();
         }).catch(function (err) {
           modal.close();
@@ -302,7 +302,7 @@ function _recovery (mnemonic) {
       });
     });
   }).then(function (pin) {
-    var hex = bip39.mnemonicToSeedHex(mnemonic);
+    var hex = mnemonic && bip39.mnemonicToSeedHex(mnemonic);
     var ledger = LedgerHWWallet.currentDevice;
     return ledger.setupNew_async(
       0x01, // wallet mode

@@ -69,55 +69,7 @@ function SignupController($scope, $location, mnemonics, tx_sender, notices, wall
     $scope.wallet.hidden = true;
     $scope.wallet.signup = true;
 
-    var trezor_dev;
-
-    var signup_with_btchip = function(hd_deferred) {
-        btchip.getDevice().then(function(btchip_dev) {
-            btchip_dev.app.verifyPin_async(new ByteString($scope.signup.btchip_pin, ASCII)).then(function() {
-                $scope.signup.seed_progress = 0;
-                var expected_signing_ms = 6000, elapsed_signing_ms = 0
-                $scope.signup.seed_progress = 0;
-                var countdown = $interval(function() {
-                    elapsed_signing_ms += 100;
-                    $scope.signup.seed_progress = Math.max(1, Math.round(100*elapsed_signing_ms/expected_signing_ms));
-                    if ($scope.signup.seed_progress >= 100) {
-                        // second login is faster because pubkey is already derived:
-                        expected_signing_ms = 4500;
-                        $interval.cancel(countdown);
-                    }
-                }, 100);
-                btchip_dev.app.getWalletPublicKey_async('').then(function(result) {
-                    var ecPub = new Bitcoin.bitcoin.ECPair.fromPublicKeyBuffer(
-                        new Bitcoin.Buffer.Buffer(result.publicKey.toString(HEX), 'hex')
-                    );
-                    ecPub.compressed = true;
-                    hd_deferred.resolve({
-                        master_public: ecPub.getPublicKeyBuffer().toString('hex'),  // compressed master pubkey
-                        master_chaincode: result.chainCode.toString(HEX),
-                        btchip_pubkey: result,
-                        btchip_dev: btchip_dev
-                    });
-                }).fail(function(error) {
-                    $scope.signup.login_failed = true;
-                    btchip_dev.dongle.disconnect_async();
-                    notices.makeNotice("error", error);
-                });
-            }).fail(function(error) {
-                btchip_dev.dongle.disconnect_async();
-                if (error.indexOf("6982") >= 0) {
-                    notices.makeNotice("error", gettext("Invalid PIN"));
-                } else if (error.indexOf("6985") >= 0) {
-                    notices.makeNotice("error", gettext("Dongle is not set up"));
-                } else if (error.indexOf("6faa") >= 0) {
-                    notices.makeNotice("error", gettext("Dongle is locked - reconnect the dongle and retry"));
-                } else {
-                    notices.makeNotice("error", error);
-                }
-            });
-        });
-    }
-
-    var signup_with_trezor = function(hd_deferred) {
+    var signup_with_hw = function(hd_deferred) {
         hwDevice.getPublicKey().then(function(result) {
             var hdwallet = result.hdnode;
             hd_deferred.resolve({
@@ -156,11 +108,7 @@ function SignupController($scope, $location, mnemonics, tx_sender, notices, wall
                                 } else {
                                     // hw wallet
                                     var hd_deferred = $q.defer(), hd_promise = hd_deferred.promise;
-                                    if ($scope.signup.has_trezor) {
-                                        signup_with_trezor(hd_deferred);
-                                    } else {
-                                        signup_with_btchip(hd_deferred);
-                                    }
+                                    signup_with_hw(hd_deferred);
                                 }
                                 hd_promise.then(function(hd) {
                                     tx_sender.call('com.greenaddress.login.register',
@@ -327,7 +275,7 @@ function SignupController($scope, $location, mnemonics, tx_sender, notices, wall
         if (!is_chrome_app) { hw_detector.showModal(); return; }
         var that = this;
         that.hw_wallet_processing = true;
-        hw_wallets.waitForHwWallet().then(function (hwDevice_) {
+        hw_wallets.waitForHwWallet(cur_net).then(function (hwDevice_) {
             if (hwDevice_.deviceTypeName === 'TREZOR') {
                 $scope.$apply(function () {
                     that.hw_wallet_processing = false;
@@ -347,7 +295,7 @@ function SignupController($scope, $location, mnemonics, tx_sender, notices, wall
     }
 
     if (first_page) {
-        hw_wallets.checkDevices().then(function (hwDevice_) {
+        hw_wallets.checkDevices(cur_net).then(function (hwDevice_) {
             if (secured_confirmed_resolved || hwDevice_.deviceTypeName !== 'TREZOR') return;
             // if (hw_detector.modal) {
             //     hw_detector.success = true;
