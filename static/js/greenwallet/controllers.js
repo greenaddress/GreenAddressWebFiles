@@ -427,8 +427,12 @@ angular.module('greenWalletControllers', [])
     }
 
     $scope.$watch(function() { return $location.path(); }, function(newValue, oldValue) {
+        if (newValue === oldValue || (oldValue === '' && newValue === '/')) {
+          // don't logout on initial navigation
+          return;
+        }
         $uibModalStack.dismissAll();
-        if (newValue == '/') tx_sender.logout();  // logout on navigation to login page
+        if (newValue === '/') tx_sender.logout();  // logout on navigation to login page
     });
 
 }]).controller('UrlQRController', ['$scope', 'url', function UrlQRController($scope, url) {

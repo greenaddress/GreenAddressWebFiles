@@ -89,6 +89,26 @@ function factory ($q, $rootScope, tx_sender, $location, notices, $uibModal,
       $location.url('/info');
     }
   };
+  var unblindedCache = {
+    _key: function (txhash, pt_idx) {
+      var rev = [].reverse.call(new Bitcoin.Buffer.Buffer(txhash));
+      return (
+        'unblinded_value_' + rev.toString('hex') +
+        ':' + pt_idx
+      );
+    },
+    getValue: function (txhash, pt_idx) {
+      return storage.get(this._key(txhash, pt_idx)).then(function (val) {
+        return +val; // convert to a number
+      });
+    },
+    setValue: function (txhash, pt_idx, value) {
+      return storage.set(
+        this._key(txhash, pt_idx),
+        value
+      );
+    }
+  };
   walletsService.loginWithHDWallet = function ($scope, hd, options) {
     options = options || {};
     var WalletClass = window.cur_net.isAlphaMultiasset ? AssetsWallet : GAWallet;
@@ -98,7 +118,8 @@ function factory ($q, $rootScope, tx_sender, $location, notices, $uibModal,
         hd: new SchnorrSigningKey(hd, options),
         schnorrTx: cur_net.isAlpha
       },
-      gaService: tx_sender.gaService
+      gaService: tx_sender.gaService,
+      unblindedCache: unblindedCache
     }), options);
   };
   walletsService.loginWithHWWallet = function ($scope, hwDevice, options) {
@@ -108,12 +129,12 @@ function factory ($q, $rootScope, tx_sender, $location, notices, $uibModal,
       return walletsService.newLogin($scope, new WalletClass({
         SigningWalletClass: HwSigningWallet,
         signingWalletOptions: { hw: hwDevice, hd: hdwallet },
-        gaService: tx_sender.gaService
+        gaService: tx_sender.gaService,
+        unblindedCache: unblindedCache
       }), options);
     });
   };
   walletsService.newLogin = function ($scope, gaWallet, options) {
-    // FIXME: C&P from _login mostly, _login needs to be removed
     options = options || {};
     var d = $q.defer();
     gaWallet.loggedIn.then(function (data) {
@@ -131,6 +152,7 @@ function factory ($q, $rootScope, tx_sender, $location, notices, $uibModal,
           // we use hwDevice for such checks too:
           $scope.wallet.hwDevice = gaWallet.signingWallet.hw;
         }
+        tx_sender.logged_in = true;
         tx_sender.wallet = $scope.wallet;
         tx_sender.gaWallet = gaWallet;
         if (gaWallet.signingWallet) {
@@ -201,179 +223,21 @@ function factory ($q, $rootScope, tx_sender, $location, notices, $uibModal,
         d.reject();
         return;
       }
+      gaWallet.service.session.subscribe('com.greenaddress.txs.wallet_' + data.receiving_id,
+        function (event) {
+          gaEvent('Wallet', 'TransactionNotification');
+          $rootScope.$broadcast('transaction', event[0]);
+        });
+      gaWallet.service.session.subscribe('com.greenaddress.fee_estimates',
+        function (event) {
+          $rootScope.$broadcast('fee_estimate', event[0]);
+        });
       d.resolve(data);
     }).catch(function (e) { d.reject(e); });
     return d.promise.catch(function (err) {
       console.log(err);
       notices.makeNotice('error', gettext('Login failed') + (err && err.args && err.args[1] && (': ' + err.args[1]) || ''));
       return $q.reject(err);
-    });
-  };
-  walletsService._login = function ($scope, hdwallet, mnemonic, signup, logout, path_seed, path, double_login_callback) {
-    var d = $q.defer();
-    var that = this;
-    tx_sender.login(logout, false, user_agent($scope.wallet), path_seed, path, mnemonic).then(function (data) {
-      if (data) {
-        if (window.disableEuCookieComplianceBanner) {
-          window.disableEuCookieComplianceBanner();
-        }
-        tx_sender.wallet = $scope.wallet;
-        $scope.wallet.hdwallet = hdwallet;
-        $scope.wallet.trezor_dev = tx_sender.trezor_dev;
-        $scope.wallet.btchip = tx_sender.btchip;
-        $scope.wallet.mnemonic = mnemonic;
-        if (data.last_login) {
-          $scope.wallet.last_login = data.last_login;
-        }
-        try {
-          $scope.wallet.appearance = JSON.parse(data.appearance);
-          if ($scope.wallet.appearance.constructor !== Object) $scope.wallet.appearance = {};
-        } catch (e) {
-          $scope.wallet.appearance = {};
-        }
-        if (cur_net.isAlphaMultiasset && !window.cordova && !is_chrome_app) {
-          if (data.theme && data.theme.css) {
-            var sheet = window.document.styleSheets[0];
-            sheet.insertRule(data.theme.css, sheet.cssRules.length);
-          }
-          if (data.theme && data.theme.js) {
-            try {
-              eval(data.theme.js);
-            } catch (e) {
-              console.log(e);
-            }
-          }
-        }
-        $scope.wallet.fee_estimates = data.fee_estimates;
-        $scope.wallet.rbf = data.rbf;
-        if (!('sound' in $scope.wallet.appearance)) {
-          $scope.wallet.appearance.sound = true;
-        }
-        if (!('pgp' in $scope.wallet.appearance)) {
-          $scope.wallet.appearance.pgp = '';
-        }
-        if (!('altimeout' in $scope.wallet.appearance)) {
-          $scope.wallet.appearance.altimeout = 20;
-        }
-        if (data.rbf && !('replace_by_fee' in $scope.wallet.appearance)) {
-          $scope.wallet.appearance.replace_by_fee = data.rbf;
-        }
-        sound.play(BASE_URL + '/static/sound/coinreceived.mp3', $scope);
-        autotimeout.start($scope.wallet.appearance.altimeout);
-        $scope.wallet.privacy = data.privacy;
-        $scope.wallet.limits = data.limits;
-        $scope.wallet.subaccounts = [
-          {pointer: 0, name: gettext('Main')}
-        ].concat(data.subaccounts);
-        if (cur_net.isAlphaMultiasset) {
-          $scope.wallet.assets = data.assets;
-        } else {
-          $scope.wallet.assets = {undefined: {name: 'BTC'}};
-        }
-        $scope.wallet.current_subaccount = $scope.wallet.appearance.current_subaccount || 0;
-        $scope.wallet.current_asset = $scope.wallet.appearance.current_asset || 1;
-        $scope.wallet.unit = $scope.wallet.appearance.unit || 'mBTC';
-        $scope.wallet.cache_password = data.cache_password;
-        $scope.wallet.fiat_exchange = data.exchange;
-        $scope.wallet.fiat_exchange_extended = $scope.exchanges[data.exchange];
-        $scope.wallet.receiving_id = data.receiving_id;
-        $scope.wallet.expired_deposits = data.expired_deposits;
-        $scope.wallet.nlocktime_blocks = data.nlocktime_blocks;
-        if (data.gait_path) {
-          $scope.wallet.gait_path = data.gait_path;
-        } else if (path) {
-          $scope.wallet.gait_path = path;
-        } else if (path_seed) {
-          $scope.wallet.gait_path_seed = path_seed;
-          $scope.wallet.gait_path = mnemonics.seedToPath(path_seed);
-        }
-        if (!data.gait_path) { // *NOTE*: don't change the path after signup, because it *will* cause locked funds
-          tx_sender.call('com.greenaddress.login.set_gait_path', $scope.wallet.gait_path).catch(function (err) {
-            if (err.uri !== 'http://api.wamp.ws/error#NoSuchRPCEndpoint') {
-              notices.makeNotice('error', 'Please contact support (reference "sgp_error ' + err.args[1] + '")');
-            } else {
-              $scope.wallet.old_server = true;
-            }
-          });
-        }
-        if (!signup) { // don't change URL on initial login in signup
-          walletsService.openInitialPage($scope.wallet, data.has_txs);
-        }
-        $rootScope.$broadcast('login');
-      } else if (!signup) { // signup has its own error handling
-        d.reject();
-        return;
-      }
-      d.resolve(data);
-    }).catch(function (e) { d.reject(e); });
-    return d.promise.catch(function (err) {
-      console.log(err);
-      if (err && err.uri === 'http://greenaddressit.com/error#doublelogin') {
-        return handle_double_login(function () {
-          if (double_login_callback) double_login_callback();
-          return that.login($scope, hdwallet, mnemonic, signup, true, path_seed);
-        });
-      } else {
-        notices.makeNotice('error', gettext('Login failed') + (err && err.args && err.args[1] && (': ' + err.args[1]) || ''));
-        return $q.reject(err);
-      }
-    });
-  };
-  walletsService.login = function ($scope, hdwallet, mnemonic, signup, logout, path_seed) {
-    tx_sender.hdwallet = hdwallet;
-    return this._login($scope, hdwallet, mnemonic, signup, logout, path_seed);
-  };
-  walletsService.login_trezor = function ($scope, trezor_dev, path, signup, logout) {
-    tx_sender.trezor_dev = trezor_dev;
-    var that = this;
-    return trezor_dev.getPublicKey([]).then(function (pubkey) {
-      var pk = pubkey.message.node.public_key;
-      pk = pk.toHex ? pk.toHex() : pk;
-      var keyPair = new Bitcoin.bitcoin.ECPair.fromPublicKeyBuffer(
-        new Bitcoin.Buffer.Buffer(pk, 'hex'),
-        cur_net
-      );
-      tx_sender.trezor_address = keyPair.getAddress();
-      var cc = pubkey.message.node.chain_code;
-      cc = cc.toHex ? cc.toHex() : cc;
-      var chainCode = new Bitcoin.Buffer.Buffer(cc, 'hex');
-      var hdwallet = new Bitcoin.bitcoin.HDNode(keyPair, chainCode);
-      tx_sender.hdwallet = hdwallet;
-      return that._login($scope, hdwallet, undefined, signup, logout, undefined, path);
-    });
-  };
-  walletsService.login_btchip = function ($scope, btchip, btchip_pubkey, double_login_callback, signup) {
-    tx_sender.btchip = btchip;
-    tx_sender.btchip_address = btchip_pubkey.bitcoinAddress.value;
-    var keyPair = new Bitcoin.bitcoin.ECPair.fromPublicKeyBuffer(
-      new Bitcoin.Buffer.Buffer(
-        btchip_pubkey.publicKey.toString(HEX),
-        'hex'
-      ),
-      cur_net
-    );
-    var chainCode = new Bitcoin.Buffer.Buffer(
-      btchip_pubkey.chainCode.toString(HEX), 'hex'
-    );
-    keyPair.compressed = true;
-    var hdwallet = new Bitcoin.bitcoin.HDNode(
-      keyPair,
-      chainCode
-    );
-    tx_sender.hdwallet = hdwallet;
-    if (signup) {
-      var path_d = btchip.app.getWalletPublicKey_async("18241'").then(function (result) {
-        var ecPub = new Bitcoin.bitcoin.ECPair.fromPublicKeyBuffer(new Bitcoin.Buffer.Buffer(result.publicKey.toString(HEX), 'hex'));
-        ecPub.compressed = true;
-        var extended = result.chainCode.toString(HEX) + ecPub.getPublicKeyBuffer().toString('hex');
-        extended = new Bitcoin.Buffer.Buffer(extended, 'hex');
-        var path = Bitcoin.hmac('sha512', 'GreenAddress.it HD wallet path').update(extended).digest();
-        return path.toString('hex');
-      });
-    } else path_d = $q.when();
-    var that = this;
-    return path_d.then(function (path) {
-      return that._login($scope, hdwallet, undefined, signup, false, undefined, path, undefined, double_login_callback);
     });
   };
   walletsService.loginWatchOnly = function ($scope, tokenType, token) {
@@ -388,71 +252,6 @@ function factory ($q, $rootScope, tx_sender, $location, notices, $uibModal,
       $scope.wallet.watchOnly = true;
       return data;
     });
-
-
-    var promise = tx_sender.loginWatchOnly(token_type, token, logout), that = this;
-    promise = promise.then(function (json) {
-      // add simple watchOnly flag so that we don't need to check values manually
-      $scope.wallet.watchOnly = true;
-
-      if (window.disableEuCookieComplianceBanner) {
-        disableEuCookieComplianceBanner();
-      }
-
-      var data = JSON.parse(json);
-      tx_sender.wallet = $scope.wallet;
-      var hdwallet = new Bitcoin.bitcoin.HDNode(
-        Bitcoin.bitcoin.ECPair.fromPublicKeyBuffer(
-          new Bitcoin.Buffer.Buffer(data.public_key, 'hex'),
-          cur_net
-        ),
-        new Bitcoin.Buffer.Buffer(data.chain_code, 'hex')
-      );
-      $scope.wallet.hdwallet = hdwallet;
-
-      try {
-        $scope.wallet.appearance = JSON.parse(data.appearance);
-        if ($scope.wallet.appearance.constructor !== Object) $scope.wallet.appearance = {};
-      } catch(e) {
-        $scope.wallet.appearance = {};
-      }
-      if (!('sound' in $scope.wallet.appearance)) {
-        $scope.wallet.appearance.sound = true;
-      }
-      if (!('pgp' in $scope.wallet.appearance)) {
-        $scope.wallet.appearance.pgp = '';
-      }
-      if (!('altimeout' in $scope.wallet.appearance)) {
-        $scope.wallet.appearance.altimeout = 20;
-      }
-
-      autotimeout.start($scope.wallet.appearance.altimeout);
-      $scope.wallet.unit = $scope.wallet.appearance.unit || 'mBTC';
-      $scope.wallet.subaccounts = [
-        {pointer: 0, name: gettext('Main')}
-      ].concat(data.subaccounts);
-      console.log($scope.wallet.subaccounts);
-      $scope.wallet.assets = data.assets;
-      $scope.wallet.current_subaccount = 0;
-      $scope.wallet.cache_password = data.cache_password;
-      $scope.wallet.fiat_exchange = data.exchange;
-      $scope.wallet.receiving_id = data.receiving_id;
-      if (data.has_txs) {
-        $location.url('/info/');
-      } else {
-        $location.url('/receive/');
-      }
-      $rootScope.$broadcast('login');
-    }, function (err) {
-      if (err.uri == 'http://greenaddressit.com/error#doublelogin') {
-        return handle_double_login(function () {
-          return that.loginWatchOnly($scope, token_type, token, true);
-        });
-      } else {
-        return $q.reject(err);
-      }
-    });
-    return promise;
   };
   walletsService.getTransactions = function ($scope, notifydata, query, sorting, date_range, subaccount) {
     return addressbook.load($scope).then(function () {
