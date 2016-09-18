@@ -203,10 +203,15 @@ var BTChip = module.exports = Class.create({
 	},
 
 	getFirmwareVersion_async : function() {
+    var _this = this;
 		return this.card.sendApdu_async(0xe0, 0xc4, 0x00, 0x00, 0x04, [0x9000]).then(function(result) {
 				var response = {};
 				response['compressedPublicKeys'] = (result.byteAt(0) == 0x01);
 				response['firmwareVersion'] = result.bytes(1);
+        var fw = response['firmwareVersion'].bytes(0, 4).toString(HEX)
+        if (fw >= '20010002') {
+          _this.newSignMessageAPI = true;
+        }
 				return response;
 		});
 	},
@@ -267,9 +272,12 @@ var BTChip = module.exports = Class.create({
 				data = data.concat(path[i]);
 			}
 		}
+		if (this.newSignMessageAPI) {
+      data = data.concat(new ByteString('00', HEX));
+    }
 		data = data.concat(new ByteString(Convert.toHexByte(message.length), HEX));
 		data = data.concat(message);
-		return this.card.sendApdu_async(0xe0, 0x4e, 0x00, 0x00, data);
+		return this.card.sendApdu_async(0xe0, 0x4e, 0x00, this.newSignMessageAPI ? 0x01 : 0x00, data, [0x9000]);
 	},
 
 	signMessageSign_async : function(pin) {
@@ -280,7 +288,7 @@ var BTChip = module.exports = Class.create({
 		else {
 			data = new ByteString("", HEX);
 		}
-		return this.card.sendApdu_async(0xe0, 0x4e, 0x80, 0x00, data);
+		return this.card.sendApdu_async(0xe0, 0x4e, 0x80, this.newSignMessageAPI ? 0x01 : 0x00, data, [0x9000]);
 	},
 
 	ecdsaSignImmediate_async : function(privateKeyEncryptionVersion, encryptedPrivateKey, hash) {
