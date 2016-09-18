@@ -1,3 +1,4 @@
+var extend = require('xtend/mutable');
 angular.module('greenWalletSignupLoginControllers', ['greenWalletMnemonicsServices'])
 .controller('SignupLoginController', ['$scope', '$uibModal', 'focus', 'wallets', 'notices', 'mnemonics', '$location', 'cordovaReady', 'tx_sender', 'crypto', 'gaEvent', 'storage', 'storage_keys', 'qrcode', '$timeout', '$q', 'trezor', 'bip38', 'btchip', '$interval', '$rootScope', 'hw_wallets',
         function SignupLoginController($scope, $uibModal, focus, wallets, notices, mnemonics, $location, cordovaReady, tx_sender, crypto, gaEvent, storage, storage_keys, qrcode, $timeout, $q, trezor, bip38, btchip, $interval, $rootScope, hw_wallets) {
@@ -208,15 +209,19 @@ angular.module('greenWalletSignupLoginControllers', ['greenWalletMnemonicsServic
                 state.seed_progress = 100;
                 state.seed = data.seed;
                 var needsPINSetup = !state.has_pin && !state.refused_pin;
+                var pathSeed = {};
+                if (data.path_seed) {
+                    // absent when logging in with btchip seed string
+                    pathSeed.pathSeed = new Bitcoin.Buffer.Buffer(data.path_seed, 'hex')
+                }
                 return wallets.loginWithHDWallet(
-                    $scope, hdwallet, {
+                    $scope, hdwallet, extend({
                         mnemonic: state.mnemonic,
                         seed: new Bitcoin.Buffer.Buffer(data.seed, 'hex'),
-                        pathSeed: new Bitcoin.Buffer.Buffer(data.path_seed, 'hex'),
                         // conditionally disable automatic redirect to the
                         // initial wallet page, to avoid closing the PIN modal:
                         needsPINSetup: needsPINSetup
-                    }
+                    }, pathSeed)
                 ).then(function(data) {
                     if (!data) {
                         gaEvent('Login', 'MnemonicLoginFailed');

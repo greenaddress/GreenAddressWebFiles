@@ -52,7 +52,8 @@
     "has-chrome-storage": "^0.1.0",
     "q": "^1.4.1",
     "raf": "^3.2.0",
-    "wallet": "file:./static/js/greenwallet/wallet"
+    "wallet": "file:./static/js/greenwallet/wallet",
+    "xtend": "^4.0.1"
   },
   "semistandard": {
     "ignore": [
