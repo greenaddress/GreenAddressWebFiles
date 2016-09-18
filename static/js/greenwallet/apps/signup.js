@@ -259,8 +259,8 @@ function SignupController($scope, $location, mnemonics, tx_sender, notices, wall
     $scope.signup.usbmodal = function() {
         var that = this;
         that.hw_wallet_processing = true;
-        btchip.getDevice().then(function () {
-            btchip.setupSeed($scope.wallet.mnemonic).then(function () {
+        hw_wallets.waitForHwWallet(cur_net).then(function (device) {
+            device.setupSeed($scope.wallet.mnemonic).then(function () {
                 $scope.signup.has_btchip = true;
             });
         }).finally(function () {

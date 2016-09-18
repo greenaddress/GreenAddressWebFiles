@@ -64,7 +64,7 @@
                 <button class="btn btn-default btn-block-xs" ng-hide="cordova_platform=='ios'" ng-click="signup.nfcmodal()" ng-class="{disabled:!signup.mnemonic}"><i class="glyphicon glyphicon-transfer"></i> {{ _("Write to NFC tag") }}</button>
                 {% endif %}
                 {% if crapp %}
-                <button ng-hide="signup.has_btchip || signup.trezor_detected" class="btn btn-default btn-block-xs" ng-click="signup.usbmodal()" ng-class="{disabled:!signup.mnemonic || signup.hw_wallet_processing}"><i class="glyphicon glyphicon-transfer"></i> {{ _("Write to a BTChip") }}</button>
+                <button ng-hide="signup.has_btchip || signup.trezor_detected" class="btn btn-default btn-block-xs" ng-click="signup.usbmodal()" ng-class="{disabled:!signup.mnemonic || signup.hw_wallet_processing}"><i class="glyphicon glyphicon-transfer"></i> {{ _("Write to a HW Wallet") }}</button>
                 {% endif %}
                 {% if not crapp and not crapp %}
                 <button tooltip="{{ _("Warning: some printers store printed documents internally, so it can be insecure to print your mnemonic.") }}" class="btn btn-default btn-block-xs" onclick="window.print(); return false;" ng-class="{disabled:!signup.mnemonic}"><i class="glyphicon glyphicon-print"></i> {{ _("Print passphrase") }}</button>
