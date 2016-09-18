@@ -28,6 +28,7 @@ TrezorHWWallet.promptPassphrase = promptPassphrase;
 TrezorHWWallet.handleButton = handleButton;
 TrezorHWWallet.handleError = handleError;
 TrezorHWWallet.initDevice = initDevice;
+TrezorHWWallet.disconnectCurrentDevice = disconnectCurrentDevice;
 HWWallet.initSubclass(TrezorHWWallet);
 
 function TrezorHWWallet (network) {
@@ -466,4 +467,9 @@ function initDevice (device) {
   device.on('passphrase', TrezorHWWallet.promptPassphrase);
   device.on('error', TrezorHWWallet.handleError);
   device.on('button', TrezorHWWallet.handleButton);
+}
+
+function disconnectCurrentDevice () {
+  window.chrome.hid.disconnect(TrezorHWWallet.currentDevice._connectionId);
+  TrezorHWWallet.currentDevice = null;
 }

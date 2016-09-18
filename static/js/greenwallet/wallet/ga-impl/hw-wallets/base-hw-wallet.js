@@ -54,12 +54,9 @@ function _checkForDevices (Cls, network, options) {
 
   function failCurrent (err) {
     clearTimeout(timeout);
-    Cls.currentDevice = null;
-    ebAll(err, {all: true});
     // disconnect old device to avoid repated callbacks
-    window.chrome.hid.disconnect(
-      Cls.currentDevice._connectionId
-    );
+    Cls.disconnectCurrentDevice();
+    ebAll(err, {all: true});
   }
 
   function doCheck () {

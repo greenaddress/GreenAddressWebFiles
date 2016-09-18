@@ -84,6 +84,14 @@ var BTChip = module.exports = Class.create({
 		return this.card.sendApdu_async(0xe0, 0x28, 0x00, 0x00, keymapEncoding, [0x9000]);
 	},
 
+  setKeyboardConfig_async: function(startDelayUnit, startDelay, timeBetweenUnit, timeBetween) {
+    var data = new ByteString(Convert.toHexInt(startDelayUnit), HEX);
+    data = data.concat(new ByteString(Convert.toHexInt(startDelay), HEX));
+    data = data.concat(new ByteString(Convert.toHexInt(timeBetweenUnit), HEX));
+    data = data.concat(new ByteString(Convert.toHexInt(timeBetween), HEX));
+    return this.card.sendApdu_async(0xe0, 0x28, 0x01, 0x00, data, [0x9000]);
+  },
+
 	setupNew_async: function(modeMask, featuresMask, version, versionP2sh, pin, wipePin, bip32Seed, wrappingKey) {
 		if (typeof modeMask == "undefined") {
 			modeMask = BTChip.MODE_WALLET;

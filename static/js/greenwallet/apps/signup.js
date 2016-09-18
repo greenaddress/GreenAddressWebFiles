@@ -74,8 +74,7 @@ function SignupController($scope, $location, mnemonics, tx_sender, notices, wall
             var hdwallet = result.hdnode;
             hd_deferred.resolve({
                 master_public: hdwallet.keyPair.getPublicKeyBuffer().toString('hex'),
-                master_chaincode: hdwallet.chainCode.toString('hex'),
-                trezor_dev: trezor_dev
+                master_chaincode: hdwallet.chainCode.toString('hex')
             })
         })
     }

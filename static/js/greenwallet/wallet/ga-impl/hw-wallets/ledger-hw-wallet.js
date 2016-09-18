@@ -32,6 +32,7 @@ LedgerHWWallet.checkForDevices = checkForDevices;
 LedgerHWWallet.listDevices = listDevices;
 LedgerHWWallet.openDevice = openDevice;
 LedgerHWWallet.initDevice = initDevice;
+LedgerHWWallet.disconnectCurrentDevice = disconnectCurrentDevice;
 HWWallet.initSubclass(LedgerHWWallet);
 
 function LedgerHWWallet (network) {
@@ -266,6 +267,7 @@ function setupSeed (mnemonic) {
             modal.close();
           } else {
             modal.replugForBackup();
+            LedgerHWWallet.disconnectCurrentDevice();
           }
           resolve();
         }).catch(function (err) {
@@ -292,6 +294,7 @@ function setupSeed (mnemonic) {
 
 function _recovery (mnemonic) {
   var _this = this;
+  var ledger;
   return _this.getDevice().then(function () {
     return new Promise(function (resolve, reject) {
       HWWallet.guiCallbacks.ledgerPINPrompt(function (err, pin) {
@@ -302,8 +305,8 @@ function _recovery (mnemonic) {
       });
     });
   }).then(function (pin) {
+    ledger = LedgerHWWallet.currentDevice;
     var hex = mnemonic && bip39.mnemonicToSeedHex(mnemonic);
-    var ledger = LedgerHWWallet.currentDevice;
     return ledger.setupNew_async(
       0x01, // wallet mode
 
@@ -318,14 +321,20 @@ function _recovery (mnemonic) {
       // undefined,  // keymapEncoding
       // true,  // restoreSeed
       hex && new ByteString(hex, HEX) // bip32Seed
-    ).then(function () {
-      return ledger.setKeymapEncoding_async().then(function () {
-      }).fail(function (error) {
-        console.log('setKeymapEncoding_async error: ' + error);
-        return Promise.reject(error);
-      });
-    }).fail(function (error) {
+    ).fail(function (error) {
       console.log('setupNew_async error: ' + error);
+      return Promise.reject(error);
+    });
+  }).then(function () {
+    return ledger.setKeymapEncoding_async().fail(function (error) {
+      console.log('setKeymapEncoding_async error: ' + error);
+      return Promise.reject(error);
+    });
+  }).then(function () {
+    // 100, 200, 100, 20 values chosen empirically
+    // - defaults seemed too fast, skipping some characters
+    return ledger.setKeyboardConfig_async(100, 200, 100, 20).fail(function (error) {
+      console.log('setKeyboardConfig_async error: ' + error);
       return Promise.reject(error);
     });
   });
@@ -445,4 +454,9 @@ function signTransaction (tx, options) {
     });
     return deferred;
   });
+}
+
+function disconnectCurrentDevice () {
+  LedgerHWWallet.currentDevice.card.disconnect_async();
+  LedgerHWWallet.currentDevice = null;
 }
