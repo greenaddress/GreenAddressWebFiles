@@ -16,6 +16,7 @@ function factory ($q, $interval, $uibModal, notices, $rootScope, focus) {
   BaseHWWallet.registerGUICallback('trezorSetupModal', showSetupModal);
   BaseHWWallet.registerGUICallback('trezorPINPrompt', promptPin);
   BaseHWWallet.registerGUICallback('trezorPassphrasePrompt', promptPassphrase);
+  BaseHWWallet.registerGUICallback('trezorButtonPrompt', promptButton);
 
   function showSetupModal (options) {
     // show a modal asking the user to either setup a HW device, or reset/reuse
@@ -86,19 +87,7 @@ function factory ($q, $interval, $uibModal, notices, $rootScope, focus) {
     );
   }
 
-  var handleError = function (e) {
-    var message;
-    if (e === 'Opening device failed') {
-      message = gettext("Device could not be opened. Make sure you don't have any TREZOR client running in another tab or browser window!");
-    } else {
-      message = e;
-    }
-    $rootScope.safeApply(function () {
-      notices.makeNotice('error', message);
-    });
-  };
-
-  var handleButton = function (dev) {
+  function promptButton (dev) {
     var modal = $uibModal.open({
       templateUrl: BASE_URL + '/' + LANG + '/wallet/partials/wallet_modal_trezor_confirm_button.html',
       size: 'sm',
@@ -115,6 +104,18 @@ function factory ($q, $interval, $uibModal, notices, $rootScope, focus) {
     });
     dev.once('error', function () {
       try { modal.close(); } catch (e) {}
+    });
+  };
+
+  var handleError = function (e) {
+    var message;
+    if (e === 'Opening device failed') {
+      message = gettext("Device could not be opened. Make sure you don't have any TREZOR client running in another tab or browser window!");
+    } else {
+      message = e;
+    }
+    $rootScope.safeApply(function () {
+      notices.makeNotice('error', message);
     });
   };
 

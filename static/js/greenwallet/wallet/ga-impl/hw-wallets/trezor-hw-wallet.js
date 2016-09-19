@@ -48,7 +48,9 @@ function promptPassphrase () {
 }
 
 function handleButton () {
-  if (this.buttonCb) this.buttonCb();
+  if (HWWallet.guiCallbacks.trezorButtonPrompt) {
+    HWWallet.guiCallbacks.trezorButtonPrompt(TrezorHWWallet.currentDevice);
+  }
 }
 
 function handleError () {
