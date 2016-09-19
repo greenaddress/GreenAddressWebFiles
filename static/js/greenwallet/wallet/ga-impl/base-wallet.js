@@ -26,7 +26,7 @@ function BaseWallet (options) {
       extend(options.signingWalletOptions, {gaService: this.service})
     );
     this.signingWallet = signingWallet;
-    this.loggedIn = this._loginHDWallet();
+    this.loggedIn = this._loginHDWallet(signingWallet);
   } else if (options.existingSession) {
     this.signingWallet = new GAHashSwSigningWallet({
       hd: new bitcoinup.SchnorrSigningKey(
@@ -76,9 +76,15 @@ function BaseWallet (options) {
   }.bind(this));
 }
 
-function _loginHDWallet () {
+function _loginHDWallet (signingWallet) {
   return new Promise(function (resolve, reject) {
-    this.service.login(this.signingWallet, resolve, reject);
+    this.service.login({signingWallet: signingWallet}, resolve, reject);
+  }.bind(this));
+}
+
+function _loginWatchOnly (options) {
+  return new Promise(function (resolve, reject) {
+    this.service.login({watchOnly: options}, resolve, reject);
   }.bind(this));
 }
 
@@ -86,12 +92,4 @@ function getSubaccountByPointer (pointer) {
   return this.subaccounts.filter(function (subaccount) {
     return subaccount.pointer === pointer;
   })[0];
-}
-
-function _loginWatchOnly (options) {
-  return this.service.call(
-    'com.greenaddress.login.watch_only', [options.tokenType, options.token, false]
-  ).then(function (data) {
-    return JSON.parse(data);
-  });
 }

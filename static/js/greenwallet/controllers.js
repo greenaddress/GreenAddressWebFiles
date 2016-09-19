@@ -309,12 +309,16 @@ angular.module('greenWalletControllers', [])
     };
     clearwallet();
     $scope.$watch('wallet.current_subaccount', function(newValue, oldValue) {
-        if (newValue !== oldValue && newValue !== undefined) {
+        if (newValue !== oldValue && newValue !== undefined && oldValue !== undefined) {
+            // newValue == undefined -> controller init,
+            // oldValue == undefined -> login (avoid calling set_appearance
+            //                                 in watch only mode)
             wallets.updateAppearance($scope, "current_subaccount", newValue);
         }
     });
     $scope.$watch('wallet.current_asset', function(newValue, oldValue) {
-        if (newValue !== oldValue && newValue !== undefined) {
+        if (newValue !== oldValue && newValue !== undefined && oldValue !== undefined) {
+            // undefined values occur as described in the previous $watch above
             wallets.updateAppearance($scope, "current_asset", newValue);
         }
     });
