@@ -36,8 +36,8 @@ function GAService (netName, options) {
 
 function login (signingWallet, cb, eb) {
   var _this = this;
+  this._signingWallet = signingWallet;
   if (this._connectInProgress) {
-    this._signingWallet = signingWallet;
     this._loginCb = cb;
     this._loginEb = eb;
   } else if (!this.session) {
@@ -102,7 +102,6 @@ function connect (signingWallet, cb, eb) {
     if (_this._signingWallet) {
       _this.login(_this._signingWallet, _this._loginCb, _this._loginEb);
     }
-    delete _this._signingWallet;
     delete _this._loginCb;
     delete _this._loginEb;
   };
