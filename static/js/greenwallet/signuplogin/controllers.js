@@ -340,11 +340,20 @@ angular.module('greenWalletSignupLoginControllers', ['greenWalletMnemonicsServic
         gaEvent('Login', 'HardwareLogin');
         if (cur_net.useNewWalletJs) {
             // new refactored implementation, unfinished
-            wallets.loginWithHWWallet($scope, hwDevice).catch(function(err) {
+            var opts = {progressCb: progressCb};
+            $scope.logging_in = true;
+            wallets.loginWithHWWallet($scope, hwDevice, opts).catch(function(err) {
                 notices.makeNotice('error', err);
+                $scope.logging_in = false;
             });
             return;
         }
+        function progressCb (progress) {
+            $rootScope.safeApply (function () {
+                $scope.hardware_progress = progress;
+            });
+        }
+
         if (trezor_dev) { login_with_trezor(); return; }
         btchip.getDevice().then(function(btchip_dev) {
             btchip.promptPin('', function(err, pin) {

@@ -1,17 +1,11 @@
 var window = require('global/window');
 var document = require('global/document');
 
-var Electrum = window.Electrum;
 var gettext = window.gettext;
 var wss_url = window.wss_url;
-var dev_d = window.dev_d;
 var Bitcoin = window.Bitcoin;
-var ByteString = window.ByteString;
-var HEX = window.HEX;
 
-var AssetsWallet = require('wallet').GA.AssetsWallet;
 var GAService = require('wallet').GA.GAService;
-var GAWallet = require('wallet').GA.GAWallet;
 
 module.exports = factory;
 

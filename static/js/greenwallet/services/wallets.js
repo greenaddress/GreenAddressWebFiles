@@ -1,5 +1,6 @@
-var window = require('global/window');
+var extend = require('xtend/mutable');
 var is_chrome_app = require('has-chrome-storage');
+var window = require('global/window');
 var AssetsWallet = require('wallet').GA.AssetsWallet;
 var GAWallet = require('wallet').GA.GAWallet;
 var HashSwSigningWallet = require('wallet').GA.HashSwSigningWallet;
@@ -128,7 +129,10 @@ function factory ($q, $rootScope, tx_sender, $location, notices, $uibModal,
     return hwDevice.getPublicKey().then(function(hdwallet) {
       return walletsService.newLogin($scope, new WalletClass({
         SigningWalletClass: HwSigningWallet,
-        signingWalletOptions: { hw: hwDevice, hd: hdwallet },
+        signingWalletOptions: extend(
+          { hw: hwDevice, hd: hdwallet },
+          { loginProgressCb: options.progressCb }
+        ),
         gaService: tx_sender.gaService,
         unblindedCache: unblindedCache
       }), options);

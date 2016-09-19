@@ -105,7 +105,7 @@ function factory ($q, $interval, $uibModal, notices, $rootScope, focus) {
     dev.once('error', function () {
       try { modal.close(); } catch (e) {}
     });
-  };
+  }
 
   var handleError = function (e) {
     var message;
@@ -177,9 +177,6 @@ function factory ($q, $interval, $uibModal, notices, $rootScope, focus) {
                   trezor_dev.on('pin', promptPin);
                   trezor_dev.on('passphrase', promptPassphrase);
                   trezor_dev.on('error', handleError);
-                  trezor_dev.on('button', function () {
-                    handleButton(dev);
-                  });
                   return trezor_dev;
                 }));
               }, function (err) {

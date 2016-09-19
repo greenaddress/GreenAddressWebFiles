@@ -25,7 +25,8 @@ extend(LedgerHWWallet.prototype, {
   signTransaction: signTransaction,
   setupSeed: setupSeed,
   _recovery: _recovery,
-  _resetRecovery: _resetRecovery
+  _resetRecovery: _resetRecovery,
+  _doSignMessageCountdown: _doSignMessageCountdown
 });
 LedgerHWWallet.pingDevice = pingDevice;
 LedgerHWWallet.checkForDevices = checkForDevices;
@@ -188,15 +189,44 @@ function getPublicKey (path) {
   });
 }
 
-function signMessage (path, message) {
+function _doSignMessageCountdown (cb) {
+  // second login is faster because pubkey is already derived:
+  var _this = this;
+  var expectedSigningMs = _this.hasLoggedIn ? 5000 : 3500;
+  if (LedgerHWWallet.currentDevice.features.quickerVersion) {
+    expectedSigningMs *= 0.74;
+  }
+
+  var elapsed = 0;
+  cb(1);
+  var countdown = setInterval(function () {
+    elapsed += 100;
+    var progress = Math.min(100, Math.round(100 * elapsed / expectedSigningMs));
+    cb(progress);
+    if (progress >= 100) {
+      _this.hasLoggedIn = true;
+      clearInterval(countdown);
+    }
+  }, 100);
+}
+
+function signMessage (path, message, options) {
+  options = options || {};
   var msg_plain = message;
   message = new Buffer(message, 'utf8').toString('hex');
   var dev, pk;
+  var _this = this;
+
   return this.getPublicKey().then(function (res) {
     pk = res;
     dev = LedgerHWWallet.currentDevice;
     return dev.signMessagePrepare_async(path, new ByteString(message, HEX));
-  }).then(function (result) {
+  }).then(function () {
+    if (options.progressCb) {
+      // start the countdown only after user has provided the PIN
+      // (there's no simple way to hook into the PIN callback currently)
+      _this._doSignMessageCountdown(options.progressCb);
+    }
     return dev.signMessageSign_async(new ByteString('00', HEX));
   }).then(function (result) {
     var signature = bitcoin.ECSignature.fromDER(

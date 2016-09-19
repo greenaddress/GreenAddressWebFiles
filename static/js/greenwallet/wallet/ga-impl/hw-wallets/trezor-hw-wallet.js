@@ -124,6 +124,7 @@ function signTransaction (tx, options) {
   var _this = this;
   var dev;
   var fromHex;
+  var hasChange = false;
 
   var inputs = [];
   tx = tx.tx;
@@ -277,7 +278,6 @@ function signTransaction (tx, options) {
     });
   }
 
-  var hasChange = false;
   function convertOuts () {
     var d_ret = Promise.resolve();
     var ret = tx.outs.map(function (out) {

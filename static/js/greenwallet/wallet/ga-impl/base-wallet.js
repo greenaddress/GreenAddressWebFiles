@@ -1,4 +1,4 @@
-var bitcoin = require ('bitcoinjs-lib');
+var bitcoin = require('bitcoinjs-lib');
 var bitcoinup = require('../bitcoinup');
 var extend = require('xtend/mutable');
 

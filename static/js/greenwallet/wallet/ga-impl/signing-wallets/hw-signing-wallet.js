@@ -21,6 +21,7 @@ function HwSigningWallet (options) {
   });
   this.hw = options.hw;
   this.scriptFactory = new ScriptFactory(this.keysManager);
+  this.loginProgressCb = options.loginProgressCb;
 }
 
 function getChallengeArguments () {
@@ -33,7 +34,10 @@ function signChallenge (challenge) {
   var path = '' + 0x4741b11e;
 
   challenge = 'greenaddress.it      login ' + challenge;
-  return this.hw.signMessage(path, challenge).then(function (signature) {
+  return this.hw.signMessage(
+    path, challenge,
+    {progressCb: this.loginProgressCb}
+  ).then(function (signature) {
     signature = [ signature.r.toString(), signature.s.toString(), signature.i.toString() ];
     return {signature: signature, path: 'GA'};
   });
