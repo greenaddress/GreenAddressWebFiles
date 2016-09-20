@@ -186,7 +186,8 @@
         </div>
       </div>
       <div class="form-group">
-      <div class="col-sm-offset-2 col-sm-10" ng-hide="send_tx.recipient.type == 'payreq' && !send_tx.instant">
+      <div class="col-sm-offset-2 col-sm-10" ng-hide="(send_tx.recipient.type == 'payreq' && !send_tx.instant) ||
+              send_tx.current_subaccount_type == '2of3'">
           <label tooltip="{{ _("Requires recipient to trust GreenAddress instant confirmations") }}">
             <input type="checkbox" ng-model="send_tx.instant" ng-disabled="send_tx.recipient.type == 'payreq'" />
             <span>{{ _("Instant Confirmation") }}</span>

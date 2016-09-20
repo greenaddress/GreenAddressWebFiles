@@ -72,9 +72,9 @@ function _collectOutputs (requiredValue, options) {
   return _makeUtxoFilter(
     this.buildOptions.feeNetworkId,
     requiredValue,
-    'not enough money',
+    options.message || 'Not enough money',
     extendCopy(options, {isFeeAsset: true})
-  )(this.utxo);
+  )(options.utxo || this.utxo);
 }
 
 function _initializeNeededValue (outputsWithAmounts, options, feeEstimate) {
@@ -93,6 +93,7 @@ function _increaseNeededValue (oldVal, newVal) {
 }
 
 function _constructTx (outputsWithAmounts, options) {
+  var _this = this;
   // 1. get fee estimate
   var feeEstimate = this.feeEstimatesFactory.getFeeEstimate(1)[0];
 
@@ -102,16 +103,32 @@ function _constructTx (outputsWithAmounts, options) {
   var oldNeededValue = (
     this._initializeNeededValue(outputsWithAmounts, options, feeEstimate)
   );
-  return this._collectOutputs(
-    oldNeededValue, extendCopy(
-      options, {
-        // 42 is very conservative
-        // (just prevout[32b]+previdx[4b]+seq[4b]+len[1b]+script[1b])
-        // -- for sure the accuracy could be improved for CT, where
-        // transactions become much larger due to rangeproofs
-        increaseNeededValueForEachOutputBy: 42 * feeEstimate / 1000
-      })
-  ).then(function (prevOutputs) {
+
+  var collectOptions = extendCopy(
+    options, {
+      // 42 is very conservative
+      // (just prevout[32b]+previdx[4b]+seq[4b]+len[1b]+script[1b])
+      // -- for sure the accuracy could be improved for CT, where
+      // transactions become much larger due to rangeproofs
+      increaseNeededValueForEachOutputBy: 42 * feeEstimate / 1000
+    });
+  var checkNonInstant = Promise.resolve();
+  if (options.instantUtxo) {
+    checkNonInstant = this._collectOutputs(oldNeededValue, collectOptions);
+  }
+
+  return checkNonInstant.then(function () {
+    var message, utxo;
+    if (options.instantUtxo) {
+      message = (
+        'You need to wait for previous transactions to get at least %s confirmations'
+      ).replace('%s', options.minConfs);
+      utxo = options.instantUtxo;
+    }
+    return _this._collectOutputs(
+      oldNeededValue, extend(collectOptions, {message: message, utxo: utxo})
+    );
+  }).then(function (prevOutputs) {
     return tx.build(extend({
       outputsWithAmounts: outputsWithAmounts,
       // start with inputs set based on needed value, which likely doesn't
@@ -175,11 +192,26 @@ function _constructTx (outputsWithAmounts, options) {
 }
 
 function constructTx (outputsWithAmounts, options) {
-  if (!this.utxoDeferred) {
-    this.refreshUtxo();
+  var utxoDeferred;
+  if (!options.minConfs) {
+    if (!this.utxoDeferred) {
+      this.refreshUtxo();
+    }
+    utxoDeferred = this.utxoDeferred;
+  } else {
+    utxoDeferred = this.utxoFactory.listAllUtxo({minConfs: options.minConfs});
   }
-  return this.utxoDeferred.then(function () {
-    return this._constructTx(outputsWithAmounts, options || {});
+  return utxoDeferred.then(function (utxo) {
+    var utxoOptions = {};
+    if (options.minConfs) {
+      // we'll just use default this.utxo below in the call stack
+      // if minConfs is not specified
+      utxoOptions = {instantUtxo: utxo};
+    }
+    return this._constructTx(
+      outputsWithAmounts,
+      extend(utxoOptions, options || {})
+    );
   }.bind(this));
 }
 

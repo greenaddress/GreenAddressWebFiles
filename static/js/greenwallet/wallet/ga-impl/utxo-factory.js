@@ -24,9 +24,10 @@ function GAUtxoFactory (gaService, options) {
   this.subaccount = options.subaccount;
 }
 
-function listAllUtxo () {
+function listAllUtxo (options) {
+  options = options || {};
   var args = [
-    0, /* include 0-confs */
+    options.minConfs || 0, /* include 0-confs */
     this.subaccount.pointer || 0  /* subaccount */
   ];
   if (this.options.asset) {

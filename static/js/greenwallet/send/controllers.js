@@ -557,7 +557,8 @@ angular.module('greenWalletSendControllers',
                               signingProgressCallback:
                                   that._signing_progress_cb.bind(that),
                               subtractFeeFromOut: satoshis === 'ALL',
-                              rbfOptIn: $scope.wallet.appearance.replace_by_fee
+                              rbfOptIn: $scope.wallet.appearance.replace_by_fee,
+                              minConfs: that.instant ? 6 : 0
                           }
                     ).then(function(tx) {
                         var fee = calculateFee(tx.tx);
@@ -590,8 +591,11 @@ angular.module('greenWalletSendControllers',
                                 twofac_data.send_raw_tx_recipient = to_addr;
                             }
                             priv_data = {};
-                            if (this.memo) {
+                            if (that.memo) {
                                 priv_data.memo = this.memo;
+                            }
+                            if (that.instant) {
+                                priv_data.instant = true;
                             }
                             return tx_sender.call(
                                 'com.greenaddress.vault.send_raw_tx',
@@ -757,6 +761,16 @@ angular.module('greenWalletSendControllers',
                 this.recipient.has_wallet;
         }
     };
+    $scope.$watch('wallet.current_subaccount', function(newValue, oldValue) {
+        var subaccount = {type: 'main'};
+        for (var k in $scope.wallet.subaccounts)
+            if ($scope.wallet.subaccounts[k].pointer === newValue)
+                subaccount = $scope.wallet.subaccounts[k];
+        $scope.send_tx.current_subaccount_type = subaccount.type;
+        if (subaccount.type === '2of3') {
+            $scope.send_tx.instant = false;
+        }
+    });
     $scope.$watch('send_tx.instant', function(newValue, oldValue) {
         if (newValue) $scope.send_tx.add_fee.per_kb = true;
     });
