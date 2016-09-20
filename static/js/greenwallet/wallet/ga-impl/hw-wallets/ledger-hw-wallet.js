@@ -438,8 +438,8 @@ function signTransaction (tx, options) {
   return this.getDevice().then(function () {
     var device = LedgerHWWallet.currentDevice;
     var deferred = Promise.resolve();
-    var signed_n = 0;
-    var progress_cb;
+    var signedN = 0;
+    var progressCb = options.signingProgressCallback;
     tx.ins.forEach(function (inp, i) {
       var path = _prevOutToPath(inp.prevOut);
       deferred = deferred.then(function () {
@@ -455,9 +455,9 @@ function signTransaction (tx, options) {
           if (device.features.quickerVersion) this_expected_ms *= 0.55;
           var interval = setInterval(function () {
             this_ms += 100;
-            var progress = signed_n / tx.ins.length;
+            var progress = signedN / tx.ins.length;
             progress += (1 / tx.ins.length) * (this_ms / this_expected_ms);
-            if (progress_cb) progress_cb(Math.min(100, Math.round(100 * progress)));
+            if (progressCb) progressCb(Math.min(100, Math.round(100 * progress)));
           }, 100);
           return device.gaUntrustedHashTransactionInputFinalizeFull_async(tx).then(function (finished) {
             return device.signTransaction_async(
@@ -467,7 +467,7 @@ function signTransaction (tx, options) {
               window.cordova ? tx.locktime : new ByteString(Convert.toHexInt(tx.locktime), HEX)
             ).then(function (sig) {
               clearInterval(interval);
-              signed_n += 1;
+              signedN += 1;
               inp.script = bitcoin.script.compile([].concat(
                 bitcoin.opcodes.OP_0, // OP_0 required for multisig
                 new Buffer([0]), // to be replaced by backend with server's sig
