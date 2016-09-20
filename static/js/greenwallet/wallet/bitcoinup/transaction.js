@@ -167,7 +167,15 @@ function _addFeeAndChange (options) {
   }
 
   // 4. make sure fee is right
-  var fee = Math.round(feeEstimate * this.estimateSignedLength() / 1000);
+  var fee;
+  if (options.constantFee) {
+    fee = feeEstimate;
+  } else {
+    fee = Math.round(feeEstimate * this.estimateSignedLength() / 1000);
+    if (options.feeMultiplier) {
+      fee = Math.round(fee * options.feeMultiplier);
+    }
+  }
   var ret = Promise.resolve({changeIdx: -1}); // -1 indicates no change
 
   return prevoutsValueDeferred.then(function (prevoutsValue) {
@@ -225,13 +233,22 @@ function _addFeeAndChange (options) {
       return iterateFee;
 
       function iterateFee () {
-        if (fee >= Math.round(
-            feeEstimate * this.estimateSignedLength() / 1000
-          )) {
+        var expectedFee;
+        if (options.constantFee) {
+          expectedFee = feeEstimate;
+        } else {
+          // check if after constructing the tx the fee needs to be increased
+          expectedFee = Math.round(feeEstimate * this.estimateSignedLength() / 1000);
+          if (options.feeMultiplier) {
+            expectedFee = Math.round(expectedFee * options.feeMultiplier);
+          }
+        }
+
+        if (fee >= expectedFee) {
           return Promise.resolve();
         }
 
-        fee = Math.round(feeEstimate * this.estimateSignedLength() / 1000);
+        fee = expectedFee;
 
         if (prevoutsValue === requiredValueForFee + fee) {
           // After adding the change output or CT data, which made the transaction larger,

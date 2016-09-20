@@ -552,13 +552,27 @@ angular.module('greenWalletSendControllers',
                             )
                         }
                     }
+                    var addFee;
+                    if (that.add_fee.amount !== '') {
+                      addFee = {
+                        isConstant: !that.add_fee.per_kb,
+                        amount: +that.amount_to_satoshis(that.add_fee.amount)
+                      };
+                    } else if (that.instant) {
+                      addFee = {
+                        // backend constant is 1.1 but we need to be careful
+                        // not to underestimate:
+                        multiplier: 1.17
+                      };
+                    }
                     return constructor.constructTx(
                           [destination], {
                               signingProgressCallback:
                                   that._signing_progress_cb.bind(that),
                               subtractFeeFromOut: satoshis === 'ALL',
                               rbfOptIn: $scope.wallet.appearance.replace_by_fee,
-                              minConfs: that.instant ? 6 : 0
+                              minConfs: that.instant ? 6 : 0,
+                              addFee: addFee
                           }
                     ).then(function(tx) {
                         var fee = calculateFee(tx.tx);

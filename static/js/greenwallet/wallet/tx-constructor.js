@@ -129,6 +129,17 @@ function _constructTx (outputsWithAmounts, options) {
       oldNeededValue, extend(collectOptions, {message: message, utxo: utxo})
     );
   }).then(function (prevOutputs) {
+    var constantFee = false;
+    var feeMultiplier;
+    if (options.addFee) {
+      if (options.addFee.multiplier) {
+        feeMultiplier = options.addFee.multiplier;
+      } else {
+        constantFee = options.addFee.isConstant;
+        feeEstimate = options.addFee.amount;
+      }
+    }
+
     return tx.build(extend({
       outputsWithAmounts: outputsWithAmounts,
       // start with inputs set based on needed value, which likely doesn't
@@ -136,6 +147,8 @@ function _constructTx (outputsWithAmounts, options) {
       // `iterate` call below:
       prevOutputs: prevOutputs,
       feeEstimate: feeEstimate,
+      constantFee: constantFee,
+      feeMultiplier: feeMultiplier,
       getChangeOutScript: this.changeAddrFactory.getNextOutputScriptWithPointer.bind(
         this.changeAddrFactory
       )
