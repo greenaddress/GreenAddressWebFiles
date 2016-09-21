@@ -66,7 +66,7 @@
                             </div>
                         </div>
                     {% else %}
-                        <p>{{ _("These apps are designed to protect you and your coins even in case the service is compromised and should be preferred over using the browser.") }}<br/><br/>
+                        <p ng-hide="wallet.send_to_receiving_id">{{ _("These apps are designed to protect you and your coins even in case the service is compromised and should be preferred over using the browser.") }}<br/><br/>
                           {{ _("Web access is intended to be used only for watch only mode.") }}
                           <br/>
                           <br/>
