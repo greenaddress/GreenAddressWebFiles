@@ -9,11 +9,10 @@ extend(GAFeeEstimatesFactory.prototype, {
 function GAFeeEstimatesFactory (gaService, initialEstimates) {
   this.gaService = gaService;
   this.estimates = initialEstimates;
-  gaService.session.subscribe('com.greenaddress.fee_estimates',
-    function (event) {
-      this.estimates = event[0];
-    }.bind(this)
-  );
+  var _this = this;
+  gaService.addNotificationCallback('feeEstimates', function (event) {
+    _this.estimates = event[0];
+  });
 }
 
 function getFeeEstimate (confs) {

@@ -141,6 +141,16 @@ function factory ($q, $rootScope, tx_sender, $location, notices, $uibModal,
   walletsService.newLogin = function ($scope, gaWallet, options) {
     options = options || {};
     var d = $q.defer();
+    gaWallet.service.addNotificationCallback('wallet', function (event) {
+      gaEvent('Wallet', 'TransactionNotification');
+      $rootScope.$broadcast('transaction', event[ 0 ]);
+    });
+    gaWallet.service.addNotificationCallback('feeEstimates', function (event) {
+      $rootScope.$broadcast('fee_estimate', event[ 0 ]);
+    });
+    gaWallet.service.addNotificationCallback('blocks', function (event) {
+      $rootScope.$broadcast('block', event[ 0 ]);
+    });
     gaWallet.loggedIn.then(function (data) {
       if (data) {
         if (window.disableEuCookieComplianceBanner) {
@@ -227,19 +237,6 @@ function factory ($q, $rootScope, tx_sender, $location, notices, $uibModal,
         d.reject();
         return;
       }
-      gaWallet.service.session.subscribe('com.greenaddress.txs.wallet_' + data.receiving_id,
-        function (event) {
-          gaEvent('Wallet', 'TransactionNotification');
-          $rootScope.$broadcast('transaction', event[0]);
-        });
-      gaWallet.service.session.subscribe('com.greenaddress.fee_estimates',
-        function (event) {
-          $rootScope.$broadcast('fee_estimate', event[0]);
-        });
-      gaWallet.service.session.subscribe('com.greenaddress.blocks',
-        function (event) {
-          $rootScope.$broadcast('block', event[0]);
-        });
       d.resolve(data);
     }).catch(function (e) { d.reject(e); });
     return d.promise.catch(function (err) {

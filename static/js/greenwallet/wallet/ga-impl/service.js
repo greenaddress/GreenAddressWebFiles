@@ -8,6 +8,7 @@ extend(GAService.prototype, {
   disconnect: disconnect,
   call: call,
   login: login,
+  addNotificationCallback: addNotificationCallback,
   _loginWithSigningWallet: _loginWithSigningWallet,
   _loginWithWatchOnly: _loginWithWatchOnly
 });
@@ -16,6 +17,7 @@ function GAService (netName, options) {
   options = options || {};
   this.gaUserPath = options.gaUserPath;
   this.netName = netName || 'testnet';
+  this.notificationCallbacks = {};
   if (this.netName === 'testnet') {
     this.gaHDNode = new bitcoin.HDNode(
       bitcoin.ECPair.fromPublicKeyBuffer(
@@ -36,7 +38,14 @@ function GAService (netName, options) {
   this.wsUrl = options.wsUrl || 'ws://localhost:8080/v2/ws';
 }
 
+function addNotificationCallback (name, cb) {
+  this.notificationCallbacks[name] = this.notificationCallbacks[name] || [];
+  this.notificationCallbacks[name].push(cb);
+}
+
 function login (options, cb, eb) {
+  cb = cb || function () {};
+  eb = eb || console.error;
   var _this = this;
   this._loginOptions = options;
   if (this._connectInProgress) {
@@ -50,15 +59,42 @@ function login (options, cb, eb) {
     this.connect(options, cb, eb);
   } else {
     try {
+      var d;
       if (options.signingWallet) {
-        _this._loginWithSigningWallet(options.signingWallet, cb, eb);
+        d = _this._loginWithSigningWallet(options.signingWallet, cb, eb);
       } else {
         var watchOnly = options.watchOnly;
         if (!watchOnly) {
           throw new Error('You must provide either signingWallet or watchOnly!');
         }
-        _this._loginWithWatchOnly(watchOnly, cb, eb);
+        d = _this._loginWithWatchOnly(watchOnly, cb, eb);
       }
+      d.then(function (data) {
+        _this.session.subscribe('com.greenaddress.txs.wallet_' + data.receiving_id,
+          function (event) {
+            if (_this.notificationCallbacks.wallet) {
+              _this.notificationCallbacks.wallet.forEach(function (cb) {
+                cb(event)
+              });
+            }
+          });
+        _this.session.subscribe('com.greenaddress.fee_estimates',
+          function (event) {
+            if (_this.notificationCallbacks.feeEstimates) {
+              _this.notificationCallbacks.feeEstimates.forEach(function (cb) {
+                cb(event);
+              });
+            }
+          });
+        _this.session.subscribe('com.greenaddress.blocks',
+          function (event) {
+            if (_this.notificationCallbacks.blocks) {
+              _this.notificationCallbacks.blocks.forEach(function (cb) {
+                cb(event);
+              });
+            }
+          });
+      });
     } catch (e) {
       eb(e);
     }
@@ -85,6 +121,7 @@ function _loginWithSigningWallet (signingWallet, cb, eb) {
       if (data.gait_path) {
         _this.gaUserPath = new Buffer(data.gait_path, 'hex');
         cb(data);
+        return data;
       } else {
         // first login -- we need to set up the path
         // *NOTE*: don't change the path after signup, because it *will*
@@ -98,6 +135,7 @@ function _loginWithSigningWallet (signingWallet, cb, eb) {
             data.gait_path = pathHex;
             _this.gaUserPath = path;
             cb(data);
+            return data;
           });
         });
       }
@@ -110,6 +148,7 @@ function _loginWithWatchOnly (options, cb, eb) {
     'com.greenaddress.login.watch_only', [options.tokenType, options.token, false]
   ).then(function (data) {
     cb(JSON.parse(data));
+    return JSON.parse(data);
   }).catch(eb);
 }
 
