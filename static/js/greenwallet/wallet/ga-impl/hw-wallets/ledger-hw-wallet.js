@@ -158,7 +158,7 @@ function checkForDevices (network, options) {
 
 function getChallengeArguments () {
   return this.getPublicKey().then(function (hdWallet) {
-    return [ 'com.greenaddress.login.get_trezor_challenge', hdWallet.hdnode.keyPair.getAddress(), false ];
+    return [ 'com.greenaddress.login.get_trezor_challenge', hdWallet.hdnode.keyPair.getAddress(), true ];
   });
 }
 
