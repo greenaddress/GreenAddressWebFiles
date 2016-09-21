@@ -285,7 +285,10 @@ function build (options) {
       vout: prevOut.ptIdx,
       prevValue: prevOut.value,
       prevOut: prevOut,
-      sequence: options.rbfOptIn ? 0xFFFFFFFD : 0xFFFFFFFF
+      sequence: (options.rbfOptIn
+        ? 0xFFFFFFFD
+        : (options.locktime ? 0xFFFFFFFE : 0xFFFFFFFF)
+      )
     });
   }.bind(this));
 

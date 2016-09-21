@@ -572,7 +572,8 @@ angular.module('greenWalletSendControllers',
                               subtractFeeFromOut: satoshis === 'ALL',
                               rbfOptIn: $scope.wallet.appearance.replace_by_fee,
                               minConfs: that.instant ? 6 : 0,
-                              addFee: addFee
+                              addFee: addFee,
+                              locktime: $scope.wallet.cur_block
                           }
                     ).then(function(tx) {
                         var fee = calculateFee(tx.tx);

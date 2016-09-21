@@ -99,6 +99,9 @@ function _constructTx (outputsWithAmounts, options) {
 
   // 2. create the transaction, looping until we have enough inputs provided
   var tx = new this.Transaction();
+  if (options.locktime) {
+    tx.tx.locktime = options.locktime;
+  }
   var builtTxData;
   var oldNeededValue = (
     this._initializeNeededValue(outputsWithAmounts, options, feeEstimate)
