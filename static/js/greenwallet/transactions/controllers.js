@@ -178,7 +178,7 @@ angular.module('greenWalletTransactionsControllers',
                             -remainingFeeDelta
                         );
                         var out = builder.tx.outs[builder.tx.outs.length - 1];
-                        out.pointer = data.pointer;
+                        out.pointer = change_pointer;
                         out.subaccount = getSubaccount(
                             $scope.wallet.current_subaccount
                         );
