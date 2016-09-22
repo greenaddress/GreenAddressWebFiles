@@ -391,16 +391,17 @@ Session.prototype._indexTxsForSign = function (inputs, outputs, txs) {
     return index;
 };
 
-Session.prototype.signTx = function (inputs, outputs, txs, coin) {
+Session.prototype.signTx = function (inputs, outputs, txs, coin, lock_time) {
     var self = this,
         index = this._indexTxsForSign(inputs, outputs, txs),
         signatures = [],
         serializedTx = '';
-
+    lock_time = lock_time || 0;
     return this._typedCommonCall('SignTx', 'TxRequest', {
         inputs_count: inputs.length,
         outputs_count: outputs.length,
-        coin_name: coin.coin_name
+        coin_name: coin.coin_name,
+        lock_time: lock_time
     }).then(process);
 
     function process(res) {

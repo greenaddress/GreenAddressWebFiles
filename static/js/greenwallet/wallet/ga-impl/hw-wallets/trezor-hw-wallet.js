@@ -183,7 +183,7 @@ function signTransaction (tx, options) {
       inputs, outs, txs, {
         coin_name: _this.network === bitcoin.networks.bitcoin
           ? 'Bitcoin' : 'Testnet'
-      }
+      }, tx.locktime
     ).then(function (res) {
       res = res.message.serialized;
       var signed = bitcoin.Transaction.fromHex(res.serialized_tx);
