@@ -567,15 +567,15 @@ angular.module('greenWalletSendControllers',
                     }
                     var tx;
                     return constructor.constructTx(
-                          [destination], {
-                              signingProgressCallback:
-                                  that._signing_progress_cb.bind(that),
-                              subtractFeeFromOut: satoshis === 'ALL',
-                              rbfOptIn: $scope.wallet.appearance.replace_by_fee,
-                              minConfs: that.instant ? 6 : 0,
-                              addFee: addFee,
-                              locktime: $scope.wallet.cur_block
-                          }
+                        [destination], {
+                            signingProgressCallback:
+                                that._signing_progress_cb.bind(that),
+                            subtractFeeFromOut: satoshis === 'ALL',
+                            rbfOptIn: $scope.wallet.appearance.replace_by_fee,
+                            minConfs: that.instant ? 6 : 0,
+                            addFee: addFee,
+                            locktime: $scope.wallet.cur_block
+                        }
                     ).then(function(tx_) {
                         tx = tx_;
                         // utxo data is necessary for the confirmation modal
