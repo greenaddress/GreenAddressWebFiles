@@ -19,22 +19,14 @@ angular.module('greenWalletTransactionsControllers',
 
     var _redeem = function(transaction) {
         gaEvent('Wallet', 'TransactionsTabRedeem');
-        var key = $q.when($scope.wallet.hdwallet);
-        if ($scope.wallet.current_subaccount) {
-            key = key.then(function(key) {
-                return key.deriveHardened(branches.SUBACCOUNT);
-            }).then(function(key) {
-                return key.deriveHardened($scope.wallet.current_subaccount);
-            })
-        }
-        key = key.then(function(key) {
-            return key.deriveHardened(branches.EXTERNAL);
-        }).then(function(key) {
-            return key.deriveHardened(transaction.pubkey_pointer);
-        });
+        var key = tx_sender.gaWallet.signingWallet.keysManager.getMyPublicKey(
+            $scope.wallet.current_subaccount,
+            transaction.pubkey_pointer,
+            branches.EXTERNAL
+        );
         return key.then(function(key) {
             return tx_sender.call("com.greenaddress.vault.prepare_sweep_social",
-                    Array.from(key.keyPair.getPublicKeyBuffer()), false, $scope.wallet.current_subaccount).then(function(data) {
+                    Array.from(key.getPublicKeyBuffer()), false, $scope.wallet.current_subaccount).then(function(data) {
                 data.prev_outputs = [];
                 for (var i = 0; i < data.prevout_scripts.length; i++) {
                     data.prev_outputs.push(
@@ -42,10 +34,12 @@ angular.module('greenWalletTransactionsControllers',
                          subaccount: $scope.wallet.current_subaccount, script: data.prevout_scripts[i]})
                 }
                 // TODO: verify
-                return wallets.sign_and_send_tx($scope, data, true);  // priv_der=true
-            }, function(error) {
-                gaEvent('Wallet', 'TransactionsTabRedeemFailed', error.args[1]);
-                notices.makeNotice('error', error.args[1]);
+                return wallets.sign_and_send_tx($scope, data, {
+                  privDer: true, value: -transaction.value
+                });
+            }).catch(function(error) {
+                gaEvent('Wallet', 'TransactionsTabRedeemFailed', error);
+                notices.makeError($scope, error);
                 return $q.reject(error);
             });
         });
@@ -102,8 +96,8 @@ angular.module('greenWalletTransactionsControllers',
                     remainingFeeDelta = 0;
                     newOuts.push(bumpedTx.outs[i]);
                     bumpedTx.outs[i].pointer = change_pointer;
-                    bumpedTx.outs[i].subaccount = getSubaccount(
-                        transaction.outputs[i].subaccount
+                    bumpedTx.outs[i].subaccount = wallets.getSubaccount(
+                        $scope, transaction.outputs[ i ].subaccount
                     );
                 }
             } else {
@@ -179,8 +173,8 @@ angular.module('greenWalletTransactionsControllers',
                         );
                         var out = builder.tx.outs[builder.tx.outs.length - 1];
                         out.pointer = change_pointer;
-                        out.subaccount = getSubaccount(
-                            $scope.wallet.current_subaccount
+                        out.subaccount = wallets.getSubaccount(
+                            $scope, $scope.wallet.current_subaccount
                         );
                     }
                     var utxos_ds = [];
@@ -273,7 +267,9 @@ angular.module('greenWalletTransactionsControllers',
                 builder.tx.ins.forEach(function(inp, i) {
                   var prevOut = res[i];
                   inp.prevOut = {
-                    subaccount: getSubaccount($scope.wallet.current_subaccount),
+                    subaccount: wallets.getSubaccount(
+                      $scope, $scope.wallet.current_subaccount
+                    ),
                     raw: {
                       pointer: prevOut.pointer,
                       txhash: Bitcoin.bitcoin.bufferutils.reverse(
@@ -444,18 +440,6 @@ angular.module('greenWalletTransactionsControllers',
 
     $scope.toggle_transaction_search = function() {
         $scope.search_visible = !$scope.search_visible;
-    }
-
-
-    function getSubaccount (pointer) {
-        pointer = pointer || 0;
-        var subaccount = null;
-        $scope.wallet.subaccounts.forEach(function (sub) {
-            if (pointer === sub.pointer) {
-                subaccount = sub;
-            }
-        });
-        return subaccount;
     }
 
 }]);

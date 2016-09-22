@@ -44,7 +44,7 @@ function getGAPublicKey (subaccountPointer, pointer) {
   return this.getGASubAccountPubKey(subaccountPointer).derive(pointer);
 }
 
-function getMyPublicKey (subaccountPointer, pointer) {
+function getMyPublicKey (subaccountPointer, pointer, branch) {
   // priv only for subaccounts -- avoid involving hw wallets when not necessary
-  return this._getKey(false, subaccountPointer, pointer);
+  return this._getKey(false, subaccountPointer, pointer, branch);
 }

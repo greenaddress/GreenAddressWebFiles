@@ -78,7 +78,18 @@ function createScriptForSubaccountAndPointer (subaccount, pointer) {
 }
 
 function getUtxoPrevScript (utxo) {
-  return this.createScriptForSubaccountAndPointer(
-    utxo.subaccount, utxo.raw.pointer
-  );
+  if (utxo.raw.branch === 2) {
+    // priv-derived branch
+    return this.keysManager.getMyPublicKey(
+      utxo.subaccount.pointer, utxo.raw.pointer, utxo.raw.branch
+    ).then(function (pk) {
+      return bitcoin.script.pubKeyHashOutput(bitcoin.crypto.hash160(
+        pk.getPublicKeyBuffer()
+      ));
+    });
+  } else {
+    return this.createScriptForSubaccountAndPointer(
+      utxo.subaccount, utxo.raw.pointer
+    );
+  }
 }

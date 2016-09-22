@@ -33,19 +33,20 @@ function _getKey (signing, subaccountPointer, pointer, keyBranch) {
     keyBranch = 1; // REGULAR
   }
   var key;
+  var privDer = (keyBranch === 5 || keyBranch === 2);
   if (subaccountPointer) {
     key = this.getSubaccountRootKey(subaccountPointer);
-    if (!signing) {
+    if (!(privDer || signing)) {
       key = key.then(function (hd) {
         return hd.neutered();
       });
     }
   } else {
-    key = Promise.resolve(signing ? this.privHDWallet : this.pubHDWallet);
+    key = Promise.resolve((privDer || signing) ? this.privHDWallet : this.pubHDWallet);
   }
   var deriveFuncName;
-  if (keyBranch === 5) {
-    // scanning keys are all hardened
+  if (privDer) {
+    // priv-derived and scanning keys are all hardened
     deriveFuncName = 'deriveHardened';
   } else {
     deriveFuncName = 'derive';
@@ -54,12 +55,17 @@ function _getKey (signing, subaccountPointer, pointer, keyBranch) {
     return hd[deriveFuncName](keyBranch);
   }).then(function (hd) {
     return hd[deriveFuncName](pointer);
+  }).then(function (hd) {
+    if (!signing) {
+      return hd.neutered();
+    }
+    return hd;
   });
 }
 
-function getMyPrivateKey (subaccountPointer, pointer) {
+function getMyPrivateKey (subaccountPointer, pointer, branch) {
   // always priv, even when it's not a subaccount
-  return this._getKey(true, subaccountPointer, pointer);
+  return this._getKey(true, subaccountPointer, pointer, branch);
 }
 
 function getMyScanningKey (subaccountPointer, pointer) {
@@ -69,6 +75,6 @@ function getMyScanningKey (subaccountPointer, pointer) {
 
 function getUtxoPrivateKey (utxo) {
   return this.getMyPrivateKey(
-    utxo.subaccount.pointer, utxo.raw.pointer
+    utxo.subaccount.pointer, utxo.raw.pointer, utxo.raw.branch
   );
 }

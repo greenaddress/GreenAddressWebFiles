@@ -12,6 +12,7 @@ module.exports = TrezorHWWallet;
 TrezorHWWallet.prototype = Object.create(HWWallet.prototype);
 extend(TrezorHWWallet.prototype, {
   deviceTypeName: 'TREZOR',
+  canSpendP2PKH: true,
   getChallengeArguments: getChallengeArguments,
   getPublicKey: getPublicKey,
   signMessage: signMessage,
@@ -141,15 +142,18 @@ function signTransaction (tx, options) {
           return getPubKeys(tx.ins[ i ].prevOut);
         }).then(function (pubKeys) {
           inputs.push({
-            address_n: prevoutToPath(tx.ins[ i ].prevOut, false, false),
+            address_n: prevoutToPath(tx.ins[ i ].prevOut, false),
             prev_hash: fromHex(
               bitcoin.bufferutils.reverse(
                 tx.ins[ i ].hash
               ).toString('hex')
             ),
             prev_index: tx.ins[ i ].index,
-            script_type: 1,  // SPENDMULTISIG
-            multisig: {
+            script_type: (tx.ins[ i ].prevOut.raw.branch === 2
+              ? 0  // SPENDADDRESS
+              : 1  // SPENDMULTISIG
+            ),
+            multisig: tx.ins[ i ].prevOut.raw.branch === 2 ? undefined : {
               pubkeys: pubKeys,
               m: 2
             },
@@ -206,20 +210,20 @@ function signTransaction (tx, options) {
   });
 
   function fetchUtxo () {
-    if (options.utxoFactory.fetchUtxoDataForTx) {
+    if (options.utxoFactory) {
       return options.utxoFactory.fetchUtxoDataForTx(tx);
     } else {
       return Promise.resolve();
     }
   }
 
-  function prevoutToPath (prevOut, fromSubaccount, privDer) {
+  function prevoutToPath (prevOut, fromSubaccount) {
     var path = [];
     if (prevOut.subaccount.pointer && !fromSubaccount) {
       path.push(3 + 0x80000000);  // branch=SUBACCOUNT
       path.push(prevOut.subaccount.pointer + 0x80000000);
     }
-    if (privDer) {
+    if (prevOut.raw.branch === 2) {
       path.push(2 + 0x80000000);  // branch=EXTERNAL
       path.push(prevOut.raw.pointer + 0x80000000);
     } else {
@@ -258,7 +262,7 @@ function signTransaction (tx, options) {
         },
         {
           node: mywallet,
-          address_n: prevoutToPath(prevOut, true, false)
+          address_n: prevoutToPath(prevOut, true)
         }
       ];
       if (prevOut.subaccount.type === '2of3') {
@@ -271,7 +275,7 @@ function signTransaction (tx, options) {
         };
         ret.push({
           node: recovery_wallet,
-          address_n: prevoutToPath(prevOut, true, false)
+          address_n: prevoutToPath(prevOut, true)
         });
       }
       return ret;
@@ -319,9 +323,7 @@ function signTransaction (tx, options) {
     return ins.map(function (inp) {
       return {
         prev_hash: fromHex(
-          bitcoin.bufferutils.reverse(
-            inp.hash
-          ).toString('hex')
+          bitcoin.bufferutils.reverse(inp.hash).toString('hex')
         ),
         prev_index: inp.index,
         script_sig: fromHex(inp.script.toString('hex')),

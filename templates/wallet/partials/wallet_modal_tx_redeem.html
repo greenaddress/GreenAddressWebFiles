@@ -10,12 +10,12 @@
 
         <dt>{{ _("Hash") }}</dt>
         <dd>(( redeem_transaction.txhash ))</dd>
-        
+
         <dt>{{ _("Description") }}</dt>
         <dd>(( redeem_transaction.description ))</dd>
 
         <dt>{{ _("Amount") }}</dt>
-        <dd>(( redeem_transaction.value|format_btc:wallet.unit )) </dd>
+        <dd>(( -redeem_transaction.value|format_btc:wallet.unit )) </dd>
     </dl>
 </div>
 

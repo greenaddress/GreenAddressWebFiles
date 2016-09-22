@@ -6,7 +6,8 @@ module.exports = HWKeysManager;
 HWKeysManager.prototype = Object.create(BaseKeysManager.prototype);
 extend(HWKeysManager.prototype, {
   _getKey: _getKey,
-  getSubaccountRootKey: getSubaccountRootKey
+  getSubaccountRootKey: getSubaccountRootKey,
+  _getSubaccountPrefix: _getSubaccountPrefix
 });
 
 function HWKeysManager (options) {
@@ -18,10 +19,17 @@ function HWKeysManager (options) {
   this.hw = options.hw;
 }
 
+function _getSubaccountPrefix (subaccountPointer, suffix) {
+  suffix = suffix || '';
+  return subaccountPointer
+    ? "3'/" + subaccountPointer + "'" + suffix
+    : '';
+}
+
 function getSubaccountRootKey (subaccountPointer) {
   // TODO caching
   if (subaccountPointer) {
-    return this.hw.getPublicKey("3'/" + subaccountPointer + "'");
+    return this.hw.getPublicKey(this._getSubaccountPrefix(subaccountPointer));
   } else {
     return Promise.resolve(this.pubHDWallet);
   }
@@ -36,6 +44,13 @@ function _getKey (signing, subaccountPointer, pointer, keyBranch) {
   }
   if (keyBranch === undefined) {
     keyBranch = 1; // REGULAR
+  }
+  if (keyBranch === 2) {
+    // priv derived
+    return this.hw.getPublicKey(
+      this._getSubaccountPrefix(subaccountPointer, '/') +
+      keyBranch + "'/" + pointer + "'"
+    );
   }
   var key;
   if (subaccountPointer) {

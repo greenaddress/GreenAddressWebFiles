@@ -99,14 +99,28 @@ function signInput (tx, i) {
       if (!_this.schnorrTx) {
         sig = sig.toDER();
       }
-      tx.ins[i].script = bitcoin.script.compile([].concat(
-        bitcoin.opcodes.OP_0, // OP_0 required for multisig
-        new Buffer([0]), // to be replaced by backend with server's sig
-        new Buffer([].concat(
-          Array.prototype.slice.call(sig), [1]
-        )), // our signature with SIGHASH_ALL
-        prevScript
-      ));
+      if (prevOut.raw.branch === 2) {
+        // priv-der pkhash-spending signature
+        return _this.keysManager.getMyPublicKey(
+          prevOut.raw.subaccount, prevOut.raw.pointer, 2
+        ).then(function (pubKey) {
+          tx.ins[ i ].script = bitcoin.script.pubKeyHashInput(
+            new Buffer([].concat(
+              Array.prototype.slice.call(sig), [ 1 ]
+            )), // our signature with SIGHASH_ALL
+            pubKey.hdnode.getPublicKeyBuffer()
+          );
+        });
+      } else {
+        tx.ins[ i ].script = bitcoin.script.compile([].concat(
+          bitcoin.opcodes.OP_0, // OP_0 required for multisig
+          new Buffer([ 0 ]), // to be replaced by backend with server's sig
+          new Buffer([].concat(
+            Array.prototype.slice.call(sig), [ 1 ]
+          )), // our signature with SIGHASH_ALL
+          prevScript
+        ));
+      }
     });
   });
 }

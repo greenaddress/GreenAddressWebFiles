@@ -6,6 +6,7 @@ var GAWallet = require('wallet').GA.GAWallet;
 var HashSwSigningWallet = require('wallet').GA.HashSwSigningWallet;
 var HwSigningWallet = require('wallet').GA.HwSigningWallet;
 var SchnorrSigningKey = require('wallet').bitcoinup.SchnorrSigningKey;
+var Transaction = require('wallet').bitcoinup.Transaction;
 
 ///@TODO Refactor this file, it's huge and crazy. Also get it to pass lint
 
@@ -978,7 +979,9 @@ function factory ($q, $rootScope, tx_sender, $location, notices, $uibModal,
     } else {
       fee = options.fee;
     }
-    if ($scope.send_tx && $scope.send_tx.amount == 'MAX') {
+    if (options.value) {
+      value = options.value;
+    } else if ($scope.send_tx && $scope.send_tx.amount == 'MAX') {
       value = $scope.wallet.final_balance - fee;
     } else if (options.bumped_tx) {
       value = -options.bumped_tx.value;
@@ -990,10 +993,12 @@ function factory ($q, $rootScope, tx_sender, $location, notices, $uibModal,
       previous_fee: options.bumped_tx && options.bumped_tx.fee,
       value: value,
       recipient: options.recipient ? options.recipient :
-        ($scope.send_tx.voucher ?
+        (($scope.send_tx && $scope.send_tx.voucher) ?
           gettext('Voucher') :
-          ($scope.send_tx.recipient.name ||
-          $scope.send_tx.recipient))
+          ($scope.send_tx ?
+            ($scope.send_tx.recipient.name ||
+            $scope.send_tx.recipient) :
+            gettext("back to myself")))
     };
     var modal = $uibModal.open({
       templateUrl: BASE_URL + '/' + LANG + '/wallet/partials/wallet_modal_confirm_tx.html',
@@ -1002,458 +1007,75 @@ function factory ($q, $rootScope, tx_sender, $location, notices, $uibModal,
     });
     return modal.result;
   };
-  walletsService.sign_tx = function ($scope, tx, data, prevouts, progress_cb, priv_der) {
-    var prevoutToPath = function (prevout, trezor, from_subaccount) {
-      var path = [];
-      if (prevout.subaccount && !from_subaccount) {
-        if (trezor) {
-          path.push(3 + 0x80000000);
-          path.push(prevout.subaccount + 0x80000000);
-        } else {
-          path.push("3'");
-          path.push(prevout.subaccount + "'");
-        }
-      }
-      if (priv_der) {
-        if (trezor) {
-          path.push(prevout.branch + 0x80000000);
-          path.push(prevout.pointer + 0x80000000);
-        } else {
-          path.push(prevout.branch + "'");
-          path.push(prevout.pointer + "'");
-        }
-      } else {
-        path.push(prevout.branch);
-        path.push(prevout.pointer);
-      }
-      return path;
-    };
-    var signatures = [], device_deferred = null, signed_n = 0;
-    for (var i = 0; i < tx.ins.length; ++i) {
-      (function (i) {
-        var key, path = [];
-        if (data.prev_outputs[i].privkey) {
-          key = $q.when(data.prev_outputs[i].privkey);
-        } else if (tx_sender.hdwallet.keyPair.d) {
-          if (data.prev_outputs[i].subaccount) {
-            key = $q.when(tx_sender.hdwallet.deriveHardened(3)).then(function (key) {
-              return key.deriveHardened(data.prev_outputs[i].subaccount);
-            });
-          } else {
-            key = $q.when(tx_sender.hdwallet);
-          }
-          if (priv_der) {
-            key = key.then(function (key) {
-              return key.deriveHardened(data.prev_outputs[i].branch);
-            }).then(function (key) {
-              return key.deriveHardened(data.prev_outputs[i].pointer);
-            });
-          } else {
-            key = key.then(function (key) {
-              return key.derive(data.prev_outputs[i].branch);
-            }).then(function (key) {
-              return key.derive(data.prev_outputs[i].pointer);
-            });
-          }
-          key = key.then(function (key) {
-            return key.keyPair;
-          });
-        } else {
-          path = prevoutToPath(data.prev_outputs[i]);
-        }
-        if (!key) {
-          // btchip or trezor -- trezor is handled separately
-          // at the end of walletsService.sign_tx
-          var script = new Bitcoin.Buffer.Buffer(data.prev_outputs[i].script, 'hex');
-          var SIGHASH_ALL = 1;
-          var sign_deferred = $q.defer();
+  walletsService.sign_tx = function ($scope, tx, options) {
+    options = options || {};
 
-          if ($scope.wallet.btchip) {
-            var next = function () {
-              return $scope.wallet.btchip.gaStartUntrustedHashTransactionInput_async(
-                i == 0,
-                tx.cloneTransactionForSignature(script, i, SIGHASH_ALL),
-                i
-              ).then(function (finished) {
-                var this_ms = 0, this_expected_ms = 6500;
-                if ($scope.wallet.btchip.features.quickerVersion) this_expected_ms *= 0.55;
-                var int_promise = $interval(function () {
-                  this_ms += 100;
-                  var progress = signed_n / tx.ins.length;
-                  progress += (1 / tx.ins.length) * (this_ms / this_expected_ms);
-                  if (progress_cb) progress_cb(Math.min(100, Math.round(100 * progress)));
-                }, 100);
-                return $scope.wallet.btchip.app.gaUntrustedHashTransactionInputFinalizeFull_async(tx).then(function (finished) {
-                  return $scope.wallet.btchip.app.signTransaction_async(
-                    path.join('/'),
-                    undefined,
-                    // Cordova requires int, while crx requires ByteString:
-                    window.cordova ? tx.locktime : new ByteString(Convert.toHexInt(tx.locktime), HEX)
-                  ).then(function (sig) {
-                    $interval.cancel(int_promise);
-                    signed_n += 1;
-                    sign_deferred.resolve('30' + sig.bytes(1).toString(HEX));
-                  }, sign_deferred.reject);
-                }, sign_deferred.reject);
-              }, sign_deferred.reject);
-            };
-            if (!device_deferred) {
-              device_deferred = next();
-            } else {
-              device_deferred = device_deferred.then(next);
-            }
-          }
-          var sign = sign_deferred.promise;
-        } else {
-          var sign = key.then(function (key) {
-            signed_n += 1;
-            if (progress_cb) progress_cb(Math.round(100 * signed_n / tx.ins.length));
-            var script = new Bitcoin.Buffer.Buffer(data.prev_outputs[i].script, 'hex');
-            var SIGHASH_ALL = 1;
-            var scope = $scope.$new();
-            var in_value = 0, out_value = 0;
-            if (cur_net.isAlpha) {
-              tx.ins.forEach(function (txin) {
-                var rev = new Bitcoin.Buffer.Buffer(txin.hash);
-                rev = Bitcoin.bitcoin.bufferutils.reverse(rev);
-                var prevtx = Bitcoin.contrib.transactionFromHex(
-                  prevouts.data[rev.toString('hex')]
-                );
-                var prevout = prevtx.outs[txin.index];
-                in_value += prevout.value;
-                txin.prevValue = prevout.value;
-              });
-              tx.outs.forEach(function (txout) {
-                out_value += txout.value;
-              });
-              var fee = in_value - out_value, value;
-            }
-            if (data.prev_outputs[i].script_type == 14) {
-              var sign = $q.when(key.sign(tx.hashForSignatureV2(i, script, parseInt(data.prev_outputs[i].value), SIGHASH_ALL)));
-            } else {
-              if (cur_net.isAlpha) {
-                  var sign = $q.when(key.sign(tx.hashForSignature(i, script, SIGHASH_ALL, fee)));
-              } else {
-                  var sign = $q.when(key.sign(tx.hashForSignature(i, script, SIGHASH_ALL)));
-              }
-            }
-            return sign.then(function (sign) {
-              var sign_serialized;
-              if (cur_net.isAlpha) {
-                sign_serialized = sign;
-              } else {
-                sign_serialized = sign.toDER();
-              }
-              sign = Bitcoin.Buffer.Buffer.concat([
-                new Bitcoin.Buffer.Buffer(sign_serialized),
-                new Bitcoin.Buffer.Buffer([SIGHASH_ALL]),
-              ]);
-              return sign.toString('hex');
-            });
-          });
+    return tx_sender.gaWallet.signingWallet.signTransaction(
+      tx, {signingProgressCallback: options.progressCb}
+    ).then(function () {
+      return tx.tx.ins.map(function (inp) {
+        var signature;
+        var decompiled = Bitcoin.bitcoin.script.decompile(inp.script);
+        if (decompiled[0] === 0) {  // multisig
+          signature = decompiled[2];
+        } else if (decompiled.length === 2) {
+          // assume pkhash-spending script
+          signature = decompiled[0];
         }
-        signatures.push(sign);
-      })(i);
-    }
-    if (!($scope && $scope.wallet.trezor_dev)) {
-      return $q.all(signatures);
-    } else {
-      var fromHex = (window.trezor && trezor.ByteBuffer) ? trezor.ByteBuffer.fromHex : function (x) {
-        return x;
-      };
-      var gawallet_hd = new Bitcoin.bitcoin.HDNode(
-        Bitcoin.bitcoin.ECPair.fromPublicKeyBuffer(
-          new Bitcoin.Buffer.Buffer(deposit_pubkey, 'hex'),
-          cur_net
-        ),
-        new Bitcoin.Buffer.Buffer(deposit_chaincode, 'hex')
-      );
-      var is_2of3 = false, cur_subaccount, recovery_wallet, recovery_wallet_hd;
-      for (var j = 0; j < $scope.wallet.subaccounts.length; j++) {
-        if ($scope.wallet.subaccounts[j].pointer == $scope.wallet.current_subaccount &&
-          $scope.wallet.subaccounts[j].type == '2of3') {
-          is_2of3 = true;
-          cur_subaccount = $scope.wallet.subaccounts[j];
-          break;
-        }
-      }
-      if ($scope.wallet.current_subaccount) {
-        var gawallet_path = $q.when(gawallet_hd.derive(branches.SUBACCOUNT)).then(function (gawallet_hd) {
-          return gawallet_hd.subpath($scope.wallet.gait_path);
-        }).then(function (subaccounts) {
-          return subaccounts.derive($scope.wallet.current_subaccount);
-        });
-      } else {
-        var gawallet_path = $q.when(gawallet_hd.derive(branches.REGULAR)).then(function (gawallet_hd) {
-          return gawallet_hd.subpath($scope.wallet.gait_path);
-        });
-      }
-      var hdwallet = {
-        depth: 0,
-        child_num: 0,
-        fingerprint: 0, // FIXME (is it important?): real fingerprint
-        chain_code: fromHex($scope.wallet.hdwallet.chainCode.toString('hex')),
-        public_key: fromHex($scope.wallet.hdwallet.keyPair.getPublicKeyBuffer().toString('hex'))
-      };
-      var path_bytes = new Bitcoin.Buffer.Buffer($scope.wallet.gait_path, 'hex'), ga_path = [];
-      for (var i = 0; i < 32; i++) {
-        ga_path.push(+Bitcoin.BigInteger.fromByteArrayUnsigned(path_bytes.slice(0, 2)));
-        path_bytes = path_bytes.slice(2);
-      }
-      var script_to_hash = [];
-      var change_key_bytes, recovery_wallet;
-      return gawallet_path.then(function (gawallet_path_result) {
-        gawallet_path = gawallet_path_result;
-        gawallet = {
-          depth: 33,
-          child_num: 0, // FIXME (is it important?): real child_num
-          fingerprint: 0, // FIXME (is it important?): real fingerprint
-          chain_code: fromHex(gawallet_path.chainCode.toString('hex')),
-          public_key: fromHex(gawallet_path.keyPair.getPublicKeyBuffer().toString('hex'))
-        };
-        if ($scope.wallet.current_subaccount) {
-          return $scope.wallet.trezor_dev.getPublicKey(
-            [branches.SUBACCOUNT + 0x80000000, $scope.wallet.current_subaccount + 0x80000000]
-          ).then(function (pubkey) {
-            var pk = pubkey.message.node.public_key;
-            pk = pk.toHex ? pk.toHex() : pk;
-            var cc = pubkey.message.node.chain_code;
-            cc = cc.toHex ? cc.toHex() : cc;
-            var hd = new Bitcoin.bitcoin.HDNode(
-              Bitcoin.bitcoin.ECPair.fromPublicKeyBuffer(
-                new Bitcoin.Buffer.Buffer(pk, 'hex'),
-                cur_net
-              ),
-              new Bitcoin.Buffer.Buffer(cc, 'hex')
-            );
-
-            hdwallet = {
-              depth: 0,
-              child_num: 0,
-              fingerprint: 0, // FIXME (is it important?): real fingerprint
-              chain_code: fromHex(hd.chainCode.toString('hex')),
-              public_key: fromHex(hd.keyPair.getPublicKeyBuffer().toString('hex'))
-            };
-
-            return hd.derive(1);
-          });
-        } else {
-          return $scope.wallet.hdwallet.derive(1);
-        }
-      }).then(function (hdwallet_branch) {
-        return hdwallet_branch.derive(data.change_pointer);
-      }).then(function (change_key) {
-        change_key_bytes = change_key.keyPair.getPublicKeyBuffer();
-        return gawallet_path.derive(data.change_pointer);
-      }).then(function (change_gait_key) {
-        if (is_2of3) {
-          var recovery_wallet_hd = new Bitcoin.bitcoin.HDNode(
-            Bitcoin.bitcoin.ECPair.fromPublicKeyBuffer(
-              new Bitcoin.Buffer.Buffer(cur_subaccount['2of3_backup_pubkey'], 'hex'),
-              cur_net
-            ),
-            new Bitcoin.Buffer.Buffer(cur_subaccount['2of3_backup_chaincode'], 'hex')
-          );
-          recovery_wallet = {
-            depth: 0,
-            child_num: 0,
-            fingerprint: 0, // FIXME (is it important?): real fingerprint
-            chain_code: fromHex(cur_subaccount['2of3_backup_chaincode']),
-            public_key: fromHex(cur_subaccount['2of3_backup_pubkey'])
-          };
-          return recovery_wallet_hd.derive(1).then(function (branch) {
-            return branch.derive(data.change_pointer);
-          }).then(function (change_key_recovery) {
-            return [change_gait_key.keyPair.getPublicKeyBuffer(),
-              change_key_bytes,
-              change_key_recovery.keyPair.getPublicKeyBuffer()];
-          });
-        } else {
-          return [change_gait_key.keyPair.getPublicKeyBuffer(), change_key_bytes];
-        }
-      }).then(function (keys) {
-        script_to_hash.push(Bitcoin.bitcoin.opcodes.OP_2);
-        script_to_hash.push(keys[0]);
-        script_to_hash.push(keys[1]);
-        if (is_2of3) {
-          script_to_hash.push(keys[2]);
-          script_to_hash.push(Bitcoin.bitcoin.opcodes.OP_3);
-        } else {
-          script_to_hash.push(Bitcoin.bitcoin.opcodes.OP_2);
-        }
-        script_to_hash.push(Bitcoin.bitcoin.opcodes.OP_CHECKMULTISIG);
-        script_to_hash = Bitcoin.bitcoin.script.compile(
-          script_to_hash
-        );
-        var change_addr = Bitcoin.bitcoin.address.fromOutputScript(
-          Bitcoin.bitcoin.script.scriptHashOutput(
-            Bitcoin.bitcoin.crypto.hash160(script_to_hash)
-          ),
-          cur_net
-        );
-        var get_pubkeys = function (prevout, is2of3) {
-          var ret = [{
-            node: gawallet,
-            address_n: [prevout.pointer]
-          },
-            {
-              node: hdwallet,
-              address_n: prevoutToPath(prevout, true, $scope.wallet.current_subaccount)
-            }];
-          if (is2of3) {
-            ret.push({
-              node: recovery_wallet,
-              address_n: prevoutToPath(prevout, true, true)
-            });
-          }
-          return ret;
-        };
-        var inputs = [];
-        for (var i = 0; i < tx.ins.length; ++i) {
-          inputs.push({
-            address_n: prevoutToPath(data.prev_outputs[i], true),
-            prev_hash: fromHex(
-              Bitcoin.bitcoin.bufferutils.reverse(
-                tx.ins[i].hash
-              ).toString('hex')
-            ),
-            prev_index: tx.ins[i].index,
-            script_type: (window.trezor && trezor.ByteBuffer) ? 1 : 'SPENDMULTISIG',
-            multisig: {
-              pubkeys: get_pubkeys(data.prev_outputs[i], is_2of3),
-              m: 2
-            },
-            sequence: tx.ins[i].sequence
-          });
-        }
-
-        var convert_ins = function (ins) {
-          return ins.map(function (inp) {
-            var fromHex = (window.trezor && trezor.ByteBuffer) ? trezor.ByteBuffer.fromHex : function (x) {
-              return x;
-            };
-            return {
-              prev_hash: fromHex(
-                Bitcoin.bitcoin.bufferutils.reverse(
-                  inp.hash
-                ).toString('hex')
-              ),
-              prev_index: inp.index,
-              script_sig: fromHex(inp.script.toString('hex')),
-              sequence: inp.sequence
-            };
-          });
-        };
-        var convert_outs = function (outs) {
-          return outs.map(function (out) {
-            var TYPE_ADDR = (window.trezor && trezor.ByteBuffer) ? 0 : 'PAYTOADDRESS';
-            var TYPE_P2SH = (window.trezor && trezor.ByteBuffer) ? 1 : 'PAYTOSCRIPTHASH';
-            var TYPE_MULTISIG = (window.trezor && trezor.ByteBuffer) ? 2 : 'PAYTOMULTISIG';
-            var addr = Bitcoin.bitcoin.address.fromOutputScript(
-              out.script, cur_net
-            );
-            var ret = {
-              amount: out.value,
-              address: addr,
-              script_type: Bitcoin.bitcoin.script.isScriptHashOutput(
-                out.script
-              ) ? TYPE_P2SH : TYPE_ADDR
-            };
-            if (ret.address == change_addr) {
-              ret.script_type = TYPE_MULTISIG;
-              ret.multisig = {
-                pubkeys: get_pubkeys({
-                  branch: 1,
-                  pointer: data.change_pointer
-                }, is_2of3),
-                m: 2
-              };
-            } else if (data.out_pointers && data.out_pointers.length == 1) {
-              // FIXME: perhaps at some point implement the case of 'single redeposit transaction',
-              // which is a bit complicated because different outputs can be from different
-              // subaccounts
-              ret.script_type = TYPE_MULTISIG;
-              ret.multisig = {
-                pubkeys: get_pubkeys({
-                  branch: 1,
-                  pointer: data.out_pointers[0].pointer
-                }, is_2of3),
-                m: 2
-              };
-            }
-            return ret;
-          });
-        };
-        var convert_outs_bin = function (outs) {
-          return outs.map(function (out) {
-            var fromHex = (window.trezor && trezor.ByteBuffer) ? trezor.ByteBuffer.fromHex : function (x) {
-              return x;
-            };
-            return {
-              amount: out.value,
-              script_pubkey: fromHex(out.script.toString('hex'))
-            };
-          });
-        };
-
-        var txs = [];
-
-        for (var k in prevouts.data) {
-          var parsed = Bitcoin.bitcoin.Transaction.fromHex(prevouts.data[k]);
-          txs.push({
-            hash: k.toString('hex'),
-            version: parsed.version,
-            lock_time: parsed.locktime,
-            bin_outputs: convert_outs_bin(parsed.outs),
-            inputs: convert_ins(parsed.ins)
-          });
-        }
-        return $scope.wallet.trezor_dev.signTx(inputs, convert_outs(tx.outs),
-          txs, {
-            coin_name: cur_net == Bitcoin.bitcoin.networks.bitcoin
-              ? 'Bitcoin' : 'Testnet'
-          }).then(function (res) {
-          return res.message.serialized.signatures.map(function (a) {
-            return (a.toHex ? a.toHex() : a) + '01';
-          });
-        });
+        return signature.toString('hex');
       });
-    }
-  };
-  walletsService.sign_and_send_tx = function ($scope, data, priv_der, twofactor, notify, progress_cb, send_after) {
-    var d = $q.defer();
-    var tx = Bitcoin.contrib.transactionFromHex(data.tx);
-    var prevouts_d;
-    var response;
-    if ($scope && ($scope.send_tx || $scope.wallet.trezor_dev)) {
-      prevouts_d = $http.get(data.prevout_rawtxs).then(function (response_) {
-        response = response_;
-        return response;
-      });
-    } else {
-      prevouts_d = $q.when();
-    }
-    var d_all = prevouts_d.then(function (prevouts) {
-      return walletsService.sign_tx($scope, tx, data, prevouts, progress_cb, priv_der);
     });
-    if (!send_after) {
-      send_after = $q.when();
-    }
+  };
+  walletsService.getSubaccount = function ($scope, pointer) {
+    pointer = pointer || 0;
+    var subaccount = null;
+    $scope.wallet.subaccounts.forEach(function (sub) {
+      if (pointer === sub.pointer) {
+        subaccount = sub;
+      }
+    });
+    return subaccount;
+  };
+  walletsService.sign_and_send_tx = function ($scope, data, options) {
+    var d = $q.defer();
+    var tx = new Transaction();
+    tx.tx = Bitcoin.contrib.transactionFromHex(data.tx);
+
+    // we can use the utxoFactory from the BTC/mainaccount constructor because
+    // the asset/subaccount doesn't matter for the purposes of utxoFactory's
+    // fetchUtxoDataForTx, which is the only usage we have here.
+    var btcMainConstructor = tx_sender.gaWallet.txConstructors[1][0];
+    data.prev_outputs.forEach(function (prevOut, i) {
+      tx.tx.ins[i].prevOut = {
+        raw: extend({
+          txhash: Bitcoin.bitcoin.bufferutils.reverse(
+            tx.tx.ins[i].hash
+          ).toString('hex')
+        }, prevOut),
+        subaccount: walletsService.getSubaccount($scope, prevOut.subaccount)
+      };
+    });
+    var prevouts_d = btcMainConstructor.utxoFactory.fetchUtxoDataForTx(tx.tx);
+
+    var d_all = prevouts_d.then(function (prevouts) {
+      return walletsService.sign_tx($scope, tx);
+    });
+    var send_after = options.sendAfter || $q.when();
     d_all = d_all.then(function (signatures) {
       return walletsService.ask_for_tx_confirmation(
-        $scope, tx, {response: response}
+        $scope, tx.tx, extend({value: options.value}, options)
       ).then(function () {
         return signatures;
       });
-    }, d.reject);
+    });
     var do_send = function () {
       return d_all.then(function (signatures) {
-        if (!twofactor && data.requires_2factor) {
+        if (data.requires_2factor) {
           return walletsService.get_two_factor_code($scope, 'send_tx').then(function (twofac_data) {
-            return [signatures, twofac_data];
+            return [signatures, twofac_data12];
           });
         } else {
-          return [signatures, twofactor];
+          return [signatures, null];
         }
       }).then(function (signatures_twofactor) {
         var signatures = signatures_twofactor[0], twofactor = signatures_twofactor[1];
@@ -1473,9 +1095,9 @@ function factory ($q, $rootScope, tx_sender, $location, notices, $uibModal,
           notices.makeNotice('error', gettext('Transaction failed: ') + reason.args[1]);
           sound.play(BASE_URL + '/static/sound/wentwrong.mp3', $scope);
         });
-      }, d.reject);
+      });
     };
-    send_after.then(do_send, d.reject);
+    send_after.then(do_send).catch(d.reject);
     return d.promise;
   };
   walletsService.getTwoFacConfig = function ($scope, force) {

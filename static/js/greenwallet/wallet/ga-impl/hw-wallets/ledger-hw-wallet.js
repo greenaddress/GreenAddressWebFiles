@@ -19,6 +19,7 @@ module.exports = LedgerHWWallet;
 LedgerHWWallet.prototype = Object.create(HWWallet.prototype);
 extend(LedgerHWWallet.prototype, {
   deviceTypeName: 'Ledger',
+  canSpendP2PKH: false,
   getChallengeArguments: getChallengeArguments,
   getPublicKey: getPublicKey,
   signMessage: signMessage,
