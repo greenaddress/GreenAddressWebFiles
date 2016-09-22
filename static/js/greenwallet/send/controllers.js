@@ -565,6 +565,7 @@ angular.module('greenWalletSendControllers',
                         multiplier: 1.17
                       };
                     }
+                    var tx;
                     return constructor.constructTx(
                           [destination], {
                               signingProgressCallback:
@@ -575,7 +576,15 @@ angular.module('greenWalletSendControllers',
                               addFee: addFee,
                               locktime: $scope.wallet.cur_block
                           }
-                    ).then(function(tx) {
+                    ).then(function(tx_) {
+                        tx = tx_;
+                        // utxo data is necessary for the confirmation modal
+                        return constructor.utxoFactory.fetchUtxoDataForTx(tx.tx);
+                    }).then(function() {
+                        return wallets.ask_for_tx_confirmation(
+                            $scope, tx.tx
+                        );
+                    }).then(function () {
                         var fee = calculateFee(tx.tx);
                         var outAmount = satoshis === 'ALL' ?
                             tx.tx.outs[0].value : satoshis;

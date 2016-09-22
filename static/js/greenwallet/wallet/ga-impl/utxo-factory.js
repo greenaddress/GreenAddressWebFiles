@@ -58,11 +58,13 @@ function fetchUtxoDataForTx (tx) {
   var d_all = Promise.resolve();
   tx.ins.forEach(function (inp) {
     d_all = d_all.then(function () {
-      return _this.gaService.call(
-        'com.greenaddress.txs.get_raw_output', [ inp.prevOut.raw.txhash ]
-      ).then(function (data) {
-        inp.prevOut.data = new Buffer(data, 'hex');
-      });
+      if (!inp.prevOut.data) {
+        return _this.gaService.call(
+          'com.greenaddress.txs.get_raw_output', [ inp.prevOut.raw.txhash ]
+        ).then(function (data) {
+          inp.prevOut.data = new Buffer(data, 'hex');
+        });
+      }
     });
   });
   return d_all;

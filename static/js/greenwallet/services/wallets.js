@@ -954,20 +954,19 @@ function factory ($q, $rootScope, tx_sender, $location, notices, $uibModal,
     });
   };
   walletsService.ask_for_tx_confirmation = function (
-    $scope, tx, data
+    $scope, tx, options
   ) {
+    options = options || {};
     if (!($scope.send_tx || $scope.bump_fee)) {
       // not all txs support this dialog, like redepositing or sweeping
       return $q.when();
     }
     var scope = $scope.$new(), fee, value;
-    if (data.response) {
+    if (tx.ins[0].prevOut && tx.ins[0].prevOut.data) {
       var in_value = 0, out_value = 0;
       tx.ins.forEach(function (txin) {
-        var rev = new Bitcoin.Buffer.Buffer(txin.hash);
-        rev = Bitcoin.bitcoin.bufferutils.reverse(rev);
         var prevtx = Bitcoin.contrib.transactionFromHex(
-          data.response.data[rev.toString('hex')]
+          txin.prevOut.data.toString('hex')
         );
         var prevout = prevtx.outs[txin.index];
         in_value += prevout.value;
@@ -977,20 +976,20 @@ function factory ($q, $rootScope, tx_sender, $location, notices, $uibModal,
       });
       fee = in_value - out_value;
     } else {
-      fee = data.fee;
+      fee = options.fee;
     }
     if ($scope.send_tx && $scope.send_tx.amount == 'MAX') {
       value = $scope.wallet.final_balance - fee;
-    } else if (data.bumped_tx) {
-      value = -data.bumped_tx.value;
+    } else if (options.bumped_tx) {
+      value = -options.bumped_tx.value;
     } else {
       value = $scope.send_tx.amount_to_satoshis($scope.send_tx.amount);
     }
     scope.tx = {
       fee: fee,
-      previous_fee: data.bumped_tx && data.bumped_tx.fee,
+      previous_fee: options.bumped_tx && options.bumped_tx.fee,
       value: value,
-      recipient: data.recipient ? data.recipient :
+      recipient: options.recipient ? options.recipient :
         ($scope.send_tx.voucher ?
           gettext('Voucher') :
           ($scope.send_tx.recipient.name ||
