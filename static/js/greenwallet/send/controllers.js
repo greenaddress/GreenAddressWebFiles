@@ -646,9 +646,7 @@ angular.module('greenWalletSendControllers',
                         $location.url('/info/');
                     });
                 }.bind(this)).catch(function(e) {
-                    notices.makeNotice('error', gettext('Transaction failed: ') + e && (
-                      e.message || (e.args && e.args[1])
-                    ));
+                    notices.makeError($scope, e);
                 }).finally(function() {
                     that.sending = false;
                 });
