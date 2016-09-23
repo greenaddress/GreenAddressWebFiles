@@ -367,9 +367,15 @@ function openDevice (network, options, device) {
   return trezor_api.open(device).then(function (dev_) {
     return dev_.initialize().then(function (init_res) {
       var outdated = false;
-      if (init_res.message.major_version < 1) outdated = true;
-      else if (init_res.message.major_version === 1 &&
-        init_res.message.minor_version < 3) outdated = true;
+      if (device.vendorId === 11044) {
+        // keepkey
+        if (init_res.message.major_version < 1) outdated = true;
+      } else {
+        // satoshilabs
+        if (init_res.message.major_version < 1) outdated = true;
+        else if (init_res.message.major_version === 1 &&
+          init_res.message.minor_version < 3) outdated = true;
+      }
       if (outdated) {
         return Promise.reject({
           outdatedFirmware: true,
