@@ -14,6 +14,7 @@ TrezorHWWallet.prototype = Object.create(HWWallet.prototype);
 extend(TrezorHWWallet.prototype, {
   deviceTypeName: 'TREZOR',
   canSpendP2PKH: true,
+  canSpendP2SH: canSpendP2SH,
   getChallengeArguments: getChallengeArguments,
   getPublicKey: getPublicKey,
   signMessage: signMessage,
@@ -35,6 +36,10 @@ HWWallet.initSubclass(TrezorHWWallet);
 
 function TrezorHWWallet (network) {
   this.network = network;
+}
+
+function canSpendP2SH () {
+  return Promise.resolve(true);
 }
 
 function promptPin () {

@@ -21,6 +21,7 @@ LedgerHWWallet.prototype = Object.create(HWWallet.prototype);
 extend(LedgerHWWallet.prototype, {
   deviceTypeName: 'Ledger',
   canSpendP2PKH: false,
+  canSpendP2SH: canSpendP2SH,
   getChallengeArguments: getChallengeArguments,
   getPublicKey: getPublicKey,
   signMessage: signMessage,
@@ -40,6 +41,28 @@ HWWallet.initSubclass(LedgerHWWallet);
 
 function LedgerHWWallet (network) {
   this.network = network;
+}
+
+function canSpendP2SH () {
+  return this.getDevice().then(function () {
+    var tx = new bitcoin.Transaction();
+    var script = bitcoin.script.multisigOutput(
+      2, [
+        new bitcoin.ECPair(BigInteger.valueOf(1)).getPublicKeyBuffer(),
+        new bitcoin.ECPair(BigInteger.valueOf(2)).getPublicKeyBuffer()
+      ]
+    );
+    tx.addInput(new Buffer(32), 0, 0xffffffff, script);
+    return LedgerHWWallet.currentDevice.gaStartUntrustedHashTransactionInput_async(
+      true,
+      _cloneTransactionForSignature(tx, script, 0),
+      0
+    ).then(function () {
+      return true;
+    }).catch(function () {
+      return false;
+    });
+  });
 }
 
 function pingDevice (device) {
@@ -260,7 +283,17 @@ function signMessage (path, message, options) {
 
 function setupSeed (mnemonic) {
   var _this = this;
-  return this.getDevice().then(function () {
+  var d;
+  if (mnemonic) {
+    // canSpendP2SH p2sh is required only for non-mnemonic (existing seed)
+    // (this way we don't display the 'reuse' button for mnemonic writing)
+    d = _this.getDevice().then(function () {
+      return false;
+    });
+  } else {
+    d = _this.canSpendP2SH();
+  }
+  return d.then(function (canSpendP2SH) {
     var ledger = LedgerHWWallet.currentDevice;
     var modal;
     return new Promise(function (resolve, reject) {
@@ -269,6 +302,7 @@ function setupSeed (mnemonic) {
         finalize: finalize,
         reuse: reuse,
         reset: reset,
+        canSpendP2SH: canSpendP2SH,
         usingMnemonic: !!mnemonic
       };
 
