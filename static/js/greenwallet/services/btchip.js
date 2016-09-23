@@ -37,6 +37,9 @@ function factory ($q, $interval, $uibModal, $rootScope, mnemonics, notices, focu
         this.replug_required = true;
         options.reset();
       },
+      reuse: function () {
+        options.reuse();
+      },
       store: function () {
         options.finalize();
       }
