@@ -13,6 +13,7 @@ var Convert = require('../../hw-apis/ledger-js/api/Convert');
 var ASCII = require('../../hw-apis/ledger-js/api/GlobalConstants').ASCII;
 var HEX = require('../../hw-apis/ledger-js/api/GlobalConstants').HEX;
 var cardFactory = new ChromeapiPlugupCardTerminalFactory();
+var cardFactoryNano = new ChromeapiPlugupCardTerminalFactory(1);
 
 module.exports = LedgerHWWallet;
 
@@ -59,7 +60,13 @@ function pingDevice (device) {
 }
 
 function listDevices (network, options) {
-  return cardFactory.list_async();
+  return cardFactory.list_async().then(function (list) {
+    if (list.length) {
+      return list;
+    } else {
+      return cardFactoryNano.list_async();
+    }
+  });
 }
 
 function openDevice (network, options, device) {

@@ -481,6 +481,7 @@ chromeDevice.enumerateDongles_async = function(pid) {
   var pidHid2 = pidHid;
   var pidHid3 = pidHid;
   var usagePage;
+  var pidHidIsLedger = false;
   // Probe automatically the associated transport supposing the client used the WinUSB transport
   if (pid == 0x1808) {
     pidHid = 0x1807;
@@ -490,13 +491,19 @@ chromeDevice.enumerateDongles_async = function(pid) {
     pidHid = 0x2b7c; // LW Legacy - old
     pidHid2 = 0x3b7c; // LW Legacy - Ledger Protocol
     pidHid3 = 0x4b7c; // LW Proton
+  } else if (pid === 0x0001) { // nano s
+    pid = 0x1b7c; // don't try nano s vid with incorrect pid
+    vidHid = 0x2c97;
+    pidHid = 0x0001;
+    pidHidIsLedger = true;
+    pidHid2 = pidHid3 = 0x0000;
   }
   debug("Looking up " + vid +  " " + pid);
 
   winUSBDevice.enumerate(vid, pid, function(devicesWinUSB) {
     debug("WinUSB devices");
     debug(devicesWinUSB);
-    hidDevice.enumerate(vidHid, pidHid, usagePage, false, function(devicesHID) {
+    hidDevice.enumerate(vidHid, pidHid, usagePage, pidHidIsLedger, function(devicesHID) {
       debug("HID devices");
       debug(devicesHID);
       hidDevice.enumerate(vidHid, pidHid2, usagePage, true, function(devicesHID2) {
