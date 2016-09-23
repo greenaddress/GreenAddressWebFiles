@@ -1,3 +1,4 @@
+var SchnorrSigningKey = require('wallet').bitcoinup.SchnorrSigningKey;
 angular.module('greenWalletReceiveControllers',
     ['greenWalletServices'])
 .controller('ReceiveController', ['$rootScope', '$scope', 'wallets', 'tx_sender', 'notices', 'cordovaReady', 'hostname', 'gaEvent', '$uibModal', '$location', 'qrcode', 'clipboard', 'branches', '$q',
@@ -41,26 +42,37 @@ angular.module('greenWalletReceiveControllers',
             var do_sweep_key = function(key) {
                 var pubkey = key.getPublicKeyBuffer();
                 that.sweeping = true;
-                tx_sender.call("com.greenaddress.vault.prepare_sweep_social", Array.from(pubkey), true).then(function(data) {
+                tx_sender.call(
+                    "com.greenaddress.vault.prepare_sweep_social",
+                    Array.from(pubkey),
+                    true,
+                    $scope.wallet.current_subaccount
+                ).then(function(data) {
                     data.prev_outputs = [];
                     for (var i = 0; i < data.prevout_scripts.length; i++) {
-                        data.prev_outputs.push(
-                            {privkey: key, script: data.prevout_scripts[i]})
+                        data.prev_outputs.push({
+                            // {keyPair: key} is a fake hdnode, which should be
+                            // enough for signing purposes
+                            privkey: new SchnorrSigningKey({keyPair: key}),
+                            script: new Bitcoin.Buffer.Buffer(
+                                data.prevout_scripts[i], 'hex'
+                            )
+                        })
                     }
                     // TODO: verify
-                    wallets.sign_and_send_tx($scope, data, false, null, gettext('Funds swept')).then(function() {
+                    return wallets.sign_and_send_tx($scope, data, false, null, gettext('Funds swept')).then(function() {
                         $location.url('/info/');
-                    }).finally(function() {
-                        that.sweeping = false;
                     });
-                }, function(error) {
+                }).catch(function(error) {
                     that.sweeping = false;
-                    if (error.args[0] == 'http://greenaddressit.com/error#notenoughmoney') {
+                    if (error.args && error.args[0] == 'http://greenaddressit.com/error#notenoughmoney') {
                         notices.makeNotice('error', gettext('Already swept or no funds found'));
                     } else {
-                        notices.makeNotice('error', error.args[1]);
+                        notices.makeError($scope, error);
                     }
-                });
+                }).finally(function() {
+                    that.sweeping = false;
+                });;
             }
 
             var that = this;

@@ -1,6 +1,7 @@
 var extend = require('xtend/mutable');
 var sha512 = require('sha512');
 var HWKeysManager = require('./../keys-managers/hw-keys-manager');
+var HashSwSigningWallet = require('./hash-sw-signing-wallet');
 var ScriptFactory = require('./../script-factory');
 
 module.exports = HwSigningWallet;
@@ -44,10 +45,19 @@ function signChallenge (challenge) {
 }
 
 function signTransaction (tx, options) {
-  return this.hw.signTransaction(tx, extend({
-    keysManager: this.keysManager,
-    scriptFactory: this.scriptFactory
-  }, options));
+  if (tx.tx.ins[0].prevOut.privkey && tx.tx.ins[0].prevOut.script) {
+    return new HashSwSigningWallet({
+      gaService: this.keysManager.gaService,
+      // not a correct arg here (not privkey), but it shouldn't matter if
+      // privkeys are provided:
+      hd: this.keysManager.pubHDWallet
+    }).signTransaction(tx, options);
+  } else {
+    return this.hw.signTransaction(tx, extend({
+      keysManager: this.keysManager,
+      scriptFactory: this.scriptFactory
+    }, options));
+  }
 }
 
 function derivePath () {

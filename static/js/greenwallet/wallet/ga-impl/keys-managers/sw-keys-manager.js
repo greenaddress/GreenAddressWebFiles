@@ -75,7 +75,11 @@ function getMyScanningKey (subaccountPointer, pointer) {
 }
 
 function getUtxoPrivateKey (utxo) {
-  return this.getMyPrivateKey(
-    utxo.subaccount.pointer, utxo.raw.pointer, utxo.raw.branch
-  );
+  if (utxo.privkey) {
+    return Promise.resolve(utxo.privkey);
+  } else {
+    return this.getMyPrivateKey(
+      utxo.subaccount.pointer, utxo.raw.pointer, utxo.raw.branch
+    );
+  }
 }

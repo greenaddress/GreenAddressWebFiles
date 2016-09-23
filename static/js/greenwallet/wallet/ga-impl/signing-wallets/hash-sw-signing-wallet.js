@@ -100,7 +100,15 @@ function signInput (tx, i) {
       if (!_this.schnorrTx) {
         sig = sig.toDER();
       }
-      if (prevOut.raw.branch === branches.EXTERNAL) {
+      if (prevOut.privkey) {
+        // privkey provided means we're signing p2pkh
+        tx.ins[ i ].script = bitcoin.script.pubKeyHashInput(
+          new Buffer([].concat(
+            Array.prototype.slice.call(sig), [ 1 ]
+          )), // our signature with SIGHASH_ALL
+          signingKey.getPublicKeyBuffer()
+        );
+      } else if (prevOut.raw.branch === branches.EXTERNAL) {
         // priv-der pkhash-spending signature
         return _this.keysManager.getMyPublicKey(
           prevOut.raw.subaccount, prevOut.raw.pointer, branches.EXTERNAL

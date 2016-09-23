@@ -1052,7 +1052,9 @@ function factory ($q, $rootScope, tx_sender, $location, notices, $uibModal,
             tx.tx.ins[i].hash
           ).toString('hex')
         }, prevOut),
-        subaccount: walletsService.getSubaccount($scope, prevOut.subaccount)
+        subaccount: walletsService.getSubaccount($scope, prevOut.subaccount),
+        privkey: prevOut.privkey,
+        script: prevOut.script
       };
     });
     var prevouts_d = btcMainConstructor.utxoFactory.fetchUtxoDataForTx(tx.tx);

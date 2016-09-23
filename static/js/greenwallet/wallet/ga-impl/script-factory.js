@@ -79,7 +79,9 @@ function createScriptForSubaccountAndPointer (subaccount, pointer) {
 }
 
 function getUtxoPrevScript (utxo) {
-  if (utxo.raw.branch === branches.EXTERNAL) {
+  if (utxo.script) {
+    return Promise.resolve(utxo.script);
+  } else if (utxo.raw.branch === branches.EXTERNAL) {
     // priv-derived branch
     return this.keysManager.getMyPublicKey(
       utxo.subaccount.pointer, utxo.raw.pointer, utxo.raw.branch
