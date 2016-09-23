@@ -1,4 +1,5 @@
 var BigInteger = require('bigi');
+var branches = require('../branches');
 var extend = require('xtend/mutable');
 
 module.exports = BaseKeysManager;
@@ -30,11 +31,11 @@ function getGASubAccountPubKey (subaccountPointer) {
   var gaNode = this.gaService.gaHDNode;
   if (subaccountPointer) {
     gaNode = _subpath(
-      gaNode.derive(3), this.gaService.gaUserPath
+      gaNode.derive(branches.SUBACCOUNT), this.gaService.gaUserPath
     ).derive(subaccountPointer);
   } else {
     gaNode = _subpath(
-      gaNode.derive(1), this.gaService.gaUserPath
+      gaNode.derive(branches.REGULAR), this.gaService.gaUserPath
     );
   }
   return gaNode;

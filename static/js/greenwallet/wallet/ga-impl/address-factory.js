@@ -1,3 +1,4 @@
+var branches = require('./branches');
 var extend = require('xtend/mutable');
 var bitcoin = require('bitcoinjs-lib');
 
@@ -60,7 +61,7 @@ function getScanningKeyForScript (script) {
     hd = Promise.resolve(this.subaccountHdWallet);
   } else if (this.subaccount.pointer) {
     hd = rootHdWallet.deriveHardened(
-      3
+      branches.SUBACCOUNT
     ).then(function (hd) {
       return hd.deriveHardened(this.subaccount.pointer);
     }.bind(this)).then(function (hd) {
@@ -73,7 +74,7 @@ function getScanningKeyForScript (script) {
     hd = Promise.resolve(rootHdWallet);
   }
   return hd.then(function (hd) {
-    return hd.deriveHardened(5);
+    return hd.deriveHardened(branches.BLINDED);
   }).then(function (hd) {
     return hd.deriveHardened(pointer);
   });

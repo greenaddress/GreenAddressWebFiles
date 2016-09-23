@@ -1,5 +1,6 @@
 var BigInteger = require('bigi');
 var bitcoin = require('bitcoinjs-lib');
+var branches = require('../branches');
 var crypto = require('crypto');
 var extend = require('xtend/mutable');
 var KeysManager = require('./../keys-managers/sw-keys-manager');
@@ -99,10 +100,10 @@ function signInput (tx, i) {
       if (!_this.schnorrTx) {
         sig = sig.toDER();
       }
-      if (prevOut.raw.branch === 2) {
+      if (prevOut.raw.branch === branches.EXTERNAL) {
         // priv-der pkhash-spending signature
         return _this.keysManager.getMyPublicKey(
-          prevOut.raw.subaccount, prevOut.raw.pointer, 2
+          prevOut.raw.subaccount, prevOut.raw.pointer, branches.EXTERNAL
         ).then(function (pubKey) {
           tx.ins[ i ].script = bitcoin.script.pubKeyHashInput(
             new Buffer([].concat(

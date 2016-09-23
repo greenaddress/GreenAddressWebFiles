@@ -1,4 +1,5 @@
 var bitcoin = require('bitcoinjs-lib');
+var branches = require('./branches');
 var extend = require('xtend/mutable');
 
 var SchnorrSigningKey = require('../bitcoinup').SchnorrSigningKey;
@@ -78,7 +79,7 @@ function createScriptForSubaccountAndPointer (subaccount, pointer) {
 }
 
 function getUtxoPrevScript (utxo) {
-  if (utxo.raw.branch === 2) {
+  if (utxo.raw.branch === branches.EXTERNAL) {
     // priv-derived branch
     return this.keysManager.getMyPublicKey(
       utxo.subaccount.pointer, utxo.raw.pointer, utxo.raw.branch

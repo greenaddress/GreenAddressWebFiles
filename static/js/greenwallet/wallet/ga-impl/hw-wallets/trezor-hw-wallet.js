@@ -1,4 +1,5 @@
 var bitcoin = require('bitcoinjs-lib');
+var branches = require('../branches');
 var extend = require('xtend/mutable');
 var SchnorrSigningKey = require('../../bitcoinup/schnorr-signing-key');
 var window = require('global/window');
@@ -149,14 +150,16 @@ function signTransaction (tx, options) {
               ).toString('hex')
             ),
             prev_index: tx.ins[ i ].index,
-            script_type: (tx.ins[ i ].prevOut.raw.branch === 2
+            script_type: (tx.ins[ i ].prevOut.raw.branch === branches.EXTERNAL
               ? 0  // SPENDADDRESS
               : 1  // SPENDMULTISIG
             ),
-            multisig: tx.ins[ i ].prevOut.raw.branch === 2 ? undefined : {
-              pubkeys: pubKeys,
-              m: 2
-            },
+            multisig: (tx.ins[ i ].prevOut.raw.branch === branches.EXTERNAL
+              ? undefined
+              : {
+                pubkeys: pubKeys,
+                m: 2
+              }),
             sequence: tx.ins[ i ].sequence
           });
         });
@@ -220,14 +223,14 @@ function signTransaction (tx, options) {
   function prevoutToPath (prevOut, fromSubaccount) {
     var path = [];
     if (prevOut.subaccount.pointer && !fromSubaccount) {
-      path.push(3 + 0x80000000);  // branch=SUBACCOUNT
+      path.push(branches.SUBACCOUNT + 0x80000000);
       path.push(prevOut.subaccount.pointer + 0x80000000);
     }
-    if (prevOut.raw.branch === 2) {
-      path.push(2 + 0x80000000);  // branch=EXTERNAL
+    if (prevOut.raw.branch === branches.EXTERNAL) {
+      path.push(branches.EXTERNAL + 0x80000000);
       path.push(prevOut.raw.pointer + 0x80000000);
     } else {
-      path.push(1);  // branch=REGULAR
+      path.push(branches.REGULAR);
       path.push(prevOut.raw.pointer);
     }
     return path;

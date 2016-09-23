@@ -1,4 +1,5 @@
 var BaseKeysManager = require('./base-keys-manager');
+var branches = require('../branches');
 var extend = require('xtend/mutable');
 
 module.exports = HWKeysManager;
@@ -22,7 +23,7 @@ function HWKeysManager (options) {
 function _getSubaccountPrefix (subaccountPointer, suffix) {
   suffix = suffix || '';
   return subaccountPointer
-    ? "3'/" + subaccountPointer + "'" + suffix
+    ? branches.SUBACCOUNT + "'/" + subaccountPointer + "'" + suffix
     : '';
 }
 
@@ -39,13 +40,13 @@ function _getKey (signing, subaccountPointer, pointer, keyBranch) {
   if (signing) {
     throw new Error('Signing keys are not implemented for HW wallets!');
   }
-  if (keyBranch === 5) {
+  if (keyBranch === branches.BLINDED) {
     throw new Error('Scanning keys are not implemented for HW wallets!');
   }
   if (keyBranch === undefined) {
-    keyBranch = 1; // REGULAR
+    keyBranch = branches.REGULAR;
   }
-  if (keyBranch === 2) {
+  if (keyBranch === branches.EXTERNAL) {
     // priv derived
     return this.hw.getPublicKey(
       this._getSubaccountPrefix(subaccountPointer, '/') +

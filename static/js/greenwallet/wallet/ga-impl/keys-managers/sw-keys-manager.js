@@ -1,4 +1,5 @@
 var BaseKeysManager = require('./base-keys-manager');
+var branches = require('../branches');
 var extend = require('xtend/mutable');
 
 module.exports = SWKeysManager;
@@ -20,7 +21,7 @@ function SWKeysManager (options) {
 
 function getSubaccountRootKey (subaccountPointer) {
   if (subaccountPointer) {
-    return this.privHDWallet.deriveHardened(3).then(function (hd) {
+    return this.privHDWallet.deriveHardened(branches.SUBACCOUNT).then(function (hd) {
       return hd.deriveHardened(subaccountPointer);
     });
   } else {
@@ -30,10 +31,10 @@ function getSubaccountRootKey (subaccountPointer) {
 
 function _getKey (signing, subaccountPointer, pointer, keyBranch) {
   if (keyBranch === undefined) {
-    keyBranch = 1; // REGULAR
+    keyBranch = branches.REGULAR;
   }
   var key;
-  var privDer = (keyBranch === 5 || keyBranch === 2);
+  var privDer = (keyBranch === branches.BLINDED || keyBranch === branches.EXTERNAL);
   if (subaccountPointer) {
     key = this.getSubaccountRootKey(subaccountPointer);
     if (!(privDer || signing)) {
@@ -70,7 +71,7 @@ function getMyPrivateKey (subaccountPointer, pointer, branch) {
 
 function getMyScanningKey (subaccountPointer, pointer) {
   // always priv, even when it's not a subaccount
-  return this._getKey(true, subaccountPointer, pointer, 5 /* = BLINDED branch */);
+  return this._getKey(true, subaccountPointer, pointer, branches.BLINDED);
 }
 
 function getUtxoPrivateKey (utxo) {
