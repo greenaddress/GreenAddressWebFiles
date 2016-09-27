@@ -233,6 +233,9 @@ function _doSignMessageCountdown (cb) {
   if (LedgerHWWallet.currentDevice.features.quickerVersion) {
     expectedSigningMs *= 0.74;
   }
+  if (LedgerHWWallet.currentDevice.isNanoS) {
+    expectedSigningMs /= 9;
+  }
 
   var elapsed = 0;
   cb(1);
@@ -502,6 +505,7 @@ function signTransaction (tx, options) {
           var this_ms = 0;
           var this_expected_ms = 6500;
           if (device.features.quickerVersion) this_expected_ms *= 0.55;
+          if (device.isNanoS) this_expected_ms /= 9;
           var interval = setInterval(function () {
             this_ms += 100;
             var progress = signedN / tx.ins.length;
