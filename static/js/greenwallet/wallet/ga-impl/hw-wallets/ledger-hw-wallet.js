@@ -22,6 +22,7 @@ extend(LedgerHWWallet.prototype, {
   deviceTypeName: 'Ledger',
   canSpendP2PKH: false,
   canSpendP2SH: canSpendP2SH,
+  isRecoverySupported: isRecoverySupported,
   getChallengeArguments: getChallengeArguments,
   getPublicKey: getPublicKey,
   signMessage: signMessage,
@@ -65,6 +66,10 @@ function canSpendP2SH () {
   });
 }
 
+function isRecoverySupported () {
+  return !LedgerHWWallet.currentDevice.isNanoS;
+}
+
 function pingDevice (device) {
   LedgerHWWallet.anyDevice = device;  // used for pin resetting
   return device.getFirmwareVersion_async().then(function (version) {
@@ -95,6 +100,7 @@ function listDevices (network, options) {
 function openDevice (network, options, device) {
   return cardFactory.getCardTerminal(device).getCard_async().then(function (dongle) {
     var ret = new BTChip(dongle);
+    ret.isNanoS = device.device.vendorId === 0x2c97;
     return pingDevice(ret).then(function () {  // populate features
       return ret;
     });
@@ -302,6 +308,7 @@ function setupSeed (mnemonic) {
         finalize: finalize,
         reuse: reuse,
         reset: reset,
+        canReset: _this.isRecoverySupported(),
         canSpendP2SH: canSpendP2SH,
         usingMnemonic: !!mnemonic
       };

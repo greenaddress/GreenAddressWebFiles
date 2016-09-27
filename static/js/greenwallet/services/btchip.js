@@ -26,6 +26,7 @@ function factory ($q, $interval, $uibModal, $rootScope, mnemonics, notices, focu
     // modal with close() method.
     var scope = $rootScope.$new();
     scope.btchip = {
+      can_reset: options.canReset,
       can_spend_p2sh: options.canSpendP2SH,
       already_setup: options.alreadySetup,
       gait_setup: false,

@@ -259,7 +259,12 @@ function SignupController($scope, $location, mnemonics, tx_sender, notices, wall
     $scope.signup.usbmodal = function() {
         var that = this;
         that.hw_wallet_processing = true;
-        hw_wallets.waitForHwWallet(cur_net).then(function (device) {
+        var opts = {
+            filterDeviceCb: function (device) {
+                return device.isRecoverySupported();
+            }
+        };
+        hw_wallets.waitForHwWallet(cur_net, opts).then(function (device) {
             device.setupSeed($scope.wallet.mnemonic).then(function () {
                 $scope.signup.has_btchip = true;
             });

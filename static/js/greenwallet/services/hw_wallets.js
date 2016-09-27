@@ -44,7 +44,8 @@ function factory ($q, trezor, btchip, $timeout, $rootScope, $uibModal) {
       });
       return BaseHWWallet.currentWallet;
     },
-    waitForHwWallet: function (cur_net) {
+    waitForHwWallet: function (cur_net, options) {
+      options = options || {};
       var d = $q.defer();
 
       var modal;
@@ -54,7 +55,9 @@ function factory ($q, trezor, btchip, $timeout, $rootScope, $uibModal) {
 
         allHwWallets.forEach(function (hw, i) {
           toRace.push(
-            hw.checkForDevices(cur_net, {failOnMissing: true}).catch(function (e) {
+            hw.checkForDevices(cur_net, {failOnMissing: true}).then(function (device) {
+              return [i, device];
+            }).catch(function (e) {
               return $q.reject([i, e]);
             })
           );
@@ -71,6 +74,12 @@ function factory ($q, trezor, btchip, $timeout, $rootScope, $uibModal) {
           return deferred.promise;
         }
         function cb (device) {
+          var i = device[0];
+          device = device[1];
+          if (options.filterDeviceCb && !options.filterDeviceCb(device)) {
+            // errback missing if given filter doesn't allow the current device
+            return eb([i, {missingDevice: true}]);
+          }
           d.resolve(device);
           if (modal) {
             modal.close();

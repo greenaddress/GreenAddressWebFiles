@@ -378,7 +378,12 @@ angular.module('greenWalletSettingsControllers',
             });
         },
         usbmodal: function() {
-            hw_wallets.waitForHwWallet(cur_net).then(function (dev) {
+            var opts = {
+                filterDeviceCb: function (device) {
+                    return device.isRecoverySupported();
+                }
+            };
+            hw_wallets.waitForHwWallet(cur_net, opts).then(function (dev) {
                 return dev.setupSeed($scope.wallet.mnemonic);
             }).catch(function (err) {
                 notices.makeNotice('error', err);

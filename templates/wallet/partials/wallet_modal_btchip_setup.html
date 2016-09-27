@@ -1,7 +1,7 @@
 <div class="modal-body text-center">
 	<div ng-show="btchip.already_setup">
     	<p>{{ _("Your Ledger is already set up. To use it with GreenAddress, you need to reset it. Do you want to reset your Ledger? This will be performed by entering wrong PIN 3 times in a row. <strong>You will lose your keys currently stored on the device.</strong>") }}</p>
-        <button ng-hide="btchip.resetting" type="button" class="btn btn-danger" ng-click="btchip.reset()">{{ _("Reset my Ledger") }}</button>
+        <button ng-hide="btchip.resetting || !btchip.can_reset" type="button" class="btn btn-danger" ng-click="btchip.reset()">{{ _("Reset my Ledger") }}</button>
         <button ng-hide="btchip.resetting || !btchip.can_spend_p2sh" type="button" class="btn btn-success" ng-click="btchip.reuse()">{{ _("Reuse current setup") }}</button>
         <button ng-show="btchip.resetting" type="button" disabled="disabled" class="btn btn-danger" ng-click="btchip.reset()">{{ _("Resetting...") }}
     	<span ng-show="btchip.replug_required">{{ _("Please unplug and plug your device in again") }} (<span>(( btchip.resets_remaining )) {{ _("wrong PINs remaining") }}</span>)</span></button>

@@ -15,6 +15,7 @@ extend(TrezorHWWallet.prototype, {
   deviceTypeName: 'TREZOR',
   canSpendP2PKH: true,
   canSpendP2SH: canSpendP2SH,
+  isRecoverySupported: isRecoverySupported,
   getChallengeArguments: getChallengeArguments,
   getPublicKey: getPublicKey,
   signMessage: signMessage,
@@ -40,6 +41,10 @@ function TrezorHWWallet (network) {
 
 function canSpendP2SH () {
   return Promise.resolve(true);
+}
+
+function isRecoverySupported () {
+  return true;
 }
 
 function promptPin () {
