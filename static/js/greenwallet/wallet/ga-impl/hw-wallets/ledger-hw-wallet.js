@@ -510,6 +510,7 @@ function signTransaction (tx, options) {
             this_ms += 100;
             var progress = signedN / tx.ins.length;
             progress += (1 / tx.ins.length) * (this_ms / this_expected_ms);
+            if (this_ms > this_expected_ms) return;
             if (progressCb) progressCb(Math.min(100, Math.round(100 * progress)));
           }, 100);
           return device.gaUntrustedHashTransactionInputFinalizeFull_async(tx).then(function (finished) {
