@@ -12,7 +12,7 @@ extend(HWKeysManager.prototype, {
 });
 
 function HWKeysManager (options) {
-  this.gaService = options.gaService;
+  BaseKeysManager.call(this, options);
 
   // optimisation for non-subaccounts subkeys and slow hardware wallets
   // (we don't need the priv-derivation to derive non-subaccount subkeys)

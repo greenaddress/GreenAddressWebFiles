@@ -12,6 +12,7 @@ extend(BaseKeysManager.prototype, {
 
 function BaseKeysManager (options) {
   this.gaService = options.gaService;
+  this._subaccountsGACache = {};
 
   // optimisation for non-subaccounts subkeys and slow hardware wallets
   // (we don't need the priv-derivation to derive non-subaccount subkeys)
@@ -28,17 +29,20 @@ function _subpath (hd, pathBuffer) {
 }
 
 function getGASubAccountPubKey (subaccountPointer) {
-  var gaNode = this.gaService.gaHDNode;
-  if (subaccountPointer) {
-    gaNode = _subpath(
-      gaNode.derive(branches.SUBACCOUNT), this.gaService.gaUserPath
-    ).derive(subaccountPointer);
-  } else {
-    gaNode = _subpath(
-      gaNode.derive(branches.REGULAR), this.gaService.gaUserPath
-    );
+  if (!this._subaccountsGACache[subaccountPointer]) {
+    var gaNode = this.gaService.gaHDNode;
+    if (subaccountPointer) {
+      gaNode = _subpath(
+        gaNode.derive(branches.SUBACCOUNT), this.gaService.gaUserPath
+      ).derive(subaccountPointer);
+    } else {
+      gaNode = _subpath(
+        gaNode.derive(branches.REGULAR), this.gaService.gaUserPath
+      );
+    }
+    this._subaccountsGACache[subaccountPointer] = gaNode;
   }
-  return gaNode;
+  return this._subaccountsGACache[subaccountPointer];
 }
 
 function getGAPublicKey (subaccountPointer, pointer) {
