@@ -6,6 +6,7 @@ var window = require('global/window');
 var gettext = window.gettext || function (s) { return s; };
 var bip39 = require('bip39');
 var HWWallet = require('./base-hw-wallet');
+var LedgerCordovaWrapper = require('./ledger-cordova-wrapper');
 var BTChip = require('../../hw-apis/ledger-js/api/BTChip');
 var ChromeapiPlugupCardTerminalFactory = require('../../hw-apis/ledger-js/api/ChromeapiPlugupCardTerminalFactory');
 var ByteString = require('../../hw-apis/ledger-js/api/ByteString');
@@ -87,7 +88,23 @@ function pingDevice (device) {
   });
 }
 
+function _listCordova (cb, eb) {
+  window.cordova.exec(function (result) {
+    if (result) {
+      cb([new LedgerCordovaWrapper()]);
+    } else {
+      cb([]);
+    }
+  }, eb, 'BTChip', 'has_dongle', []);
+}
+
 function listDevices (network, options) {
+  if (options.cordova) {
+    return new Promise(function (resolve, reject) {
+      _listCordova(resolve, reject);
+    });
+  }
+
   return cardFactory.list_async().then(function (list) {
     if (list.length) {
       return list;
@@ -98,6 +115,14 @@ function listDevices (network, options) {
 }
 
 function openDevice (network, options, device) {
+  if (options.cordova) {
+    return pingDevice(device).then(function () {  // populate features
+      return device.getVendorId();
+    }).then(function (vendorId) {
+      device.isNanoS = vendorId === 0x2c97;
+      return device;
+    });
+  }
   return cardFactory.getCardTerminal(device).getCard_async().then(function (dongle) {
     var ret = new BTChip(dongle);
     ret.isNanoS = device.device.vendorId === 0x2c97;
@@ -186,7 +211,11 @@ function checkForDevices (network, options) {
   try {
     nodeHid = require('node-hid');
   } catch (e) { }
-  if (!isChromeApp && !(nodeHid && nodeHid.devices)) {
+  if (window.cordova && window.cordova.platformId === 'android') {
+    return HWWallet.checkForDevices(
+      LedgerHWWallet, network, extend({cordova: true}, options)
+    );
+  } else if (!isChromeApp && !(nodeHid && nodeHid.devices)) {
     return Promise.reject('No Ledger support present');
   }
 
