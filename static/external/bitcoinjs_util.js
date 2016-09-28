@@ -217,7 +217,7 @@ if (self.cordova && cordova.platformId == 'ios') {
             tag.parentNode.insertBefore(script, tag);
         });
     }
-    if (self.Worker && !self.GAIT_IN_WORKER) {
+    if (!self.cordova && self.Worker && !self.GAIT_IN_WORKER) {
         (function() {
             var worker = new Worker(BASE_URL+"/static/js/bitcoinjs_util_worker.js"), callId = 0,
                 cbs = {};

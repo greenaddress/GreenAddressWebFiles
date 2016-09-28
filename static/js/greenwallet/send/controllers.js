@@ -328,8 +328,11 @@ angular.module('greenWalletSendControllers',
     };
     $scope.send_tx = {
         _signing_progress_cb: function(progress) {
-            this.signing = true;
-            this.signing_percentage = Math.max(this.signing_percentage, progress);
+            var _this = this;
+            $rootScope.safeApply(function () {
+                _this.signing = true;
+                _this.signing_percentage = Math.max(_this.signing_percentage, progress);
+            });
         },
         add_fee: {'party': 'sender',
                   'per_kb': true,

@@ -34,8 +34,16 @@ function SchnorrSigningKey (hdnode, options) {
 }
 
 function _signHash (msgIn, schnorr) {
-  checkContext();
   var _this = this;
+  if (window.cordova) {
+    // libsecp256k1 is slow in Cordova
+    return new Promise(function (resolve) {
+      window.setTimeout(function () {
+        resolve(_this.hdnode.keyPair.sign(msgIn));
+      }, 0);
+    });
+  }
+  checkContext();
   return new Promise(function (resolve, reject) {
     var key = _this.hdnode.keyPair;
     var sig, siglenPointer;
