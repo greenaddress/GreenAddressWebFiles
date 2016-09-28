@@ -156,7 +156,7 @@ angular.module('greenWalletSignupLoginControllers', ['greenWalletMnemonicsServic
     };
 
     $scope.login = function() {
-        if (!state.mnemonic && !use_pin_data.pin) {
+        if ($scope.logging_in || (!state.mnemonic && !use_pin_data.pin)) {
             return;
         }
 
