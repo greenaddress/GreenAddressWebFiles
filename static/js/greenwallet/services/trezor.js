@@ -8,11 +8,9 @@ var gettext = window.gettext;
 
 module.exports = factory;
 
-factory.dependencies = ['$q', '$interval', '$uibModal', 'notices', '$rootScope', 'focus'];
+factory.dependencies = ['$uibModal', 'notices', '$rootScope'];
 
-function factory ($q, $interval, $uibModal, notices, $rootScope, focus) {
-  var trezor_api, transport, trezor;
-
+function factory ($uibModal, notices, $rootScope) {
   BaseHWWallet.registerGUICallback('trezorSetupModal', showSetupModal);
   BaseHWWallet.registerGUICallback('trezorPINPrompt', promptPin);
   BaseHWWallet.registerGUICallback('trezorPassphrasePrompt', promptPassphrase);
@@ -119,91 +117,5 @@ function factory ($q, $interval, $uibModal, notices, $rootScope, focus) {
     });
   };
 
-  return {
-    getDevice: function (noModal, silentFailure) {
-      var deferred = $q.defer();
-      var is_chrome_app = require('has-chrome-storage');
-      if (!is_chrome_app) return deferred.promise;
-
-      var tick, modal;
-      var showModal = function () {
-        if (!noModal && !modal) {
-          modal = $uibModal.open({
-            templateUrl: BASE_URL + '/' + LANG + '/wallet/partials/wallet_modal_usb_device.html'
-          });
-          modal.result.finally(function () {
-            if (tick) {
-              $interval.cancel(tick);
-            }
-          });
-        }
-      };
-      var plugin_d;
-
-      if (trezor_api) {
-        plugin_d = $q.when(trezor_api);
-      } else {
-        plugin_d = window.trezor.load();
-      }
-      plugin_d.then(function (api) {
-        trezor_api = api;
-        tick = $interval(function () {
-          var enumerate_fun = is_chrome_app ? 'devices' : 'enumerate';
-          $q.when(trezor_api[enumerate_fun]()).then(function (devices) {
-            if (devices.length) {
-              if (noModal) {
-                $interval.cancel(tick);
-              } else if (modal) {
-                modal.close(); // modal close cancels the tick
-              } else {
-                $interval.cancel(tick);
-              }
-              var acquire_fun = is_chrome_app ? 'open' : 'acquire';
-              $q.when(trezor_api[acquire_fun](devices[0])).then(function (dev_) {
-                if (!is_chrome_app) dev_ = new trezor.Session(transport, dev_.session);
-                deferred.resolve(dev_.initialize().then(function (init_res) {
-                  var outdated = false;
-                  if (init_res.message.major_version < 1) outdated = true;
-                  else if (init_res.message.major_version === 1 &&
-                    init_res.message.minor_version < 3) outdated = true;
-                  if (outdated) {
-                    notices.makeNotice('error', gettext('Outdated firmware. Please upgrade to at least 1.3.0 at http://mytrezor.com/'));
-                    return $q.reject({outdatedFirmware: true});
-                  } else {
-                    return dev_;
-                  }
-                }).then(function (dev) {
-                  var trezor_dev = window.trezor_dev = dev;
-                  trezor_dev.on('pin', promptPin);
-                  trezor_dev.on('passphrase', promptPassphrase);
-                  trezor_dev.on('error', handleError);
-                  return trezor_dev;
-                }));
-              }, function (err) {
-                console.error(err.stack || err);
-                handleError('Opening device failed');
-              });
-            } else if (noModal) {
-              if (noModal === 'retry') return;
-              deferred.reject();
-            } else showModal();
-          }, function () {
-            if (noModal) {
-              if (noModal === 'retry') return;
-              $interval.cancel(tick);
-              deferred.reject();
-            } else showModal();
-          });
-        }, 1000);
-      }).catch(function (e) {
-        if (!silentFailure) {
-          $rootScope.safeApply(function () {
-            // notices.makeNotice('error', gettext('TREZOR initialisation failed') + ': ' + e)
-          });
-        }
-        deferred.reject({pluginLoadFailed: true});
-      });
-      return deferred.promise;
-    }
-  };
+  return {};
 }
