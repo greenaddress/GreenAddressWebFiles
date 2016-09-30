@@ -66,14 +66,23 @@ angular.module('greenWalletSendControllers',
             var to_addr = this.recipient.constructor === String ? this.recipient : this.recipient.address;
             var parsed_uri = parse_bitcoin_uri(to_addr);
             if (parsed_uri.recipient) to_addr = parsed_uri.recipient;
-            try {
-                var decoded = Bitcoin.bs58check.decode(to_addr);
-            } catch (e) {
-                notices.makeNotice('error', gettext('Invalid address'));
-                that.sending = false;
-                return;
+            var addrDeferred, isConfidential;
+            if (to_addr.indexOf('GA') === 0) {
+                addrDeferred = tx_sender.call(
+                    'com.greenaddress.vault.fund_receiving_id', to_addr
+                ).then(function(p2sh) {
+                    to_addr = p2sh;
+                });
+            } else {
+                try {
+                    var decoded = Bitcoin.bs58check.decode(to_addr);
+                } catch (e) {
+                    notices.makeNotice('error', gettext('Invalid address'));
+                    that.sending = false;
+                    return;
+                }
+                isConfidential = (decoded[0] == 25 || decoded[0] == 10);
             }
-            var isConfidential = (decoded[0] == 25 || decoded[0] == 10);
             var satoshis =
                 this.spend_all ? "ALL" : this.amount_to_satoshis(this.amount);
             $rootScope.is_loading += 1;
@@ -81,13 +90,16 @@ angular.module('greenWalletSendControllers',
             var subaccount = $scope.wallet.current_subaccount || 0;
             constructor = tx_sender.gaWallet.txConstructors[$scope.wallet.current_asset][subaccount];
             // constructors are only available when connected
-            var refresh = [constructor.refreshUtxo()];
+            var refreshAndAddr = [constructor.refreshUtxo()];
             var feeConstructor;
             if ($scope.wallet.current_asset !== 1) {
                 feeConstructor = tx_sender.gaWallet.txConstructors[ 1 ][subaccount];
-                refresh.push(feeConstructor.refreshUtxo());
+                refreshAndAddr.push(feeConstructor.refreshUtxo());
             }
-            return $q.all(refresh).then(function() {
+            if (addrDeferred) {
+                refreshAndAddr.push(addrDeferred);
+            }
+            return $q.all(refreshAndAddr).then(function() {
                 var destination;
                 if (isConfidential) {
                     destination = {
