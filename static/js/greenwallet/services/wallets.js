@@ -1054,13 +1054,16 @@ function factory ($q, $rootScope, tx_sender, $location, notices, $uibModal,
         }, prevOut),
         subaccount: walletsService.getSubaccount($scope, prevOut.subaccount),
         privkey: prevOut.privkey,
-        script: prevOut.script
+        script: (typeof prevOut.script === 'string'
+          ? new Bitcoin.Buffer.Buffer(prevOut.script, 'hex')
+          : prevOut.script
+        )
       };
     });
     var prevouts_d = btcMainConstructor.utxoFactory.fetchUtxoDataForTx(tx.tx);
 
     var d_all = prevouts_d.then(function (prevouts) {
-      return walletsService.sign_tx($scope, tx);
+      return walletsService.sign_tx($scope, tx, options);
     });
     var send_after = options.sendAfter || $q.when();
     d_all = d_all.then(function (signatures) {
@@ -1074,7 +1077,7 @@ function factory ($q, $rootScope, tx_sender, $location, notices, $uibModal,
       return d_all.then(function (signatures) {
         if (data.requires_2factor) {
           return walletsService.get_two_factor_code($scope, 'send_tx').then(function (twofac_data) {
-            return [signatures, twofac_data12];
+            return [signatures, twofac_data];
           });
         } else {
           return [signatures, null];

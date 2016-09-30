@@ -214,7 +214,11 @@ angular.module('greenWalletSendControllers',
                     rbf_optin: $scope.wallet.appearance.replace_by_fee,
                     prevouts_mode: 'http'}).then(function(data) {
                 that.signing = true;
-                return wallets.sign_and_send_tx($scope, data, undefined, undefined, undefined, that._signing_progress_cb.bind(that)).then(function() {
+                var progressCb = that._signing_progress_cb.bind(that);
+                return wallets.sign_and_send_tx(
+                    $scope, data,
+                    {signingProgressCallback: progressCb}
+                ).then(function() {
                     $location.url('/info/');
                 });
             }, function(error) {
