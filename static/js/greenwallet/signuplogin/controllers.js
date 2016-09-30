@@ -322,117 +322,34 @@ angular.module('greenWalletSignupLoginControllers', ['greenWalletMnemonicsServic
 
     var hwDevice = null;
 
-    var login_with_trezor = function() {
-        $scope.logging_in = true;
-        state.login_error = undefined;
-        return wallets.login_trezor($scope, trezor_dev).then(function(data) {},
-            function(err) {
-                $rootScope.safeApply(function() {
-                    $scope.logging_in = false;
-                    if (err.message) return;  // handled by TREZOR handleError in services.js
-                    notices.makeNotice('error', 'Account not found. Please create a new account with your TREZOR.');
-                    $location.url('/create/');
-                });
-            });
-    }
-
     $scope.login_with_hw = function() {
         gaEvent('Login', 'HardwareLogin');
-        if (cur_net.useNewWalletJs) {
-            // new refactored implementation, unfinished
-            var opts = {progressCb: progressCb};
-            $scope.logging_in = true;
-            wallets.loginWithHWWallet($scope, hwDevice, opts).catch(function(err) {
-                notices.makeNotice('error', err);
-                $scope.logging_in = false;
-            });
-            return;
-        }
+        // new refactored implementation, unfinished
+        var opts = {progressCb: progressCb};
+        $scope.logging_in = true;
+        wallets.loginWithHWWallet($scope, hwDevice, opts).catch(function(err) {
+            notices.makeNotice('error', err);
+            $scope.logging_in = false;
+        });
+
         function progressCb (progress) {
             $rootScope.safeApply (function () {
                 $scope.hardware_progress = progress;
             });
         }
-
-        if (trezor_dev) { login_with_trezor(); return; }
-        btchip.getDevice().then(function(btchip_dev) {
-            btchip.promptPin('', function(err, pin) {
-                if (!pin) return;
-                btchip_dev.app.verifyPin_async(new ByteString(pin, ASCII)).then(function() {
-                    var expected_signing_ms = 6000;
-                    if (btchip_dev.features.quickerVersion) expected_signing_ms *= 0.74;
-                    var restart_countdown = function() {
-                        var elapsed_signing_ms = 0
-                        $scope.hardware_progress = 1;
-                        var countdown = $interval(function() {
-                            elapsed_signing_ms += 100;
-                            $scope.hardware_progress = Math.min(100, Math.round(100*elapsed_signing_ms/expected_signing_ms));
-                            if ($scope.hardware_progress >= 100) {
-                                // second login is faster because pubkey is already derived:
-                                expected_signing_ms = 4500;
-                                if (btchip_dev.features.quickerVersion) expected_signing_ms *= 0.74;
-                                $interval.cancel(countdown);
-                            }
-                        }, 100);
-                    };
-                    restart_countdown();
-                    $scope.logging_in = true;
-                    btchip_dev.app.getWalletPublicKey_async('').then(function(result) {
-                        wallets.login_btchip($scope, btchip_dev, result, restart_countdown).finally(function() {
-                            $scope.logging_in = false;
-                        });
-                    }).fail(function(error) {
-                        $scope.logging_in = false;
-                        btchip_dev.dongle.disconnect_async();
-                        notices.makeNotice("error", error);
-                    });
-                }).fail(function(error) {
-                    btchip_dev.dongle.disconnect_async();
-                    if (error.indexOf("6982") >= 0) {
-                        notices.makeNotice("error", gettext("Invalid PIN"));
-                    } else if (error.indexOf("63c2") >= 0) {
-                        notices.makeNotice("error", gettext("Invalid PIN, 2 retries left"));
-                    } else if (error.indexOf("63c1") >= 0) {
-                        notices.makeNotice("error", gettext("Invalid PIN, 1 retry left"));
-                    } else if (error.indexOf("63c0") >= 0) {
-                        notices.makeNotice("error", gettext("Invalid PIN, dongle wiped"));
-                    } else if (error.indexOf("6985") >= 0) {
-                        notices.makeNotice("error", gettext("Dongle is not set up"));
-                    } else if (error.indexOf("6faa") >= 0) {
-                        notices.makeNotice("error", gettext("Dongle is locked - reconnect the dongle and retry"));
-                    } else {
-                        notices.makeNotice("error", error);
-                    }
-                });
-            });
-        });
     };
 
     var template = gettext("{hardware_wallet_name} Login");
-
-    if (cur_net.useNewWalletJs) {
-        // new refactored implementation, unfinished
-        var checkForHwWallets = function () {
-            hw_wallets.checkDevices(cur_net).then(function (dev) {
-                state.hw_detected = template.replace('{hardware_wallet_name}', dev.deviceTypeName);
-                hwDevice = dev;
-            }, function (err) {
-                notices.makeNotice('error', err.message);
-                setTimeout(1000, checkForHwWallets);
-            });
-        };
-        checkForHwWallets();
-    } else {
-        btchip.getDevice('retry').then(function (btchip) {
-            btchip.dongle.disconnect_async();
-            state.hw_detected = template.replace('{hardware_wallet_name}', 'BTChip');
+    var checkForHwWallets = function () {
+        hw_wallets.checkDevices(cur_net).then(function (dev) {
+            state.hw_detected = template.replace('{hardware_wallet_name}', dev.deviceTypeName);
+            hwDevice = dev;
+        }, function (err) {
+            notices.makeNotice('error', err.message);
+            setTimeout(1000, checkForHwWallets);
         });
-
-        trezor.getDevice('retry', true).then(function (trezor) {
-            state.hw_detected = template.replace('{hardware_wallet_name}', 'TREZOR');
-            trezor_dev = trezor;
-        });
-    }
+    };
+    checkForHwWallets();
 
     $scope.read_qr_code = function read_qr_code($event) {
         gaEvent('Login', 'QrScanClicked');

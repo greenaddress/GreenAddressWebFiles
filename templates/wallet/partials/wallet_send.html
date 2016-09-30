@@ -17,15 +17,9 @@
         <hr class="double">
       </div>
       <div class="form-group">
-        <label class="col-sm-2 control-label" for="voucher_text" ng-show="send_tx.voucher">{{ _("Voucher Text (optional)") }}</label>
-        <label class="col-sm-2 control-label" for="recipient" ng-hide="send_tx.voucher">{{ _("Recipient") }}</label>
-        <div class="col-sm-10" ng-show="send_tx.voucher">
-
-            <input ng-model="send_tx.voucher_text" class="form-control" type="text" id="voucher_text" placeholder="{{ _('Enter any clear text message that will appear on the voucher') }}" />
-
-        </div>
-        <div class="col-sm-10" ng-hide="send_tx.voucher">
-          <div class="input-group">
+        <label class="col-sm-2 control-label" for="recipient">{{ _("Recipient") }}</label>
+        <div class="col-sm-10">
+          <divs class="input-group">
             <span class="input-group-addon">
               <span class="glyphicon glyphicon-search"></span>
             </span>
@@ -55,7 +49,7 @@
               </span>
               <a class="btn btn-default" ng-show="scanning_qr_video" ng-click="send_tx.stop_scanning_qr_code()">{{ _("Cancel") }}</a>
             </span>
-          </div>
+          </divs>
           {% if not cdvapp %}
               <input class="ng-hide" type="file" id="qrcodeinput_send" accept="image/*" capture="camera">
               <canvas id="qr-canvas" class="ng-hide"></canvas>
@@ -64,22 +58,6 @@
         </div>
       </div>
 
-      <div class="form-group" ng-show="send_tx.advanced_options_visible && send_tx.recipient.type != 'payreq' && !send_tx.recipient_overridden">
-        <div class="col-sm-offset-2 col-sm-10">
-           <label>
-            <input type="checkbox" ng-model="send_tx.voucher" />
-            <span>{{ _("Create a voucher instead of sending to a recipient") }}</span>
-          </label>
-        </div>
-      </div>
-
-      <div class="form-group" ng-hide="!send_tx.voucher && (send_tx.recipient_is_btcaddr() || wallet.send_unencrypted)">
-        <label class="col-sm-2 control-label" for="encpassphrase">{{ _("Encryption passphrase") }}</label>
-        <div class="col-sm-10">
-          <input class="form-control" id="encpassphrase" ng-model="send_tx.passphrase" class="form-control" type="text" />
-          <small ng-show="!send_tx.passphrase" class="label label-warning" style="white-space: normal"><strong>{{ _("NOTE") }}</strong>: {{ _("The receiving private key will not be encrypted unless you provide a passphrase. Unencrypted private keys are prone to eavesdropping!") }}</small>
-        </div>
-      </div>
       <hr>
       <div class="form-group">
         <label class="col-sm-2 control-label" for="amount">{{ _("Amount") }}</label>
@@ -207,11 +185,10 @@
       </div>
       <hr class="double">
       <button ng-disabled="send_tx.sending || send_tx.processing_payreq" class="btn btn-primary btn-block-xs pull-right" ng-click="send_tx.send_money()" href=""><i class="glyphicon glyphicon-send"></i>
-        <span ng-hide="send_tx.voucher || (send_tx.sending && send_tx.signing)">{{ _("Review &amp; Send") }}</span>
-        <span ng-show="!send_tx.voucher && send_tx.sending && send_tx.signing">
+        <span ng-hide="send_tx.sending && send_tx.signing">{{ _("Review &amp; Send") }}</span>
+        <span ng-show="send_tx.sending && send_tx.signing">
           <span ng-show="send_tx.verifying">{{ _("Verifying") }} ((send_tx.verifying_percentage))% /</span>
           {{ _("Signing") }} ((send_tx.signing_percentage))%</span>
-        <span ng-show="send_tx.voucher">{{ _("Create a Voucher") }}</span>
       </button>
       <div class="pull-right" ng-hide="send_tx.advanced_options_visible">
         <a class="btn btn-default" ng-click="send_tx.advanced_options_visible = true"><i class="glyphicon glyphicon-wrench"></i> {{ _("Show advanced options") }}</a>
