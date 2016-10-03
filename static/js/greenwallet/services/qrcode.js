@@ -82,7 +82,7 @@ function factory ($q, cordovaReady, $timeout, notices) {
             v.mozSrcObject = stream;
             v.play();
           } else {
-            v.src = stream;
+            v.src = window.URL.createObjectURL(stream);
           }
           setTimeout(captureToCanvas, 500);
         };
@@ -140,37 +140,49 @@ function factory ($q, cordovaReady, $timeout, notices) {
             img.src = URL.createObjectURL(event.target.files[0]);
           });
         };
-        var tryGUM = function (source) {
-          if (n.getUserMedia && !$scope.gotGUMerror) {
-            n.getUserMedia({video: source, audio: false}, success, error);
+        var tryGUM = function (source, useMediaDevices) {
+          if (useMediaDevices && n.mediaDevices && n.mediaDevices.getUserMedia) {
+            n.mediaDevices.getUserMedia(source).then(success).catch(error);
+            $event.preventDefault();
+          } else if (n.getUserMedia && !$scope.gotGUMerror) {
+            n.getUserMedia(source, success, error);
             $event.preventDefault();
           } else if (n.webkitGetUserMedia && !$scope.gotGUMerror) {
             webkit = true;
-            n.webkitGetUserMedia({video: source, audio: false}, success, error);
+            n.webkitGetUserMedia(source, success, error);
             $event.preventDefault();
           } else if (n.mozGetUserMedia && !$scope.gotGUMerror) {
             moz = true;
-            n.mozGetUserMedia({video: source, audio: false}, success, error);
+            n.mozGetUserMedia(source, success, error);
             $event.preventDefault();
           } else {
             scan_input();
           }
         };
-        if (window.MediaStreamTrack && window.MediaStreamTrack.getSources && !$scope.gotGUMerror) {
+        if (n.mediaDevices && n.mediaDevices.enumerateDevices && !$scope.gotGUMerror) {
+          $event.preventDefault();
+          // facingMode can now be passed to getUserMedia, no need to filter manually:
+          tryGUM(
+            {
+              video: {facingMode: {exact: 'environment'}},
+              audio: false
+            }, true
+          );
+        } else if (window.MediaStreamTrack && window.MediaStreamTrack.getSources && !$scope.gotGUMerror) {
           $event.preventDefault();
           window.MediaStreamTrack.getSources(function (sources) {
             var found = false;
             for (var i = 0; i < sources.length; i++) {
               if (sources[i].kind === 'video' && sources[i].facing === 'environment') {
                 found = true;
-                tryGUM({optional: [{sourceId: sources[i].id}]});
+                tryGUM({video: {optional: [{sourceId: sources[i].id}]}, audio: false});
                 break;
               }
             }
-            if (!found) tryGUM(true);
+            if (!found) tryGUM({video: true, audio: false});
           });
         } else {
-          tryGUM(true);
+          tryGUM({video: true, audio: false});
         }
       }
       return deferred.promise;
