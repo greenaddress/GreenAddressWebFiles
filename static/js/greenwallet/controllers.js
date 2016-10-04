@@ -460,7 +460,8 @@ angular.module('greenWalletControllers', [])
         }
         tx_sender.call('com.greenaddress.vault.prepare_redeposit', txos_in,
                 {rbf_optin: $scope.wallet.appearance.replace_by_fee, prevouts_mode: 'http'}).then(function(data) {
-            wallets.sign_and_send_tx($scope, data, false, twofac_data).then(function() {
+            data.twofactor_data = twofac_data;
+            wallets.sign_and_send_tx($scope, data).then(function() {
                 deferred.resolve();
             }, function(err) {
                 deferred.reject(err);

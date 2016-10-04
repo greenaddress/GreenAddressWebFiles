@@ -709,6 +709,8 @@ function factory ($q, $rootScope, tx_sender, $location, notices, $uibModal,
     return subaccount;
   };
   walletsService.sign_and_send_tx = function ($scope, data, options) {
+    options = options || {};
+
     var d = $q.defer();
     var tx = new Transaction();
     tx.tx = Bitcoin.contrib.transactionFromHex(data.tx);
@@ -747,12 +749,12 @@ function factory ($q, $rootScope, tx_sender, $location, notices, $uibModal,
     });
     var do_send = function () {
       return d_all.then(function (signatures) {
-        if (data.requires_2factor) {
+        if (data.requires_2factor && !data.twofactor_data) {
           return walletsService.get_two_factor_code($scope, 'send_tx').then(function (twofac_data) {
             return [signatures, twofac_data];
           });
         } else {
-          return [signatures, null];
+          return [signatures, data.twofactor_data || null];
         }
       }).then(function (signatures_twofactor) {
         var signatures = signatures_twofactor[0], twofactor = signatures_twofactor[1];
