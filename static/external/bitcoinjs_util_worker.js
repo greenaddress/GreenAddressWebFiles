@@ -13,15 +13,8 @@ var isPatched = false;
 var patchIfNotPatched = function(isAlpha) {
     if (isPatched) return;
     isPatched = true;
-    if (isAlpha) {
-        importScripts('secp256k1-alpha/secp256k1-alpha.js');
-        Bitcoin.contrib.init_secp256k1(Module, isAlpha);
-        // TODO: implementation of getPublicKeyBuffer for alpha's libsecp256k1
-        return;
-    } else {
-        importScripts('secp256k1.js');
-        Bitcoin.contrib.init_secp256k1(Module, isAlpha);
-    }
+    importScripts('secp256k1-alpha/secp256k1-alpha.js');
+    Bitcoin.contrib.init_secp256k1(Module);
 }
 // segnet hack (belongs in bitcoinjs really)
 segnet = {pubKeyHash: 30, scriptHash: 50, wif: 158,
