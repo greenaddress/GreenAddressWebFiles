@@ -245,6 +245,9 @@ angular.module('greenWalletSignupLoginControllers', ['greenWalletMnemonicsServic
                             wallets.openInitialPage($scope.wallet, data.has_txs);
                         });
                     }
+                }).finally(function () {
+                    $scope.logging_in = false;
+                    state.seed_progress = 0;
                 });
             });
         }, function(e) {
@@ -370,6 +373,13 @@ angular.module('greenWalletSignupLoginControllers', ['greenWalletMnemonicsServic
 
     var pin_attempts_left = 3;
     $scope.use_pin = function(storage_suffix) {
+        try {
+            return $scope._use_pin(storage_suffix)
+        } catch (e) {
+            return Promise.reject(e);
+        }
+    };
+    $scope._use_pin = function(storage_suffix) {
         storage_suffix = storage_suffix || '';
         notices.setLoadingText("Checking PIN");
         return tx_sender.call('com.greenaddress.pin.get_password', use_pin_data.pin, state['pin_ident'+storage_suffix]).then(
