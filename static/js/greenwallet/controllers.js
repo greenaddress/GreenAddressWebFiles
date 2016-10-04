@@ -435,6 +435,11 @@ angular.module('greenWalletControllers', [])
           // don't logout on initial navigation
           return;
         }
+        if (oldValue === '/') {
+          // don't break redeposit modal which is displayed directly after '/'
+          // (on login)
+          return;
+        }
         $uibModalStack.dismissAll();
         if (newValue === '/') tx_sender.logout();  // logout on navigation to login page
     });
