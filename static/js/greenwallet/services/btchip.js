@@ -7,11 +7,19 @@ var LANG = window.LANG;
 
 module.exports = factory;
 
-factory.dependencies = ['$q', '$uibModal', '$rootScope', 'focus'];
+factory.dependencies = ['$q', '$uibModal', '$rootScope', 'focus', 'notices'];
 
-function factory ($q, $uibModal, $rootScope, focus) {
+function factory ($q, $uibModal, $rootScope, focus, notices) {
   BaseHWWallet.registerGUICallback('ledgerSetupModal', showSetupModal);
   BaseHWWallet.registerGUICallback('ledgerPINPrompt', showPINPrompt);
+  BaseHWWallet.registerGUICallback('ledgerPleaseOpenBitcoinApp', pleaseOpenApp);
+
+  function pleaseOpenApp () {
+    notices.makeNotice(
+      'error',
+      gettext('Ledger Dashboard detected, please open the Bitcoin app to access.')
+    );
+  }
 
   function showSetupModal (options) {
     // show a modal asking the user to either setup a HW device, or reset/reuse

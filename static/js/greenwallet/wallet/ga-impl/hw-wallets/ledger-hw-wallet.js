@@ -85,6 +85,12 @@ function pingDevice (device) {
     features.quickerVersion =
       firmwareVersion.toString(HEX) >= '0001040b';
     device.features = features;
+  }).catch(function (err) {
+    if (err.indexOf('6d00') !== -1) {
+      HWWallet.guiCallbacks.ledgerPleaseOpenBitcoinApp();
+    } else {
+      return Promise.reject(err);
+    }
   });
 }
 
@@ -181,6 +187,9 @@ function _setupWrappers (device) {
                   return Promise.reject(gettext('Dongle is not set up'));
                 } else if (error.indexOf && error.indexOf('6faa') >= 0) {
                   return Promise.reject(gettext('Dongle is locked - reconnect the dongle and retry'));
+                } else if (error.indexOf('6d00') !== -1) {
+                  HWWallet.guiCallbacks.ledgerPleaseOpenBitcoinApp();
+                  return Promise.reject(error);
                 } else {
                   return Promise.reject(error);
                 }
