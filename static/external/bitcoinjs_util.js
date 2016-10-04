@@ -193,11 +193,7 @@ if (self.cordova && cordova.platformId == 'ios') {
             var ready = false;
             var script = document.createElement('script')
             script.type = 'text/javascript';
-            if (cur_net.isAlpha) {
-                script.src = '/static/js/secp256k1-alpha/secp256k1-alpha.js';
-            } else {
-                script.src = '/static/js/secp256k1.js';
-            }
+            script.src = '/static/js/secp256k1-alpha/secp256k1-alpha.js';
             script.onload = script.onreadystatechange = function () {
                 if (!ready && (!this.readyState || this.readyState == 'complete')) {
                     ready = true;
