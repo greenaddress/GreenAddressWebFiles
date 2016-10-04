@@ -149,7 +149,7 @@ function SignupController($scope, $location, mnemonics, tx_sender, notices, wall
                     $scope.signup.unexpected_error = err;
                 }, function(progress) {
                     // any progress means the mnemonic is valid so we can display it
-                    if (!($scope.signup.trezor_detected || $scope.has_btchip)) {
+                    if (!$scope.signup.hw_detected) {
                         $scope.wallet.mnemonic = $scope.signup.mnemonic = mnemonic;
                         $scope.signup.seed_progress = Math.round(progress/2);
                     }
@@ -275,54 +275,38 @@ function SignupController($scope, $location, mnemonics, tx_sender, notices, wall
 
     var hwDevice;
 
-    $scope.signup.usb_hwseed_modal = function() {
-        if (!is_chrome_app) { hw_detector.showModal(); return; }
-        var that = this;
-        that.hw_wallet_processing = true;
-        hw_wallets.waitForHwWallet(cur_net).then(function (hwDevice_) {
-            if (hwDevice_.deviceTypeName === 'TREZOR') {
-                $scope.$apply(function () {
-                    that.hw_wallet_processing = false;
-                });
-                // special flow handled below
-                return;
+    if (first_page) {
+        // automatically trigger the HW wallet setup when device is detected:
+        hw_wallets.checkDevices(cur_net).then(function (hwDevice_) {
+            if (secured_confirmed_resolved) {
+                return;  // already confirmed the sw mnemonic
             }
             hwDevice = hwDevice_;
-            return hwDevice.setupSeed().then(function(result) {
-                delete $scope.wallet.mnemonic;
-                $scope.signup.mnemonic = gettext('Mnemonic not available when using hardware wallet seed');
-
-                $scope.signup.has_btchip = true;
-                $scope.signup.btchip_pin = result.pin;
-            });
-        }).finally(function() { that.hw_wallet_processing = false; })
-    }
-
-    if (first_page) {
-        hw_wallets.checkDevices(cur_net).then(function (hwDevice_) {
-            if (secured_confirmed_resolved || hwDevice_.deviceTypeName !== 'TREZOR') return;
-            // if (hw_detector.modal) {
-            //     hw_detector.success = true;
-            //     hw_detector.modal.close();
-            // }
-            hwDevice = hwDevice_;
-            hwDevice.getPublicKey().then(function () {
-                $scope.$apply(function () {
-                    $scope.signup.has_trezor = true;;
-                    delete $scope.wallet.mnemonic;
-                    $scope.signup.trezor_detected = true;
-                });
-            }).catch(function (e) {
-                if (e.code === "Failure_NotInitialized") {
+            if (hwDevice_.deviceTypeName === 'TREZOR') {
+                hwDevice.getPublicKey().then(function () {
                     $scope.$apply(function () {
-                        $scope.signup.empty_trezor = true;;
                         delete $scope.wallet.mnemonic;
-                        $scope.signup.trezor_detected = true;
+                        $scope.signup.hw_detected = true;
                     });
-                } else {
-                    notices.makeNotice('error', e);
-                }
-            });
+                }).catch(function (e) {
+                    if (e.code === "Failure_NotInitialized") {
+                        $scope.$apply(function () {
+                            $scope.signup.hw_detected = true;
+                            $scope.signup.empty_trezor = true;
+                            delete $scope.wallet.mnemonic;
+                        });
+                    } else {
+                        notices.makeNotice('error', e);
+                    }
+                });
+            } else {
+                hwDevice.setupSeed().then(function () {
+                    delete $scope.wallet.mnemonic;
+                    $scope.signup.hw_detected = true;
+                });
+            }
+        }, function (err) {
+            notices.makeNotice('error', err.message);
         });
     }
 

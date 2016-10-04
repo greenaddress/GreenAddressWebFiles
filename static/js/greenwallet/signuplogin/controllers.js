@@ -343,16 +343,12 @@ angular.module('greenWalletSignupLoginControllers', ['greenWalletMnemonicsServic
     };
 
     var template = gettext("{hardware_wallet_name} Login");
-    var checkForHwWallets = function () {
-        hw_wallets.checkDevices(cur_net).then(function (dev) {
-            state.hw_detected = template.replace('{hardware_wallet_name}', dev.deviceTypeName);
-            hwDevice = dev;
-        }, function (err) {
-            notices.makeNotice('error', err.message);
-            setTimeout(1000, checkForHwWallets);
-        });
-    };
-    checkForHwWallets();
+    hw_wallets.checkDevices(cur_net).then(function (dev) {
+        state.hw_detected = template.replace('{hardware_wallet_name}', dev.deviceTypeName);
+        hwDevice = dev;
+    }, function (err) {
+        notices.makeNotice('error', err.message);
+    });
 
     $scope.read_qr_code = function read_qr_code($event) {
         gaEvent('Login', 'QrScanClicked');
