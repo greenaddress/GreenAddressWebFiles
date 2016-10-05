@@ -5,7 +5,8 @@ import errno
 import gettext
 import glob
 import os
-import subprocess
+from babel.messages.pofile import read_po
+from babel.messages.mofile import write_mo
 
 import gettext_finder
 
@@ -134,18 +135,9 @@ def compile_domain(domain):
     for locale in gettext_finder.GETTEXT_LANGUAGES:
         popath = os.path.join('locale', locale, "LC_MESSAGES", domain + ".po")
         mopath = os.path.join('locale', locale, "LC_MESSAGES", domain + ".mo")
-        args = [
-            'msgfmt',
-            '--check-format',
-            '-o',
-            mopath,
-            popath,
-        ]
-        try:
-            subprocess.check_output(args)
-        except subprocess.CalledProcessError:
-            print "Error while processing domain/locale %s/%s" % (
-                domain, locale)
+
+        with open(mopath, 'w') as mo_f, open(popath) as po_f:
+            write_mo(mo_f, read_po(po_f))
 
 
 def main():

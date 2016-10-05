@@ -1,9 +1,11 @@
-import subprocess, logging, os, os.path, sys
+import logging, os, os.path, sys, cStringIO
 from itertools import dropwhile
 
+from babel.messages.extract import extract_from_dir
+from babel.messages.catalog import Catalog
+from babel.messages.pofile import write_po, read_po
 import gettext
 import jinja2
-import jslex
 
 reload(sys)
 sys.setdefaultencoding('utf-8')  # make jinja decode utf8 strings automatically
@@ -63,17 +65,17 @@ jinja_env = jinja2.Environment(
 
 def start():
     #log.info("WARNING: .pox and .mox files are produces as outputs. CHANGE IT FOR REAL USE")
-    filenames = find_all_files(".", [".py"], IGNORED_DIRS)
     filenames_html = []
     filenames_html += find_all_files('templates', [".html"], IGNORED_DIRS)
-    filenames_js = find_all_files("./build/static/", [".js"], IGNORED_DIRS)
 
     # Run xgettext.
-    server_msgs = cleanup_msgs(run_gettext(filenames, for_js=False), True)
+    # Don't run for_js=False here since we don't have *.py in the webfiles repo
+    server_msgs = ''
+    # server_msgs = cleanup_msgs(run_gettext('.', for_js=False), True)
     for filename in filenames_html:
         msgs = run_jinja_extract(filename)
         server_msgs += "\n" + msgs
-    js_msgs = cleanup_msgs(run_gettext(filenames_js, for_js=True), True)
+    js_msgs = cleanup_msgs(run_gettext('./build/static', for_js=True), True)
 
     with open(os.path.join("locale", "django.pot"), "w") as f:
         f.write(server_msgs)
@@ -107,58 +109,19 @@ def find_all_files(path, extensions, ignored_dirs):
     return matches
 
 
-def run_gettext(filenames, for_js):
-    if for_js:
-        for filename in filenames:
-            # Convert to sth suitable for gettext.
-            with open(filename, "rU") as f:
-                data = f.read()
-                if data:
-                    data = jslex.prepare_js_for_gettext(data)
-            filename2 = filename + ".c"
-            with open(filename2, "w") as f:
-                f.write(data)
-        args = [
-            'xgettext',
-            '-d djangojs',
-            '--language=C',
-            '--keyword=gettext_noop',
-            '--keyword=gettext_lazy',
-            '--keyword=ngettext_lazy:1,2',
-            '--keyword=pgettext:1c,2',
-            '--keyword=npgettext:1c,2,3',
-            '--from-code=UTF-8',
-            '--add-comments=Translators',
-            '--output=-',
-        ]
-        for filename in filenames:
-            args.append(filename + ".c")
-    else:
-        args = [
-            'xgettext',
-            '-d django',
-            '--language=Python',
-            '--keyword=gettext_noop',
-            '--keyword=gettext_lazy',
-            '--keyword=nget:text_lazy:1,2',
-            '--keyword=ugettext_noop',
-            '--keyword=ugettext_lazy',
-            '--keyword=ungettext_lazy:1,2',
-            '--keyword=pgettext:1c,2',
-            '--keyword=npgettext:1c,2,3',
-            '--keyword=pgettext_lazy:1c,2',
-            '--keyword=npgettext_lazy:1c,2,3',
-            '--from-code=UTF-8',
-            '--add-comments=Translators',
-            '--output=-',
-        ]
-        for filename in filenames:
-            args.append(filename)
-    msgs = subprocess.check_output(args)
-    if for_js:
-        for filename in filenames:
-            os.unlink(filename + ".c")
-    return msgs
+def run_gettext(dirname, for_js):
+    catalog = Catalog()
+    for filename, lineno, message, comments, context in extract_from_dir(
+        dirname,
+        method_map=[('**.js', 'javascript')] if for_js else [('**.py', 'python')]
+    ):
+        catalog.add(message, None, [(filename, lineno)],
+                    auto_comments=comments, context=context)
+
+    sio = cStringIO.StringIO()
+    write_po(sio, catalog)
+
+    return sio.getvalue()
 
 
 def pot_str(s):
@@ -211,24 +174,13 @@ def write_po_files(domain):
         popath = os.path.join("locale", locale, "LC_MESSAGES", domain + ".po")
         potpath = os.path.join("locale", domain + ".pot")
 
-        args = ['msguniq', '--to-code=utf-8', '-o', potpath, potpath]
-        subprocess.check_output(args)
+        with open(popath, 'r') as po_f, open(potpath, 'r') as pot_f:
+            template = read_po(pot_f)
+            catalog = read_po(po_f)
+            catalog.update(template)
 
-        msgs = ""
-        if os.path.exists(popath):
-            args = [
-                'msgmerge',
-                '-q',
-                popath,
-                potpath,
-            ]
-            msgs = subprocess.check_output(args)
-            msgs = msgs.replace("#. #-#-#-#-#  %s.pot (PACKAGE VERSION)  #-#-#-#-#\n" % domain, "")
-        else:
-            with open(potpath, "rU") as f:
-                msgs = f.read()
-        with open(popath, "w") as f:
-            f.write(msgs)
+        with open(popath, 'w') as po_f:
+            write_po(po_f, catalog)
 
     potpath = os.path.join("locale", domain + ".pot")
     os.unlink(potpath)
