@@ -766,9 +766,6 @@ angular.module('greenWalletSettingsControllers',
     };
     $scope.save = function() {
         var item = addressbook.new_item;
-        if (item.address.indexOf('@') != -1) {
-            item.type = 'email';
-        }
         tx_sender.call('com.greenaddress.addressbook.add_entry',
                 item.address, item.name, 0).then(function(data) {
             if (!data) {

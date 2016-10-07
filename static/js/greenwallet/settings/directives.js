@@ -7,11 +7,7 @@ angular.module('greenWalletSettingsDirectives', [])
         if (cache[key]) return cache[key];
 
         var template = '<table><tr><td>';
-        if (item.type == 'facebook') {
-            template += '<i class="icon-facebook"></i>'
-        } else if (item.type == 'email') {
-            template += '<i class="glyphicon glyphicon-envelope"></i>'
-        } else if (item.type == 'subaccount') {
+        if (item.type == 'subaccount') {
             template += '<i class="glyphicon glyphicon-tag"></i>'
         }
         template += '</td>';
@@ -48,7 +44,7 @@ angular.module('greenWalletSettingsDirectives', [])
         template += '<td>' + address + '</td>';
 
         template += '<td>';
-        if (scope.wallet.hdwallet.keyPair.d && item.type != 'facebook') {
+        if (scope.wallet.hdwallet.keyPair.d) {
             template += '<a href="" ng-click="start_rename(item)"><i class="glyphicon glyphicon-edit"></i></a>';
             if (item.type != 'subaccount')
             template += '<a href="" ng-click="delete(item.address)"><i class="glyphicon glyphicon-trash"></i></a> ';
