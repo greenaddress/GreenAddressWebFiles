@@ -86,8 +86,10 @@ function pingDevice (device) {
       firmwareVersion.toString(HEX) >= '0001040b';
     device.features = features;
   }).catch(function (err) {
-    if (err.indexOf('6d00') !== -1) {
+    if (err.indexOf && err.indexOf('6d00') !== -1) {
       HWWallet.guiCallbacks.ledgerPleaseOpenBitcoinApp();
+    } else if (err.indexOf && err.indexOf('6faa') >= 0) {
+      return Promise.reject(gettext('Dongle is locked - reconnect the dongle and retry'));
     } else {
       return Promise.reject(err);
     }
