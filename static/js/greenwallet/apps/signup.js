@@ -35,7 +35,7 @@ function SignupController($scope, $location, mnemonics, tx_sender, notices, wall
         return;
     }
     var requires_mnemonic = ($location.path() == '/signup_pin' || $location.path() == '/signup_oauth' || $location.path() == '/signup_2factor');
-    if (requires_mnemonic && !signup.mnemonic && !tx_sender.trezor_dev) {
+    if (requires_mnemonic && !signup.mnemonic && !signup.hw_detected) {
         $location.path('/create');
         return;
     }

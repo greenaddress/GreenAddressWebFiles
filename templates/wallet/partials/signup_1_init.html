@@ -67,7 +67,7 @@
                 <button tooltip="{{ _("Warning: some printers store printed documents internally, so it can be insecure to print your mnemonic.") }}" class="btn btn-default btn-block-xs" onclick="window.print(); return false;" ng-class="{disabled:!signup.mnemonic}"><i class="glyphicon glyphicon-print"></i> {{ _("Print passphrase") }}</button>
                 {% endif %}
 
-                <a class="btn btn-primary btn-block-xs" ng-class="{disabled:!signup.mnemonic||!signup.secured_confirmed}" href="#/signup_2factor#content_container">{{ _("Continue") }}!</a>
+                <a class="btn btn-primary btn-block-xs" ng-class="{disabled:!( (signup.mnemonic&&signup.secured_confirmed)||(signup.hw_detected&&signup.logged_in) )}" href="#/signup_2factor#content_container">{{ _("Continue") }}!</a>
             </div>
 
             <div class="create-modal-footer" ng-show="signup.unexpected_error">
