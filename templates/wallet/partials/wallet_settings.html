@@ -228,35 +228,6 @@
     </div>
   </div>
 </div>
-<hr class="double">
-<div class="row" ng-controller="PrivacyController">
-  <div class="col-md-3">
-    <div class="sub-header">{{ _("Privacy") }}</div>
-    <div class="sub-header-desc">{{ _("Decide who can send you money directly to your GreenAddress wallet, and who can see your name when receiving money from you") }}</div>
-  </div>
-  <div class="col-md-9" submittable>
-      <form role="form" class="row">
-        <div class="form-group">
-          <div class="col-sm-5"><label class="control-label" for="privacy_send_me">{{ _("Allow sending to my wallet via email") }}</label></div>
-          <select ng-model="privacy.send_me" id="privacy_send_me" class="col-sm-4" ng-disabled="privacy.updating_send_me">
-            <option value="2">{{ _("Everyone") }}</option>
-            <option value="1">{{ _("Addressbook contacts") }}</option>
-            <option value="0">{{ _("No one") }}</option>
-          </select>
-        </div>
-      </form>
-      <form role="form" class="row">
-        <div class="form-group">
-          <div class="col-sm-5"><label class="control-label" for="privacy_show_as_sender">{{ _("Show my email handle as sender to ") }}</label></div>
-          <select ng-model="privacy.show_as_sender" id="privacy_show_as_sender" class="col-sm-4" ng-disabled="privacy.updating_show_as_sender">
-            <option value="2">{{ _("Everyone") }}</option>
-            <option value="1">{{ _("Mutually added in addressbook") }}</option>
-            <option value="0">{{ _("No one") }}</option>
-          </select>
-        </div>
-      </form>
-  </div>
-</div>
 <hr class="double" ng-show="wallet.rbf">
 <div class="row" ng-show="wallet.rbf">
   <div class="col-md-3">

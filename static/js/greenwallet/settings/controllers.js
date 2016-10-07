@@ -683,34 +683,6 @@ angular.module('greenWalletSettingsControllers',
             notices.makeNotice('error', err.args[1]);
         });
     };
-}]).controller('PrivacyController', ['$scope', 'tx_sender', 'wallets', 'notices',
-        function PrivacyController($scope, tx_sender, wallets, notices) {
-    if (!wallets.requireWallet($scope, true)) return;   // dontredirect=true because one redirect in SettingsController is enough
-
-    $scope.privacy = {
-        'updating_send_me': false,
-        'send_me': ''+$scope.wallet.privacy.send_me,
-        'updating_show_as_sender': false,
-        'show_as_sender': ''+$scope.wallet.privacy.show_as_sender
-    };
-    var init_changer = function(key) {
-        $scope.$watch('privacy.' + key, function(newValue, oldValue) {
-            if (newValue == oldValue || newValue == $scope.wallet.privacy[key]) return;
-            var upkey = 'updating_' + key;
-            $scope.privacy[upkey] = true;
-            $scope.privacy[key] = oldValue;
-            tx_sender.call('com.greenaddress.login.change_settings', 'privacy.' + key, parseInt(newValue)).then(function() {
-                $scope.wallet.privacy[key] = newValue;
-                $scope.privacy[upkey] = false;
-                $scope.privacy[key] = newValue;
-            }, function(err) {
-                notices.makeNotice('error', err.args[1]);
-                $scope.privacy[upkey] = false;
-            });
-        });
-    };
-    init_changer('send_me');
-    init_changer('show_as_sender');
 }]).controller('AddressBookController', ['$scope', 'tx_sender', 'notices', 'focus', 'wallets', '$location', 'gaEvent', '$rootScope', '$routeParams', 'addressbook', 'qrcode',
         function AddressBookController($scope, tx_sender, notices, focus, wallets, $location, gaEvent, $rootScope, $routeParams, addressbook, qrcode) {
     // dontredirect=false here because address book is now outside settings,
