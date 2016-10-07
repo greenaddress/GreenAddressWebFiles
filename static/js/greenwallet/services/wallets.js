@@ -136,7 +136,7 @@ function factory ($q, $rootScope, tx_sender, $location, notices, $uibModal,
         ),
         gaService: tx_sender.gaService,
         unblindedCache: unblindedCache
-      }), options);
+      }), extend({signupOnFailure: true}, options));
     });
   };
   walletsService.newLogin = function ($scope, gaWallet, options) {
@@ -241,9 +241,14 @@ function factory ($q, $rootScope, tx_sender, $location, notices, $uibModal,
       d.resolve(data);
     }).catch(function (e) { d.reject(e); });
     return d.promise.catch(function (err) {
-      console.log(err);
-      notices.makeNotice('error', gettext('Login failed') + (err && err.args && err.args[1] && (': ' + err.args[1]) || ''));
-      return $q.reject(err);
+      if (options.signupOnFailure && err === 'Login failed') {
+        notices.makeNotice('error', gettext('User not found.'));
+        $location.path('/create');
+      } else {
+        console.log(err);
+        notices.makeNotice('error', gettext('Login failed') + (err && err.args && err.args[ 1 ] && (': ' + err.args[ 1 ]) || ''));
+        return $q.reject(err);
+      }
     });
   };
   walletsService.loginWatchOnly = function ($scope, tokenType, token) {

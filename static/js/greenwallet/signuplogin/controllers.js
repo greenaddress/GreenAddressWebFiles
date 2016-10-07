@@ -331,7 +331,7 @@ angular.module('greenWalletSignupLoginControllers', ['greenWalletMnemonicsServic
         var opts = {progressCb: progressCb};
         $scope.logging_in = true;
         wallets.loginWithHWWallet($scope, hwDevice, opts).catch(function(err) {
-            notices.makeNotice('error', err);
+            notices.makeError($scope, err);
             $scope.logging_in = false;
         });
 
