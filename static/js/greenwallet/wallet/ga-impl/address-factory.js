@@ -1,4 +1,4 @@
-var branches = require('./branches');
+var branches = require('./constants').branches;
 var extend = require('xtend/mutable');
 var bitcoin = require('bitcoinjs-lib');
 

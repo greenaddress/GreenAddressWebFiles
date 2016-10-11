@@ -1,6 +1,6 @@
 var BigInteger = require('bigi');
 var bitcoin = require('bitcoinjs-lib');
-var branches = require('../branches');
+var branches = require('../constants').branches;
 var crypto = require('crypto');
 var extend = require('xtend/mutable');
 var KeysManager = require('./../keys-managers/sw-keys-manager');

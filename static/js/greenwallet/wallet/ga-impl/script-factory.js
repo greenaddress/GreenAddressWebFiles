@@ -1,5 +1,5 @@
 var bitcoin = require('bitcoinjs-lib');
-var branches = require('./branches');
+var branches = require('./constants').branches;
 var extend = require('xtend/mutable');
 
 var SchnorrSigningKey = require('../bitcoinup').SchnorrSigningKey;
