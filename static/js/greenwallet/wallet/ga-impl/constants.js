@@ -9,5 +9,8 @@ module.exports = {
   scriptTypes: {
     REDEEM_P2SH: 10,
     REDEEM_P2SH_P2WSH: 14
+  },
+  sigHash: {
+    ALL: 1
   }
 };

@@ -2,6 +2,7 @@ var BigInteger = require('bigi');
 var bitcoin = require('bitcoinjs-lib');
 var branches = require('../constants').branches;
 var scriptTypes = require('../constants').scriptTypes;
+var sigHash = require('../constants').sigHash;
 var crypto = require('crypto');
 var hashSegWit = require('../segwit').hashSegWit;
 var extend = require('xtend/mutable');
@@ -111,14 +112,14 @@ function signInput (tx, i) {
     ).bind(signingKey);
     return signFunction(
       prevOut.raw.script_type === scriptTypes.REDEEM_P2SH_P2WSH
-        ? hashSegWit(tx, i, prevScript, prevOut.value, 1)
-        : tx.hashForSignature(i, prevScript, 1)
+        ? hashSegWit(tx, i, prevScript, prevOut.value, sigHash.ALL)
+        : tx.hashForSignature(i, prevScript, sigHash.ALL)
     ).then(function (sig) {
       if (!_this.schnorrTx) {
         sig = sig.toDER();
       }
       var sigAndSigHash = new Buffer([].concat(
-        Array.prototype.slice.call(sig), [ 1 ]
+        Array.prototype.slice.call(sig), [ sigHash.ALL ]
       ));
       if (prevOut.privkey) {
         // privkey provided means we're signing p2pkh
