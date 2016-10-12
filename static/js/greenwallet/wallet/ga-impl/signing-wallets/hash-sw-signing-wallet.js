@@ -111,7 +111,7 @@ function signInput (tx, i) {
       : signingKey.signHash
     ).bind(signingKey);
     return signFunction(
-      prevOut.raw.script_type === scriptTypes.REDEEM_P2SH_P2WSH
+      prevOut.raw.script_type === scriptTypes.OUT_P2SH_P2WSH
         ? hashSegWit(tx, i, prevScript, prevOut.value, sigHash.ALL)
         : tx.hashForSignature(i, prevScript, sigHash.ALL)
     ).then(function (sig) {
@@ -139,7 +139,7 @@ function signInput (tx, i) {
         });
         return {};
       } else {
-        if (prevOut.raw.script_type == scriptTypes.REDEEM_P2SH_P2WSH) {
+        if (prevOut.raw.script_type == scriptTypes.OUT_P2SH_P2WSH) {
           tx.ins[i].script = new Buffer([].concat(
             0x22, 0x00, 0x20, Array.from(bitcoin.crypto.sha256(prevScript))
           ));

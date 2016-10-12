@@ -11,5 +11,6 @@ module.exports = {
   HwSigningWallet: require('./signing-wallets/hw-signing-wallet'),
   BaseHWWallet: require('./hw-wallets/base-hw-wallet'),
   TrezorHWWallet: require('./hw-wallets/trezor-hw-wallet'),
-  allHwWallets: require('./all-hw-wallets')
+  allHwWallets: require('./all-hw-wallets'),
+  constants: require('./constants')
 };

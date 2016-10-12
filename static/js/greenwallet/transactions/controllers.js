@@ -1,4 +1,5 @@
 var Transaction = require('wallet').bitcoinup.Transaction;
+var scriptTypes = require('wallet').GA.constants.scriptTypes;
 angular.module('greenWalletTransactionsControllers',
     ['greenWalletServices'])
 .controller('TransactionsController', ['$scope', 'wallets', 'tx_sender', 'notices', 'branches', '$uibModal', 'gaEvent', '$timeout', '$q', 'encode_key', 'hostname',
@@ -247,6 +248,9 @@ angular.module('greenWalletTransactionsControllers',
             );
 
             var prev_outputs = [];
+            var in2out_types = {};
+            in2out_types[scriptTypes.REDEEM_P2SH] = scriptTypes.OUT_P2SH;
+            in2out_types[scriptTypes.REDEEM_P2SH_P2WSH] = scriptTypes.OUT_P2SH_P2WSH;
             for (var i = 0; i < transaction.inputs.length; ++i) {
                 (function(utxo) {
                     prev_outputs.push(calcRedeemAndKeyPairs(
@@ -256,7 +260,9 @@ angular.module('greenWalletTransactionsControllers',
                         return {
                             branch: branches.REGULAR,
                             subaccount: $scope.wallet.current_subaccount,
+                            script_type: in2out_types[utxo.script_type],
                             pointer: utxo.pubkey_pointer,
+                            value: +utxo.value,
                             script: res.redeemScript.toString('hex')
                         }
                     }));
@@ -270,7 +276,10 @@ angular.module('greenWalletTransactionsControllers',
                     subaccount: wallets.getSubaccount(
                       $scope, $scope.wallet.current_subaccount
                     ),
+                    value: prevOut.value,
                     raw: {
+                      script_type: prevOut.script_type,
+                      branch: prevOut.branch,
                       pointer: prevOut.pointer,
                       txhash: Bitcoin.bitcoin.bufferutils.reverse(
                         inp.hash
