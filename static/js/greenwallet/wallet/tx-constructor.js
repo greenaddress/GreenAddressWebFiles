@@ -167,9 +167,7 @@ function _constructTx (outputsWithAmounts, options) {
         }, options)
       )
     ).then(function () {
-      return extend({
-        tx: tx.tx
-      }, builtTxData);
+      return extend(tx, builtTxData);
     });
   }.bind(this));
 

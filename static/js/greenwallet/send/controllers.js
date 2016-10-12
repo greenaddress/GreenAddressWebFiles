@@ -189,7 +189,7 @@ angular.module('greenWalletSendControllers',
                         }
                         return tx_sender.call(
                             'com.greenaddress.vault.send_raw_tx',
-                            tx.tx.toBuffer().toString('hex'),
+                            tx.toBuffer().toString('hex'),
                             twofac_data,
                             priv_data
                         );

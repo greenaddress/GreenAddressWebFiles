@@ -1,7 +1,9 @@
 var BigInteger = require('bigi');
 var bitcoin = require('bitcoinjs-lib');
 var branches = require('../constants').branches;
+var scriptTypes = require('../constants').scriptTypes;
 var crypto = require('crypto');
+var hashSegWit = require('../segwit').hashSegWit;
 var extend = require('xtend/mutable');
 var KeysManager = require('./../keys-managers/sw-keys-manager');
 var ScriptFactory = require('./../script-factory');
@@ -64,6 +66,7 @@ function signTransaction (tx, options) {
     options.signingProgressCallback(0);
   }
   var _this = this;
+  var witness = [];
   for (var i = 0; i < tx.tx.ins.length; ++i) {
     (function (i) {
       ret = ret.then(function () {
@@ -73,6 +76,18 @@ function signTransaction (tx, options) {
           options.signingProgressCallback(Math.round(
             100 * (i + 1) / tx.tx.ins.length
           ));
+        }
+        if (sig.witness) {
+          witness.push(Buffer.concat(
+            // count + length + signature
+            [new Buffer([1, sig.witness.length]), sig.witness]
+          ));
+        } else {
+          // count = 0
+          witness.push(new Buffer([0]));
+        }
+        if (sig.witness) {
+          tx.tx.witness = witness;
         }
         return sig;
       });
@@ -95,17 +110,20 @@ function signInput (tx, i) {
       : signingKey.signHash
     ).bind(signingKey);
     return signFunction(
-      tx.hashForSignature(i, prevScript, 1)
+      prevOut.raw.script_type === scriptTypes.REDEEM_P2SH_P2WSH
+        ? hashSegWit(tx, i, prevScript, prevOut.value, 1)
+        : tx.hashForSignature(i, prevScript, 1)
     ).then(function (sig) {
       if (!_this.schnorrTx) {
         sig = sig.toDER();
       }
+      var sigAndSigHash = new Buffer([].concat(
+        Array.prototype.slice.call(sig), [ 1 ]
+      ));
       if (prevOut.privkey) {
         // privkey provided means we're signing p2pkh
         tx.ins[ i ].script = bitcoin.script.pubKeyHashInput(
-          new Buffer([].concat(
-            Array.prototype.slice.call(sig), [ 1 ]
-          )), // our signature with SIGHASH_ALL
+          sigAndSigHash, // our signature with SIGHASH_ALL
           signingKey.getPublicKeyBuffer()
         );
       } else if (prevOut.raw.branch === branches.EXTERNAL) {
@@ -114,21 +132,26 @@ function signInput (tx, i) {
           prevOut.raw.subaccount, prevOut.raw.pointer, branches.EXTERNAL
         ).then(function (pubKey) {
           tx.ins[ i ].script = bitcoin.script.pubKeyHashInput(
-            new Buffer([].concat(
-              Array.prototype.slice.call(sig), [ 1 ]
-            )), // our signature with SIGHASH_ALL
+            sigAndSigHash, // our signature with SIGHASH_ALL
             pubKey.hdnode.getPublicKeyBuffer()
           );
         });
+        return {};
       } else {
-        tx.ins[ i ].script = bitcoin.script.compile([].concat(
-          bitcoin.opcodes.OP_0, // OP_0 required for multisig
-          new Buffer([ 0 ]), // to be replaced by backend with server's sig
-          new Buffer([].concat(
-            Array.prototype.slice.call(sig), [ 1 ]
-          )), // our signature with SIGHASH_ALL
-          prevScript
-        ));
+        if (prevOut.raw.script_type == scriptTypes.REDEEM_P2SH_P2WSH) {
+          tx.ins[i].script = new Buffer([].concat(
+            0x22, 0x00, 0x20, Array.from(bitcoin.crypto.sha256(prevScript))
+          ));
+          return {witness: sigAndSigHash};
+        } else {
+          tx.ins[i].script = bitcoin.script.compile([].concat(
+            bitcoin.opcodes.OP_0, // OP_0 required for multisig
+            new Buffer([0]), // to be replaced by backend with server's sig
+            sigAndSigHash, // our signature with SIGHASH_ALL
+            prevScript
+          ));
+          return {};
+        }
       }
     });
   });

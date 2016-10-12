@@ -289,7 +289,7 @@ angular.module('greenWalletTransactionsControllers',
                   tx,
                   {utxoFactory: constructor.utxoFactory}
                 ).then(function () {
-                  return tx.tx
+                  return tx
                 });
             });
 
@@ -301,7 +301,7 @@ angular.module('greenWalletTransactionsControllers',
                 var try_sending = function(twofac_data) {
                     return tx_sender.call(
                         'com.greenaddress.vault.send_raw_tx',
-                        tx.toHex(), twofac_data
+                        tx.toBuffer().toString('hex'), twofac_data
                     ).then(function(data) {
                         if (data.limit_decrease) {
                             $scope.wallet.limits.total -= data.limit_decrease;

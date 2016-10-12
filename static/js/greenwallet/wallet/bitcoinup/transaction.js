@@ -88,7 +88,20 @@ function estimateSignedLength () {
 }
 
 function toBuffer () {
-  return this.tx.toBuffer();
+  var ret = this.tx.toBuffer();
+  if (this.tx.witness && this.tx.witness.length) {
+    var args = [
+      ret.slice(0, 4),
+      new Buffer([0, 1]),  // witness marker
+      ret.slice(4, ret.length - 4) // tx with nlocktime trimmed
+    ];
+    this.tx.witness.forEach(function (witness) {
+      args.push(witness);
+    });
+    args.push(ret.slice(ret.length - 4));
+    return Buffer.concat(args);
+  }
+  return ret;
 }
 
 function getOutputsCount () {
