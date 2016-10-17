@@ -14,6 +14,7 @@ extend(GAAddressFactory.prototype, {
 function GAAddressFactory (gaService, signingWallet, options) {
   this.gaService = gaService;
   this.signingWallet = signingWallet;
+  this.scriptFactory = options.scriptFactory;
   this.scriptToPointer = {};
   this.subaccount = options.subaccount || {pointer: null, type: 'main'};
   this.segWit = options.segWit;
@@ -23,9 +24,19 @@ function getNextOutputScriptWithPointer () {
   var _this = this;
   return this.gaService.call(
     'com.greenaddress.vault.fund',
-    // TODO: verification against our keys
     [this.subaccount.pointer, /* return_pointer = */true]
   ).then(function (script) {
+    return _this.scriptFactory.createScriptForSubaccountAndPointer(
+      _this.subaccount, script.pointer
+    ).then(function (scriptToVerify) {
+      return [script, scriptToVerify];
+    });
+  }).then(function (data) {
+    var script = data[0];
+    var scriptToVerify = data[1];
+    if (scriptToVerify.toString('hex') !== script.script) {
+      throw new Error('Invalid script returned');
+    }
     var scriptRaw = new Buffer(script.script, 'hex');
     var scriptHash;
     if (_this.segWit) {
