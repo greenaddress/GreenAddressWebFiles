@@ -21,6 +21,8 @@ function BaseWallet (options) {
     options.netName || 'testnet', options
   );
 
+  this.segWit = options.segWit;
+
   if (options.SigningWalletClass) {
     var signingWallet = new options.SigningWalletClass(
       extend(options.signingWalletOptions, {gaService: this.service})

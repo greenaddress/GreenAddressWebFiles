@@ -121,7 +121,8 @@ function factory ($q, $rootScope, tx_sender, $location, notices, $uibModal,
         schnorrTx: cur_net.isAlpha
       },
       gaService: tx_sender.gaService,
-      unblindedCache: unblindedCache
+      unblindedCache: unblindedCache,
+      segWit: cur_net.isSegwit
     }), options);
   };
   walletsService.loginWithHWWallet = function ($scope, hwDevice, options) {
@@ -135,7 +136,8 @@ function factory ($q, $rootScope, tx_sender, $location, notices, $uibModal,
           { loginProgressCb: options.progressCb }
         ),
         gaService: tx_sender.gaService,
-        unblindedCache: unblindedCache
+        unblindedCache: unblindedCache,
+        segWit: cur_net.isSegwit
       }), extend({signupOnFailure: true}, options));
     });
   };
@@ -258,7 +260,8 @@ function factory ($q, $rootScope, tx_sender, $location, notices, $uibModal,
         tokenType: tokenType,
         token: token
       },
-      gaService: tx_sender.gaService
+      gaService: tx_sender.gaService,
+      segWit: cur_net.isSegwit
     })).then(function (data) {
       $scope.wallet.watchOnly = true;
       return data;

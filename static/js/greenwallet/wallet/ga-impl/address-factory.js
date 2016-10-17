@@ -16,17 +16,29 @@ function GAAddressFactory (gaService, signingWallet, options) {
   this.signingWallet = signingWallet;
   this.scriptToPointer = {};
   this.subaccount = options.subaccount || {pointer: null, type: 'main'};
+  this.segWit = options.segWit;
 }
 
 function getNextOutputScriptWithPointer () {
+  var _this = this;
   return this.gaService.call(
     'com.greenaddress.vault.fund',
     // TODO: verification against our keys
     [this.subaccount.pointer, /* return_pointer = */true]
   ).then(function (script) {
-    var ret = bitcoin.script.scriptHashOutput(
-      bitcoin.crypto.hash160(new Buffer(script.script, 'hex'))
-    );
+    var scriptRaw = new Buffer(script.script, 'hex');
+    var scriptHash;
+    if (_this.segWit) {
+      var hash = bitcoin.crypto.sha256(scriptRaw);
+      var buf = Buffer.concat([
+        new Buffer([ 0, 32 ]),
+        hash
+      ]);
+      scriptHash = bitcoin.crypto.hash160(buf);
+    } else {
+      scriptHash = bitcoin.crypto.hash160(scriptRaw);
+    }
+    var ret = bitcoin.script.scriptHashOutput(scriptHash);
     this.scriptToPointer[ret.toString('hex')] = script.pointer;
     return {
       outScript: ret,
