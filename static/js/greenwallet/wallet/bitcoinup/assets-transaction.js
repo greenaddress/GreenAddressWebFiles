@@ -905,7 +905,7 @@ function _addFeeAndChange (options) {
 
         this.replaceOutput(
           changeIdx,
-          changeScript,
+          changeScript.outScript,
           prevoutsValue - (requiredValueForFee + fee),
           fee,
           options.feeNetworkId

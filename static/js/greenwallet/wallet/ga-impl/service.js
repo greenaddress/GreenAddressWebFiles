@@ -74,7 +74,7 @@ function login (options, cb, eb) {
           function (event) {
             if (_this.notificationCallbacks.wallet) {
               _this.notificationCallbacks.wallet.forEach(function (cb) {
-                cb(event)
+                cb(event);
               });
             }
           });

@@ -4,7 +4,6 @@ var window = require('global/window');
 
 var BASE_URL = window.BASE_URL;
 var LANG = window.LANG;
-var gettext = window.gettext;
 
 module.exports = factory;
 
@@ -104,18 +103,6 @@ function factory ($uibModal, notices, $rootScope) {
       try { modal.close(); } catch (e) {}
     });
   }
-
-  var handleError = function (e) {
-    var message;
-    if (e === 'Opening device failed') {
-      message = gettext("Device could not be opened. Make sure you don't have any TREZOR client running in another tab or browser window!");
-    } else {
-      message = e;
-    }
-    $rootScope.safeApply(function () {
-      notices.makeNotice('error', message);
-    });
-  };
 
   return {};
 }

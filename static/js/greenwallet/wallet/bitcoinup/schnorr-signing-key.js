@@ -5,6 +5,7 @@ var pbkdf2 = require('pbkdf2').pbkdf2Sync;
 var secp256k1 = require('secp256k1-alpha');
 var secp256k1ctx = null;
 var sha512 = require('sha512');
+var window = require('global/window');
 
 module.exports = SchnorrSigningKey;
 

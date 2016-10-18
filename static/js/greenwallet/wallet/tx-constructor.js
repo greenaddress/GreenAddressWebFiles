@@ -206,6 +206,8 @@ function _constructTx (outputsWithAmounts, options) {
 }
 
 function constructTx (outputsWithAmounts, options) {
+  options = options || {};
+
   var utxoDeferred;
   if (!options.minConfs) {
     if (!this.utxoDeferred) {

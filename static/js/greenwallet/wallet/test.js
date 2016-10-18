@@ -12,7 +12,7 @@ var mockUtxoFactory = {
 };
 
 var mockAddressFactory = {
-  getNextOutputScript: mockGetNextOutputScript,
+  getNextOutputScriptWithPointer: mockGetNextOutputScriptWithPointer,
   getNextAddress: mockGetNextAddress
 };
 
@@ -112,7 +112,7 @@ function testChangeOutput (t, idx) {
         '2My8mvjL6r9BpvY11N95jRKdTV4roXvbQQZ', bitcoin.networks.testnet
     )}
   ]).then(function (tx) {
-    t.equal(tx.tx.toString('hex'), expected, 'change output at index=' + idx);
+    t.equal(tx.tx.toBuffer().toString('hex'), expected, 'change output at index=' + idx);
   }, function (e) { console.log(e.stack); t.fail(e); });
 }
 
@@ -135,14 +135,18 @@ function mockListAllUtxo () {
   ].map(function (data) { return new MockUtxo(data); }));
 }
 
-function mockGetNextOutputScript () {
+function mockGetNextOutputScriptWithPointer () {
   var toHash = (
   '522102964e7b79e43e0df9f5f82862383692dd7ba28cf59ea964ab6ba4add1ccaf55e82' +
     '103ea09b3d655fdffc09870d0bc514c45ffbbde3ec9699412f918b3f037341905d452ae'
   );
-  return Promise.resolve(bitcoin.script.scriptHashOutput(
-    bitcoin.crypto.hash160(new Buffer(toHash, 'hex'))
-  ));
+  return Promise.resolve({
+    subaccount: 0,
+    pointer: 1,
+    outScript: bitcoin.script.scriptHashOutput(
+      bitcoin.crypto.hash160(new Buffer(toHash, 'hex'))
+    )
+  });
 }
 
 function mockGetNextAddress () {

@@ -5,7 +5,7 @@
   "main": "static/js/index.js",
   "scripts": {
     "testbuild": "npm run test && npm run build",
-    "test": "semistandard && tape './static/**/*test.js' | tap-spec",
+    "test": "semistandard && tape $(find static/ -name '*test.js' | grep -v node_modules) | tap-spec",
     "build": "gulp build",
     "sync": "rsync -av ./build/ ../WalletCrx/",
     "watch": "gulp"
@@ -102,7 +102,8 @@
       "static/js/greenwallet/wallet/hw-apis/ledger-js/api/CardTerminal.js",
       "static/js/greenwallet/wallet/hw-apis/trezor-hid/index.js",
       "static/js/greenwallet/wallet/hw-apis/trezor-hid/trezor.js",
-      "static/js/greenwallet/wallet/hw-apis/trezor-hid/messages_proto.js"
+      "static/js/greenwallet/wallet/hw-apis/trezor-hid/messages_proto.js",
+      "static/js/greenwallet/wallet/ga-impl/segwit.js"
     ]
   }
 }

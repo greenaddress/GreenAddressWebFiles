@@ -136,10 +136,10 @@ function signInput (tx, i) {
             sigAndSigHash, // our signature with SIGHASH_ALL
             pubKey.hdnode.getPublicKeyBuffer()
           );
+          return {};
         });
-        return {};
       } else {
-        if (prevOut.raw.script_type == scriptTypes.OUT_P2SH_P2WSH) {
+        if (prevOut.raw.script_type === scriptTypes.OUT_P2SH_P2WSH) {
           tx.ins[i].script = new Buffer([].concat(
             0x22, 0x00, 0x20, Array.from(bitcoin.crypto.sha256(prevScript))
           ));
