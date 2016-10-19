@@ -1262,11 +1262,6 @@ angular.module('greenWalletSettingsControllers',
                                     templateUrl: BASE_URL+'/'+LANG+'/wallet/partials/wallet_modal_mnemonic.html',
                                     scope: scope
                                 });
-                                subaccount = {type: '2of3', name: that.new_2of3_label,
-                                    pointer: min_unused_pointer, receiving_id: receiving_id};
-                                subaccount['2of3_backup_chaincode'] = hdhex_recovery.chaincode;
-                                subaccount['2of3_backup_pubkey'] = hdhex_recovery.pub;
-                                that.existing.push(subaccount);
                                 that.new_2of3_label = '';
                                 that.new_2of3_xpub = '';
                             });
@@ -1291,15 +1286,13 @@ angular.module('greenWalletSettingsControllers',
                     hd.hdnode.keyPair.getPublicKeyBuffer().toString('hex'),
                     hd.hdnode.chainCode.toString('hex')
                 ).then(function(receiving_id) {
-                    if (tx_sender.gawallet) {
-                        tx_sender.gawallet.setupSubAccount({
+                    if (tx_sender.gaWallet) {
+                        tx_sender.gaWallet.setupSubAccount({
                             name: that.new_label,
                             pointer: min_unused_pointer,
                             type: 'simple'
                         });
                     }
-                    that.existing.push({type: 'simple', name: that.new_label,
-                        pointer: min_unused_pointer, receiving_id: receiving_id})
                     that.new_label = '';
                     $rootScope.safeApply(function() { that.adding_subwallet = false; });
                 });
