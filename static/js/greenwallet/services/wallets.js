@@ -799,8 +799,15 @@ function factory ($q, $rootScope, tx_sender, $location, notices, $uibModal,
     }
     return d.promise;
   };
+  walletsService.attempt_two_factor = function ($scope, action, options, cb) {
+    options = options || {};
+    options.data = options.data || {};
+    options.data.cb = cb;
+    return walletsService.get_two_factor_code($scope, action, options.data, options.redeposit);
+  };
   walletsService.get_two_factor_code = function ($scope, action, data, redeposit) {
     var deferred = $q.defer();
+    var attemptsLeft = 3;
     walletsService.getTwoFacConfig($scope).then(function (twofac_data) {
       if (twofac_data.any) {
         $scope.twofactor_method_names = {
@@ -832,14 +839,19 @@ function factory ($q, $rootScope, tx_sender, $location, notices, $uibModal,
               that.requesting_code = false;
             });
         }};
-        var show_modal = function () {
+        var cb;
+        if (data.cb) {
+            cb = data.cb;
+            delete data.cb;
+        }
+        var show_modal = function (retVal) {
           var modal = $uibModal.open({
             templateUrl: BASE_URL + '/' + LANG + '/wallet/partials/wallet_modal_2fa.html',
             scope: $scope,
             windowClass: 'twofactor'
           });
           modal.opened.then(function () { focus('twoFactorModal'); });
-          deferred.resolve(modal.result.then(function (twofac_data) {
+          var modalResult = modal.result.then(function (twofac_data) {
             if (twofac_data.method == 'gauth' && redeposit) {
               return tx_sender.call('com.greenaddress.twofactor.request_redeposit_proxy', twofac_data).then(function (data) {
                 return {'method': 'proxy', 'code': data};
@@ -847,7 +859,28 @@ function factory ($q, $rootScope, tx_sender, $location, notices, $uibModal,
             } else {
               return twofac_data;
             }
-          }));
+          });
+          if (!cb) {
+            deferred.resolve(modalResult);
+          } else {
+            var res = modalResult.then(function (twofac_data) {
+              return cb(twofac_data).catch(function (err) {
+                if (attemptsLeft > 1 && err.args && err.args[0] === 'http://greenaddressit.com/error#auth') {
+                  attemptsLeft -= 1;
+                  $scope.twofac.twofactor_code = '';
+                  $scope.twofac.invalid_code = true;
+                  return show_modal(true);
+                } else {
+                  return $q.reject(err);
+                }
+              })
+            });
+            if (retVal) {
+              return res;
+            } else {
+              deferred.resolve(res);
+            }
+          }
         };
         if ($scope.twofactor_methods.length == 1) {
           if ($scope.twofactor_methods[0] == 'gauth') {

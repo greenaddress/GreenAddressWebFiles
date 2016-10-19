@@ -164,8 +164,8 @@ angular.module('greenWalletSendControllers',
                         $scope.wallet.current_asset
                     ];
                     var assetName = asset ? asset.name : 'BTC';
-                    return wallets.get_two_factor_code(
-                        $scope, 'send_raw_tx', isConfidential ? null : {
+                    return wallets.attempt_two_factor(
+                        $scope, 'send_raw_tx', {data: isConfidential ? null : {
                             amount: amountWithFee,
                             // fake change idx for ALL to allow backend to
                             // ignore our wallet outs if we sweep to ourselves
@@ -173,31 +173,30 @@ angular.module('greenWalletSendControllers',
                             fee: fee,
                             asset: assetName,
                             recipient: to_addr
-                        }
-                    ).then(function(twofac_data) {
-                        if (twofac_data && !isConfidential) {
-                            twofac_data.send_raw_tx_amount = amountWithFee;
-                            // fake change idx for ALL, as above
-                            twofac_data.send_raw_tx_change_idx = satoshis === 'ALL' ? 1 : tx.changeIdx;
-                            twofac_data.send_raw_tx_fee = fee;
-                            twofac_data.send_raw_tx_asset = assetName;
-                            twofac_data.send_raw_tx_recipient = to_addr;
-                        }
-                        priv_data = {};
-                        if (that.memo) {
-                            priv_data.memo = this.memo;
-                        }
-                        if (that.instant) {
-                            priv_data.instant = true;
-                        }
-                        return tx_sender.call(
-                            'com.greenaddress.vault.send_raw_tx',
-                            tx.toBuffer().toString('hex'),
-                            twofac_data,
-                            priv_data
-                        );
-                    }.bind(this));
-
+                        }}, function(twofac_data) {
+                            if (twofac_data && !isConfidential) {
+                                twofac_data.send_raw_tx_amount = amountWithFee;
+                                // fake change idx for ALL, as above
+                                twofac_data.send_raw_tx_change_idx = satoshis === 'ALL' ? 1 : tx.changeIdx;
+                                twofac_data.send_raw_tx_fee = fee;
+                                twofac_data.send_raw_tx_asset = assetName;
+                                twofac_data.send_raw_tx_recipient = to_addr;
+                            }
+                            priv_data = {};
+                            if (that.memo) {
+                                priv_data.memo = this.memo;
+                            }
+                            if (that.instant) {
+                                priv_data.instant = true;
+                            }
+                            return tx_sender.call(
+                                'com.greenaddress.vault.send_raw_tx',
+                                tx.toBuffer().toString('hex'),
+                                twofac_data,
+                                priv_data
+                            );
+                        }.bind(this)
+                    );
                     function calculateFee (tx) {
                         if (cur_net.isAlphaMultiasset) {
                             for (var i = 0; i < tx.fees.length; ++i) {

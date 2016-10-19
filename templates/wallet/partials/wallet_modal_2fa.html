@@ -13,7 +13,7 @@
                 </label>
             </div>
             <p ng-show="twofac.codes_requested[twofac.twofactor_method]">{{ _("Please enter your ") }}(( twofactor_method_names[twofac.twofactor_method] )){{ _(" authentication code which we have just sent to you.") }}</p>
-            
+            <div ng-show="twofac.invalid_code" class="label label-danger" role="alert">Invalid code. Please try again:</div>
             <div class="form-inline" ng-show="twofac.twofactor_method == 'gauth' || twofac.codes_requested[twofac.twofactor_method]">
                 <p>{{ _("Please enter the ") }} (( twofactor_method_names[twofac.twofactor_method] )) {{ _(" code") }}:
                 <input clickfix focus-on="twoFactorModal" class="form-control pin" type="tel" mask-input required="required"
