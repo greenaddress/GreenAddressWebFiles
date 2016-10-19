@@ -61,6 +61,106 @@ test('construct tx', function (t) {
   }, function (e) { console.log(e.stack); t.fail(e); });
 });
 
+var coinSelectionTestCases = [
+  ['single utxo available',
+    {
+      utxo: [
+        {value: 100000, blockHeight: 1}
+      ],
+      txValue: 10000, options: {}, utxoExpected: 0
+    }
+  ],
+  ['8 utxo available, with different blockHeight',
+    {
+      utxo: [
+        {value: 50000, blockHeight: 3},  // 0
+        {value: 50000, blockHeight: 2},  // 1
+        {value: 100000, blockHeight: 1}, // 2
+        {value: 50000, blockHeight: 1},  // 3 - better match for the value
+        {value: 3000, blockHeight: 1},   // 4
+        {value: 3000, blockHeight: 1},   // 5
+        {value: 3000, blockHeight: 1},   // 6
+        {value: 50000, blockHeight: 2},  // 7
+        {value: 50000, blockHeight: 3}   // 8
+      ],
+      txValue: 10000, options: {}, utxoExpected: 3
+    }
+  ],
+  ['18 utxo available, blockHeight match not enough because fee too large',
+    {
+      utxo: [
+        {value: 40, blockHeight: 5}, {value: 40, blockHeight: 5},    // 0,1
+        {value: 40, blockHeight: 4}, {value: 40, blockHeight: 4},   // 2,3
+        {value: 40, blockHeight: 3}, {value: 40, blockHeight: 3},   // 4,5
+        {value: 40, blockHeight: 2}, {value: 40, blockHeight: 2},   // 6,7
+        // first choice because lowest blockHeight:
+        {value: 40, blockHeight: 1}, {value: 40, blockHeight: 1},   // 8,9
+        {value: 40, blockHeight: 2}, {value: 40, blockHeight: 2},   // 10,11
+        {value: 40, blockHeight: 3}, {value: 40, blockHeight: 3},   // 12,13
+        {value: 40, blockHeight: 4}, {value: 40, blockHeight: 4},   // 14,15
+        // 10 satoshi per byte * at least 42 bytes per input * 16 inputs
+        // + at least 6720 bytes for output
+        // = at least 3376 for fee - not enough if inputs chosen by nblockHeight
+        // but the last input is enough to cover the whole tx
+        {value: 3900, blockHeight: 10}, // 16 - must be used to cover fee
+        {value: 3901, blockHeight: 10}  // 17 - too large - choose the smaller one
+      ],
+      txValue: 640, options: {}, utxoExpected: 16
+    }
+  ]
+];
+
+coinSelectionTestCases.forEach(function (testCase) {
+  test('utxo selection: ' + testCase[0], function (t) {
+    var currentUtxoFactory = {
+      listAllUtxo: listCurrentUtxo
+    };
+    var constructor = new TxConstructor({
+      signingWallet: mockSigningWallet,
+      utxoFactory: currentUtxoFactory,
+      changeAddrFactory: mockAddressFactory,
+      feeEstimatesFactory: mockFeeEstimatesFactory
+    });
+    var assetNetworkId = new Buffer(
+      '095cdb4b50450887a3fba5fa77bdd7ce969868b78e2e7a75886d8e324c9e331d',
+      'hex'
+    );
+    constructor.buildOptions = {
+      assetNetworkId: assetNetworkId,
+      feeNetworkId: assetNetworkId
+    };
+    return constructor.constructTx([
+      {value: testCase[1].txValue,
+        scriptPubKey: bitcoin.address.toOutputScript(
+          '2My8mvjL6r9BpvY11N95jRKdTV4roXvbQQZ', bitcoin.networks.testnet
+        )}
+    ], testCase[1].options).then(function (tx) {
+      t.equal(
+        tx.tx.ins[0].hash[0], testCase[1].utxoExpected,
+        'utxo = ' + testCase[1].utxoExpected
+      );
+      t.end();
+    }).catch(function (e) { console.log(e.stack); t.fail(e); });
+
+    function listCurrentUtxo () {
+      return Promise.resolve(testCase[1].utxo.map(function (data, i) {
+        return new MockUtxo({
+          ga_asset_id: 1,
+          pt_idx: 0,
+          subaccount: 0,
+          value: data.value,
+          block_height: data.blockHeight,
+          txhash: (
+            '0000000000000000000000000000000000000000000000000000000000000000' +
+            i.toString(16)
+          ).slice(-64),
+          pointer: 0
+        });
+      }));
+    }
+  });
+});
+
 function testChangeOutput (t, idx) {
   var expected = [
     '01000000017f26be0b0bd7a00a87970df6b6c811a6faef8d721f13676a32987096b5bb' +
