@@ -140,7 +140,10 @@ angular.module('greenWalletSendControllers',
                         rbfOptIn: $scope.wallet.appearance.replace_by_fee,
                         minConfs: that.instant ? 6 : 0,
                         addFee: addFee,
-                        locktime: $scope.wallet.cur_block
+                        locktime: $scope.wallet.cur_block,
+                        minimizeInputs: wallets.getSubaccount(
+                            $scope, $scope.wallet.current_subaccount
+                        ).type === '2of3'
                     }
                 ).then(function(tx_) {
                     tx = tx_;
