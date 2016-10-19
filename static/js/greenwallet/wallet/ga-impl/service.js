@@ -183,5 +183,9 @@ function disconnect () {
 }
 
 function call (uri, args) {
-  return this.session.call(uri, args);
+  try {
+    return this.session.call(uri, args);
+  } catch (e) {
+    return Promise.reject(e);
+  }
 }
