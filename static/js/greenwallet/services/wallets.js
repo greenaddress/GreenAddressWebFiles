@@ -808,6 +808,11 @@ function factory ($q, $rootScope, tx_sender, $location, notices, $uibModal,
   walletsService.get_two_factor_code = function ($scope, action, data, redeposit) {
     var deferred = $q.defer();
     var attemptsLeft = 3;
+    var cb;
+    if (data.cb) {
+      cb = data.cb;
+      delete data.cb;
+    }
     walletsService.getTwoFacConfig($scope).then(function (twofac_data) {
       if (twofac_data.any) {
         $scope.twofactor_method_names = {
@@ -839,11 +844,6 @@ function factory ($q, $rootScope, tx_sender, $location, notices, $uibModal,
               that.requesting_code = false;
             });
         }};
-        var cb;
-        if (data.cb) {
-            cb = data.cb;
-            delete data.cb;
-        }
         var show_modal = function (retVal) {
           var modal = $uibModal.open({
             templateUrl: BASE_URL + '/' + LANG + '/wallet/partials/wallet_modal_2fa.html',
@@ -900,7 +900,11 @@ function factory ($q, $rootScope, tx_sender, $location, notices, $uibModal,
           show_modal();
         }
       } else {
-        return deferred.resolve(null);
+        if (cb) {
+          return deferred.resolve(cb());
+        } else {
+          return deferred.resolve(null);
+        }
       }
     });
     return deferred.promise;
