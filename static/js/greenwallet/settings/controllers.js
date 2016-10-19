@@ -275,7 +275,7 @@ angular.module('greenWalletSettingsControllers',
             if (oldValue) { // disabling
                 $scope.twofactor_state['toggling_'+type] = 'disabling';
                 $scope.twofactor_state.twofactor_type = type;
-                wallets.get_two_factor_code($scope, 'disable_2fa', {method: type}).then(function(twofac_data) {
+                wallets.attempt_two_factor($scope, 'disable_2fa', {data: {method: type}}, function(twofac_data) {
                     return $scope.disable_2fa(type, twofac_data)
                 }).catch(function() {
                     $scope.twofactor_state['toggling_'+type] = false;
@@ -288,7 +288,7 @@ angular.module('greenWalletSettingsControllers',
             } else {
                 $scope.twofactor_state['toggling_'+type] = 'old_2fa';
             }
-            wallets.get_two_factor_code($scope, 'enable_2fa', {method: type}).then(function(twofac_data) {
+            wallets.attempt_two_factor($scope, 'enable_2fa', {data: {method: type}}, function(twofac_data) {
                 if (type == 'email') {
                     $scope.twofac_data = twofac_data;
                     return $scope['enable_twofac_'+type]();
@@ -1262,6 +1262,7 @@ angular.module('greenWalletSettingsControllers',
                                     templateUrl: BASE_URL+'/'+LANG+'/wallet/partials/wallet_modal_mnemonic.html',
                                     scope: scope
                                 });
+                                that.existing.push(subaccount);
                                 that.new_2of3_label = '';
                                 that.new_2of3_xpub = '';
                             });
