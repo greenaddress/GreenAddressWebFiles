@@ -31,19 +31,42 @@ function _makeUtxoFilter (assetNetworkId, requiredValue, message, options) {
   return processFiltered;
 
   function processFiltered (utxos) {
+    var copied = utxos.slice();
+    copied.sort(function (u0, u1) {
+      if (options.minimizeInputs) {
+        return u1.value - u0.value; // larger values first to minimize inputs
+      } else {
+        return (
+          u0.raw.block_height === u1.raw.block_height
+            ? u1.value - u0.value  // larger values first to avoid excess change
+            // prefer earlier nlocktime:
+            : u0.raw.block_height - u1.raw.block_height
+        );
+      }
+    });
     var collected = [];
     var collectedTotal = Promise.resolve(0);
-    for (var i = 0; i < utxos.length; ++i) {
+    for (var i = 0; i < copied.length; ++i) {
       (function (i) {
         collectedTotal = collectedTotal.then(function (curTotal) {
-          if (options.nonCTOnly && !utxos[i].value) {
+          if (options.nonCTOnly && !copied[i].value) {
             return curTotal;
           }
-          return utxos[ i ].getValue().then(function (nextValue) {
+          return copied[ i ].getValue().then(function (nextValue) {
             if (curTotal >= requiredValue) {
               return curTotal;
             }
-            collected.push(utxos[ i ]);
+
+            var nextOut = copied[ i + 1 ];
+            if (nextOut !== undefined &&
+                  (nextOut.raw.block_height === nextOut.raw.block_height ||
+                   options.minimizeInputs) && // ignore nlocktime to minimize inputs
+                  nextOut.value >= requiredValue - curTotal) {
+              // next one is enough - skip this one which is too large
+              return curTotal;
+            }
+
+            collected.push(copied[ i ]);
             if (!options.subtractFeeFromOut &&
                 options.increaseNeededValueForEachOutputBy &&
                 options.isFeeAsset) {
@@ -56,7 +79,9 @@ function _makeUtxoFilter (assetNetworkId, requiredValue, message, options) {
     }
     return collectedTotal.then(function (total) {
       if (total < requiredValue) {
-        throw new Error(message);
+        var err = new Error(message);
+        err.notEnoughMoney = true;
+        throw err;
       }
       return collected.map(process);
     });
@@ -73,7 +98,7 @@ function _collectOutputs (requiredValue, options) {
     this.buildOptions.feeNetworkId,
     requiredValue,
     options.message || 'Not enough money',
-    extendCopy(options, {isFeeAsset: true})
+    extendCopy(options, { isFeeAsset: true })
   )(options.utxo || this.utxo);
 }
 
@@ -207,15 +232,16 @@ function _constructTx (outputsWithAmounts, options) {
 
 function constructTx (outputsWithAmounts, options) {
   options = options || {};
+  var _this = this;
 
   var utxoDeferred;
   if (!options.minConfs) {
     if (!this.utxoDeferred) {
       this.refreshUtxo();
     }
-    utxoDeferred = this.utxoDeferred;
+    utxoDeferred = _this.utxoDeferred;
   } else {
-    utxoDeferred = this.utxoFactory.listAllUtxo({minConfs: options.minConfs});
+    utxoDeferred = _this.utxoFactory.listAllUtxo({minConfs: options.minConfs});
   }
   return utxoDeferred.then(function (utxo) {
     var utxoOptions = {};
@@ -224,11 +250,18 @@ function constructTx (outputsWithAmounts, options) {
       // if minConfs is not specified
       utxoOptions = {instantUtxo: utxo};
     }
-    return this._constructTx(
+    return _this._constructTx(
       outputsWithAmounts,
       extend(utxoOptions, options || {})
-    );
-  }.bind(this));
+    ).catch(function (err) {
+      if (err.notEnoughMoney && !options.minimizeInputs) {
+        return _this._constructTx(
+          outputsWithAmounts,
+          extend(utxoOptions, options || {}, {minimizeInputs: true})
+        );
+      }
+    });
+  });
 }
 
 function _getBalance () {
