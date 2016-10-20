@@ -22,81 +22,6 @@ angular.module('greenWalletInfoControllers',
         $scope.wallet.signup = false;
     }
 
-    $scope.wallet.has_graph = true;  // element needs to be initially visible to allow computing width
-    var update_graph = function() {
-        tx_sender.call("com.greenaddress.txs.get_daily_balance_chart", $scope.wallet.current_subaccount).then(function(balances_arr) {
-            if (!document.getElementById('btc_graph')) {
-                // not in 'Transactions' tab anymore - don't do anything to avoid breaking it
-                return;
-            }
-            var btcGraph = dc.lineChart("#btc_graph");
-            var prevDate;
-            var balance = parseInt($scope.wallet.final_balance);
-            var bMin = balance, bMax = balance;
-            if (balances_arr.length < 2) {
-                balances_arr = [{date: new Date(), balance: 0}];
-                $scope.wallet.has_graph = false;
-                gaEvent('Wallet', 'NotEnoughTxForBalanceGraph');
-            } else {
-                $scope.wallet.has_graph = true;
-            }
-            for (var i = 0; i < balances_arr.length; i++) {
-                var balance = balances_arr[i][1];
-                balances_arr[i]= {date: new Date(balances_arr[i][0]),
-                                  balance: balance};
-                bMin = Math.min(bMin, balance); bMax = Math.max(bMax, balance);
-            }
-            var balances = crossfilter(balances_arr);
-            var byDate = balances.dimension(function(d) {return d.date} );
-            var getSize = function() {
-                var parent = document.getElementById('btc_graph').parentNode;
-                return [Math.round(parent.offsetWidth), Math.round(parent.offsetWidth * (290/920))];
-            };
-            var size = getSize();
-            var pow = {'BTC': 8, 'mBTC': 5, 'µBTC': 2, 'bits': 2}[$scope.wallet.unit];
-            bMin /= Math.pow(10, pow); bMax /= Math.pow(10, pow);
-            var dScale = (bMax - bMin) * 0.1;
-            btcGraph.width(size[0]).height(size[1])
-                .colors(['#69b16e'])
-                .margins({top: 10, right: 50, bottom: 30, left: 60})
-                .dimension(byDate)
-                .valueAccessor(function (p) {
-                    return p.value / Math.pow(10, pow);
-                })
-                .group(byDate.group().reduceSum(function(p) { return p.balance; }))
-                .x(d3.time.scale().domain([balances_arr[0].date, balances_arr[balances_arr.length-1].date]))
-                .y(d3.scale.linear().domain([Math.max(0, bMin-dScale), bMax+dScale]))
-                .brushOn(false)
-                .renderlet(
-                    function(chart) {
-                        chart.select("svg").attr("viewBox",
-                                "0 0 " + size[0] + " " + size[1]).attr("preserveAspectRatio", "xMidYMid")
-                        if (!$scope.wallet.has_graph) {
-                            var text = chart.select("svg").selectAll("text").data(['empty']).enter().append("text");
-                            text.attr("x", size[0]/2)
-                                .attr("y", size[1]/2)
-                                .attr("text-anchor", "middle")
-                                .text(gettext("Not enough data to draw the graph"));
-                        }
-                    });
-            btcGraph.xAxis().ticks(Math.floor(size[0]/100));
-            btcGraph.yAxis().ticks(Math.floor(size[1]/30));
-            dc.renderAll();
-            angular.element(window).on('resize', function() {
-                try {
-                    var size = getSize();
-                    var svg = document.getElementById('btc_graph').getElementsByTagName('svg')[0];
-                    svg.setAttribute("width", size[0]);
-                    svg.setAttribute("height", size[1]);
-                } catch (err) {
-                    //  btc_graph does not exist, i.e. logged out
-                    //  FIXME: perhaps remove hooks on logout?
-                }
-            });
-            gaEvent('Wallet', 'BalanceGraphShown');
-        });
-    }
-
     $scope.$watch('filtered_transactions', function(newValue, oldValue) {
         if (newValue && newValue.populate_csv) newValue.populate_csv();
     });
@@ -166,7 +91,6 @@ angular.module('greenWalletInfoControllers',
                     update_after_loaded = false;
                     // some new notifications arrived while we were updating
                     update_txs();
-                    update_graph();
                 } else {
                     $scope.loading_txs = false;
                 }
@@ -175,7 +99,6 @@ angular.module('greenWalletInfoControllers',
     };
     $scope.sorting = {};
     update_txs();
-    update_graph();
     $scope.$watch('search.query', function(newValue, oldValue) {
         if (newValue !== oldValue) update_txs(800);
     });
@@ -188,7 +111,6 @@ angular.module('greenWalletInfoControllers',
     $scope.$watch('wallet.current_subaccount', function(newValue, oldValue) {
         if (newValue !== oldValue && newValue !== undefined) {
             update_txs();
-            update_graph();
         }
     });
     $scope.$on('transaction', function(event, data) {
@@ -199,7 +121,6 @@ angular.module('greenWalletInfoControllers',
         if (!$scope.loading_txs && (!subaccounts ||
                 subaccounts.indexOf($scope.wallet.current_subaccount) != -1)) {
             update_txs(0, true);
-            update_graph();
         } else if ($scope.loading_txs) {
             update_after_loaded = true;
         }
