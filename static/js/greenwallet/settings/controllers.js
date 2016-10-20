@@ -646,7 +646,7 @@ angular.module('greenWalletSettingsControllers',
         $uibModal.open({
             templateUrl: BASE_URL+'/'+LANG+'/wallet/partials/wallet_modal_remove_account.html',
         }).result.then(function() {
-            wallets.get_two_factor_code($scope, 'remove_account', {}).then(function(twofac_data) {
+            wallets.attempt_two_factor($scope, 'remove_account', {}, function(twofac_data) {
                 return tx_sender.call('com.greenaddress.login.remove_account', twofac_data).then(function() {
                     tx_sender.logout();
                     storage.remove(storage_keys.PIN_ID);
