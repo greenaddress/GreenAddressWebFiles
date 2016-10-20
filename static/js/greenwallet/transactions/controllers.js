@@ -325,9 +325,8 @@ angular.module('greenWalletTransactionsControllers',
                 }).catch(function(e) {
                     if (e.args && e.args[0] &&
                             e.args[0] == "http://greenaddressit.com/error#auth") {
-                        return wallets.get_two_factor_code(
-                            $scope, 'bump_fee', {amount: feeDelta}
-                        ).then(function(twofac_data) {
+                        return wallets.attempt_two_factor(
+                            $scope, 'bump_fee', {data: {amount: feeDelta}}, function(twofac_data) {
                             twofac_data.bump_fee_amount = feeDelta;
                             return try_sending(twofac_data);
                         });
@@ -336,7 +335,7 @@ angular.module('greenWalletTransactionsControllers',
                     }
                 });
             }).catch(function(e) {
-                notices.makeNotice('error', e.args ? e.args[1] : e);
+                notices.makeError($scope, e);
             }).finally(function() {
                 $scope.bumping_fee = false;
             }));
