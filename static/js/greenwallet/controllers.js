@@ -467,7 +467,7 @@ angular.module('greenWalletControllers', [])
                 deferred.reject(err);
             });
         }, function(error) {
-            deferred.reject(error.args[1]);
+            deferred.reject(error);
         });
         return deferred.promise;
     };
@@ -478,7 +478,7 @@ angular.module('greenWalletControllers', [])
             notices.makeNotice('success', gettext('Re-depositing successful!'));
         }, function(err) {
             $scope.redepositing = false;
-            notices.makeNotice('error', err);
+            notices.makeError($scope, err);
         });
     };
     $scope.redeposit_multiple_tx = function() {
@@ -488,7 +488,7 @@ angular.module('greenWalletControllers', [])
                 {rbf_optin: $scope.wallet.appearance.replace_by_fee,
                  prevouts_mode: 'http'}).then(function() {
             // prepare one to set appropriate tx data for 2FA
-            return wallets.get_two_factor_code($scope, 'send_tx', null, true).then(function(twofac_data) {
+            return wallets.attempt_two_factor($scope, 'send_tx', {redeposit: true}, function(twofac_data) {
                 var promise = $q.when();
                 for (var i = 0; i < $scope.wallet.expired_deposits.length; ++i) {
                     (function(i) { promise = promise.then(function() {
@@ -502,13 +502,13 @@ angular.module('greenWalletControllers', [])
                     notices.makeNotice('success', gettext('Re-depositing successful!'));
                 }, function(error) {
                     $scope.redepositing = false;
-                    notices.makeNotice('error', error);
+                    notices.makeError($scope, error);
                 });
                 return promise;
             });
         }, function(error) {
             $scope.redepositing = false;
-            notices.makeNotice('error', error);
+            notices.makeError($scope, error);
         })
 
     };

@@ -693,7 +693,7 @@ function factory ($q, $rootScope, tx_sender, $location, notices, $uibModal,
     return tx_sender.gaWallet.signingWallet.signTransaction(
       tx, {signingProgressCallback: options.progressCb}
     ).then(function () {
-      return tx.tx.ins.map(function (inp) {
+      return tx.tx.ins.map(function (inp, i) {
         var signature;
         var decompiled = Bitcoin.bitcoin.script.decompile(inp.script);
         if (decompiled[0] === 0) {  // multisig
@@ -701,6 +701,10 @@ function factory ($q, $rootScope, tx_sender, $location, notices, $uibModal,
         } else if (decompiled.length === 2) {
           // assume pkhash-spending script
           signature = decompiled[0];
+        } else if (decompiled.length === 1) {
+          // assume segwit
+          // (from signTransaction we pass just the user signature in witness)
+          signature = tx.tx.witness[i].slice(2);
         }
         return signature.toString('hex');
       });
@@ -734,6 +738,7 @@ function factory ($q, $rootScope, tx_sender, $location, notices, $uibModal,
             tx.tx.ins[i].hash
           ).toString('hex')
         }, prevOut),
+        value: +prevOut.value,
         subaccount: walletsService.getSubaccount($scope, prevOut.subaccount),
         privkey: prevOut.privkey,
         script: (typeof prevOut.script === 'string'
@@ -757,31 +762,33 @@ function factory ($q, $rootScope, tx_sender, $location, notices, $uibModal,
     });
     var do_send = function () {
       return d_all.then(function (signatures) {
+        var ret;
+
         if (data.requires_2factor && !data.twofactor_data) {
-          return walletsService.get_two_factor_code($scope, 'send_tx').then(function (twofac_data) {
-            return [signatures, twofac_data];
+          ret = walletsService.attempt_two_factor($scope, 'send_tx', {}, function (twofac_data) {
+            return attempt(twofac_data);
           });
         } else {
-          return [signatures, data.twofactor_data || null];
+          ret = attempt(data.twofactor_data || null);
         }
-      }).then(function (signatures_twofactor) {
-        var signatures = signatures_twofactor[0], twofactor = signatures_twofactor[1];
-        tx_sender.call('com.greenaddress.vault.send_tx', signatures, twofactor || null).then(function (data) {
-          d.resolve();
-          if (!twofactor && $scope) {
-            tx_sender.call('com.greenaddress.login.get_spending_limits').then(function (data) {
-              $scope.wallet.limits.total = data.total;
-            });
-          }
-          if (notify !== false) {
-            sound.play(BASE_URL + '/static/sound/coinsent.mp3', $scope);
-            notices.makeNotice('success', notify || gettext('Bitcoin transaction sent!'));
-          }
-        }, function (reason) {
-          d.reject();
-          notices.makeNotice('error', gettext('Transaction failed: ') + reason.args[1]);
+
+        ret.then(d.resolve).catch(function (error) {
+          d.reject(error);
+          notices.makeNotice('error', gettext('Transaction failed: ') + error.args[ 1 ]);
           sound.play(BASE_URL + '/static/sound/wentwrong.mp3', $scope);
         });
+
+        function attempt (twofactor) {
+          return tx_sender.call('com.greenaddress.vault.send_tx', signatures, twofactor || null).then(function (data) {
+            if (!twofactor && $scope) {
+              tx_sender.call('com.greenaddress.login.get_spending_limits').then(function (data) {
+                $scope.wallet.limits.total = data.total;
+              });
+            }
+            sound.play(BASE_URL + '/static/sound/coinsent.mp3', $scope);
+            notices.makeNotice('success', gettext('Bitcoin transaction sent!'));
+          });
+        }
       });
     };
     send_after.then(do_send).catch(d.reject);
@@ -806,6 +813,7 @@ function factory ($q, $rootScope, tx_sender, $location, notices, $uibModal,
     return walletsService.get_two_factor_code($scope, action, options.data, options.redeposit);
   };
   walletsService.get_two_factor_code = function ($scope, action, data, redeposit) {
+    data = data || {};
     var deferred = $q.defer();
     var attemptsLeft = 3;
     var cb;
