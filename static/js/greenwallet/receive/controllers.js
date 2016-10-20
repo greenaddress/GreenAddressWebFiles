@@ -165,7 +165,7 @@ angular.module('greenWalletReceiveControllers',
                     new Bitcoin.bitcoin.ECPair(
                         Bitcoin.BigInteger.fromByteArrayUnsigned(key_bytes),
                         null,
-                        {network: cur_net})
+                        {network: cur_net, compressed: compressed})
                 );
             } else {
                 notices.makeNotice(gettext('Not a valid private key'));
