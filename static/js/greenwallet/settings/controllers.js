@@ -1130,7 +1130,7 @@ angular.module('greenWalletSettingsControllers',
                 data.per_tx > $scope.wallet.limits.per_tx ||
                 data.total > $scope.wallet.limits.total) {
             var do_change = function() {
-                return wallets.get_two_factor_code($scope, 'change_tx_limits', data).then(function(twofac_data) {
+                return wallets.attempt_two_factor($scope, 'change_tx_limits', {data: data}, function(twofac_data) {
                     return tx_sender.call('com.greenaddress.login.change_settings', 'tx_limits', data, twofac_data);
                 });
             }
