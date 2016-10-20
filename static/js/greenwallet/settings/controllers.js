@@ -666,7 +666,7 @@ angular.module('greenWalletSettingsControllers',
             return;
         }
         settings.setting_email = true;
-        wallets.get_two_factor_code($scope, 'set_email', {'address': settings.new_email}).then(function(twofac_data) {
+        wallets.attempt_two_factor($scope, 'set_email', {data: {'address': settings.new_email}}, function(twofac_data) {
             return tx_sender.call('com.greenaddress.twofactor.set_email', settings.new_email, twofac_data).then(function() {
                 wallets.getTwoFacConfig($scope, true);  // refresh twofac config
                 notices.makeNotice('success', gettext('Email sent'));
