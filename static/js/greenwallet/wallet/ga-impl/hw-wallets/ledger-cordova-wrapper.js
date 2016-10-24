@@ -126,16 +126,9 @@ extend(LedgerCordovaWrapper.prototype, {
     }, 'signMessageSign', [pin.toString(HEX)]);
     return promise.promise;
   },
-  gaStartUntrustedHashTransactionInput_async: function (newTransaction, tx, i) {
+  gaStartUntrustedHashTransactionInput_async: function (newTransaction, tx, i, segwit) {
     var promise = Q.defer();
     var inputs = [];
-    var segwit = false;
-    tx.ins.forEach(function (inp) {
-      if (inp.prevOut.raw.script_type === scriptTypes.OUT_P2SH_P2WSH) {
-        // Assume all inputs use segwit if one input is found
-        segwit = true;
-      }
-    });
     for (var j = 0; j < tx.ins.length; j++) {
       var input = tx.ins[ j ];
       var txhash = input.hash.toString('hex');

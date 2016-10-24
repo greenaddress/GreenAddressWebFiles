@@ -59,7 +59,8 @@ function canSpendP2SH () {
     return LedgerHWWallet.currentDevice.gaStartUntrustedHashTransactionInput_async(
       true,
       _cloneTransactionForSignature(tx, script, 0),
-      0
+      0,
+      false
     ).then(function () {
       return true;
     }).catch(function () {
@@ -552,18 +553,25 @@ function _signTransactionSegwit (device, tx, options) {
           return device.gaStartUntrustedHashTransactionInput_async(
             true,
             _cloneTransactionForSignature(tx, script, i),
-            0
+            0,
+            true
           );
         }).then(function () {
           return device.gaUntrustedHashTransactionInputFinalizeFull_async(tx);
-        }).then(function () { return script; });;
+        }).then(function () { return script; });
       }
       return d;
     }).then(function (script) {
+      if (inp.prevOut.raw.script_type !== scriptTypes.OUT_P2SH_P2WSH) {
+        // sign segwit only
+        tx.witness.push(new Buffer([0]));
+        return;
+      }
       return device.gaStartUntrustedHashTransactionInput_async(
         false,
         _cloneTransactionForSignature(tx, script, i, true),
-        0
+        0,
+        true
       ).then(function () {
         var this_ms = 0;
         var this_expected_ms = 6500;
@@ -603,7 +611,7 @@ function _signTransactionSegwit (device, tx, options) {
 }
 
 function _signTransactionNonSegwit (device, tx, options) {
-  var signedN = 0;
+  var signedN = options.initialSignedN || 0;
   var progressCb = options.signingProgressCallback;
   var deferred = Promise.resolve();
   tx.ins.forEach(function (inp, i) {
@@ -614,7 +622,8 @@ function _signTransactionNonSegwit (device, tx, options) {
       return device.gaStartUntrustedHashTransactionInput_async(
         i === 0,
         _cloneTransactionForSignature(tx, script, i),
-        i
+        i,
+        false
       ).then(function () {
         var this_ms = 0;
         var this_expected_ms = 6500;
@@ -628,6 +637,10 @@ function _signTransactionNonSegwit (device, tx, options) {
           if (progressCb) progressCb(Math.min(100, Math.round(100 * progress)));
         }, 100);
         return device.gaUntrustedHashTransactionInputFinalizeFull_async(tx).then(function (finished) {
+          if (inp.prevOut.raw.script_type === scriptTypes.OUT_P2SH_P2WSH) {
+            // don't sign segwit
+            return;
+          }
           return device.signTransaction_async(
             path,
             undefined,
@@ -658,11 +671,14 @@ function signTransaction (tx, options) {
   return this.getDevice().then(function () {
     var device = LedgerHWWallet.currentDevice;
     var segwit = false;
+    var nonSegwitCount = 0;
 
     tx.ins.forEach(function (inp) {
       if (inp.prevOut.raw.script_type === scriptTypes.OUT_P2SH_P2WSH) {
         // Assume all inputs use segwit if one input is found
         segwit = true;
+      } else {
+        nonSegwitCount += 1;
       }
     });
 
@@ -673,7 +689,15 @@ function signTransaction (tx, options) {
     }
 
     if (segwit) {
-      return _signTransactionSegwit(device, tx, options);
+      return _signTransactionSegwit(device, tx, options).then(function () {
+        if (nonSegwitCount) {
+          // sign non-segwit inputs too
+          return _signTransactionNonSegwit(device, tx, extend({
+            // initialSignedN = number of segwit inputs
+            initialSignedN: tx.ins.length - nonSegwitCount
+          }, options));
+        }
+      });
     } else {
       return _signTransactionNonSegwit(device, tx, options);
     }

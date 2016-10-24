@@ -416,15 +416,8 @@ var BTChip = module.exports = Class.create({
 		return this.card.sendApdu_async(0xe0, 0x44, (firstRound ? 0x00 : 0x80), (newTransaction ? (segwit ? 0x02 : 0x00) : 0x80), transactionData, [0x9000]);
 	},
 
-	gaStartUntrustedHashTransactionInput_async: function(newTransaction, transaction) {
-    var segwit = false;
-    transaction.ins.forEach(function (inp) {
-      if (inp.prevOut.raw.script_type === scriptTypes.OUT_P2SH_P2WSH) {
-        // Assume all inputs use segwit if one input is found
-        segwit = true;
-      }
-    });
-        var currentObject = this;
+	gaStartUntrustedHashTransactionInput_async: function(newTransaction, transaction, i, segwit) {
+      var currentObject = this;
 	    var verBuf = new Buffer(4);
 	    verBuf.writeUInt32LE(transaction.version, 0);
         var version_hex = new ByteString(verBuf.toString('hex'), HEX);
