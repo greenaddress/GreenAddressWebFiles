@@ -13,6 +13,7 @@ var ByteString = require('../../hw-apis/ledger-js/api/ByteString');
 var Convert = require('../../hw-apis/ledger-js/api/Convert');
 var ASCII = require('../../hw-apis/ledger-js/api/GlobalConstants').ASCII;
 var HEX = require('../../hw-apis/ledger-js/api/GlobalConstants').HEX;
+var scriptTypes = require('../constants').scriptTypes;
 var cardFactory = new ChromeapiPlugupCardTerminalFactory();
 var cardFactoryNano = new ChromeapiPlugupCardTerminalFactory(1);
 
@@ -84,6 +85,8 @@ function pingDevice (device) {
       firmwareVersion.toString(HEX) >= '00010409';
     features.quickerVersion =
       firmwareVersion.toString(HEX) >= '0001040b';
+    features.shouldUseNewSigingApi =
+      firmwareVersion.toString(HEX) >= '20010002';
     device.features = features;
   }).catch(function (err) {
     if (err.indexOf && err.indexOf('6d00') !== -1) {
@@ -512,71 +515,168 @@ function _prevOutToPath (prevOut, privDer) {
   return path;
 }
 
-function _cloneTransactionForSignature (tx, connectedScript, inIndex) {
+function _cloneTransactionForSignature (tx, connectedScript, inIndex, singleInput) {
   var txTmp = tx.clone();
 
   // Blank out other inputs' signatures
-  txTmp.ins.forEach(function (txin) {
+  txTmp.ins.forEach(function (txin, i) {
     txin.script = new Buffer([]);
+    txin.prevOut = tx.ins[i].prevOut;
   });
 
   txTmp.ins[inIndex].script = connectedScript;
 
+  if (singleInput) {
+    txTmp.ins = [txTmp.ins[inIndex]];
+  }
+
   return txTmp;
+}
+
+function _signTransactionSegwit (device, tx, options) {
+  var signedN = 0;
+  var progressCb = options.signingProgressCallback;
+  var deferred = Promise.resolve();
+
+  tx.witness = [];
+
+  tx.ins.forEach(function (inp, i) {
+    var path = _prevOutToPath(inp.prevOut);
+    deferred = deferred.then(function () {
+      return options.scriptFactory.getUtxoPrevScript(inp.prevOut);
+    }).then(function (script) {
+      var d = Promise.resolve(script);
+      if (i === 0) {
+        // Provide the first script instead of a null script to initialize the P2SH confirmation logic
+        d = d.then(function () {
+          return device.gaStartUntrustedHashTransactionInput_async(
+            true,
+            _cloneTransactionForSignature(tx, script, i),
+            i
+          );
+        }).then(function () {
+          return device.gaUntrustedHashTransactionInputFinalizeFull_async(tx);
+        }).then(function () { return script; });;
+      }
+      return d;
+    }).then(function (script) {
+      return device.gaStartUntrustedHashTransactionInput_async(
+        false,
+        _cloneTransactionForSignature(tx, script, i, true),
+        0
+      ).then(function () {
+        var this_ms = 0;
+        var this_expected_ms = 6500;
+        if (device.features.quickerVersion) this_expected_ms *= 0.55;
+        if (device.isNanoS) this_expected_ms /= 9;
+        var interval = setInterval(function () {
+          this_ms += 100;
+          var progress = signedN / tx.ins.length;
+          progress += (1 / tx.ins.length) * (this_ms / this_expected_ms);
+          if (this_ms > this_expected_ms) return;
+          if (progressCb) progressCb(Math.min(100, Math.round(100 * progress)));
+        }, 100);
+        return device.signTransaction_async(
+          path,
+          undefined,
+          // Cordova requires int, while crx requires ByteString:
+          window.cordova ? tx.locktime : new ByteString(Convert.toHexInt(tx.locktime), HEX)
+        ).then(function (sig) {
+          clearInterval(interval);
+          signedN += 1;
+          var sigAndSigHash = new Buffer('30' + sig.bytes(1).toString(HEX), 'hex'); // our sig
+          tx.ins[i].script = new Buffer([].concat(
+            0x22, 0x00, 0x20, Array.from(bitcoin.crypto.sha256(script))
+          ));
+          tx.witness.push(Buffer.concat(
+            // count + length + signature
+            [new Buffer([1, sigAndSigHash.length]), sigAndSigHash]
+          ));
+        }).catch(function (err) {
+          clearInterval(interval);
+          return Promise.reject(err);
+        });
+      });
+    });
+  });
+  return deferred;
+}
+
+function _signTransactionNonSegwit (device, tx, options) {
+  var signedN = 0;
+  var progressCb = options.signingProgressCallback;
+  var deferred = Promise.resolve();
+  tx.ins.forEach(function (inp, i) {
+    var path = _prevOutToPath(inp.prevOut);
+    deferred = deferred.then(function () {
+      return options.scriptFactory.getUtxoPrevScript(inp.prevOut);
+    }).then(function (script) {
+      return device.gaStartUntrustedHashTransactionInput_async(
+        i === 0,
+        _cloneTransactionForSignature(tx, script, i),
+        i
+      ).then(function () {
+        var this_ms = 0;
+        var this_expected_ms = 6500;
+        if (device.features.quickerVersion) this_expected_ms *= 0.55;
+        if (device.isNanoS) this_expected_ms /= 9;
+        var interval = setInterval(function () {
+          this_ms += 100;
+          var progress = signedN / tx.ins.length;
+          progress += (1 / tx.ins.length) * (this_ms / this_expected_ms);
+          if (this_ms > this_expected_ms) return;
+          if (progressCb) progressCb(Math.min(100, Math.round(100 * progress)));
+        }, 100);
+        return device.gaUntrustedHashTransactionInputFinalizeFull_async(tx).then(function (finished) {
+          return device.signTransaction_async(
+            path,
+            undefined,
+            // Cordova requires int, while crx requires ByteString:
+            window.cordova ? tx.locktime : new ByteString(Convert.toHexInt(tx.locktime), HEX)
+          ).then(function (sig) {
+            clearInterval(interval);
+            signedN += 1;
+            inp.script = bitcoin.script.compile([].concat(
+              bitcoin.opcodes.OP_0, // OP_0 required for multisig
+              new Buffer([0]), // to be replaced by backend with server's sig
+              new Buffer('30' + sig.bytes(1).toString(HEX), 'hex'), // our sig
+              script  // prevScript
+            ));
+          });
+        }).catch(function (err) {
+          clearInterval(interval);
+          return Promise.reject(err);
+        });
+      });
+    });
+  });
+  return deferred;
 }
 
 function signTransaction (tx, options) {
   tx = tx.tx;
   return this.getDevice().then(function () {
     var device = LedgerHWWallet.currentDevice;
-    var deferred = Promise.resolve();
-    var signedN = 0;
-    var progressCb = options.signingProgressCallback;
-    tx.ins.forEach(function (inp, i) {
-      var path = _prevOutToPath(inp.prevOut);
-      deferred = deferred.then(function () {
-        return options.scriptFactory.getUtxoPrevScript(inp.prevOut);
-      }).then(function (script) {
-        return device.gaStartUntrustedHashTransactionInput_async(
-          i === 0,
-          _cloneTransactionForSignature(tx, script, i),
-          i
-        ).then(function (res) {
-          var this_ms = 0;
-          var this_expected_ms = 6500;
-          if (device.features.quickerVersion) this_expected_ms *= 0.55;
-          if (device.isNanoS) this_expected_ms /= 9;
-          var interval = setInterval(function () {
-            this_ms += 100;
-            var progress = signedN / tx.ins.length;
-            progress += (1 / tx.ins.length) * (this_ms / this_expected_ms);
-            if (this_ms > this_expected_ms) return;
-            if (progressCb) progressCb(Math.min(100, Math.round(100 * progress)));
-          }, 100);
-          return device.gaUntrustedHashTransactionInputFinalizeFull_async(tx).then(function (finished) {
-            return device.signTransaction_async(
-              path,
-              undefined,
-              // Cordova requires int, while crx requires ByteString:
-              window.cordova ? tx.locktime : new ByteString(Convert.toHexInt(tx.locktime), HEX)
-            ).then(function (sig) {
-              clearInterval(interval);
-              signedN += 1;
-              inp.script = bitcoin.script.compile([].concat(
-                bitcoin.opcodes.OP_0, // OP_0 required for multisig
-                new Buffer([0]), // to be replaced by backend with server's sig
-                new Buffer('30' + sig.bytes(1).toString(HEX), 'hex'), // our sig
-                script  // prevScript
-              ));
-            });
-          }).catch(function (err) {
-            clearInterval(interval);
-            return Promise.reject(err);
-          });
-        });
-      });
+    var segwit = false;
+
+    tx.ins.forEach(function (inp) {
+      if (inp.prevOut.raw.script_type === scriptTypes.OUT_P2SH_P2WSH) {
+        // Assume all inputs use segwit if one input is found
+        segwit = true;
+      }
     });
-    return deferred;
+
+    if (!device.features.shouldUseNewSigingApi && segwit) {
+      throw new Error(
+        'Segwit is not supported by your Ledger firmware - please upgrade.'
+      );
+    }
+
+    if (segwit) {
+      return _signTransactionSegwit(device, tx, options);
+    } else {
+      return _signTransactionNonSegwit(device, tx, options);
+    }
   });
 }
 

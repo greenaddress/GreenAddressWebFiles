@@ -259,6 +259,8 @@ function constructTx (outputsWithAmounts, options) {
           outputsWithAmounts,
           extend(utxoOptions, options || {}, {minimizeInputs: true})
         );
+      } else {
+        return Promise.reject(err);
       }
     });
   });

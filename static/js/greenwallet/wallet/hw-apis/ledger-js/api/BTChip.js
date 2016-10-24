@@ -24,6 +24,7 @@ var Convert = require('./Convert');
 var HEX = require('./GlobalConstants').HEX;
 var Q = require('../thirdparty/q/q.min');
 var async = require('../thirdparty/async/async.min')
+var scriptTypes = require('../../../ga-impl/constants').scriptTypes;
 
 var BTChip = module.exports = Class.create({
 
@@ -411,23 +412,30 @@ var BTChip = module.exports = Class.create({
           return deferred.promise;
 	},
 
-	startUntrustedHashTransactionInputRaw_async: function(newTransaction, firstRound, transactionData) {
-		return this.card.sendApdu_async(0xe0, 0x44, (firstRound ? 0x00 : 0x80), (newTransaction ? 0x00 : 0x80), transactionData, [0x9000]);
+	startUntrustedHashTransactionInputRaw_async: function(newTransaction, firstRound, transactionData, segwit) {
+		return this.card.sendApdu_async(0xe0, 0x44, (firstRound ? 0x00 : 0x80), (newTransaction ? (segwit ? 0x02 : 0x00) : 0x80), transactionData, [0x9000]);
 	},
 
 	gaStartUntrustedHashTransactionInput_async: function(newTransaction, transaction) {
+    var segwit = false;
+    transaction.ins.forEach(function (inp) {
+      if (inp.prevOut.raw.script_type === scriptTypes.OUT_P2SH_P2WSH) {
+        // Assume all inputs use segwit if one input is found
+        segwit = true;
+      }
+    });
         var currentObject = this;
 	    var verBuf = new Buffer(4);
 	    verBuf.writeUInt32LE(transaction.version, 0);
         var version_hex = new ByteString(verBuf.toString('hex'), HEX);
 		var data = version_hex.concat(currentObject.createVarint(transaction['ins'].length));
         var deferred = Q.defer();
-		currentObject.startUntrustedHashTransactionInputRaw_async(newTransaction, true, data).then(function (result) {
+		currentObject.startUntrustedHashTransactionInputRaw_async(newTransaction, true, data, segwit).then(function (result) {
 				  var i = 0;
                   async.eachSeries(
                     transaction['ins'],
                     function (input, finishedCallback) {
-                        data = new ByteString(Convert.toHexByte(0x00), HEX);
+                        data = new ByteString(Convert.toHexByte(segwit ? 0x02 : 0x00), HEX);
 
                         var txhash = input.hash.toString('hex');
                         var idxBuf = new Buffer(4);
@@ -435,14 +443,20 @@ var BTChip = module.exports = Class.create({
                         var idxHex = idxBuf.toString('hex');
                   		data = data.concat(new ByteString(txhash, HEX)).concat(new ByteString(idxHex, HEX));
 
+                        if (segwit) {
+                          var valueBuf = new Buffer(8);
+                          bitcoin.bufferutils.writeUInt64LE(valueBuf, input.prevOut.value, 0);
+                          data = data.concat(new ByteString(valueBuf.toString('hex'), HEX));
+                        }
+
                         var scriptBytes = new ByteString(input.script.toString('hex'), HEX);
                         data = data.concat(currentObject.createVarint(scriptBytes.length));
-                        currentObject.startUntrustedHashTransactionInputRaw_async(newTransaction, false, data).then(function(result) {
+                        currentObject.startUntrustedHashTransactionInputRaw_async(false, false, data).then(function(result) {
                           var seqBuf = new Buffer(4);
                           seqBuf.writeUInt32LE(input.sequence, 0);
                           var seqHex = seqBuf.toString('hex');
                           data = scriptBytes.concat(new ByteString(seqHex, HEX));
-                          currentObject.startUntrustedHashTransactionInputRaw_async(newTransaction, false, data).then(function (result) {
+                          currentObject.startUntrustedHashTransactionInputRaw_async(false, false, data).then(function (result) {
                             // TODO notify progress
                             i++;
                             finishedCallback();
