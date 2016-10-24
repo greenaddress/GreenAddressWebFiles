@@ -552,7 +552,7 @@ function _signTransactionSegwit (device, tx, options) {
           return device.gaStartUntrustedHashTransactionInput_async(
             true,
             _cloneTransactionForSignature(tx, script, i),
-            i
+            0
           );
         }).then(function () {
           return device.gaUntrustedHashTransactionInputFinalizeFull_async(tx);

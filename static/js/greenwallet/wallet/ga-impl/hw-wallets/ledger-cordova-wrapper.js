@@ -4,6 +4,7 @@ var extend = require('xtend/mutable');
 var window = require('global/window');
 var HEX = require('../../hw-apis/ledger-js/api/GlobalConstants').HEX;
 var Q = require('../../hw-apis/ledger-js/thirdparty/q/q.min');
+var scriptTypes = require('../constants').scriptTypes;
 
 module.exports = LedgerCordovaWrapper;
 
@@ -128,6 +129,13 @@ extend(LedgerCordovaWrapper.prototype, {
   gaStartUntrustedHashTransactionInput_async: function (newTransaction, tx, i) {
     var promise = Q.defer();
     var inputs = [];
+    var segwit = false;
+    tx.ins.forEach(function (inp) {
+      if (inp.prevOut.raw.script_type === scriptTypes.OUT_P2SH_P2WSH) {
+        // Assume all inputs use segwit if one input is found
+        segwit = true;
+      }
+    });
     for (var j = 0; j < tx.ins.length; j++) {
       var input = tx.ins[ j ];
       var txhash = input.hash.toString('hex');
@@ -135,14 +143,20 @@ extend(LedgerCordovaWrapper.prototype, {
       outpointAndSequence.writeUInt32LE(input.index, 0);
       outpointAndSequence.writeUInt32LE(input.sequence, 4);
       outpointAndSequence = outpointAndSequence.toString('hex');
-      inputs.push(txhash + outpointAndSequence);
+      var value = '';
+      if (segwit) {
+        var valueBuf = new Buffer(8);
+        bitcoin.bufferutils.writeUInt64LE(valueBuf, input.prevOut.value, 0);
+        value = valueBuf.toString('hex');
+      }
+      inputs.push(txhash + outpointAndSequence + value);
     }
     var script = tx.ins[ i ].script.toString('hex');
     this.queuedCordovaCall(function (result) {
       promise.resolve(result);
     }, function (fail) {
       promise.reject(fail);
-    }, 'startUntrustedTransaction', [ newTransaction, i, inputs, script ]);
+    }, 'startUntrustedTransaction', [ newTransaction, i, inputs, script, segwit ]);
     return promise.promise;
   },
 
