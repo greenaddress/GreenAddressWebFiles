@@ -138,7 +138,7 @@ angular.module('greenWalletSendControllers',
                             that._signing_progress_cb.bind(that),
                         subtractFeeFromOut: satoshis === 'ALL',
                         rbfOptIn: $scope.wallet.appearance.replace_by_fee,
-                        minConfs: that.instant ? 6 : 0,
+                        minConfs: that.instant ? 6 : 1,
                         addFee: addFee,
                         locktime: $scope.wallet.cur_block,
                         minimizeInputs: wallets.getSubaccount(
