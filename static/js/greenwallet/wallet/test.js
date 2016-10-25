@@ -67,7 +67,7 @@ var coinSelectionTestCases = [
       utxo: [
         {value: 100000, blockHeight: 1}
       ],
-      txValue: 10000, options: {}, utxoExpected: 0
+      txValue: 10000, options: {}, utxoExpected: [0]
     }
   ],
   ['8 utxo available, with different blockHeight',
@@ -83,7 +83,7 @@ var coinSelectionTestCases = [
         {value: 50000, blockHeight: 2},  // 7
         {value: 50000, blockHeight: 3}   // 8
       ],
-      txValue: 10000, options: {}, utxoExpected: 3
+      txValue: 10000, options: {}, utxoExpected: [3]
     }
   ],
   ['18 utxo available, blockHeight match not enough because fee too large',
@@ -102,10 +102,20 @@ var coinSelectionTestCases = [
         // + at least 6720 bytes for output
         // = at least 3376 for fee - not enough if inputs chosen by nblockHeight
         // but the last input is enough to cover the whole tx
-        {value: 3900, blockHeight: 10}, // 16 - must be used to cover fee
-        {value: 3901, blockHeight: 10}  // 17 - too large - choose the smaller one
+        {value: 3900, blockHeight: 10}, // 16 - could be used to cover fee
+        {value: 4700, blockHeight: 10}  // 17 - but dust threshold actually requires more
       ],
-      txValue: 640, options: {}, utxoExpected: 16
+      txValue: 640, options: {}, utxoExpected: [17]
+    }
+  ],
+  ['3 utxo available, 2 best result in dust output, 3rd needs to be added',
+    {
+      utxo: [
+        {value: 10000, blockHeight: 1}, // 0
+        {value: 10000, blockHeight: 1}, // 1
+        {value: 19900, blockHeight: 2}  // 2
+      ],
+      txValue: 19900, options: {mockFee: 0}, utxoExpected: [0, 1, 2]
     }
   ]
 ];
@@ -129,18 +139,35 @@ coinSelectionTestCases.forEach(function (testCase) {
       assetNetworkId: assetNetworkId,
       feeNetworkId: assetNetworkId
     };
-    return constructor.constructTx([
-      {value: testCase[1].txValue,
-        scriptPubKey: bitcoin.address.toOutputScript(
-          '2My8mvjL6r9BpvY11N95jRKdTV4roXvbQQZ', bitcoin.networks.testnet
-        )}
-    ], testCase[1].options).then(function (tx) {
-      t.equal(
-        tx.tx.ins[0].hash[0], testCase[1].utxoExpected,
-        'utxo = ' + testCase[1].utxoExpected
-      );
-      t.end();
-    }).catch(function (e) { console.log(e.stack); t.fail(e); });
+    if (testCase[1].options.mockFee !== undefined) {
+      mockFeeEstimatesFactory.mockFee = testCase[1].options.mockFee;
+    }
+    try {
+      return constructor.constructTx([
+        {
+          value: testCase[ 1 ].txValue,
+          scriptPubKey: bitcoin.address.toOutputScript(
+            '2My8mvjL6r9BpvY11N95jRKdTV4roXvbQQZ', bitcoin.networks.testnet
+          )
+        }
+      ], testCase[ 1 ].options).then(function (tx) {
+        mockFeeEstimatesFactory.mockFee = undefined;
+        var utxoActual = tx.tx.ins.map(
+          function (i) { return i.hash[ 0 ]; }
+        ).sort(function (a, b) { return a - b; });
+        t.equal(
+          JSON.stringify(utxoActual), JSON.stringify(testCase[ 1 ].utxoExpected),
+          'utxo = ' + JSON.stringify(testCase[ 1 ].utxoExpected)
+        );
+        t.end();
+      }).catch(function (e) {
+        mockFeeEstimatesFactory.mockFee = undefined;
+        console.log(e.stack);
+        t.fail(e);
+      });
+    } catch (e) {
+      mockFeeEstimatesFactory.mockFee = undefined;
+    }
 
     function listCurrentUtxo () {
       return Promise.resolve(testCase[1].utxo.map(function (data, i) {
@@ -188,7 +215,6 @@ function testChangeOutput (t, idx) {
     'b78e2e7a75886d8e324c9e331d17a914dce69773530780cbcf0fd40e54c5dd5c302728' +
     'e98700000000'
   ][idx];
-  console.log(expected);
   var constructor = new TxConstructor({
     signingWallet: mockSigningWallet,
     utxoFactory: mockUtxoFactory,
@@ -256,5 +282,5 @@ function mockGetNextAddress () {
 }
 
 function mockGetFeeEstimate () {
-  return [10000, 1];
+  return [this.mockFee !== undefined ? this.mockFee : 10000, 1];
 }

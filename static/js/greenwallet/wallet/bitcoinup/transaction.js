@@ -164,6 +164,8 @@ function _sumPrevouts (prevouts) {
   return ret;
 }
 
+var DUST = 546;
+
 function _addFeeAndChange (options) {
   var feeEstimate = options.feeEstimate;
   var prevouts = options.prevOutputs;
@@ -197,9 +199,9 @@ function _addFeeAndChange (options) {
         throw new Error('subtractFeeFromOut not supported for multiple outputs');
       }
 
-      if (prevoutsValue < fee) {
-        // only the fee is required if we subtract from outputs
-        return Promise.resolve([ fee, changeCache ]);
+      if (prevoutsValue < fee + DUST) {
+        // only the fee + DUST is required if we subtract from outputs
+        return Promise.resolve([ fee + DUST, changeCache ]);
       }
 
       this.replaceOutput(
@@ -220,6 +222,9 @@ function _addFeeAndChange (options) {
     if (prevoutsValue === requiredValue + fee) {
       // we got exactly the required value of prevouts
       return ret;
+    } else if (prevoutsValue < requiredValue + fee + DUST) {
+      // if change results in adding outputs below dust, we need more inputs
+      return Promise.resolve([ requiredValue + fee + DUST, changeCache ]);
     }
 
     // prevouts are larger than required value -- we need to add change output
@@ -263,12 +268,12 @@ function _addFeeAndChange (options) {
 
         fee = expectedFee;
 
-        if (prevoutsValue === requiredValueForFee + fee) {
+        if (prevoutsValue < requiredValueForFee + fee + DUST) {
           // After adding the change output or CT data, which made the transaction larger,
           // the prevouts match exactly the fee, but we now have change which
-          // cannot be zero.
+          // cannot be smaller than dust threshold.
           // In such case increase the fee to have at least minimum change value.
-          fee += 2730;
+          fee += DUST;
         }
 
         if (prevoutsValue < requiredValueForFee + fee) {

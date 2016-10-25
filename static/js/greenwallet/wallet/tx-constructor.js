@@ -44,6 +44,7 @@ function _makeUtxoFilter (assetNetworkId, requiredValue, message, options) {
         );
       }
     });
+
     var collected = [];
     var collectedTotal = Promise.resolve(0);
     for (var i = 0; i < copied.length; ++i) {
@@ -59,7 +60,7 @@ function _makeUtxoFilter (assetNetworkId, requiredValue, message, options) {
 
             var nextOut = copied[ i + 1 ];
             if (nextOut !== undefined &&
-                  (nextOut.raw.block_height === nextOut.raw.block_height ||
+                  (copied[ i ].raw.block_height === nextOut.raw.block_height ||
                    options.minimizeInputs) && // ignore nlocktime to minimize inputs
                   nextOut.value >= requiredValue - curTotal) {
               // next one is enough - skip this one which is too large

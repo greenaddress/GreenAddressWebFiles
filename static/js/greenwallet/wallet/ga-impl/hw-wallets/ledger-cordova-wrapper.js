@@ -4,7 +4,6 @@ var extend = require('xtend/mutable');
 var window = require('global/window');
 var HEX = require('../../hw-apis/ledger-js/api/GlobalConstants').HEX;
 var Q = require('../../hw-apis/ledger-js/thirdparty/q/q.min');
-var scriptTypes = require('../constants').scriptTypes;
 
 module.exports = LedgerCordovaWrapper;
 
