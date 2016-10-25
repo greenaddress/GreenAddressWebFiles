@@ -1,13 +1,6 @@
 angular.module('greenWalletControllers', [])
 .controller('WalletController', ['$scope', 'tx_sender', '$uibModal', 'notices', 'gaEvent', '$location', 'wallets', '$http', '$q', 'parse_bitcoin_uri', 'parseKeyValue', 'backButtonHandler', '$uibModalStack', 'sound', 'blind', 'storage',
         function WalletController($scope, tx_sender, $uibModal, notices, gaEvent, $location, wallets, $http, $q, parse_bitcoin_uri, parseKeyValue, backButtonHandler, $uibModalStack, sound, blind, storage) {
-    // appcache:
-    applicationCache.addEventListener('updateready', function() {
-        $scope.$apply(function() {
-            $scope.update_available = true;
-        });
-    });
-
     $scope.cordova_platform = window.cordova && cordova.platformId;
 
     var exchanges = $scope.exchanges = {
