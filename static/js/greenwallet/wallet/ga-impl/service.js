@@ -34,6 +34,22 @@ function GAService (netName, options) {
         'hex'
       )
     );
+  } else {
+    this.gaHDNode = new bitcoin.HDNode(
+      bitcoin.ECPair.fromPublicKeyBuffer(
+        new Buffer(
+          // ga mainnet pubkey
+          '0322c5f5c9c4b9d1c3e22ca995e200d724c2d7d8b6953f7b38fddf9296053c961f',
+          'hex'
+        ),
+        bitcoin.networks['testnet']
+      ),
+      new Buffer(
+        // ga mainnet chaincode
+        'e9a563d68686999af372a33157209c6860fe79197a4dafd9ec1dbaa49523351d',
+        'hex'
+      )
+    );
   }
   this.wsUrl = options.wsUrl || 'ws://localhost:8080/v2/ws';
 }
