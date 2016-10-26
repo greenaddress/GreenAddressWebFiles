@@ -7213,6 +7213,9 @@ input[type="checkbox"].switch:disabled + span + span {
     margin-right: 3px;
     padding: 0;
   }
+  #wallet .sub-header select {
+    max-width: 100px;
+  }
 }
 #wallet .transaction-search-toggle {
   float: right;
