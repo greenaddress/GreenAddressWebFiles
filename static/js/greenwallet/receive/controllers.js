@@ -305,8 +305,8 @@ angular.module('greenWalletReceiveControllers',
                     if ($scope.receive.amount) {
                         $scope.receive.bitcoin_uri += '?amount=' + formatAmountBitcoin($scope.receive.amount);
                     }
+                    if (show_qr) $scope.show_url_qr($scope.receive.bitcoin_uri);
                 });
-                if (show_qr) $scope.show_url_qr($scope.receive.bitcoin_uri);
             }).catch(function (err) {
                 notices.makeNotice('error', err ? (err.message || err) : 'Unknown error occurred');
                 console.log(err);
