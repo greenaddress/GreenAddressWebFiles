@@ -33,16 +33,16 @@ function factory ($q, cordovaReady) {
         if (!txSenderService.wallet || !txSenderService.logged_in) return;
         if (txSenderService.gaService.connection) {
           txSenderService.gaService.connection.close(); // reconnect on resume
-          connect();
+          connect(null, txSenderService.wallet.update_balance);
         }
-        txSenderService.wallet.update_balance();
       }, false);
     })();
   } else if (isMobile && typeof document.addEventListener !== undefined) {
     // reconnect on tab shown in mobile browsers
     document.addEventListener('visibilitychange', function () {
       if (!document.hidden && txSenderService.wallet && txSenderService.logged_in) {
-        txSenderService.wallet.update_balance();
+        txSenderService.gaService.connection.close(); // reconnect on resume
+        connect(null, txSenderService.wallet.update_balance);
       }
     }, false);
   }

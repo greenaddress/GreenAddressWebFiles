@@ -175,7 +175,9 @@ function connect (options, cb, eb) {
     realm: 'realm1'
   });
   this._connectInProgress = true;
-  this._loginOptions = options;
+  if (options) {
+    this._loginOptions = options;
+  }
   this._loginCb = cb;
   this._loginEb = eb;
   var _this = this;
