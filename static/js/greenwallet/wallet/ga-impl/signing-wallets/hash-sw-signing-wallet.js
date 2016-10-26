@@ -127,6 +127,7 @@ function signInput (tx, i) {
           sigAndSigHash, // our signature with SIGHASH_ALL
           signingKey.getPublicKeyBuffer()
         );
+        return {};
       } else if (prevOut.raw.branch === branches.EXTERNAL) {
         // priv-der pkhash-spending signature
         return _this.keysManager.getMyPublicKey(
