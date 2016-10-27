@@ -264,7 +264,7 @@ angular.module('greenWalletSendControllers',
             }).finally(function() { that.sending = false; });
         },
         send_money: function() {
-            if (!this.spend_all && isNaN(parseFloat(this.amount))) {
+            if (!this.spend_all && (isNaN(parseFloat(this.amount)) || this.amount <= 0)) {
                 notices.makeNotice('error', gettext('Invalid amount'));
                 return;
             }
