@@ -60,7 +60,7 @@ function factory ($q, cordovaReady) {
   }
   function logout () {
     if (txSenderService.gaService.connection) {
-      txSenderService.gaService.connection.close();
+      txSenderService.gaService.disconnect();
       connect();
       txSenderService.gawallet = null;
     }

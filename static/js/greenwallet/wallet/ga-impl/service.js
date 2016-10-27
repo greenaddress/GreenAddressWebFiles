@@ -197,6 +197,7 @@ function connect (options, cb, eb) {
 
 function disconnect () {
   delete this.connection.onclose;
+  delete this._loginOptions;
   this.connection.close();
 }
 
