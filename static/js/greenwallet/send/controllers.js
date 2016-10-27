@@ -229,8 +229,8 @@ angular.module('greenWalletSendControllers',
                             twofac_data,
                             priv_data
                         ).then(function (data) {
-                            if (data.limit_decrease) {
-                                $scope.wallet.limits.total -= data.limit_decrease;
+                            if (data.new_limit) {
+                                $scope.wallet.limits.total = data.new_limit;
                             }
                         })
                     }

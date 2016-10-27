@@ -312,8 +312,8 @@ angular.module('greenWalletTransactionsControllers',
                         'com.greenaddress.vault.send_raw_tx',
                         tx.toBuffer().toString('hex'), twofac_data
                     ).then(function(data) {
-                        if (data.limit_decrease) {
-                            $scope.wallet.limits.total -= data.limit_decrease;
+                        if (data.new_limit) {
+                            $scope.wallet.limits.total = data.new_limit;
                         }
                     });
                 };
