@@ -319,7 +319,7 @@ angular.module('greenWalletSettingsControllers',
     setup_2fa('sms');
     setup_2fa('phone');
     setup_2fa('gauth');
-}]).controller('SettingsController', ['$scope', '$q', 'wallets', 'tx_sender', 'notices', '$uibModal', 'gaEvent', 'storage', '$location', 'storage_keys', '$timeout', 'bip38', 'mnemonics', 'hw_wallets',
+}]).controller('SettingsController', ['$scope', '$q', 'wallets', 'tx_sender', 'notices', '$uibModal', 'gaEvent', 'storage', 'storage_keys', '$location', '$timeout', 'bip38', 'mnemonics', 'hw_wallets',
         function SettingsController($scope, $q, wallets, tx_sender, notices, $uibModal, gaEvent, storage, storage_keys, $location, $timeout, bip38, mnemonics, hw_wallets) {
     if (!wallets.requireWallet($scope)) return;
     var userfriendly_blocks = function(num) {
