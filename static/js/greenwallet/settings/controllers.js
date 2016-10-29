@@ -767,6 +767,17 @@ angular.module('greenWalletSettingsControllers',
     };
     $scope.save = function() {
         var item = addressbook.new_item;
+        try {
+            var ad = Bitcoin.bitcoin.address.fromBase58Check(item.address, [cur_net]);
+        } catch (e) {
+            notices.makeNotice('error', gettext('Invalid address'));
+            return;
+        }
+
+        if (ad.version !== cur_net.pubKeyHash && ad.version !== cur_net.scriptHash) {
+            notices.makeNotice('error', gettext('Invalid address'));
+            return;
+        }
         tx_sender.call('com.greenaddress.addressbook.add_entry',
                 item.address, item.name, 0).then(function(data) {
             if (!data) {
