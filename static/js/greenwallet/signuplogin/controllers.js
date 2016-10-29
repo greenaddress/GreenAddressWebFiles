@@ -216,7 +216,7 @@ angular.module('greenWalletSignupLoginControllers', ['greenWalletMnemonicsServic
                 }
                 return wallets.loginWithHDWallet(
                     $scope, hdwallet, extend({
-                        mnemonic: state.mnemonic,
+                        mnemonic: data.mnemonic,
                         seed: new Bitcoin.Buffer.Buffer(data.seed, 'hex'),
                         // conditionally disable automatic redirect to the
                         // initial wallet page, to avoid closing the PIN modal:
