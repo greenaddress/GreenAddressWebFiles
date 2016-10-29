@@ -78,7 +78,7 @@ function pingDevice (device) {
   return device.getFirmwareVersion_async().then(function (version) {
     var features = {};
     var firmwareVersion = version.firmwareVersion.bytes(0, 4);
-    if (firmwareVersion.toString(HEX) < '00010408') {
+    if (firmwareVersion.toString(HEX) < '02010000') {
       device.card.disconnect_async();
       return Promise.reject('Too old Ledger firmware. Please upgrade.');
     }
