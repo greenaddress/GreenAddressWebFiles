@@ -117,6 +117,20 @@ var coinSelectionTestCases = [
       ],
       txValue: 19900, options: {mockFee: 0}, utxoExpected: [0, 1, 2]
     }
+  ],
+  ['do not fail with not enough money with incorrect "next out is enough" check',
+    // We had a bug which ignored the 9000-60000 outs because 900 seemed enough,
+    // but then turned out to be not enough because of the increaseNeededValueForEachOutputBy
+    // increment.
+    {
+      utxo: [
+        {value: 8000000, blockHeight: 1},  // 0
+        {value: 900, blockHeight: 1},      // 1
+        {value: 9000, blockHeight: 1},     // 2
+        {value: 60000, blockHeight: 1}     // 3
+      ],
+      txValue: 8000000, options: {mockFee: 60000}, utxoExpected: [0, 3]
+    }
   ]
 ];
 
@@ -145,19 +159,23 @@ coinSelectionTestCases.forEach(function (testCase) {
     try {
       return constructor.constructTx([
         {
-          value: testCase[ 1 ].txValue,
+          value: testCase[1].txValue,
           scriptPubKey: bitcoin.address.toOutputScript(
             '2My8mvjL6r9BpvY11N95jRKdTV4roXvbQQZ', bitcoin.networks.testnet
           )
         }
-      ], testCase[ 1 ].options).then(function (tx) {
+      ], testCase[1].options).then(function (tx) {
         mockFeeEstimatesFactory.mockFee = undefined;
         var utxoActual = tx.tx.ins.map(
-          function (i) { return i.hash[ 0 ]; }
-        ).sort(function (a, b) { return a - b; });
+          function (i) {
+            return i.hash[0];
+          }
+        ).sort(function (a, b) {
+          return a - b;
+        });
         t.equal(
-          JSON.stringify(utxoActual), JSON.stringify(testCase[ 1 ].utxoExpected),
-          'utxo = ' + JSON.stringify(testCase[ 1 ].utxoExpected)
+          JSON.stringify(utxoActual), JSON.stringify(testCase[1].utxoExpected),
+          'utxo = ' + JSON.stringify(testCase[1].utxoExpected)
         );
         t.end();
       }).catch(function (e) {

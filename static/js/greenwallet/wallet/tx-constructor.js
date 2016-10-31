@@ -47,6 +47,7 @@ function _makeUtxoFilter (assetNetworkId, requiredValue, message, options) {
 
     var collected = [];
     var collectedTotal = Promise.resolve(0);
+
     for (var i = 0; i < copied.length; ++i) {
       (function (i) {
         collectedTotal = collectedTotal.then(function (curTotal) {
@@ -58,21 +59,24 @@ function _makeUtxoFilter (assetNetworkId, requiredValue, message, options) {
               return curTotal;
             }
 
+            var increase = 0;
+            if (!options.subtractFeeFromOut &&
+              options.increaseNeededValueForEachOutputBy &&
+              options.isFeeAsset) {
+              increase = options.increaseNeededValueForEachOutputBy;
+            }
+
             var nextOut = copied[ i + 1 ];
             if (nextOut !== undefined &&
                   (copied[ i ].raw.block_height === nextOut.raw.block_height ||
                    options.minimizeInputs) && // ignore nlocktime to minimize inputs
-                  nextOut.value >= requiredValue - curTotal) {
+                  nextOut.value >= requiredValue - curTotal + increase) {
               // next one is enough - skip this one which is too large
               return curTotal;
             }
 
             collected.push(copied[ i ]);
-            if (!options.subtractFeeFromOut &&
-                options.increaseNeededValueForEachOutputBy &&
-                options.isFeeAsset) {
-              requiredValue += options.increaseNeededValueForEachOutputBy;
-            }
+            requiredValue += increase;
             return curTotal + nextValue;
           });
         });
