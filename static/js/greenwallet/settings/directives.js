@@ -44,7 +44,7 @@ angular.module('greenWalletSettingsDirectives', [])
         template += '<td>' + address + '</td>';
 
         template += '<td>';
-        if (scope.wallet.hdwallet.keyPair.d) {
+        if (scope.wallet.hdwallet.keyPair.d || scope.wallet.hwDevice) {
             template += '<a href="" ng-click="start_rename(item)"><i class="glyphicon glyphicon-edit"></i></a>';
             if (item.type != 'subaccount')
             template += '<a href="" ng-click="delete(item.address)"><i class="glyphicon glyphicon-trash"></i></a> ';
