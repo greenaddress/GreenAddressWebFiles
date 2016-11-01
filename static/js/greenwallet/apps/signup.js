@@ -230,14 +230,8 @@ function SignupController($scope, $location, mnemonics, tx_sender, notices, wall
 
     $scope.signup.nfcmodal = function() {
         gaEvent('Signup', 'NfcModal');
-        var mnemonic, mime;
-        if ($scope.signup.mnemonic_encrypted) {
-            mnemonic = $scope.signup.mnemonic_encrypted;
-            mime = 'x-ga/en';
-        } else {
-            mnemonic = $scope.wallet.mnemonic;
-            mime = 'x-gait/mnc';
-        }
+        var mnemonic = $scope.wallet.mnemonic;
+        var mime = 'x-gait/mnc';
         mnemonics.validateMnemonic(mnemonic).then(function(bytes) {
             $scope.nfc_bytes = bytes;
             $scope.nfc_mime = mime;
@@ -246,13 +240,6 @@ function SignupController($scope, $location, mnemonics, tx_sender, notices, wall
                 scope: $scope,
                 controller: 'NFCController'
             });
-        });
-    };
-
-    $scope.signup.encrypt_mnemonic = function() {
-        gaEvent('Signup', 'EncryptMnemonic');
-        bip38.encrypt_mnemonic_modal($scope, new Bitcoin.Buffer.Buffer($scope.signup.seed, 'hex')).then(function(encrypted) {
-            $scope.signup.mnemonic_encrypted = encrypted;
         });
     };
 
