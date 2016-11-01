@@ -34,7 +34,7 @@ function SignupController($scope, $location, mnemonics, tx_sender, notices, wall
         $location.path('/browser_unsupported');
         return;
     }
-    var requires_mnemonic = ($location.path() == '/signup_pin' || $location.path() == '/signup_oauth' || $location.path() == '/signup_2factor');
+    var requires_mnemonic = ($location.path() == '/signup_pin' || $location.path() == '/signup_2factor');
     if (requires_mnemonic && !signup.mnemonic && !signup.hw_detected) {
         $location.path('/create');
         return;
@@ -180,10 +180,10 @@ function SignupController($scope, $location, mnemonics, tx_sender, notices, wall
     });
 
     $scope.signup.set_pin = function() {
-        var next_page = '/signup_oauth';
+        var next_page = '/receive';
         if (!$scope.signup.pin) {
-            gaEvent('Signup', 'PinSkippedToOauth');
-            $location.url(next_page + '#content_container');
+            gaEvent('Signup', 'PinSkippedToWallet');
+            $location.url(next_page);
             return;
         }
         $scope.signup.setting_pin = true;
@@ -199,26 +199,6 @@ function SignupController($scope, $location, mnemonics, tx_sender, notices, wall
         });
 
     };
-
-    $scope.signup.customlogin = function() {
-        gaEvent('Signup', 'CustomLoginClicked');
-        $scope.got_username_password = function(username, password) {
-            tx_sender.call('com.greenaddress.addressbook.sync_custom', username, password).then(function() {
-                gaEvent('Signup', 'CustomLoginEnabled');
-                notices.makeNotice('success', gettext('Custom login enabled'));
-                $scope.signup.any_social_done = true;
-                $scope.signup.customloginstate.synchronized = true;
-                modal.close();
-            }, function(err) {
-                gaEvent('Signup', 'CustomLoginEnableFailed', err.args[1]);
-                notices.makeNotice('error', err.args[1]);
-            });
-        };
-        var modal = $uibModal.open({
-            templateUrl: BASE_URL+'/'+LANG+'/wallet/partials/wallet_modal_custom_login.html',
-            scope: $scope
-        });
-    }
 
     $scope.signup.qrmodal = function() {
         gaEvent('Signup', 'QrModal');

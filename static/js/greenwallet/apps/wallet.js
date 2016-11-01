@@ -92,10 +92,6 @@ var greenWalletApp = angular.module('greenWalletApp', deps)
             templateUrl: BASE_URL+'/'+LANG+'/wallet/partials/signup_3_pin.html',
             controller: 'SignupController'
         })
-        .when('/signup_oauth', {
-            templateUrl: BASE_URL+'/'+LANG+'/wallet/partials/signup_4_oauth.html',
-            controller: 'SignupController'
-        })
         .when('/trezor_signup', {
             templateUrl: BASE_URL+'/'+LANG+'/wallet/partials/signup_1_trezor.html',
             controller: 'SignupController'
