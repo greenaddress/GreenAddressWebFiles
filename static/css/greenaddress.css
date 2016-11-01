@@ -5948,7 +5948,6 @@ a:focus {
 .btn {
   position: relative;
   min-width: 110px;
-  font-style: italic;
   white-space: normal;
   margin: auto 2px;
   letter-spacing: .2px;
