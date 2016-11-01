@@ -1,7 +1,9 @@
 <div submittable>
 
     <div class="modal-body">
-    	<p class="text-center">{{ _("Please enter the following words from your <strong>unencrypted</strong> mnemonic:") }}</p>
+    	<p class="text-center" ng-hide="signup">{{ _("Please enter the following words from your <strong>unencrypted</strong> mnemonic:") }}</p>
+      <p class="text-center" ng-show="signup">{{ _("Please enter the following words from your mnemonic:") }}</p>
+      <p class="text-center">{{ _("(to verify that you backed it up correctly)") }}</p>
         <form ng-submit="verify_mnemonic_submit()">
             <div ng-class="{'has-error': verified_mnemonic_errors[$index]}" ng-repeat="index in verify_mnemonics_words_indices">
                 <hr />
@@ -15,7 +17,8 @@
 
     <div class="modal-footer">
         <div class="">
-            <button class="btn btn-danger" ng-click="$dismiss()">{{ _("Cancel") }}</button>
+            <button class="btn btn-danger" ng-show="signup" ng-click="$dismiss()">{{ _("Cancel and return to first step") }}</button>
+            <button class="btn btn-danger" ng-hide="signup" ng-click="$dismiss()">{{ _("Cancel") }}</button>
             <button class="btn btn-primary" ng-click="submit_me()">{{ _("Verify") }}</button>
         </div>
     </div>

@@ -1041,5 +1041,62 @@ function factory ($q, $rootScope, tx_sender, $location, notices, $uibModal,
       scope: $scope
     }).result;
   };
+  walletsService.verify_mnemonic = function($scope, options) {
+    options = options || {};
+    var verified = false;
+    return new Promise(function (resolve, reject) {
+      var scope = $scope.$new();
+      gaEvent('Wallet', 'VerifyMnemonicModal');
+      var indices = scope.verify_mnemonics_words_indices = [];
+      scope.verified_mnemonic_words = ['', '', '', ''];
+      scope.verified_mnemonic_errors = ['', '', '', ''];
+      scope.signup = options.signup;
+      for (var i = 0; i < 4; i++) {
+        indices.push(Math.floor(Math.random() * 24) + 1);
+        while (indices.indexOf(indices[indices.length - 1]) < indices.length - 1) {
+          indices[indices.length - 1] = Math.floor(Math.random() * 24) + 1;
+        }
+      }
+      indices.sort(function(a, b) { return a - b; });
+      scope.verify_mnemonic_submit = function() {
+        var valid = true;
+        var valid_words = scope.wallet.mnemonic.split(' ');
+        for (var i = 0; i < 4; i++) {
+          if (!scope.verified_mnemonic_words[i]) {
+            scope.verified_mnemonic_errors[i] = gettext('Please provide this word');
+            valid = false;
+          } else if (scope.verified_mnemonic_words[i] != valid_words[indices[i]-1]) {
+            scope.verified_mnemonic_errors[i] = gettext('Incorrect word');
+            valid = false;
+          } else {
+            scope.verified_mnemonic_errors[i] = '';
+          }
+        }
+
+        verified = valid;
+        if (verified) {
+          modal.close();
+          walletsService.updateAppearance(scope, 'mnemonic_verified', 'true').catch(function(e) {
+            notices.makeNotice('error', e);
+          });
+          resolve();
+        }
+      }
+
+      var modal = $uibModal.open({
+        templateUrl: BASE_URL+'/'+LANG+'/wallet/partials/wallet_modal_verify_mnemonic.html',
+        scope: scope
+      });
+      modal.result.catch(function () {
+        if (options.signup && !verified) {
+          notices.makeNotice(
+            'error',
+            gettext('Please back up and verify your mnemonic before continuing.')
+          );
+          reject();
+        }
+      });
+    });
+  }
   return walletsService;
 }
