@@ -6231,6 +6231,7 @@ table.table .date {
   color: #808080;
   font-weight: 300;
   font-style: italic;
+  white-space: nowrap;
 }
 table .desc,
 table.table .desc {
@@ -6248,6 +6249,7 @@ table.table .info {
 table .amount,
 table.table .amount {
   text-align: right;
+  white-space: nowrap;
 }
 table .amount.amount-plus,
 table.table .amount.amount-plus {
