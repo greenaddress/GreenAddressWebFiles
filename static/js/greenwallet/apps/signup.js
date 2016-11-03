@@ -232,21 +232,6 @@ function SignupController($scope, $location, mnemonics, tx_sender, notices, wall
         });
     };
 
-    $scope.signup.nfcmodal = function() {
-        gaEvent('Signup', 'NfcModal');
-        var mnemonic = $scope.wallet.mnemonic;
-        var mime = 'x-gait/mnc';
-        mnemonics.validateMnemonic(mnemonic).then(function(bytes) {
-            $scope.nfc_bytes = bytes;
-            $scope.nfc_mime = mime;
-            $uibModal.open({
-                templateUrl: BASE_URL+'/'+LANG+'/wallet/partials/signup_nfc_modal.html',
-                scope: $scope,
-                controller: 'NFCController'
-            });
-        });
-    };
-
     var hwDevice;
 
     if (first_page) {

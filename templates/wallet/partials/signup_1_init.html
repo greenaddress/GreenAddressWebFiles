@@ -55,10 +55,6 @@
                 <br>
                 <button ng-hide="signup.hw_detected" class="btn btn-default btn-block-xs" ng-click="signup.qrmodal()" ng-class="{disabled:!signup.mnemonic}"><i class="glyphicon glyphicon-qrcode"></i> {{ _("Show QR Code") }}</button>
 
-                {% if cdvapp %}
-                <button class="btn btn-default btn-block-xs" ng-hide="cordova_platform=='ios'" ng-click="signup.nfcmodal()" ng-class="{disabled:!signup.mnemonic}"><i class="glyphicon glyphicon-transfer"></i> {{ _("Write to NFC tag") }}</button>
-                {% endif %}
-
                 <a class="btn btn-primary btn-block-xs" ng-class="{disabled:!( (signup.mnemonic&&signup.secured_confirmed)||(signup.hw_detected&&signup.logged_in) )}" href="#/signup_2factor#content_container">{{ _("Continue") }}</a>
             </div>
 
