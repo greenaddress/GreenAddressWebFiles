@@ -66,7 +66,7 @@ function SignupController($scope, $location, mnemonics, tx_sender, notices, wall
         signup.is_trezor = false;
     }
 
-    if ($location.path() == '/signup_2factor') {
+    if ($location.path() == '/signup_2factor' && !$scope.signup.hw_detected) {
         wallets.verify_mnemonic($scope, {signup: true}).catch(function(e) {
             $location.url('/create#content_container');
         });
