@@ -1,3 +1,5 @@
+var allHwWallets = require('wallet').GA.allHwWallets;
+var BaseHWWallet = require('wallet').GA.BaseHWWallet;
 var signup = {};
 var secured_confirmed;
 
@@ -39,25 +41,41 @@ function SignupController($scope, $location, mnemonics, tx_sender, notices, wall
         $location.path('/create');
         return;
     }
+    var refresh = $location.path() === '/create_refresh';
     var first_page = false;
-    if (!$scope.wallet.signup) {  // clear for case of other signup done previously in the same browser/crx session
+    if (!$scope.wallet.signup || refresh) {  // clear for case of other signup done previously in the same browser/crx session
+        if (signup.hw_detected) {
+            // reset hw wallets state for the case of 'refresh' clicked in
+            // the hw wallets flow
+            allHwWallets.forEach(function (hw) {
+                try {
+                    hw.disconnectCurrentDevice();
+                } catch (e) { }
+            });
+            BaseHWWallet.allowAnotherCheck();
+        }
         first_page = true;
         for (var k in signup) {
             signup[k] = undefined;
         }
     }
     $scope.signup = signup;
-    signup.empty_mytrezor_message = gettext('Please go to %s first to set up your device.');
-    if (is_chrome_app) {
-        signup.empty_mytrezor_message = $sce.trustAsHtml(signup.empty_mytrezor_message.replace(
-            '%s',
-            '<a href="https://mytrezor.com/" target="_blank">myTREZOR</a>'));
-    } else {
-        // don't use target _blank for browser because the signup page needs refreshing
-        // after TREZOR setup anyway
-        signup.empty_mytrezor_message = $sce.trustAsHtml(signup.empty_mytrezor_message.replace(
-            '%s',
-            '<a href="https://mytrezor.com/">myTREZOR</a>'));
+    if (refresh) {
+        $location.path('/create');
+    }
+    if (!signup.empty_mytrezor_message) {
+        signup.empty_mytrezor_message = gettext('Please go to %s first to set up your device.');
+        if (is_chrome_app) {
+            signup.empty_mytrezor_message = $sce.trustAsHtml(signup.empty_mytrezor_message.replace(
+                '%s',
+                '<a href="https://mytrezor.com/" target="_blank">myTREZOR</a>'));
+        } else {
+            // don't use target _blank for browser because the signup page needs refreshing
+            // after TREZOR setup anyway
+            signup.empty_mytrezor_message = $sce.trustAsHtml(signup.empty_mytrezor_message.replace(
+                '%s',
+                '<a href="https://mytrezor.com/">myTREZOR</a>'));
+        }
     }
     if ($location.path() == '/trezor_signup') {
         signup.is_trezor = true;
@@ -229,23 +247,6 @@ function SignupController($scope, $location, mnemonics, tx_sender, notices, wall
         });
     };
 
-    $scope.signup.usbmodal = function() {
-        var that = this;
-        that.hw_wallet_processing = true;
-        var opts = {
-            filterDeviceCb: function (device) {
-                return device.isRecoverySupported();
-            }
-        };
-        hw_wallets.waitForHwWallet(cur_net, opts).then(function (device) {
-            device.setupSeed($scope.wallet.mnemonic).then(function () {
-                $scope.signup.has_btchip = true;
-            });
-        }).finally(function () {
-            that.hw_wallet_processing = false;
-        })
-    }
-
     var hwDevice;
 
     if (first_page) {
@@ -255,29 +256,23 @@ function SignupController($scope, $location, mnemonics, tx_sender, notices, wall
                 return;  // already confirmed the sw mnemonic
             }
             hwDevice = hwDevice_;
-            if (hwDevice_.deviceTypeName === 'TREZOR') {
-                hwDevice.getPublicKey().then(function () {
-                    $scope.$apply(function () {
-                        delete $scope.wallet.mnemonic;
-                        $scope.signup.hw_detected = true;
-                    });
-                }).catch(function (e) {
-                    if (e.code === "Failure_NotInitialized") {
-                        $scope.$apply(function () {
-                            $scope.signup.hw_detected = true;
-                            $scope.signup.empty_trezor = true;
-                            delete $scope.wallet.mnemonic;
-                        });
-                    } else {
-                        notices.makeNotice('error', e);
-                    }
-                });
-            } else {
-                hwDevice.setupSeed().then(function () {
+            hwDevice.getPublicKey().then(function () {
+                $rootScope.safeApply(function () {
                     delete $scope.wallet.mnemonic;
-                    $scope.signup.hw_detected = true;
+                    signup.hw_detected = true;
                 });
-            }
+            }).catch(function (e) {
+                $rootScope.safeApply(function () {
+                    $scope.signup.hw_detected = true;
+                    $scope.signup.empty_trezor = true;
+                    if (hwDevice.deviceTypeName !== 'TREZOR') {
+                        signup.empty_mytrezor_message = $sce.trustAsHtml(gettext(
+                            'Empty %s hardware wallet detected. Please initialize it before using with GreenAddress.'
+                        ).replace('%s', hwDevice.deviceTypeName));
+                    }
+                    delete $scope.wallet.mnemonic;
+                });
+            });
         }, function (err) {
             notices.makeNotice('error', err.message);
         });

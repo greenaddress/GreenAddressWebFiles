@@ -8,11 +8,19 @@ HWWallet.registerError = registerError;
 HWWallet.guiCallbacks = {};
 HWWallet.registerGUICallback = registerGUICallback;
 HWWallet.checkForDevices = checkForDevices;
+HWWallet.allowAnotherCheck = allowAnotherCheck;
 HWWallet.initSubclass = initSubclass;
 HWWallet.currentWallet = new Promise(function (resolve, reject) {
   HWWallet.resolveCurrentWallet = resolve;
   HWWallet.rejectCurrentWallet = reject;
 });
+
+function allowAnotherCheck () {
+  HWWallet.currentWallet = new Promise(function (resolve, reject) {
+    HWWallet.resolveCurrentWallet = resolve;
+    HWWallet.rejectCurrentWallet = reject;
+  });
+}
 
 function HWWallet () {
 }

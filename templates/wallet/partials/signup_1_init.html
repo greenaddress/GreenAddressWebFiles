@@ -22,7 +22,9 @@
                     <small ng-show="signup.empty_trezor" ng-bind-html="signup.empty_mytrezor_message"></small>
                 </div>
 
-                <p style="text-align: center;">({{ _("You can also disconnect the Hardware Wallet and refresh this page to create a wallet without the device.") }})</p>
+                <p style="text-align: center;">({{ _("You can also disconnect the Hardware Wallet and refresh this page to create a wallet without the device.") }})
+                  <br /><a href="#/create_refresh">{{ _("Click here to refresh.") }}</a>
+                </p>
             </div>
 
             <div class="create-modal-body" ng-hide="signup.unexpected_error || signup.hw_detected">
@@ -55,9 +57,6 @@
 
                 {% if cdvapp %}
                 <button class="btn btn-default btn-block-xs" ng-hide="cordova_platform=='ios'" ng-click="signup.nfcmodal()" ng-class="{disabled:!signup.mnemonic}"><i class="glyphicon glyphicon-transfer"></i> {{ _("Write to NFC tag") }}</button>
-                {% endif %}
-                {% if crapp %}
-                <button ng-hide="signup.hw_detected" class="btn btn-default btn-block-xs" ng-click="signup.usbmodal()" ng-class="{disabled:!signup.mnemonic || signup.hw_wallet_processing}"><i class="glyphicon glyphicon-transfer"></i> {{ _("Write to a HW Wallet") }}</button>
                 {% endif %}
 
                 <a class="btn btn-primary btn-block-xs" ng-class="{disabled:!( (signup.mnemonic&&signup.secured_confirmed)||(signup.hw_detected&&signup.logged_in) )}" href="#/signup_2factor#content_container">{{ _("Continue") }}</a>
