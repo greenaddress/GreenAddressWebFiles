@@ -238,7 +238,7 @@ angular.module('greenWalletSignupLoginControllers', ['greenWalletMnemonicsServic
                             scope: $scope
                         });
                         modal.opened.then(function() { focus("pinModal"); });
-                        return modal.result.then(function() {
+                        return modal.result.finally(function() {
                             storage.set(storage_keys.PIN_REFUSED, true);
                             // Open initial page only after the modal is closed,
                             // otherwise it'd close itself on navigation.
