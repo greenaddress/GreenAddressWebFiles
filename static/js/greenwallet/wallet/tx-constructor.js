@@ -238,7 +238,7 @@ function constructTx (outputsWithAmounts, options) {
 
   var utxoDeferred;
   if (!this.utxoDeferred) {
-    // with minConfs we need unconfirmed-txs the utxoDeferred too, for the
+    // with minConfs we need the unconfirmed-txs utxoDeferred too, for the
     // 'You need to wait for previous transactions to get at least %s confirmations'
     // check
     this.refreshUtxo();
