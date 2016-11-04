@@ -7809,6 +7809,21 @@ input[type="checkbox"].switch:disabled + span + span {
     margin-bottom: 60px;
   }
 }
+.modal-verify-mnemonic .mnemonic {
+  margin: 30px;
+}
+.modal-verify-mnemonic .mnemonic-wrapper {
+  vertical-align: middle;
+  display: inline-block;
+}
+.modal-verify-mnemonic .mnemonic-word {
+  display: inline-block;
+  padding: 8px 12px;
+  height: 40px;
+}
+.modal-verify-mnemonic .error {
+  display: block;
+}
 #index #wallet-create-menu a {
   font-weight: bold;
   color: #ff6d01;

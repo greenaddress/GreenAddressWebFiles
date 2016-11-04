@@ -1048,16 +1048,21 @@ function factory ($q, $rootScope, tx_sender, $location, notices, $uibModal,
       var scope = $scope.$new();
       gaEvent('Wallet', 'VerifyMnemonicModal');
       var indices = scope.verify_mnemonics_words_indices = [];
+      scope.all_words = scope.wallet.mnemonic.split(' ');
       scope.verified_mnemonic_words = ['', '', '', ''];
       scope.verified_mnemonic_errors = ['', '', '', ''];
       scope.signup = options.signup;
+      scope.indices = {};
       for (var i = 0; i < 4; i++) {
-        indices.push(Math.floor(Math.random() * 24) + 1);
+        indices.push(Math.floor(Math.random() * 24));
         while (indices.indexOf(indices[indices.length - 1]) < indices.length - 1) {
-          indices[indices.length - 1] = Math.floor(Math.random() * 24) + 1;
+          indices[indices.length - 1] = Math.floor(Math.random() * 24);
         }
       }
       indices.sort(function(a, b) { return a - b; });
+      indices.forEach(function (v, i) {
+        scope.indices[v] = i + 1;
+      });
       scope.verify_mnemonic_submit = function() {
         var valid = true;
         var valid_words = scope.wallet.mnemonic.split(' ');
@@ -1065,7 +1070,7 @@ function factory ($q, $rootScope, tx_sender, $location, notices, $uibModal,
           if (!scope.verified_mnemonic_words[i]) {
             scope.verified_mnemonic_errors[i] = gettext('Please provide this word');
             valid = false;
-          } else if (scope.verified_mnemonic_words[i] != valid_words[indices[i]-1]) {
+          } else if (scope.verified_mnemonic_words[i] != valid_words[indices[i]]) {
             scope.verified_mnemonic_errors[i] = gettext('Incorrect word');
             valid = false;
           } else {
@@ -1081,7 +1086,7 @@ function factory ($q, $rootScope, tx_sender, $location, notices, $uibModal,
           });
           resolve();
         }
-      }
+      };
 
       var modal = $uibModal.open({
         templateUrl: BASE_URL+'/'+LANG+'/wallet/partials/wallet_modal_verify_mnemonic.html',

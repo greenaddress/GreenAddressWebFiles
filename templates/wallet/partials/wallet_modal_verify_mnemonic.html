@@ -1,16 +1,16 @@
 <div submittable>
 
-    <div class="modal-body">
-    	<p class="text-center" ng-hide="signup">{{ _("Please enter the following words from your <strong>unencrypted</strong> mnemonic:") }}</p>
-      <p class="text-center" ng-show="signup">{{ _("Please enter the following words from your mnemonic:") }}</p>
+    <div class="modal-body modal-verify-mnemonic">
+      <p class="text-center">{{ _("Please enter the missing words from your mnemonic:") }}</p>
       <p class="text-center">{{ _("(to verify that you backed it up correctly)") }}</p>
         <form ng-submit="verify_mnemonic_submit()">
-            <div ng-class="{'has-error': verified_mnemonic_errors[$index]}" ng-repeat="index in verify_mnemonics_words_indices">
-                <hr />
-                <label for="id_word(($index))">{{ _("Word #") }}(( index ))</label><input clickfix id="id_word(($index))" class="form-control" type="password" ng-model="verified_mnemonic_words[$index]" />
-                <div ng-show="verified_mnemonic_errors[$index]" class="label label-danger">((verified_mnemonic_errors[$index]))</div>
-            </div>
-
+            <p class="text-center mnemonic form-inline">
+              <span ng-repeat="word in all_words track by $index" class="mnemonic-wrapper">
+                <span ng-hide="indices[$index]" class="mnemonic-word">(( word ))&nbsp;</span>
+                <input ng-show="indices[$index]" size="10" placeholder="{{ _("Word #") }}(( $index+1 ))" clickfix id="id_word((idx))" class="form-control form-inline" type="password" ng-model="verified_mnemonic_words[indices[$index]-1]" />
+                <span class="error" ng-show="verified_mnemonic_errors[indices[$index]-1]" class="label label-danger">((verified_mnemonic_errors[indices[$index]-1]))</span>
+              </span>
+            </p>
             <input type="submit" submitter style="position: absolute; left: -10000px;" />
         </form>
     </div>
