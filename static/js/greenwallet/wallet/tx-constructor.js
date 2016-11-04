@@ -148,19 +148,16 @@ function _constructTx (outputsWithAmounts, options) {
   var checkNonInstant = Promise.resolve();
   if (options.instantUtxo) {
     checkNonInstant = this._collectOutputs(oldNeededValue, collectOptions);
+    // all further _collectOutputs calls need to use the updated collectOptions
+    // to collect instant outputs only:
+    collectOptions.message = (
+      'You need to wait for previous transactions to get at least %s confirmations'
+    ).replace('%s', options.minConfs);
+    collectOptions.utxo = options.instantUtxo;
   }
 
   return checkNonInstant.then(function () {
-    var message, utxo;
-    if (options.instantUtxo) {
-      message = (
-        'You need to wait for previous transactions to get at least %s confirmations'
-      ).replace('%s', options.minConfs);
-      utxo = options.instantUtxo;
-    }
-    return _this._collectOutputs(
-      oldNeededValue, extend(collectOptions, {message: message, utxo: utxo})
-    );
+    return _this._collectOutputs(oldNeededValue, collectOptions);
   }).then(function (prevOutputs) {
     var constantFee = false;
     var feeMultiplier;
@@ -210,7 +207,7 @@ function _constructTx (outputsWithAmounts, options) {
       neededValue = this._increaseNeededValue(neededValue, oldNeededValue);
       oldNeededValue = neededValue;
       var changeCache = neededValueAndChange[1];
-      return this._collectOutputs(neededValue, options).then(function (prevOutputs) {
+      return this._collectOutputs(neededValue, collectOptions).then(function (prevOutputs) {
         // (2) rebuild the tx
         var buildOptions = {
           outputsWithAmounts: outputsWithAmounts,
@@ -240,10 +237,13 @@ function constructTx (outputsWithAmounts, options) {
   var _this = this;
 
   var utxoDeferred;
+  if (!this.utxoDeferred) {
+    // with minConfs we need unconfirmed-txs the utxoDeferred too, for the
+    // 'You need to wait for previous transactions to get at least %s confirmations'
+    // check
+    this.refreshUtxo();
+  }
   if (!options.minConfs) {
-    if (!this.utxoDeferred) {
-      this.refreshUtxo();
-    }
     utxoDeferred = _this.utxoDeferred;
   } else {
     utxoDeferred = _this.utxoFactory.listAllUtxo({minConfs: options.minConfs});

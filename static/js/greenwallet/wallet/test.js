@@ -206,6 +206,87 @@ coinSelectionTestCases.forEach(function (testCase) {
   });
 });
 
+test('instant uses only 6-confs outputs', function (t) {
+  // We had a bug which caused the last _collectOutputs from _constructTx
+  // to try non-instant inputs in case the initial choice was not enough
+  // for change.
+  var currentUtxoFactory = {
+    listAllUtxo: listCurrentUtxo
+  };
+  var constructor = new TxConstructor({
+    signingWallet: mockSigningWallet,
+    utxoFactory: currentUtxoFactory,
+    changeAddrFactory: mockAddressFactory,
+    feeEstimatesFactory: mockFeeEstimatesFactory
+  });
+  var assetNetworkId = new Buffer(
+    '095cdb4b50450887a3fba5fa77bdd7ce969868b78e2e7a75886d8e324c9e331d',
+    'hex'
+  );
+  constructor.buildOptions = {
+    assetNetworkId: assetNetworkId,
+    feeNetworkId: assetNetworkId
+  };
+  return constructor.constructTx([
+    {
+      value: 9000, // needs to be low enough to allow the
+                   // first check to choose just one output,
+                   // to have the last _collectOutputs called.
+                   // (the 'neededValueAndChange being Array' case in
+                   // _constructTx)
+      scriptPubKey: bitcoin.address.toOutputScript(
+        '2My8mvjL6r9BpvY11N95jRKdTV4roXvbQQZ', bitcoin.networks.testnet
+      )
+    }
+  ], {minConfs: 6}).then(function (tx) {
+    var utxoActual = tx.tx.ins.map(
+      function (i) {
+        return i.hash[0];
+      }
+    ).sort(function (a, b) {
+      return a - b;
+    });
+    t.equal(
+      JSON.stringify(utxoActual), '[1,2]', 'utxo = [1,2]'
+    );
+    t.end();
+  }).catch(function (e) {
+    console.log(e.stack);
+    t.fail(e);
+  });
+
+  function listCurrentUtxo (options) {
+    options = options || {};
+    var minConfs = options.minConfs || 1;
+    var utxo;
+    if (minConfs === 6) {
+      utxo = [
+        {id: 1, value: 10000, blockHeight: 1},
+        {id: 2, value: 10000, blockHeight: 1}
+      ];
+    } else {
+      utxo = [
+        {id: 3, value: 10000, blockHeight: 1},
+        {id: 4, value: 10000, blockHeight: 1}
+      ];
+    }
+    return Promise.resolve(utxo.map(function (data) {
+      return new MockUtxo({
+        ga_asset_id: 1,
+        pt_idx: 0,
+        subaccount: 0,
+        value: data.value,
+        block_height: data.blockHeight,
+        txhash: (
+          '0000000000000000000000000000000000000000000000000000000000000000' +
+          data.id.toString(16)
+        ).slice(-64),
+        pointer: 0
+      });
+    }));
+  }
+});
+
 function testChangeOutput (t, idx) {
   var expected = [
     '01000000017f26be0b0bd7a00a87970df6b6c811a6faef8d721f13676a32987096b5bb' +
