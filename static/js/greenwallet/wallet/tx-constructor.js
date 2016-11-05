@@ -145,19 +145,25 @@ function _constructTx (outputsWithAmounts, options) {
       // transactions become much larger due to rangeproofs
       increaseNeededValueForEachOutputBy: 42 * feeEstimate / 1000
     });
+  var collectOptionsInstant = null;
   var checkNonInstant = Promise.resolve();
   if (options.instantUtxo) {
     checkNonInstant = this._collectOutputs(oldNeededValue, collectOptions);
-    // all further _collectOutputs calls need to use the updated collectOptions
+    // further _collectOutputs calls need to use the updated collectOptions
     // to collect instant outputs only:
-    collectOptions.message = (
-      'You need to wait for previous transactions to get at least %s confirmations'
-    ).replace('%s', options.minConfs);
-    collectOptions.utxo = options.instantUtxo;
+    collectOptionsInstant = extendCopy(collectOptions, {
+      message: (
+        'You need to wait for previous transactions to get at least %s confirmations'
+      ).replace('%s', options.minConfs),
+      utxo: options.instantUtxo
+    });
   }
 
   return checkNonInstant.then(function () {
-    return _this._collectOutputs(oldNeededValue, collectOptions);
+    return _this._collectOutputs(
+      // use collectOptions if "instant" is not enabled
+      oldNeededValue, collectOptionsInstant || collectOptions
+    );
   }).then(function (prevOutputs) {
     var constantFee = false;
     var feeMultiplier;
@@ -207,25 +213,34 @@ function _constructTx (outputsWithAmounts, options) {
       neededValue = this._increaseNeededValue(neededValue, oldNeededValue);
       oldNeededValue = neededValue;
       var changeCache = neededValueAndChange[1];
-      return this._collectOutputs(neededValue, collectOptions).then(function (prevOutputs) {
-        // (2) rebuild the tx
-        var buildOptions = {
-          outputsWithAmounts: outputsWithAmounts,
-          prevOutputs: prevOutputs,
-          feeEstimate: feeEstimate,
-          getChangeOutScript: this.changeAddrFactory.getNextOutputScriptWithPointer.bind(
-            this.changeAddrFactory
-          ),
-          // cache change out between calls, if any was generated, to avoid
-          // generating multiple change addresses
-          changeCache: changeCache
-        };
-        return tx.build(
-          extend(buildOptions, this.buildOptions, options)
-        ).then(
-          iterate.bind(this)
-        );
-      }.bind(this));
+      checkNonInstant = Promise.resolve();
+      if (collectOptionsInstant) {
+        checkNonInstant = this._collectOutputs(neededValue, collectOptions);
+      }
+      return checkNonInstant.then(function () {
+        return _this._collectOutputs(
+          // use collectOptions if "instant" is not enabled
+          neededValue, collectOptionsInstant || collectOptions
+        ).then(function (prevOutputs) {
+          // (2) rebuild the tx
+          var buildOptions = {
+            outputsWithAmounts: outputsWithAmounts,
+            prevOutputs: prevOutputs,
+            feeEstimate: feeEstimate,
+            getChangeOutScript: _this.changeAddrFactory.getNextOutputScriptWithPointer.bind(
+              _this.changeAddrFactory
+            ),
+            // cache change out between calls, if any was generated, to avoid
+            // generating multiple change addresses
+            changeCache: changeCache
+          };
+          return tx.build(
+            extend(buildOptions, _this.buildOptions, options)
+          ).then(
+            iterate.bind(_this)
+          );
+        });
+      });
     } else {
       builtTxData = neededValueAndChange;
     }
