@@ -1,5 +1,6 @@
 var Window = require('global/window');
 
+Window.Promise = require('promise-polyfill');
 var promiseFinally = require('promise.prototype.finally');
 promiseFinally.shim();
 
