@@ -123,9 +123,12 @@ function _increaseNeededValue (oldVal, newVal) {
 }
 
 function _constructTx (outputsWithAmounts, options) {
+  options = options || {};
   var _this = this;
   // 1. get fee estimate
-  var feeEstimate = this.feeEstimatesFactory.getFeeEstimate(1)[0];
+  var feeEstimate = this.feeEstimatesFactory.getFeeEstimate(
+    (options.addFee && options.addFee.requiredNumOfBlocks) || 6
+  )[0];
 
   // 2. create the transaction, looping until we have enough inputs provided
   var tx = new this.Transaction();
