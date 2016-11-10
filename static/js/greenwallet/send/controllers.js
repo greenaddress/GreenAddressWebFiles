@@ -126,9 +126,7 @@ angular.module('greenWalletSendControllers',
                   };
                 } else if (that.instant) {
                   addFee = {
-                    // backend constant is 1.1 but we need to be careful
-                    // not to underestimate:
-                    multiplier: 1.17
+                    multiplier: 1.1 // backend constant
                   };
                 }
                 var tx;

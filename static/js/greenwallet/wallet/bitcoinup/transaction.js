@@ -1,6 +1,7 @@
 var BigInteger = require('bigi');
 var bitcoin = require('bitcoinjs-lib');
 var crypto = require('crypto');
+var scriptTypes = require('../ga-impl/constants').scriptTypes;
 var bufferutils = bitcoin.bufferutils;
 var extend = require('xtend/mutable');
 
@@ -65,16 +66,23 @@ function byteLength () {
 function estimateSignedLength () {
   var ret = this.tx.byteLength();
   this.tx.ins.forEach(function (input) {
-    ret -= scriptSize(input.script.length);
     var scriptSigSize = (
-        1 + // OP_0 required for multisig
-        // TODO: classify prevscript and derive number of signatures from it
-        2 * pushDataSize(64) + // 2 signatures pushdata
-        pushDataSize(
-          input.prevOut.getPrevScriptLength()
-        ) // prevScript pushdata
+      1 + // OP_0 required for multisig
+      // TODO: classify prevscript and derive number of signatures from it
+      2 * pushDataSize(73) + // 2 signatures pushdata
+      pushDataSize(
+        input.prevOut.getPrevScriptLength()
+      ) // prevScript pushdata
     );
-    ret += scriptSize(scriptSigSize);
+    if (input.prevOut.raw.script_type === scriptTypes.OUT_P2SH_P2WSH) {
+      var witnessLen = scriptSigSize;
+      ret += scriptSize(2 /* = count(1) + len(1byte) */ + witnessLen);
+      ret -= scriptSize(input.script.length);
+      ret += 35;  // len(pushdata(0x00 + 0x20 + hash256))
+    } else {
+      ret -= scriptSize(input.script.length);
+      ret += scriptSize(scriptSigSize);
+    }
   });
 
   return ret;
