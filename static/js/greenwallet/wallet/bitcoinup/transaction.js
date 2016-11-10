@@ -269,14 +269,22 @@ function _addFeeAndChange (options) {
         fee = expectedFee;
 
         if (prevoutsValue < requiredValueForFee + fee + DUST) {
-          // After adding the change output or CT data, which made the transaction larger,
-          // the prevouts match exactly the fee, but we now have change which
-          // cannot be smaller than dust threshold.
+          // After adding the change output, which made the transaction larger,
+          // the prevouts match the fee (+ at most DUST), but we now have
+          // change which cannot be smaller than dust threshold.
           // In such case increase the fee to have at least minimum change value.
           fee += DUST;
+          // (Without this check,
+          //        prevoutsValue - (requiredValueForFee + fee) < DUST,
+          //  which would result in an invalid value smaller than the
+          //  dust threshold.)
+          // Note this triggers the check below which requests prevoutsValue
+          // increase from the caller. (Because after fee += DUST,
+          //        prevoutsValue < requiredValueForFee + fee.)
         }
 
         if (prevoutsValue < requiredValueForFee + fee) {
+          // prevouts are not enough for fee after adding the change output.
           return Promise.resolve([ requiredValueForFee + fee, changeCache ]);
         }
 
