@@ -19,7 +19,7 @@ msgstr "Annullato"
 
 #: js/facebook-js-sdk.js:4525
 msgid "Loading..."
-msgstr ""
+msgstr "Caricamento..."
 
 #: js/facebook-js-sdk.js:10726
 msgid "Add Profile Tab on Facebook"
@@ -224,13 +224,12 @@ msgid "You must provide only one image file."
 msgstr "È necessario fornire solo un file di immagine."
 
 #: js/index.js:108275
-#, fuzzy
 msgid "Changing PIN failed."
-msgstr "Accesso fallito"
+msgstr "Cambio PIN fallito"
 
 #: js/index.js:108553
 msgid "User not found."
-msgstr ""
+msgstr "Utente non trovato."
 
 #: js/index.js:108557
 msgid "Login failed"
@@ -242,7 +241,7 @@ msgstr "Buono"
 
 #: js/index.js:108764
 msgid "Asset Issuance"
-msgstr ""
+msgstr "Immissione beni"
 
 #: js/index.js:108766
 msgid "Back from "
@@ -271,7 +270,7 @@ msgstr "Data, Descrizione,satoshis,"
 
 #: js/index.js:108987
 msgid "back to myself"
-msgstr ""
+msgstr "indietro a te stesso"
 
 #: js/index.js:109083
 msgid "Transaction failed: "
@@ -290,9 +289,8 @@ msgid "Internal error"
 msgstr "Errore interno"
 
 #: js/index.js:109310
-#, fuzzy
 msgid "Failed creating PIN."
-msgstr "Impossibile recuperare la password."
+msgstr "Creazione del PIN fallita."
 
 #: js/index.js:109323
 msgid "Failed retrieving password."
@@ -308,7 +306,7 @@ msgstr "Parola non corretta"
 
 #: js/index.js:109405
 msgid "Please back up and verify your mnemonic before continuing."
-msgstr ""
+msgstr "Per piacere fai un back up e verifica la tua frase mnemonica prima di continuare."
 
 #: js/index.js:109743
 #, c-format, python-format

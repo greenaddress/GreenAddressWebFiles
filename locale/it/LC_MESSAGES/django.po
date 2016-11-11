@@ -92,7 +92,6 @@ msgstr "Invia"
 #: templates/wallet/nav.html:6 templates/wallet/partials/wallet_receive.html:4
 #: templates/wallet/partials/wallet_settings.html:657
 #: templates/wallet/partials/wallet_settings.html:713
-#, fuzzy
 msgid "Receive"
 msgstr "Ricevi"
 
@@ -904,19 +903,18 @@ msgid "Change limits"
 msgstr "Cambia i limiti"
 
 #: templates/wallet/partials/wallet_settings.html:234
-#, fuzzy
 msgid "Transaction replacement"
-msgstr "Dettagli"
+msgstr "Modifica transazioni"
 
 #: templates/wallet/partials/wallet_settings.html:235
 msgid ""
 "Transaction replacement functionality allows re-sending unconfirmed "
 "transactions with higher fees to speed up confirmation progress."
-msgstr ""
+msgstr "Questa funzionalità permette di aumentare la priorità di transazioni non ancora confermate"
 
 #: templates/wallet/partials/wallet_settings.html:247
 msgid "Allow to increase the fee for outgoing transactions"
-msgstr ""
+msgstr "Permetti di aumentare la priorità per transazioni in uscita"
 
 #: templates/wallet/partials/wallet_settings.html:261
 #: templates/wallet/partials/wallet_settings.html:421
@@ -970,15 +968,15 @@ msgstr ""
 
 #: templates/wallet/partials/wallet_settings.html:302
 msgid "Set your Pretty Good Privacy public key for improved privacy."
-msgstr ""
+msgstr "Configura la tua chiave pubblica Pretty Good Privacy per aumentare la tua riservatezza."
 
 #: templates/wallet/partials/wallet_settings.html:310
 msgid "View/Edit Public Key"
-msgstr ""
+msgstr "Mostra/Modifica la chiave pubblica"
 
 #: templates/wallet/partials/wallet_settings.html:319
 msgid "Add Public Key"
-msgstr ""
+msgstr "Aggiungi la tua chiave pubblica"
 
 #: templates/wallet/partials/wallet_settings.html:329
 msgid "Quick login"
@@ -1042,17 +1040,16 @@ msgstr "Abilita l'accesso rapido su questo dispositivo"
 
 #: templates/wallet/partials/wallet_settings.html:391
 msgid "Enable Watch-Only login"
-msgstr ""
+msgstr "Abilita modalità di accesso in sola lettura"
 
 #: templates/wallet/partials/wallet_settings.html:392
-#, fuzzy
 msgid "Allow watch-only login to your wallet."
-msgstr "Per piacere accedi per usare il tuo portafoglio"
+msgstr "Permetti l'accesso al tuo wallet in modalità sola lettura"
 
 #: templates/wallet/partials/signuplogin/base.html:83
 #: templates/wallet/partials/wallet_settings.html:396
 msgid "Custom Login"
-msgstr "Login custom"
+msgstr "Accesso personalizzato"
 
 #: templates/wallet/partials/wallet_settings.html:402
 msgid "Username"
@@ -1076,7 +1073,7 @@ msgstr ""
 
 #: templates/wallet/partials/wallet_settings.html:413
 msgid "Enable two or back up the given code where applicable."
-msgstr ""
+msgstr "Abilita due o fai un back up del codice mostrato se applicabile."
 
 #: templates/wallet/partials/wallet_settings.html:431
 msgid "Google Authenticator"
@@ -1421,7 +1418,7 @@ msgstr "Vuoi riprendere i bitcoin da questa transazione?"
 #: templates/wallet/partials/wallet_modal_tx_limits_fiat_warning.html:9
 #: templates/wallet/partials/wallet_modal_tx_redeem.html:25
 msgid "OK"
-msgstr "Ok"
+msgstr "OK"
 
 #: templates/wallet/partials/wallet_modal_logout.html:5
 msgid "Do you want to log out?"
@@ -1520,7 +1517,7 @@ msgstr "Indirizzo permanente per pagamenti"
 
 #: templates/wallet/partials/wallet_receive.html:100
 msgid "Private key in WIF or BIP38 format"
-msgstr "Private key in formato WIF o BIP38"
+msgstr "Chiave privata in formato WIF o BIP38"
 
 #: templates/wallet/partials/wallet_receive.html:104
 msgid "Enter a private key to sweep here"
@@ -1537,7 +1534,7 @@ msgstr "Mostra tutti gli indirizzi generati fino ad oggi"
 #: templates/wallet/partials/wallet_receive.html:133
 #: templates/wallet/partials/wallet_send.html:190
 msgid "Show advanced options"
-msgstr ""
+msgstr "Mostra opzioni avanzate"
 
 #: templates/wallet/partials/signup_1_init.html:13
 #: templates/wallet/partials/signup_1_trezor.html:13
@@ -1852,7 +1849,7 @@ msgstr ""
 
 #: templates/wallet/partials/wallet_modal_reset_email.html:5
 msgid "Warning"
-msgstr ""
+msgstr "Attenzione"
 
 #: templates/wallet/partials/wallet_modal_reset_email.html:5
 msgid ""
@@ -2069,27 +2066,27 @@ msgstr "Salva questa pagina in un posto sicuro"
 
 #: templates/wallet/partials/wallet_fiat_price.html:3
 msgid "min"
-msgstr ""
+msgstr "minuto"
 
 #: templates/wallet/partials/wallet_fiat_price.html:3
 msgid "mins"
-msgstr ""
+msgstr "minuti"
 
 #: templates/wallet/partials/wallet_fiat_price.html:3
 msgid "sec"
-msgstr ""
+msgstr "secondo"
 
 #: templates/wallet/partials/wallet_fiat_price.html:3
 msgid "secs"
-msgstr ""
+msgstr "secondi"
 
 #: templates/wallet/partials/wallet_fiat_price.html:4
 msgid "ago"
-msgstr ""
+msgstr "fa"
 
 #: templates/wallet/partials/wallet_fiat_price.html:7
 msgid "just updated"
-msgstr ""
+msgstr "appena aggiornato"
 
 #: templates/wallet/partials/wallet_modal_fb_message.html:4
 msgid "Please send the Facebook message."
@@ -2152,40 +2149,36 @@ msgid "From account"
 msgstr "Aggiungi un account"
 
 #: templates/wallet/partials/wallet_send.html:29
-#, fuzzy
 msgid "Enter recipient's address "
-msgstr "Imposta l'indirizzo email"
+msgstr "Inserisci l'indirizzo del ricevente"
 
 #: templates/wallet/partials/wallet_send.html:35
 msgid "Paste"
 msgstr "Incolla"
 
 #: templates/wallet/partials/wallet_send.html:65
-#, fuzzy
 msgid "Asset"
-msgstr "Incolla"
+msgstr "Bene"
 
 #: templates/wallet/partials/wallet_send.html:102
-#, fuzzy
 msgid "Sweep all the funds from the wallet"
-msgstr "Offriamo tutti i vantaggi di un portafoglio online:"
+msgstr "Prendi tutti i fondi dal wallet"
 
 #: templates/wallet/partials/wallet_send.html:118
 msgid "Leave empty for default"
-msgstr ""
+msgstr "Lascia vuoto per valore automatico"
 
 #: templates/wallet/partials/wallet_send.html:129
 msgid "per kB"
 msgstr ""
 
 #: templates/wallet/partials/wallet_send.html:153
-#, fuzzy
 msgid "Network fee will be added to the amount"
-msgstr "verrà aggiunta all'importo"
+msgstr "Costi di conferma verranno aggiunti all'ammontare"
 
 #: templates/wallet/partials/wallet_send.html:155
 msgid "Rate is"
-msgstr ""
+msgstr "Il cambio é"
 
 #: templates/wallet/partials/wallet_send.html:165
 #, fuzzy
@@ -2205,9 +2198,8 @@ msgstr ""
 "transazioni"
 
 #: templates/wallet/partials/wallet_send.html:184
-#, fuzzy
 msgid "Review &amp; Send"
-msgstr "Invia denaro"
+msgstr "Verifica e invia"
 
 #: templates/wallet/partials/wallet_send.html:186
 msgid "Verifying"
