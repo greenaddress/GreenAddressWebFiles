@@ -180,7 +180,7 @@ def write_po_files(domain):
             catalog.update(template)
 
         with open(popath, 'w') as po_f:
-            write_po(po_f, catalog)
+            write_po(po_f, catalog, ignore_obsolete=True)
 
     potpath = os.path.join("locale", domain + ".pot")
     os.unlink(potpath)
