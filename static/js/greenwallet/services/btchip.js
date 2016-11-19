@@ -17,7 +17,7 @@ function factory ($q, $uibModal, $rootScope, focus, notices) {
   function pleaseOpenApp () {
     notices.makeNotice(
       'error',
-      window.gettext('Ledger Dashboard detected, please open the Bitcoin app to access.')
+      window.gettext('Ledger Dashboard detected, please open the Bitcoin app on the device to access.')
     );
   }
 
