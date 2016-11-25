@@ -31,8 +31,8 @@ msgstr "номер телефону: %(abc)s"
 msgid "singular %(num)d"
 msgid_plural "plural %(num)d"
 msgstr[0] "єдиний %(num)d"
-msgstr[1] "plural %(num)d"
-msgstr[2] "plural %(num)d"
+msgstr[1] "множинний %(num)d"
+
 
 #: templates/website/about.html:5 templates/website/about.html:11
 msgid "About us"
@@ -49,15 +49,15 @@ msgstr "Засновник"
 
 #: templates/website/about.html:53
 msgid "Full Stack Developer"
-msgstr "Розробник повної інфраструктури"
+msgstr "Фул стек Розробник"
 
 #: templates/website/about.html:61
 msgid "Careers"
-msgstr "Careers"
+msgstr "Кар'єра"
 
 #: templates/website/faq.html:5
 msgid "FAQ for GreenAddress Bitcoin wallet"
-msgstr "FAQ по GreenAddress Bitcoin кошельку"
+msgstr "FAQ по GreenAddress Bitcoin гаманцю"
 
 #: templates/website/faq.html:6
 msgid ""
@@ -73,11 +73,11 @@ msgstr "Часті запитання"
 
 #: templates/website/faq.html:14
 msgid "What currency exchange sources do you support?"
-msgstr "What currency exchange sources do you support?"
+msgstr "Які джерела курсу ви підтримуєте?"
 
 #: templates/website/faq.html:15
 msgid " and "
-msgstr " and "
+msgstr " і "
 
 #: templates/website/faq.html:16
 msgid ""
@@ -93,10 +93,8 @@ msgid ""
 "private key in the right field and client side the funds will be swept into "
 "your wallet. Voilà!"
 msgstr ""
-"Так. Кликніть на закладку \"Отримати Біткоїни\". У рядку \"Секретний ключ\" "
-"введіть Ваш Секретний ключ у форматі WIF. https://en.bitcoin.it/wiki/"
-"Wallet_import_format. Кликніть \"Ввести\". Готово. Ваші Біткоїни уже в "
-"гаманці GreenAddress!"
+"Так. просто натисніть на закладку \"Отримати Біткоїни\". Введіть \"Секретний ключ\" "
+"у праве поле і кошти будуть зачислені у ваш гаманець. Готово!"
 
 #: templates/website/faq.html:19
 msgid "Can I try your service?  Do you have a testnet/UAT version?"
@@ -133,11 +131,11 @@ msgstr "з Google Play магазину"
 
 #: templates/website/faq.html:25
 msgid ", an iOS App"
-msgstr ", an iOS App"
+msgstr ", iOS додаток"
 
 #: templates/website/faq.html:25
 msgid "from the iTunes Store "
-msgstr "from the iTunes Store "
+msgstr "з iTunes Store "
 
 #: templates/website/faq.html:25
 msgid "and a Chrome packaged app"
@@ -149,11 +147,11 @@ msgstr "з Chrome Web-магазину"
 
 #: templates/website/faq.html:25
 msgid "All apps are open source and you can "
-msgstr "All apps are open source and you can "
+msgstr "Усі додатки з відкритим кодом і ви можете "
 
 #: templates/website/faq.html:25
 msgid "see the source code of each on GitHub"
-msgstr "дивіться код на GitHub"
+msgstr "дивіться код кожного на GitHub"
 
 #: templates/website/faq.html:25
 #, fuzzy
@@ -161,9 +159,8 @@ msgid ""
 "It also uses Electrum servers for additional transaction verification, so it "
 "should be safe to use even if our servers are compromised."
 msgstr ""
-"Також він використовує <a href=\"http://electrum.org\"> Electrum</a> сервери "
-"для додаткової перевірки https://crowdin.net/translate/greenaddress-"
-"wallet/25/en-uk#транзакцій, тому його використання безпечне навіть у "
+"Також він використовує сервери <a href=\"http://electrum.org\"> Electrum</a>  "
+"для додаткової перевірки транзакцій, тому його використання безпечне навіть у "
 "випадку, якщо наші сервери були б скромпрометовані."
 
 #: templates/website/faq.html:28
@@ -178,11 +175,11 @@ msgid ""
 "cannot control your funds without GreenAddress' signature, so you are right "
 "to worry that you can lose your coins."
 msgstr ""
-"GreenAddress signs each transaction with its own key in addition to client-"
-"side signing by user's keys, and funds are stored in 2-of-2 multisignature "
-"outputs requiring both signatures to spend. The drawback of it is that you "
-"cannot control your funds without GreenAddress' signature, so you are right "
-"to worry that you can lose your coins."
+"GreenAddress підписує кожну транзакцію своїм власним ключем в додаток до того"
+"клієнт підписує ключами користувача, і кошти зберігаються у 2-з-2 multisig "
+"транзакціях що вимагає обидва підписи для витрачання коштів. Недолік такого "
+"підходу в тому що ви не контролюєте ваші кошти без підпису GreenAddress, "
+"тому це вносить хвилювання щодо можливої втрати ваших монет."
 
 #: templates/website/faq.html:32
 msgid ""
@@ -202,8 +199,8 @@ msgid ""
 "This allows you to keep your ease of mind even in case GreenAddress "
 "disappears with its keys."
 msgstr ""
-"This allows you to keep your ease of mind even in case GreenAddress "
-"disappears with its keys."
+"Це дозволяє Вам бути спокійним навіть у випадку зникнення GreenAddress "
+"з цими ключами."
 
 #: templates/website/faq.html:36
 msgid ""
@@ -279,16 +276,16 @@ msgstr "Green address миттєве підтвердження транзакц
 
 #: templates/website/faq.html:52
 msgid "And the advantages of a local software wallet like "
-msgstr "І переваги локальних гаманців таких як "
+msgstr "І переваги локальних додатків гаманців таких як "
 
 #: templates/website/faq.html:54
 msgid "Mnemonic seed backup once and forget"
-msgstr "Резервна копія мнемоніки - один раз зробити і забути"
+msgstr "Резервна копія мнемонічної фрази - один раз зробити і забути"
 
 #: templates/website/faq.html:55
 msgid "Your private keys are never stored on our servers, not even encrypted"
 msgstr ""
-"Ваші приватні ключі ніколи не зберігаються на наших серверах, навіть і "
+"Ваші приватні ключі ніколи не зберігаються на наших серверах, навіть у "
 "зашифрованому вигляді"
 
 #: templates/website/faq.html:56
@@ -331,8 +328,8 @@ msgid ""
 "your wallet. If the PIN is provided wrong for 3 times in a row the password "
 "is then deleted from our servers."
 msgstr ""
-"Випадковий пароль (256 AES) створюється і використовується для шифрування "
-"Ваших мнемонік і зберігання їх на Вашому пристрої у зашифрованому вигляді. "
+"Випадковий пароль (256 AES) створюється і використовується для шифрування Ваших"
+" мнемонічних фраз і зберігання їх на Вашому пристрої у зашифрованому вигляді. "
 "Випадковий пароль передається на сервер і зразу ж знищується на комп'ютері "
 "користувача. Коли під час входу в систему користувач вводить правильний PIN-"
 "код, з сервера запитується правильний пароль, який використовується для "
@@ -354,9 +351,9 @@ msgid ""
 "provide some feedback or get involved feel free to PM on reddit (/u/BitFast) "
 "or send us an email at "
 msgstr ""
-"We are constantly looking for feedback from our users, if you want to "
-"provide some feedback or get involved feel free to PM on reddit (/u/BitFast) "
-"or send us an email at "
+"Ми постійно слідкуємо за зворотнім зв'язком від наших користувачів, якщо Ви "
+"бажаєте надати якийсь відгук чи взяти участь не зволікайте з ПМ на reddit "
+"(/u/BitFast) чи відправте нам email на "
 
 #: templates/website/faq.html:71
 msgid ""
@@ -374,9 +371,9 @@ msgid ""
 "\"http://translate.greenaddress.it\">here</a> and pull requests are welcome "
 "on <a href=\"https://github.com/greenaddress\" target=\"_blank\">GitHub</a>!"
 msgstr ""
-"If you want to help with translation see them <a target=\"_blank_\" href="
-"\"http://translate.greenaddress.it\">here</a> and pull requests are welcome "
-"on <a href=\"https://github.com/greenaddress\" target=\"_blank\">GitHub</a>!"
+"Якщо ви хочете допомогти з перекладом перегляньте <a target=\"_blank_\" href="
+"\"http://translate.greenaddress.it\">стан тут</a> і pull requests приймаються "
+"на <a href=\"https://github.com/greenaddress\" target=\"_blank\">GitHub</a>!"
 
 #: templates/website/faq.html:74
 msgid "Do you have a donate button for linking to users payment URLs?"
@@ -419,45 +416,51 @@ msgid ""
 "forgery and display the site in the language you have selected or to not "
 "show you the EU cookie compliance info banner."
 msgstr ""
-"To enable GreenAddress to recognize your device and to provide features to "
-"you, we use cookies. Cookies are unique identifiers that we transfer to your "
-"device to enable our services to recognize your device and to provide "
-"features such as providing you with protection from Cross-site request "
-"forgery and display the site in the language you have selected or to not "
-"show you the EU cookie compliance info banner."
+"Щоб примусити GreenAddress розпізнавати ваш пристрій і надавати Вам послуги, "
+"ми використовуємо куки. Куки - це унікальні ідентифікатори, що ми ппередаємо "
+"на Ваш пристрій, для того щоб наші сервіси могли розпізнати ваш пристрій і надати "
+"такі можливості як, на приклад, захист від  CSRF, відображення сайту на обраній "
+"вами мові, чи приховування від вас банера дотримання куків ЄС."
 
 #: templates/website/faq.html:91
 msgid ""
 "Yes! You can see our <a href=\"http://api.greenaddress.it/\">API "
 "documentation at GitHub Pages</a>."
 msgstr ""
-"Yes! You can see our <a href=\"http://api.greenaddress.it/\">API "
-"documentation at GitHub Pages</a>."
+"Так! Ви можете переглянути нашу <a href=\"http://api.greenaddress.it/\">API "
+"документацію на сторінках GitHub</a>."
 
 #: templates/website/faq.html:95
 msgid ""
 "Yes! Our https site supports tor users, for onion specific urls see <a href="
-"\"http://s7a4rvc6425y72d2.onion\">s7a4rvc6425y72d2.onion</a> and <a href="
-"\"http://gu5ke7a2aguwfqhz.onion\">gu5ke7a2aguwfqhz.onion</a> respectively "
+"\"http://s7a4rvc6425y72d2.onion\">s7a4rvc6425y72d2.onion</a> and  respectively "
 "for prodnet and testnet"
 msgstr ""
+"Так! Наш https сайт підтримує користувачів tor, для .onion посилань перейдіть "
+"на <a href=\"http://s7a4rvc6425y72d2.onion\">s7a4rvc6425y72d2.onion</a> й "
+"<a href=\"http://gu5ke7a2aguwfqhz.onion\">gu5ke7a2aguwfqhz.onion</a> для "
+" для основоного і тестового сайту відповідно"
 
 #: templates/website/faq.html:99
 msgid ""
 "Yes! One is available  <a href=\"http://blog.greenaddress.it/2of3recovery"
 "\">here</a>"
 msgstr ""
+"Так! Один доступний <a href=\"http://blog.greenaddress.it/2of3recovery"
+"\">тут</a>"
 
 #: templates/website/index.html:5
 #, fuzzy
 msgid "GreenAddress Bitcoin Wallet"
-msgstr "FAQ по GreenAddress Bitcoin кошельку"
+msgstr "FAQ для GreenAddress Bitcoin гаманця"
 
 #: templates/website/index.html:6
 msgid ""
 "GreenAddress Wallet brings the most advanced protection level to your "
 "bitcoins without sacrificing usability or control."
 msgstr ""
+"Гаманець GreenAddress надає найбільш передовий рівень захисту для ваших "
+"bitcoin монет, без втрат в зручності й простоті використання, чи контролю."
 
 #: templates/website/index.html:31 templates/website/index.html:42
 msgid "Create your Wallet"
@@ -465,7 +468,7 @@ msgstr "Створіть Ваш Гаманець"
 
 #: templates/website/index.html:42
 msgid "The safer "
-msgstr "Безпечний "
+msgstr "Безпечніший "
 
 #: templates/website/index.html:42
 msgid " wallet that puts "
@@ -502,7 +505,7 @@ msgid ""
 "You can easily login in 'watch-only mode' via Facebook/Twitter/custom login "
 "with no compromise on security and privacy"
 msgstr ""
-"Ви можете легко ввійти в режим \"Тільки-Спостереження\" через Facebook/"
+"Ви можете легко ввійти в режим \"для читання\" через Facebook/"
 "Twitter/Спеціальний вхід без жодних компромісів для Вашої безпеки та "
 "конфіденціальності"
 
@@ -535,14 +538,14 @@ msgid ""
 "p>        "
 msgstr ""
 "        <p><h4>Bitcoin — валюта майбутнього</h4></p>        <p>Ми не "
-"заставляємо Вас вибирати між безпекою та зручністю. І ми не йдемо на "
+"змушуємо Вас вибирати між безпекою та зручністю. І ми не йдемо на "
 "компроміс із Вашою <strong>конфіденційністю</strong>.</p> <p>Наші двох-"
 "факторна аутентифікація, мульти-підпис<strong>(для кожної транзакції!)</"
-"strong> та детермінований гаманець дозволяють Вам безпрецедентний контроль "
+"strong> та детермінований гаманець надають Вам безпрецедентний контроль "
 "над вашими коштами.</p>        <p>Ми <strong>ніколи не</strong> зберігаємо "
 "ваших приватних ключів,  навіть у шифрованому вигляді. В той же час, ми "
 "забезпечуємо вам можливість легко спостерігати та переміщувати Ваші кошти.</"
-"p>        <p> Візьміть Ваше майбутнє у Ваші руки зараз із GreenAddress.</"
+"p>        <p> Візьміть під контроль Ваше майбутнє зараз із GreenAddress.</"
 "p>        "
 
 #: templates/website/index.html:94
@@ -556,13 +559,13 @@ msgid ""
 "transaction are possible and settings can't be modified</p>        "
 msgstr ""
 "        <p><h4>Найкраща конфіденційність Ваших коштів та безпечний вхід у "
-"систему у режимі \"тільки спостереження\"</h4></p> <p>Безпечно перевіряйте "
+"систему у режимі \"для читання\"</h4></p> <p>Безпечно перевіряйте "
 "ваш <strong>баланс</strong> та <strong>транзакції</strong> в публічних Wi-Fi "
 "мережах, Starbucks і на ходу.</p> <p>З нашим унікальним режимом "
-"<strong>Тільки спостереження</strong> можна швидко перевірити свій баланс чи "
+"<strong>для читання</strong> можна швидко перевірити свій баланс чи "
 "отримати кошти без повного доступу до вашого гаманця.</p> <p>Ваші "
-"<strong>ключі</strong> не завантажуються, тому здійснення транзакцій не "
-"можливе і ніякі настройки не можуть бути змінені</p>        "
+"<strong>ключі</strong> не застосовуються, тому здійснення транзакцій не "
+"можливе і жоднв налаштування не вдасться змінити</p>        "
 
 #: templates/website/index.html:112
 msgid ""
@@ -577,12 +580,12 @@ msgid ""
 "with to read your past and future transactions</p>        "
 msgstr ""
 "        <p><h4>Додаткові функції, які дозволяють зручний та безпечний доступ "
-"до Вашого гаманця </h4></p>        <p>Дозволити <strong>швидкий</strong> PIN-"
-"код для входу у ваш гаманець з будь-якого із Ваших пристроїв без "
+"до Вашого гаманця </h4></p>        <p>Увімкніть <strong>швидкий</strong> вхід"
+"за допомогою ПІН-коду у ваш гаманець з будь-якого з Ваших пристроїв без "
 "необхідності використовувати Вашу фразу-пароль</p>        <p>Навіть якщо "
 "наша система перестане працювати чи зникне, можете спати <strong>спокійно</"
 "strong> - наша автоматично підписана транзакція (nLockTime) дасть Вам "
-"можливість просто зачекати вибраний Вами час після якого Ви отримаєте доступ "
+"можливість просто зачекати вибраний Вами період, після якого Ви отримаєте доступ "
 "до Ваших коштів!</p>        <p>Всі платежі на Ваш гаманець (включаючи решту) "
 "будуть кожен раз використовувати новий згенерований адрес, що ускладнює для "
 "людей з якими Ви проводите транзакції, бачити Ваші минулі та майбутні "
@@ -617,11 +620,11 @@ msgid ""
 "service are compromised at the same time which reduces risks.          "
 msgstr ""
 "          1) Гарячі гаманці можуть бути спустошені, холодні гаманці мають "
-"затримки, помилки чи можуть загубитися<br> 2) Якщо сервіс був "
-"скомпрометований і проти вашого гаманця здійснена брут-форс атака, для "
-"надійного захисту Ваш гаманець обов'язково має мати сильний пароль. <br> 3) "
-"Доступ до гаманця користувача вимагає, щоб одночасно були скомпрометовані як "
-"користувач так і сервіс, що значно знижує ризик.          "
+"затримки, помилки чи можуть загубитися<br>          2) Якщо сервіс був "
+"скомпрометований, проти вашого гаманця може бути здійснена брут-форс атака, "
+"для надійного захисту Ваш гаманець обов'язково має мати сильний пароль. <br>"
+"          3) Доступ до гаманця користувача вимагає, щоб одночасно були "
+"скомпрометовані як користувач так і сервіс, що значно знижує ризик.          "
 
 #: templates/website/index.html:223
 msgid "Under the hood"
@@ -635,7 +638,7 @@ msgid ""
 "your privacy at the highest standard."
 msgstr ""
 "<h3>Ми використовуємо ієрархічні детерміновані гаманці</h3><br> (або BIP0032 "
-"HD Wallet) що значить,  ми використовуємо нові адреса для кожної вхідної "
+"HD Wallet) що значить,  ми використовуємо нову адресу для кожної вхідної "
 "транзакції (включаючи решту), що, разом з coinjoin (скоро) дозволить "
 "підтримувати Вашу конфіденційність на найвищому рівні."
 
@@ -648,9 +651,8 @@ msgid ""
 msgstr ""
 "<h3> Швидко перевірити свій баланс </h3><br> Ви можете використовувати ряд "
 "сторонніх сервісів (Facebook, наприклад), щоб швидко перевірити чи отримали "
-"Ви платіж, швидко подивитися свій баланс, не \n"
-"ризикуючи безпекою Вашого гаманця. Дійсно, це досить зручно, коли ви спішите "
-"і/чи за чужим комп'ютером"
+"Ви платіж, швидко подивитися свій баланс, не ризикуючи безпекою Вашого "
+"гаманця. Дійсно, це досить зручно, коли ви поспішаєте і/чи за чужим комп'ютером"
 
 #: templates/website/index.html:244
 msgid ""
@@ -662,11 +664,10 @@ msgid ""
 msgstr ""
 "<h3> Ми надаємо перед-підписані транзакції</h3><br> Для того щоб забезпечити "
 "ліміти на транзакції та двох-факторну аутентифікацію, Ваші кошти захищені з "
-"використанням двох ключів - Вашого і нашого. Для Вашого спокою, перед-"
-"підписані транзакції використовуються автоматично (через механізм "
-"nlocktime), що значить кожен раз коли ваш гаманець оновлюється, ми надаємо "
-"вам перед-підписану транзакцію, яка розблокує Ваші кошти у вибрану Вами дату "
-"в майбутньому."
+"використанням двох ключів - Вашого і нашого. Для Вашого спокою використовуються"
+" автоматично передпідписані транзакції  (через механізм nlocktime), що означає"
+" кожен раз коли ваш гаманець оновлюється, ми надаємо вам перед-підписану "
+"транзакцію, яка розблокує Ваші кошти у вибрану Вами дату в майбутньому."
 
 #: templates/website/index.html:250
 msgid ""
@@ -705,32 +706,32 @@ msgstr ""
 "проінформовані про передачу коштів, і вони будуть миттєво зачислені на їх "
 "баланс. Якщо ж вони не мають облікового запису, вони отримають повідомлення "
 "з посиланням, де вони можуть отримати свої кошти вказавши пароль (BIP0038) "
-"на ваш вибір,  який вам буде запропоновано повідомити їх через інший канал. "
+"на ваш вибір,  який вам буде запропоновано повідомити їм через інший канал. "
 "Кошти завжди будуть під вашим контролем, поки користувач їх не отримає."
 
 #: templates/website/instant.html:7
 msgid "Verify instant transaction"
-msgstr "Verify instant transaction"
+msgstr "Перевірити миттєву транзакцію"
 
 #: templates/website/instant.html:25
 msgid "Verify a GreenAddress instant confirmation!"
-msgstr "Verify a GreenAddress instant confirmation!"
+msgstr "Перевірити миттєве підтвердження GreenAddress!"
 
 #: templates/website/instant.html:25
 msgid "Please provide transaction details below"
-msgstr "Please provide transaction details below"
+msgstr "Будь-ласка вкажіть деталі транзакції нижче"
 
 #: templates/website/instant.html:27 templates/website/instant.html:32
 msgid "Transaction hash"
-msgstr "Transaction hash"
+msgstr "Хеш транзакції"
 
 #: templates/website/instant.html:38
 msgid "Recipient verification signature"
-msgstr "Recipient verification signature"
+msgstr "Підпис отримувача для перевірки"
 
 #: templates/website/instant.html:39
 msgid "Please sign the following message"
-msgstr "Please sign the following message"
+msgstr "Будь-ласка підпишіть наступне повідомлення"
 
 #: templates/website/instant.html:39
 msgid ""
@@ -739,14 +740,14 @@ msgid ""
 "key in WIF format. The key will be used in your browser only to sign the "
 "message."
 msgstr ""
-"You can either provide the signature yourself (recommended), <strong>or</"
-"strong>, if your client doesn't support signing messages, paste your private "
-"key in WIF format. The key will be used in your browser only to sign the "
-"message."
+"Ви можете надати підпис власноруч (рекомендується), <strong>або</strong>, "
+"якщо ваш клієнт не підтримує підпис повідомлень, введіть ваш приватний "
+"ключ у WIF форматі. Ключ буде використовуватись лише у вашому браузері для "
+"підпису повідомлення."
 
 #: templates/website/instant.html:43
 msgid "Signature"
-msgstr "Signature"
+msgstr "підпис"
 
 #: templates/website/instant.html:46
 msgid "or"
@@ -754,35 +755,35 @@ msgstr "або"
 
 #: templates/website/instant.html:49
 msgid "WIF Private Key"
-msgstr "WIF Private Key"
+msgstr "приватний ключ WIF"
 
 #: templates/website/instant.html:55
 msgid "Error"
-msgstr "Error"
+msgstr "Помилка"
 
 #: templates/website/instant.html:58
 msgid "Verify transaction"
-msgstr "Verify transaction"
+msgstr "Перевірити транзакцію"
 
 #: templates/website/instant.html:64
 msgid "Verification successful!"
-msgstr "Verification successful!"
+msgstr "Перевірка успішна!"
 
 #: templates/website/instant.html:64
 msgid "is covered by GreenAddress instant confirmation."
-msgstr "is covered by GreenAddress instant confirmation."
+msgstr "гарантується миттєвим підтвердженням GreenAddress"
 
 #: templates/website/instant.html:67
 msgid "Verification failed!"
-msgstr "Verification failed!"
+msgstr "Перевірка провалилась!"
 
 #: templates/website/instant.html:67
 msgid "is not covered by GreenAddress instant confirmation."
-msgstr "is not covered by GreenAddress instant confirmation."
+msgstr "не гарантується миттєвим підтвердженням GreenAddress"
 
 #: templates/website/instant.html:70
 msgid "Try again"
-msgstr "Try again"
+msgstr "Спробувати знову"
 
 #: templates/website/pay.html:6
 msgid "Send funds"
@@ -794,7 +795,7 @@ msgstr "Будь-ласка, відправте"
 
 #: templates/website/privacy.html:5
 msgid "Privacy Policy"
-msgstr "Privacy Policy"
+msgstr "Політика Конфіденційності"
 
 #: templates/website/redeem.html:6
 msgid "Redeem funds"
@@ -806,7 +807,7 @@ msgstr "Ви отримали"
 
 #: templates/website/service.html:23
 msgid "The service is currently unavailable!"
-msgstr ""
+msgstr "Сервіс тимчасово недоступний!"
 
 #: templates/website/service.html:23
 #, fuzzy
@@ -815,29 +816,31 @@ msgstr "Будь-ласка, введіть "
 
 #: templates/website/service.html:25
 msgid "Your funds are safe"
-msgstr ""
+msgstr "Ваші кошти в безпеці"
 
 #: templates/website/service.html:31
 msgid ""
 "For 2of3 recovery see this guide  <a href=\"http://blog.greenaddress."
 "it/2of3recovery\">here</a>"
 msgstr ""
+"Для 2-з-3 відновлення перегляньте наступну <a href=\"http://blog.greenaddress."
+"it/2of3recovery\">інструкцію</a>"
 
 #: templates/website/service.html:37
 msgid "Want to get in touch? Email us!"
-msgstr ""
+msgstr "Бажаєте зв'язатись? Відправте нам Email!"
 
 #: templates/website/support.html:5
 msgid "Support and contacts for GreenAddress Bitcoin wallet"
-msgstr "Support and contacts for GreenAddress Bitcoin wallet"
+msgstr "Підтримка і контакти для GreenAddress Bitcoin гаманця"
 
 #: templates/website/support.html:6
 msgid ""
 "GreenAddress contacts details. We are here to listen to your suggestions for "
 "a better and safer Bitcoin online wallet."
 msgstr ""
-"GreenAddress contacts details. We are here to listen to your suggestions for "
-"a better and safer Bitcoin online wallet."
+"GreenAddress деталі контактів. Ми тут для того, щоб вислухати ваші пропозиції "
+"покращеного і безпечнішого онлайн Bitcoin гаманця."
 
 #: templates/website/support.html:22
 msgid "For any issue, you can email us at"
