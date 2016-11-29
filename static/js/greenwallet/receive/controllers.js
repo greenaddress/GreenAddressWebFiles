@@ -209,7 +209,8 @@ angular.module('greenWalletReceiveControllers',
             var args = [
                 'com.greenaddress.vault.fund',
                 $scope.wallet.current_subaccount,
-                true /* return_pointer */
+                true /* return_pointer */,
+                $scope.wallet.appearance.use_segwit ? 'p2wsh' : 'p2sh'
             ];
             if (confidential) {
                 // old server doesn't support the 4th argument
@@ -279,7 +280,7 @@ angular.module('greenWalletReceiveControllers',
                     });
                 } else {
                     var script = new Bitcoin.Buffer.Buffer(data, 'hex');
-                    if (cur_net.isSegwit) {
+                    if ($scope.wallet.appearance.use_segwit) {
                         var hash = Bitcoin.bitcoin.crypto.sha256(script);
                         var buf = Bitcoin.Buffer.Buffer.concat([
                             new Bitcoin.Buffer.Buffer([0, 32]),

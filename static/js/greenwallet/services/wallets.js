@@ -180,6 +180,7 @@ function factory ($q, $rootScope, tx_sender, $location, notices, $uibModal,
         }
         try {
           $scope.wallet.appearance = JSON.parse(data.appearance);
+          gaWallet.service.appearance = $scope.wallet.appearance;
           if ($scope.wallet.appearance.constructor !== Object) $scope.wallet.appearance = {};
         } catch (e) {
           $scope.wallet.appearance = {};
@@ -260,8 +261,7 @@ function factory ($q, $rootScope, tx_sender, $location, notices, $uibModal,
         tokenType: tokenType,
         token: token
       },
-      gaService: tx_sender.gaService,
-      segWit: cur_net.isSegwit
+      gaService: tx_sender.gaService
     })).then(function (data) {
       $scope.wallet.watchOnly = true;
       return data;
