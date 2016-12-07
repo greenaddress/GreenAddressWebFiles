@@ -11,10 +11,12 @@ module.exports = BaseWallet;
 extend(BaseWallet.prototype, {
   _loginHDWallet: _loginHDWallet,
   _loginWatchOnly: _loginWatchOnly,
-  getSubaccountByPointer: getSubaccountByPointer
+  getSubaccountByPointer: getSubaccountByPointer,
+  login: login
 });
 
 function BaseWallet (options) {
+  var _this = this;
   if (!options) return;  // allow subclassing
 
   this.service = options.gaService || new GAService(
@@ -26,7 +28,9 @@ function BaseWallet (options) {
       extend(options.signingWalletOptions, {gaService: this.service})
     );
     this.signingWallet = signingWallet;
-    this.loggedIn = this._loginHDWallet(signingWallet);
+    this._loginImpl = function () {
+      return this._loginHDWallet(this.signingWallet);
+    };
   } else if (options.existingSession) {
     this.signingWallet = new GAHashSwSigningWallet({
       hd: new bitcoinup.SchnorrSigningKey(
@@ -36,12 +40,43 @@ function BaseWallet (options) {
     });
     this.service.session = options.existingSession.session;
     this.service.gaUserPath = new Buffer(options.existingSession.gaUserPath, 'hex');
-    this.loggedIn = Promise.resolve(options.existingSession.loginData);
+    this._loginImpl = function () {
+      return Promise.resolve(options.existingSession.loginData);
+    };
   } else if (options.watchOnly) {
-    this.loggedIn = this._loginWatchOnly(options.watchOnly);
+    this._loginImpl = function () {
+      return _this._loginWatchOnly(options.watchOnly)
+    };
   }
 
-  this.loggedIn = this.loggedIn.then(function (data) {
+  if (!options.loginLater) {
+    // keep the API simple by logging in by default when constructing, but
+    // still allow custom access to the wallet, for example for registration,
+    // with login done only later
+    this.login();
+  }
+}
+
+function _loginHDWallet (signingWallet) {
+  return new Promise(function (resolve, reject) {
+    this.service.login({signingWallet: signingWallet}, resolve, reject);
+  }.bind(this));
+}
+
+function _loginWatchOnly (options) {
+  return new Promise(function (resolve, reject) {
+    this.service.login({watchOnly: options}, resolve, reject);
+  }.bind(this));
+}
+
+function getSubaccountByPointer (pointer) {
+  return this.subaccounts.filter(function (subaccount) {
+    return subaccount.pointer === pointer;
+  })[0];
+}
+
+function login () {
+  this.loggedIn = this._loginImpl().then(function (data) {
     // TxConstructor calls the service, so it needs to be constructed only
     // after login succeeds:
     this.txConstructors = {};
@@ -74,22 +109,4 @@ function BaseWallet (options) {
 
     return data;
   }.bind(this));
-}
-
-function _loginHDWallet (signingWallet) {
-  return new Promise(function (resolve, reject) {
-    this.service.login({signingWallet: signingWallet}, resolve, reject);
-  }.bind(this));
-}
-
-function _loginWatchOnly (options) {
-  return new Promise(function (resolve, reject) {
-    this.service.login({watchOnly: options}, resolve, reject);
-  }.bind(this));
-}
-
-function getSubaccountByPointer (pointer) {
-  return this.subaccounts.filter(function (subaccount) {
-    return subaccount.pointer === pointer;
-  })[0];
 }

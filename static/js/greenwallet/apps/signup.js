@@ -124,36 +124,53 @@ function SignupController($scope, $location, mnemonics, tx_sender, notices, wall
                                 if ($scope.wallet.mnemonic) {
                                     // no hardware wallet because user confirmed they backed up their seed:
                                     $scope.wallet.nohw_chosen = true;
-                                    var hd_promise = $q.when({
+                                    var hdPromise = $q.when({
                                         master_public: hdwallet.keyPair.getPublicKeyBuffer().toString('hex'),
                                         master_chaincode: hdwallet.chainCode.toString('hex')
                                     });
                                 } else {
                                     // hw wallet
-                                    var hd_deferred = $q.defer(), hd_promise = hd_deferred.promise;
-                                    signup_with_hw(hd_deferred);
+                                    var hdDeferred = $q.defer(), hdPromise = hdDeferred.promise;
+                                    signup_with_hw(hdDeferred);
                                 }
-                                hd_promise.then(function(hd) {
+
+                                var loginWalletOptions, walletPromise;
+                                if (hwDevice) {
+                                    loginWalletOptions = {
+                                        signup: true
+                                    };
+                                    walletPromise = wallets.walletFromHW(
+                                        $scope, hwDevice, loginWalletOptions
+                                    );
+                                } else {
+                                    loginWalletOptions = {
+                                        mnemonic: mnemonic,
+                                        seed: new Bitcoin.Buffer.Buffer(seed, 'hex'),
+                                        pathSeed: new Bitcoin.Buffer.Buffer(path_seed, 'hex'),
+                                        signup: true
+                                    };
+                                    walletPromise = $q.when(
+                                        wallets.walletFromHD(
+                                            $scope, hdwallet, loginWalletOptions
+                                        )
+                                    );
+                                }
+                                var pathPromise = walletPromise.then(function (wallet) {
+                                    return wallet.signingWallet.derivePath();
+                                });
+                                hdPromise = $q.all([hdPromise, walletPromise, pathPromise]);
+                                hdPromise.then(function(args) {
+                                    var hd = args[0];
+                                    var wallet = args[1];
+                                    var pathHex = args[2].toString('hex');
                                     tx_sender.call('com.greenaddress.login.register',
-                                            hd.master_public, hd.master_chaincode,
-                                            user_agent($scope.wallet)).then(function(data) {
-                                        if (hwDevice) {
-                                            var login_d = wallets.loginWithHWWallet(
-                                                $scope, hwDevice, {
-                                                    signup: true
-                                                }
-                                            );
-                                        } else {
-                                            var login_d = wallets.loginWithHDWallet(
-                                                $scope, hdwallet, {
-                                                    mnemonic: mnemonic,
-                                                    seed: new Bitcoin.Buffer.Buffer(seed, 'hex'),
-                                                    pathSeed: new Bitcoin.Buffer.Buffer(path_seed, 'hex'),
-                                                    signup: true
-                                                }
-                                            )
-                                        }
-                                        login_d.then(function(data) {
+                                          hd.master_public, hd.master_chaincode,
+                                          user_agent($scope.wallet),
+                                          pathHex
+                                    ).then(function (data) {
+                                        wallets.newLogin(
+                                            $scope, wallet, loginWalletOptions
+                                        ).then(function(data) {
                                             gaEvent('Signup', 'LoggedIn');
                                             $scope.signup.logged_in = data;
                                             if (!data) $scope.signup.login_failed = true;

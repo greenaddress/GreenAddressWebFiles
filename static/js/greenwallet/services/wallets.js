@@ -111,10 +111,10 @@ function factory ($q, $rootScope, tx_sender, $location, notices, $uibModal,
       );
     }
   };
-  walletsService.loginWithHDWallet = function ($scope, hd, options) {
+  walletsService.walletFromHD = function ($scope, hd, options) {
     options = options || {};
     var WalletClass = window.cur_net.isAlphaMultiasset ? AssetsWallet : GAWallet;
-    return walletsService.newLogin($scope, new WalletClass({
+    return new WalletClass({
       SigningWalletClass: HashSwSigningWallet,
       signingWalletOptions: {
         hd: new SchnorrSigningKey(hd, options),
@@ -122,14 +122,15 @@ function factory ($q, $rootScope, tx_sender, $location, notices, $uibModal,
       },
       gaService: tx_sender.gaService,
       unblindedCache: unblindedCache,
-      segWit: cur_net.isSegwit
-    }), options);
+      segWit: cur_net.isSegwit,
+      loginLater: true
+    });
   };
-  walletsService.loginWithHWWallet = function ($scope, hwDevice, options) {
+  walletsService.walletFromHW = function ($scope, hwDevice, options) {
     options = options || {};
     var WalletClass = window.cur_net.isAlphaMultiasset ? AssetsWallet : GAWallet;
-    return hwDevice.getPublicKey().then(function(hdwallet) {
-      return walletsService.newLogin($scope, new WalletClass({
+    return hwDevice.getPublicKey().then(function (hdwallet) {
+      return new WalletClass({
         SigningWalletClass: HwSigningWallet,
         signingWalletOptions: extend(
           { hw: hwDevice, hd: hdwallet },
@@ -137,8 +138,27 @@ function factory ($q, $rootScope, tx_sender, $location, notices, $uibModal,
         ),
         gaService: tx_sender.gaService,
         unblindedCache: unblindedCache,
-        segWit: cur_net.isSegwit
-      }), extend({signupOnFailure: true}, options));
+        segWit: cur_net.isSegwit,
+        loginLater: true
+      })
+    });
+  }
+  walletsService.loginWithHDWallet = function ($scope, hd, options) {
+    options = options || {};
+    return walletsService.newLogin(
+      $scope, walletsService.walletFromHD($scope, hd, options), options
+    );
+  };
+  walletsService.loginWithHWWallet = function ($scope, hwDevice, options) {
+    options = options || {};
+    return walletsService.walletFromHW(
+      $scope, hwDevice, options
+    ).then(function (wallet) {
+      return walletsService.newLogin(
+        // Note signup doesn't call this function, instead it calls newLogin
+        // directly because it has to call signingWalletFromHW earlier anyway.
+        $scope, wallet, extend({signupOnFailure: true}, options)
+      );
     });
   };
   walletsService.newLogin = function ($scope, gaWallet, options) {
@@ -154,6 +174,7 @@ function factory ($q, $rootScope, tx_sender, $location, notices, $uibModal,
     gaWallet.service.addNotificationCallback('blocks', function (event) {
       $rootScope.$broadcast('block', event[ 0 ]);
     });
+    gaWallet.login();
     gaWallet.loggedIn.then(function (data) {
       if (data) {
         if (window.disableEuCookieComplianceBanner) {
@@ -261,7 +282,8 @@ function factory ($q, $rootScope, tx_sender, $location, notices, $uibModal,
         tokenType: tokenType,
         token: token
       },
-      gaService: tx_sender.gaService
+      gaService: tx_sender.gaService,
+      loginLater: true
     })).then(function (data) {
       $scope.wallet.watchOnly = true;
       return data;
