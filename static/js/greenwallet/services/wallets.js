@@ -254,6 +254,7 @@ function factory ($q, $rootScope, tx_sender, $location, notices, $uibModal,
           // don't change URL on initial login in signup or PIN setup
           walletsService.openInitialPage($scope.wallet, data.has_txs);
         }
+        $scope.wallet.update_balance(data);
         $rootScope.$broadcast('login');
       } else if (!options.signup) { // signup has its own error handling
         d.reject();

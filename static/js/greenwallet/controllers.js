@@ -143,7 +143,7 @@ angular.module('greenWalletControllers', [])
         $scope.wallet = {
             balanceLoaded: false,
             version: app_version,
-            update_balance: function(first) {
+            update_balance: function(firstUpdateData) {
                 var that = this;
                 that.balance_updating = true;
                 if (!cur_net.isAlpha) {
@@ -155,9 +155,21 @@ angular.module('greenWalletControllers', [])
                         args.push(0);  // confs
                         args.push($scope.wallet.current_asset);
                     }
-                    tx_sender.call.apply(
-                        tx_sender, args
-                    ).then(function(data) {
+                    var d;
+                    if (firstUpdateData) {
+                        if ($scope.wallet.current_subaccount) {
+                            d = $q.when(firstUpdateData.subaccounts.filter(
+                                function (sa) {
+                                    return sa.pointer == $scope.wallet.current_subaccount;
+                                }
+                            )[0]);
+                        } else {
+                            d = $q.when(firstUpdateData);
+                        }
+                    } else {
+                        d = tx_sender.call.apply(tx_sender, args);
+                    }
+                    d.then(function(data) {
                         that.final_balance = data.satoshi;
                         that.fiat_currency = data.fiat_currency;
                         that.fiat_value = data.fiat_value;
@@ -170,7 +182,7 @@ angular.module('greenWalletControllers', [])
                                                     currency: data.fiat_currency});
                         that.fiat_last_fetch = 1*((new Date).getTime()/1000).toFixed();
                         that.fiat_exchange_extended = exchanges[$scope.wallet.fiat_exchange];
-                        if (first) {
+                        if (firstUpdateData) {
                             $scope.$broadcast('first_balance_updated');
                         }
                     }).finally(function() {
@@ -268,7 +280,7 @@ angular.module('greenWalletControllers', [])
 
                             that.fiat_last_fetch = 1*((new Date).getTime()/1000).toFixed();
                             that.fiat_exchange_extended = exchanges[$scope.wallet.fiat_exchange];
-                            if (first) {
+                            if (firstUpdateData) {
                                 $scope.$broadcast('first_balance_updated');
                             }
                         });
@@ -331,8 +343,6 @@ angular.module('greenWalletControllers', [])
         $scope.$on('first_balance_updated', function (event, data) {
             $scope.wallet.balanceLoaded = true;
         });
-        // after the handler in case there's a synchronous mock implementation
-        $scope.wallet.update_balance(true);
 
         $scope.$on('transaction', function(event, data) {
             if (updating) return;
