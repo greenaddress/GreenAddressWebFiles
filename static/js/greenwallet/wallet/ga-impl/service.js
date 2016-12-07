@@ -77,7 +77,7 @@ function login (options, cb, eb) {
     try {
       var d;
       if (options.signingWallet) {
-        d = _this._loginWithSigningWallet(options.signingWallet, cb, eb);
+        d = _this._loginWithSigningWallet(options, cb, eb);
       } else {
         var watchOnly = options.watchOnly;
         if (!watchOnly) {
@@ -117,17 +117,17 @@ function login (options, cb, eb) {
   }
 }
 
-function _loginWithSigningWallet (signingWallet, cb, eb) {
+function _loginWithSigningWallet (options, cb, eb) {
   var _this = this;
-  return signingWallet.getChallengeArguments().then(function (args) {
+  return options.signingWallet.getChallengeArguments().then(function (args) {
     return _this.call.call(_this, args[ 0 ], args.slice(1)); // eslint-disable-line
   }).then(function (challenge) {
-    return signingWallet.signChallenge(challenge);
+    return options.signingWallet.signChallenge(challenge);
   }).then(function (signed) {
     var signature = signed.signature;
     var randomPathHex = signed.path;
     return _this.call('com.greenaddress.login.authenticate',
-      [ signature, false, randomPathHex ]
+      [ signature, false, randomPathHex, null, '[v2,sw]' + (options.userAgent||'')]
     );
   }).then(function (data) {
     if (data === false) {
@@ -161,10 +161,12 @@ function _loginWithSigningWallet (signingWallet, cb, eb) {
 
 function _loginWithWatchOnly (options, cb, eb) {
   return this.call(
-    'com.greenaddress.login.watch_only', [options.tokenType, options.token, false]
+    'com.greenaddress.login.watch_only_v2', [
+      options.tokenType, options.token, '[v2,sw]' + (options.userAgent||'')
+    ]
   ).then(function (data) {
-    cb(JSON.parse(data));
-    return JSON.parse(data);
+    cb(data);
+    return data;
   }).catch(eb);
 }
 

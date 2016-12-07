@@ -165,7 +165,7 @@ function SignupController($scope, $location, mnemonics, tx_sender, notices, wall
                                     var pathHex = args[2].toString('hex');
                                     tx_sender.call('com.greenaddress.login.register',
                                           hd.master_public, hd.master_chaincode,
-                                          user_agent($scope.wallet),
+                                          '[v2,sw]'+user_agent($scope.wallet),
                                           pathHex
                                     ).then(function (data) {
                                         wallets.newLogin(

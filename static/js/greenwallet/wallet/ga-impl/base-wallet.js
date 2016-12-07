@@ -49,6 +49,8 @@ function BaseWallet (options) {
     };
   }
 
+  this.userAgent = options.userAgent || 'ga-js-wallet';
+
   if (!options.loginLater) {
     // keep the API simple by logging in by default when constructing, but
     // still allow custom access to the wallet, for example for registration,
@@ -59,13 +61,19 @@ function BaseWallet (options) {
 
 function _loginHDWallet (signingWallet) {
   return new Promise(function (resolve, reject) {
-    this.service.login({signingWallet: signingWallet}, resolve, reject);
+    this.service.login(
+      {signingWallet: signingWallet, userAgent: this.userAgent},
+      resolve, reject
+    );
   }.bind(this));
 }
 
 function _loginWatchOnly (options) {
   return new Promise(function (resolve, reject) {
-    this.service.login({watchOnly: options}, resolve, reject);
+    this.service.login(
+      {watchOnly: options, userAgent: this.userAgent},
+      resolve, reject
+    );
   }.bind(this));
 }
 

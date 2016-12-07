@@ -123,7 +123,8 @@ function factory ($q, $rootScope, tx_sender, $location, notices, $uibModal,
       gaService: tx_sender.gaService,
       unblindedCache: unblindedCache,
       segWit: cur_net.isSegwit,
-      loginLater: true
+      loginLater: true,
+      userAgent: user_agent($scope.wallet)
     });
   };
   walletsService.walletFromHW = function ($scope, hwDevice, options) {
@@ -139,7 +140,8 @@ function factory ($q, $rootScope, tx_sender, $location, notices, $uibModal,
         gaService: tx_sender.gaService,
         unblindedCache: unblindedCache,
         segWit: cur_net.isSegwit,
-        loginLater: true
+        loginLater: true,
+        userAgent: user_agent($scope.wallet)
       })
     });
   }
@@ -199,13 +201,8 @@ function factory ($q, $rootScope, tx_sender, $location, notices, $uibModal,
         if (data.last_login) {
           $scope.wallet.last_login = data.last_login;
         }
-        try {
-          $scope.wallet.appearance = JSON.parse(data.appearance);
-          gaWallet.service.appearance = $scope.wallet.appearance;
-          if ($scope.wallet.appearance.constructor !== Object) $scope.wallet.appearance = {};
-        } catch (e) {
-          $scope.wallet.appearance = {};
-        }
+        $scope.wallet.appearance = data.appearance;
+        gaWallet.service.appearance = $scope.wallet.appearance;
         if (cur_net.isAlphaMultiasset && !window.cordova && !is_chrome_app) {
           if (data.theme && data.theme.css) {
             var sheet = window.document.styleSheets[0];
