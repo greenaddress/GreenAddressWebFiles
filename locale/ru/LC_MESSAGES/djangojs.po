@@ -17,7 +17,7 @@ msgid ""
 "Cookies help us deliver our services. By using our services, you agree to"
 " our use of cookies."
 msgstr ""
-"Куки помогают нам предоставлять Вам наш услуги. Пользуясь нашими "
+"Куки помогают нам предоставлять Вам услуги. Пользуясь нашими "
 "услугами, вы соглашаетесь на использование наших куки. "
 
 #: js/greenaddress.js:22
@@ -27,18 +27,19 @@ msgstr "Дополнительная информация"
 #: js/index.js:102192
 #, c-format, python-format
 msgid "Please go to %s first to set up your device."
-msgstr ""
+msgstr "Пожалуйста переидите на %s для установки вашего устройства."
 
 #: js/index.js:102286
 msgid "You were already registered, so we logged you in."
-msgstr ""
+msgstr "Вы уже зарегистрированы, поэтому мы вас авторизировали."
 
 #: js/index.js:102379
 #, python-format
 msgid ""
 "Empty %s hardware wallet detected. Please initialize it before using with"
 " GreenAddress."
-msgstr ""
+msgstr "Обнаружено пустое %s физическое устройство кошелёк. Пожалуйста настройте"
+" его перед использованием с GreenAddress."
 
 #: js/index.js:102651
 msgid "You need to log out to update cache."
@@ -46,7 +47,7 @@ msgstr "Вам необходимо выйти чтобы обновить кэ�
 
 #: js/index.js:102745 js/index.js:106434
 msgid "Failed processing payment protocol request:"
-msgstr "Failed processing payment protocol request:"
+msgstr "Ошибка обработки запроса платежного протокола:"
 
 #: js/index.js:102908
 msgid "Electrum setup failed"
@@ -54,21 +55,21 @@ msgstr "Ошибка при настройке Electrum"
 
 #: js/index.js:102957
 msgid "Bitcoin transaction received!"
-msgstr "Bitcoin transaction received!"
+msgstr "Получена Bitcoin транзакция!"
 
 #: js/index.js:103050 js/index.js:103074
 msgid "Re-depositing successful!"
-msgstr "Повторное внесение депозита успешно завершено!"
+msgstr "Перезачисление успешно завершено!"
 
 #: js/index.js:105309
 #, fuzzy
 msgid "1 confirmation"
-msgstr "Дополнительная информация"
+msgstr "1 подтверждение"
 
 #: js/index.js:105310
 #, c-format, fuzzy, python-format
 msgid "%s confirmations"
-msgstr "Дополнительная информация"
+msgstr "%s подтверждений"
 
 #: js/index.js:105418 js/index.js:105803
 msgid "Not a valid encrypted private key"
@@ -80,7 +81,7 @@ msgstr "Приватный ключ не действительный"
 
 #: js/index.js:105420 js/index.js:105804
 msgid "Invalid passphrase"
-msgstr "Неверная парольная фраза"
+msgstr "Неверный пароль"
 
 #: js/index.js:105437
 msgid "Funds redeemed"
@@ -101,7 +102,7 @@ msgstr "Средства уже были сняты или не найдены"
 #: js/index.js:106178 js/index.js:110190 js/index.js:110195
 #, fuzzy
 msgid "Invalid address"
-msgstr "Неверная парольная фраза"
+msgstr "Неверный адрес"
 
 #: js/index.js:106366
 msgid "Invalid amount"
@@ -117,29 +118,32 @@ msgstr "Ошибка при чтении адресной книги: "
 
 #: js/index.js:106815 js/index.js:111061 js/index.js:111830
 msgid "Please provide a password."
-msgstr "Please provide a password."
+msgstr "Пожалуйста, укажите пароль."
 
 #: js/index.js:106819 js/index.js:111834
 msgid "Passwords do not match."
-msgstr "Passwords do not match."
+msgstr "Пароли не  совпадают."
 
 #: js/index.js:106988
 msgid "Ledger Dashboard detected, please open the Bitcoin app to access."
-msgstr ""
+msgstr "Обнаружен Ledger Dashboard. пожалуйста откройте Bitcoin приложение, "
+"Чтобы получить доступ."
 
 #: js/index.js:107111
 msgid "Copied"
-msgstr "Copied"
+msgstr "CСкопировано"
 
 #: js/index.js:107113
 msgid "Error copying"
-msgstr "Error copying"
+msgstr "Ошибка при копировании"
 
 #: js/index.js:107632
 msgid ""
 "Not enough money, you need ${missing_satoshis} more ${unit} to cover the "
 "transaction and fee"
 msgstr ""
+"Недостаточно средств, вам необходимо еще ${missing_satoshis} ${unit} для "
+"покрытия транзакции и комиссии"
 
 #: js/index.js:107839 js/index.js:114419 js/index.js:115027 js/index.js:115804
 msgid "Cancelled"
@@ -170,7 +174,7 @@ msgstr "Не удалось войти"
 
 #: js/index.js:108553
 msgid "User not found."
-msgstr ""
+msgstr "Пользователь не найден."
 
 #: js/index.js:108557
 msgid "Login failed"
@@ -178,7 +182,7 @@ msgstr "Не удалось войти"
 
 #: js/index.js:108584 js/index.js:108983
 msgid "Voucher"
-msgstr "Voucher"
+msgstr "Ваучер"
 
 #: js/index.js:108764
 msgid "Asset Issuance"
@@ -190,11 +194,11 @@ msgstr "Back from "
 
 #: js/index.js:108768
 msgid "From "
-msgstr "From "
+msgstr "От "
 
 #: js/index.js:108793
 msgid "To "
-msgstr "To "
+msgstr "К "
 
 #: js/index.js:108828
 msgid "Sent back to "
@@ -202,16 +206,16 @@ msgstr "Отправлено назад на "
 
 #: js/index.js:108831
 msgid "Re-deposited"
-msgstr "Положено на депозит повторно"
+msgstr "ППерезачислено повторно"
 
 #: js/index.js:108897
 #, c-format, fuzzy, python-format
 msgid "Time,Description,satoshis,%s,txhash,fee,memo"
-msgstr "Время, Описание, сатоши"
+msgstr "Время, Описание, сатоши,%s,txhash,комиссия,сообщение"
 
 #: js/index.js:108987
 msgid "back to myself"
-msgstr ""
+msgstr "Назад в профиль"
 
 #: js/index.js:109083
 msgid "Transaction failed: "
@@ -227,7 +231,7 @@ msgstr "Телефон"
 
 #: js/index.js:109303
 msgid "Internal error"
-msgstr "Internal error"
+msgstr "Внутренняя ошибка"
 
 #: js/index.js:109310
 #, fuzzy
@@ -240,15 +244,16 @@ msgstr "Ошибка при получении пароля."
 
 #: js/index.js:109377
 msgid "Please provide this word"
-msgstr "Please provide this word"
+msgstr "Пожалуйста, введите это слово"
 
 #: js/index.js:109380
 msgid "Incorrect word"
-msgstr "Incorrect word"
+msgstr "Неверное слово"
 
 #: js/index.js:109405
 msgid "Please back up and verify your mnemonic before continuing."
-msgstr ""
+msgstr "Пожалуйста, сделайте резервную копию вашей мнемонической фразы и "
+"проверьте её перед продолжением."
 
 #: js/index.js:109743
 #, c-format, python-format
@@ -290,15 +295,16 @@ msgstr "Sent handler registration request"
 
 #: js/index.js:110060
 msgid "Cannot remove an account with non-zero balance"
-msgstr "Cannot remove an account with non-zero balance"
+msgstr "Невозможно удалить аккаунт с ненулевым балансом"
 
 #: js/index.js:110082
 msgid "You can't change your email address while you have email 2FA enabled"
-msgstr "You can't change your email address while you have email 2FA enabled"
+msgstr "Вы не можете изменить email адрес пока у вас включена двух факторная "
+"проверка подленности через email"
 
 #: js/index.js:110099
 msgid "Email confirmed"
-msgstr "Email confirmed"
+msgstr "Email подтвержден"
 
 #: js/index.js:110208
 msgid "New item saved"
@@ -346,24 +352,24 @@ msgstr "Сохранить"
 
 #: js/index.js:110573
 msgid "Limits updated successfully"
-msgstr "Limits updated successfully"
+msgstr "Лимит успешно обновлен"
 
 #: js/index.js:110747
 #, fuzzy
 msgid "Renamed successfully"
-msgstr "Limits updated successfully"
+msgstr "Успешно переименовано"
 
 #: js/index.js:110955
 msgid "Launch the Chrome App"
-msgstr ""
+msgstr "Запустить Chrome App"
 
 #: js/index.js:110961
 msgid "Install the Chrome App"
-msgstr ""
+msgstr "установить Chrome App"
 
 #: js/index.js:111275
 msgid "{hardware_wallet_name} Login"
-msgstr ""
+msgstr "{hardware_wallet_name} логин"
 
 #: js/index.js:111367
 msgid "Wallet decryption failed"
@@ -372,44 +378,45 @@ msgstr "Не удалось расшифровать кошелек"
 #: js/index.js:111376
 #, c-format, python-format
 msgid "%s attempts left."
-msgstr ""
+msgstr "осталось %s попыток."
 
 #: js/index.js:111378
 msgid "0 attempts left - PIN removed."
-msgstr ""
+msgstr "осталось 0 попыток - PIN удален."
 
 #: js/index.js:111567
 msgid "Not enough money"
-msgstr ""
+msgstr "Не достаточно средств"
 
 #: js/index.js:114738 js/index.js:114837
 msgid "Dongle is locked - reconnect the dongle and retry"
-msgstr "Dongle is locked - reconnect the dongle and retry"
+msgstr "Донгл заблокирован - переподключите донгл и попробуйте снова"
 
 #: js/index.js:114813
 #, fuzzy
 msgid "Ledger communication failed"
-msgstr "Ошибка контрольной суммы!"
+msgstr "Ошибка соединения с Ledger"
 
 #: js/index.js:114833
 msgid "Invalid PIN"
-msgstr "Invalid PIN"
+msgstr "Неверный PIN"
 
 #: js/index.js:114835 js/index.js:114847
 msgid "Dongle is not set up"
-msgstr "Dongle is not set up"
+msgstr "Донгл не настроен"
 
 #: js/index.js:114849
 msgid "Dongle is locked - remove the dongle and retry"
-msgstr "Dongle is locked - remove the dongle and retry"
+msgstr "Донгл заблокирован - отключите донгл и попробуйте снова"
 
 #: js/index.js:115748
 msgid ""
 "Outdated firmware. Please upgrade to at least 1.3.0 at "
 "http://mytrezor.com/"
 msgstr ""
+"Програмное обеспечение устарело. Пожалуйста, обновите хотя-бы "
+" к версии 1.3.0 на http://mytrezor.com/ "
 
 #: js/instant.js:54
 msgid "Invalid WIF key"
-msgstr "Invalid WIF key"
-
+msgstr "Неверный ключ WIF"
