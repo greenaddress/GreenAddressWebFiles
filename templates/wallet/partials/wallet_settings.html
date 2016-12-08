@@ -228,25 +228,52 @@
     </div>
   </div>
 </div>
-<hr class="double" ng-show="wallet.rbf">
+<hr class="double" ng-show="wallet.rbf || wallet.segwit_server">
+<div class="row" ng-show="wallet.rbf || wallet.segwit_server">
+  <div class="col-md-3">
+    <div class="sub-header">{{ _("Network upgrades") }}</div>
+  </div>
+</div>
 <div class="row" ng-show="wallet.rbf">
   <div class="col-md-3">
-    <div class="sub-header">{{ _("Transaction replacement") }}</div>
-    <div class="sub-header-desc">{{ _("Transaction replacement functionality allows re-sending unconfirmed transactions with higher fees to speed up confirmation progress.") }}</div>
+    <div class="sub-header-desc">
+      {{ _("Transaction replacement functionality allows re-sending unconfirmed transactions with higher fees to speed up confirmation progress.") }}
+    </div>
   </div>
   <div class="col-md-9">
-    <form role="form" class="form-inline">
-    <div>
+    <form role="form" class="form-inline settings-form-aligned">
+      <div>
+        <div class="form-group">
+          <label class="switch">
+            <input type="checkbox" class="switch" ng-model="settings.replace_by_fee" ng-disabled="settings.replace_by_fee_updating" id="replace_by_fee_switch">
+            <span class="switch"></span>
+          </label>
+        </div>
+        <div class="form-group">
+          <label class="control-label" for="replace_by_fee_switch">{{ _("Allow to increase the fee for outgoing transactions") }}</label>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+<br ng-show="wallet.rbf && wallet.segwit_server" />
+<div class="row" ng-show="wallet.segwit_server">
+  <div class="col-md-3">
+    <div class="sub-header-desc">
+      {{ _("Segregated Witness is a technical improvement which solves transaction malleability issues, improves hardware wallets support, and allows other enhancements. We highly encourage you to keep it enabled.") }}
+    </div>
+  </div>
+  <div class="col-md-9">
+    <form role="form" class="form-inline settings-form-aligned">
       <div class="form-group">
         <label class="switch">
-          <input type="checkbox" class="switch" ng-model="settings.replace_by_fee" ng-disabled="settings.replace_by_fee_updating" id="replace_by_fee_switch">
+          <input type="checkbox" class="switch" ng-model="settings.segregated_witness" ng-disabled="settings.segregated_witness_updating" id="segwit_switch">
           <span class="switch"></span>
         </label>
       </div>
       <div class="form-group">
-        <label class="control-label" for="replace_by_fee_switch">{{ _("Allow to increase the fee for outgoing transactions") }}</label>
+        <label class="control-label" for="segwit_switch">{{ _("Enable Segregated Witness") }}</label>
       </div>
-    </div>
     </form>
   </div>
 </div>

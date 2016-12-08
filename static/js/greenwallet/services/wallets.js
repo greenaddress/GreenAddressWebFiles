@@ -122,7 +122,6 @@ function factory ($q, $rootScope, tx_sender, $location, notices, $uibModal,
       },
       gaService: tx_sender.gaService,
       unblindedCache: unblindedCache,
-      segWit: cur_net.isSegwit,
       loginLater: true,
       userAgent: user_agent($scope.wallet)
     });
@@ -139,7 +138,6 @@ function factory ($q, $rootScope, tx_sender, $location, notices, $uibModal,
         ),
         gaService: tx_sender.gaService,
         unblindedCache: unblindedCache,
-        segWit: cur_net.isSegwit,
         loginLater: true,
         userAgent: user_agent($scope.wallet)
       })
@@ -149,7 +147,7 @@ function factory ($q, $rootScope, tx_sender, $location, notices, $uibModal,
     options = options || {};
     return walletsService.newLogin(
       $scope, walletsService.walletFromHD($scope, hd, options), options
-    );
+    ).then(function (data) { walletsService.onLogin($scope, data); });
   };
   walletsService.loginWithHWWallet = function ($scope, hwDevice, options) {
     options = options || {};
@@ -161,8 +159,16 @@ function factory ($q, $rootScope, tx_sender, $location, notices, $uibModal,
         // directly because it has to call signingWalletFromHW earlier anyway.
         $scope, wallet, extend({signupOnFailure: true}, options)
       );
-    });
+    }).then(function (data) { walletsService.onLogin($scope, data); });
   };
+  walletsService.onLogin = function ($scope, data) {
+    if (data.appearance.use_segwit === null && // false would mean user-disabled
+        $scope.wallet.segwit_server) {
+      walletsService.updateAppearance($scope, 'use_segwit', true).then(function () {
+        $scope.wallet.show_segwit_notice = true;
+      });
+    }
+  }
   walletsService.newLogin = function ($scope, gaWallet, options) {
     options = options || {};
     var d = $q.defer();
@@ -218,6 +224,7 @@ function factory ($q, $rootScope, tx_sender, $location, notices, $uibModal,
         }
         $scope.wallet.fee_estimates = data.fee_estimates;
         $scope.wallet.rbf = data.rbf;
+        $scope.wallet.segwit_server = data.segwit_server;
         if (!('sound' in $scope.wallet.appearance)) {
           $scope.wallet.appearance.sound = true;
         }

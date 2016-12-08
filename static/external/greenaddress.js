@@ -24,7 +24,7 @@ $(document).ready(function() {
             disableEuCookieComplianceBanner();
         });
     }
-    if (!(cur_net.isAlpha || cur_net.isSegwit) && window.chrome && chrome.app) {
+    if (!cur_net.isAlpha && window.chrome && chrome.app) {
         $('#wallet-create, #wallet-login').click(function(ev) {
             ev.preventDefault();
             if (appInstalled) {

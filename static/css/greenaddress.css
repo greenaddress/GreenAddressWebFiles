@@ -6473,6 +6473,9 @@ form {
 form.form-inline .form-group:not(:last-child) {
   margin-right: 10px;
 }
+form.settings-form-aligned {
+  margin-top: -10px;
+}
 label {
   font-style: italic;
   color: #333333;

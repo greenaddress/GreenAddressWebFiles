@@ -51,11 +51,17 @@
     {% endif %}
   </div>
   <div class="container" toggle-class="visible">
-    <p ng-show="wallet.twofac && !wallet.twofac.any"><span class="label label-warning">{{ _("WARNING") }}:</span> {{ _('You have no two factor authentication set up. Please set it up in <a href="#/settings">settings</a>.') }}</p>
+    <p ng-show="wallet.twofac && !wallet.twofac.any"><span class="label label-warning">{{ _("WARNING") }}</span> {{ _('You have no two factor authentication set up. Please set it up in <a href="#/settings">settings</a>.') }}</p>
 
     <p ng-show="wallet.hdwallet.keyPair.d && !wallet.appearance.mnemonic_verified && !wallet.logged_in_with_encrypted_mnemonics"><span class="label label-warning">{{ _("WARNING") }}</span>
       {{ _('You have not verified that you have backed up your mnemonic.') }}
       <a href="" ng-click="verify_mnemonic()">{{ _('Please verify now by clicking here.') }}</a>
+    </p>
+
+    <p ng-show="wallet.show_segwit_notice">
+      <span class="label label-info">{{ _("NOTE") }}</span> We have enabled Segregated Witness. Please turn it off in settings
+    if you want to avoid generating segwit addresseses.
+      <a href="" ng-click="hide_segwit_message()">{{ _('Hide this message by clicking here.') }}</a>
     </p>
     <div class="ng-view"></div>
   </div>

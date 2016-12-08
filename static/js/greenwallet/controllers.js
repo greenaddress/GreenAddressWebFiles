@@ -397,6 +397,10 @@ angular.module('greenWalletControllers', [])
         wallets.verify_mnemonic($scope);
     };
 
+    $scope.hide_segwit_message = function () {
+        $scope.wallet.show_segwit_notice = false;
+    };
+
     $scope.$watch(function() { return $location.path(); }, function(newValue, oldValue) {
         if (newValue === oldValue || (oldValue === '' && newValue === '/')) {
           // don't logout on initial navigation

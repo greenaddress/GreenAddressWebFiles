@@ -327,6 +327,7 @@ angular.module('greenWalletSettingsControllers',
     }
     var settings = $scope.settings = {
         replace_by_fee: $scope.wallet.appearance.replace_by_fee,
+        segregated_witness: $scope.wallet.appearance.use_segwit,
         noLocalStorage: storage.noLocalStorage,
         unit: $scope.wallet.unit,
         pricing_source: $scope.wallet.fiat_currency + '|' + $scope.wallet.fiat_exchange,
@@ -545,6 +546,24 @@ angular.module('greenWalletSettingsControllers',
                 settings.replace_by_fee = newValue;
             }).finally(function() {
                 settings.replace_by_fee_updating = false;
+            });
+        }
+    });
+    $scope.$watch('settings.segregated_witness', function(newValue, oldValue) {
+        if (oldValue !== newValue && !settings.segregated_witness_updating &&
+            // avoid infinite loop by checking for post-update value change:
+            newValue != $scope.wallet.appearance.use_segwit) {
+            settings.segregated_witness_updating = true;
+            settings.segregated_witness = oldValue;  // set to old until really updated
+            wallets.updateAppearance(
+                $scope, 'use_segwit', newValue
+            ).then(function() {
+                settings.segregated_witness_updating = false;
+                settings.segregated_witness = newValue;
+            }, function() {
+                notices.makeNotice('error', gettext('Segwit can not be disabled for this account as segwit-style receive addresses have been generated for it.'));
+            }).finally(function() {
+                settings.segregated_witness_updating = false;
             });
         }
     });
