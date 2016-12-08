@@ -147,7 +147,7 @@ function factory ($q, $rootScope, tx_sender, $location, notices, $uibModal,
     options = options || {};
     return walletsService.newLogin(
       $scope, walletsService.walletFromHD($scope, hd, options), options
-    ).then(function (data) { walletsService.onLogin($scope, data); });
+    ).then(function (data) { walletsService.onLogin($scope, data); return data; });
   };
   walletsService.loginWithHWWallet = function ($scope, hwDevice, options) {
     options = options || {};
@@ -159,7 +159,7 @@ function factory ($q, $rootScope, tx_sender, $location, notices, $uibModal,
         // directly because it has to call signingWalletFromHW earlier anyway.
         $scope, wallet, extend({signupOnFailure: true}, options)
       );
-    }).then(function (data) { walletsService.onLogin($scope, data); });
+    }).then(function (data) { walletsService.onLogin($scope, data); return data; });
   };
   walletsService.onLogin = function ($scope, data) {
     if (data.appearance.use_segwit === null && // false would mean user-disabled
