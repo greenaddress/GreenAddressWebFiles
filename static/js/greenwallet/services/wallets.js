@@ -47,13 +47,6 @@ function factory ($q, $rootScope, tx_sender, $location, notices, $uibModal,
   autotimeout, social_types, sound, $interval, $timeout, branches, user_agent,
   $http, blind) {
   var walletsService = {};
-  var handle_double_login = function (retry_fun) {
-    return $uibModal.open({
-      templateUrl: BASE_URL + '/' + LANG + '/wallet/partials/wallet_modal_logout_other_session.html'
-    }).result.then(function () {
-      return retry_fun();
-    });
-  };
   walletsService.requireWallet = function ($scope, dontredirect) {
     if (!$scope.wallet.hdwallet && !$scope.wallet.trezor_dev && !$scope.wallet.btchip) {
       if (!dontredirect) {

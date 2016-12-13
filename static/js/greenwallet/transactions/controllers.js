@@ -399,53 +399,6 @@ angular.module('greenWalletTransactionsControllers',
         })
     };
 
-    $scope.show_voucher = function(transaction, passphrase) {
-        return $q.when($scope.wallet.hdwallet.deriveHardened(branches.EXTERNAL)).then(function(key) {
-            return $q.when(key.deriveHardened(transaction.pubkey_pointer)).then(function(key) {
-                return encode_key(key, passphrase).then(function(enckey) {
-                    $scope.voucher = {
-                        encrypted: !!passphrase,
-                        enckey: enckey,
-                        satoshis: transaction.social_value,
-                        url: 'https://' + hostname + '/redeem/?amount=' + transaction.social_value + '#/redeem/' + enckey,
-                        text: transaction.social_destination.text
-                    };
-                    $uibModal.open({
-                        templateUrl: BASE_URL+'/'+LANG+'/wallet/partials/wallet_modal_voucher.html',
-                        scope: $scope
-                    });
-                });
-            });
-        });
-    };
-
-    $scope.show_encrypted_voucher = function(transaction) {
-        $scope.encrypting_voucher = true;
-        $scope.encrypt_password_modal = {
-            encrypt: function() {
-                this.error = undefined;
-                if (!this.password) {
-                    this.error = gettext('Please provide a password.');
-                    return;
-                }
-                if (this.password != this.password_repeated) {
-                    this.error = gettext('Passwords do not match.');
-                    return;
-                }
-                var that = this;
-                this.encrypting = true;
-                $scope.show_voucher(transaction, this.password).then(function() {
-                    that.encrypting = false;
-                    modal.close();
-                });
-            }
-        }
-        var modal = $uibModal.open({
-            templateUrl: BASE_URL+'/'+LANG+'/wallet/partials/signuplogin/modal_encryption_password.html',
-            scope: $scope
-        });
-    };
-
     $scope.toggle_transaction_search = function() {
         $scope.search_visible = !$scope.search_visible;
     }
