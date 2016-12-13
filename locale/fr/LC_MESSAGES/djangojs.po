@@ -12,66 +12,6 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.3.4\n"
 
-#: js/facebook-js-sdk.js:4520
-#, fuzzy
-msgid "Cancel"
-msgstr "Annulé"
-
-#: js/facebook-js-sdk.js:4525
-msgid "Loading..."
-msgstr ""
-
-#: js/facebook-js-sdk.js:10726
-msgid "Add Profile Tab on Facebook"
-msgstr ""
-
-#: js/facebook-js-sdk.js:10942
-msgid "Bookmark on Facebook"
-msgstr ""
-
-#: js/facebook-js-sdk.js:11601
-msgid "No Thanks"
-msgstr ""
-
-#: js/facebook-js-sdk.js:11603
-msgid "Close"
-msgstr ""
-
-#: js/facebook-js-sdk.js:11609
-msgid ""
-"Hi {firstName}. <strong>{siteName}</strong> is using Facebook to "
-"personalize your experience."
-msgstr ""
-
-#: js/facebook-js-sdk.js:11611
-msgid "Learn More"
-msgstr ""
-
-#: js/facebook-js-sdk.js:12982 js/facebook-js-sdk.js:12999
-#, fuzzy
-msgid "Facebook Logout"
-msgstr "Login Facebook echoué"
-
-#: js/facebook-js-sdk.js:12996
-msgid "Register"
-msgstr ""
-
-#: js/facebook-js-sdk.js:13005 js/facebook-js-sdk.js:13015
-msgid "Log In"
-msgstr ""
-
-#: js/facebook-js-sdk.js:13016
-msgid "Log In with Facebook"
-msgstr ""
-
-#: js/facebook-js-sdk.js:14316
-msgid "Share"
-msgstr ""
-
-#: js/facebook-js-sdk.js:14331
-msgid "Share on Facebook"
-msgstr ""
-
 #: js/greenaddress.js:21
 msgid ""
 "Cookies help us deliver our services. By using our services, you agree to"
