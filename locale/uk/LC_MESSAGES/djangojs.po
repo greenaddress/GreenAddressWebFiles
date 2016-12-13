@@ -12,68 +12,6 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.3.4\n"
 
-#: js/facebook-js-sdk.js:4520
-#, fuzzy
-msgid "Cancel"
-msgstr "Скасовано"
-
-#: js/facebook-js-sdk.js:4525
-msgid "Loading..."
-msgstr "Завантаження..."
-
-#: js/facebook-js-sdk.js:10726
-msgid "Add Profile Tab on Facebook"
-msgstr "Додати вкладку профыля в Facebook"
-
-#: js/facebook-js-sdk.js:10942
-msgid "Bookmark on Facebook"
-msgstr "Додати в закладки Facebook"
-
-#: js/facebook-js-sdk.js:11601
-msgid "No Thanks"
-msgstr "Ні дякую"
-
-#: js/facebook-js-sdk.js:11603
-msgid "Close"
-msgstr "Закрити"
-
-#: js/facebook-js-sdk.js:11609
-msgid ""
-"Hi {firstName}. <strong>{siteName}</strong> is using Facebook to "
-"personalize your experience."
-msgstr ""
-"Вітаємо {firstName}. <strong>{siteName}</strong> використовує Facebook для "
-"персоналізації взаємодії."
-
-#: js/facebook-js-sdk.js:11611
-msgid "Learn More"
-msgstr "Дізнатись більше"
-
-#: js/facebook-js-sdk.js:12982 js/facebook-js-sdk.js:12999
-#, fuzzy
-msgid "Facebook Logout"
-msgstr "Вийти за допомогою Facebook"
-
-#: js/facebook-js-sdk.js:12996
-msgid "Register"
-msgstr "Зареєструватись"
-
-#: js/facebook-js-sdk.js:13005 js/facebook-js-sdk.js:13015
-msgid "Log In"
-msgstr "Увійти"
-
-#: js/facebook-js-sdk.js:13016
-msgid "Log In with Facebook"
-msgstr "Увійти через Facebook"
-
-#: js/facebook-js-sdk.js:14316
-msgid "Share"
-msgstr "Поділитись"
-
-#: js/facebook-js-sdk.js:14331
-msgid "Share on Facebook"
-msgstr "Поділитись через Facebook"
-
 #: js/greenaddress.js:21
 msgid ""
 "Cookies help us deliver our services. By using our services, you agree to"
