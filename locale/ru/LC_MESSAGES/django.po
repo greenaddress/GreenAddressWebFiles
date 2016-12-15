@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  greenaddress-wallet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-12-15 07:48-0500\n"
+"POT-Creation-Date: 2016-12-15 17:50+0200\n"
 "PO-Revision-Date: 2014-08-20 10:19-0400\n"
 "Last-Translator: GreenAddress <info@greenaddress.it>\n"
 "Language-Team: Russian\n"
@@ -67,7 +67,7 @@ msgstr "Отправить"
 #: templates/wallet/partials/wallet_settings.html:740
 #, fuzzy
 msgid "Receive"
-msgstr "Получить денежные средства"
+msgstr "Получить"
 
 #: templates/wallet/nav.html:7
 #: templates/wallet/partials/wallet_address_book.html:4
@@ -81,22 +81,21 @@ msgstr "Настройки"
 #: templates/wallet/nav.html:10
 #, fuzzy
 msgid "General"
-msgstr "General Settings"
+msgstr "Основные"
 
 #: templates/wallet/nav.html:12
 #: templates/wallet/partials/wallet_settings.html:284
 msgid "Security"
-msgstr "Security"
+msgstr "Безопасность"
 
 #: templates/wallet/nav.html:13
 #: templates/wallet/partials/wallet_settings.html:644
 #, fuzzy
 msgid "Accounts"
-msgstr "Добавить аккаунт"
+msgstr "Аккаунты"
 
 #: templates/wallet/nav.html:15
 #: templates/wallet/partials/wallet_modal_logout.html:11
-#: templates/wallet/partials/wallet_modal_logout_other_session.html:10
 msgid "Logout"
 msgstr "Выход"
 
@@ -124,12 +123,12 @@ msgstr "страна не указана"
 
 #: templates/wallet/partials/wallet_transactions_table.html:1
 msgid "New transactions! Sort by descending date to see them."
-msgstr "Новый транзакции! Сортируйте за датой по убыванию чтобы, увидеть их."
+msgstr "Новые транзакции! Отсортируйте по дате по убыванию чтобы, увидеть их."
 
 #: templates/wallet/partials/wallet_transactions_table.html:2
 msgid "Newly confirmed transactions! Sort by descending date to see them."
 msgstr ""
-"Новые подтвержденные транзакции! Сортируйте за датой по убыванию, чтобы "
+"Новые подтвержденные транзакции! Отсортируйте по дате по убыванию, чтобы "
 "увидеть их."
 
 #: templates/wallet/partials/wallet_transactions_table.html:8
@@ -143,12 +142,12 @@ msgstr "Описание"
 
 #: templates/wallet/partials/wallet_transactions_table.html:11
 msgid "Value"
-msgstr ""
+msgstr "Значение"
 
 #: templates/wallet/partials/wallet_address_book.html:35
 #: templates/wallet/partials/wallet_transactions_table.html:18
 msgid "Export to CSV"
-msgstr "Экспортировать в формат CSV"
+msgstr "Экспортировать в формате CSV"
 
 #: templates/wallet/partials/wallet_transactions_table.html:32
 msgid "instant GreenAddress confirmation"
@@ -160,12 +159,12 @@ msgstr "двойная трата"
 
 #: templates/wallet/partials/wallet_transactions_table.html:38
 msgid "replaceable"
-msgstr ""
+msgstr "заменимые"
 
 #: templates/wallet/partials/wallet_transactions_table.html:39
 #: templates/wallet/partials/wallet_transactions_table.html:40
 msgid "updated"
-msgstr ""
+msgstr "обновленное"
 
 #: templates/wallet/partials/wallet_transactions_table.html:41
 msgid "unconfirmed"
@@ -177,35 +176,37 @@ msgstr "Подтверждения"
 
 #: templates/wallet/partials/wallet_transactions_table.html:46
 msgid "bump fee"
-msgstr ""
+msgstr "поднять комиссию"
 
 #: templates/wallet/partials/wallet_transactions_table.html:50
 msgid "Choose required estimated number of confirmations:"
-msgstr ""
+msgstr "Выберите необходимое прогнозируемое число подтверждений:"
 
 #: templates/wallet/partials/wallet_transactions_table.html:51
 msgid "Current estimate"
-msgstr ""
+msgstr "Текущяя оценка"
 
 #: templates/wallet/partials/wallet_transactions_table.html:61
 msgid "Fee already at 1-conf-estimate level. Choose new fee:"
 msgstr ""
+"Комиссия уже на уровне оценки одного подтверждения. Выберите новую "
+"комиссию:"
 
 #: templates/wallet/partials/wallet_transactions_table.html:63
 msgid "1.5x current fee"
-msgstr ""
+msgstr "1.5x текущей комиссии"
 
 #: templates/wallet/partials/wallet_transactions_table.html:64
 msgid "2x current fee"
-msgstr ""
+msgstr "2х текущей комиссии"
 
 #: templates/wallet/partials/wallet_transactions_table.html:65
 msgid "3x current fee"
-msgstr ""
+msgstr "3х текущей комиссии"
 
 #: templates/wallet/partials/wallet_transactions_table.html:69
 msgid "show replaced"
-msgstr ""
+msgstr "показать заменённые"
 
 #: templates/wallet/partials/wallet_transactions_table.html:74
 msgid "take funds back"
@@ -214,12 +215,12 @@ msgstr "вернуть средства"
 #: templates/wallet/partials/wallet_transactions_table.html:80
 #, fuzzy
 msgid "Replaced transactions:"
-msgstr "Raw transaction"
+msgstr "Заменённые транзакции:"
 
 #: templates/wallet/partials/wallet_transactions_table.html:118
 #, fuzzy
 msgid "Loading transactions, please wait..."
-msgstr "Logging in, please wait..."
+msgstr "Загрузка транзакций, пожалуйста подождите..."
 
 #: templates/wallet/partials/wallet_transactions_table.html:121
 msgid "No transactions found..."
@@ -257,8 +258,8 @@ msgid ""
 "Web access is intended to be used for watch only mode or if you have no "
 "alternative, like on the Windows Mobile platform."
 msgstr ""
-"Веб-доступ предназначен только для режима только наблюдения или если у "
-"Вас нет другой альтернативы, как на Windows мобильной платформе."
+"Веб-доступ предназначен только для режима только чтения или если у Вас "
+"нет другой альтернативы, как на платформе Windows Mobile."
 
 #: templates/wallet/partials/signup_0_warning.html:16
 #: templates/wallet/partials/signuplogin/base.html:73
@@ -266,8 +267,8 @@ msgid ""
 "Please see the link to Google Play store, Chrome Web Store or AppStore "
 "below"
 msgstr ""
-"Пожалуйста, ссылки на Google Play store, Chrome Web Store или AppStore "
-"ниже"
+"Пожалуйста,посмотрите ссылки на Google Play store, Chrome Web Store или "
+"AppStore ниже"
 
 #: templates/wallet/partials/signup_0_warning.html:26
 msgid "Continue using web page"
@@ -278,12 +279,12 @@ msgid ""
 "Are you sure you want to permanently remove your wallet and all "
 "associated data from our servers?"
 msgstr ""
-"Are you sure you want to permanently remove your wallet and all "
-"associated data from our servers?"
+"Вы уверенны что хотитте безвозвратно удалить ваш кошелёк и все данные, "
+"асоциированые с ним, с наших серверов?"
 
 #: templates/wallet/partials/wallet_modal_remove_account.html:5
 msgid "Remove my account"
-msgstr "Remove my account"
+msgstr "Удалить мой аккаунт"
 
 #: templates/wallet/partials/signuplogin/base.html:44
 #: templates/wallet/partials/signuplogin/modal_decryption_password.html:23
@@ -299,7 +300,6 @@ msgstr "Remove my account"
 #: templates/wallet/partials/wallet_modal_confirm_tx.html:36
 #: templates/wallet/partials/wallet_modal_custom_login.html:25
 #: templates/wallet/partials/wallet_modal_logout.html:10
-#: templates/wallet/partials/wallet_modal_logout_other_session.html:9
 #: templates/wallet/partials/wallet_modal_pgp.html:27
 #: templates/wallet/partials/wallet_modal_pin.html:22
 #: templates/wallet/partials/wallet_modal_remove_account.html:6
@@ -398,31 +398,33 @@ msgstr "OK"
 
 #: templates/wallet/partials/wallet_modal_tx_limits_fiat_warning.html:2
 msgid "Confirm changing the pricing source"
-msgstr "Confirm changing the pricing source"
+msgstr "подтвердить изменение источника курса"
 
 #: templates/wallet/partials/wallet_modal_tx_limits_fiat_warning.html:5
 msgid ""
 "Changing the pricing source while using it for transaction limits will "
 "result in resetting the limits to 0. Do you want to proceed?"
 msgstr ""
-"Changing the pricing source while using it for transaction limits will "
-"result in resetting the limits to 0. Do you want to proceed?"
+"Измененние источника курса во время использовании его с лимитом "
+"транзакций приведёт к сбрасыванию лимита в 0. Хотите продолжить?"
 
 #: templates/wallet/partials/wallet_modal_trezor_setup.html:3
 msgid ""
 "Your Hardware Wallet is already set up. You must wipe it to write "
 "GreenAddress mnemonic to it. Do you want to wipe?"
 msgstr ""
+"Ваше физическое устройство кошелька уже настроено. Вы должны стереть его "
+"для записи мнемонической фразы GreenAddress. Хотите стереть?"
 
 #: templates/wallet/partials/wallet_modal_trezor_setup.html:4
 #: templates/wallet/partials/wallet_modal_trezor_setup.html:9
 msgid "No"
-msgstr ""
+msgstr "Нет"
 
 #: templates/wallet/partials/wallet_modal_trezor_setup.html:5
 #: templates/wallet/partials/wallet_modal_trezor_setup.html:10
 msgid "Yes"
-msgstr ""
+msgstr "Да"
 
 #: templates/wallet/partials/wallet_modal_trezor_setup.html:8
 msgid ""
@@ -434,6 +436,14 @@ msgid ""
 "GreenAddress, because we don't support non-multisig "
 "transactions.</strong> Do you want to reuse existing seed?"
 msgstr ""
+"Ваше физическое устройство кошелька уже настроено. Для использования с "
+"GreenAddress вы должны либо сбросить его, либо использовать текущий сид "
+"кошелька. Для сброса перейдите пожалуйста на myTREZOR или аналог и "
+"используйте опцию 'Wipe device' с расширеных настроек. Хотите ли вы "
+"использовать текущиц сид? <strong>ЗАМЕЧАНИЕ: если вы его будете "
+"использовать, то не будете иметь возможность просматривать транзакции "
+"myTREZOR в GreenAddress, потому что мы не поддерживаем не-multisig "
+"транзакции.</strong>"
 
 #: templates/wallet/partials/wallet_modal_trezor_setup.html:13
 #, fuzzy
@@ -441,8 +451,8 @@ msgid ""
 "Empty Hardware Wallet detected successfully. Click the button below to "
 "store your seed on it."
 msgstr ""
-"Empty BTChip detected successfully. Click the button below to store your "
-"seed on it."
+"Пустое физическое устройство кошелька успешно обнаружено. Нажмите кнопку "
+"ниже для записи на него сида."
 
 #: templates/wallet/partials/wallet_modal_trezor_setup.html:14
 #, fuzzy
@@ -450,18 +460,18 @@ msgid ""
 "Empty Hardware Wallet detected successfully. Click the button below to "
 "set it up."
 msgstr ""
-"Empty BTChip detected successfully. Click the button below to store your "
-"seed on it."
+"Пустое физическое устройство кошелька успешно обнаружено. Нажмите кнопку "
+"ниже для настройки."
 
 #: templates/wallet/partials/wallet_modal_trezor_setup.html:15
 #, fuzzy
 msgid "Save to Hardware Wallet"
-msgstr "Write to a hardware wallet"
+msgstr "Записать в физическое устройство кошелька"
 
 #: templates/wallet/partials/wallet_modal_trezor_setup.html:16
 #, fuzzy
 msgid "Set up Hardware Wallet"
-msgstr "Write to a hardware wallet"
+msgstr "Настроить физическое устройство кошелька"
 
 #: templates/wallet/partials/signup_2_2factor.html:25
 #: templates/wallet/partials/signup_3_pin.html:37
@@ -473,7 +483,7 @@ msgstr "Генерирование ключей вашего кошелька, �
 #: templates/wallet/partials/wallet_modal_trezor_setup.html:22
 #, fuzzy
 msgid "Hardware Wallet setup successful!"
-msgstr "BTChip setup successful!"
+msgstr "Физическое устройство кошелька успешно установлено!"
 
 #: templates/wallet/partials/wallet_modal_tx_details.html:2
 msgid "Transaction details"
@@ -492,7 +502,7 @@ msgstr "Хеш"
 #: templates/wallet/partials/wallet_modal_tx_details.html:13
 #: templates/wallet/partials/wallet_send.html:173
 msgid "Memo"
-msgstr ""
+msgstr "Сообщение"
 
 #: templates/wallet/partials/wallet_modal_tx_details.html:21
 #: templates/wallet/partials/wallet_modal_tx_limits.html:41
@@ -501,16 +511,16 @@ msgstr ""
 #: templates/wallet/partials/wallet_settings.html:682
 #: templates/wallet/partials/wallet_settings.html:738
 msgid "Save"
-msgstr "Save"
+msgstr "сохранить"
 
 #: templates/wallet/partials/wallet_modal_tx_details.html:28
 #, fuzzy
 msgid "Add"
-msgstr "Адрес"
+msgstr "Добавить"
 
 #: templates/wallet/partials/wallet_modal_tx_details.html:29
 msgid "Edit"
-msgstr ""
+msgstr "Изменить"
 
 #: templates/wallet/partials/wallet_modal_confirm_tx.html:23
 #: templates/wallet/partials/wallet_modal_tx_details.html:33
@@ -520,41 +530,43 @@ msgstr "Коммисия"
 
 #: templates/wallet/partials/wallet_modal_tx_details.html:33
 msgid "Size (bytes)"
-msgstr ""
+msgstr "Размер (байт)"
 
 #: templates/wallet/partials/wallet_modal_tx_details.html:33
 msgid "Fee per kB"
-msgstr ""
+msgstr "Комиссия за килобайт"
 
 #: templates/wallet/partials/wallet_modal_tx_details.html:39
 msgid "Estimated number of confirmations required:"
-msgstr ""
+msgstr "Предполагаемое число необходимых подтверждений:"
 
 #: templates/wallet/partials/wallet_modal_tx_details.html:43
 msgid "Raw transaction"
-msgstr "Raw transaction"
+msgstr "Raw транзакция"
 
 #: templates/wallet/partials/wallet_modal_tx_details.html:46
 msgid "Double spend by txhash"
-msgstr "Double spend by txhash"
+msgstr "Повторная трата таким хешем транзакции"
 
 #: templates/wallet/partials/wallet_modal_tx_details.html:49
 msgid "Payment request"
-msgstr "Payment request"
+msgstr "Запрос оплаты"
 
 #: templates/wallet/partials/wallet_modal_tx_details.html:51
 msgid "download"
-msgstr "download"
+msgstr "скачать"
 
 #: templates/wallet/partials/wallet_modal_tx_details.html:57
 msgid "Inputs"
-msgstr "Входы"
+msgstr "Входые значения"
 
 #: templates/wallet/partials/wallet_modal_tx_details.html:58
 msgid ""
 "The inputs below are only the first 10 inputs of this transaction. To see"
 " all of them, use a block explorer."
 msgstr ""
+"Входные значения ниже - это только первые 10 входных значений транзакции."
+" Для просмотра всех входных значений используйте просмотрщик блоков."
 
 #: templates/wallet/partials/wallet_modal_confirm_tx.html:17
 #: templates/wallet/partials/wallet_modal_tx_details.html:60
@@ -574,17 +586,20 @@ msgstr "Количество"
 #: templates/wallet/partials/wallet_modal_tx_details.html:69
 #: templates/wallet/partials/wallet_modal_tx_details.html:87
 msgid "Confidential"
-msgstr ""
+msgstr "Конфиденциальная"
 
 #: templates/wallet/partials/wallet_modal_tx_details.html:75
 msgid "Outputs"
-msgstr "Выходы"
+msgstr "Выходые значения"
 
 #: templates/wallet/partials/wallet_modal_tx_details.html:76
 msgid ""
 "The outputs below are only the first 10 outputs of this transaction. To "
 "see all of them, use a block explorer."
 msgstr ""
+"Выходные значения ниже - это только первые 10 входных значений "
+"транзакции. Для просмотра всех входных значений используйте просмотрщик "
+"блоков."
 
 #: templates/wallet/partials/wallet_modal_pin.html:4
 #, fuzzy
@@ -605,7 +620,7 @@ msgstr "Введите ваш PIN"
 #: templates/wallet/partials/wallet_modal_pin.html:14
 #, fuzzy
 msgid "PIN must be a 4-to-15-digit number"
-msgstr "PIN must be a 4-to-32-digit number"
+msgstr "Пин код должен быть 4-32-значным числом"
 
 #: templates/wallet/partials/wallet_modal_btchip_pin.html:23
 #: templates/wallet/partials/wallet_modal_pin.html:23
@@ -619,26 +634,30 @@ msgid ""
 "entering wrong PIN 3 times in a row. <strong>You will lose your keys "
 "currently stored on the device.</strong>"
 msgstr ""
+"Ваш Ledger уже настроен. Для использования его с GreenAddress, вам "
+"необходимо его сбросить. Хотите ли вы сбросить ваш Ledger? Это можно "
+"сделать путем ввода неправильного пин кода 3 раза подряд. <strong>Вы "
+"потеряете текущие, сохраненные в устройстве, ключи. </strong>"
 
 #: templates/wallet/partials/wallet_modal_btchip_setup.html:4
 msgid "Reset my Ledger"
-msgstr ""
+msgstr "Сбросить мой Ledger"
 
 #: templates/wallet/partials/wallet_modal_btchip_setup.html:5
 msgid "Reuse current setup"
-msgstr ""
+msgstr "Использовать текущие настройки"
 
 #: templates/wallet/partials/wallet_modal_btchip_setup.html:6
 msgid "Resetting..."
-msgstr "Resetting..."
+msgstr "Идет сброс..."
 
 #: templates/wallet/partials/wallet_modal_btchip_setup.html:7
 msgid "Please unplug and plug your device in again"
-msgstr "Please unplug and plug your device in again"
+msgstr "Пожалуйста, отключите и подключите снова ваше устройство"
 
 #: templates/wallet/partials/wallet_modal_btchip_setup.html:7
 msgid "wrong PINs remaining"
-msgstr "wrong PINs remaining"
+msgstr "осталось неправильных ПИН кодов"
 
 #: templates/wallet/partials/wallet_modal_btchip_setup.html:10
 #, fuzzy
@@ -646,41 +665,44 @@ msgid ""
 "Empty Ledger detected successfully. Click the button below to store your "
 "seed on it."
 msgstr ""
-"Empty BTChip detected successfully. Click the button below to store your "
-"seed on it."
+"Пустой Ledger успешно обнаружен. Нажмите кнопку ниже для сохранения "
+"вашего сида на нем."
 
 #: templates/wallet/partials/wallet_modal_btchip_setup.html:11
 #, fuzzy
 msgid "Empty Ledger detected successfully. Click the button below to set it up."
-msgstr ""
-"Empty BTChip detected successfully. Click the button below to store your "
-"seed on it."
+msgstr "Пустой Ledger успешно обнаружен. Нажмите кнопку ниже для настройки."
 
 #: templates/wallet/partials/wallet_modal_btchip_setup.html:12
 msgid "Save to Ledger"
-msgstr ""
+msgstr "Сохранить в Ledger"
 
 #: templates/wallet/partials/wallet_modal_btchip_setup.html:13
 msgid "Set up Ledger"
-msgstr ""
+msgstr "Настроить Ledger"
 
 #: templates/wallet/partials/wallet_modal_btchip_setup.html:19
 #: templates/wallet/partials/wallet_modal_btchip_setup.html:22
 #, fuzzy
 msgid "Ledger setup successful!"
-msgstr "BTChip setup successful!"
+msgstr "Настройка Ledger успешно завершена!"
 
 #: templates/wallet/partials/wallet_modal_btchip_setup.html:20
 msgid ""
 "Please unplug your Ledger and plug it into a secure device supporting USB"
 " keyboards to read the seed backup."
 msgstr ""
+"Пожалуйста, отключите ваш Ledger и подключите снова в безопасное "
+"устройство с поддержкой USB клавиатур для считывания резервной копии "
+"сида."
 
 #: templates/wallet/partials/wallet_modal_btchip_setup.html:21
 msgid ""
 "On the second device remember to first open a text editor or a similar "
 "application where the seed will be typed in by Ledger."
 msgstr ""
+"На другом устройстве не забудьте сначала открыть текстовый редактор или "
+"похожее приложение, где сид буде напечатан Ledger-ом."
 
 #: templates/wallet/partials/concurrent_login.html:6
 msgid "You were logged out."
@@ -691,14 +713,14 @@ msgid ""
 "          You have logged in elsewhere.<br>          <small>If it was not"
 " you, please contact <strong>immediately</strong>        "
 msgstr ""
-"          You have logged in elsewhere.<br>          <small>If it was not"
-" you, please contact <strong>immediately</strong>        "
+"          Вы вошли с другого приложения.<br>          <small>Если это не"
+"  вы, обратитесь в поддержку <strong>немедленно</strong>        "
 
 #: templates/wallet/partials/concurrent_login.html:16
 #: templates/wallet/partials/concurrent_login.html:18
 #: templates/wallet/partials/concurrent_login.html:20
 msgid "support"
-msgstr "support"
+msgstr "поддержка"
 
 #: templates/wallet/partials/concurrent_login.html:24
 msgid "Go back to login"
@@ -730,7 +752,7 @@ msgstr "Адресная книга пуста"
 
 #: templates/wallet/partials/wallet_modal_redeposit.html:4
 msgid "Please re-deposit your funds"
-msgstr "Please re-deposit your funds"
+msgstr "Пожалуйста перезачислите ваши средства"
 
 #: templates/wallet/partials/wallet_modal_redeposit.html:7
 #, fuzzy
@@ -739,17 +761,21 @@ msgid ""
 "Instant Confirmation transactions will not be allowed"
 msgstr ""
 "У вас есть некоторые депозиты, срок которых истек. Если вы не сделаете "
-"повторный депозит или не активируете их, транзакции будут запрещены"
+"повторный депозит или не активируете их, моментальные транзакции будут "
+"запрещены"
 
 #: templates/wallet/partials/wallet_modal_redeposit.html:10
 msgid ""
 "Warning: single transactions can be used to correlate funds with your "
 "identity, including funds between different accounts."
 msgstr ""
+"Внимание: пересылка всех средств одной транзакцией может быть "
+"использованадля поиска связи между средствами и вашей персоной, включая "
+"средства на разных аккаунтах"
 
 #: templates/wallet/partials/wallet_modal_redeposit.html:11
 msgid "Redeposit as single transaction (cheaper)"
-msgstr "Сделать депозит как одну транзакцию (дешевле)"
+msgstr "Перезачислить средства как одну транзакцию (дешевле)"
 
 #: templates/wallet/partials/wallet_modal_redeposit.html:12
 #: templates/wallet/partials/wallet_modal_redeposit.html:15
@@ -759,7 +785,7 @@ msgstr "предполагаемая коммисия"
 
 #: templates/wallet/partials/wallet_modal_redeposit.html:14
 msgid "Redeposit as one transaction per output (better privacy)"
-msgstr "Повторный депозит как одна транзакция на выход (лучшая конфиденциальность)"
+msgstr "Перезачислить как одна транзакция на выход (лучшая конфиденциальность)"
 
 #: templates/wallet/partials/wallet_modal_redeposit.html:16
 msgid "transactions"
@@ -767,25 +793,25 @@ msgstr "транзакции"
 
 #: templates/wallet/partials/wallet_modal_redeposit.html:20
 msgid "Redeposit"
-msgstr "Redeposit"
+msgstr "Перезачислить"
 
 #: templates/wallet/partials/wallet_modal_redeposit.html:22
 msgid "transaction"
-msgstr "transaction"
+msgstr "транзакция"
 
 #: templates/wallet/partials/wallet_modal_confirm_tx.html:2
 #, fuzzy
 msgid "Confirm transaction details"
-msgstr "Детали транзакции"
+msgstr "Подтвердить детали транзакции"
 
 #: templates/wallet/partials/wallet_modal_confirm_tx.html:7
 #, fuzzy
 msgid "You are about to bump a fee."
-msgstr "Вы собираетесь отправить "
+msgstr "Вы собираетесь поднять комиссию"
 
 #: templates/wallet/partials/wallet_modal_confirm_tx.html:8
 msgid "Please make sure the details below are correct:"
-msgstr ""
+msgstr "Пожалуйста, убетитесь в правильности данных ниже:"
 
 #: templates/wallet/partials/wallet_modal_confirm_tx.html:12
 #: templates/wallet/partials/wallet_send.html:20
@@ -794,17 +820,17 @@ msgstr "Получатель"
 
 #: templates/wallet/partials/wallet_modal_confirm_tx.html:28
 msgid "Previous fee:"
-msgstr ""
+msgstr "предыдущая комиссия:"
 
 #: templates/wallet/partials/wallet_modal_confirm_tx.html:37
 #, fuzzy
 msgid "Send transaction"
-msgstr "transaction"
+msgstr "Отправить транзакцию"
 
 #: templates/wallet/partials/wallet_modal_tx_limits.html:9
 #: templates/wallet/partials/wallet_settings.html:208
 msgid "(current currency)"
-msgstr "(current currency)"
+msgstr "(текущая валюта)"
 
 #: templates/wallet/partials/wallet_modal_tx_limits.html:11
 #: templates/wallet/partials/wallet_settings.html:209
@@ -812,8 +838,8 @@ msgid ""
 "Using currency values for limits assumes you can trust your pricing "
 "source to provide correct values."
 msgstr ""
-"Using currency values for limits assumes you can trust your pricing "
-"source to provide correct values."
+"Использование валютных значений подразумевает что вы доверяете источнику "
+"предоставление правельных значений."
 
 #: templates/wallet/partials/wallet_modal_tx_limits.html:33
 #: templates/wallet/partials/wallet_settings.html:222
@@ -821,28 +847,28 @@ msgid ""
 "This limit will be decreased with each transaction and you will need to "
 "\"refill\" it manually by changing this value."
 msgstr ""
-"This limit will be decreased with each transaction and you will need to "
-"\"refill\" it manually by changing this value."
+"Этот лимит будет уменьшатся с каждой транзакцией, и вам будет необходимо "
+"\"возобновлять\" его вручную путем изменения этого значения."
 
 #: templates/wallet/partials/signup_qr_modal.html:2
 #: templates/wallet/partials/wallet_modal_mnemonic.html:2
 msgid "The QR code containing the passphrase to access your wallet is:"
-msgstr "The QR code containing the passphrase to access your wallet is:"
+msgstr "QR содержащий пароль для доступа к вашему кошильку:"
 
 #: templates/wallet/partials/wallet_modal_mnemonic.html:3
 #, fuzzy
 msgid ""
 "The QR code containing the passphrase for recovery access to your "
 "subaccount is:"
-msgstr "The QR code containing the passphrase to access your wallet is:"
+msgstr "QR код содержащий пароль для восстановления доступа в ваш дополнительны"
 
 #: templates/wallet/partials/wallet_modal_mnemonic.html:5
 msgid ""
 "This passphrase is encrypted, so your encryption password is required to "
 "use it."
 msgstr ""
-"This passphrase is encrypted, so your encryption password is required to "
-"use it."
+"Пароль зашифрован, поэтому вам нужен ваш ключ шифрования, чтобы его "
+"использовать."
 
 #: templates/wallet/partials/signup_qr_modal.html:4
 #: templates/wallet/partials/wallet_modal_mnemonic.html:6
@@ -855,6 +881,10 @@ msgid ""
 "nor by your browser, so you *HAVE* to back it up to have a recovery "
 "access to your 2of3 subaccount."
 msgstr ""
+"Мнемоническая фраза дополнительного аккаунта не сохраняется нигде ни в "
+"GreenAddress, ни в вашем браузере, поэтому вам *НЕОБХОДИМО* сделать "
+"резервную копию, чтобы иметь возможность восстановить доступ к вашему "
+"2-с-3 дополнительному аккаунту"
 
 #: templates/wallet/partials/signup_1_init.html:35
 #: templates/wallet/partials/wallet_modal_mnemonic.html:9
@@ -864,32 +894,35 @@ msgstr "Ваша мнемоническая фраза-пароль"
 #: templates/wallet/partials/wallet_modal_mnemonic.html:13
 #, fuzzy
 msgid "Your subaccount recovery mnemonic passphrase"
-msgstr "Ваша мнемоническая фраза-пароль"
+msgstr "Ваша мнемоническая фраза-пароль дополнительного аккаунта"
 
 #: templates/wallet/partials/wallet_modal_mnemonic.html:18
 #, fuzzy
 msgid "Your subaccount recovery xpub"
-msgstr "Ваша мнемоническая фраза-пароль"
+msgstr "Ваш xpub ключ дополнительного аккаунта"
 
 #: templates/wallet/partials/wallet_modal_mnemonic.html:23
 msgid "Your subaccount GreenAddress xpub"
-msgstr ""
+msgstr "GreenAddress xpub вашего дополнительного аккаунта"
 
 #: templates/wallet/partials/wallet_receive.html:13
 #, fuzzy
 msgid "Account"
-msgstr "Добавить аккаунт"
+msgstr "Аккаунт"
 
 #: templates/wallet/partials/wallet_receive.html:21
 msgid ""
 "You are logged in via watch only mode, you will need to login with the "
 "mnemonics passphrase (or hardware wallet if applicable) to spend."
 msgstr ""
+"Вы вошли в режиме для чтения, вам будет необходимо войти с помощью "
+"мнемонической фразы (или физичиствого устройства кошелька, если "
+"применимо) для отправки транзакций."
 
 #: templates/wallet/partials/wallet_receive.html:57
 #, fuzzy
 msgid "Wallet URI"
-msgstr "Кошелек"
+msgstr "URI Кошелька"
 
 #: templates/wallet/partials/wallet_receive.html:59
 msgid "Bitcoin URI"
@@ -903,7 +936,7 @@ msgstr "Показать URI и адрес"
 #: templates/wallet/partials/wallet_receive.html:68
 #: templates/wallet/partials/wallet_receive.html:91
 msgid "Copy to clipboard"
-msgstr "Copy to clipboard"
+msgstr "Скопировать в буфер обмена"
 
 #: templates/wallet/partials/signup_1_init.html:56
 #: templates/wallet/partials/signuplogin/header_pay.html:32
@@ -920,15 +953,15 @@ msgstr "Постоянный URL Оплаты"
 
 #: templates/wallet/partials/wallet_receive.html:100
 msgid "Private key in WIF or BIP38 format"
-msgstr "Private key in WIF or BIP38 format"
+msgstr "Приватный ключ в формате WIF или BIP38"
 
 #: templates/wallet/partials/wallet_receive.html:104
 msgid "Enter a private key to sweep here"
-msgstr "Введите приватный ключ, чтобы смести с него средства сюда"
+msgstr "Введите приватный ключ, чтобы собрать с него средства сюда"
 
 #: templates/wallet/partials/wallet_receive.html:113
 msgid "Sweep"
-msgstr "Смести"
+msgstr "Собрать"
 
 #: templates/wallet/partials/wallet_receive.html:130
 msgid "Show previously generated addresses"
@@ -937,42 +970,42 @@ msgstr "Показать ранее созданные адреса"
 #: templates/wallet/partials/wallet_receive.html:133
 #: templates/wallet/partials/wallet_send.html:190
 msgid "Show advanced options"
-msgstr ""
+msgstr "Показать расширенные опции"
 
 #: templates/wallet/partials/wallet_modal_usb_device.html:2
 msgid "Please connect/reconnect your wallet USB device to proceed."
-msgstr "Please connect/reconnect your wallet USB device to proceed."
+msgstr ""
+"Пожалуйста подключите/переподключите ваше USB устройство кошелька чтобы "
+"продолжить."
 
 #: templates/wallet/partials/wallet_modal_btchip_pin.html:4
 msgid "Please enter BTChip PIN."
-msgstr "Please enter BTChip PIN."
+msgstr "Пожалуйста введите ПИн код BTChip."
 
 #: templates/wallet/partials/wallet_modal_btchip_pin.html:14
 msgid "PIN must be a 4-to-32-digit number"
-msgstr "PIN must be a 4-to-32-digit number"
+msgstr "Пин код должен быть 4-32-значным числом"
 
 #: templates/wallet/partials/wallet_modal_verify_mnemonic.html:4
 #, fuzzy
 msgid "Please enter the missing words from your mnemonic:"
-msgstr ""
-"Please enter the following words from your <strong>unencrypted</strong> "
-"mnemonic:"
+msgstr "Пожалуста введите недостающие слова с вашей мнемонической фразы:"
 
 #: templates/wallet/partials/wallet_modal_verify_mnemonic.html:5
 msgid "(to verify that you backed it up correctly)"
-msgstr ""
+msgstr "(чтобы проверить коректность сделаной вами резервной копии)"
 
 #: templates/wallet/partials/wallet_modal_verify_mnemonic.html:10
 msgid "Word #"
-msgstr "Word #"
+msgstr "Слово #"
 
 #: templates/wallet/partials/wallet_modal_verify_mnemonic.html:20
 msgid "Cancel and return to first step"
-msgstr ""
+msgstr "Отменить и возвратится на первый шаг"
 
 #: templates/wallet/partials/wallet_modal_verify_mnemonic.html:22
 msgid "Verify"
-msgstr "Verify"
+msgstr "Проверить"
 
 #: templates/wallet/partials/signup_1_init.html:13
 #: templates/wallet/partials/signup_1_trezor.html:13
@@ -998,7 +1031,7 @@ msgstr "Настроить Двух-факторнаую аутентифика�
 
 #: templates/wallet/partials/signup_2_2factor.html:16
 msgid "Please wait while we log you into your new wallet..."
-msgstr "Please wait while we log you into your new wallet..."
+msgstr "Пожалуйста попдождите пока идет вход в ваш новый кошелёк..."
 
 #: templates/wallet/partials/signup_2_2factor.html:18
 #, fuzzy
@@ -1007,15 +1040,17 @@ msgid ""
 "will make your wallet much more secure and will let you some additional "
 "features such as Spending Limits."
 msgstr ""
-"We require you to set up two factor authentication, this will make your "
-"wallet much more secure and will let you some additional features such as"
-" Spending Limits and Delayed Payments."
+"Мы рекомендуем установить несколько методов двух факторной "
+"аутентификации, это сделает ваш кошелёк более безопасным и позволит "
+"использовать некоторые дополнительные опции, например Лимит Трат"
 
 #: templates/wallet/partials/signup_2_2factor.html:19
 msgid ""
 "Multiple methods will allow backup access to your funds in case any of "
 "your two factor become unavailable."
 msgstr ""
+"Несколько методов позволит иметь резервный доступ к вашим средствам в "
+"случаенедоступности одного с методов двух факторной аутентификации"
 
 #: templates/wallet/partials/signup_2_2factor.html:20
 msgid ""
@@ -1023,9 +1058,10 @@ msgid ""
 " also confirm it with a code sent to you via email, SMS or google "
 "authenticator as per your choice."
 msgstr ""
-"To issue a transaction you will not only need to login to your wallet but"
-" also confirm it with a code sent to you via email, SMS or google "
-"authenticator as per your choice."
+"Для создания транзакции вам будет необходимо не только войти в ваш "
+"кошелёк, но и подтвердить её с помощью кода, который мы отослали вам "
+"через почтку, SMS или google authenticator в соответствии с вашим "
+"выбором."
 
 #: templates/wallet/partials/signup_2_2factor.html:28
 #: templates/wallet/partials/signup_3_pin.html:40
@@ -1195,101 +1231,99 @@ msgstr "Телефонный код"
 #: templates/wallet/partials/wallet_send.html:12
 #, fuzzy
 msgid "From account"
-msgstr "Добавить аккаунт"
+msgstr "С аккаунта"
 
 #: templates/wallet/partials/wallet_send.html:29
 #, fuzzy
 msgid "Enter recipient's address "
-msgstr "Set email address"
+msgstr "введите адрес получателя"
 
 #: templates/wallet/partials/wallet_send.html:35
 msgid "Paste"
-msgstr "Paste"
+msgstr "Вставить"
 
 #: templates/wallet/partials/wallet_send.html:65
 #, fuzzy
 msgid "Asset"
-msgstr "Paste"
+msgstr "Имущество"
 
 #: templates/wallet/partials/wallet_send.html:102
 #, fuzzy
 msgid "Sweep all the funds from the wallet"
-msgstr "Мы предлагаем преимущества веб-кошелька:"
+msgstr "Собрать все средства с кошелька"
 
 #: templates/wallet/partials/wallet_send.html:118
 msgid "Leave empty for default"
-msgstr ""
+msgstr "Оставить пустым для значения по умолчанию"
 
 #: templates/wallet/partials/wallet_send.html:129
 msgid "per kB"
-msgstr ""
+msgstr "за КБ"
 
 #: templates/wallet/partials/wallet_send.html:153
 #, fuzzy
 msgid "Network fee will be added to the amount"
-msgstr "will be added to the amount"
+msgstr "Комиссия сети будет добавлена к сумме"
 
 #: templates/wallet/partials/wallet_send.html:155
 msgid "Rate is"
-msgstr ""
+msgstr "Тариф"
 
 #: templates/wallet/partials/wallet_send.html:165
 msgid "Requires recipient to trust GreenAddress instant confirmations"
-msgstr "Requires recipient to trust GreenAddress instant confirmations"
+msgstr "Требует, чтобы получатель доверял моментальному подтверждению GreenAddress"
 
 #: templates/wallet/partials/wallet_send.html:167
 msgid "Instant Confirmation"
-msgstr "Instant Confirmation"
+msgstr "Моментальное подтверждение"
 
 #: templates/wallet/partials/wallet_send.html:177
 msgid "You can enter a memo to store in your transactions list"
-msgstr ""
+msgstr "Вы можете ввести сообщение для сожранения в списке ваших транзакций"
 
 #: templates/wallet/partials/wallet_send.html:184
 #, fuzzy
 msgid "Review &amp; Send"
-msgstr "Послать денежные средства"
+msgstr "Проверить &amp; Послать"
 
 #: templates/wallet/partials/wallet_send.html:186
 msgid "Verifying"
-msgstr "Verifying"
+msgstr "Идет проверка"
 
 #: templates/wallet/partials/wallet_send.html:187
 msgid "Signing"
-msgstr "Signing"
+msgstr "Идет подпись"
 
 #: templates/wallet/partials/wallet_send.html:205
 msgid "calculating"
 msgstr "Вычисляю ..."
 
-#: templates/wallet/partials/wallet_modal_logout_other_session.html:4
-msgid "You are already logged in. Do you want to log out the other session?"
-msgstr "Вы уже зашли в систему. Хотите ли вы выйти из текущей сессии?"
-
 #: templates/wallet/partials/wallet_modal_pgp.html:4
 msgid "Please enter a valid PGP public key into the box below."
-msgstr ""
+msgstr "Пожалуйста введите действительный публичный ключ PGP в поле ниже."
 
 #: templates/wallet/partials/wallet_modal_pgp.html:12
 msgid "----BEGIN PGP PUBLIC KEY..."
-msgstr ""
+msgstr "----BEGIN PGP PUBLIC KEY..."
 
 #: templates/wallet/partials/wallet_modal_pgp.html:31
 msgid "Add PGP Public Key"
-msgstr ""
+msgstr "Добавить публичный ключ PGP"
 
 #: templates/wallet/partials/wallet_modal_pgp.html:35
 #, fuzzy
 msgid "Change PGP Public Key"
-msgstr "Изменить PIN-код"
+msgstr "Изменить публичный ключ PGP"
 
 #: templates/wallet/partials/wallet_modal_pgp.html:39
 msgid "Remove PGP Public Key"
-msgstr ""
+msgstr "Удалить публичный ключ PGP"
 
 #: templates/wallet/partials/wallet_modal_btchip_fup.html:6
 msgid "To upgrade your firmware, please use the following Chrome extension: "
 msgstr ""
+"Для обновления ваше програмного обеспечения, пожалуйста, используйте  "
+"следующее расширение Chrome:"
 
 #: templates/wallet/partials/wallet_modal_btchip_fup.html:8
 #, fuzzy
@@ -1298,7 +1332,7 @@ msgstr "Создайте Ваш Кошелек"
 
 #: templates/wallet/partials/signup_3_pin.html:14
 msgid "Fast and secure access to your Wallet"
-msgstr "Быстрый и безопасный доступ к Wallet"
+msgstr "Быстрый и безопасный доступ к Кошельку"
 
 #: templates/wallet/partials/signup_3_pin.html:14
 msgid "To have a secure but quick access from this device set your PIN"
@@ -1314,7 +1348,7 @@ msgstr "ПИН номер"
 #: templates/wallet/partials/signup_3_pin.html:22
 #: templates/wallet/partials/wallet_settings.html:373
 msgid "4-15 digits number"
-msgstr "4-15 digits number"
+msgstr "4-15 знаковое число"
 
 #: templates/wallet/partials/signup_3_pin.html:29
 msgid ""
@@ -1327,8 +1361,8 @@ msgstr ""
 "Доступ через PIN-код разрешает быстрый вход в Ваш кошелек сохраняя при "
 "этом безопасность на высоком уровне. PIN-код защищает случайный AES "
 "256-битный пароль, который будет удален в случае 3 не успешных попыток "
-"ввода PIN-кода и тогда Ваша мнемоника должна будет предоставлена "
-"полностью. Легко, удобно и безопасно. Пользуйтесь!"
+"ввода PIN-кода и тогда Ваша мнемоническая фраза будет нужна для "
+"дальнейшего входа. Легко, удобно и безопасно. Пользуйтесь!"
 
 #: templates/wallet/partials/signup_3_pin.html:43
 msgid "Take me to my wallet and skip all this!"
@@ -1362,32 +1396,34 @@ msgstr "Вход в ваш кошелёк"
 #: templates/wallet/partials/signup_1_trezor.html:20
 #, fuzzy
 msgid "Connect Hardware Wallet to create a GreenAddress wallet"
-msgstr "Connect Trezor to create a GreenAddress wallet"
+msgstr ""
+"Подсоедините физическое устройство кошелька для создания кошелька "
+"GreenAddress"
 
 #: templates/wallet/partials/signup_1_trezor.html:21
 msgid "This 3-step account setup will fully secure it against intruders"
-msgstr "This 3-step account setup will fully secure it against intruders"
+msgstr "Эта 3-этапная настройка аккаунта полностью защитит его от злоумышленников"
 
 #: templates/wallet/partials/signup_1_trezor.html:24
 #: templates/wallet/partials/signuplogin/trezor.html:12
 #, fuzzy
 msgid "Please connect your Hardware Wallet device"
-msgstr "Please connect your Trezor device"
+msgstr "Пожалуйста, подсоедините ваше физическое устройство кошелька"
 
 #: templates/wallet/partials/signup_1_trezor.html:25
 #: templates/wallet/partials/signuplogin/trezor.html:13
 msgid "Hardware Wallet detected."
-msgstr ""
+msgstr "Обнаружено физическое устройство кошелька."
 
 #: templates/wallet/partials/signup_1_trezor.html:26
 #: templates/wallet/partials/signuplogin/trezor.html:14
 #, fuzzy
 msgid "Please confirm the signature on your Hardware Wallet device."
-msgstr "Please confirm the signature on your Trezor device."
+msgstr "Пожалуйста, подтвердите подпись на вашем физическом устройстве кошелька."
 
 #: templates/wallet/partials/signup_1_trezor.html:31
 msgid "I agree with the "
-msgstr "I agree with the "
+msgstr "Я соглашаюсь с "
 
 #: templates/wallet/partials/signup_1_init.html:48
 #: templates/wallet/partials/signup_1_init.html:50
@@ -1404,7 +1440,7 @@ msgstr "Ошибка:"
 #: templates/wallet/partials/signup_1_init.html:63
 #: templates/wallet/partials/signup_1_trezor.html:39
 msgid " Click to try again"
-msgstr " Кликнете чтобы повторит заново"
+msgstr " Кликнете чтобы повторить заново"
 
 #: templates/wallet/partials/signup_1_trezor.html:51
 msgid "The passphrase to access your wallet is:"
@@ -1446,39 +1482,39 @@ msgstr "Ваши последние транзакции"
 
 #: templates/wallet/partials/wallet_transactions.html:22
 msgid "From date"
-msgstr "From date"
+msgstr "С даты"
 
 #: templates/wallet/partials/wallet_transactions.html:32
 msgid "To date"
-msgstr "To date"
+msgstr "По дату"
 
 #: templates/wallet/partials/wallet_transactions.html:40
 msgid "Search"
-msgstr "Search"
+msgstr "Поиск"
 
 #: templates/wallet/partials/wallet_fiat_price.html:3
 msgid "min"
-msgstr ""
+msgstr "минута"
 
 #: templates/wallet/partials/wallet_fiat_price.html:3
 msgid "mins"
-msgstr ""
+msgstr "минут"
 
 #: templates/wallet/partials/wallet_fiat_price.html:3
 msgid "sec"
-msgstr ""
+msgstr "секунда"
 
 #: templates/wallet/partials/wallet_fiat_price.html:3
 msgid "secs"
-msgstr ""
+msgstr "секунд"
 
 #: templates/wallet/partials/wallet_fiat_price.html:4
 msgid "ago"
-msgstr ""
+msgstr "назад"
 
 #: templates/wallet/partials/wallet_fiat_price.html:7
 msgid "just updated"
-msgstr ""
+msgstr "толь обновлено"
 
 #: templates/wallet/partials/wallet_modal_gauth_qr.html:2
 msgid "The QR code for Google Authenticator access to your wallet is:"
@@ -1489,6 +1525,8 @@ msgid ""
 "Please write this down or print it for emergencies, i.e. you lose your "
 "device"
 msgstr ""
+"Пожалуйста запишите это или распечатайте на случай чрезвычайной ситуации,"
+" например утрата вашего устройства"
 
 #: templates/wallet/partials/wallet_modal_gauth_qr.html:5
 msgid "You can also copy the code manually:"
@@ -1496,32 +1534,38 @@ msgstr "Вы можете также скопировать код вручну�
 
 #: templates/wallet/partials/wallet_modal_tx_redeem.html:2
 msgid "Take funds back"
-msgstr "Take funds back"
+msgstr "Возвратить средства"
 
 #: templates/wallet/partials/wallet_modal_tx_redeem.html:6
 msgid "Do you want to take funds back from the following transaction?"
-msgstr "Do you want to take funds back from the following transaction?"
+msgstr "Хотите ли вы возвратить средства со следующей транзакции ?"
 
 #: templates/wallet/partials/wallet_modal_reset_email.html:4
 msgid ""
 "This email is already used by a different account. Do you want to unlink "
 "it from that account?"
 msgstr ""
+"Этот адрес электронной почты уже используется другим аккаунтом. Хотите "
+"отвязать его от другого аккаунта?"
 
 #: templates/wallet/partials/wallet_modal_reset_email.html:5
 msgid "Warning"
-msgstr ""
+msgstr "Внимание"
 
 #: templates/wallet/partials/wallet_modal_reset_email.html:5
 msgid ""
 "This can disable two factor authentication if you have no other 2FA "
 "method set up in that account."
 msgstr ""
+"Это может отключить двух факторную проверку подленности, если вы не "
+"используете других методов на том аккаунте."
 
 #: templates/wallet/partials/wallet_modal_trezor_confirm_button.html:9
 #, fuzzy
 msgid "Please confirm the action on your Hardware Wallet device."
-msgstr "Please confirm the signature on your Trezor device."
+msgstr ""
+"Пожалуйста, подтвердите это действие на вашем физичиском устройстве "
+"кошелька."
 
 #: templates/wallet/partials/browser_unsupported.html:6
 #: templates/wallet/partials/browser_unsupported.html:10
@@ -1533,8 +1577,8 @@ msgid ""
 "Please try a modern browser like Chrome, Firefox, Safari or our Android, "
 "iOS or F-Droid app!"
 msgstr ""
-"Please try a modern browser like Chrome, Firefox, Safari or our Android, "
-"iOS or F-Droid app!"
+"Пожалуйста, попробуйте в современнном браузере Chrome, Firefox, Safari "
+"или нашем приложении для Android, iOS или F-Droid!"
 
 #: templates/wallet/partials/signup_nfc_modal.html:2
 msgid "There was a problem writing to the NFC tag:"
@@ -1569,7 +1613,9 @@ msgstr ""
 #: templates/wallet/partials/signup_1_init.html:20
 #, fuzzy
 msgid "Use a Hardware Wallet to create a GreenAddress wallet"
-msgstr "Connect Trezor to create a GreenAddress wallet"
+msgstr ""
+"Использовать физическое устройство кошелёк для создания кошелька "
+"GreenAddress"
 
 #: templates/wallet/partials/signup_1_init.html:21
 #, fuzzy
@@ -1577,7 +1623,7 @@ msgid ""
 "Please finish this 3-step account setup to fully secure it against "
 "intruders"
 msgstr ""
-"Пожалуйста, завершите эту 4-этапную настройку аккаунта для полной защиты "
+"Пожалуйста, завершите эту 3-этапную настройку аккаунта для полной защиты "
 "от злоумышленников"
 
 #: templates/wallet/partials/signup_1_init.html:25
@@ -1585,10 +1631,12 @@ msgid ""
 "You can also disconnect the Hardware Wallet and refresh this page to "
 "create a wallet without the device."
 msgstr ""
+"Вы также можете отключить физическое устройство кошелёк и обновить "
+"страницу для создания кошелька без устройства."
 
 #: templates/wallet/partials/signup_1_init.html:26
 msgid "Click here to refresh."
-msgstr ""
+msgstr "Нажмите здесь для обновления страницы."
 
 #: templates/wallet/partials/signup_1_init.html:31
 msgid "You are now the proud owner of a bitcoin wallet"
@@ -1604,7 +1652,7 @@ msgstr ""
 
 #: templates/wallet/partials/signup_1_init.html:39
 msgid "Generating mnemonic, please wait..."
-msgstr "Генерируем мнемонику, пожалуйста подождите"
+msgstr "Генерируем мнемоническую фразу, пожалуйста подождите..."
 
 #: templates/wallet/partials/signup_1_init.html:41
 msgid ""
@@ -1630,7 +1678,7 @@ msgstr ""
 
 #: templates/wallet/partials/wallet_settings.html:5
 msgid "General Settings"
-msgstr "General Settings"
+msgstr "Основные настройки"
 
 #: templates/wallet/partials/wallet_settings.html:11
 msgid "Currency"
@@ -1642,31 +1690,31 @@ msgstr "Выберете валюту и источник цен"
 
 #: templates/wallet/partials/wallet_settings.html:13
 msgid "Select unit of measurement."
-msgstr ""
+msgstr "Выберите номинал."
 
 #: templates/wallet/partials/wallet_settings.html:18
 msgid "Pricing source to use"
-msgstr "Обмен использовать"
+msgstr "Использовать источник цен"
 
 #: templates/wallet/partials/wallet_settings.html:32
 msgid "Show amounts in"
-msgstr "Показать суммы в БТД"
+msgstr "Показать суммы в"
 
 #: templates/wallet/partials/wallet_settings.html:53
 msgid "Sound"
-msgstr "Sound"
+msgstr "Звуковые уведомления"
 
 #: templates/wallet/partials/wallet_settings.html:54
 msgid "Enable or disable sounds"
-msgstr "Enable or disable sounds"
+msgstr "Включить или отключить звуковые уведомления"
 
 #: templates/wallet/partials/wallet_settings.html:62
 msgid "Enable sounds"
-msgstr "Enable sounds"
+msgstr "Включить звуковые уведомления"
 
 #: templates/wallet/partials/wallet_settings.html:71
 msgid "Language"
-msgstr "Language"
+msgstr "Язык"
 
 #: templates/wallet/partials/wallet_settings.html:72
 msgid "Change language to"
@@ -1694,8 +1742,7 @@ msgid ""
 "and for most up to date information when configured for incoming"
 msgstr ""
 "Уведомления позволяют повысить уровень безопасности при настройке "
-"исходящих и для большинства актуальную информацию, когда настроен для "
-"входящих"
+"исходящих и наиболее актуальную информацию, когда настроен для входящих"
 
 #: templates/wallet/partials/wallet_settings.html:124
 msgid "Send incoming transaction notification by"
@@ -1718,19 +1765,19 @@ msgstr "Отправить уведомление о исходящей тран
 
 #: templates/wallet/partials/wallet_settings.html:163
 msgid "You need to have a confirmed email enabled for this feature to work."
-msgstr "You need to have a confirmed email enabled for this feature to work."
+msgstr "Вам нужен включенный подтвержденный email для работы этой функции."
 
 #: templates/wallet/partials/wallet_settings.html:172
 msgid ""
 "nLockTime transactions allow you to redeem your deposited funds without "
 "GreenAddress' signature after pre-defined number of blocks"
 msgstr ""
-"nLockTime transactions allow you to redeem your deposited funds without "
-"GreenAddress' signature after pre-defined number of blocks"
+"nLockTime позволяют вам вернуть ваши средства без подписи GreenAddress "
+"после указаного числа блоков"
 
 #: templates/wallet/partials/wallet_settings.html:178
 msgid "Allow redeeming funds without GreenAddress' signature after"
-msgstr "Allow redeeming funds without GreenAddress' signature after"
+msgstr "Позволить возвращение средств без подписи GreenAddress через"
 
 #: templates/wallet/partials/wallet_settings.html:180
 msgid "blocks"
@@ -1741,8 +1788,8 @@ msgid ""
 "Both outgoing and incoming transaction notifications must be enabled for "
 "this feature to work."
 msgstr ""
-"Уведомления для входящих так и исходящих транзакций должны быть включены "
-"для работы этой функции."
+"Уведомления как для входящих, так и исходящих транзакций должны быть "
+"включены для работы этой функции."
 
 #: templates/wallet/partials/wallet_settings.html:189
 msgid "Show outputs expiring soon"
@@ -1750,11 +1797,11 @@ msgstr "Показать выходы, срок которых скоро зак
 
 #: templates/wallet/partials/wallet_settings.html:190
 msgid "Send all nLockTime transactions by email"
-msgstr "Send all nLockTime transactions by email"
+msgstr "Отправлять все nLockTime транзакции через email"
 
 #: templates/wallet/partials/wallet_settings.html:198
 msgid "Spending limits"
-msgstr "Потолок траты"
+msgstr "Лимит для траты"
 
 #: templates/wallet/partials/wallet_settings.html:199
 msgid ""
@@ -1769,12 +1816,12 @@ msgid ""
 "You can provide amount (BTC or fiat) limits of transactions that you can "
 "make without using two factor authentication"
 msgstr ""
-"You can provide amount (BTC or fiat) limits of transactions that you can "
-"make without using two factor authentication"
+"Вы можете указать ограничение на сумму транзакций в BTC или валюте, "
+"которые можно проводить без двухфакторной проверки подленности"
 
 #: templates/wallet/partials/wallet_settings.html:227
 msgid "Change limits"
-msgstr "Change limits"
+msgstr "Изменить лимит"
 
 #: templates/wallet/partials/wallet_settings.html:234
 msgid "Network upgrades"
@@ -1785,10 +1832,12 @@ msgid ""
 "Transaction replacement functionality allows re-sending unconfirmed "
 "transactions with higher fees to speed up confirmation progress."
 msgstr ""
+"Функционал замены транзакций позволяет отсылать повторно неподтвержденные"
+" транзакции с большей комиссией для ускорения процеса подтверждения."
 
 #: templates/wallet/partials/wallet_settings.html:253
 msgid "Allow to increase the fee for outgoing transactions"
-msgstr ""
+msgstr "Позволить поднятие комиссии для исходящих транзакций"
 
 #: templates/wallet/partials/wallet_settings.html:263
 msgid ""
@@ -1811,24 +1860,25 @@ msgid ""
 "Set your email address for transactions notifications, two factor "
 "authentication, and nLockTime transactions."
 msgstr ""
-"Set your email address for transactions notifications, two factor "
-"authentication, and nLockTime transactions."
+"Установить адрес электронной почты, для уведомлений о транзакции, "
+"двухфакторной проверки подленности, и nLockTime транзакций."
 
 #: templates/wallet/partials/wallet_settings.html:294
 msgid "Change email address"
-msgstr "Change email address"
+msgstr "Изменить адрес электронной почты"
 
 #: templates/wallet/partials/wallet_settings.html:295
 msgid "Set email address"
-msgstr "Set email address"
+msgstr "Установить адрес электронной почты"
 
 #: templates/wallet/partials/wallet_settings.html:303
 msgid ""
 "You need to provide confirmation code from your email to allow using "
 "it.<br>              Please check your email and provide the code."
 msgstr ""
-"You need to provide confirmation code from your email to allow using "
-"it.<br>              Please check your email and provide the code."
+"Вам нужно предоставить код подтверждения с вашей электронной почты, чтобы"
+" разрешить использование.<br>Пожалуйста, откройте вашу электронную почту "
+"и введите код."
 
 #: templates/wallet/partials/wallet_settings.html:314
 #: templates/wallet/partials/wallet_settings.html:375
@@ -1841,28 +1891,28 @@ msgid ""
 "The code is valid only for 5 minutes, so you can request another one if "
 "necessary."
 msgstr ""
-"The code is valid only for 5 minutes, so you can request another one if "
-"necessary."
+"Код действительный в течении 5 минут, по-этому вы можете запросить другой"
+" если нужно."
 
 #: templates/wallet/partials/wallet_settings.html:320
 msgid "Request another code"
-msgstr "Request another code"
+msgstr "Запросить другой код"
 
 #: templates/wallet/partials/wallet_settings.html:328
 msgid "PGP"
-msgstr ""
+msgstr "PGP"
 
 #: templates/wallet/partials/wallet_settings.html:329
 msgid "Set your Pretty Good Privacy public key for improved privacy."
-msgstr ""
+msgstr "Установить ваш PGP ключ для повышения приватности."
 
 #: templates/wallet/partials/wallet_settings.html:337
 msgid "View/Edit Public Key"
-msgstr ""
+msgstr "Посмотреть/Редактировать Публичный ключ"
 
 #: templates/wallet/partials/wallet_settings.html:346
 msgid "Add Public Key"
-msgstr ""
+msgstr "Добавить Публичный ключ"
 
 #: templates/wallet/partials/wallet_settings.html:356
 msgid "Quick login"
@@ -1900,28 +1950,28 @@ msgstr "Удалить"
 
 #: templates/wallet/partials/wallet_settings.html:400
 msgid "Touch ID"
-msgstr ""
+msgstr "Touch ID"
 
 #: templates/wallet/partials/wallet_settings.html:401
 #, fuzzy
 msgid "Enable Touch ID to quickly access your wallet from this device."
 msgstr ""
-"Включить простой PIN-код для быстрого доступа к вашему кошельку c этого "
+"Включить Touch ID для быстрого доступа к вашему кошельку c этого "
 "устройства."
 
 #: templates/wallet/partials/wallet_settings.html:409
 #, fuzzy
 msgid "Enable Touch ID on this device"
-msgstr "Разрешает быстрый вход на этом устройстве"
+msgstr "Touch ID разрешает быстрый вход на этом устройстве"
 
 #: templates/wallet/partials/wallet_settings.html:418
 msgid "Enable Watch-Only login"
-msgstr ""
+msgstr "Включить вход для чтения"
 
 #: templates/wallet/partials/wallet_settings.html:419
 #, fuzzy
 msgid "Allow watch-only login to your wallet."
-msgstr "Пожалуйста, войдите, чтобы использовать ваш кошелек"
+msgstr "Разрешить вход для чтения для вашего кошелька."
 
 #: templates/wallet/partials/signuplogin/base.html:83
 #: templates/wallet/partials/wallet_settings.html:423
@@ -1945,12 +1995,12 @@ msgstr "Двухфакторная проверка подлинности"
 #: templates/wallet/partials/wallet_settings.html:440
 msgid "Set any or all two factor: you can choose which one when needed!"
 msgstr ""
-"Установите двух-фактор выборочно или для всего: Вы можете выбрать, что "
-"Вам необходимо!"
+"Установите двух-фактор выборочно или все: Вы можете выбрать, что Вам "
+"необходимо!"
 
 #: templates/wallet/partials/wallet_settings.html:440
 msgid "Enable two or back up the given code where applicable."
-msgstr ""
+msgstr "Вкличить две или сделать резервную копию данного кода где возможно."
 
 #: templates/wallet/partials/wallet_settings.html:458
 msgid "Google Authenticator"
@@ -1990,19 +2040,19 @@ msgstr ""
 
 #: templates/wallet/partials/wallet_settings.html:564
 msgid "Auto logout"
-msgstr "Auto logout"
+msgstr "Автоматический выход"
 
 #: templates/wallet/partials/wallet_settings.html:565
 msgid "Configure auto logout after some inactivity timeout"
-msgstr "Configure auto logout after some inactivity timeout"
+msgstr "Настроить автоматический выход после промежутка бездеятельности"
 
 #: templates/wallet/partials/wallet_settings.html:569
 msgid "Minutes"
-msgstr "Minutes"
+msgstr "Минут"
 
 #: templates/wallet/partials/wallet_settings.html:571
 msgid "Timeout minutes"
-msgstr "Timeout minutes"
+msgstr "Минут тайм-аут"
 
 #: templates/wallet/partials/wallet_settings.html:581
 #: templates/wallet/partials/wallet_settings.html:585
@@ -2017,7 +2067,7 @@ msgstr ""
 
 #: templates/wallet/partials/wallet_settings.html:586
 msgid "Show encrypted mnemonic"
-msgstr "Show encrypted mnemonic"
+msgstr "Показать зашифрованую мнемонику"
 
 #: templates/wallet/partials/wallet_settings.html:588
 msgid "Write to NFC tag"
@@ -2025,11 +2075,11 @@ msgstr "Записать на тег NFC"
 
 #: templates/wallet/partials/wallet_settings.html:589
 msgid "Write encrypted to NFC tag"
-msgstr "Write encrypted to NFC tag"
+msgstr "Записать шифрованым на тег NFC"
 
 #: templates/wallet/partials/wallet_settings.html:592
 msgid "Write to a hardware wallet"
-msgstr "Write to a hardware wallet"
+msgstr "Записать в физическое устройство кошелька"
 
 #: templates/wallet/partials/wallet_settings.html:600
 msgid "Delayed payments"
@@ -2058,58 +2108,60 @@ msgstr "Задержать платеж"
 #: templates/wallet/partials/wallet_settings.html:633
 #: templates/wallet/partials/wallet_settings.html:637
 msgid "Remove account"
-msgstr "Remove account"
+msgstr "Удалить аккаунт"
 
 #: templates/wallet/partials/wallet_settings.html:634
 msgid "You can remove your account with all associated data here."
-msgstr "You can remove your account with all associated data here."
+msgstr "Вы можете удалить аккаунт со всей асоциированой информацией тут."
 
 #: templates/wallet/partials/wallet_settings.html:648
 #, fuzzy
 msgid "Simple accounts"
-msgstr "Remove account"
+msgstr "Дополнительные аккаунты"
 
 #: templates/wallet/partials/wallet_settings.html:649
 msgid ""
 "Create accounts that allow you to separate your funds. Each account will "
 "have its own receiving addresses."
 msgstr ""
+"Создание аккаунтов позволит вам розделить ваши средства. Каждый аккаунт "
+"будет иметь собственный адрес для получения средств."
 
 #: templates/wallet/partials/wallet_settings.html:654
 msgid "Create an account with the following label:"
-msgstr ""
+msgstr "Создать аккаунт со следующим названием:"
 
 #: templates/wallet/partials/wallet_settings.html:657
 #: templates/wallet/partials/wallet_settings.html:706
 msgid "Label"
-msgstr ""
+msgstr "Название"
 
 #: templates/wallet/partials/wallet_settings.html:659
 #: templates/wallet/partials/wallet_settings.html:708
 msgid "Create"
-msgstr ""
+msgstr "Создать"
 
 #: templates/wallet/partials/wallet_settings.html:665
 #, fuzzy
 msgid "Your simple accounts:"
-msgstr "Remove account"
+msgstr "Ваши дополнительные аккаунты:"
 
 #: templates/wallet/partials/wallet_settings.html:669
 #: templates/wallet/partials/wallet_settings.html:725
 #, fuzzy
 msgid "Actions"
-msgstr "Транзакции"
+msgstr "Действия"
 
 #: templates/wallet/partials/wallet_settings.html:681
 #: templates/wallet/partials/wallet_settings.html:737
 #, fuzzy
 msgid "Rename"
-msgstr "Имя пользователя"
+msgstr "Переименовать"
 
 #: templates/wallet/partials/wallet_settings.html:693
 #, fuzzy
 msgid "2of3 accounts"
-msgstr "Remove account"
+msgstr "2-с-3 аккаунт"
 
 #: templates/wallet/partials/wallet_settings.html:695
 msgid ""
@@ -2121,6 +2173,14 @@ msgid ""
 "transactions are not available for these accounts because GreenAddress "
 "can't protect them from double spending."
 msgstr ""
+"Создать аккаунт, который позволяет получить ваши средства в любое время, "
+"даже без доступа к GreenAddress, используя дополнительный ключ для "
+"восстановления. <br/><strong>ЗАМЕЧАНИЕ:</strong> <a "
+"href=\"http://blog.greenaddress.it/2of3recovery\" "
+"target=\"_blank\">Инструкция по восстановлению</a><br/> "
+"<strong>ЗАМЕЧАНИЕ:</strong> Моментальные транзакции недоступны для этого "
+"типа аккаунтов, потому что GreenAddress не может защитить их от двойной "
+"траты."
 
 #: templates/wallet/partials/wallet_settings.html:697
 msgid ""
@@ -2130,27 +2190,32 @@ msgid ""
 "for these accounts because GreenAddress can't protect them from double "
 "spending."
 msgstr ""
+"Создать аккаунт, который позволит вам иметь доступ к вашим средствам в "
+"любое время, даже без доступа к GreenAddress, используя дополнительный "
+"ключ для восстановления. <br/><strong>ЗАМЕЧАНИЕ:</strong> Моментальные "
+"транзакции недоступны для этого типа аккаунтов, потому что GreenAddress "
+"не может защитить их от двойной траты. "
 
 #: templates/wallet/partials/wallet_settings.html:703
 msgid "Create a 2of3 account with the following label:"
-msgstr ""
+msgstr "Создать 2-с-3 аккаунт со следуйщим названием:"
 
 #: templates/wallet/partials/wallet_settings.html:715
 msgid "Optionally provide your custom recovery xpub:"
-msgstr ""
+msgstr "Введите xpub вашего ключа восстановления(опционально):"
 
 #: templates/wallet/partials/wallet_settings.html:717
 msgid "xpub"
-msgstr ""
+msgstr "xpub"
 
 #: templates/wallet/partials/wallet_settings.html:721
 #, fuzzy
 msgid "Your 2of3 accounts:"
-msgstr "Remove account"
+msgstr "Ваши 2-с-3 аккаунты:"
 
 #: templates/wallet/partials/signuplogin/modal_decryption_password.html:4
 msgid "Please provide a password to decrypt your mnemonic"
-msgstr "Please provide a password to decrypt your mnemonic"
+msgstr "Пожалуйста, введите пароль для расшифровки вашей мнемонической фразы"
 
 #: templates/wallet/partials/signuplogin/modal_decryption_password.html:15
 #: templates/wallet/partials/signuplogin/redeem_password_modal.html:15
@@ -2159,7 +2224,7 @@ msgstr "Пожалуйста, подождите, дешифрирование..
 
 #: templates/wallet/partials/signuplogin/modal_decryption_password.html:24
 msgid "Decrypt"
-msgstr "Decrypt"
+msgstr "Расшифровать"
 
 #: templates/wallet/partials/signuplogin/base.html:7
 #: templates/wallet/partials/signuplogin/trezor.html:6
@@ -2173,64 +2238,64 @@ msgstr "Создать новый кошелёк"
 
 #: templates/wallet/partials/signuplogin/base.html:17
 msgid "Log in for full Wallet access"
-msgstr "Войти для полного доступа Wallet"
+msgstr "Войти для полного доступа в Кошельку"
 
 #: templates/wallet/partials/signuplogin/base.html:20
 msgid "PIN Number"
-msgstr "PIN Number"
+msgstr "Пин код"
 
 #: templates/wallet/partials/signuplogin/base.html:34
 msgid "Mnemonic"
-msgstr "Mnemonic"
+msgstr "Мнемоническая фраза"
 
 #: templates/wallet/partials/signuplogin/base.html:37
 #: templates/wallet/partials/signuplogin/base.html:38
 msgid "Enter your Mnemonic passphrase"
-msgstr "Enter your Mnemonic passphrase"
+msgstr "Введите пароль вашей Мнемонической фразы"
 
 #: templates/wallet/partials/signuplogin/base.html:58
 msgid "Invalid mnemonic"
-msgstr "Недопустимая мнемоника"
+msgstr "Недопустимая Мнемоническая фраза"
 
 #: templates/wallet/partials/signuplogin/base.html:63
 msgid "Show mnemonics"
-msgstr "Show mnemonics"
+msgstr "Показать Мнемоническую фразу"
 
 #: templates/wallet/partials/signuplogin/base.html:70
 msgid "Web access is intended to be used only for watch only mode."
-msgstr ""
+msgstr "Веб-доступ предназначен для использования только в режиме для чтения."
 
 #: templates/wallet/partials/signuplogin/base.html:82
 msgid "Log in to Watch-Only mode"
-msgstr "Войти в режиме Только-Наблюдать"
+msgstr "Войти в режиме только для чтения"
 
 #: templates/wallet/partials/signuplogin/base.html:87
 msgid "Log in via hardware wallet"
-msgstr "Log in via hardware wallet"
+msgstr "Войти через физическое устройство кошелёк"
 
 #: templates/wallet/partials/signuplogin/base.html:90
 msgid "Logging in, please wait..."
-msgstr "Logging in, please wait..."
+msgstr "Входим, пожалуйста подождите..."
 
 #: templates/wallet/partials/signuplogin/base.html:102
 msgid "Show other logins"
-msgstr "Show other logins"
+msgstr "Показать другие входы"
 
 #: templates/wallet/partials/signuplogin/modal_encryption_password.html:4
 msgid "Please provide a password to encrypt your mnemonic"
-msgstr "Please provide a password to encrypt your mnemonic"
+msgstr "Подалуйста, введите пароль для шифрования мнемонической фразы"
 
 #: templates/wallet/partials/signuplogin/modal_encryption_password.html:16
 msgid "Repeat password"
-msgstr "Repeat password"
+msgstr "Повторить пароль"
 
 #: templates/wallet/partials/signuplogin/modal_encryption_password.html:23
 msgid "Please wait, encrypting..."
-msgstr "Please wait, encrypting..."
+msgstr "Пожалуйста подождите, идет шифрование..."
 
 #: templates/wallet/partials/signuplogin/modal_encryption_password.html:32
 msgid "Encrypt"
-msgstr "Encrypt"
+msgstr "Зашифровать"
 
 #: templates/wallet/partials/signuplogin/header_redeem.html:2
 msgid "You've received"
@@ -2241,24 +2306,25 @@ msgid ""
 "You can redeem it using any BIP38-compatible wallet using the password "
 "given to you by the sender and the following key: "
 msgstr ""
-"You can redeem it using any BIP38-compatible wallet using the password "
-"given to you by the sender and the following key: "
+"Вы можете получить их путем использования любого BIP38-совместимого "
+"кошелькаиспользуя предоставленный вам отправителем пароль и следующим "
+"ключом: "
 
 #: templates/wallet/partials/signuplogin/header_redeem.html:7
 msgid ""
 "You can redeem it using any WIF-compatible wallet using the following "
 "key: "
 msgstr ""
-"You can redeem it using any WIF-compatible wallet using the following "
-"key: "
+"Вы можете получить их путем использования любого WIF-совместимого "
+"кошелька используя  следующий ключ: "
 
 #: templates/wallet/partials/signuplogin/header_redeem.html:8
 msgid ""
 "If you do not have a GreenAddress wallet, you can create one to reedem "
 "the payment"
 msgstr ""
-"If you do not have a GreenAddress wallet, you can create one to reedem "
-"the payment"
+"Если у вас нет кошелька GreenAddress, вы можете создать его для получения"
+" платежа"
 
 #: templates/wallet/partials/signuplogin/header_redeem.html:8
 msgid "Create your Wallet"
@@ -2290,11 +2356,11 @@ msgstr "Вы собираетесь отправить "
 
 #: templates/wallet/partials/signuplogin/header_pay.html:18
 msgid "Click below to show a bitcoin: URI:"
-msgstr "Click below to show a bitcoin: URI:"
+msgstr "Нажмите ниже чтобы отобразить bitcoin: URI:"
 
 #: templates/wallet/partials/signuplogin/header_pay.html:21
 msgid "Use the URI below:"
-msgstr "Use the URI below:"
+msgstr "Используйте URI ниже:"
 
 #: templates/wallet/partials/signuplogin/header_pay.html:31
 msgid "Show"
@@ -2310,7 +2376,7 @@ msgstr "Ошибка, попробуйте еще раз"
 
 #: templates/wallet/partials/signuplogin/header_wallet.html:3
 msgid "Welcome to GreenAddress!"
-msgstr "Welcome to GreenAddress!"
+msgstr "Добро пожаловать в GreenAddress!"
 
 #: templates/wallet/partials/signuplogin/header_wallet.html:3
 msgid "Please log in to use your Wallet"
@@ -2320,8 +2386,8 @@ msgstr "Пожалуйста, войдите, чтобы использоват�
 #, fuzzy
 msgid "For improved security please login via our desktop or mobile apps"
 msgstr ""
-"Для повышенной безопасности, продолжите регистрацию через наше настольное"
-" или мобильное приложение"
+"Для повышенной безопасности, пожалуйста войдите через наше настольное или"
+" мобильное приложение"
 
 #: templates/base/base.html:4
 msgid "Welcome!"
@@ -2341,7 +2407,7 @@ msgstr "Блог"
 
 #: templates/base/base.html:119
 msgid "API"
-msgstr ""
+msgstr "API"
 
 #: templates/base/base.html:121
 msgid "Login"
