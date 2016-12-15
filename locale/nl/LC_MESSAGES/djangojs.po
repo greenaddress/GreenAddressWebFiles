@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  greenaddress-wallet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-11-11 22:21+0100\n"
+"POT-Creation-Date: 2016-12-15 07:48-0500\n"
 "PO-Revision-Date: 2014-08-20 10:08-0400\n"
 "Last-Translator: GreenAddress <info@greenaddress.it>\n"
 "Language-Team: Dutch\n"
@@ -24,389 +24,397 @@ msgstr ""
 msgid "More information"
 msgstr "Meer informatie"
 
-#: js/index.js:102192
+#: js/index.js:107401 js/index.js:108009 js/index.js:108786 js/index.js:125807
+msgid "Cancelled"
+msgstr "Geannuleerd"
+
+#: js/index.js:107720 js/index.js:107819
+msgid "Dongle is locked - reconnect the dongle and retry"
+msgstr "Dongle is locked - reconnect the dongle and retry"
+
+#: js/index.js:107795
+#, fuzzy
+msgid "Ledger communication failed"
+msgstr "Validatie controlegetal is mislukt!"
+
+#: js/index.js:107815
+msgid "Invalid PIN"
+msgstr "Invalid PIN"
+
+#: js/index.js:107817 js/index.js:107829
+msgid "Dongle is not set up"
+msgstr "Dongle is not set up"
+
+#: js/index.js:107831
+msgid "Dongle is locked - remove the dongle and retry"
+msgstr "Dongle is locked - remove the dongle and retry"
+
+#: js/index.js:108730
+msgid ""
+"Outdated firmware. Please upgrade to at least 1.3.0 at "
+"http://mytrezor.com/"
+msgstr ""
+
+#: js/index.js:120128
 #, c-format, python-format
 msgid "Please go to %s first to set up your device."
 msgstr ""
 
-#: js/index.js:102286
+#: js/index.js:120239
 msgid "You were already registered, so we logged you in."
 msgstr ""
 
-#: js/index.js:102379
+#: js/index.js:120332
 #, python-format
 msgid ""
 "Empty %s hardware wallet detected. Please initialize it before using with"
 " GreenAddress."
 msgstr ""
 
-#: js/index.js:102651
+#: js/index.js:120604
 msgid "You need to log out to update cache."
 msgstr "U moet uitloggen om de cache bij te werken."
 
-#: js/index.js:102745 js/index.js:106434
+#: js/index.js:120698 js/index.js:124402
 msgid "Failed processing payment protocol request:"
 msgstr "Failed processing payment protocol request:"
 
-#: js/index.js:102908
+#: js/index.js:120873
 msgid "Electrum setup failed"
 msgstr "Elektrum setup is mislukt"
 
-#: js/index.js:102957
+#: js/index.js:120920
 msgid "Bitcoin transaction received!"
 msgstr "Bitcoin transaction received!"
 
-#: js/index.js:103050 js/index.js:103074
+#: js/index.js:121017 js/index.js:121041
 msgid "Re-depositing successful!"
 msgstr "Opnieuw storten is gelukt!"
 
-#: js/index.js:105309
+#: js/index.js:123276
 #, fuzzy
 msgid "1 confirmation"
 msgstr "Meer informatie"
 
-#: js/index.js:105310
+#: js/index.js:123277
 #, c-format, fuzzy, python-format
 msgid "%s confirmations"
 msgstr "Meer informatie"
 
-#: js/index.js:105418 js/index.js:105803
+#: js/index.js:123385 js/index.js:123770
 msgid "Not a valid encrypted private key"
 msgstr "Geen geldige versleutelde privésleutel"
 
-#: js/index.js:105419 js/index.js:105866 js/index.js:105873 js/index.js:105890
+#: js/index.js:123386 js/index.js:123833 js/index.js:123840 js/index.js:123857
 msgid "Not a valid private key"
 msgstr "Geen geldige privé-sleutel"
 
-#: js/index.js:105420 js/index.js:105804
+#: js/index.js:123387 js/index.js:123771
 msgid "Invalid passphrase"
 msgstr "Ongeldig wachtwoord"
 
-#: js/index.js:105437
+#: js/index.js:123404
 msgid "Funds redeemed"
 msgstr "Bedrag opgenomen"
 
-#: js/index.js:105440
+#: js/index.js:123407
 msgid "Already redeemed"
 msgstr "Al eerder opgenomen"
 
-#: js/index.js:105782
+#: js/index.js:123749
 msgid "Funds swept"
 msgstr "Bedrag leeggeveegd"
 
-#: js/index.js:105788
+#: js/index.js:123755
 msgid "Already swept or no funds found"
 msgstr "Al eerder leeggeveegd, of geen bedrag gevonden"
 
-#: js/index.js:106178 js/index.js:110190 js/index.js:110195
+#: js/index.js:124146 js/index.js:128204 js/index.js:128209
 #, fuzzy
 msgid "Invalid address"
 msgstr "Ongeldig wachtwoord"
 
-#: js/index.js:106366
+#: js/index.js:124334
 msgid "Invalid amount"
 msgstr "Ongeldig bedrag"
 
-#: js/index.js:106370
+#: js/index.js:124338
 msgid "Please provide a recipient"
 msgstr "Geef een begunstigde"
 
-#: js/index.js:106648
+#: js/index.js:124616
 msgid "Error reading address book: "
 msgstr "Fout bij het lezen van het adresboek: "
 
-#: js/index.js:106815 js/index.js:111061 js/index.js:111830
+#: js/index.js:124783 js/index.js:129075
 msgid "Please provide a password."
 msgstr "Please provide a password."
 
-#: js/index.js:106819 js/index.js:111834
+#: js/index.js:124787
 msgid "Passwords do not match."
 msgstr "Passwords do not match."
 
-#: js/index.js:106988
-msgid "Ledger Dashboard detected, please open the Bitcoin app to access."
+#: js/index.js:124956
+msgid ""
+"Ledger Dashboard detected, please open the Bitcoin app on the device to "
+"access."
 msgstr ""
 
-#: js/index.js:107111
+#: js/index.js:125079
 msgid "Copied"
 msgstr "Copied"
 
-#: js/index.js:107113
+#: js/index.js:125081
 msgid "Error copying"
 msgstr "Error copying"
 
-#: js/index.js:107632
+#: js/index.js:125600
 msgid ""
 "Not enough money, you need ${missing_satoshis} more ${unit} to cover the "
 "transaction and fee"
 msgstr ""
 
-#: js/index.js:107839 js/index.js:114419 js/index.js:115027 js/index.js:115804
-msgid "Cancelled"
-msgstr "Geannuleerd"
-
-#: js/index.js:107841
+#: js/index.js:125809
 msgid "Invalid format"
 msgstr "Ongeldig formaat"
 
-#: js/index.js:107852
+#: js/index.js:125820
 msgid "Could not process the QR code, the image may be blurry. Please try again."
 msgstr ""
 "De QR code kon niet worden verwerkt, misschien is het beeld onscherp. "
 "Probeer het alstublieft opnieuw."
 
-#: js/index.js:107883
+#: js/index.js:125851
 msgid "Access denied. Retry to scan from file."
 msgstr "Toegang geweigerd. Probeer opnieuw te scannen vanaf bestand."
 
-#: js/index.js:107889
+#: js/index.js:125857
 msgid "You must provide only one image file."
 msgstr "U mag maar een afbeelding selecteren."
 
-#: js/index.js:108275
+#: js/index.js:126243
 #, fuzzy
 msgid "Changing PIN failed."
 msgstr "Inloggen mislukt"
 
-#: js/index.js:108553
+#: js/index.js:126548
 msgid "User not found."
 msgstr ""
 
-#: js/index.js:108557
+#: js/index.js:126552
 msgid "Login failed"
 msgstr "Inloggen mislukt"
 
-#: js/index.js:108584 js/index.js:108983
+#: js/index.js:126579 js/index.js:126978
 msgid "Voucher"
 msgstr "Voucher"
 
-#: js/index.js:108764
+#: js/index.js:126759
 msgid "Asset Issuance"
 msgstr ""
 
-#: js/index.js:108766
+#: js/index.js:126761
 msgid "Back from "
 msgstr "Back from "
 
-#: js/index.js:108768
+#: js/index.js:126763
 msgid "From "
 msgstr "From "
 
-#: js/index.js:108793
+#: js/index.js:126788
 msgid "To "
 msgstr "To "
 
-#: js/index.js:108828
+#: js/index.js:126823
 msgid "Sent back to "
 msgstr "Terugverzonden aan "
 
-#: js/index.js:108831
+#: js/index.js:126826
 msgid "Re-deposited"
 msgstr "Opnieuw gestort"
 
-#: js/index.js:108897
+#: js/index.js:126892
 #, c-format, fuzzy, python-format
 msgid "Time,Description,satoshis,%s,txhash,fee,memo"
 msgstr "Tijd, beschrijving, satoshis,"
 
-#: js/index.js:108987
+#: js/index.js:126982
 msgid "back to myself"
 msgstr ""
 
-#: js/index.js:109083
+#: js/index.js:127078
 msgid "Transaction failed: "
 msgstr "Transactie is mislukt: "
 
-#: js/index.js:109095
+#: js/index.js:127090
 msgid "Bitcoin transaction sent!"
 msgstr "Bitcointransactie verzonden!"
 
-#: js/index.js:109136
+#: js/index.js:127131
 msgid "Phone"
 msgstr "Telefoon"
 
-#: js/index.js:109303
+#: js/index.js:127298
 msgid "Internal error"
 msgstr "Internal error"
 
-#: js/index.js:109310
+#: js/index.js:127305
 #, fuzzy
 msgid "Failed creating PIN."
 msgstr "Ophalen wachtwoord mislukt."
 
-#: js/index.js:109323
+#: js/index.js:127318
 msgid "Failed retrieving password."
 msgstr "Ophalen wachtwoord mislukt."
 
-#: js/index.js:109377
+#: js/index.js:127372
 msgid "Please provide this word"
 msgstr "Please provide this word"
 
-#: js/index.js:109380
+#: js/index.js:127375
 msgid "Incorrect word"
 msgstr "Incorrect word"
 
-#: js/index.js:109405
+#: js/index.js:127400
 msgid "Please back up and verify your mnemonic before continuing."
 msgstr ""
 
-#: js/index.js:109743
+#: js/index.js:127738
 #, c-format, python-format
 msgid "(about %s days: 1 day ≈ 144 blocks)"
 msgstr "(over %s dagen: 1 dag ≈ 144 blokken)"
 
-#: js/index.js:109762
+#: js/index.js:127758
 msgid "nLockTime settings updated successfully"
 msgstr "Instellingen voor nLockTime bijgewerkt"
 
-#: js/index.js:109816
+#: js/index.js:127812
 msgid "Already expired"
 msgstr "Reeds verstreken"
 
-#: js/index.js:109817
+#: js/index.js:127813
 #, c-format, python-format
 msgid "in about %s days"
 msgstr "over %s dagen"
 
-#: js/index.js:109832 js/index.js:110089
+#: js/index.js:127828 js/index.js:128103
 msgid "Email sent"
 msgstr "E-mail is verzonden"
 
-#: js/index.js:109868
+#: js/index.js:127864
 msgid "You need to log out for language changes to be applied."
 msgstr "U moet uitloggen om taalwijzigingen toe te passen."
 
-#: js/index.js:109876
+#: js/index.js:127872
 msgid "Error changing language:"
 msgstr "Fout bij wijzigen van de taal:"
 
-#: js/index.js:109908 js/index.js:109942 js/index.js:109982
+#: js/index.js:127904 js/index.js:127938 js/index.js:127996
 msgid "{1} supports only the following currencies: {2}"
 msgstr "{1} ondersteunt alleen de volgende valuta's: {2}"
 
-#: js/index.js:110032
+#: js/index.js:127976
+msgid ""
+"Segwit can not be disabled for this account as segwit-style receive "
+"addresses have been generated for it."
+msgstr ""
+
+#: js/index.js:128046
 msgid "Sent handler registration request"
 msgstr "Sent handler registration request"
 
-#: js/index.js:110060
+#: js/index.js:128074
 msgid "Cannot remove an account with non-zero balance"
 msgstr "Cannot remove an account with non-zero balance"
 
-#: js/index.js:110082
+#: js/index.js:128096
 msgid "You can't change your email address while you have email 2FA enabled"
 msgstr "You can't change your email address while you have email 2FA enabled"
 
-#: js/index.js:110099
+#: js/index.js:128113
 msgid "Email confirmed"
 msgstr "Email confirmed"
 
-#: js/index.js:110208
+#: js/index.js:128222
 msgid "New item saved"
 msgstr "Nieuw item opgeslagen"
 
-#: js/index.js:110214
+#: js/index.js:128228
 msgid "Error saving item: "
 msgstr "Fout bij het opslaan van item: "
 
-#: js/index.js:110380
+#: js/index.js:128394
 msgid "PIN removed"
 msgstr "PIN verwijderd"
 
-#: js/index.js:110412
+#: js/index.js:128426
 msgid "PIN changed"
 msgstr "PIN gewijzigd"
 
-#: js/index.js:110419
+#: js/index.js:128433
 msgid "PIN set"
 msgstr "PIN ingesteld"
 
-#: js/index.js:110434
+#: js/index.js:128448
 msgid "All PINs removed"
 msgstr "Alle pincodes verwijderd"
 
-#: js/index.js:110454
+#: js/index.js:128468
 msgid "Custom login disabled"
 msgstr "Aangepast inloggen uitgeschakeld"
 
-#: js/index.js:110467
+#: js/index.js:128481
 msgid "Custom login changed"
 msgstr "Aangepast inloggen gewijzigd"
 
-#: js/index.js:110470
+#: js/index.js:128484
 msgid "Custom login enabled"
 msgstr "Aangepast inloggen ingeschakeld"
 
-#: js/index.js:110485 js/index.js:110498 js/index.js:110506
+#: js/index.js:128499 js/index.js:128512 js/index.js:128520
 msgid "Change"
 msgstr "Wijzigen"
 
-#: js/index.js:110485 js/index.js:110498 js/index.js:110506
+#: js/index.js:128499 js/index.js:128512 js/index.js:128520
 msgid "Save"
 msgstr "Opslaan"
 
-#: js/index.js:110573
+#: js/index.js:128587
 msgid "Limits updated successfully"
 msgstr "Limits updated successfully"
 
-#: js/index.js:110747
+#: js/index.js:128761
 #, fuzzy
 msgid "Renamed successfully"
 msgstr "Limits updated successfully"
 
-#: js/index.js:110955
+#: js/index.js:128969
 msgid "Launch the Chrome App"
 msgstr ""
 
-#: js/index.js:110961
+#: js/index.js:128975
 msgid "Install the Chrome App"
 msgstr ""
 
-#: js/index.js:111275
+#: js/index.js:129289
 msgid "{hardware_wallet_name} Login"
 msgstr ""
 
-#: js/index.js:111367
+#: js/index.js:129381
 msgid "Wallet decryption failed"
 msgstr "Decoderen van de portemonnee is mislukt"
 
-#: js/index.js:111376
+#: js/index.js:129390
 #, c-format, python-format
 msgid "%s attempts left."
 msgstr ""
 
-#: js/index.js:111378
+#: js/index.js:129392
 msgid "0 attempts left - PIN removed."
 msgstr ""
 
-#: js/index.js:111567
+#: js/index.js:129581
 msgid "Not enough money"
-msgstr ""
-
-#: js/index.js:114738 js/index.js:114837
-msgid "Dongle is locked - reconnect the dongle and retry"
-msgstr "Dongle is locked - reconnect the dongle and retry"
-
-#: js/index.js:114813
-#, fuzzy
-msgid "Ledger communication failed"
-msgstr "Validatie controlegetal is mislukt!"
-
-#: js/index.js:114833
-msgid "Invalid PIN"
-msgstr "Invalid PIN"
-
-#: js/index.js:114835 js/index.js:114847
-msgid "Dongle is not set up"
-msgstr "Dongle is not set up"
-
-#: js/index.js:114849
-msgid "Dongle is locked - remove the dongle and retry"
-msgstr "Dongle is locked - remove the dongle and retry"
-
-#: js/index.js:115748
-msgid ""
-"Outdated firmware. Please upgrade to at least 1.3.0 at "
-"http://mytrezor.com/"
 msgstr ""
 
 #: js/instant.js:54
