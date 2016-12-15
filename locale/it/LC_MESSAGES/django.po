@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  greenaddress-wallet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-11-11 22:21+0100\n"
+"POT-Creation-Date: 2016-12-15 07:48-0500\n"
 "PO-Revision-Date: 2014-08-23 16:08-0400\n"
 "Last-Translator: GreenAddress <info@greenaddress.it>\n"
 "Language-Team: Italian\n"
@@ -11,44 +11,6 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.3.4\n"
-
-#: templates/base/base.html:4
-msgid "Welcome!"
-msgstr "Benvenuto!"
-
-#: templates/base/base.html:6
-msgid "The safer Bitcoin wallet that puts you in control."
-msgstr "Il più sicuro wallet Bitcoin che ti lascia in controllo completo"
-
-#: templates/base/base.html:108
-msgid "Toggle navigation"
-msgstr "Mostra navigazione"
-
-#: templates/base/base.html:117
-msgid "Blog"
-msgstr "Blog"
-
-#: templates/base/base.html:118 templates/wallet/nav.html:21
-#: templates/wallet/nav.html:23
-msgid "FAQ"
-msgstr "Domande frequenti"
-
-#: templates/base/base.html:119
-msgid "API"
-msgstr ""
-
-#: templates/base/base.html:120 templates/wallet/nav.html:21
-#: templates/wallet/nav.html:23
-msgid "Support"
-msgstr "Supporto"
-
-#: templates/base/base.html:121
-msgid "Login"
-msgstr "Accedi"
-
-#: templates/base/base.html:156
-msgid "About us"
-msgstr "Chi siamo"
 
 #: templates/wallet/wallet.html:6
 msgid "Wallet"
@@ -75,23 +37,34 @@ msgstr "Non hai verificato di aver salvato il tuo mnemonico."
 msgid "Please verify now by clicking here."
 msgstr "Verifica ora cliccando qui."
 
+#: templates/wallet/partials/wallet_modal_tx_limits.html:11
+#: templates/wallet/partials/wallet_settings.html:163
+#: templates/wallet/partials/wallet_settings.html:186
+#: templates/wallet/partials/wallet_settings.html:209
+#: templates/wallet/wallet.html:62
+msgid "NOTE"
+msgstr "NOTA"
+
+#: templates/wallet/wallet.html:64
+#, fuzzy
+msgid "Hide this message by clicking here."
+msgstr "Verifica ora cliccando qui."
+
 #: templates/wallet/nav.html:4 templates/wallet/nav.html:11
 #: templates/wallet/partials/wallet_settings.html:113
 #: templates/wallet/partials/wallet_transactions.html:4
 msgid "Transactions"
 msgstr "Transazioni"
 
-#: templates/wallet/nav.html:5
-#: templates/wallet/partials/wallet_modal_fb_message.html:6
-#: templates/wallet/partials/wallet_send.html:4
-#: templates/wallet/partials/wallet_settings.html:656
-#: templates/wallet/partials/wallet_settings.html:712
+#: templates/wallet/nav.html:5 templates/wallet/partials/wallet_send.html:4
+#: templates/wallet/partials/wallet_settings.html:683
+#: templates/wallet/partials/wallet_settings.html:739
 msgid "Send"
 msgstr "Invia"
 
 #: templates/wallet/nav.html:6 templates/wallet/partials/wallet_receive.html:4
-#: templates/wallet/partials/wallet_settings.html:657
-#: templates/wallet/partials/wallet_settings.html:713
+#: templates/wallet/partials/wallet_settings.html:684
+#: templates/wallet/partials/wallet_settings.html:740
 msgid "Receive"
 msgstr "Ricevi"
 
@@ -110,12 +83,12 @@ msgid "General"
 msgstr "Impostazioni Generali"
 
 #: templates/wallet/nav.html:12
-#: templates/wallet/partials/wallet_settings.html:257
+#: templates/wallet/partials/wallet_settings.html:284
 msgid "Security"
 msgstr "Sicurezza"
 
 #: templates/wallet/nav.html:13
-#: templates/wallet/partials/wallet_settings.html:617
+#: templates/wallet/partials/wallet_settings.html:644
 #, fuzzy
 msgid "Accounts"
 msgstr "Aggiungi un account"
@@ -125,6 +98,16 @@ msgstr "Aggiungi un account"
 #: templates/wallet/partials/wallet_modal_logout_other_session.html:10
 msgid "Logout"
 msgstr "Esci"
+
+#: templates/base/base.html:118 templates/wallet/nav.html:21
+#: templates/wallet/nav.html:23
+msgid "FAQ"
+msgstr "Domande frequenti"
+
+#: templates/base/base.html:120 templates/wallet/nav.html:21
+#: templates/wallet/nav.html:23
+msgid "Support"
+msgstr "Supporto"
 
 #: templates/wallet/nav.html:27
 msgid "Last login"
@@ -137,285 +120,6 @@ msgstr "paese"
 #: templates/wallet/nav.html:31
 msgid "unknown country"
 msgstr "paese sconosciuto"
-
-#: templates/wallet/partials/wallet_modal_confirm_tx.html:2
-#, fuzzy
-msgid "Confirm transaction details"
-msgstr "Dettagli"
-
-#: templates/wallet/partials/wallet_modal_confirm_tx.html:7
-#, fuzzy
-msgid "You are about to bump a fee."
-msgstr "Stai per inviare"
-
-#: templates/wallet/partials/wallet_modal_confirm_tx.html:8
-msgid "Please make sure the details below are correct:"
-msgstr ""
-
-#: templates/wallet/partials/wallet_modal_confirm_tx.html:12
-#: templates/wallet/partials/wallet_send.html:20
-msgid "Recipient"
-msgstr "Destinatario"
-
-#: templates/wallet/partials/wallet_modal_confirm_tx.html:17
-#: templates/wallet/partials/wallet_modal_tx_details.html:60
-#: templates/wallet/partials/wallet_modal_tx_details.html:78
-#: templates/wallet/partials/wallet_modal_tx_limits.html:18
-#: templates/wallet/partials/wallet_modal_tx_limits.html:20
-#: templates/wallet/partials/wallet_modal_tx_limits.html:28
-#: templates/wallet/partials/wallet_modal_tx_limits.html:30
-#: templates/wallet/partials/wallet_modal_tx_limits.html:31
-#: templates/wallet/partials/wallet_modal_tx_redeem.html:17
-#: templates/wallet/partials/wallet_receive.html:25
-#: templates/wallet/partials/wallet_send.html:59
-#: templates/wallet/partials/wallet_settings.html:590
-msgid "Amount"
-msgstr "Ammontare"
-
-#: templates/wallet/partials/wallet_modal_confirm_tx.html:22
-#: templates/wallet/partials/wallet_modal_tx_details.html:33
-#: templates/wallet/partials/wallet_send.html:109
-msgid "Fee"
-msgstr "Fee"
-
-#: templates/wallet/partials/wallet_modal_confirm_tx.html:26
-msgid "Previous fee:"
-msgstr ""
-
-#: templates/wallet/partials/signuplogin/base.html:44
-#: templates/wallet/partials/signuplogin/modal_decryption_password.html:23
-#: templates/wallet/partials/signuplogin/modal_encryption_password.html:33
-#: templates/wallet/partials/signuplogin/redeem_password_modal.html:23
-#: templates/wallet/partials/wallet_2fa.html:103
-#: templates/wallet/partials/wallet_2fa.html:145
-#: templates/wallet/partials/wallet_2fa.html:187
-#: templates/wallet/partials/wallet_address_book.html:54
-#: templates/wallet/partials/wallet_address_book.html:69
-#: templates/wallet/partials/wallet_modal_2fa.html:31
-#: templates/wallet/partials/wallet_modal_btchip_pin.html:22
-#: templates/wallet/partials/wallet_modal_confirm_tx.html:34
-#: templates/wallet/partials/wallet_modal_custom_login.html:25
-#: templates/wallet/partials/wallet_modal_logout.html:10
-#: templates/wallet/partials/wallet_modal_logout_other_session.html:9
-#: templates/wallet/partials/wallet_modal_no_electrum.html:10
-#: templates/wallet/partials/wallet_modal_pgp.html:27
-#: templates/wallet/partials/wallet_modal_pin.html:22
-#: templates/wallet/partials/wallet_modal_remove_account.html:6
-#: templates/wallet/partials/wallet_modal_reset_email.html:10
-#: templates/wallet/partials/wallet_modal_tx_limits.html:40
-#: templates/wallet/partials/wallet_modal_tx_limits_fiat_warning.html:8
-#: templates/wallet/partials/wallet_modal_tx_redeem.html:24
-#: templates/wallet/partials/wallet_modal_usb_device.html:5
-#: templates/wallet/partials/wallet_modal_verify_mnemonic.html:21
-#: templates/wallet/partials/wallet_receive.html:110
-#: templates/wallet/partials/wallet_send.html:46
-#: templates/wallet/partials/wallet_settings.html:445
-#: templates/wallet/partials/wallet_settings.html:485
-#: templates/wallet/partials/wallet_settings.html:525
-msgid "Cancel"
-msgstr "Annulla"
-
-#: templates/wallet/partials/wallet_modal_confirm_tx.html:35
-#, fuzzy
-msgid "Send transaction"
-msgstr "transazione"
-
-#: templates/wallet/partials/wallet_modal_redeposit.html:4
-msgid "Please re-deposit your funds"
-msgstr "Per piacere rideposita i tuoi bitcoin"
-
-#: templates/wallet/partials/wallet_modal_redeposit.html:7
-#, fuzzy
-msgid ""
-"You have some expired deposits. Unless you re-deposit or redeem them, "
-"Instant Confirmation transactions will not be allowed"
-msgstr ""
-"Hai alcuni depositi scaduti. A meno che non li ridepositi o incassi, non "
-"potrai effettuare altra transazioni"
-
-#: templates/wallet/partials/wallet_modal_redeposit.html:10
-msgid ""
-"Warning: single transactions can be used to correlate funds with your "
-"identity, including funds between different accounts."
-msgstr ""
-
-#: templates/wallet/partials/wallet_modal_redeposit.html:11
-msgid "Redeposit as single transaction (cheaper)"
-msgstr "Rideposita una singola transazione (più economico)"
-
-#: templates/wallet/partials/wallet_modal_redeposit.html:12
-#: templates/wallet/partials/wallet_modal_redeposit.html:15
-#: templates/wallet/partials/wallet_modal_redeposit.html:21
-msgid "estimated fee"
-msgstr "commissioni stimate"
-
-#: templates/wallet/partials/wallet_modal_redeposit.html:14
-msgid "Redeposit as one transaction per output (better privacy)"
-msgstr "Rideposita come singola transazione per output (privacy migliore)"
-
-#: templates/wallet/partials/wallet_modal_redeposit.html:16
-msgid "transactions"
-msgstr "transazioni"
-
-#: templates/wallet/partials/wallet_modal_redeposit.html:20
-msgid "Redeposit"
-msgstr "Rideposita"
-
-#: templates/wallet/partials/wallet_modal_redeposit.html:22
-msgid "transaction"
-msgstr "transazione"
-
-#: templates/wallet/partials/wallet_modal_tx_details.html:2
-msgid "Transaction details"
-msgstr "Dettagli"
-
-#: templates/wallet/partials/wallet_modal_tx_details.html:7
-#: templates/wallet/partials/wallet_modal_tx_redeem.html:8
-msgid "Timestamp"
-msgstr "Orario"
-
-#: templates/wallet/partials/wallet_modal_tx_details.html:10
-#: templates/wallet/partials/wallet_modal_tx_redeem.html:11
-msgid "Hash"
-msgstr "Codice Identificativo"
-
-#: templates/wallet/partials/wallet_modal_tx_details.html:13
-#: templates/wallet/partials/wallet_send.html:173
-msgid "Memo"
-msgstr "Nota"
-
-#: templates/wallet/partials/wallet_modal_tx_details.html:21
-#: templates/wallet/partials/wallet_modal_tx_limits.html:41
-#: templates/wallet/partials/wallet_settings.html:271
-#: templates/wallet/partials/wallet_settings.html:546
-#: templates/wallet/partials/wallet_settings.html:655
-#: templates/wallet/partials/wallet_settings.html:711
-msgid "Save"
-msgstr "Salva"
-
-#: templates/wallet/partials/wallet_modal_tx_details.html:28
-#, fuzzy
-msgid "Add"
-msgstr "Indirizzo"
-
-#: templates/wallet/partials/wallet_modal_tx_details.html:29
-msgid "Edit"
-msgstr ""
-
-#: templates/wallet/partials/wallet_modal_tx_details.html:33
-msgid "Size (bytes)"
-msgstr ""
-
-#: templates/wallet/partials/wallet_modal_tx_details.html:33
-msgid "Fee per kB"
-msgstr ""
-
-#: templates/wallet/partials/wallet_modal_tx_details.html:39
-msgid "Estimated number of confirmations required:"
-msgstr ""
-
-#: templates/wallet/partials/wallet_modal_tx_details.html:43
-msgid "Raw transaction"
-msgstr "Transazione"
-
-#: templates/wallet/partials/wallet_modal_tx_details.html:46
-msgid "Double spend by txhash"
-msgstr "Doppia spesa da txhash"
-
-#: templates/wallet/partials/wallet_modal_tx_details.html:49
-msgid "Payment request"
-msgstr "Richiesta di pagamento"
-
-#: templates/wallet/partials/wallet_modal_tx_details.html:51
-msgid "download"
-msgstr "download"
-
-#: templates/wallet/partials/wallet_modal_tx_details.html:57
-msgid "Inputs"
-msgstr "Inputs"
-
-#: templates/wallet/partials/wallet_modal_tx_details.html:58
-msgid ""
-"The inputs below are only the first 10 inputs of this transaction. To see"
-" all of them, use a block explorer."
-msgstr ""
-
-#: templates/wallet/partials/wallet_address_book.html:28
-#: templates/wallet/partials/wallet_address_book.html:47
-#: templates/wallet/partials/wallet_modal_my_addresses.html:5
-#: templates/wallet/partials/wallet_modal_tx_details.html:60
-#: templates/wallet/partials/wallet_modal_tx_details.html:78
-#: templates/wallet/partials/wallet_receive.html:75
-msgid "Address"
-msgstr "Indirizzo"
-
-#: templates/wallet/partials/wallet_modal_tx_details.html:69
-#: templates/wallet/partials/wallet_modal_tx_details.html:87
-msgid "Confidential"
-msgstr ""
-
-#: templates/wallet/partials/wallet_modal_tx_details.html:75
-msgid "Outputs"
-msgstr "Outputs"
-
-#: templates/wallet/partials/wallet_modal_tx_details.html:76
-msgid ""
-"The outputs below are only the first 10 outputs of this transaction. To "
-"see all of them, use a block explorer."
-msgstr ""
-
-#: templates/wallet/partials/signup_nfc_modal.html:16
-#: templates/wallet/partials/signup_qr_modal.html:7
-#: templates/wallet/partials/wallet_modal_btchip_fup.html:15
-#: templates/wallet/partials/wallet_modal_btchip_setup.html:26
-#: templates/wallet/partials/wallet_modal_expiring_soon.html:20
-#: templates/wallet/partials/wallet_modal_gauth_qr.html:12
-#: templates/wallet/partials/wallet_modal_mnemonic.html:27
-#: templates/wallet/partials/wallet_modal_my_addresses.html:22
-#: templates/wallet/partials/wallet_modal_trezor_setup.html:26
-#: templates/wallet/partials/wallet_modal_tx_details.html:94
-#: templates/wallet/partials/wallet_modal_url_qr.html:6
-#: templates/wallet/partials/wallet_modal_voucher.html:13
-#: templates/wallet/partials/wallet_transactions.html:22
-#: templates/wallet/partials/wallet_transactions.html:32
-msgid "Close"
-msgstr "Chiudi"
-
-#: templates/wallet/partials/wallet_modal_logout_other_session.html:4
-msgid "You are already logged in. Do you want to log out the other session?"
-msgstr "Hai già effettuato l'accesso. Vuoi uscire dalla altra sessione?"
-
-#: templates/wallet/partials/wallet_modal_usb_device.html:2
-msgid "Please connect/reconnect your wallet USB device to proceed."
-msgstr "Per piacere connetti e disconnetti il tuo device wallet USB per procedere."
-
-#: templates/wallet/partials/wallet_transactions.html:11
-msgid "Your last transactions"
-msgstr "Le tue ultime transazioni"
-
-#: templates/wallet/partials/wallet_transactions.html:22
-msgid "From date"
-msgstr "Da data"
-
-#: templates/wallet/partials/wallet_transactions.html:32
-msgid "To date"
-msgstr "A data"
-
-#: templates/wallet/partials/wallet_transactions.html:40
-msgid "Search"
-msgstr "Cerca"
-
-#: templates/wallet/partials/wallet_modal_my_addresses.html:3
-msgid "No addresses found"
-msgstr "Nessun indirizzo trovato"
-
-#: templates/wallet/partials/wallet_modal_my_addresses.html:5
-msgid "number of transactions"
-msgstr "numero di transazioni"
-
-#: templates/wallet/partials/wallet_modal_my_addresses.html:17
-msgid "Show more addresses"
-msgstr "Mostra altri indirizzi"
 
 #: templates/wallet/partials/wallet_transactions_table.html:1
 msgid "New transactions! Sort by descending date to see them."
@@ -504,31 +208,496 @@ msgstr ""
 msgid "take funds back"
 msgstr "riprendi indietro"
 
-#: templates/wallet/partials/wallet_transactions_table.html:77
-msgid "Regenerate voucher"
-msgstr "Rigenera il voucher"
-
 #: templates/wallet/partials/wallet_transactions_table.html:80
-msgid "Regenerate encrypted voucher"
-msgstr "Rigenera voucher crittografato"
-
-#: templates/wallet/partials/wallet_transactions_table.html:86
 #, fuzzy
 msgid "Replaced transactions:"
 msgstr "Transazione"
 
-#: templates/wallet/partials/wallet_transactions_table.html:124
+#: templates/wallet/partials/wallet_transactions_table.html:118
 #, fuzzy
 msgid "Loading transactions, please wait..."
 msgstr "Accesso in corso, attendere..."
 
-#: templates/wallet/partials/wallet_transactions_table.html:127
+#: templates/wallet/partials/wallet_transactions_table.html:121
 msgid "No transactions found..."
 msgstr "Nessuna transazione..."
 
-#: templates/wallet/partials/wallet_transactions_table.html:130
+#: templates/wallet/partials/wallet_transactions_table.html:124
 msgid "Show more transactions..."
 msgstr "Visualizza più transazioni..."
+
+#: templates/wallet/partials/signup_0_warning.html:8
+msgid ""
+"For improved security continue the registration via our desktop or mobile"
+" apps"
+msgstr ""
+"Per maggior sicurezza, continua la tua registrazione attraverso la nostra"
+" app desktop o mobile"
+
+#: templates/wallet/partials/signup_0_warning.html:9
+#: templates/wallet/partials/signuplogin/header_wallet.html:7
+msgid "Locally installed apps are generally more secure than websites"
+msgstr ""
+"Applicazioni installate localmente sono generalmente piu' sicure da "
+"utilizzare che dei siti web"
+
+#: templates/wallet/partials/signup_0_warning.html:12
+#: templates/wallet/partials/signuplogin/base.html:69
+msgid ""
+"These apps are designed to protect you and your coins even in case the "
+"service is compromised and should be preferred over using the browser."
+msgstr ""
+"Queste apps sono disegnate per proteggere te e i tuoi bitcoin anche in "
+"caso il servizio fosse attaccato e queste dovrebbero essere preferibili "
+"all'utilizzare direttamente il sito da browser."
+
+#: templates/wallet/partials/signup_0_warning.html:13
+msgid ""
+"Web access is intended to be used for watch only mode or if you have no "
+"alternative, like on the Windows Mobile platform."
+msgstr ""
+"L'accesso via web è principalmente inteso per usare la modalità watch-"
+"only o se non hai alternativa, come sulla piattaforma Windows Mobile."
+
+#: templates/wallet/partials/signup_0_warning.html:16
+#: templates/wallet/partials/signuplogin/base.html:73
+msgid ""
+"Please see the link to Google Play store, Chrome Web Store or AppStore "
+"below"
+msgstr ""
+"Per piacere vai su Google Play store, Chrome Web store o App store qui "
+"sotto"
+
+#: templates/wallet/partials/signup_0_warning.html:26
+msgid "Continue using web page"
+msgstr "Continua su web"
+
+#: templates/wallet/partials/wallet_modal_remove_account.html:2
+msgid ""
+"Are you sure you want to permanently remove your wallet and all "
+"associated data from our servers?"
+msgstr ""
+"Sei sicuro di voler rimuovere permanentemente il tuo portafoglio e tutti "
+"i dati associati dai nostri server?"
+
+#: templates/wallet/partials/wallet_modal_remove_account.html:5
+msgid "Remove my account"
+msgstr "Rimuovere il mio account"
+
+#: templates/wallet/partials/signuplogin/base.html:44
+#: templates/wallet/partials/signuplogin/modal_decryption_password.html:23
+#: templates/wallet/partials/signuplogin/modal_encryption_password.html:31
+#: templates/wallet/partials/signuplogin/redeem_password_modal.html:23
+#: templates/wallet/partials/wallet_2fa.html:103
+#: templates/wallet/partials/wallet_2fa.html:145
+#: templates/wallet/partials/wallet_2fa.html:187
+#: templates/wallet/partials/wallet_address_book.html:54
+#: templates/wallet/partials/wallet_address_book.html:69
+#: templates/wallet/partials/wallet_modal_2fa.html:31
+#: templates/wallet/partials/wallet_modal_btchip_pin.html:22
+#: templates/wallet/partials/wallet_modal_confirm_tx.html:36
+#: templates/wallet/partials/wallet_modal_custom_login.html:25
+#: templates/wallet/partials/wallet_modal_logout.html:10
+#: templates/wallet/partials/wallet_modal_logout_other_session.html:9
+#: templates/wallet/partials/wallet_modal_pgp.html:27
+#: templates/wallet/partials/wallet_modal_pin.html:22
+#: templates/wallet/partials/wallet_modal_remove_account.html:6
+#: templates/wallet/partials/wallet_modal_reset_email.html:10
+#: templates/wallet/partials/wallet_modal_tx_limits.html:40
+#: templates/wallet/partials/wallet_modal_tx_limits_fiat_warning.html:8
+#: templates/wallet/partials/wallet_modal_tx_redeem.html:24
+#: templates/wallet/partials/wallet_modal_usb_device.html:5
+#: templates/wallet/partials/wallet_modal_verify_mnemonic.html:21
+#: templates/wallet/partials/wallet_receive.html:110
+#: templates/wallet/partials/wallet_send.html:46
+#: templates/wallet/partials/wallet_settings.html:472
+#: templates/wallet/partials/wallet_settings.html:512
+#: templates/wallet/partials/wallet_settings.html:552
+msgid "Cancel"
+msgstr "Annulla"
+
+#: templates/wallet/partials/wallet_modal_logout.html:5
+msgid "Do you want to log out?"
+msgstr "Vuoi uscire?"
+
+#: templates/wallet/partials/wallet_modal_my_addresses.html:3
+msgid "No addresses found"
+msgstr "Nessun indirizzo trovato"
+
+#: templates/wallet/partials/wallet_address_book.html:28
+#: templates/wallet/partials/wallet_address_book.html:47
+#: templates/wallet/partials/wallet_modal_my_addresses.html:5
+#: templates/wallet/partials/wallet_modal_tx_details.html:60
+#: templates/wallet/partials/wallet_modal_tx_details.html:78
+#: templates/wallet/partials/wallet_receive.html:75
+msgid "Address"
+msgstr "Indirizzo"
+
+#: templates/wallet/partials/wallet_modal_my_addresses.html:5
+msgid "number of transactions"
+msgstr "numero di transazioni"
+
+#: templates/wallet/partials/wallet_modal_my_addresses.html:17
+msgid "Show more addresses"
+msgstr "Mostra altri indirizzi"
+
+#: templates/wallet/partials/signup_nfc_modal.html:16
+#: templates/wallet/partials/signup_qr_modal.html:7
+#: templates/wallet/partials/wallet_modal_btchip_fup.html:15
+#: templates/wallet/partials/wallet_modal_btchip_setup.html:26
+#: templates/wallet/partials/wallet_modal_expiring_soon.html:20
+#: templates/wallet/partials/wallet_modal_gauth_qr.html:12
+#: templates/wallet/partials/wallet_modal_mnemonic.html:27
+#: templates/wallet/partials/wallet_modal_my_addresses.html:22
+#: templates/wallet/partials/wallet_modal_trezor_setup.html:26
+#: templates/wallet/partials/wallet_modal_tx_details.html:94
+#: templates/wallet/partials/wallet_modal_url_qr.html:6
+#: templates/wallet/partials/wallet_transactions.html:22
+#: templates/wallet/partials/wallet_transactions.html:32
+msgid "Close"
+msgstr "Chiudi"
+
+#: templates/wallet/partials/wallet_modal_expiring_soon.html:2
+msgid "Outputs expiring soon"
+msgstr "Gli outputs scadranno presto"
+
+#: templates/wallet/partials/wallet_modal_expiring_soon.html:7
+msgid "No active nLockTime transactions found"
+msgstr "Non ci sono transazioni nLockTime attive"
+
+#: templates/wallet/partials/wallet_modal_expiring_soon.html:9
+msgid "Transaction hash, output number"
+msgstr "Hash della transazione, numero di output"
+
+#: templates/wallet/partials/wallet_modal_expiring_soon.html:9
+#: templates/wallet/partials/wallet_settings.html:171
+msgid "nLockTime"
+msgstr "nLockTime"
+
+#: templates/wallet/partials/wallet_modal_custom_login.html:4
+msgid "Please provide username and password."
+msgstr "Per favore inserisci nome utente e password"
+
+#: templates/wallet/partials/wallet_modal_custom_login.html:8
+msgid "Enter your username"
+msgstr "Inserisci il tuo nome utente"
+
+#: templates/wallet/partials/wallet_modal_custom_login.html:14
+msgid "Enter your password"
+msgstr "Inserisci la tua password"
+
+#: templates/wallet/partials/wallet_modal_2fa.html:32
+#: templates/wallet/partials/wallet_modal_custom_login.html:26
+#: templates/wallet/partials/wallet_modal_reset_email.html:11
+#: templates/wallet/partials/wallet_modal_tx_limits_fiat_warning.html:9
+#: templates/wallet/partials/wallet_modal_tx_redeem.html:25
+msgid "OK"
+msgstr "OK"
+
+#: templates/wallet/partials/wallet_modal_tx_limits_fiat_warning.html:2
+msgid "Confirm changing the pricing source"
+msgstr "Confermare la modifica dell'origine dei prezzi"
+
+#: templates/wallet/partials/wallet_modal_tx_limits_fiat_warning.html:5
+msgid ""
+"Changing the pricing source while using it for transaction limits will "
+"result in resetting the limits to 0. Do you want to proceed?"
+msgstr ""
+"Cambiare la fonte del cambio mentre viene usata per i limiti di "
+"transazione risulterà nel reset dei limiti a 0. Vuoi procedere?"
+
+#: templates/wallet/partials/wallet_modal_trezor_setup.html:3
+msgid ""
+"Your Hardware Wallet is already set up. You must wipe it to write "
+"GreenAddress mnemonic to it. Do you want to wipe?"
+msgstr ""
+
+#: templates/wallet/partials/wallet_modal_trezor_setup.html:4
+#: templates/wallet/partials/wallet_modal_trezor_setup.html:9
+msgid "No"
+msgstr ""
+
+#: templates/wallet/partials/wallet_modal_trezor_setup.html:5
+#: templates/wallet/partials/wallet_modal_trezor_setup.html:10
+msgid "Yes"
+msgstr ""
+
+#: templates/wallet/partials/wallet_modal_trezor_setup.html:8
+msgid ""
+"Your Hardware Wallet is already set up. To use it with GreenAddress, you "
+"can either reset it, or use the existing wallet seed. To reset it, please"
+" go to myTREZOR or equivalent and use the 'Wipe device' feature from "
+"advanced details. Do you want to use the existing seed? <strong>NOTE: if "
+"you use it, you won't be able to se myTREZOR transactions in "
+"GreenAddress, because we don't support non-multisig "
+"transactions.</strong> Do you want to reuse existing seed?"
+msgstr ""
+
+#: templates/wallet/partials/wallet_modal_trezor_setup.html:13
+#, fuzzy
+msgid ""
+"Empty Hardware Wallet detected successfully. Click the button below to "
+"store your seed on it."
+msgstr ""
+"Nuovo dispositivo vuoto BTChip trovato. Fai click sul bottone qui sotto "
+"per salvare all'interno del dispositivo i tuoi dati di accesso."
+
+#: templates/wallet/partials/wallet_modal_trezor_setup.html:14
+#, fuzzy
+msgid ""
+"Empty Hardware Wallet detected successfully. Click the button below to "
+"set it up."
+msgstr ""
+"Nuovo dispositivo vuoto BTChip trovato. Fai click sul bottone qui sotto "
+"per salvare all'interno del dispositivo i tuoi dati di accesso."
+
+#: templates/wallet/partials/wallet_modal_trezor_setup.html:15
+#, fuzzy
+msgid "Save to Hardware Wallet"
+msgstr "Scrivi su dispositivo wallet"
+
+#: templates/wallet/partials/wallet_modal_trezor_setup.html:16
+#, fuzzy
+msgid "Set up Hardware Wallet"
+msgstr "Scrivi su dispositivo wallet"
+
+#: templates/wallet/partials/signup_2_2factor.html:25
+#: templates/wallet/partials/signup_3_pin.html:37
+#: templates/wallet/partials/wallet_modal_btchip_setup.html:15
+#: templates/wallet/partials/wallet_modal_trezor_setup.html:18
+msgid "Generating your wallet keys, please wait"
+msgstr "Generazione delle chiavi del tuo portafogli"
+
+#: templates/wallet/partials/wallet_modal_trezor_setup.html:22
+#, fuzzy
+msgid "Hardware Wallet setup successful!"
+msgstr "BTChip configurato correttamente!"
+
+#: templates/wallet/partials/wallet_modal_tx_details.html:2
+msgid "Transaction details"
+msgstr "Dettagli"
+
+#: templates/wallet/partials/wallet_modal_tx_details.html:7
+#: templates/wallet/partials/wallet_modal_tx_redeem.html:8
+msgid "Timestamp"
+msgstr "Orario"
+
+#: templates/wallet/partials/wallet_modal_tx_details.html:10
+#: templates/wallet/partials/wallet_modal_tx_redeem.html:11
+msgid "Hash"
+msgstr "Codice Identificativo"
+
+#: templates/wallet/partials/wallet_modal_tx_details.html:13
+#: templates/wallet/partials/wallet_send.html:173
+msgid "Memo"
+msgstr "Nota"
+
+#: templates/wallet/partials/wallet_modal_tx_details.html:21
+#: templates/wallet/partials/wallet_modal_tx_limits.html:41
+#: templates/wallet/partials/wallet_settings.html:298
+#: templates/wallet/partials/wallet_settings.html:573
+#: templates/wallet/partials/wallet_settings.html:682
+#: templates/wallet/partials/wallet_settings.html:738
+msgid "Save"
+msgstr "Salva"
+
+#: templates/wallet/partials/wallet_modal_tx_details.html:28
+#, fuzzy
+msgid "Add"
+msgstr "Indirizzo"
+
+#: templates/wallet/partials/wallet_modal_tx_details.html:29
+msgid "Edit"
+msgstr ""
+
+#: templates/wallet/partials/wallet_modal_confirm_tx.html:23
+#: templates/wallet/partials/wallet_modal_tx_details.html:33
+#: templates/wallet/partials/wallet_send.html:109
+msgid "Fee"
+msgstr "Fee"
+
+#: templates/wallet/partials/wallet_modal_tx_details.html:33
+msgid "Size (bytes)"
+msgstr ""
+
+#: templates/wallet/partials/wallet_modal_tx_details.html:33
+msgid "Fee per kB"
+msgstr ""
+
+#: templates/wallet/partials/wallet_modal_tx_details.html:39
+msgid "Estimated number of confirmations required:"
+msgstr ""
+
+#: templates/wallet/partials/wallet_modal_tx_details.html:43
+msgid "Raw transaction"
+msgstr "Transazione"
+
+#: templates/wallet/partials/wallet_modal_tx_details.html:46
+msgid "Double spend by txhash"
+msgstr "Doppia spesa da txhash"
+
+#: templates/wallet/partials/wallet_modal_tx_details.html:49
+msgid "Payment request"
+msgstr "Richiesta di pagamento"
+
+#: templates/wallet/partials/wallet_modal_tx_details.html:51
+msgid "download"
+msgstr "download"
+
+#: templates/wallet/partials/wallet_modal_tx_details.html:57
+msgid "Inputs"
+msgstr "Inputs"
+
+#: templates/wallet/partials/wallet_modal_tx_details.html:58
+msgid ""
+"The inputs below are only the first 10 inputs of this transaction. To see"
+" all of them, use a block explorer."
+msgstr ""
+
+#: templates/wallet/partials/wallet_modal_confirm_tx.html:17
+#: templates/wallet/partials/wallet_modal_tx_details.html:60
+#: templates/wallet/partials/wallet_modal_tx_details.html:78
+#: templates/wallet/partials/wallet_modal_tx_limits.html:18
+#: templates/wallet/partials/wallet_modal_tx_limits.html:20
+#: templates/wallet/partials/wallet_modal_tx_limits.html:28
+#: templates/wallet/partials/wallet_modal_tx_limits.html:30
+#: templates/wallet/partials/wallet_modal_tx_limits.html:31
+#: templates/wallet/partials/wallet_modal_tx_redeem.html:17
+#: templates/wallet/partials/wallet_receive.html:25
+#: templates/wallet/partials/wallet_send.html:59
+#: templates/wallet/partials/wallet_settings.html:617
+msgid "Amount"
+msgstr "Ammontare"
+
+#: templates/wallet/partials/wallet_modal_tx_details.html:69
+#: templates/wallet/partials/wallet_modal_tx_details.html:87
+msgid "Confidential"
+msgstr ""
+
+#: templates/wallet/partials/wallet_modal_tx_details.html:75
+msgid "Outputs"
+msgstr "Outputs"
+
+#: templates/wallet/partials/wallet_modal_tx_details.html:76
+msgid ""
+"The outputs below are only the first 10 outputs of this transaction. To "
+"see all of them, use a block explorer."
+msgstr ""
+
+#: templates/wallet/partials/wallet_modal_pin.html:4
+#, fuzzy
+msgid ""
+"You can create a 4-to-15-digit personal identification number used to "
+"retrieve the password encrypting the mnemonic passphrase."
+msgstr "Devi create un PIN a 4 cifre per proteggere la passphrase mnemonica."
+
+#: templates/wallet/partials/signuplogin/base.html:23
+#: templates/wallet/partials/wallet_modal_btchip_pin.html:8
+#: templates/wallet/partials/wallet_modal_pin.html:8
+msgid "Enter your PIN"
+msgstr "Inserici il tuo PIN"
+
+#: templates/wallet/partials/wallet_modal_pin.html:14
+#, fuzzy
+msgid "PIN must be a 4-to-15-digit number"
+msgstr "Il PIN deve essere da 4 a 32 cifre numeriche"
+
+#: templates/wallet/partials/wallet_modal_btchip_pin.html:23
+#: templates/wallet/partials/wallet_modal_pin.html:23
+msgid "Confirm PIN number"
+msgstr "Conferma PIN"
+
+#: templates/wallet/partials/wallet_modal_btchip_setup.html:3
+msgid ""
+"Your Ledger is already set up. To use it with GreenAddress, you need to "
+"reset it. Do you want to reset your Ledger? This will be performed by "
+"entering wrong PIN 3 times in a row. <strong>You will lose your keys "
+"currently stored on the device.</strong>"
+msgstr ""
+
+#: templates/wallet/partials/wallet_modal_btchip_setup.html:4
+msgid "Reset my Ledger"
+msgstr ""
+
+#: templates/wallet/partials/wallet_modal_btchip_setup.html:5
+msgid "Reuse current setup"
+msgstr ""
+
+#: templates/wallet/partials/wallet_modal_btchip_setup.html:6
+msgid "Resetting..."
+msgstr "Resetting..."
+
+#: templates/wallet/partials/wallet_modal_btchip_setup.html:7
+msgid "Please unplug and plug your device in again"
+msgstr "Per piacere rimuovi e reinserisci il tuo dispositivo di nuovo"
+
+#: templates/wallet/partials/wallet_modal_btchip_setup.html:7
+msgid "wrong PINs remaining"
+msgstr "tentativi PIN rimasti"
+
+#: templates/wallet/partials/wallet_modal_btchip_setup.html:10
+#, fuzzy
+msgid ""
+"Empty Ledger detected successfully. Click the button below to store your "
+"seed on it."
+msgstr ""
+"Nuovo dispositivo vuoto BTChip trovato. Fai click sul bottone qui sotto "
+"per salvare all'interno del dispositivo i tuoi dati di accesso."
+
+#: templates/wallet/partials/wallet_modal_btchip_setup.html:11
+#, fuzzy
+msgid "Empty Ledger detected successfully. Click the button below to set it up."
+msgstr ""
+"Nuovo dispositivo vuoto BTChip trovato. Fai click sul bottone qui sotto "
+"per salvare all'interno del dispositivo i tuoi dati di accesso."
+
+#: templates/wallet/partials/wallet_modal_btchip_setup.html:12
+msgid "Save to Ledger"
+msgstr ""
+
+#: templates/wallet/partials/wallet_modal_btchip_setup.html:13
+msgid "Set up Ledger"
+msgstr ""
+
+#: templates/wallet/partials/wallet_modal_btchip_setup.html:19
+#: templates/wallet/partials/wallet_modal_btchip_setup.html:22
+#, fuzzy
+msgid "Ledger setup successful!"
+msgstr "BTChip configurato correttamente!"
+
+#: templates/wallet/partials/wallet_modal_btchip_setup.html:20
+msgid ""
+"Please unplug your Ledger and plug it into a secure device supporting USB"
+" keyboards to read the seed backup."
+msgstr ""
+
+#: templates/wallet/partials/wallet_modal_btchip_setup.html:21
+msgid ""
+"On the second device remember to first open a text editor or a similar "
+"application where the seed will be typed in by Ledger."
+msgstr ""
+
+#: templates/wallet/partials/concurrent_login.html:6
+msgid "You were logged out."
+msgstr "Sei uscito"
+
+#: templates/wallet/partials/concurrent_login.html:11
+msgid ""
+"          You have logged in elsewhere.<br>          <small>If it was not"
+" you, please contact <strong>immediately</strong>        "
+msgstr ""
+"             Ti sei loggato altrove. <br><small> Se non eri tu, per "
+"piacere contatta <strong> subito</strong>       "
+
+#: templates/wallet/partials/concurrent_login.html:16
+#: templates/wallet/partials/concurrent_login.html:18
+#: templates/wallet/partials/concurrent_login.html:20
+msgid "support"
+msgstr "supporto"
+
+#: templates/wallet/partials/concurrent_login.html:24
+msgid "Go back to login"
+msgstr "Torna al login"
 
 #: templates/wallet/partials/wallet_address_book.html:12
 msgid "Add new entry"
@@ -536,8 +705,8 @@ msgstr "Nuovo"
 
 #: templates/wallet/partials/wallet_address_book.html:27
 #: templates/wallet/partials/wallet_address_book.html:45
-#: templates/wallet/partials/wallet_settings.html:641
-#: templates/wallet/partials/wallet_settings.html:697
+#: templates/wallet/partials/wallet_settings.html:668
+#: templates/wallet/partials/wallet_settings.html:724
 msgid "Name"
 msgstr "Nome"
 
@@ -554,8 +723,322 @@ msgstr "Leggi QR"
 msgid "Your address book is empty"
 msgstr "La tua rubrica è vuota"
 
+#: templates/wallet/partials/wallet_modal_redeposit.html:4
+msgid "Please re-deposit your funds"
+msgstr "Per piacere rideposita i tuoi bitcoin"
+
+#: templates/wallet/partials/wallet_modal_redeposit.html:7
+#, fuzzy
+msgid ""
+"You have some expired deposits. Unless you re-deposit or redeem them, "
+"Instant Confirmation transactions will not be allowed"
+msgstr ""
+"Hai alcuni depositi scaduti. A meno che non li ridepositi o incassi, non "
+"potrai effettuare altra transazioni"
+
+#: templates/wallet/partials/wallet_modal_redeposit.html:10
+msgid ""
+"Warning: single transactions can be used to correlate funds with your "
+"identity, including funds between different accounts."
+msgstr ""
+
+#: templates/wallet/partials/wallet_modal_redeposit.html:11
+msgid "Redeposit as single transaction (cheaper)"
+msgstr "Rideposita una singola transazione (più economico)"
+
+#: templates/wallet/partials/wallet_modal_redeposit.html:12
+#: templates/wallet/partials/wallet_modal_redeposit.html:15
+#: templates/wallet/partials/wallet_modal_redeposit.html:21
+msgid "estimated fee"
+msgstr "commissioni stimate"
+
+#: templates/wallet/partials/wallet_modal_redeposit.html:14
+msgid "Redeposit as one transaction per output (better privacy)"
+msgstr "Rideposita come singola transazione per output (privacy migliore)"
+
+#: templates/wallet/partials/wallet_modal_redeposit.html:16
+msgid "transactions"
+msgstr "transazioni"
+
+#: templates/wallet/partials/wallet_modal_redeposit.html:20
+msgid "Redeposit"
+msgstr "Rideposita"
+
+#: templates/wallet/partials/wallet_modal_redeposit.html:22
+msgid "transaction"
+msgstr "transazione"
+
+#: templates/wallet/partials/wallet_modal_confirm_tx.html:2
+#, fuzzy
+msgid "Confirm transaction details"
+msgstr "Dettagli"
+
+#: templates/wallet/partials/wallet_modal_confirm_tx.html:7
+#, fuzzy
+msgid "You are about to bump a fee."
+msgstr "Stai per inviare"
+
+#: templates/wallet/partials/wallet_modal_confirm_tx.html:8
+msgid "Please make sure the details below are correct:"
+msgstr ""
+
+#: templates/wallet/partials/wallet_modal_confirm_tx.html:12
+#: templates/wallet/partials/wallet_send.html:20
+msgid "Recipient"
+msgstr "Destinatario"
+
+#: templates/wallet/partials/wallet_modal_confirm_tx.html:28
+msgid "Previous fee:"
+msgstr ""
+
+#: templates/wallet/partials/wallet_modal_confirm_tx.html:37
+#, fuzzy
+msgid "Send transaction"
+msgstr "transazione"
+
+#: templates/wallet/partials/wallet_modal_tx_limits.html:9
+#: templates/wallet/partials/wallet_settings.html:208
+msgid "(current currency)"
+msgstr "(valuta corrente)"
+
+#: templates/wallet/partials/wallet_modal_tx_limits.html:11
+#: templates/wallet/partials/wallet_settings.html:209
+msgid ""
+"Using currency values for limits assumes you can trust your pricing "
+"source to provide correct values."
+msgstr ""
+"Usare limiti con valuta fiat assume che puoi fidarti della fonte del "
+"cambio di offrire il cambio corretto."
+
+#: templates/wallet/partials/wallet_modal_tx_limits.html:33
+#: templates/wallet/partials/wallet_settings.html:222
+msgid ""
+"This limit will be decreased with each transaction and you will need to "
+"\"refill\" it manually by changing this value."
+msgstr ""
+"Questo limite verrà diminiuto ad ogni transazione e avrai bisogno di "
+"riempirlo manualmente cambiando questo valore."
+
+#: templates/wallet/partials/signup_qr_modal.html:2
+#: templates/wallet/partials/wallet_modal_mnemonic.html:2
+msgid "The QR code containing the passphrase to access your wallet is:"
+msgstr ""
+"Il codice QR che contiene la tua passphrase per accedere al tuo "
+"portafoglio è:"
+
+#: templates/wallet/partials/wallet_modal_mnemonic.html:3
+#, fuzzy
+msgid ""
+"The QR code containing the passphrase for recovery access to your "
+"subaccount is:"
+msgstr ""
+"Il codice QR che contiene la tua passphrase per accedere al tuo "
+"portafoglio è:"
+
+#: templates/wallet/partials/wallet_modal_mnemonic.html:5
+msgid ""
+"This passphrase is encrypted, so your encryption password is required to "
+"use it."
+msgstr ""
+"Questa password è criptata, quindi la tua password di crittazione è "
+"richiesta per utilizzarla."
+
+#: templates/wallet/partials/signup_qr_modal.html:4
+#: templates/wallet/partials/wallet_modal_mnemonic.html:6
+msgid "Remember to store it in a safe place!"
+msgstr "Fai il backup di questa pagina in un posto sicuro!"
+
+#: templates/wallet/partials/wallet_modal_mnemonic.html:7
+msgid ""
+"The subaccount mnemonic is not stored anywhere neither by GreenAddress, "
+"nor by your browser, so you *HAVE* to back it up to have a recovery "
+"access to your 2of3 subaccount."
+msgstr ""
+
+#: templates/wallet/partials/signup_1_init.html:35
+#: templates/wallet/partials/wallet_modal_mnemonic.html:9
+msgid "Your mnemonic passphrase"
+msgstr "La tua passphrase mnemonica"
+
+#: templates/wallet/partials/wallet_modal_mnemonic.html:13
+#, fuzzy
+msgid "Your subaccount recovery mnemonic passphrase"
+msgstr "La tua passphrase mnemonica"
+
+#: templates/wallet/partials/wallet_modal_mnemonic.html:18
+#, fuzzy
+msgid "Your subaccount recovery xpub"
+msgstr "La tua passphrase mnemonica"
+
+#: templates/wallet/partials/wallet_modal_mnemonic.html:23
+msgid "Your subaccount GreenAddress xpub"
+msgstr ""
+
+#: templates/wallet/partials/wallet_receive.html:13
+#, fuzzy
+msgid "Account"
+msgstr "Aggiungi un account"
+
+#: templates/wallet/partials/wallet_receive.html:21
+msgid ""
+"You are logged in via watch only mode, you will need to login with the "
+"mnemonics passphrase (or hardware wallet if applicable) to spend."
+msgstr ""
+
+#: templates/wallet/partials/wallet_receive.html:57
+#, fuzzy
+msgid "Wallet URI"
+msgstr "portafoglio"
+
+#: templates/wallet/partials/wallet_receive.html:59
+msgid "Bitcoin URI"
+msgstr "Indirizzo Bitcoin"
+
+#: templates/wallet/partials/wallet_receive.html:66
+msgid "Show URI and address"
+msgstr "Visualizza URI e indirizzo"
+
+#: templates/wallet/partials/wallet_modal_gauth_qr.html:10
+#: templates/wallet/partials/wallet_receive.html:68
+#: templates/wallet/partials/wallet_receive.html:91
+msgid "Copy to clipboard"
+msgstr "Copia"
+
+#: templates/wallet/partials/signup_1_init.html:56
+#: templates/wallet/partials/signuplogin/header_pay.html:32
+#: templates/wallet/partials/wallet_2fa.html:33
+#: templates/wallet/partials/wallet_receive.html:70
+#: templates/wallet/partials/wallet_receive.html:93
+#: templates/wallet/partials/wallet_settings.html:464
+msgid "Show QR Code"
+msgstr "Mostra Codice QR"
+
+#: templates/wallet/partials/wallet_receive.html:84
+msgid "Permanent Payment URL"
+msgstr "Indirizzo permanente per pagamenti"
+
+#: templates/wallet/partials/wallet_receive.html:100
+msgid "Private key in WIF or BIP38 format"
+msgstr "Chiave privata in formato WIF o BIP38"
+
+#: templates/wallet/partials/wallet_receive.html:104
+msgid "Enter a private key to sweep here"
+msgstr "Inserisci qui la chiave privata dei fondi da acquisire"
+
+#: templates/wallet/partials/wallet_receive.html:113
+msgid "Sweep"
+msgstr "Acquisisci"
+
+#: templates/wallet/partials/wallet_receive.html:130
+msgid "Show previously generated addresses"
+msgstr "Mostra tutti gli indirizzi generati fino ad oggi"
+
+#: templates/wallet/partials/wallet_receive.html:133
+#: templates/wallet/partials/wallet_send.html:190
+msgid "Show advanced options"
+msgstr "Mostra opzioni avanzate"
+
+#: templates/wallet/partials/wallet_modal_usb_device.html:2
+msgid "Please connect/reconnect your wallet USB device to proceed."
+msgstr "Per piacere connetti e disconnetti il tuo device wallet USB per procedere."
+
+#: templates/wallet/partials/wallet_modal_btchip_pin.html:4
+msgid "Please enter BTChip PIN."
+msgstr "Per piacere immetti il PIN BTChip."
+
+#: templates/wallet/partials/wallet_modal_btchip_pin.html:14
+msgid "PIN must be a 4-to-32-digit number"
+msgstr "Il PIN deve essere da 4 a 32 cifre numeriche"
+
+#: templates/wallet/partials/wallet_modal_verify_mnemonic.html:4
+#, fuzzy
+msgid "Please enter the missing words from your mnemonic:"
+msgstr ""
+"Per piacere inserisci le seguenti parole dalla tua frase mnemonica "
+"<strong>non</strong> crittografata:"
+
+#: templates/wallet/partials/wallet_modal_verify_mnemonic.html:5
+msgid "(to verify that you backed it up correctly)"
+msgstr ""
+
+#: templates/wallet/partials/wallet_modal_verify_mnemonic.html:10
+msgid "Word #"
+msgstr "Parola #"
+
+#: templates/wallet/partials/wallet_modal_verify_mnemonic.html:20
+msgid "Cancel and return to first step"
+msgstr ""
+
+#: templates/wallet/partials/wallet_modal_verify_mnemonic.html:22
+msgid "Verify"
+msgstr "Verifica"
+
+#: templates/wallet/partials/signup_1_init.html:13
+#: templates/wallet/partials/signup_1_trezor.html:13
+#: templates/wallet/partials/signup_2_2factor.html:7
+#: templates/wallet/partials/signup_3_pin.html:7
+msgid "Step"
+msgstr "Passo"
+
+#: templates/wallet/partials/signup_1_init.html:13
+#: templates/wallet/partials/signup_1_trezor.html:13
+#: templates/wallet/partials/signup_2_2factor.html:7
+#: templates/wallet/partials/signup_3_pin.html:7
+msgid "of"
+msgstr "di"
+
+#: templates/wallet/partials/signup_2_2factor.html:14
+msgid "Don't compromise on security"
+msgstr "Non rischiare con la sicurezza"
+
+#: templates/wallet/partials/signup_2_2factor.html:14
+msgid "Set up two factor authentication"
+msgstr "Autenticazione a due fattori"
+
+#: templates/wallet/partials/signup_2_2factor.html:16
+msgid "Please wait while we log you into your new wallet..."
+msgstr "Per piacere aspetta mentre entri nel tuo nuovo wallet..."
+
+#: templates/wallet/partials/signup_2_2factor.html:18
+#, fuzzy
+msgid ""
+"We recommend to set up multiple two factor authentication methods, this "
+"will make your wallet much more secure and will let you some additional "
+"features such as Spending Limits."
+msgstr ""
+"Ti richiediamo di abilitare un'autenticazione a due fattori, questo "
+"renderà il tuo portafoglio molto più sicuro e ti permetterà di usare "
+"Limiti e Ritardi."
+
+#: templates/wallet/partials/signup_2_2factor.html:19
+msgid ""
+"Multiple methods will allow backup access to your funds in case any of "
+"your two factor become unavailable."
+msgstr ""
+
+#: templates/wallet/partials/signup_2_2factor.html:20
+msgid ""
+"To issue a transaction you will not only need to login to your wallet but"
+" also confirm it with a code sent to you via email, SMS or google "
+"authenticator as per your choice."
+msgstr ""
+"Per effettuare una transazione ti verrà richiesto un codice a due fattori"
+" via email, SMS o Google Authenticator come hai scelto."
+
+#: templates/wallet/partials/signup_2_2factor.html:28
+#: templates/wallet/partials/signup_3_pin.html:40
+msgid "Please wait, logging in..."
+msgstr "Attendi per favore, accesso in corso..."
+
+#: templates/wallet/partials/signup_1_init.html:58
+#: templates/wallet/partials/signup_1_trezor.html:34
+#: templates/wallet/partials/signup_2_2factor.html:31
+#: templates/wallet/partials/signup_2_2factor.html:34
+msgid "Continue"
+msgstr "Continua"
+
 #: templates/wallet/partials/wallet_2fa.html:13
-#: templates/wallet/partials/wallet_settings.html:498
+#: templates/wallet/partials/wallet_settings.html:525
 msgid "Phone"
 msgstr "Telefono"
 
@@ -587,15 +1070,6 @@ msgstr ""
 "Aggiungi un account all'app Google Authenticator e leggi il codice QR qui"
 " sotto o altrimenti inserisci questo codice: "
 
-#: templates/wallet/partials/signup_1_init.html:56
-#: templates/wallet/partials/signuplogin/header_pay.html:32
-#: templates/wallet/partials/wallet_2fa.html:33
-#: templates/wallet/partials/wallet_receive.html:70
-#: templates/wallet/partials/wallet_receive.html:93
-#: templates/wallet/partials/wallet_settings.html:437
-msgid "Show QR Code"
-msgstr "Mostra Codice QR"
-
 #: templates/wallet/partials/wallet_2fa.html:37
 msgid "Confirm code"
 msgstr "Conferma codice"
@@ -616,10 +1090,10 @@ msgstr "Codice di autenticazione"
 #: templates/wallet/partials/wallet_2fa.html:101
 #: templates/wallet/partials/wallet_2fa.html:143
 #: templates/wallet/partials/wallet_2fa.html:185
-#: templates/wallet/partials/wallet_settings.html:285
-#: templates/wallet/partials/wallet_settings.html:443
-#: templates/wallet/partials/wallet_settings.html:483
-#: templates/wallet/partials/wallet_settings.html:523
+#: templates/wallet/partials/wallet_settings.html:312
+#: templates/wallet/partials/wallet_settings.html:470
+#: templates/wallet/partials/wallet_settings.html:510
+#: templates/wallet/partials/wallet_settings.html:550
 msgid "Please enter received code"
 msgstr "Per piacere inserisci qui il codice ricevuto"
 
@@ -630,11 +1104,11 @@ msgstr "Per piacere inserisci qui il codice ricevuto"
 #: templates/wallet/partials/wallet_2fa.html:145
 #: templates/wallet/partials/wallet_2fa.html:167
 #: templates/wallet/partials/wallet_2fa.html:187
-#: templates/wallet/partials/wallet_settings.html:445
-#: templates/wallet/partials/wallet_settings.html:469
-#: templates/wallet/partials/wallet_settings.html:485
-#: templates/wallet/partials/wallet_settings.html:509
-#: templates/wallet/partials/wallet_settings.html:525
+#: templates/wallet/partials/wallet_settings.html:472
+#: templates/wallet/partials/wallet_settings.html:496
+#: templates/wallet/partials/wallet_settings.html:512
+#: templates/wallet/partials/wallet_settings.html:536
+#: templates/wallet/partials/wallet_settings.html:552
 msgid "Enable"
 msgstr "Abilita"
 
@@ -643,7 +1117,7 @@ msgid "Email two factor authentication is enabled."
 msgstr "L'autenticazione a due fattori via email è attiva."
 
 #: templates/wallet/partials/wallet_2fa.html:74
-#: templates/wallet/partials/wallet_settings.html:270
+#: templates/wallet/partials/wallet_settings.html:297
 msgid "Your email address"
 msgstr "Il tuo indirizzo email"
 
@@ -662,7 +1136,7 @@ msgstr ""
 "email e inserisci il codice."
 
 #: templates/wallet/partials/wallet_2fa.html:96
-#: templates/wallet/partials/wallet_settings.html:280
+#: templates/wallet/partials/wallet_settings.html:307
 msgid "Email code"
 msgstr "Codice email"
 
@@ -672,15 +1146,15 @@ msgstr "L'autenticazione a due fattori via SMS è attiva."
 
 #: templates/wallet/partials/wallet_2fa.html:119
 #: templates/wallet/partials/wallet_2fa.html:161
-#: templates/wallet/partials/wallet_settings.html:462
-#: templates/wallet/partials/wallet_settings.html:502
+#: templates/wallet/partials/wallet_settings.html:489
+#: templates/wallet/partials/wallet_settings.html:529
 msgid "Your phone number"
 msgstr "Il tuo numero di telefono:"
 
 #: templates/wallet/partials/wallet_2fa.html:123
 #: templates/wallet/partials/wallet_2fa.html:165
-#: templates/wallet/partials/wallet_settings.html:467
-#: templates/wallet/partials/wallet_settings.html:507
+#: templates/wallet/partials/wallet_settings.html:494
+#: templates/wallet/partials/wallet_settings.html:534
 msgid "+NN... Please enter your phone"
 msgstr ""
 "Inserisci qui il tuo numero di telefono incluso il codice paese (ad es: "
@@ -697,7 +1171,7 @@ msgstr ""
 " e inserisci il codice."
 
 #: templates/wallet/partials/wallet_2fa.html:138
-#: templates/wallet/partials/wallet_settings.html:478
+#: templates/wallet/partials/wallet_settings.html:505
 msgid "SMS code"
 msgstr "codice SMS"
 
@@ -715,9 +1189,445 @@ msgstr ""
 " SMS e inserisci il codice."
 
 #: templates/wallet/partials/wallet_2fa.html:180
-#: templates/wallet/partials/wallet_settings.html:518
+#: templates/wallet/partials/wallet_settings.html:545
 msgid "Phone code"
 msgstr "Codice Telefono"
+
+#: templates/wallet/partials/wallet_send.html:12
+#, fuzzy
+msgid "From account"
+msgstr "Aggiungi un account"
+
+#: templates/wallet/partials/wallet_send.html:29
+msgid "Enter recipient's address "
+msgstr "Inserisci l'indirizzo del ricevente"
+
+#: templates/wallet/partials/wallet_send.html:35
+msgid "Paste"
+msgstr "Incolla"
+
+#: templates/wallet/partials/wallet_send.html:65
+msgid "Asset"
+msgstr "Bene"
+
+#: templates/wallet/partials/wallet_send.html:102
+msgid "Sweep all the funds from the wallet"
+msgstr "Prendi tutti i fondi dal wallet"
+
+#: templates/wallet/partials/wallet_send.html:118
+msgid "Leave empty for default"
+msgstr "Lascia vuoto per valore automatico"
+
+#: templates/wallet/partials/wallet_send.html:129
+msgid "per kB"
+msgstr ""
+
+#: templates/wallet/partials/wallet_send.html:153
+msgid "Network fee will be added to the amount"
+msgstr "Costi di conferma verranno aggiunti all'ammontare"
+
+#: templates/wallet/partials/wallet_send.html:155
+msgid "Rate is"
+msgstr "Il cambio é"
+
+#: templates/wallet/partials/wallet_send.html:165
+#, fuzzy
+msgid "Requires recipient to trust GreenAddress instant confirmations"
+msgstr ""
+"E' necessario che chi riceve la transazioni accetti le conferme "
+"instantanee GreenAddress"
+
+#: templates/wallet/partials/wallet_send.html:167
+msgid "Instant Confirmation"
+msgstr "Conferma immediata"
+
+#: templates/wallet/partials/wallet_send.html:177
+msgid "You can enter a memo to store in your transactions list"
+msgstr ""
+"Puoi inserire una nota privata che verrà visualizzata nella lista "
+"transazioni"
+
+#: templates/wallet/partials/wallet_send.html:184
+msgid "Review &amp; Send"
+msgstr "Verifica e invia"
+
+#: templates/wallet/partials/wallet_send.html:186
+msgid "Verifying"
+msgstr "Verifica"
+
+#: templates/wallet/partials/wallet_send.html:187
+msgid "Signing"
+msgstr "Firma"
+
+#: templates/wallet/partials/wallet_send.html:205
+msgid "calculating"
+msgstr "elaborazione"
+
+#: templates/wallet/partials/wallet_modal_logout_other_session.html:4
+msgid "You are already logged in. Do you want to log out the other session?"
+msgstr "Hai già effettuato l'accesso. Vuoi uscire dalla altra sessione?"
+
+#: templates/wallet/partials/wallet_modal_pgp.html:4
+msgid "Please enter a valid PGP public key into the box below."
+msgstr "Inserire una chiave pubblica PGP valida nel box sottostante per piacere."
+
+#: templates/wallet/partials/wallet_modal_pgp.html:12
+msgid "----BEGIN PGP PUBLIC KEY..."
+msgstr ""
+
+#: templates/wallet/partials/wallet_modal_pgp.html:31
+msgid "Add PGP Public Key"
+msgstr "Aggiungi una chiave PGP"
+
+#: templates/wallet/partials/wallet_modal_pgp.html:35
+msgid "Change PGP Public Key"
+msgstr "Cambia chiave PGP"
+
+#: templates/wallet/partials/wallet_modal_pgp.html:39
+msgid "Remove PGP Public Key"
+msgstr "Rimuovi chiave PGP"
+
+#: templates/wallet/partials/wallet_modal_btchip_fup.html:6
+msgid "To upgrade your firmware, please use the following Chrome extension: "
+msgstr ""
+
+#: templates/wallet/partials/wallet_modal_btchip_fup.html:8
+#, fuzzy
+msgid "Ledger Wallet"
+msgstr "Crea il tuo portafoglio"
+
+#: templates/wallet/partials/signup_3_pin.html:14
+msgid "Fast and secure access to your Wallet"
+msgstr "Accesso rapido e sicuro al tuo portafogli"
+
+#: templates/wallet/partials/signup_3_pin.html:14
+msgid "To have a secure but quick access from this device set your PIN"
+msgstr ""
+"Per avere un accesso sicuro ma veloce da questo dispositivo configura il "
+"PIN"
+
+#: templates/wallet/partials/signup_3_pin.html:18
+#: templates/wallet/partials/wallet_settings.html:386
+msgid "PIN number"
+msgstr "codice PIN"
+
+#: templates/wallet/partials/signup_3_pin.html:22
+#: templates/wallet/partials/wallet_settings.html:373
+msgid "4-15 digits number"
+msgstr "numero di cifre 4-15"
+
+#: templates/wallet/partials/signup_3_pin.html:29
+msgid ""
+"Access by PIN allows a quick login while keeping security to a high "
+"standard.                    The PIN secures a random AES 256 bit "
+"password which we will delete if 3 PIN attempts                    fail, "
+"forcing you to provide your full mnemonics once again. Easy, convenient "
+"and secure, so let's use it!"
+msgstr ""
+"Accedere col PIN permetter un accesso veloce mantenendo la sicurezza a "
+"standard elevati. Il PIN rende sicura una passwrod random AES 256 bit che"
+" cancelliamo dopo tre tentativi falliti, costringendoti a immettere "
+"nuovamente la mnemonica. Facile, rapido e sicuro, usalo!"
+
+#: templates/wallet/partials/signup_3_pin.html:43
+msgid "Take me to my wallet and skip all this!"
+msgstr "Portami al mio portafoglio e saltiamo la configurazione!"
+
+#: templates/wallet/partials/signup_3_pin.html:46
+msgid "PIN set, ready for step 3"
+msgstr "PIN configurato, vai al passo 3"
+
+#: templates/wallet/partials/signup_3_pin.html:47
+msgid "Setting PIN..."
+msgstr "Configurazione PIN..."
+
+#: templates/wallet/partials/signup_3_pin.html:50
+msgid "Skip PIN setup and continue"
+msgstr "Salta l'impostazione del PIN e continua"
+
+#: templates/wallet/partials/signup_1_init.html:7
+#: templates/wallet/partials/signup_1_trezor.html:7
+msgid "Already got an account?"
+msgstr "Hai già un account?"
+
+#: templates/wallet/partials/signup_1_init.html:9
+#: templates/wallet/partials/signup_1_init.html:11
+#: templates/wallet/partials/signup_1_trezor.html:9
+#: templates/wallet/partials/signup_1_trezor.html:11
+#: templates/wallet/partials/signuplogin/trezor.html:18
+msgid "Login to your Wallet"
+msgstr "Per piacere accedi per usare il tuo portafogli"
+
+#: templates/wallet/partials/signup_1_trezor.html:20
+#, fuzzy
+msgid "Connect Hardware Wallet to create a GreenAddress wallet"
+msgstr "Connetti Trezor per creare un portafoglio GreenAddress"
+
+#: templates/wallet/partials/signup_1_trezor.html:21
+msgid "This 3-step account setup will fully secure it against intruders"
+msgstr ""
+"Questi 3 passaggi renderanno il tuo account completamente sicuro da "
+"eventuali intrusioni"
+
+#: templates/wallet/partials/signup_1_trezor.html:24
+#: templates/wallet/partials/signuplogin/trezor.html:12
+#, fuzzy
+msgid "Please connect your Hardware Wallet device"
+msgstr "Per favore connetti il tuo dispositivo Trezor"
+
+#: templates/wallet/partials/signup_1_trezor.html:25
+#: templates/wallet/partials/signuplogin/trezor.html:13
+msgid "Hardware Wallet detected."
+msgstr ""
+
+#: templates/wallet/partials/signup_1_trezor.html:26
+#: templates/wallet/partials/signuplogin/trezor.html:14
+#, fuzzy
+msgid "Please confirm the signature on your Hardware Wallet device."
+msgstr "Per favore conferma la firma sul tuo Trezor."
+
+#: templates/wallet/partials/signup_1_trezor.html:31
+msgid "I agree with the "
+msgstr "Sono d'accordo con i "
+
+#: templates/wallet/partials/signup_1_init.html:48
+#: templates/wallet/partials/signup_1_init.html:50
+#: templates/wallet/partials/signup_1_init.html:52
+#: templates/wallet/partials/signup_1_trezor.html:31
+msgid "Terms of Service"
+msgstr "Termini di Servizio"
+
+#: templates/wallet/partials/signup_1_init.html:63
+#: templates/wallet/partials/signup_1_trezor.html:39
+msgid "Error: "
+msgstr "Errore: "
+
+#: templates/wallet/partials/signup_1_init.html:63
+#: templates/wallet/partials/signup_1_trezor.html:39
+msgid " Click to try again"
+msgstr "Errore, riprovare"
+
+#: templates/wallet/partials/signup_1_trezor.html:51
+msgid "The passphrase to access your wallet is:"
+msgstr "La passphrase per accedere al tuo portafoglio è:"
+
+#: templates/wallet/partials/signup_1_trezor.html:54
+msgid "Store this page in a safe place"
+msgstr "Salva questa pagina in un posto sicuro"
+
+#: templates/wallet/partials/wallet_modal_2fa.html:6
+msgid "You must provide 2 factor authentication code to perform this action"
+msgstr ""
+"Devi fornire il tuo codice di autenticazione a due fattori per "
+"disabilitarla"
+
+#: templates/wallet/partials/wallet_modal_2fa.html:9
+msgid "Please select authentication method"
+msgstr "Scegli quale autenticazione a due fattori usare"
+
+#: templates/wallet/partials/wallet_modal_2fa.html:15
+msgid "Please enter your "
+msgstr "Per favore inserisci "
+
+#: templates/wallet/partials/wallet_modal_2fa.html:15
+msgid " authentication code which we have just sent to you."
+msgstr " codice di autenticazione che vi abbiamo appena inviato."
+
+#: templates/wallet/partials/wallet_modal_2fa.html:18
+msgid "Please enter the "
+msgstr "Per piacere inserisci qui"
+
+#: templates/wallet/partials/wallet_modal_2fa.html:18
+msgid " code"
+msgstr "codice SMS:"
+
+#: templates/wallet/partials/wallet_transactions.html:11
+msgid "Your last transactions"
+msgstr "Le tue ultime transazioni"
+
+#: templates/wallet/partials/wallet_transactions.html:22
+msgid "From date"
+msgstr "Da data"
+
+#: templates/wallet/partials/wallet_transactions.html:32
+msgid "To date"
+msgstr "A data"
+
+#: templates/wallet/partials/wallet_transactions.html:40
+msgid "Search"
+msgstr "Cerca"
+
+#: templates/wallet/partials/wallet_fiat_price.html:3
+msgid "min"
+msgstr "minuto"
+
+#: templates/wallet/partials/wallet_fiat_price.html:3
+msgid "mins"
+msgstr "minuti"
+
+#: templates/wallet/partials/wallet_fiat_price.html:3
+msgid "sec"
+msgstr "secondo"
+
+#: templates/wallet/partials/wallet_fiat_price.html:3
+msgid "secs"
+msgstr "secondi"
+
+#: templates/wallet/partials/wallet_fiat_price.html:4
+msgid "ago"
+msgstr "fa"
+
+#: templates/wallet/partials/wallet_fiat_price.html:7
+msgid "just updated"
+msgstr "appena aggiornato"
+
+#: templates/wallet/partials/wallet_modal_gauth_qr.html:2
+msgid "The QR code for Google Authenticator access to your wallet is:"
+msgstr ""
+"Il codice QR che contiene la tua passphrase per accedere al tuo "
+"portafoglio è:"
+
+#: templates/wallet/partials/wallet_modal_gauth_qr.html:4
+msgid ""
+"Please write this down or print it for emergencies, i.e. you lose your "
+"device"
+msgstr ""
+
+#: templates/wallet/partials/wallet_modal_gauth_qr.html:5
+msgid "You can also copy the code manually:"
+msgstr "Puoi anche copiare il codice manualmente:"
+
+#: templates/wallet/partials/wallet_modal_tx_redeem.html:2
+msgid "Take funds back"
+msgstr "Riprenditi i bitcoin"
+
+#: templates/wallet/partials/wallet_modal_tx_redeem.html:6
+msgid "Do you want to take funds back from the following transaction?"
+msgstr "Vuoi riprendere i bitcoin da questa transazione?"
+
+#: templates/wallet/partials/wallet_modal_reset_email.html:4
+msgid ""
+"This email is already used by a different account. Do you want to unlink "
+"it from that account?"
+msgstr ""
+
+#: templates/wallet/partials/wallet_modal_reset_email.html:5
+msgid "Warning"
+msgstr "Attenzione"
+
+#: templates/wallet/partials/wallet_modal_reset_email.html:5
+msgid ""
+"This can disable two factor authentication if you have no other 2FA "
+"method set up in that account."
+msgstr ""
+
+#: templates/wallet/partials/wallet_modal_trezor_confirm_button.html:9
+#, fuzzy
+msgid "Please confirm the action on your Hardware Wallet device."
+msgstr "Per favore conferma la firma sul tuo Trezor."
+
+#: templates/wallet/partials/browser_unsupported.html:6
+#: templates/wallet/partials/browser_unsupported.html:10
+msgid "We are sorry, but your browser is not supported."
+msgstr "Ci spiace ma il tuo browser non è supportato."
+
+#: templates/wallet/partials/browser_unsupported.html:11
+msgid ""
+"Please try a modern browser like Chrome, Firefox, Safari or our Android, "
+"iOS or F-Droid app!"
+msgstr ""
+"Prova un browser moderno come Chrome, Firefox, Safari o la nostra app "
+"Android, iOS o F-Droid!"
+
+#: templates/wallet/partials/signup_nfc_modal.html:2
+msgid "There was a problem writing to the NFC tag:"
+msgstr "C'è stato un problema nello scrivere la tag NFC:"
+
+#: templates/wallet/partials/signup_nfc_modal.html:5
+msgid "Initialising NFC tags listener..."
+msgstr "Inizializzazione ascolto tags NFC..."
+
+#: templates/wallet/partials/signup_nfc_modal.html:8
+msgid "Please hold your tag(s) close to the device to write your wallet!"
+msgstr ""
+"Per piacere avvicina la o le tags al tuo dispositivo per scriverci il tuo"
+" portafogli!"
+
+#: templates/wallet/partials/signup_nfc_modal.html:9
+msgid "Tags written:"
+msgstr "Tags scritte:"
+
+#: templates/wallet/partials/signup_nfc_modal.html:10
+msgid "Tags formatted:"
+msgstr "Tags cancellate:"
+
+#: templates/wallet/partials/signup_nfc_modal.html:13
+msgid ""
+"Your NFC is not enabled or not available. If available, please enable it "
+"in settings"
+msgstr ""
+"Il tuo nfc non è abilitato o disponibile. Se disponibile per favore "
+"abilitalo nelle impostazioni"
+
+#: templates/wallet/partials/signup_1_init.html:20
+#, fuzzy
+msgid "Use a Hardware Wallet to create a GreenAddress wallet"
+msgstr "Connetti Trezor per creare un portafoglio GreenAddress"
+
+#: templates/wallet/partials/signup_1_init.html:21
+#, fuzzy
+msgid ""
+"Please finish this 3-step account setup to fully secure it against "
+"intruders"
+msgstr ""
+"Per piacere completa questi 4 passaggi per configurare e per rendere "
+"sicuro il tuo portafoglio."
+
+#: templates/wallet/partials/signup_1_init.html:25
+msgid ""
+"You can also disconnect the Hardware Wallet and refresh this page to "
+"create a wallet without the device."
+msgstr ""
+
+#: templates/wallet/partials/signup_1_init.html:26
+msgid "Click here to refresh."
+msgstr ""
+
+#: templates/wallet/partials/signup_1_init.html:31
+msgid "You are now the proud owner of a bitcoin wallet"
+msgstr "Ora puoi vantarti di avere un portafoglio Bitcoin"
+
+#: templates/wallet/partials/signup_1_init.html:32
+msgid ""
+"Please finish this 4-step account setup to fully secure it against "
+"intruders"
+msgstr ""
+"Per piacere completa questi 4 passaggi per configurare e per rendere "
+"sicuro il tuo portafoglio."
+
+#: templates/wallet/partials/signup_1_init.html:39
+msgid "Generating mnemonic, please wait..."
+msgstr "Generazione mnemonica in corso..."
+
+#: templates/wallet/partials/signup_1_init.html:41
+msgid ""
+"Please write down these words and store them in a safe place as they "
+"can't be recovered."
+msgstr ""
+"Per piacere scrivi e non perdere queste parole perchè non possono essere "
+"recuperate altrimenti."
+
+#: templates/wallet/partials/signup_1_init.html:41
+msgid ""
+"We do not store the above information anywhere, we can't help you recover"
+" it!"
+msgstr ""
+"Non salviamo queste parole sui nostri server dunque non possiamo aiutarti"
+" a recuperarle se le perdi!"
+
+#: templates/wallet/partials/signup_1_init.html:46
+msgid "I confirm that my passphrase is saved &amp; secured and I agree with the "
+msgstr "Confermo che la mia passphrase è al sicuro e aderisco"
 
 #: templates/wallet/partials/wallet_settings.html:5
 msgid "General Settings"
@@ -799,7 +1709,7 @@ msgstr "email"
 
 #: templates/wallet/partials/wallet_settings.html:137
 #: templates/wallet/partials/wallet_settings.html:157
-#: templates/wallet/partials/wallet_settings.html:458
+#: templates/wallet/partials/wallet_settings.html:485
 msgid "SMS"
 msgstr "SMS"
 
@@ -807,21 +1717,9 @@ msgstr "SMS"
 msgid "Send outgoing transaction notification by"
 msgstr "Manda notifica di transazioni in uscita via"
 
-#: templates/wallet/partials/wallet_modal_tx_limits.html:11
-#: templates/wallet/partials/wallet_settings.html:163
-#: templates/wallet/partials/wallet_settings.html:186
-#: templates/wallet/partials/wallet_settings.html:209
-msgid "NOTE"
-msgstr "NOTA"
-
 #: templates/wallet/partials/wallet_settings.html:163
 msgid "You need to have a confirmed email enabled for this feature to work."
 msgstr "È necessario avere un email confermata per abilitare questa funzione."
-
-#: templates/wallet/partials/wallet_modal_expiring_soon.html:9
-#: templates/wallet/partials/wallet_settings.html:171
-msgid "nLockTime"
-msgstr "nLockTime"
 
 #: templates/wallet/partials/wallet_settings.html:172
 msgid ""
@@ -875,53 +1773,43 @@ msgstr ""
 "È possibile indicare dei limiti di importo (BTC o fiat) per le operazioni"
 " che si possono fare senza utilizzare l'autenticazione a due fattori"
 
-#: templates/wallet/partials/wallet_modal_tx_limits.html:9
-#: templates/wallet/partials/wallet_settings.html:208
-msgid "(current currency)"
-msgstr "(valuta corrente)"
-
-#: templates/wallet/partials/wallet_modal_tx_limits.html:11
-#: templates/wallet/partials/wallet_settings.html:209
-msgid ""
-"Using currency values for limits assumes you can trust your pricing "
-"source to provide correct values."
-msgstr ""
-"Usare limiti con valuta fiat assume che puoi fidarti della fonte del "
-"cambio di offrire il cambio corretto."
-
-#: templates/wallet/partials/wallet_modal_tx_limits.html:33
-#: templates/wallet/partials/wallet_settings.html:222
-msgid ""
-"This limit will be decreased with each transaction and you will need to "
-"\"refill\" it manually by changing this value."
-msgstr ""
-"Questo limite verrà diminiuto ad ogni transazione e avrai bisogno di "
-"riempirlo manualmente cambiando questo valore."
-
 #: templates/wallet/partials/wallet_settings.html:227
 msgid "Change limits"
 msgstr "Cambia i limiti"
 
 #: templates/wallet/partials/wallet_settings.html:234
-msgid "Transaction replacement"
-msgstr "Modifica transazioni"
+msgid "Network upgrades"
+msgstr ""
 
-#: templates/wallet/partials/wallet_settings.html:235
+#: templates/wallet/partials/wallet_settings.html:240
 msgid ""
 "Transaction replacement functionality allows re-sending unconfirmed "
 "transactions with higher fees to speed up confirmation progress."
-msgstr "Questa funzionalità permette di aumentare la priorità di transazioni non ancora confermate"
+msgstr ""
+"Questa funzionalità permette di aumentare la priorità di transazioni non "
+"ancora confermate"
 
-#: templates/wallet/partials/wallet_settings.html:247
+#: templates/wallet/partials/wallet_settings.html:253
 msgid "Allow to increase the fee for outgoing transactions"
 msgstr "Permetti di aumentare la priorità per transazioni in uscita"
 
-#: templates/wallet/partials/wallet_settings.html:261
-#: templates/wallet/partials/wallet_settings.html:421
+#: templates/wallet/partials/wallet_settings.html:263
+msgid ""
+"Segregated Witness is a technical improvement which solves transaction "
+"malleability issues, improves hardware wallets support, and allows other "
+"enhancements. We highly encourage you to keep it enabled."
+msgstr ""
+
+#: templates/wallet/partials/wallet_settings.html:275
+msgid "Enable Segregated Witness"
+msgstr ""
+
+#: templates/wallet/partials/wallet_settings.html:288
+#: templates/wallet/partials/wallet_settings.html:448
 msgid "Email"
 msgstr "Email"
 
-#: templates/wallet/partials/wallet_settings.html:262
+#: templates/wallet/partials/wallet_settings.html:289
 msgid ""
 "Set your email address for transactions notifications, two factor "
 "authentication, and nLockTime transactions."
@@ -929,15 +1817,15 @@ msgstr ""
 "Impostare il tuo indirizzo e-mail per le notifiche di transazioni, "
 "l'autenticazione a due fattori e transazioni nLockTime."
 
-#: templates/wallet/partials/wallet_settings.html:267
+#: templates/wallet/partials/wallet_settings.html:294
 msgid "Change email address"
 msgstr "Modifica indirizzo e-mail"
 
-#: templates/wallet/partials/wallet_settings.html:268
+#: templates/wallet/partials/wallet_settings.html:295
 msgid "Set email address"
 msgstr "Imposta l'indirizzo email"
 
-#: templates/wallet/partials/wallet_settings.html:276
+#: templates/wallet/partials/wallet_settings.html:303
 msgid ""
 "You need to provide confirmation code from your email to allow using "
 "it.<br>              Please check your email and provide the code."
@@ -946,140 +1834,132 @@ msgstr ""
 "l'autenticazione. <br> Per piacere verifica la tua email e inserisci il "
 "codice."
 
-#: templates/wallet/partials/wallet_settings.html:287
-#: templates/wallet/partials/wallet_settings.html:348
-#: templates/wallet/partials/wallet_settings.html:363
+#: templates/wallet/partials/wallet_settings.html:314
+#: templates/wallet/partials/wallet_settings.html:375
+#: templates/wallet/partials/wallet_settings.html:390
 msgid "Confirm"
 msgstr "Conferma"
 
-#: templates/wallet/partials/wallet_settings.html:293
+#: templates/wallet/partials/wallet_settings.html:320
 msgid ""
 "The code is valid only for 5 minutes, so you can request another one if "
 "necessary."
 msgstr "Il codice è valido solo per 5 minuto, richiedine uno nuovo se necessario."
 
-#: templates/wallet/partials/wallet_settings.html:293
+#: templates/wallet/partials/wallet_settings.html:320
 msgid "Request another code"
 msgstr "Richiedi un altro codice"
 
-#: templates/wallet/partials/wallet_settings.html:301
+#: templates/wallet/partials/wallet_settings.html:328
 msgid "PGP"
 msgstr ""
 
-#: templates/wallet/partials/wallet_settings.html:302
+#: templates/wallet/partials/wallet_settings.html:329
 msgid "Set your Pretty Good Privacy public key for improved privacy."
-msgstr "Configura la tua chiave pubblica Pretty Good Privacy per aumentare la tua riservatezza."
+msgstr ""
+"Configura la tua chiave pubblica Pretty Good Privacy per aumentare la tua"
+" riservatezza."
 
-#: templates/wallet/partials/wallet_settings.html:310
+#: templates/wallet/partials/wallet_settings.html:337
 msgid "View/Edit Public Key"
 msgstr "Mostra/Modifica la chiave pubblica"
 
-#: templates/wallet/partials/wallet_settings.html:319
+#: templates/wallet/partials/wallet_settings.html:346
 msgid "Add Public Key"
 msgstr "Aggiungi la tua chiave pubblica"
 
-#: templates/wallet/partials/wallet_settings.html:329
+#: templates/wallet/partials/wallet_settings.html:356
 msgid "Quick login"
 msgstr "Accesso veloce"
 
-#: templates/wallet/partials/wallet_settings.html:330
+#: templates/wallet/partials/wallet_settings.html:357
 msgid "Enable a simple PIN to quickly access your wallet from this device."
 msgstr ""
 "Per avere un accesso sicuro ma veloce da questo dispositivo configura il "
 "PIN"
 
-#: templates/wallet/partials/wallet_settings.html:339
+#: templates/wallet/partials/wallet_settings.html:366
 msgid "Enable quick login on this device"
 msgstr "Abilita l'accesso rapido su questo dispositivo"
 
-#: templates/wallet/partials/wallet_settings.html:343
+#: templates/wallet/partials/wallet_settings.html:370
 msgid "Change PIN number"
 msgstr "Cambia PIN"
 
-#: templates/wallet/partials/wallet_settings.html:344
+#: templates/wallet/partials/wallet_settings.html:371
 msgid "Set PIN number"
 msgstr "Imposta PIN"
 
-#: templates/wallet/partials/signup_3_pin.html:22
-#: templates/wallet/partials/wallet_settings.html:346
-msgid "4-15 digits number"
-msgstr "numero di cifre 4-15"
-
-#: templates/wallet/partials/wallet_settings.html:353
+#: templates/wallet/partials/wallet_settings.html:380
 msgid "Disable quick login on all devices"
 msgstr "Disabilita l'accesso rapido da tutti i devices"
 
-#: templates/wallet/partials/wallet_settings.html:357
+#: templates/wallet/partials/wallet_settings.html:384
 msgid "set PIN to"
 msgstr "imposta PIN a"
 
-#: templates/wallet/partials/signup_3_pin.html:18
-#: templates/wallet/partials/wallet_settings.html:359
-msgid "PIN number"
-msgstr "codice PIN"
-
-#: templates/wallet/partials/wallet_settings.html:362
+#: templates/wallet/partials/wallet_settings.html:389
 msgid "Remove"
 msgstr "Rimuovi"
 
-#: templates/wallet/partials/wallet_settings.html:373
+#: templates/wallet/partials/wallet_settings.html:400
 msgid "Touch ID"
 msgstr ""
 
-#: templates/wallet/partials/wallet_settings.html:374
+#: templates/wallet/partials/wallet_settings.html:401
 #, fuzzy
 msgid "Enable Touch ID to quickly access your wallet from this device."
 msgstr ""
 "Per avere un accesso sicuro ma veloce da questo dispositivo configura il "
 "PIN"
 
-#: templates/wallet/partials/wallet_settings.html:382
+#: templates/wallet/partials/wallet_settings.html:409
 #, fuzzy
 msgid "Enable Touch ID on this device"
 msgstr "Abilita l'accesso rapido su questo dispositivo"
 
-#: templates/wallet/partials/wallet_settings.html:391
+#: templates/wallet/partials/wallet_settings.html:418
 msgid "Enable Watch-Only login"
 msgstr "Abilita modalità di accesso in sola lettura"
 
-#: templates/wallet/partials/wallet_settings.html:392
+#: templates/wallet/partials/wallet_settings.html:419
 msgid "Allow watch-only login to your wallet."
 msgstr "Permetti l'accesso al tuo wallet in modalità sola lettura"
 
 #: templates/wallet/partials/signuplogin/base.html:83
-#: templates/wallet/partials/wallet_settings.html:396
+#: templates/wallet/partials/wallet_settings.html:423
 msgid "Custom Login"
 msgstr "Accesso personalizzato"
 
-#: templates/wallet/partials/wallet_settings.html:402
+#: templates/wallet/partials/wallet_settings.html:429
 msgid "Username"
 msgstr "Nome utente"
 
 #: templates/wallet/partials/signuplogin/modal_decryption_password.html:8
-#: templates/wallet/partials/signuplogin/modal_encryption_password.html:10
-#: templates/wallet/partials/wallet_settings.html:403
+#: templates/wallet/partials/signuplogin/modal_encryption_password.html:8
+#: templates/wallet/partials/wallet_settings.html:430
 msgid "Password"
 msgstr "Password"
 
-#: templates/wallet/partials/wallet_settings.html:412
+#: templates/wallet/partials/wallet_settings.html:439
 msgid "Two factor authentication"
 msgstr "Autentificazione a due fattori"
 
-#: templates/wallet/partials/wallet_settings.html:413
+#: templates/wallet/partials/wallet_settings.html:440
 msgid "Set any or all two factor: you can choose which one when needed!"
 msgstr ""
 "Imposta uno o tutte le autenticazioni a due fattori: potrai scegliere "
 "quale usare!"
 
-#: templates/wallet/partials/wallet_settings.html:413
+#: templates/wallet/partials/wallet_settings.html:440
 msgid "Enable two or back up the given code where applicable."
 msgstr "Abilita due o fai un back up del codice mostrato se applicabile."
 
-#: templates/wallet/partials/wallet_settings.html:431
+#: templates/wallet/partials/wallet_settings.html:458
 msgid "Google Authenticator"
 msgstr "Autenticazione Google"
 
-#: templates/wallet/partials/wallet_settings.html:434
+#: templates/wallet/partials/wallet_settings.html:461
 msgid ""
 "You need to provide one Google Authenticator code to set up the two "
 "factor authentication.<br>                    Please scan the QR code "
@@ -1089,11 +1969,11 @@ msgstr ""
 "l'autenticazione a due fattori.<br> Per piacere usa il QR code qui sotto "
 "e fornisci il codice."
 
-#: templates/wallet/partials/wallet_settings.html:438
+#: templates/wallet/partials/wallet_settings.html:465
 msgid "Code"
 msgstr "Codice"
 
-#: templates/wallet/partials/wallet_settings.html:475
+#: templates/wallet/partials/wallet_settings.html:502
 msgid ""
 "You need to provide one SMS code to set up the two factor "
 "authentication.<br>                    Please check your phone and "
@@ -1103,7 +1983,7 @@ msgstr ""
 "configurare l'autenticazione a due fattori. Per piacere controlla gli SMS"
 " e inserisci il codice."
 
-#: templates/wallet/partials/wallet_settings.html:515
+#: templates/wallet/partials/wallet_settings.html:542
 msgid ""
 "You need to provide one phone code to set up the two factor "
 "authentication.<br>                    Please check your phone and "
@@ -1113,54 +1993,54 @@ msgstr ""
 "configurare l'autenticazione a due fattori.<br> Per piacere controlla gli"
 " SMS e inserisci il codice."
 
-#: templates/wallet/partials/wallet_settings.html:537
+#: templates/wallet/partials/wallet_settings.html:564
 msgid "Auto logout"
 msgstr "Esci automaticamente"
 
-#: templates/wallet/partials/wallet_settings.html:538
+#: templates/wallet/partials/wallet_settings.html:565
 msgid "Configure auto logout after some inactivity timeout"
 msgstr "Configura il logout automatico dopo un periodo di inattivita'"
 
-#: templates/wallet/partials/wallet_settings.html:542
+#: templates/wallet/partials/wallet_settings.html:569
 msgid "Minutes"
 msgstr "Minuti"
 
-#: templates/wallet/partials/wallet_settings.html:544
+#: templates/wallet/partials/wallet_settings.html:571
 msgid "Timeout minutes"
 msgstr "Timeout minuti"
 
-#: templates/wallet/partials/wallet_settings.html:554
-#: templates/wallet/partials/wallet_settings.html:558
+#: templates/wallet/partials/wallet_settings.html:581
+#: templates/wallet/partials/wallet_settings.html:585
 msgid "Show mnemonic"
 msgstr "Mnemonica"
 
-#: templates/wallet/partials/wallet_settings.html:555
+#: templates/wallet/partials/wallet_settings.html:582
 msgid "Display your mnemonic for account recovery or cloning on another device."
 msgstr ""
 "Mostra la tua passphrase per recuperare o clonare il wallet su un altro "
 "dispositivo."
 
-#: templates/wallet/partials/wallet_settings.html:559
+#: templates/wallet/partials/wallet_settings.html:586
 msgid "Show encrypted mnemonic"
 msgstr "Visualizza mnemonica crittografata"
 
-#: templates/wallet/partials/wallet_settings.html:561
+#: templates/wallet/partials/wallet_settings.html:588
 msgid "Write to NFC tag"
 msgstr "Scrivi su tag NFC"
 
-#: templates/wallet/partials/wallet_settings.html:562
+#: templates/wallet/partials/wallet_settings.html:589
 msgid "Write encrypted to NFC tag"
 msgstr "Scrivi crittografata su NFC tag"
 
-#: templates/wallet/partials/wallet_settings.html:565
+#: templates/wallet/partials/wallet_settings.html:592
 msgid "Write to a hardware wallet"
 msgstr "Scrivi su dispositivo wallet"
 
-#: templates/wallet/partials/wallet_settings.html:573
+#: templates/wallet/partials/wallet_settings.html:600
 msgid "Delayed payments"
 msgstr "Pagamenti ritardati"
 
-#: templates/wallet/partials/wallet_settings.html:574
+#: templates/wallet/partials/wallet_settings.html:601
 msgid ""
 "Delay transaction for super ease of mind: works best in conjuction with "
 "outgoing notifications."
@@ -1168,75 +2048,75 @@ msgstr ""
 "Ritarda le transazioni per stare tranquillo: funziona al meglio con la "
 "notifica dei movimenti in uscita."
 
-#: templates/wallet/partials/wallet_settings.html:582
+#: templates/wallet/partials/wallet_settings.html:609
 msgid "Enable delayed payments"
 msgstr "Abilita pagamenti ritardati"
 
-#: templates/wallet/partials/wallet_settings.html:583
+#: templates/wallet/partials/wallet_settings.html:610
 msgid "Coming soon"
 msgstr "Disponibile a breve"
 
-#: templates/wallet/partials/wallet_settings.html:588
+#: templates/wallet/partials/wallet_settings.html:615
 msgid "Delay payments of"
 msgstr "Ritarda il pagamento di"
 
-#: templates/wallet/partials/wallet_settings.html:606
-#: templates/wallet/partials/wallet_settings.html:610
+#: templates/wallet/partials/wallet_settings.html:633
+#: templates/wallet/partials/wallet_settings.html:637
 msgid "Remove account"
 msgstr "Rimuovi conto"
 
-#: templates/wallet/partials/wallet_settings.html:607
+#: templates/wallet/partials/wallet_settings.html:634
 msgid "You can remove your account with all associated data here."
 msgstr "Puoi rimuovere il tuo account con tutti i dati associati."
 
-#: templates/wallet/partials/wallet_settings.html:621
+#: templates/wallet/partials/wallet_settings.html:648
 #, fuzzy
 msgid "Simple accounts"
 msgstr "Rimuovi conto"
 
-#: templates/wallet/partials/wallet_settings.html:622
+#: templates/wallet/partials/wallet_settings.html:649
 msgid ""
 "Create accounts that allow you to separate your funds. Each account will "
 "have its own receiving addresses."
 msgstr ""
 
-#: templates/wallet/partials/wallet_settings.html:627
+#: templates/wallet/partials/wallet_settings.html:654
 msgid "Create an account with the following label:"
 msgstr ""
 
-#: templates/wallet/partials/wallet_settings.html:630
-#: templates/wallet/partials/wallet_settings.html:679
+#: templates/wallet/partials/wallet_settings.html:657
+#: templates/wallet/partials/wallet_settings.html:706
 msgid "Label"
 msgstr ""
 
-#: templates/wallet/partials/wallet_settings.html:632
-#: templates/wallet/partials/wallet_settings.html:681
+#: templates/wallet/partials/wallet_settings.html:659
+#: templates/wallet/partials/wallet_settings.html:708
 msgid "Create"
 msgstr ""
 
-#: templates/wallet/partials/wallet_settings.html:638
+#: templates/wallet/partials/wallet_settings.html:665
 #, fuzzy
 msgid "Your simple accounts:"
 msgstr "Rimuovi conto"
 
-#: templates/wallet/partials/wallet_settings.html:642
-#: templates/wallet/partials/wallet_settings.html:698
+#: templates/wallet/partials/wallet_settings.html:669
+#: templates/wallet/partials/wallet_settings.html:725
 #, fuzzy
 msgid "Actions"
 msgstr "Transazioni"
 
-#: templates/wallet/partials/wallet_settings.html:654
-#: templates/wallet/partials/wallet_settings.html:710
+#: templates/wallet/partials/wallet_settings.html:681
+#: templates/wallet/partials/wallet_settings.html:737
 #, fuzzy
 msgid "Rename"
 msgstr "Nome utente"
 
-#: templates/wallet/partials/wallet_settings.html:666
+#: templates/wallet/partials/wallet_settings.html:693
 #, fuzzy
 msgid "2of3 accounts"
 msgstr "Rimuovi conto"
 
-#: templates/wallet/partials/wallet_settings.html:668
+#: templates/wallet/partials/wallet_settings.html:695
 msgid ""
 "Create accounts that allow you to access your funds at any time even "
 "without access to GreenAddress, using additional offline recovery "
@@ -1247,7 +2127,7 @@ msgid ""
 "can't protect them from double spending."
 msgstr ""
 
-#: templates/wallet/partials/wallet_settings.html:670
+#: templates/wallet/partials/wallet_settings.html:697
 msgid ""
 "Create accounts that allow you to access your funds at any time even "
 "without access to GreenAddress, using additional offline recovery "
@@ -1256,990 +2136,35 @@ msgid ""
 "spending."
 msgstr ""
 
-#: templates/wallet/partials/wallet_settings.html:676
+#: templates/wallet/partials/wallet_settings.html:703
 msgid "Create a 2of3 account with the following label:"
 msgstr ""
 
-#: templates/wallet/partials/wallet_settings.html:688
+#: templates/wallet/partials/wallet_settings.html:715
 msgid "Optionally provide your custom recovery xpub:"
 msgstr ""
 
-#: templates/wallet/partials/wallet_settings.html:690
+#: templates/wallet/partials/wallet_settings.html:717
 msgid "xpub"
 msgstr ""
 
-#: templates/wallet/partials/wallet_settings.html:694
+#: templates/wallet/partials/wallet_settings.html:721
 #, fuzzy
 msgid "Your 2of3 accounts:"
 msgstr "Rimuovi conto"
 
-#: templates/wallet/partials/signup_qr_modal.html:2
-#: templates/wallet/partials/wallet_modal_mnemonic.html:2
-msgid "The QR code containing the passphrase to access your wallet is:"
-msgstr ""
-"Il codice QR che contiene la tua passphrase per accedere al tuo "
-"portafoglio è:"
-
-#: templates/wallet/partials/signup_qr_modal.html:4
-#: templates/wallet/partials/wallet_modal_mnemonic.html:6
-msgid "Remember to store it in a safe place!"
-msgstr "Fai il backup di questa pagina in un posto sicuro!"
-
-#: templates/wallet/partials/wallet_modal_pin.html:4
-msgid ""
-"You can create a 4-digit personal identification number used to retrieve "
-"the password encrypting the mnemonic passphrase."
-msgstr "Devi create un PIN a 4 cifre per proteggere la passphrase mnemonica."
-
-#: templates/wallet/partials/signuplogin/base.html:23
-#: templates/wallet/partials/wallet_modal_btchip_pin.html:8
-#: templates/wallet/partials/wallet_modal_pin.html:8
-msgid "Enter your PIN"
-msgstr "Inserici il tuo PIN"
-
-#: templates/wallet/partials/wallet_modal_pin.html:14
-msgid "PIN must be a 4-digit number"
-msgstr "Il PIN deve essere formato da 4 numeri"
-
-#: templates/wallet/partials/wallet_modal_btchip_pin.html:23
-#: templates/wallet/partials/wallet_modal_pin.html:23
-msgid "Confirm PIN number"
-msgstr "Conferma PIN"
-
-#: templates/wallet/partials/signup_0_warning.html:8
-msgid ""
-"For improved security continue the registration via our desktop or mobile"
-" apps"
-msgstr ""
-"Per maggior sicurezza, continua la tua registrazione attraverso la nostra"
-" app desktop o mobile"
-
-#: templates/wallet/partials/signup_0_warning.html:9
-#: templates/wallet/partials/signuplogin/header_wallet.html:7
-msgid "Locally installed apps are generally more secure than websites"
-msgstr ""
-"Applicazioni installate localmente sono generalmente piu' sicure da "
-"utilizzare che dei siti web"
-
-#: templates/wallet/partials/signup_0_warning.html:12
-#: templates/wallet/partials/signuplogin/base.html:69
-msgid ""
-"These apps are designed to protect you and your coins even in case the "
-"service is compromised and should be preferred over using the browser."
-msgstr ""
-"Queste apps sono disegnate per proteggere te e i tuoi bitcoin anche in "
-"caso il servizio fosse attaccato e queste dovrebbero essere preferibili "
-"all'utilizzare direttamente il sito da browser."
-
-#: templates/wallet/partials/signup_0_warning.html:13
-msgid ""
-"Web access is intended to be used for watch only mode or if you have no "
-"alternative, like on the Windows Mobile platform."
-msgstr ""
-"L'accesso via web è principalmente inteso per usare la modalità watch-"
-"only o se non hai alternativa, come sulla piattaforma Windows Mobile."
-
-#: templates/wallet/partials/signup_0_warning.html:16
-#: templates/wallet/partials/signuplogin/base.html:73
-msgid ""
-"Please see the link to Google Play store, Chrome Web Store or AppStore "
-"below"
-msgstr ""
-"Per piacere vai su Google Play store, Chrome Web store o App store qui "
-"sotto"
-
-#: templates/wallet/partials/signup_0_warning.html:26
-msgid "Continue using web page"
-msgstr "Continua su web"
-
-#: templates/wallet/partials/wallet_modal_btchip_fup.html:6
-msgid "To upgrade your firmware, please use the following Chrome extension: "
-msgstr ""
-
-#: templates/wallet/partials/wallet_modal_btchip_fup.html:8
-#, fuzzy
-msgid "Ledger Wallet"
-msgstr "Crea il tuo portafoglio"
-
-#: templates/wallet/partials/wallet_modal_mnemonic.html:3
-#, fuzzy
-msgid ""
-"The QR code containing the passphrase for recovery access to your "
-"subaccount is:"
-msgstr ""
-"Il codice QR che contiene la tua passphrase per accedere al tuo "
-"portafoglio è:"
-
-#: templates/wallet/partials/wallet_modal_mnemonic.html:5
-msgid ""
-"This passphrase is encrypted, so your encryption password is required to "
-"use it."
-msgstr ""
-"Questa password è criptata, quindi la tua password di crittazione è "
-"richiesta per utilizzarla."
-
-#: templates/wallet/partials/wallet_modal_mnemonic.html:7
-msgid ""
-"The subaccount mnemonic is not stored anywhere neither by GreenAddress, "
-"nor by your browser, so you *HAVE* to back it up to have a recovery "
-"access to your 2of3 subaccount."
-msgstr ""
-
-#: templates/wallet/partials/signup_1_init.html:35
-#: templates/wallet/partials/wallet_modal_mnemonic.html:9
-msgid "Your mnemonic passphrase"
-msgstr "La tua passphrase mnemonica"
-
-#: templates/wallet/partials/wallet_modal_mnemonic.html:13
-#, fuzzy
-msgid "Your subaccount recovery mnemonic passphrase"
-msgstr "La tua passphrase mnemonica"
-
-#: templates/wallet/partials/wallet_modal_mnemonic.html:18
-#, fuzzy
-msgid "Your subaccount recovery xpub"
-msgstr "La tua passphrase mnemonica"
-
-#: templates/wallet/partials/wallet_modal_mnemonic.html:23
-msgid "Your subaccount GreenAddress xpub"
-msgstr ""
-
-#: templates/wallet/partials/wallet_modal_tx_redeem.html:2
-msgid "Take funds back"
-msgstr "Riprenditi i bitcoin"
-
-#: templates/wallet/partials/wallet_modal_tx_redeem.html:6
-msgid "Do you want to take funds back from the following transaction?"
-msgstr "Vuoi riprendere i bitcoin da questa transazione?"
-
-#: templates/wallet/partials/wallet_modal_2fa.html:32
-#: templates/wallet/partials/wallet_modal_custom_login.html:26
-#: templates/wallet/partials/wallet_modal_reset_email.html:11
-#: templates/wallet/partials/wallet_modal_tx_limits_fiat_warning.html:9
-#: templates/wallet/partials/wallet_modal_tx_redeem.html:25
-msgid "OK"
-msgstr "OK"
-
-#: templates/wallet/partials/wallet_modal_logout.html:5
-msgid "Do you want to log out?"
-msgstr "Vuoi uscire?"
-
-#: templates/wallet/partials/concurrent_login.html:6
-msgid "You were logged out."
-msgstr "Sei uscito"
-
-#: templates/wallet/partials/concurrent_login.html:11
-msgid ""
-"          You have logged in elsewhere.<br>          <small>If it was not"
-" you, please contact <strong>immediately</strong>        "
-msgstr ""
-"             Ti sei loggato altrove. <br><small> Se non eri tu, per "
-"piacere contatta <strong> subito</strong>       "
-
-#: templates/wallet/partials/concurrent_login.html:16
-#: templates/wallet/partials/concurrent_login.html:18
-#: templates/wallet/partials/concurrent_login.html:20
-msgid "support"
-msgstr "supporto"
-
-#: templates/wallet/partials/concurrent_login.html:24
-msgid "Go back to login"
-msgstr "Torna al login"
-
-#: templates/wallet/partials/wallet_modal_remove_account.html:2
-msgid ""
-"Are you sure you want to permanently remove your wallet and all "
-"associated data from our servers?"
-msgstr ""
-"Sei sicuro di voler rimuovere permanentemente il tuo portafoglio e tutti "
-"i dati associati dai nostri server?"
-
-#: templates/wallet/partials/wallet_modal_remove_account.html:5
-msgid "Remove my account"
-msgstr "Rimuovere il mio account"
-
-#: templates/wallet/partials/wallet_modal_verify_mnemonic.html:4
-#, fuzzy
-msgid "Please enter the missing words from your mnemonic:"
-msgstr ""
-"Per piacere inserisci le seguenti parole dalla tua frase mnemonica "
-"<strong>non</strong> crittografata:"
-
-#: templates/wallet/partials/wallet_modal_verify_mnemonic.html:5
-msgid "(to verify that you backed it up correctly)"
-msgstr ""
-
-#: templates/wallet/partials/wallet_modal_verify_mnemonic.html:10
-msgid "Word #"
-msgstr "Parola #"
-
-#: templates/wallet/partials/wallet_modal_verify_mnemonic.html:20
-msgid "Cancel and return to first step"
-msgstr ""
-
-#: templates/wallet/partials/wallet_modal_verify_mnemonic.html:22
-msgid "Verify"
-msgstr "Verifica"
-
-#: templates/wallet/partials/wallet_receive.html:13
-#, fuzzy
-msgid "Account"
-msgstr "Aggiungi un account"
-
-#: templates/wallet/partials/wallet_receive.html:21
-msgid ""
-"You are logged in via watch only mode, you will need to login with the "
-"mnemonics passphrase (or hardware wallet if applicable) to spend."
-msgstr ""
-
-#: templates/wallet/partials/wallet_receive.html:57
-#, fuzzy
-msgid "Wallet URI"
-msgstr "portafoglio"
-
-#: templates/wallet/partials/wallet_receive.html:59
-msgid "Bitcoin URI"
-msgstr "Indirizzo Bitcoin"
-
-#: templates/wallet/partials/wallet_receive.html:66
-msgid "Show URI and address"
-msgstr "Visualizza URI e indirizzo"
-
-#: templates/wallet/partials/wallet_modal_gauth_qr.html:10
-#: templates/wallet/partials/wallet_receive.html:68
-#: templates/wallet/partials/wallet_receive.html:91
-msgid "Copy to clipboard"
-msgstr "Copia"
-
-#: templates/wallet/partials/wallet_receive.html:84
-msgid "Permanent Payment URL"
-msgstr "Indirizzo permanente per pagamenti"
-
-#: templates/wallet/partials/wallet_receive.html:100
-msgid "Private key in WIF or BIP38 format"
-msgstr "Chiave privata in formato WIF o BIP38"
-
-#: templates/wallet/partials/wallet_receive.html:104
-msgid "Enter a private key to sweep here"
-msgstr "Inserisci qui la chiave privata dei fondi da acquisire"
-
-#: templates/wallet/partials/wallet_receive.html:113
-msgid "Sweep"
-msgstr "Acquisisci"
-
-#: templates/wallet/partials/wallet_receive.html:130
-msgid "Show previously generated addresses"
-msgstr "Mostra tutti gli indirizzi generati fino ad oggi"
-
-#: templates/wallet/partials/wallet_receive.html:133
-#: templates/wallet/partials/wallet_send.html:190
-msgid "Show advanced options"
-msgstr "Mostra opzioni avanzate"
-
-#: templates/wallet/partials/signup_1_init.html:13
-#: templates/wallet/partials/signup_1_trezor.html:13
-#: templates/wallet/partials/signup_2_2factor.html:7
-#: templates/wallet/partials/signup_3_pin.html:7
-msgid "Step"
-msgstr "Passo"
-
-#: templates/wallet/partials/signup_1_init.html:13
-#: templates/wallet/partials/signup_1_trezor.html:13
-#: templates/wallet/partials/signup_2_2factor.html:7
-#: templates/wallet/partials/signup_3_pin.html:7
-msgid "of"
-msgstr "di"
-
-#: templates/wallet/partials/signup_2_2factor.html:14
-msgid "Don't compromise on security"
-msgstr "Non rischiare con la sicurezza"
-
-#: templates/wallet/partials/signup_2_2factor.html:14
-msgid "Set up two factor authentication"
-msgstr "Autenticazione a due fattori"
-
-#: templates/wallet/partials/signup_2_2factor.html:16
-msgid "Please wait while we log you into your new wallet..."
-msgstr "Per piacere aspetta mentre entri nel tuo nuovo wallet..."
-
-#: templates/wallet/partials/signup_2_2factor.html:18
-#, fuzzy
-msgid ""
-"We recommend to set up multiple two factor authentication methods, this "
-"will make your wallet much more secure and will let you some additional "
-"features such as Spending Limits."
-msgstr ""
-"Ti richiediamo di abilitare un'autenticazione a due fattori, questo "
-"renderà il tuo portafoglio molto più sicuro e ti permetterà di usare "
-"Limiti e Ritardi."
-
-#: templates/wallet/partials/signup_2_2factor.html:19
-msgid ""
-"Multiple methods will allow backup access to your funds in case any of "
-"your two factor become unavailable."
-msgstr ""
-
-#: templates/wallet/partials/signup_2_2factor.html:20
-msgid ""
-"To issue a transaction you will not only need to login to your wallet but"
-" also confirm it with a code sent to you via email, SMS or google "
-"authenticator as per your choice."
-msgstr ""
-"Per effettuare una transazione ti verrà richiesto un codice a due fattori"
-" via email, SMS o Google Authenticator come hai scelto."
-
-#: templates/wallet/partials/signup_2_2factor.html:25
-#: templates/wallet/partials/signup_3_pin.html:37
-#: templates/wallet/partials/wallet_modal_btchip_setup.html:15
-#: templates/wallet/partials/wallet_modal_trezor_setup.html:18
-msgid "Generating your wallet keys, please wait"
-msgstr "Generazione delle chiavi del tuo portafogli"
-
-#: templates/wallet/partials/signup_2_2factor.html:28
-#: templates/wallet/partials/signup_3_pin.html:40
-msgid "Please wait, logging in..."
-msgstr "Attendi per favore, accesso in corso..."
-
-#: templates/wallet/partials/signup_1_init.html:58
-#: templates/wallet/partials/signup_1_trezor.html:34
-#: templates/wallet/partials/signup_2_2factor.html:31
-#: templates/wallet/partials/signup_2_2factor.html:34
-#: templates/wallet/partials/wallet_modal_no_electrum.html:11
-msgid "Continue"
-msgstr "Continua"
-
-#: templates/wallet/partials/wallet_modal_tx_limits_fiat_warning.html:2
-msgid "Confirm changing the pricing source"
-msgstr "Confermare la modifica dell'origine dei prezzi"
-
-#: templates/wallet/partials/wallet_modal_tx_limits_fiat_warning.html:5
-msgid ""
-"Changing the pricing source while using it for transaction limits will "
-"result in resetting the limits to 0. Do you want to proceed?"
-msgstr ""
-"Cambiare la fonte del cambio mentre viene usata per i limiti di "
-"transazione risulterà nel reset dei limiti a 0. Vuoi procedere?"
-
-#: templates/wallet/partials/wallet_modal_gauth_qr.html:2
-msgid "The QR code for Google Authenticator access to your wallet is:"
-msgstr ""
-"Il codice QR che contiene la tua passphrase per accedere al tuo "
-"portafoglio è:"
-
-#: templates/wallet/partials/wallet_modal_gauth_qr.html:4
-msgid ""
-"Please write this down or print it for emergencies, i.e. you lose your "
-"device"
-msgstr ""
-
-#: templates/wallet/partials/wallet_modal_gauth_qr.html:5
-msgid "You can also copy the code manually:"
-msgstr "Puoi anche copiare il codice manualmente:"
-
-#: templates/wallet/partials/wallet_modal_voucher.html:4
-msgid "Voucher created successfully!"
-msgstr "Buono creato con successo!"
-
-#: templates/wallet/partials/wallet_modal_voucher.html:7
-msgid ""
-"Warning: some printers store printed documents internally, so it can be "
-"insecure to print the voucher."
-msgstr ""
-"Attenzione: alcune stampanti tengono in memoria i documenti, in questi "
-"casi la stampa è poco sicura."
-
-#: templates/wallet/partials/wallet_modal_voucher.html:7
-msgid "Print the voucher"
-msgstr "Stampa il voucher"
-
-#: templates/wallet/partials/wallet_modal_voucher.html:21
-msgid "This is a GreenAddress voucher for "
-msgstr "Questo è un voucher GreenAddress per "
-
-#: templates/wallet/partials/wallet_modal_voucher.html:23
-msgid "The QR code below contains a URL for redeeming the funds:"
-msgstr "Il codice QR sottostante contiene l'URL per riscattare i soldi:"
-
-#: templates/wallet/partials/wallet_modal_voucher.html:25
-msgid ""
-"Alternatively, you can sweep funds to a wallet supporting Wallet Import "
-"Format using the following QR code:"
-msgstr ""
-"In alternativa, puoi muovere i fondi a un portafoglio che supporta "
-"l'importazione tramite il seguente qr code:"
-
-#: templates/wallet/partials/wallet_modal_voucher.html:26
-msgid ""
-"Alternatively, you can sweep funds to a wallet supporting BIP38 using the"
-" following QR code:"
-msgstr ""
-"In alternativa puoi spostare i fondi a un portafogli che supporta BIP38 "
-"usando il seguente qr code:"
-
-#: templates/wallet/partials/wallet_modal_2fa.html:6
-msgid "You must provide 2 factor authentication code to perform this action"
-msgstr ""
-"Devi fornire il tuo codice di autenticazione a due fattori per "
-"disabilitarla"
-
-#: templates/wallet/partials/wallet_modal_2fa.html:9
-msgid "Please select authentication method"
-msgstr "Scegli quale autenticazione a due fattori usare"
-
-#: templates/wallet/partials/wallet_modal_2fa.html:15
-msgid "Please enter your "
-msgstr "Per favore inserisci "
-
-#: templates/wallet/partials/wallet_modal_2fa.html:15
-msgid " authentication code which we have just sent to you."
-msgstr " codice di autenticazione che vi abbiamo appena inviato."
-
-#: templates/wallet/partials/wallet_modal_2fa.html:18
-msgid "Please enter the "
-msgstr "Per piacere inserisci qui"
-
-#: templates/wallet/partials/wallet_modal_2fa.html:18
-msgid " code"
-msgstr "codice SMS:"
-
-#: templates/wallet/partials/signup_3_pin.html:14
-msgid "Fast and secure access to your Wallet"
-msgstr "Accesso rapido e sicuro al tuo portafogli"
-
-#: templates/wallet/partials/signup_3_pin.html:14
-msgid "To have a secure but quick access from this device set your PIN"
-msgstr ""
-"Per avere un accesso sicuro ma veloce da questo dispositivo configura il "
-"PIN"
-
-#: templates/wallet/partials/signup_3_pin.html:29
-msgid ""
-"Access by PIN allows a quick login while keeping security to a high "
-"standard.                    The PIN secures a random AES 256 bit "
-"password which we will delete if 3 PIN attempts                    fail, "
-"forcing you to provide your full mnemonics once again. Easy, convenient "
-"and secure, so let's use it!"
-msgstr ""
-"Accedere col PIN permetter un accesso veloce mantenendo la sicurezza a "
-"standard elevati. Il PIN rende sicura una passwrod random AES 256 bit che"
-" cancelliamo dopo tre tentativi falliti, costringendoti a immettere "
-"nuovamente la mnemonica. Facile, rapido e sicuro, usalo!"
-
-#: templates/wallet/partials/signup_3_pin.html:43
-msgid "Take me to my wallet and skip all this!"
-msgstr "Portami al mio portafoglio e saltiamo la configurazione!"
-
-#: templates/wallet/partials/signup_3_pin.html:46
-msgid "PIN set, ready for step 3"
-msgstr "PIN configurato, vai al passo 3"
-
-#: templates/wallet/partials/signup_3_pin.html:47
-msgid "Setting PIN..."
-msgstr "Configurazione PIN..."
-
-#: templates/wallet/partials/signup_3_pin.html:50
-msgid "Skip PIN setup and continue"
-msgstr "Salta l'impostazione del PIN e continua"
-
-#: templates/wallet/partials/wallet_modal_custom_login.html:4
-msgid "Please provide username and password."
-msgstr "Per favore inserisci nome utente e password"
-
-#: templates/wallet/partials/wallet_modal_custom_login.html:8
-msgid "Enter your username"
-msgstr "Inserisci il tuo nome utente"
-
-#: templates/wallet/partials/wallet_modal_custom_login.html:14
-msgid "Enter your password"
-msgstr "Inserisci la tua password"
-
-#: templates/wallet/partials/wallet_modal_btchip_setup.html:3
-msgid ""
-"Your Ledger is already set up. To use it with GreenAddress, you need to "
-"reset it. Do you want to reset your Ledger? This will be performed by "
-"entering wrong PIN 3 times in a row. <strong>You will lose your keys "
-"currently stored on the device.</strong>"
-msgstr ""
-
-#: templates/wallet/partials/wallet_modal_btchip_setup.html:4
-msgid "Reset my Ledger"
-msgstr ""
-
-#: templates/wallet/partials/wallet_modal_btchip_setup.html:5
-msgid "Reuse current setup"
-msgstr ""
-
-#: templates/wallet/partials/wallet_modal_btchip_setup.html:6
-msgid "Resetting..."
-msgstr "Resetting..."
-
-#: templates/wallet/partials/wallet_modal_btchip_setup.html:7
-msgid "Please unplug and plug your device in again"
-msgstr "Per piacere rimuovi e reinserisci il tuo dispositivo di nuovo"
-
-#: templates/wallet/partials/wallet_modal_btchip_setup.html:7
-msgid "wrong PINs remaining"
-msgstr "tentativi PIN rimasti"
-
-#: templates/wallet/partials/wallet_modal_btchip_setup.html:10
-#, fuzzy
-msgid ""
-"Empty Ledger detected successfully. Click the button below to store your "
-"seed on it."
-msgstr ""
-"Nuovo dispositivo vuoto BTChip trovato. Fai click sul bottone qui sotto "
-"per salvare all'interno del dispositivo i tuoi dati di accesso."
-
-#: templates/wallet/partials/wallet_modal_btchip_setup.html:11
-#, fuzzy
-msgid "Empty Ledger detected successfully. Click the button below to set it up."
-msgstr ""
-"Nuovo dispositivo vuoto BTChip trovato. Fai click sul bottone qui sotto "
-"per salvare all'interno del dispositivo i tuoi dati di accesso."
-
-#: templates/wallet/partials/wallet_modal_btchip_setup.html:12
-msgid "Save to Ledger"
-msgstr ""
-
-#: templates/wallet/partials/wallet_modal_btchip_setup.html:13
-msgid "Set up Ledger"
-msgstr ""
-
-#: templates/wallet/partials/wallet_modal_btchip_setup.html:19
-#: templates/wallet/partials/wallet_modal_btchip_setup.html:22
-#, fuzzy
-msgid "Ledger setup successful!"
-msgstr "BTChip configurato correttamente!"
-
-#: templates/wallet/partials/wallet_modal_btchip_setup.html:20
-msgid ""
-"Please unplug your Ledger and plug it into a secure device supporting USB"
-" keyboards to read the seed backup."
-msgstr ""
-
-#: templates/wallet/partials/wallet_modal_btchip_setup.html:21
-msgid ""
-"On the second device remember to first open a text editor or a similar "
-"application where the seed will be typed in by Ledger."
-msgstr ""
-
-#: templates/wallet/partials/wallet_modal_no_electrum.html:4
-msgid ""
-"No Electrum servers are reachable. They are used to verify that our "
-"servers don't attempt misleading your client into spending wrong amount "
-"of money."
-msgstr ""
-"Nessun server di electrum è raggiungibile. Sono usati per verificare che "
-"i nostri server non tentino di fuorviare il client nello spendere un "
-"ammontare sbagliato di denaro."
-
-#: templates/wallet/partials/wallet_modal_no_electrum.html:5
-msgid ""
-"Do you want to continue sending the transaction without Electrum network "
-"verification?"
-msgstr ""
-"Vuoi comunque inviare la transazione senza la verifica del network di "
-"electrum?"
-
-#: templates/wallet/partials/wallet_modal_reset_email.html:4
-msgid ""
-"This email is already used by a different account. Do you want to unlink "
-"it from that account?"
-msgstr ""
-
-#: templates/wallet/partials/wallet_modal_reset_email.html:5
-msgid "Warning"
-msgstr "Attenzione"
-
-#: templates/wallet/partials/wallet_modal_reset_email.html:5
-msgid ""
-"This can disable two factor authentication if you have no other 2FA "
-"method set up in that account."
-msgstr ""
-
-#: templates/wallet/partials/wallet_modal_expiring_soon.html:2
-msgid "Outputs expiring soon"
-msgstr "Gli outputs scadranno presto"
-
-#: templates/wallet/partials/wallet_modal_expiring_soon.html:7
-msgid "No active nLockTime transactions found"
-msgstr "Non ci sono transazioni nLockTime attive"
-
-#: templates/wallet/partials/wallet_modal_expiring_soon.html:9
-msgid "Transaction hash, output number"
-msgstr "Hash della transazione, numero di output"
-
-#: templates/wallet/partials/signup_1_init.html:7
-#: templates/wallet/partials/signup_1_trezor.html:7
-msgid "Already got an account?"
-msgstr "Hai già un account?"
-
-#: templates/wallet/partials/signup_1_init.html:9
-#: templates/wallet/partials/signup_1_init.html:11
-#: templates/wallet/partials/signup_1_trezor.html:9
-#: templates/wallet/partials/signup_1_trezor.html:11
-#: templates/wallet/partials/signuplogin/trezor.html:18
-msgid "Login to your Wallet"
-msgstr "Per piacere accedi per usare il tuo portafogli"
-
-#: templates/wallet/partials/signup_1_init.html:20
-#, fuzzy
-msgid "Use a Hardware Wallet to create a GreenAddress wallet"
-msgstr "Connetti Trezor per creare un portafoglio GreenAddress"
-
-#: templates/wallet/partials/signup_1_init.html:21
-#, fuzzy
-msgid ""
-"Please finish this 3-step account setup to fully secure it against "
-"intruders"
-msgstr ""
-"Per piacere completa questi 4 passaggi per configurare e per rendere "
-"sicuro il tuo portafoglio."
-
-#: templates/wallet/partials/signup_1_init.html:25
-msgid ""
-"You can also disconnect the Hardware Wallet and refresh this page to "
-"create a wallet without the device."
-msgstr ""
-
-#: templates/wallet/partials/signup_1_init.html:26
-msgid "Click here to refresh."
-msgstr ""
-
-#: templates/wallet/partials/signup_1_init.html:31
-msgid "You are now the proud owner of a bitcoin wallet"
-msgstr "Ora puoi vantarti di avere un portafoglio Bitcoin"
-
-#: templates/wallet/partials/signup_1_init.html:32
-msgid ""
-"Please finish this 4-step account setup to fully secure it against "
-"intruders"
-msgstr ""
-"Per piacere completa questi 4 passaggi per configurare e per rendere "
-"sicuro il tuo portafoglio."
-
-#: templates/wallet/partials/signup_1_init.html:39
-msgid "Generating mnemonic, please wait..."
-msgstr "Generazione mnemonica in corso..."
-
-#: templates/wallet/partials/signup_1_init.html:41
-msgid ""
-"Please write down these words and store them in a safe place as they "
-"can't be recovered."
-msgstr ""
-"Per piacere scrivi e non perdere queste parole perchè non possono essere "
-"recuperate altrimenti."
-
-#: templates/wallet/partials/signup_1_init.html:41
-msgid ""
-"We do not store the above information anywhere, we can't help you recover"
-" it!"
-msgstr ""
-"Non salviamo queste parole sui nostri server dunque non possiamo aiutarti"
-" a recuperarle se le perdi!"
-
-#: templates/wallet/partials/signup_1_init.html:46
-msgid "I confirm that my passphrase is saved &amp; secured and I agree with the "
-msgstr "Confermo che la mia passphrase è al sicuro e aderisco"
-
-#: templates/wallet/partials/signup_1_init.html:48
-#: templates/wallet/partials/signup_1_init.html:50
-#: templates/wallet/partials/signup_1_init.html:52
-#: templates/wallet/partials/signup_1_trezor.html:31
-msgid "Terms of Service"
-msgstr "Termini di Servizio"
-
-#: templates/wallet/partials/signup_1_init.html:63
-#: templates/wallet/partials/signup_1_trezor.html:39
-msgid "Error: "
-msgstr "Errore: "
-
-#: templates/wallet/partials/signup_1_init.html:63
-#: templates/wallet/partials/signup_1_trezor.html:39
-msgid " Click to try again"
-msgstr "Errore, riprovare"
-
-#: templates/wallet/partials/wallet_modal_trezor_confirm_button.html:9
-#, fuzzy
-msgid "Please confirm the action on your Hardware Wallet device."
-msgstr "Per favore conferma la firma sul tuo Trezor."
-
-#: templates/wallet/partials/wallet_modal_trezor_setup.html:3
-msgid ""
-"Your Hardware Wallet is already set up. You must wipe it to write "
-"GreenAddress mnemonic to it. Do you want to wipe?"
-msgstr ""
-
-#: templates/wallet/partials/wallet_modal_trezor_setup.html:4
-#: templates/wallet/partials/wallet_modal_trezor_setup.html:9
-msgid "No"
-msgstr ""
-
-#: templates/wallet/partials/wallet_modal_trezor_setup.html:5
-#: templates/wallet/partials/wallet_modal_trezor_setup.html:10
-msgid "Yes"
-msgstr ""
-
-#: templates/wallet/partials/wallet_modal_trezor_setup.html:8
-msgid ""
-"Your Hardware Wallet is already set up. To use it with GreenAddress, you "
-"can either reset it, or use the existing wallet seed. To reset it, please"
-" go to myTREZOR or equivalent and use the 'Wipe device' feature from "
-"advanced details. Do you want to use the existing seed? <strong>NOTE: if "
-"you use it, you won't be able to se myTREZOR transactions in "
-"GreenAddress, because we don't support non-multisig "
-"transactions.</strong> Do you want to reuse existing seed?"
-msgstr ""
-
-#: templates/wallet/partials/wallet_modal_trezor_setup.html:13
-#, fuzzy
-msgid ""
-"Empty Hardware Wallet detected successfully. Click the button below to "
-"store your seed on it."
-msgstr ""
-"Nuovo dispositivo vuoto BTChip trovato. Fai click sul bottone qui sotto "
-"per salvare all'interno del dispositivo i tuoi dati di accesso."
-
-#: templates/wallet/partials/wallet_modal_trezor_setup.html:14
-#, fuzzy
-msgid ""
-"Empty Hardware Wallet detected successfully. Click the button below to "
-"set it up."
-msgstr ""
-"Nuovo dispositivo vuoto BTChip trovato. Fai click sul bottone qui sotto "
-"per salvare all'interno del dispositivo i tuoi dati di accesso."
-
-#: templates/wallet/partials/wallet_modal_trezor_setup.html:15
-#, fuzzy
-msgid "Save to Hardware Wallet"
-msgstr "Scrivi su dispositivo wallet"
-
-#: templates/wallet/partials/wallet_modal_trezor_setup.html:16
-#, fuzzy
-msgid "Set up Hardware Wallet"
-msgstr "Scrivi su dispositivo wallet"
-
-#: templates/wallet/partials/wallet_modal_trezor_setup.html:22
-#, fuzzy
-msgid "Hardware Wallet setup successful!"
-msgstr "BTChip configurato correttamente!"
-
-#: templates/wallet/partials/signup_1_trezor.html:20
-#, fuzzy
-msgid "Connect Hardware Wallet to create a GreenAddress wallet"
-msgstr "Connetti Trezor per creare un portafoglio GreenAddress"
-
-#: templates/wallet/partials/signup_1_trezor.html:21
-msgid "This 3-step account setup will fully secure it against intruders"
-msgstr ""
-"Questi 3 passaggi renderanno il tuo account completamente sicuro da "
-"eventuali intrusioni"
-
-#: templates/wallet/partials/signup_1_trezor.html:24
-#: templates/wallet/partials/signuplogin/trezor.html:12
-#, fuzzy
-msgid "Please connect your Hardware Wallet device"
-msgstr "Per favore connetti il tuo dispositivo Trezor"
-
-#: templates/wallet/partials/signup_1_trezor.html:25
-#: templates/wallet/partials/signuplogin/trezor.html:13
-msgid "Hardware Wallet detected."
-msgstr ""
-
-#: templates/wallet/partials/signup_1_trezor.html:26
-#: templates/wallet/partials/signuplogin/trezor.html:14
-#, fuzzy
-msgid "Please confirm the signature on your Hardware Wallet device."
-msgstr "Per favore conferma la firma sul tuo Trezor."
-
-#: templates/wallet/partials/signup_1_trezor.html:31
-msgid "I agree with the "
-msgstr "Sono d'accordo con i "
-
-#: templates/wallet/partials/signup_1_trezor.html:51
-msgid "The passphrase to access your wallet is:"
-msgstr "La passphrase per accedere al tuo portafoglio è:"
-
-#: templates/wallet/partials/signup_1_trezor.html:54
-msgid "Store this page in a safe place"
-msgstr "Salva questa pagina in un posto sicuro"
-
-#: templates/wallet/partials/wallet_fiat_price.html:3
-msgid "min"
-msgstr "minuto"
-
-#: templates/wallet/partials/wallet_fiat_price.html:3
-msgid "mins"
-msgstr "minuti"
-
-#: templates/wallet/partials/wallet_fiat_price.html:3
-msgid "sec"
-msgstr "secondo"
-
-#: templates/wallet/partials/wallet_fiat_price.html:3
-msgid "secs"
-msgstr "secondi"
-
-#: templates/wallet/partials/wallet_fiat_price.html:4
-msgid "ago"
-msgstr "fa"
-
-#: templates/wallet/partials/wallet_fiat_price.html:7
-msgid "just updated"
-msgstr "appena aggiornato"
-
-#: templates/wallet/partials/wallet_modal_fb_message.html:4
-msgid "Please send the Facebook message."
-msgstr "Per favore manda il messaggio via Facebook."
-
-#: templates/wallet/partials/wallet_modal_fb_message.html:11
-msgid "Cancel - revert transaction"
-msgstr "Annulla - storna la transazione"
-
-#: templates/wallet/partials/wallet_modal_fb_message.html:12
-msgid "I have sent the message"
-msgstr "Messaggio inviato"
-
-#: templates/wallet/partials/browser_unsupported.html:6
-#: templates/wallet/partials/browser_unsupported.html:10
-msgid "We are sorry, but your browser is not supported."
-msgstr "Ci spiace ma il tuo browser non è supportato."
-
-#: templates/wallet/partials/browser_unsupported.html:11
-msgid ""
-"Please try a modern browser like Chrome, Firefox, Safari or our Android, "
-"iOS or F-Droid app!"
-msgstr ""
-"Prova un browser moderno come Chrome, Firefox, Safari o la nostra app "
-"Android, iOS o F-Droid!"
-
-#: templates/wallet/partials/signup_nfc_modal.html:2
-msgid "There was a problem writing to the NFC tag:"
-msgstr "C'è stato un problema nello scrivere la tag NFC:"
-
-#: templates/wallet/partials/signup_nfc_modal.html:5
-msgid "Initialising NFC tags listener..."
-msgstr "Inizializzazione ascolto tags NFC..."
-
-#: templates/wallet/partials/signup_nfc_modal.html:8
-msgid "Please hold your tag(s) close to the device to write your wallet!"
-msgstr ""
-"Per piacere avvicina la o le tags al tuo dispositivo per scriverci il tuo"
-" portafogli!"
-
-#: templates/wallet/partials/signup_nfc_modal.html:9
-msgid "Tags written:"
-msgstr "Tags scritte:"
-
-#: templates/wallet/partials/signup_nfc_modal.html:10
-msgid "Tags formatted:"
-msgstr "Tags cancellate:"
-
-#: templates/wallet/partials/signup_nfc_modal.html:13
-msgid ""
-"Your NFC is not enabled or not available. If available, please enable it "
-"in settings"
-msgstr ""
-"Il tuo nfc non è abilitato o disponibile. Se disponibile per favore "
-"abilitalo nelle impostazioni"
-
-#: templates/wallet/partials/wallet_send.html:12
-#, fuzzy
-msgid "From account"
-msgstr "Aggiungi un account"
-
-#: templates/wallet/partials/wallet_send.html:29
-msgid "Enter recipient's address "
-msgstr "Inserisci l'indirizzo del ricevente"
-
-#: templates/wallet/partials/wallet_send.html:35
-msgid "Paste"
-msgstr "Incolla"
-
-#: templates/wallet/partials/wallet_send.html:65
-msgid "Asset"
-msgstr "Bene"
-
-#: templates/wallet/partials/wallet_send.html:102
-msgid "Sweep all the funds from the wallet"
-msgstr "Prendi tutti i fondi dal wallet"
-
-#: templates/wallet/partials/wallet_send.html:118
-msgid "Leave empty for default"
-msgstr "Lascia vuoto per valore automatico"
-
-#: templates/wallet/partials/wallet_send.html:129
-msgid "per kB"
-msgstr ""
-
-#: templates/wallet/partials/wallet_send.html:153
-msgid "Network fee will be added to the amount"
-msgstr "Costi di conferma verranno aggiunti all'ammontare"
-
-#: templates/wallet/partials/wallet_send.html:155
-msgid "Rate is"
-msgstr "Il cambio é"
-
-#: templates/wallet/partials/wallet_send.html:165
-#, fuzzy
-msgid "Requires recipient to trust GreenAddress instant confirmations"
-msgstr ""
-"E' necessario che chi riceve la transazioni accetti le conferme "
-"instantanee GreenAddress"
-
-#: templates/wallet/partials/wallet_send.html:167
-msgid "Instant Confirmation"
-msgstr "Conferma immediata"
-
-#: templates/wallet/partials/wallet_send.html:177
-msgid "You can enter a memo to store in your transactions list"
-msgstr ""
-"Puoi inserire una nota privata che verrà visualizzata nella lista "
-"transazioni"
-
-#: templates/wallet/partials/wallet_send.html:184
-msgid "Review &amp; Send"
-msgstr "Verifica e invia"
-
-#: templates/wallet/partials/wallet_send.html:186
-msgid "Verifying"
-msgstr "Verifica"
-
-#: templates/wallet/partials/wallet_send.html:187
-msgid "Signing"
-msgstr "Firma"
-
-#: templates/wallet/partials/wallet_send.html:205
-msgid "calculating"
-msgstr "elaborazione"
-
-#: templates/wallet/partials/wallet_modal_btchip_pin.html:4
-msgid "Please enter BTChip PIN."
-msgstr "Per piacere immetti il PIN BTChip."
-
-#: templates/wallet/partials/wallet_modal_btchip_pin.html:14
-msgid "PIN must be a 4-to-32-digit number"
-msgstr "Il PIN deve essere da 4 a 32 cifre numeriche"
-
-#: templates/wallet/partials/wallet_modal_pgp.html:4
-msgid "Please enter a valid PGP public key into the box below."
-msgstr "Inserire una chiave pubblica PGP valida nel box sottostante per piacere."
-
-#: templates/wallet/partials/wallet_modal_pgp.html:12
-msgid "----BEGIN PGP PUBLIC KEY..."
-msgstr ""
-
-#: templates/wallet/partials/wallet_modal_pgp.html:31
-msgid "Add PGP Public Key"
-msgstr "Aggiungi una chiave PGP"
-
-#: templates/wallet/partials/wallet_modal_pgp.html:35
-msgid "Change PGP Public Key"
-msgstr "Cambia chiave PGP"
-
-#: templates/wallet/partials/wallet_modal_pgp.html:39
-msgid "Remove PGP Public Key"
-msgstr "Rimuovi chiave PGP"
+#: templates/wallet/partials/signuplogin/modal_decryption_password.html:4
+msgid "Please provide a password to decrypt your mnemonic"
+msgstr "Per piacere inserisci la password per decrittografare la tua mnemonica"
+
+#: templates/wallet/partials/signuplogin/modal_decryption_password.html:15
+#: templates/wallet/partials/signuplogin/redeem_password_modal.html:15
+msgid "Please wait, decrypting..."
+msgstr "Aspetta per piacere, autenticazione..."
+
+#: templates/wallet/partials/signuplogin/modal_decryption_password.html:24
+msgid "Decrypt"
+msgstr "Decripta"
 
 #: templates/wallet/partials/signuplogin/base.html:7
 #: templates/wallet/partials/signuplogin/trezor.html:6
@@ -2250,45 +2175,6 @@ msgstr "Non hai ancora un account?"
 #: templates/wallet/partials/signuplogin/trezor.html:7
 msgid "Create new Wallet"
 msgstr "Crea un nuovo portafogli"
-
-#: templates/wallet/partials/signuplogin/trezor.html:19
-msgid "Processing"
-msgstr "Sto lavorando..."
-
-#: templates/wallet/partials/signuplogin/trezor.html:20
-msgid "Error, try again"
-msgstr "Errore, riprovare"
-
-#: templates/wallet/partials/signuplogin/header_pay.html:1
-msgid "You're about to send "
-msgstr "Stai per inviare"
-
-#: templates/wallet/partials/signuplogin/header_pay.html:18
-msgid "Click below to show a bitcoin: URI:"
-msgstr "Fai click qui sotto per vedere l'indirizzo bitcoin"
-
-#: templates/wallet/partials/signuplogin/header_pay.html:21
-msgid "Use the URI below:"
-msgstr "Usa l'URI qui sotto:"
-
-#: templates/wallet/partials/signuplogin/header_pay.html:31
-msgid "Show"
-msgstr "Mostra"
-
-#: templates/wallet/partials/signuplogin/header_wallet.html:3
-msgid "Welcome to GreenAddress!"
-msgstr "Benvenuti su GreenAddress!"
-
-#: templates/wallet/partials/signuplogin/header_wallet.html:3
-msgid "Please log in to use your Wallet"
-msgstr "Per piacere accedi per usare il tuo portafoglio"
-
-#: templates/wallet/partials/signuplogin/header_wallet.html:6
-#, fuzzy
-msgid "For improved security please login via our desktop or mobile apps"
-msgstr ""
-"Per maggior sicurezza, continua la tua registrazione attraverso la nostra"
-" app desktop o mobile"
 
 #: templates/wallet/partials/signuplogin/base.html:17
 msgid "Log in for full Wallet access"
@@ -2335,18 +2221,21 @@ msgstr "Accesso in corso, attendere..."
 msgid "Show other logins"
 msgstr "Visualizza altri accessi"
 
-#: templates/wallet/partials/signuplogin/modal_decryption_password.html:4
-msgid "Please provide a password to decrypt your mnemonic"
-msgstr "Per piacere inserisci la password per decrittografare la tua mnemonica"
+#: templates/wallet/partials/signuplogin/modal_encryption_password.html:4
+msgid "Please provide a password to encrypt your mnemonic"
+msgstr "Per piacere inserisci la password per crittografare la tua mnemonica"
 
-#: templates/wallet/partials/signuplogin/modal_decryption_password.html:15
-#: templates/wallet/partials/signuplogin/redeem_password_modal.html:15
-msgid "Please wait, decrypting..."
-msgstr "Aspetta per piacere, autenticazione..."
+#: templates/wallet/partials/signuplogin/modal_encryption_password.html:16
+msgid "Repeat password"
+msgstr "Ridigitare password"
 
-#: templates/wallet/partials/signuplogin/modal_decryption_password.html:24
-msgid "Decrypt"
-msgstr "Decripta"
+#: templates/wallet/partials/signuplogin/modal_encryption_password.html:23
+msgid "Please wait, encrypting..."
+msgstr "Si prega di attendere, crittografia in corso..."
+
+#: templates/wallet/partials/signuplogin/modal_encryption_password.html:32
+msgid "Encrypt"
+msgstr "Cripta"
 
 #: templates/wallet/partials/signuplogin/header_redeem.html:2
 msgid "You've received"
@@ -2387,35 +2276,6 @@ msgid ""
 "below"
 msgstr "Altrimenti, se sei gia' un utente registrato puoi fare il login qui sotto"
 
-#: templates/wallet/partials/signuplogin/modal_encryption_password.html:4
-msgid "Please provide a password to encrypt your mnemonic"
-msgstr "Per piacere inserisci la password per crittografare la tua mnemonica"
-
-#: templates/wallet/partials/signuplogin/modal_encryption_password.html:5
-msgid "Please provide a password to encrypt the voucher"
-msgstr "Si prega di fornire una password per crittografare il buono"
-
-#: templates/wallet/partials/signuplogin/modal_encryption_password.html:6
-msgid ""
-"If you use a different password from the one used when you created the "
-"voucher, the clear text voucher message (if any) will not be displayed at"
-" the voucher URL."
-msgstr ""
-"Se usi una password diversa da quella usata quando hai creato il buono, "
-"il messaggio, (se alcuno), verrà perso."
-
-#: templates/wallet/partials/signuplogin/modal_encryption_password.html:18
-msgid "Repeat password"
-msgstr "Ridigitare password"
-
-#: templates/wallet/partials/signuplogin/modal_encryption_password.html:25
-msgid "Please wait, encrypting..."
-msgstr "Si prega di attendere, crittografia in corso..."
-
-#: templates/wallet/partials/signuplogin/modal_encryption_password.html:34
-msgid "Encrypt"
-msgstr "Cripta"
-
 #: templates/wallet/partials/signuplogin/redeem_password_modal.html:4
 msgid "Please provide the password received from sender."
 msgstr "Per piacere inserisci qui la password ricevuta dal mittente."
@@ -2427,4 +2287,71 @@ msgstr "Per piacere inserisci la password principale"
 #: templates/wallet/partials/signuplogin/redeem_password_modal.html:24
 msgid "Redeem the payment"
 msgstr "Incassa il pagamento"
+
+#: templates/wallet/partials/signuplogin/header_pay.html:1
+msgid "You're about to send "
+msgstr "Stai per inviare"
+
+#: templates/wallet/partials/signuplogin/header_pay.html:18
+msgid "Click below to show a bitcoin: URI:"
+msgstr "Fai click qui sotto per vedere l'indirizzo bitcoin"
+
+#: templates/wallet/partials/signuplogin/header_pay.html:21
+msgid "Use the URI below:"
+msgstr "Usa l'URI qui sotto:"
+
+#: templates/wallet/partials/signuplogin/header_pay.html:31
+msgid "Show"
+msgstr "Mostra"
+
+#: templates/wallet/partials/signuplogin/trezor.html:19
+msgid "Processing"
+msgstr "Sto lavorando..."
+
+#: templates/wallet/partials/signuplogin/trezor.html:20
+msgid "Error, try again"
+msgstr "Errore, riprovare"
+
+#: templates/wallet/partials/signuplogin/header_wallet.html:3
+msgid "Welcome to GreenAddress!"
+msgstr "Benvenuti su GreenAddress!"
+
+#: templates/wallet/partials/signuplogin/header_wallet.html:3
+msgid "Please log in to use your Wallet"
+msgstr "Per piacere accedi per usare il tuo portafoglio"
+
+#: templates/wallet/partials/signuplogin/header_wallet.html:6
+#, fuzzy
+msgid "For improved security please login via our desktop or mobile apps"
+msgstr ""
+"Per maggior sicurezza, continua la tua registrazione attraverso la nostra"
+" app desktop o mobile"
+
+#: templates/base/base.html:4
+msgid "Welcome!"
+msgstr "Benvenuto!"
+
+#: templates/base/base.html:6
+msgid "The safer Bitcoin wallet that puts you in control."
+msgstr "Il più sicuro wallet Bitcoin che ti lascia in controllo completo"
+
+#: templates/base/base.html:108
+msgid "Toggle navigation"
+msgstr "Mostra navigazione"
+
+#: templates/base/base.html:117
+msgid "Blog"
+msgstr "Blog"
+
+#: templates/base/base.html:119
+msgid "API"
+msgstr ""
+
+#: templates/base/base.html:121
+msgid "Login"
+msgstr "Accedi"
+
+#: templates/base/base.html:156
+msgid "About us"
+msgstr "Chi siamo"
 
