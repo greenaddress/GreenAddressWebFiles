@@ -255,7 +255,8 @@ function getPublicKey (path) {
         var pk = res.publicKey.toString(HEX);
         var keyPair = bitcoin.ECPair.fromPublicKeyBuffer(
           new Buffer(pk, 'hex'),
-          _this.network
+          (_this.network === 'mainnet' ?
+            bitcoin.networks.bitcoin : bitcoin.networks.testnet)
         );
         keyPair.compressed = true;
         var cc = res.chainCode.toString(HEX);
@@ -433,14 +434,16 @@ function _recovery (mnemonic) {
   }).then(function (pin) {
     ledger = LedgerHWWallet.currentDevice;
     var hex = mnemonic && bip39.mnemonicToSeedHex(mnemonic);
+    var net = (_this.network === 'mainnet' ?
+      bitcoin.networks.bitcoin : bitcoin.networks.testnet);
     return ledger.setupNew_async(
       0x01, // wallet mode
 
       0x02 | // deterministic signatures
       0x08, // skip second factor if consuming only P2SH inputs in a transaction
 
-      _this.network.pubKeyHash,
-      _this.network.scriptHash,
+      net.pubKeyHash,
+      net.scriptHash,
       new ByteString(pin, ASCII),
       undefined, // wipePin
 

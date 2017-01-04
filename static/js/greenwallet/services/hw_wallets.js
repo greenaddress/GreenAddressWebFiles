@@ -38,13 +38,13 @@ function factory ($q, trezor, btchip, $timeout, $rootScope, $uibModal) {
     allHwWallets: allHwWallets,
     BaseHWWallet: BaseHWWallet,
     success: false,
-    checkDevices: function (cur_net) {
+    checkDevices: function (netName) {
       allHwWallets.forEach(function (hw) {
-        hw.checkForDevices(cur_net);
+        hw.checkForDevices(netName);
       });
       return BaseHWWallet.currentWallet;
     },
-    waitForHwWallet: function (cur_net, options) {
+    waitForHwWallet: function (netName, options) {
       options = options || {};
       var d = $q.defer();
 
@@ -55,7 +55,7 @@ function factory ($q, trezor, btchip, $timeout, $rootScope, $uibModal) {
 
         allHwWallets.forEach(function (hw, i) {
           toRace.push(
-            hw.checkForDevices(cur_net, {failOnMissing: true}).then(function (device) {
+            hw.checkForDevices(netName, {failOnMissing: true}).then(function (device) {
               return [i, device];
             }).catch(function (e) {
               return $q.reject([i, e]);

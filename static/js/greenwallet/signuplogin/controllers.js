@@ -343,7 +343,7 @@ angular.module('greenWalletSignupLoginControllers', ['greenWalletMnemonicsServic
     };
 
     var template = gettext("{hardware_wallet_name} Login");
-    hw_wallets.checkDevices(cur_net).then(function (dev) {
+    hw_wallets.checkDevices(tx_sender.gaService.netName).then(function (dev) {
         state.hw_detected = template.replace('{hardware_wallet_name}', dev.deviceTypeName);
         hwDevice = dev;
     }, function (err) {
