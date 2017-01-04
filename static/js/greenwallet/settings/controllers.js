@@ -385,7 +385,7 @@ angular.module('greenWalletSettingsControllers',
                     return device.isRecoverySupported();
                 }
             };
-            hw_wallets.waitForHwWallet(cur_net, opts).then(function (dev) {
+            hw_wallets.waitFoWallet(tx_sender.gaService.netName, opts).then(function (dev) {
                 return dev.setupSeed($scope.wallet.mnemonic);
             }).catch(function (err) {
                 notices.makeNotice('error', err);

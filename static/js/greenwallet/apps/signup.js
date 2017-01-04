@@ -253,7 +253,7 @@ function SignupController($scope, $location, mnemonics, tx_sender, notices, wall
 
     if (first_page) {
         // automatically trigger the HW wallet setup when device is detected:
-        hw_wallets.checkDevices(cur_net).then(function (hwDevice_) {
+        hw_wallets.checkDevices(tx_sender.gaService.netName).then(function (hwDevice_) {
             if (secured_confirmed_resolved) {
                 return;  // already confirmed the sw mnemonic
             }
