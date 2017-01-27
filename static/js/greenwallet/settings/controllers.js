@@ -1,5 +1,5 @@
 angular.module('greenWalletSettingsControllers',
-    ['greenWalletServices', 'greenWalletSettingsDirectives'])
+    ['greenWalletServices', 'greenWalletSettingsDirectives', 'ui.bootstrap.tooltip'])
 .controller('TwoFactorSetupController', ['$scope', '$uibModal', 'notices', 'focus', 'tx_sender', 'wallets', 'gaEvent', '$q', 'clipboard',
         function TwoFactorSetupController($scope, $uibModal, notices, focus, tx_sender, wallets, gaEvent, $q, clipboard) {
     if (!wallets.requireWallet($scope, true)) return;  // dontredirect=true because this cocntroller is reused in signup
@@ -334,6 +334,8 @@ angular.module('greenWalletSettingsControllers',
         notifications: angular.copy($scope.wallet.appearance.notifications_settings || {}),
         language: LANG,
         updating_display_fiat: false,
+        required_num_blocks: $scope.wallet.appearance.required_num_blocks || 6,
+        required_num_blocks_update: false,
         nlocktime: {
             blocks: $scope.wallet.nlocktime_blocks,
             blocks_new: $scope.wallet.nlocktime_blocks,
@@ -566,6 +568,21 @@ angular.module('greenWalletSettingsControllers',
                 settings.segregated_witness_updating = false;
             });
         }
+    });
+    $scope.$watch('settings.required_num_blocks', function(newValue, oldValue){
+      if (oldValue !== newValue && !settings.required_num_blocks_update){
+        settings.required_num_blocks_update = true;
+        wallets.updateAppearance(
+          $scope, 'required_num_blocks', newValue
+        ).then(function(){
+          settings.required_num_blocks = newValue;
+          settings.required_num_blocks_update = false;
+        },function () {
+          notices.makeNotice('error', gettext('Setting update failed!'));
+        }).finally(function() {
+          settings.required_num_blocks_update = false;
+        })
+      }
     });
     $scope.$watch('settings.exchange', function(newValue, oldValue) {
         if (oldValue !== newValue && !settings.updating_exchange && newValue != $scope.wallet.fiat_exchange) {

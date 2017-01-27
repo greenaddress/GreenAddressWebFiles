@@ -112,6 +112,7 @@
 <div class="header">
   {{ _("Transactions") }}
 </div>
+
 <div class="row">
   <div class="col-md-3">
     <div class="sub-header">{{ _("Notifications") }}</div>
@@ -163,6 +164,35 @@
         <small class="label label-info" style="white-space: normal"><strong>{{ _("NOTE") }}</strong>: {{ _("You need to have a confirmed email enabled for this feature to work.") }}</small>
       </div>
     </form>
+  </div>
+</div>
+<hr class="double">
+<div class="row">
+  <div class="col-md-3">
+    <div class="sub-header">{{ _("Transaction confirmation priority") }}</div>
+    <div class="sub-header-desc">{{ _("Set default transaction confirmation priority.") }}</div>
+  </div>
+  <div class="col-md-9" submittable>
+      <form role="form" class="form-inline">
+        <div class="form-group">
+          <label class="control-label">{{ _("Select priority:") }}</label>
+        </div>
+        <div class="form-group">
+          <div class="btn-group">
+            <button
+              ng-repeat="(unit,value) in { '{{ _("High") }}':3,'{{ _("Normal") }}':6,'{{ _("Low") }}':12,'{{ _("Economy") }}':24}"
+              type="button"
+              class="btn btn-xs"
+              uib-tooltip="Expected number of blocks to confirm: ((value))"
+              tooltip-placement="top"
+              ng-class="{'btn-primary': settings.required_num_blocks === value, 'btn-default': settings.required_num_blocks !== value}"
+              ng-click="settings.required_num_blocks = value"
+              ng-disabled="settings.required_num_blocks_update">
+              (( unit ))
+            </button>
+          </div>
+        </div>
+      </form>
   </div>
 </div>
 <hr class="double">
