@@ -7,6 +7,8 @@ module.exports = [
     '$scope',
     '$location',
     'mnemonics',
+    'focus',
+    '$timeout',
     'tx_sender',
     'notices',
     'wallets',
@@ -23,7 +25,7 @@ module.exports = [
     SignupController
 ];
 
-function SignupController($scope, $location, mnemonics, tx_sender, notices, wallets, $window, $uibModal, gaEvent, $q, storage, bip38, $interval, $sce, hw_wallets, user_agent) {
+function SignupController($scope, $location, mnemonics, focus, $timeout, tx_sender, notices, wallets, $window, $uibModal, gaEvent, $q, storage, bip38, $interval, $sce, hw_wallets, user_agent) {
     // some Android devices have window.WebSocket defined and yet still don't support WebSockets
     var isUnsupportedAndroid = navigator.userAgent.match(/Android 4.0/i) ||
                                navigator.userAgent.match(/Android 4.1/i) ||
@@ -88,6 +90,10 @@ function SignupController($scope, $location, mnemonics, tx_sender, notices, wall
         wallets.verify_mnemonic($scope, {signup: true}).catch(function(e) {
             $location.url('/create#content_container');
         });
+    }
+    if($location.path() === '/signup_pin'){
+        focus('pin');
+        $scope.$apply();
     }
     signup.noLocalStorage = storage.noLocalStorage;
     $scope.wallet.hidden = true;
