@@ -7,7 +7,7 @@
             <p class="text-center mnemonic form-inline">
               <span ng-repeat="word in all_words track by $index" class="mnemonic-wrapper">
                 <span ng-hide="indices[$index]" class="mnemonic-word">(( word ))&nbsp;</span>
-                <input ng-show="indices[$index]" size="10" placeholder="{{ _("Word #") }}(( $index+1 ))" clickfix id="id_word((idx))" class="form-control form-inline" type="password" ng-model="verified_mnemonic_words[indices[$index]-1]" />
+                <input ng-show="indices[$index]" size="10" placeholder="{{ _("Word #") }}(( $index+1 ))" clickfix id="id_word((idx))" class="form-control form-inline" type="text" ng-model="verified_mnemonic_words[indices[$index]-1]" />
                 <span class="error" ng-show="verified_mnemonic_errors[indices[$index]-1]" class="label label-danger">((verified_mnemonic_errors[indices[$index]-1]))</span>
               </span>
             </p>
