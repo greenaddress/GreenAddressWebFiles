@@ -1,8 +1,8 @@
 var SchnorrSigningKey = require('wallet').bitcoinup.SchnorrSigningKey;
 angular.module('greenWalletReceiveControllers',
     ['greenWalletServices'])
-.controller('ReceiveController', ['$rootScope', '$scope', 'wallets', 'tx_sender', 'notices', 'cordovaReady', 'hostname', 'gaEvent', '$uibModal', '$location', 'qrcode', 'clipboard', 'branches', '$q',
-        function InfoController($rootScope, $scope, wallets, tx_sender, notices, cordovaReady, hostname, gaEvent, $uibModal, $location, qrcode, clipboard, branches, $q) {
+.controller('ReceiveController', ['$rootScope', '$scope', 'wallets', '$filter', 'tx_sender', 'notices', 'cordovaReady', 'hostname', 'gaEvent', '$uibModal', '$location', 'qrcode', 'clipboard', 'branches', '$q',
+        function InfoController($rootScope, $scope, wallets, $filter, tx_sender, notices, cordovaReady, hostname, gaEvent, $uibModal, $location, qrcode, clipboard, branches, $q) {
     if(!wallets.requireWallet($scope)) return;
     $scope.wallet.signup = false;  // required for 2FA settings to work properly in the same session as signup
 
@@ -59,9 +59,24 @@ angular.module('greenWalletReceiveControllers',
                             )
                         })
                     }
+                    var satoshi_val = 0;
                     // TODO: verify
-                    return wallets.sign_and_send_tx($scope, data, false, null, gettext('Funds swept')).then(function() {
-                        $location.url('/info/');
+                    new Bitcoin.contrib.transactionFromHex(data.tx).outs.forEach(function (item, i) {
+                      satoshi_val += item.value;
+                    });
+                    var sweep_tx_data = $rootScope.$new();
+                    sweep_tx_data.message = gettext("Your account will be funded with %s.".replace("%s", $filter('format_btc')(satoshi_val, $scope.wallet.unit)));
+                    var modal = $uibModal.open({
+                        templateUrl: BASE_URL+'/'+LANG+'/wallet/partials/wallet_modal_receive_sweep.html',
+                        scope: sweep_tx_data
+                    });
+                    modal.result.then(function () {
+                        wallets.sign_and_send_tx($scope, data, false, null, gettext('Funds swept')).then(function() {
+                            $location.url('/info/');
+                        });
+                        sweep_tx_data.$destroy();
+                    }, function () {
+                        sweep_tx_data.$destroy();
                     });
                 }).catch(function(error) {
                     that.sweeping = false;
