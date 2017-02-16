@@ -1,0 +1,11 @@
+<div class="modal-header">
+    {{ _("Confirm sweeping of this key") }}
+</div>
+<div class="modal-body">
+  <p>(( message ))
+  <p>{{ _("Do you want to sweep?") }}
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn" ng-click="$dismiss()" >{{ _("Cancel") }}</button>
+  <button class="btn btn-primary btn-block-xs" ng-click="$close()">{{ _("Sweep") }}</button>
+</div>
