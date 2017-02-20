@@ -12,6 +12,7 @@ extend(BaseWallet.prototype, {
   _loginHDWallet: _loginHDWallet,
   _loginWatchOnly: _loginWatchOnly,
   getSubaccountByPointer: getSubaccountByPointer,
+  disconnectedHandler: function (reason, message) { },
   login: login
 });
 
@@ -92,6 +93,7 @@ function login () {
     this.feeEstimatesFactory = new GAFeeEstimatesFactory(
       this.service, data.fee_estimates
     );
+    this.service.connection.onclose = this.disconnectedHandler;
 
     if (this.signingWallet) {
       // scriptFactory is required by setupSubAccount below (for non watch-only):
