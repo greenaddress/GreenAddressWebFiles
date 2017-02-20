@@ -184,6 +184,9 @@ function connect (options, cb, eb) {
   this._loginEb = eb;
   var _this = this;
   this.connection.onopen = function (session) {
+    if (this.connectedHandler) {
+      this.connectedHandler();
+    }
     _this.session = session;
     delete _this._connectInProgress;
     if (_this._loginOptions) {

@@ -143,6 +143,7 @@ angular.module('greenWalletControllers', [])
         $scope.wallet = {
             balanceLoaded: false,
             version: app_version,
+            disconnected: false,
             update_balance: function(firstUpdateData) {
                 var that = this;
                 that.balance_updating = true;
@@ -361,6 +362,12 @@ angular.module('greenWalletControllers', [])
             });
         }
         wallets.getTwoFacConfig($scope);  // required for 2FA missing warning
+    });
+    $scope.$on('disconnect', function(message) {
+        $scope.wallet.disconnected = true;
+    });
+    $scope.$on('connect', function() {
+        $scope.wallet.disconnected = false;
     });
 
     if ($scope.wallet.send_to_receiving_id) {
