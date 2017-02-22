@@ -3,6 +3,17 @@ angular.module('greenWalletSignupLoginControllers', ['greenWalletMnemonicsServic
 .controller('SignupLoginController', ['$scope', '$uibModal', 'focus', 'wallets', 'notices', 'mnemonics', '$location', 'cordovaReady', 'tx_sender', 'crypto', 'gaEvent', 'storage', 'storage_keys', 'qrcode', '$timeout', '$q', 'trezor', 'bip38', 'btchip', '$interval', '$rootScope', 'hw_wallets',
         function SignupLoginController($scope, $uibModal, focus, wallets, notices, mnemonics, $location, cordovaReady, tx_sender, crypto, gaEvent, storage, storage_keys, qrcode, $timeout, $q, trezor, bip38, btchip, $interval, $rootScope, hw_wallets) {
 
+    $uibModal.open({
+        templateUrl: BASE_URL+'/'+LANG+'/wallet/partials/wallet_modal_ios_deprecated.html',
+        scope: $rootScope
+    }).result.then(function () {
+        window.cordova.exec(function (result) {
+          d.resolve({data: result});
+        }, function (fail) {
+          d.reject(fail);
+        }, 'BIP38', 'launchBlockstreamAppStore', []);
+    });
+
     var allHwWallets = hw_wallets.allHwWallets;
     var BaseHWWallet = hw_wallets.BaseHWWallet;
 

@@ -1,0 +1,12 @@
+<div class="modal-body text-center">
+  <button type="button" class="close" ng-click="$dismiss()" data-dismiss="modal" style="margin-top: -15px; margin-right: -5px;><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+  <h3 style="margin-top: 5px; margin-bottom: -5px; border-bottom: none; padding-bottom: 0; white-space:nowrap;">This app is deprecated!</h3>
+</div>
+<div class="modal-footer" style="text-align:left">
+  <p>This GreenAddress iOS application released by Jersey Studios will be removed from the App Store and stop receiving updates.</p>
+  <p>To protect your data, instead of moving it, we have released a new application with Blockstream.</p>
+  <p class="notice notice-error" style="text-align: left; font-weight: normal;"><i class="glyphicon glyphicon-exclamation-sign"></i> Please migrate your accounts as soon as possible to the new app by clicking below and logging in with the new version. By ignoring this message you risk not receiving important updates, which may be <strong>required to continue using your wallet</strong>!<p>
+  <p style="text-align: center">
+    <button type="button" class="btn btn-success" ng-click="$close()">{{ _("Get the new app") }}</button>
+  </p>
+</div>
