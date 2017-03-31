@@ -1,3 +1,4 @@
+var wally = require('wallyjs')
 // Bitcoin utility functions
 Bitcoin.Util = {
     /**
@@ -188,31 +189,6 @@ if (self.cordova && cordova.platformId == 'ios') {
         return deferred.promise;
     }
 } else {
-    if (!self.cordova && self.angular) {
-        angular.element(document).ready(function() {
-            var ready = false;
-            var script = document.createElement('script')
-            script.type = 'text/javascript';
-            script.src = BASE_URL+'/static/js/secp256k1-alpha/secp256k1-alpha.js';
-            script.onload = script.onreadystatechange = function () {
-                if (!ready && (!this.readyState || this.readyState == 'complete')) {
-                    ready = true;
-                    Bitcoin.contrib.init_secp256k1(Module, cur_net.isAlpha);
-                    if (cur_net.isAlpha) {
-                        Module._secp256k1_pedersen_context_initialize(Module.secp256k1ctx);
-                        Module._secp256k1_rangeproof_context_initialize(Module.secp256k1ctx);
-                    }
-                    var randArr = new Uint8Array(32);
-                    crypto.getRandomValues(randArr);
-                    if (!Module._secp256k1_context_randomize(Module.secp256k1ctx, randArr)) {
-                        throw new Error("Couldn't initialize library, randomized failed");
-                    }
-                }
-            };
-            var tag = document.getElementsByTagName('script')[0];
-            tag.parentNode.insertBefore(script, tag);
-        });
-    }
     if (!self.cordova && self.Worker && !self.GAIT_IN_WORKER) {
         (function() {
             var worker = new Worker(BASE_URL+"/static/js/bitcoinjs_util_worker.js"), callId = 0,
@@ -240,30 +216,23 @@ if (self.cordova && cordova.platformId == 'ios') {
             }
 
             Bitcoin.bitcoin.ECPair.prototype.sign = function(hash) {
-                return _sign(this, hash, false);
+                return wally.wally_ec_sig_from_bytes(
+                    this.d.toBuffer(32),
+                    new Buffer(hash),
+                    1
+                ).then(function (compact) {
+                  return wally.wally_ec_sig_to_der(compact).then(
+                    bitcoin.ECSignature.fromDER
+                  );
+                });
             }
 
             Bitcoin.bitcoin.ECPair.prototype.signSchnorr = function(hash) {
-                return _sign(this, hash, true);
-            }
-
-            function _sign(_this, hash, schnorr) {
-                var deferred = $q.defer();
-                if (schnorr) {
-                    cbs[++callId] = deferred.resolve;
-                } else {
-                    cbs[++callId] = function(der) {
-                        deferred.resolve(Bitcoin.bitcoin.ECSignature.fromDER(der));
-                    };
-                }
-                worker.postMessage({
-                    schnorr: schnorr,
-                    isAlpha: cur_net.isAlpha,
-                    func: 'sign',
-                    data: {key: _this.toWIF(), hash: hash},
-                    callId: callId
-                })
-                return deferred.promise;
+                return wally.wally_ec_sig_from_bytes(
+                    this.d.toBuffer(32),
+                    new Buffer(hash),
+                    2
+                );
             }
         })();
     }
