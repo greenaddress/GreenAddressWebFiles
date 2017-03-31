@@ -17,6 +17,7 @@ gulp.task('browserify', ['clean-js'], function () {
     .ignore('ws')
     .ignore('node-hid')
     .ignore(require.resolve('wallet/hw-apis/trezor-hid'))
+    .external('wallyjs')
     .bundle()
     .pipe(source('index.js'))
     .pipe(gulp.dest('build/static/js/'));
