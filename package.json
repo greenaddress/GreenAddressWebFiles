@@ -70,8 +70,6 @@
       "static/js/greenwallet/hdwallet.js",
       "static/js/greenwallet/info/controllers.js",
       "static/js/greenwallet/init.js",
-      "static/js/greenwallet/mnemonics/mnemonic_seed.js",
-      "static/js/greenwallet/mnemonics/mnemonic_seed_worker.js",
       "static/js/greenwallet/mnemonics/services.js",
       "static/js/greenwallet/receive/controllers.js",
       "static/js/greenwallet/send/controllers.js",
