@@ -14,10 +14,9 @@ gulp.task('browserify', ['clean-js'], function () {
   var browserified = browserify('static/js/index.js', {
     insertGlobals: true
   }).require('./secp256k1-shim.js', {expose: 'secp256k1-alpha'})
-    .ignore('ws')
-    .ignore('node-hid')
-    .ignore(require.resolve('wallet/hw-apis/trezor-hid'))
+    .external('ws')
     .external('wallyjs')
+    .external('node-hid')
     .bundle()
     .pipe(source('index.js'))
     .pipe(gulp.dest('build/static/js/'));
