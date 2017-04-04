@@ -98,6 +98,7 @@ function SignupController($scope, $location, mnemonics, focus, tx_sender, notice
     $scope.wallet.signup = true;
 
     var signup_with_hw = function(hd_deferred) {
+        signup.seed_progress = 100;
         hwDevice.getPublicKey().then(function(result) {
             var hdwallet = result.hdnode;
             hd_deferred.resolve({
