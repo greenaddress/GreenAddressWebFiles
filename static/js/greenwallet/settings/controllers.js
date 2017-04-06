@@ -461,6 +461,9 @@ angular.module('greenWalletSettingsControllers',
                 }, function(error) {
                     notices.makeNotice('error', gettext('Error changing language:') + ' ' + error);
                 }, 'language', newValue);
+            } else if (global.process && global.process.versions.electron) {
+                storage.set(storage_keys.LANGUAGE, newValue);
+                window.location.href = BASE_URL+'/'+newValue+'/wallet.html';
             } else {
                 window.location.href = '/'+newValue+'/wallet';
             }
