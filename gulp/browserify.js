@@ -17,6 +17,8 @@ gulp.task('browserify', ['clean-js'], function () {
     .external('ws')
     .external('wallyjs')
     .external('node-hid')
+    .external('electron')
+    .external('windows-registry')
     .bundle()
     .pipe(source('index.js'))
     .pipe(gulp.dest('build/static/js/'));
