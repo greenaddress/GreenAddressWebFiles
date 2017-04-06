@@ -86,7 +86,8 @@ class TemplatesRenderer(object):
             'PATH_NO_LANG': output,
             'MULTIASSET': self.multi_asset,
             'cdvapp': self.cdvapp,
-            'crapp': not self.cdvapp,
+            'crapp': not (self.cdvapp or self.electron),
+            'electronapp': self.electron,
             'WEBWALLET_MODE': 'FULL'
         }
         out = template.render(**kwargs)

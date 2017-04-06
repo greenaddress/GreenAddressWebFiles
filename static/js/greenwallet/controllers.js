@@ -101,7 +101,9 @@ angular.module('greenWalletControllers', [])
                 send_to_receiving_id_bitcoin_uri: destUri
             };
             initVars.send_to_receiving_id = parsed_uri.recipient;
-            initVars.send_to_receiving_id_amount = Bitcoin.Util.parseValue(parsed_uri.amount).toString();
+            if (parsed_uri.amount) {
+                initVars.send_to_receiving_id_amount = Bitcoin.Util.parseValue(parsed_uri.amount).toString();
+            }
         }
 
         if (window.WalletControllerInitVars) {
