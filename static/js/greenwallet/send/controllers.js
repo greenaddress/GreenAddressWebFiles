@@ -334,6 +334,7 @@ angular.module('greenWalletSendControllers',
     });
     var spend_all_succeeded = false;
     $scope.$watch('send_tx.spend_all', function(newValue, oldValue) {
+        if (newValue === oldValue) return;
         if (newValue) {
             $scope.send_tx.amount = 'MAX';
         } else {
