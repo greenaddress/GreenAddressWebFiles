@@ -17,6 +17,7 @@ gulp.task('browserify', ['clean-js'], function () {
     .external('ws')
     .external('wallyjs')
     .external('node-hid')
+    .external('electron')
     .bundle()
     .pipe(source('index.js'))
     .pipe(gulp.dest('build/static/js/'));
