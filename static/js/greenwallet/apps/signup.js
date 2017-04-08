@@ -125,7 +125,8 @@ function SignupController($scope, $location, mnemonics, focus, tx_sender, notice
                     mnemonics.toSeed(mnemonic, 'greenaddress_path').then(function(path_seed) {
                         $q.when(Bitcoin.bitcoin.HDNode.fromSeedHex(seed, cur_net)).then(function(hdwallet) {
                             if (!$scope.signup.hw_detected) {
-                              $scope.wallet.mnemonic = $scope.signup.mnemonic = mnemonic
+                              $scope.signup.seed_progress = 100;
+                              $scope.wallet.mnemonic = $scope.signup.mnemonic = mnemonic;
                             }
                             secured_confirmed.promise.then(function() {
                                 hdwallet.seed_hex = seed;
