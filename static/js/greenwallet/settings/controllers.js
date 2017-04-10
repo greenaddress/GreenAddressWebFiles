@@ -653,22 +653,11 @@ angular.module('greenWalletSettingsControllers',
             });
         }
     });
-    var enableLinkWindows = function (cb, eb) {
-        var utils = require('windows-registry').utils;
-        utils.elevate(
-            require('electron').remote.app.getPath('exe'),
-            '--register-uri-handler', cb
-        )
-    }
     $scope.enable_link_handler = function() {
         if (global.process) {
-            if (global.process.platform === 'win32') {
-                enableLinkWindows(function () {
-                    notices.makeNotice('success', gettext('Handler registered'));
-                }, function (error) {
-                    notices.makeNotice('error', error);
-                });
-            } else if (global.process.platform === 'darwin') {
+            if (global.process.platform === 'win32' || global.process.platform === 'darwin') {
+                require('electron').remote.app.setAsDefaultProtocolClient('bitcoin');
+                notices.makeNotice('success', gettext('Handler registered'));
             } else {
                 notices.makeNotice(
                     'error',
