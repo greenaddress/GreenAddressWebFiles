@@ -16,7 +16,6 @@
     "bs58check": "^1.0.5",
     "buffer-equals": "^1.0.3",
     "pbkdf2": "^3.0.4",
-    "secp256k1-alpha": "file:../../../external/secp256k1-alpha",
     "sha512": "0.0.1",
     "typeforce": "^1.6.2",
     "xtend": "^4.0.1"
