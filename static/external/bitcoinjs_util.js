@@ -86,11 +86,6 @@ if (self.angular) {  // not in WebWorkers
 (function() {
     var wallyjs = require('wallyjs');
 
-    worker.onmessage = function(message) {
-        cbs[message.data.callId](message.data.result);
-        delete cbs[message.data.callId];
-    }
-
     Bitcoin.bitcoin.HDNode.fromSeedHex = function(seed_hex, network) {
         return wallyjs.bip32_key_from_seed(
             new Bitcoin.Buffer.Buffer(seed_hex, 'hex'),
@@ -101,7 +96,6 @@ if (self.angular) {  // not in WebWorkers
             return Bitcoin.bitcoin.HDNode.fromBase58(b58, network);
         })
     };
-
 
     Bitcoin.bitcoin.HDNode.prototype.derive = function(i) {
         var _this = this;
