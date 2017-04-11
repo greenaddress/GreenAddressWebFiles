@@ -13,9 +13,8 @@ gulp.task('browserify', ['clean-js'], function () {
   // Single entry point to browserify
   var browserified = browserify('static/js/index.js', {
     insertGlobals: true
-  }).require('./secp256k1-shim.js', {expose: 'secp256k1-alpha'})
+  }).external('wallyjs')
     .external('ws')
-    .external('wallyjs')
     .external('node-hid')
     .external('electron')
     .bundle()
