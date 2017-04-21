@@ -1,5 +1,3 @@
-var crossfilter = require('crossfilter');
-
 angular.module('greenWalletInfoControllers',
     ['greenWalletServices'])
 .controller('InfoController', ['$scope', 'wallets', 'tx_sender', '$uibModal', '$q', 'notices', '$location', 'gaEvent', 'cordovaReady', '$timeout', '$rootScope',
