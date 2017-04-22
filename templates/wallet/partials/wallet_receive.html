@@ -111,7 +111,7 @@
                 </span>
                   <span class="input-group-btn">
                     <span class="btn btn-primary pull-right" ng-class="{disabled: receive.sweeping}"><i ng-hide="receive.sweeping" ng-if="!receive.sweeping">{{ _("Sweep") }}</i><div class="spin" ng-hide="!receive.sweeping" ng-if="receive.sweeping" ng-cloak></div>
-                        <input type="button" tabindex="2" style="opacity: 0; position: absolute; left: 0; top: 0; width: 100%; height: 100%" ng-click="receive.sweep()" ng-focus="receive.sweep()" ng-disabled="receive.sweeping" />
+                        <input type="button" tabindex="2" style="opacity: 0; position: absolute; left: 0; top: 0; width: 100%; height: 100%" ng-click="receive.sweep()" ng-disabled="receive.sweeping || !receive.privkey_wif" />
                     </span>
                 </span>
               </div>
