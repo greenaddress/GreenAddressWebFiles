@@ -57,6 +57,9 @@
       {{ _('You have not verified that you have backed up your mnemonic.') }}
       <a href="" ng-click="verify_mnemonic()">{{ _('Please verify now by clicking here.') }}</a>
     </p>
+    <p ng-show="wallet.disconnected"><span class="label label-warning">{{ _("WARNING") }}</span>
+      {{ _('Connection lost or unavailable, please check your connection.') }}
+    </p>
 
     <p ng-show="wallet.show_segwit_notice">
       <span class="label label-info">{{ _("NOTE") }}</span> We have enabled Segregated Witness. Please turn it off in settings

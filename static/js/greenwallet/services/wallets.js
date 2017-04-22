@@ -175,6 +175,13 @@ function factory ($q, $rootScope, tx_sender, $location, notices, $uibModal,
     gaWallet.service.addNotificationCallback('blocks', function (event) {
       $rootScope.$broadcast('block', event[ 0 ]);
     });
+    gaWallet.disconnectedHandler = function (reason, message) {
+      if (reason === "lost" || reason == "unreachable") {
+        $rootScope.$broadcast("disconnect", message);
+      } else {
+        console.error(reason + "," + message);
+      }
+    };
     gaWallet.login();
     gaWallet.loggedIn.then(function (data) {
       if (data) {
