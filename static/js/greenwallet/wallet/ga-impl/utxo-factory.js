@@ -1,4 +1,6 @@
+var BigInteger = require('bigi');
 var extend = require('xtend/mutable');
+var wally = require('../wally');
 
 module.exports = {
   'GAUtxoFactory': GAUtxoFactory,
@@ -26,24 +28,47 @@ function GAUtxoFactory (gaService, options) {
 
 function listAllUtxo (options) {
   options = options || {};
+  var _this = this;
   var args = [
     options.minConfs || 0, /* include 0-confs */
     this.subaccount.pointer || 0  /* subaccount */
   ];
   if (this.options.asset) {
-    args.push(this.options.asset.id);
+    args.push('any');
   }
   return this.gaService.call(
     'com.greenaddress.txs.get_all_unspent_outputs',
     args
   ).then(function (utxos) {
-    return utxos.map(function (utxo) {
-      return new this.UtxoClass(
-        utxo,
-        this.options
-      );
-    }.bind(this));
-  }.bind(this));
+    var utxo_deferreds = utxos.map(function (utxo) {
+      var h = function (h) { return new Buffer(h, 'hex'); };
+      // TODO: derive real privkey
+      var privkey = '0101010101010101010101010101010101010101010101010101010101010101';
+      return wally.wally_asset_unblind(
+        h(utxo.nonce_commitment),
+        h(privkey),
+        h(utxo.range_proof),
+        h(utxo.commitment),
+        h(utxo.asset_tag)
+      ).then(function (unblindedData) {
+        delete utxo.nonce_commitment;
+        delete utxo.range_proof;
+        delete utxo.commitment;
+        delete utxo.asset_tag
+
+        utxo.assetId = new Buffer(unblindedData[0]).toString('hex');
+        utxo.value = BigInteger.fromByteArrayUnsigned(unblindedData[3]).toString();
+        utxo.abf = new Buffer(unblindedData[1]).toString('hex');
+        utxo.vbf = new Buffer(unblindedData[2]).toString('hex');
+
+        return new _this.UtxoClass(
+          utxo,
+          _this.options
+        );
+      });
+    });
+    return Promise.all(utxo_deferreds);
+  });
 }
 
 function getRawTx (txhash) {
