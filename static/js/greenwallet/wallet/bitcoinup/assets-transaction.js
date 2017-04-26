@@ -11,6 +11,7 @@ var Buffer = require('buffer').Buffer;
 var extend = require('xtend/mutable');
 var window = require('global/window');
 var SchnorrSigningKey = require('./schnorr-signing-key');
+var wally = require('../wally');
 
 var Transaction = require('./transaction');
 
@@ -22,6 +23,8 @@ module.exports = AssetsTransaction;
 
 function AssetsTransactionImpl () {
   bitcoin.Transaction.apply(this, arguments);
+  this.witness = [];
+  this.outWitness = [];
 }
 
 AssetsTransactionImpl.prototype = Object.create(bitcoin.Transaction.prototype);
@@ -44,7 +47,10 @@ extend(AssetsTransaction.prototype, {
   _calcCTOutData: _calcCTOutData,
   addInput: addInput,
   addOutput: addOutput,
-  replaceOutput: replaceOutput
+  replaceOutput: replaceOutput,
+  toBuffer: function toBuffer (withWitness) {
+    return this.tx.toBuffer(withWitness);
+  }
 });
 AssetsTransaction.fromHex = fromHex;
 
@@ -110,55 +116,41 @@ for (var typeName in typeforce) {
 }
 /* END C&P from bitcoin.types */
 
-function signedByteLength (signInIndex) {
+function scriptSize (someScript) {
+  var length = someScript.length;
+
+  return bufferutils.varIntSize(length) + length;
+}
+
+function signedByteLength (signInIndex, withWitness) {
   var forSigning = signInIndex !== -1;
-  function scriptSize (someScript) {
-    var length = someScript.length;
-
-    return bufferutils.varIntSize(length) + length;
-  }
-
-  var forSigningInputLenDelta = 0;
-  if (signInIndex !== -1) {
-    var signIn = this.ins[signInIndex];
-    forSigningInputLenDelta =
-      (33 + (signIn.prevOutRaw
-        ? scriptSize(signIn.prevOutRaw.range_proof) +
-        scriptSize(signIn.prevOutRaw.nonce_commitment)
-        : 2));
-  }
 
   return (
-  8 +
-  bufferutils.varIntSize(this.ins.length) +
-  bufferutils.varIntSize(this.outs.length) +
-  (forSigning
-    ? 0
-    : (bufferutils.varIntSize(this.outs.length) + this.outs.length * 8)) +
-  this.ins.reduce(function (sum, input) {
-    return sum + 40 + scriptSize(input.script) + forSigningInputLenDelta;
-  }, 0) +
-  this.outs.reduce(function (sum, output) {
-    return sum + 33 + scriptSize(output.script) +
-    (forSigning
-      ? 32
-      : (
-        (output.range_proof
-          ? scriptSize(output.range_proof)
-          : 1) +
-        (output.nonce_commitment
-          ? scriptSize(output.nonce_commitment)
-          : 1)
-        )
-    ) +
-    32; // asset id
-  }, 0
-  )
+    8 +
+    (!withWitness ? 0 : ((this.witness.length || this.outWitness.length) ? 2 : 0)) + // marker
+    bufferutils.varIntSize(this.ins.length) +
+    bufferutils.varIntSize(this.outs.length) +
+    this.ins.reduce(function (sum, input) {
+      return sum + 40 + scriptSize(input.script);
+    }, 0) +
+    this.outs.reduce(function (sum, output) {
+      return sum + scriptSize(output.script) +
+        (output.commitment ? 33 : 9) + // value or commitment
+        33; // asset tag
+    }, 0) + (!withWitness ? 0 :
+      (this.witness.length ? bufferutils.varIntSize(this.witness.length) : 0) +
+      this.witness.reduce(function (sum, wit) {
+        return sum + scriptSize(wit);
+      }, 0) +
+      this.outWitness.reduce(function (sum, wit) {
+        return sum + wit.length;
+      }, 0)
+    )
   );
 }
 
 function byteLength () {
-  return this.signedByteLength(-1);
+  return this.signedByteLength(-1, true);
 }
 
 function clone () {
@@ -185,15 +177,22 @@ function clone () {
       commitment: txOut.commitment,
       range_proof: txOut.range_proof,
       nonce_commitment: txOut.nonce_commitment,
+      assetId: txOut.assetId,
       assetHash: txOut.assetHash
     };
+  });
+
+  newTx.outWitness = this.outWitness.map(function (ow) {
+    var ret = new Buffer(ow.length);
+    ow.copy(ret);
+    return ret;
   });
 
   return newTx;
 }
 
-function toBufferForSigning (signInIndex) {
-  var buffer = new Buffer(this.signedByteLength(signInIndex));
+function toBufferForSigning (signInIndex, withWitness) {
+  var buffer = new Buffer(this.signedByteLength(signInIndex, withWitness));
   var forSigning = signInIndex !== -1;
 
   var offset = 0;
@@ -218,50 +217,42 @@ function toBufferForSigning (signInIndex) {
   }
 
   writeUInt32(this.version);
-  writeVarInt(this.ins.length);
 
-  if (forSigning) {
-    var signIn = this.ins[signInIndex];
+  if (withWitness) {
+    var marker = 0;
+    if (this.witness.length) marker += 1;
+    if (this.outWitness.length) marker += 2;
+    if (marker) {
+      new Buffer([0, marker]).copy(buffer, offset);
+      offset += 2;
+    }
   }
+
+  writeVarInt(this.ins.length);
 
   this.ins.forEach(function (txIn) {
     writeSlice(txIn.hash);
     writeUInt32(txIn.index);
-    if (forSigning) {
-      if (signIn.prevOutRaw) {
-        writeSlice(signIn.prevOutRaw.commitment);
-        writeVarInt(signIn.prevOutRaw.range_proof.length);
-        writeSlice(signIn.prevOutRaw.range_proof);
-        writeVarInt(signIn.prevOutRaw.nonce_commitment.length);
-        writeSlice(signIn.prevOutRaw.nonce_commitment);
-      } else {
-        writeSlice(new Buffer(new Array(33 - 8)));
-        var valBuf = new Buffer(8);
-        bufferutils.writeUInt64LE(valBuf, signIn.prevValue, 0);
-        writeSlice(valBuf.reverse());
-        writeVarInt(0);
-        writeVarInt(0);
-      }
-    }
     writeVarInt(txIn.script.length);
     writeSlice(txIn.script);
     writeUInt32(txIn.sequence);
   });
 
-  if (!forSigning) {
-    writeVarInt(this.outs.length);
-    this.outs.forEach(function (txOut) {
-      writeUInt64(txOut.fee || 0);
-    });
-  }
-
   writeVarInt(this.outs.length);
-  this.outs.forEach(function (txOut) {
-    var hash256 = null;
+  var _this = this;
+  this.outs.forEach(function (txOut, idx) {
+    writeSlice(txOut.assetHash !== undefined ?
+      new Buffer(txOut.assetHash) : (
+        txOut.assetId !== undefined ?
+          Buffer.concat([new Buffer([1]), new Buffer(txOut.assetId)]) :
+          new Buffer('000000000000000000000000000000000000000000000000000000000000000000', 'hex')
+      )
+    );
+
     if (txOut.commitment) {
-      writeSlice(txOut.commitment);
+      writeSlice(new Buffer(txOut.commitment));
     } else if (!txOut.valueBuffer) {
-      writeSlice(new Buffer(new Array(33 - 8)));
+      writeSlice(new Buffer([1]));
       var valBuf = new Buffer(8);
       bufferutils.writeUInt64LE(valBuf, txOut.value, 0);
       writeSlice(valBuf.reverse());
@@ -269,50 +260,25 @@ function toBufferForSigning (signInIndex) {
       writeSlice(txOut.valueBuffer);
     }
 
-    if (forSigning) {
-      if (txOut.range_proof) {
-        var toHash = new Buffer(
-          bufferutils.varIntSize(txOut.range_proof.length) +
-          txOut.range_proof.length +
-          bufferutils.varIntSize(txOut.nonce_commitment.length) +
-          txOut.nonce_commitment.length
-        );
-        var toHashOffset = 0;
-        toHashOffset += bufferutils.writeVarInt(toHash, txOut.range_proof.length, 0);
-        txOut.range_proof.copy(toHash, toHashOffset);
-        toHashOffset += txOut.range_proof.length;
-
-        toHashOffset += bufferutils.writeVarInt(toHash, txOut.nonce_commitment.length, toHashOffset);
-        txOut.nonce_commitment.copy(toHash, toHashOffset);
-
-        hash256 = bcrypto.hash256(toHash);
-      } else {
-        hash256 = bcrypto.hash256(new Buffer([0, 0]));
-      }
-      writeSlice(hash256);
-    } else {
-      writeVarInt(txOut.range_proof ? txOut.range_proof.length : 0);
-      if (txOut.range_proof) writeSlice(txOut.range_proof);
-      writeVarInt(txOut.nonce_commitment ? txOut.nonce_commitment.length : 0);
-      if (txOut.nonce_commitment) writeSlice(txOut.nonce_commitment);
-    }
-
-    if (txOut.assetHash) {
-      writeSlice(txOut.assetHash);
-    } else {
-      writeSlice(new Buffer(new Array(32))); // fill with zeroes
-    }
-
     writeVarInt(txOut.script.length);
     writeSlice(txOut.script);
   });
+
+  if (withWitness) {
+    this.witness.forEach(function (bufs)  {
+      // TODO
+    });
+    this.outWitness.forEach(function (buf) {
+      writeSlice(buf);
+    });
+  }
 
   writeUInt32(this.locktime);
   return buffer;
 }
 
-function toBuffer () {
-  return this.toBufferForSigning(-1);
+function toBuffer (withWitness) {
+  return this.toBufferForSigning(-1, withWitness);
 }
 
 function fromHexImpl (tx, hex, __noStrict) {
@@ -494,7 +460,7 @@ function addOutput (outScript, value, fee, assetId) {
   var idx = this.tx.addOutput(outScript, value);
   var ret = this.tx.outs[idx];
   ret.fee = fee;
-  ret.assetHash = assetId;
+  ret.assetId = assetId;
   return ret;
 }
 
@@ -502,41 +468,117 @@ function replaceOutput (idx, outScript, value, fee, assetId) {
   this.tx.outs[idx].script = outScript;
   this.tx.outs[idx].value = value;
   this.tx.outs[idx].fee = fee;
-  this.tx.outs[idx].assetHash = assetId;
+  this.tx.outs[idx].assetId = assetId;
 }
 
 function _rebuildCT () {
-  Object.keys(this.isCT).forEach(function (k) {
-    if (!this.isCT[k]) {
+  var _this = this;
+  var abfs = [], vbfs = [], values = [];
+  var bf_i = 0;
+  function u64 (n) {
+    var val = BigInteger.valueOf(n).toByteArrayUnsigned();
+    while (val.length < 8) val.unshift(0);
+    return new Uint8Array(val);
+  }
+  this.tx.outWitness = [];
+  this.tx.outs.forEach(function (out, idx) {
+    if (!out.valueToBlind) {
       return;
     }
-
-    var inputsCount = 0;
-    var outputsCount = 0;
-    this.tx.ins.forEach(function (input) {
-      if (input.prevOut.assetNetworkId.toString('hex') === k &&
-        input.blindingFactor) {
-        inputsCount += 1;
-      }
-    });
-    this.tx.outs.forEach(function (out) {
-      if (out.assetHash.toString('hex') === k && out.valueToBlind) {
-        outputsCount += 1;
-      }
-    });
-    var ctState = {
-      blindedInputsCount: inputsCount,
-      blindedOutputsCount: outputsCount,
-      assetIdHex: k,
-      outputIdx: 0
-    };
-    this.tx.outs.forEach(function (out, idx) {
-      if (out.assetHash.toString('hex') !== k || !out.valueToBlind) {
+    values.push(u64(out.valueToBlind));
+    abfs.push(crypto.randomBytes(32));
+    vbfs.push(crypto.randomBytes(32));
+  });
+  if (!vbfs.length) return Promise.resolve();
+  vbfs.pop();
+  var nonceCommitment;
+  this.tx.outWitness = [];
+  var allValues = [], allAbfs = [], allVbfs = [];
+  _this.tx.ins.forEach(function (inp) {
+    allValues.push(u64(inp.prevOutRaw.value));
+    allAbfs.push(new Buffer(inp.prevOutRaw.abf, 'hex'));
+    allVbfs.push(new Buffer(inp.prevOutRaw.vbf, 'hex'));
+  });
+  values.forEach(function (val) { allValues.push(val); });
+  abfs.forEach(function (abf) { allAbfs.push(abf); });
+  vbfs.forEach(function (vbf) { allVbfs.push(vbf); });
+  return wally.wally_asset_final_vbf(
+    allValues, this.tx.ins.length, Buffer.concat(allAbfs), Buffer.concat(allVbfs)
+  ).then(function (vbf) {
+    vbfs.push(vbf);
+  }.bind(this)).then(function () {
+    return Promise.all(this.tx.outs.map(function (out, idx) {
+      if (!out.valueToBlind) {
+        this.tx.outWitness[idx] = new Buffer([0, 0, 0]);
         return;
       }
-      var extendWith = this._calcCTOutData(idx, ctState);
-      extend(out, extendWith);
-    }.bind(this));
+
+      var abf = abfs[bf_i];
+      var vbf = vbfs[bf_i];
+      bf_i += 1;
+      var commitment;
+      var ephemeral_key = bitcoin.ECPair.makeRandom({rng: crypto.randomBytes});
+      var ephemeral = ephemeral_key.d.toBuffer();
+      nonceCommitment = ephemeral_key.getPublicKeyBuffer();
+      var blinding = new bitcoin.ECPair(BigInteger.fromByteArrayUnsigned(new Buffer(
+        // TODO: real key
+        '0101010101010101010101010101010101010101010101010101010101010101', 'hex'
+      )));
+      var blindingPub = blinding.getPublicKeyBuffer();
+      return wally.wally_asset_generator_from_bytes(
+        new Buffer(out.assetId, 'hex'), abf
+      ).then(function (assetHash) {
+        out.assetHash = assetHash;
+        return wally.wally_asset_value_commitment(
+          u64(out.valueToBlind), vbf, out.assetHash
+        );
+      }).then(function (commitment_) {
+        out.commitment = commitment = commitment_;
+        var inputAssets = [], inputAbfs = [], inputAgs = [];
+        _this.tx.ins.forEach(function (inp) {
+          inputAssets.push(new Buffer(inp.prevOutRaw.assetId, 'hex'));
+          inputAbfs.push(new Buffer(inp.prevOutRaw.abf, 'hex'));
+          inputAgs.push(wally.wally_asset_generator_from_bytes(
+            new Buffer(inp.prevOutRaw.assetId, 'hex'),
+            new Buffer(inp.prevOutRaw.abf, 'hex')
+          ));
+        });
+        return Promise.all(inputAgs).then(function (inputAgs) {
+          inputAgs = inputAgs.map(function (ui8a) { return new Buffer(ui8a); });
+          return Promise.all([
+            wally.wally_asset_rangeproof(
+              u64(out.valueToBlind), blindingPub, ephemeral, out.assetId, abf, vbf,
+              commitment, out.assetHash),
+            wally.wally_asset_surjectionproof(
+              new Buffer(out.assetId, 'hex'), abf, out.assetHash,
+              crypto.randomBytes(32),
+              Buffer.concat(inputAssets),
+              Buffer.concat(inputAbfs),
+              Buffer.concat(inputAgs)
+            )
+          ]);
+        });
+      }.bind()).then(function (results) {
+        var rangeproof = new Buffer(results[0]);
+        var surjectionproof = new Buffer(results[1]);
+        var outwit = new Buffer(
+          scriptSize(surjectionproof) +
+          scriptSize(rangeproof) +
+          scriptSize(nonceCommitment)
+        );
+        var offset = 0;
+        function writePart (slice) {
+          var n = bufferutils.writeVarInt(outwit, slice.length, offset);
+          offset += n;
+          slice.copy(outwit, offset);
+          offset += slice.length;
+        }
+        writePart(surjectionproof);
+        writePart(rangeproof);
+        writePart(nonceCommitment);
+        _this.tx.outWitness[idx] = outwit;
+      });
+    }.bind(this)));
   }.bind(this));
 }
 
@@ -545,10 +587,10 @@ function _addChangeOutput (script, value, assetNetworkId) {
   //    to avoid easy tracing of coins with constant change index.
   var changeIdx = (
     +BigInteger.fromBuffer(crypto.randomBytes(4))
-    ) % (this.getOutputsCount() + 1);
+  ) % (this.getOutputsCount() + 1);
 
-  // 2. add the output at the index
   if (changeIdx === this.getOutputsCount()) {
+    // 2. add the output at the index
     var changeOut = this.addOutput(script.outScript, value, 0, assetNetworkId);
     changeOut.pointer = script.pointer;
     changeOut.subaccount = script.subaccount;
@@ -557,7 +599,7 @@ function _addChangeOutput (script, value, assetNetworkId) {
     for (var i = 0; i < this.getOutputsCount(); ++i) {
       if (i === changeIdx) {
         newOutputs.push({
-          script: script.outScript, value: value, fee: 0, assetHash: assetNetworkId,
+          script: script.outScript, value: value, fee: 0, assetId: assetNetworkId,
           pointer: script.pointer, subaccount: script.subaccount
         });
       }
@@ -565,7 +607,7 @@ function _addChangeOutput (script, value, assetNetworkId) {
     }
     this.clearOutputs();
     newOutputs.forEach(function (out) {
-      var newOut = this.addOutput(out.script, out.value, out.fee, out.assetHash);
+      var newOut = this.addOutput(out.script, out.value, out.fee, out.assetId);
 
       newOut.pointer = out.pointer;
       newOut.subaccount = out.subaccount;
@@ -617,7 +659,7 @@ function _addFeeAndChangeWithAsset (options) {
     }
 
     var requiredValues = {
-      fee: Math.round(feeEstimate * this.estimateSignedLength() / 1000),
+      fee: Math.round(feeEstimate * this.byteLength() / 1000),
       asset: currentAssetValue
     };
 
@@ -647,22 +689,18 @@ function _addFeeAndChangeWithAsset (options) {
         );
         // update required fee for the new output
         requiredValues.fee = Math.round(
-          feeEstimate * this.estimateSignedLength() / 1000
+          feeEstimate * this.byteLength() / 1000
         );
 
-        if (!this.isCT[ options.assetNetworkId.toString('hex') ]) {
-          return;
-        }
-
         this.tx.outs[ assetChangeIdx ].valueToBlind = this.tx.outs[ assetChangeIdx ].value;
-        this.tx.outs[ assetChangeIdx ].value = 0;
+        this.tx.outs[ assetChangeIdx ].value = null;
         return options.changeAddrFactory.getScanningKeyForScript(
           this.tx.outs[ assetChangeIdx ].script
         ).then(function (k) {
           this.tx.outs[ assetChangeIdx ].scanningPubkey = (
             k.hdnode.keyPair.getPublicKeyBuffer()
           );
-          this._rebuildCT();
+          return this._rebuildCT();
         }.bind(this));
       }.bind(this));
     } else if (this.isCT[ options.assetNetworkId.toString('hex') ]) {
@@ -670,7 +708,7 @@ function _addFeeAndChangeWithAsset (options) {
       var anyCTAssetOuts = false;
       for (i = 0; i < this.getOutputsCount(); ++i) {
         if (bufferEquals(
-            this.tx.outs[ i ].assetHash,
+            this.tx.outs[ i ].assetId,
             options.assetNetworkId) &&
           this.tx.outs[ i ].commitment) {
           anyCTAssetOuts = true;
@@ -724,13 +762,13 @@ function _addFeeAndChangeWithAsset (options) {
 
         function iterateFee () {
           if (requiredValues.fee >= Math.round(
-              feeEstimate * this.estimateSignedLength() / 1000
+              feeEstimate * this.byteLength() / 1000
             )) {
             return Promise.resolve();
           }
 
           requiredValues.fee = Math.round(
-            feeEstimate * this.estimateSignedLength() / 1000
+            feeEstimate * this.byteLength() / 1000
           );
 
           if (prevoutsFeeTotal === requiredValues.fee) {
@@ -766,7 +804,7 @@ function _addFeeAndChangeWithAsset (options) {
             this.tx.outs[ changeIdx ].scanningPubkey = (
               k.hdnode.keyPair.getPublicKeyBuffer()
             );
-            this._rebuildCT();
+            return this._rebuildCT();
           }.bind(this)).then(
             iterateFee.bind(this)
           );
@@ -792,7 +830,7 @@ function _sumPrevouts (prevouts) {
 }
 
 function _addFeeAndChange (options) {
-  if (options.withAsset) {
+  if (options.withAsset && !bufferEquals(options.feeNetworkId, options.assetNetworkId)) {
     return this._addFeeAndChangeWithAsset(options);
   }
   var feeEstimate = options.feeEstimate;
@@ -810,7 +848,7 @@ function _addFeeAndChange (options) {
   }
 
   // 4. make sure fee is right
-  var fee = Math.round(feeEstimate * this.estimateSignedLength() / 1000);
+  var fee = Math.round(feeEstimate * this.byteLength() / 1000);
   var ret = Promise.resolve({changeIdx: -1}); // -1 indicates no change
 
   return prevoutsValueDeferred.then(function (prevoutsValue) {
@@ -821,7 +859,7 @@ function _addFeeAndChange (options) {
 
       if (prevoutsValue < fee) {
         // only the fee is required if we subtract from outputs
-        return Promise.resolve([ fee, changeCache ]);
+        return Promise.resolve([ {asset: fee}, changeCache ]);
       }
 
       this.replaceOutput(
@@ -842,16 +880,17 @@ function _addFeeAndChange (options) {
 
       this.tx.outs[ 0 ].valueToBlind = this.tx.outs[ 0 ].value;
       this.tx.outs[ 0 ].value = 0;
-      this._rebuildCT();
 
-      var iterateFee = getIterateFee(0, 0, this.tx.outs[0].script, true);
-      // check if CT made the tx large enough to increase the fee
-      return iterateFee.bind(this)();
+      return this._rebuildCT().then(function () {
+        var iterateFee = getIterateFee(0, 0, this.tx.outs[0].script, true);
+        // check if CT made the tx large enough to increase the fee
+        return iterateFee.bind(this)();
+      }.bind(this));
     }
 
     if (prevoutsValue < requiredValue + fee) {
       // not enough -- return a request to fetch more prevouts
-      return Promise.resolve([ requiredValue + fee, changeCache ]);
+      return Promise.resolve([ {asset: requiredValue + fee}, changeCache ]);
     }
 
     if (prevoutsValue === requiredValue + fee) {
@@ -867,12 +906,18 @@ function _addFeeAndChange (options) {
     }
     ret = ret.then(function (outScript) {
       changeCache = outScript;
-      return this._addChangeOutput(
+      var changeIdx = this._addChangeOutput(
         outScript,
         prevoutsValue - (requiredValue + fee),
         options.feeNetworkId,
         options.changeAddrFactory
       );
+      this.addOutput(
+        new Buffer([]), fee, 0, options.feeNetworkId
+      )
+      return this._rebuildCT().then(function () {
+        return changeIdx;
+      });
     }.bind(this)).then(function (changeIdx) {
       var iterateFee = getIterateFee(requiredValue, changeIdx, changeCache);
 
@@ -886,12 +931,12 @@ function _addFeeAndChange (options) {
 
       function iterateFee () {
         if (fee >= Math.round(
-            feeEstimate * this.estimateSignedLength() / 1000
+            feeEstimate * this.byteLength() / 1000
           )) {
           return Promise.resolve();
         }
 
-        fee = Math.round(feeEstimate * this.estimateSignedLength() / 1000);
+        fee = Math.round(feeEstimate * this.byteLength() / 1000);
 
         if (prevoutsValue === requiredValueForFee + fee) {
           // After adding the change output or CT data, which made the transaction larger,
@@ -902,7 +947,7 @@ function _addFeeAndChange (options) {
         }
 
         if (prevoutsValue < requiredValueForFee + fee) {
-          return Promise.resolve([ requiredValueForFee + fee, changeCache ]);
+          return Promise.resolve([ {asset: requiredValueForFee + fee}, changeCache ]);
         }
 
         this.replaceOutput(
@@ -918,10 +963,11 @@ function _addFeeAndChange (options) {
         }
 
         this.tx.outs[ changeIdx ].valueToBlind = this.tx.outs[ changeIdx ].value;
-        this.tx.outs[ changeIdx ].value = 0;
+        this.tx.outs[ changeIdx ].value = null;
         if (doNotChangeScanningKey) {
-          this._rebuildCT();
-          return iterateFee.bind(this)();
+          return this._rebuildCT().then(function () {
+            return iterateFee.bind(this)();
+          }.bind(this));
         } else {
           return options.changeAddrFactory.getScanningKeyForScript(
             this.tx.outs[ changeIdx ].script
@@ -929,7 +975,7 @@ function _addFeeAndChange (options) {
             this.tx.outs[ changeIdx ].scanningPubkey = (
               k.hdnode.keyPair.getPublicKeyBuffer()
             );
-            this._rebuildCT();
+            return this._rebuildCT();
           }.bind(this)).then(
             iterateFee.bind(this)
           );
@@ -1087,7 +1133,6 @@ function build (options) {
   this.clearOutputs();
   this.isCT = {};
 
-  var blindingFactorsInProgress = [];
   options.prevOutputs.map(function (prevOut) {
     this.addInput({
       txHash: prevOut.prevHash,
@@ -1095,14 +1140,9 @@ function build (options) {
       prevValue: prevOut.value,
       prevOut: prevOut
     });
-    if (!prevOut.value) {
-      this.isCT[prevOut.assetNetworkId.toString('hex')] = true;
+    if (prevOut.raw.vbf) {
+      this.isCT[ prevOut.raw.assetId ] = true;
       this.tx.ins[ this.tx.ins.length - 1 ].prevOutRaw = prevOut.raw;
-      (function (currentInput) {
-        blindingFactorsInProgress.push(prevOut.unblindOutValue().then(function (res) {
-          currentInput.blindingFactor = res.blinding_factor_out;
-        }));
-      })(this.tx.ins[ this.tx.ins.length - 1 ]);
     }
   }.bind(this));
 
@@ -1132,9 +1172,7 @@ function build (options) {
     }
   }.bind(this));
 
-  return Promise.all(blindingFactorsInProgress).then(function () {
-    this._rebuildCT();
-
+  return this._rebuildCT().then(function () {
     return this._addFeeAndChange(options);
   }.bind(this));
 }

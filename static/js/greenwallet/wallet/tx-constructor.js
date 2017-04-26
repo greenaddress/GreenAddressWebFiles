@@ -31,6 +31,12 @@ function _makeUtxoFilter (assetNetworkId, requiredValue, message, options) {
   return processFiltered;
 
   function processFiltered (utxos) {
+    if (assetNetworkId) {
+      utxos = utxos.filter(function (utxo) {
+        return utxo.raw.assetId === assetNetworkId.toString('hex');
+      });
+    }
+
     var copied = utxos.slice();
     copied.sort(function (u0, u1) {
       if (options.minimizeInputs) {
@@ -84,7 +90,6 @@ function _makeUtxoFilter (assetNetworkId, requiredValue, message, options) {
     });
   }
   function process (utxo) {
-    utxo.assetNetworkId = assetNetworkId;
     return utxo;
   }
 }

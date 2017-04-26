@@ -6,9 +6,10 @@ extend(GAFeeEstimatesFactory.prototype, {
   getFeeEstimate: getFeeEstimate
 });
 
-function GAFeeEstimatesFactory (gaService, initialEstimates) {
+function GAFeeEstimatesFactory (gaService, initialEstimates, minFee) {
   this.gaService = gaService;
   this.estimates = initialEstimates;
+  this.minFee = minFee;
   var _this = this;
   gaService.addNotificationCallback('feeEstimates', function (event) {
     _this.estimates = event[0];

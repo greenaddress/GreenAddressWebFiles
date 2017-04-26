@@ -55,65 +55,56 @@ function setupSubAccount (subaccount) {
   }
 
   var changeAddrFactory = new GAAddressFactory(
-    this.service, this.signingWallet, {subaccount: subaccount}
+    this.service, this.signingWallet, {
+      subaccount: subaccount,
+      scriptFactory: this.scriptFactory
+    }
   );
-  Object.keys(this.assets).forEach(function (assetId) {
+  var feeAssetId, feeAssetIdHex;
+  var _this = this;
+  var feeAssetNum = 2;
+  Object.keys(this.assetIds).forEach(function (assetIdHex) {
+    if (_this.assetIds[assetIdHex] === feeAssetNum) {
+      feeAssetIdHex = assetIdHex;
+      feeAssetId = new Buffer(assetIdHex, 'hex');
+    }
+  });
+  Object.keys(this.assets).forEach(function (assetIdHex) {
+    var assetId = new Buffer(assetIdHex, 'hex');
     var asset = {
-      id: Number(assetId),
-      name: this.assets[assetId].name,
-      networkId: new Buffer(this.assets[assetId].network_id, 'hex')
+      id: this.assetIds[assetIdHex],
+      name: this.assets[assetIdHex],
+      networkId: assetId
+    };
+    var feeAsset = {
+      id: this.assetIds[feeAssetIdHex],
+      name: this.assets[feeAssetIdHex],
+      networkId: feeAssetId
     };
     if (this.txConstructors[ asset.id ] === undefined) {
       this.txConstructors[ asset.id ] = {};
     }
-
-    if (asset.id === 1) {
-      // feeasset
-      this.txConstructors[ asset.id ][ subaccount.pointer ] = new TxConstructor(
-        {
-          signingWallet: this.signingWallet,
-          utxoFactory: new GAUtxoFactory(
-            this.service,
-            {utxoClass: GAConfidentialUtxo,
-             scriptFactory: this.scriptFactory,
-             unblindedCache: this.unblindedCache,
-             subaccount: subaccount}
-          ),
-          changeAddrFactory: changeAddrFactory,
-          feeEstimatesFactory: this.feeEstimatesFactory,
-          transactionClass: makeAssetsClassWithDefaultAsssetId(
-            asset.networkId
-          )
-        }
-      );
-      this.txConstructors[ asset.id ][ subaccount.pointer ].buildOptions = {
-        changeAddrFactory: changeAddrFactory,
-        assetNetworkId: new Buffer(this.assets[1].network_id, 'hex'),
-        feeNetworkId: new Buffer(this.assets[1].network_id, 'hex')
-      };
-    } else {
-      // nonfeeasset
-      this.txConstructors[ asset.id ][ subaccount.pointer ] = new AssetsTxConstructor({
-        signingWallet: this.signingWallet,
-        utxoFactory: new GAUtxoFactory(
-          this.service,
-          {asset: asset,
-           utxoClass: GAConfidentialUtxo,
-           scriptFactory: this.scriptFactory,
-           unblindedCache: this.unblindedCache,
-           subaccount: subaccount}
-        ),
-        feeUtxoFactory: new GAUtxoFactory(
-          this.service,
-          {utxoClass: GAConfidentialUtxo,
-           scriptFactory: this.scriptFactory,
-           subaccount: subaccount}),
-        changeAddrFactory: changeAddrFactory,
-        feeChangeAddrFactory: changeAddrFactory,
-        feeEstimatesFactory: this.feeEstimatesFactory,
-        assetNetworkId: asset.networkId,
-        feeNetworkId: new Buffer(this.assets[1].network_id, 'hex')
-      });
-    }
+    this.txConstructors[ asset.id ][ subaccount.pointer ] = new AssetsTxConstructor({
+      signingWallet: this.signingWallet,
+      utxoFactory: new GAUtxoFactory(
+        this.service,
+        {asset: asset,
+         utxoClass: GAConfidentialUtxo,
+         scriptFactory: this.scriptFactory,
+         unblindedCache: this.unblindedCache,
+         subaccount: subaccount}
+      ),
+      feeUtxoFactory: new GAUtxoFactory(
+        this.service,
+        {asset: feeAsset,
+         utxoClass: GAConfidentialUtxo,
+         scriptFactory: this.scriptFactory,
+         subaccount: subaccount}),
+      changeAddrFactory: changeAddrFactory,
+      feeChangeAddrFactory: changeAddrFactory,
+      feeEstimatesFactory: this.feeEstimatesFactory,
+      assetNetworkId: assetId,
+      feeNetworkId: feeAssetId
+    });
   }.bind(this));
 }

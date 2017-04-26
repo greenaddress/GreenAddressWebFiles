@@ -1,4 +1,5 @@
 var bitcoinup = require('../bitcoinup/index.js');
+var bufferEquals = require('buffer-equals');
 var TxConstructor = require('../tx-constructor');
 var extend = require('xtend/mutable');
 var extendCopy = require('xtend');
@@ -26,7 +27,7 @@ function AssetsTxConstructor (options) {
     changeAddrFactory: options.changeAddrFactory,
     feeChangeAddrFactory: options.feeChangeAddrFactory,
     getChangeAssetOutScript:
-      options.feeChangeAddrFactory.getNextOutputScript.bind(
+      options.feeChangeAddrFactory.getNextOutputScriptWithPointer.bind(
         options.feeChangeAddrFactory
       )
   };
@@ -36,24 +37,30 @@ function _collectOutputs (values, options) {
   options = options || {};
   var ret = [];
   var deferreds = [];
+  var assetIsFee = bufferEquals(
+    this.buildOptions.feeNetworkId,
+    this.buildOptions.assetNetworkId
+  );
 
   deferreds.push(TxConstructor._makeUtxoFilter(
     this.buildOptions.assetNetworkId,
-    values.asset,
+    values.asset + assetIsFee ? values.fee : 0,
     'not enough asset',
     options
   )(this.utxo).then(function (assetUtxo) {
     Array.prototype.push.apply(ret, assetUtxo);
   }));
 
-  deferreds.push(TxConstructor._makeUtxoFilter(
-    this.buildOptions.feeNetworkId,
-    values.fee,
-    'not enough money for fee',
-    extendCopy(options, {isFeeAsset: true})
-  )(this.feeUtxo).then(function (feeUtxo) {
-    Array.prototype.push.apply(ret, feeUtxo);
-  }));
+  if (!assetIsFee) {
+    deferreds.push(TxConstructor._makeUtxoFilter(
+      this.buildOptions.feeNetworkId,
+      values.fee,
+      'not enough money for fee',
+      extendCopy(options, {isFeeAsset: true})
+    )(this.feeUtxo).then(function (feeUtxo) {
+      Array.prototype.push.apply(ret, feeUtxo);
+    }));
+  }
 
   return Promise.all(deferreds).then(function () {
     return ret;
