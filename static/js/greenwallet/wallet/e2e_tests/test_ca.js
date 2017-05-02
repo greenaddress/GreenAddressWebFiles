@@ -1,4 +1,4 @@
-var wally = require('../wally');
+var wally = require('wallyjs');
 var bitcoin = require('bitcoinjs-lib');
 var test = require('tape');
 var bip39 = require('bip39');

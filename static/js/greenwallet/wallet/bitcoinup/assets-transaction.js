@@ -11,7 +11,7 @@ var Buffer = require('buffer').Buffer;
 var extend = require('xtend/mutable');
 var window = require('global/window');
 var SchnorrSigningKey = require('./schnorr-signing-key');
-var wally = require('../wally');
+var wally = require('wallyjs');
 
 var Transaction = require('./transaction');
 
