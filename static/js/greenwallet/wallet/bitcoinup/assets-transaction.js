@@ -493,9 +493,16 @@ function _rebuildCT () {
   var allValues = [], allAbfs = [], allVbfs = [];
   _this.tx.ins.forEach(function (inp) {
     allValues.push(u64(inp.prevOutRaw.value));
-    allAbfs.push(new Buffer(inp.prevOutRaw.abf, 'hex'));
-    allVbfs.push(new Buffer(inp.prevOutRaw.vbf, 'hex'));
+    if (inp.prevOutRaw.abf) {
+      allAbfs.push(new Buffer(inp.prevOutRaw.abf, 'hex'));
+      allVbfs.push(new Buffer(inp.prevOutRaw.vbf, 'hex'));
+    } else {
+      var ZEROS = new Buffer('0000000000000000000000000000000000000000000000000000000000000000', 'hex');
+      allAbfs.push(ZEROS);
+      allVbfs.push(ZEROS);
+    }
   });
+
   values.forEach(function (val) { allValues.push(val); });
   abfs.forEach(function (abf) { allAbfs.push(abf); });
   vbfs.forEach(function (vbf) { allVbfs.push(vbf); });
@@ -533,12 +540,23 @@ function _rebuildCT () {
         out.commitment = commitment = commitment_;
         var inputAssets = [], inputAbfs = [], inputAgs = [];
         _this.tx.ins.forEach(function (inp) {
-          inputAssets.push(new Buffer(inp.prevOutRaw.assetId, 'hex'));
-          inputAbfs.push(new Buffer(inp.prevOutRaw.abf, 'hex'));
-          inputAgs.push(wally.wally_asset_generator_from_bytes(
-            new Buffer(inp.prevOutRaw.assetId, 'hex'),
-            new Buffer(inp.prevOutRaw.abf, 'hex')
-          ));
+          if (inp.prevOutRaw.abf) {
+            inputAssets.push(new Buffer(inp.prevOutRaw.assetId, 'hex'));
+            inputAbfs.push(new Buffer(inp.prevOutRaw.abf, 'hex'));
+            inputAgs.push(wally.wally_asset_generator_from_bytes(
+              new Buffer(inp.prevOutRaw.assetId, 'hex'),
+              new Buffer(inp.prevOutRaw.abf, 'hex')
+            ));
+          } else {
+            var ZEROS = new Buffer('0000000000000000000000000000000000000000000000000000000000000000', 'hex');
+            inputAssets.push(new Buffer(inp.prevOutRaw.assetId, 'hex'));
+            inputAbfs.push(ZEROS);
+            inputAgs.push(wally.wally_asset_generator_from_bytes(
+              new Buffer(inp.prevOutRaw.assetId, 'hex'),
+              ZEROS
+            ));
+          }
+
         });
         return Promise.all(inputAgs).then(function (inputAgs) {
           inputAgs = inputAgs.map(function (ui8a) { return new Buffer(ui8a); });
@@ -995,9 +1013,9 @@ function build (options) {
       prevValue: prevOut.value,
       prevOut: prevOut
     });
+    this.tx.ins[ this.tx.ins.length - 1 ].prevOutRaw = prevOut.raw;
     if (prevOut.raw.vbf) {
       this.isCT[ prevOut.raw.assetId ] = true;
-      this.tx.ins[ this.tx.ins.length - 1 ].prevOutRaw = prevOut.raw;
     }
   }.bind(this));
 

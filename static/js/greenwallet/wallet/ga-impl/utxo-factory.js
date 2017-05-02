@@ -44,6 +44,13 @@ function listAllUtxo (options) {
       var h = function (h) { return new Buffer(h, 'hex'); };
       // TODO: derive real privkey
       var privkey = '0101010101010101010101010101010101010101010101010101010101010101';
+      if (!utxo.nonce_commitment) {
+        utxo.assetId = utxo.asset_tag.substring(2);
+        return new _this.UtxoClass(
+          utxo,
+          _this.options
+        );
+      }
       return wally.wally_asset_unblind(
         h(utxo.nonce_commitment),
         h(privkey),
