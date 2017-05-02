@@ -293,11 +293,11 @@ function fromHexImpl (tx, hex, __noStrict) {
     return i;
   }
 
-  function readUInt64 () {
-    var i = bufferutils.readUInt64LE(buffer, offset);
-    offset += 8;
-    return i;
+  function readUInt64BE () {
+    var buf = readSlice(8);
+    return bufferutils.readUInt64LE(bufferutils.reverse(buf), 0);
   }
+
 
   function readVarInt () {
     var vi = bufferutils.readVarInt(buffer, offset);
@@ -312,6 +312,13 @@ function fromHexImpl (tx, hex, __noStrict) {
   tx.version = readUInt32();
 
   var vinLen = readVarInt();
+  var marker;
+  if (vinLen === 0) {
+    marker = readSlice(1)[0];
+    vinLen = readVarInt();
+  } else {
+    marker = 0;
+  }
   for (var i = 0; i < vinLen; ++i) {
     tx.ins.push({
       hash: readSlice(32),
@@ -323,37 +330,45 @@ function fromHexImpl (tx, hex, __noStrict) {
 
   tx.fees = [];
 
-  var feesCount = readVarInt();
-  while (feesCount--) {
-    tx.fees.push(readUInt64());
-  }
-
   var voutLen = readVarInt();
   for (i = 0; i < voutLen; ++i) {
-    var commitment = readSlice(33);
-    var value;
-    if (commitment[0] === 0) {
-      var valueBuf = new Buffer(commitment.slice(-8));
-      value = bufferutils.readUInt64LE(
-        bitcoin.bufferutils.reverse(valueBuf),
-        0
-      );
+    var assetTag = readSlice(33), assetId, assetHash;
+    if (assetTag[0] === 1) {
+      assetId = assetTag.slice(1);
+    } else {
+      assetHash = assetTag;
+    }
+    var commitmentFirst = readSlice(1)[0], value;
+    if (commitmentFirst === 1) {
+      value = readUInt64BE();
       commitment = null;
     } else {
-      value = 0;
+      commitment = Buffer.concat([new Buffer([commitmentFirst]), readSlice(32)]);
     }
-    var range_proof = readScript();
-    var nonce_commitment = readScript();
-    var assetHash = readSlice(32);
     tx.outs.push({
+      assetId: assetId,
       assetHash: assetHash,
+      assetTag: assetTag,
+      commitment: commitment,
       value: value,
-      script: readScript(),
-      range_proof: range_proof,
-      nonce_commitment: nonce_commitment,
-      commitment: commitment
+      script: readScript()
     });
   }
+
+  if (marker & 1) {
+    // TODO inwitness
+  }
+  if (marker & 2) {
+    tx.outs.forEach(function () {
+
+    });
+    tx.outs.forEach(function (buf, idx) {
+      tx.outs[idx].surjectionProof = readScript();
+      tx.outs[idx].rangeProof = readScript();
+      tx.outs[idx].nonceCommitment = readScript();
+    });
+  }
+
 
   tx.locktime = readUInt32();
 

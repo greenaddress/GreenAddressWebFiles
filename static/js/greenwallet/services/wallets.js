@@ -3,10 +3,12 @@ var is_chrome_app = require('has-chrome-storage');
 var window = require('global/window');
 var AssetsWallet = require('wallet').GA.AssetsWallet;
 var GAWallet = require('wallet').GA.GAWallet;
+var ConfidentialUtxo = require('wallet').GA.ConfidentialUtxo;
 var HashSwSigningWallet = require('wallet').GA.HashSwSigningWallet;
 var HwSigningWallet = require('wallet').GA.HwSigningWallet;
 var SchnorrSigningKey = require('wallet').bitcoinup.SchnorrSigningKey;
 var Transaction = require('wallet').bitcoinup.Transaction;
+var AssetsTransaction = require('wallet').bitcoinup.AssetsTransaction;
 
 ///@TODO Refactor this file, it's huge and crazy. Also get it to pass lint
 
@@ -246,7 +248,13 @@ function factory ($q, $rootScope, tx_sender, $location, notices, $uibModal,
         $scope.wallet.limits = data.limits;
         $scope.wallet.subaccounts = gaWallet.subaccounts;
         if (cur_net.isAlphaMultiasset) {
-          $scope.wallet.assets = data.assets;
+          $scope.wallet.assets = {};
+          $scope.wallet.assetGaIds = data.asset_ids;
+          Object.keys(data.asset_ids).forEach(function (k) {
+            $scope.wallet.assets[data.asset_ids[k]] = {
+              name: data.assets[k]
+            };
+          })
         } else {
           $scope.wallet.assets = {undefined: {name: 'BTC'}};
         }
@@ -313,7 +321,6 @@ function factory ($q, $rootScope, tx_sender, $location, notices, $uibModal,
   };
   var unblindOutputs = function ($scope, txData, rawTxs) {
     var deferreds = [];
-    var tx = Bitcoin.contrib.transactionFromHex(txData.data);
     for (var i = 0; i < txData.eps.length; ++i) {
       (function (ep) {
         if (ep.value === null && (ep.is_relevant || ep.pubkey_pointer)) {
@@ -323,28 +330,37 @@ function factory ($q, $rootScope, tx_sender, $location, notices, $uibModal,
           if (ep.is_credit) {
             txhash = txData.txhash;
             pt_idx = ep.pt_idx;
-            out = tx.outs[ep.pt_idx];
             subaccount = ep.subaccount;
           } else {
             txhash = ep.prevtxhash;
             pt_idx = ep.previdx;
-            out = Bitcoin.contrib.transactionFromHex(
-              rawTxs[ep.prevtxhash]
-            ).outs[pt_idx];
             subaccount = ep.prevsubaccount;
           }
-          var key =
-          'unblinded_value_' + txhash + ':' + pt_idx;
+          var tx = AssetsTransaction.fromHex(rawTxs[txhash]).tx;
+          var out = tx.outs[pt_idx];
+          var ep_to_unblind = {
+            txhash: txhash,
+            pt_idx: pt_idx,
+            commitment: out.commitment.toString('hex'),
+            nonce_commitment: out.nonceCommitment.toString('hex'),
+            range_proof: out.rangeProof.toString('hex'),
+            asset_tag: out.assetTag.toString('hex')
+          };
+          var key = 'unblinded_value_' + txhash + ':' + pt_idx;
           var d = storage.get(key).then(function (value) {
             if (value === null) {
-              return blind.unblindOutValue(
-                $scope, out, subaccount || 0, ep.pubkey_pointer
-              ).then(function (data) {
+              return new ConfidentialUtxo(
+                ep_to_unblind,
+                tx_sender.gaWallet.txConstructors[1][0].utxoFactory.options
+              ).unblind().then(function (data) {
                 ep.value = data.value;
-                storage.set(key, data.value);
+                ep.ga_asset_id = $scope.wallet.assetGaIds[data.assetId.toString('hex')]
+                console.log(ep.ga_asset_id)
+                storage.set(key, data.value+';'+ep.ga_asset_id);
               });
             } else {
-              ep.value = value;
+              ep.value = value.split(';')[0];
+              ep.ga_asset_id = value.split(';')[1];
             }
           });
           deferreds.push(d);
@@ -371,14 +387,15 @@ function factory ($q, $rootScope, tx_sender, $location, notices, $uibModal,
     var date_range_iso = date_range && [date_range[0] && date_range[0].toISOString(),
       end && end.toISOString()];
     var args = ['com.greenaddress.txs.get_list_v2',
-      page_id, query, sort_by, date_range_iso, subaccount];
+      page_id, query, sort_by, date_range_iso, subaccount,
+      cur_net.isAlphaMultiasset];
     if (cur_net.isAlpha) {
       // return prev data
       args.push(true);
     }
     var call = tx_sender.call.apply(tx_sender, args);
 
-    if (cur_net.isAlpha) {
+    if (cur_net.isAlphaMultiasset) {
       call = call.then(function (data) {
         var deferreds = [];
         var valid = {};
@@ -659,7 +676,7 @@ function factory ($q, $rootScope, tx_sender, $location, notices, $uibModal,
         asset.value = asset.value.add(v);
       }
     }, function (err) {
-      notices.makeNotice('error', err.args[1]);
+      notices.makeError($scope, err);
       d.reject(err);
     }).finally(function () { $rootScope.decrementLoading(); });
     return d.promise;

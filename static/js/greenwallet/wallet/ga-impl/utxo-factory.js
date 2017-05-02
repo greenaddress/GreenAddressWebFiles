@@ -41,38 +41,14 @@ function listAllUtxo (options) {
     args
   ).then(function (utxos) {
     var utxo_deferreds = utxos.map(function (utxo) {
-      var h = function (h) { return new Buffer(h, 'hex'); };
-      // TODO: derive real privkey
-      var privkey = '0101010101010101010101010101010101010101010101010101010101010101';
       if (!utxo.nonce_commitment) {
         utxo.assetId = utxo.asset_tag.substring(2);
-        return new _this.UtxoClass(
-          utxo,
-          _this.options
-        );
       }
-      return wally.wally_asset_unblind(
-        h(utxo.nonce_commitment),
-        h(privkey),
-        h(utxo.range_proof),
-        h(utxo.commitment),
-        h(utxo.asset_tag)
-      ).then(function (unblindedData) {
-        delete utxo.nonce_commitment;
-        delete utxo.range_proof;
-        delete utxo.commitment;
-        delete utxo.asset_tag
-
-        utxo.assetId = new Buffer(unblindedData[0]).toString('hex');
-        utxo.value = BigInteger.fromByteArrayUnsigned(unblindedData[3]).toString();
-        utxo.abf = new Buffer(unblindedData[1]).toString('hex');
-        utxo.vbf = new Buffer(unblindedData[2]).toString('hex');
-
-        return new _this.UtxoClass(
-          utxo,
-          _this.options
-        );
-      });
+      var ret = new _this.UtxoClass(utxo, _this.options);
+      if (!utxo.nonce_commitment) {
+        return ret;
+      }
+      return ret.unblind();
     });
     return Promise.all(utxo_deferreds);
   });
