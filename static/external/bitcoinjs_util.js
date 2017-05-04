@@ -89,7 +89,8 @@ if (self.angular) {  // not in WebWorkers
     Bitcoin.bitcoin.HDNode.fromSeedHex = function(seed_hex, network) {
         return wallyjs.bip32_key_from_seed(
             new Bitcoin.Buffer.Buffer(seed_hex, 'hex'),
-            network === Bitcoin.bitcoin.networks.testnet ? 0x04358394 : 0x0488ADE4
+            network === Bitcoin.bitcoin.networks.testnet ? 0x04358394 : 0x0488ADE4,
+            0
         ).then(function (b) {
             return wallyjs.wally_base58_from_bytes(b, 1);
         }).then(function (b58) {
