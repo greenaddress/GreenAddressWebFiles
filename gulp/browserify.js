@@ -1,3 +1,4 @@
+var fs = require('fs');
 var gulp = require('gulp');
 var merge = require('merge-stream');
 var browserify = require('browserify');
@@ -13,11 +14,16 @@ gulp.task('browserify', ['clean-js'], function () {
   // Single entry point to browserify
   var browserified = browserify('static/js/index.js', {
     insertGlobals: true
-  }).external('wallyjs')
-    .external('ws')
+  }).external('ws')
     .external('node-hid')
-    .external('electron')
-    .bundle()
+    .external('electron');
+  if (fs.existsSync('../libwally-core-cordova/wallyplugin/wally.js')) {
+    // Cordova only
+    browserified = browserified.require('../libwally-core-cordova/wallyplugin/wally', {expose: 'wallyjs'})
+  } else {
+    browserified = browserified.external('wallyjs');
+  }
+  browserified = browserified.bundle()
     .pipe(source('index.js'))
     .pipe(gulp.dest('build/static/js/'));
 

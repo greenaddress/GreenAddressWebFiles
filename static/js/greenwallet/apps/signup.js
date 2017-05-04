@@ -121,8 +121,10 @@ function SignupController($scope, $location, mnemonics, focus, tx_sender, notice
             while (entropy.length < 32) entropy.unshift(0);
             $scope.signup.seed = new Bitcoin.Buffer.Buffer(entropy, 'hex');
             mnemonics.toMnemonic(entropy).then(function(mnemonic) {
-                mnemonics.toSeed(mnemonic).then(function(seed) {
-                    mnemonics.toSeed(mnemonic, 'greenaddress_path').then(function(path_seed) {
+                mnemonics.toSeed(mnemonic).then(function(seed_) {
+                    mnemonics.toSeed(mnemonic, 'greenaddress_path').then(function(path_seed_) {
+                        var seed = new Bitcoin.Buffer.Buffer(seed_).toString('hex');
+                        var path_seed = new Bitcoin.Buffer.Buffer(path_seed_).toString('hex');
                         $q.when(Bitcoin.bitcoin.HDNode.fromSeedHex(seed, cur_net)).then(function(hdwallet) {
                             if (!$scope.signup.hw_detected) {
                               $scope.signup.seed_progress = 100;
