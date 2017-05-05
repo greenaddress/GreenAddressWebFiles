@@ -17,9 +17,9 @@ gulp.task('browserify', ['clean-js'], function () {
   }).external('ws')
     .external('node-hid')
     .external('electron');
-  if (fs.existsSync('../libwally-core-cordova/wallyplugin/wally.js')) {
+  if (fs.existsSync('../plugins/cordova-plugin-wally/wally.js')) {
     // Cordova only
-    browserified = browserified.require('../libwally-core-cordova/wallyplugin/wally', {expose: 'wallyjs'})
+    browserified = browserified.require('../plugins/cordova-plugin-wally/wally', {expose: 'wallyjs'})
   } else {
     browserified = browserified.external('wallyjs');
   }
