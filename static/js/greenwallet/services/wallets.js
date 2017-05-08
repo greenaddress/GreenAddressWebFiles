@@ -355,12 +355,11 @@ function factory ($q, $rootScope, tx_sender, $location, notices, $uibModal,
               ).unblind().then(function (data) {
                 ep.value = data.value;
                 ep.ga_asset_id = $scope.wallet.assetGaIds[data.assetId.toString('hex')]
-                console.log(ep.ga_asset_id)
                 storage.set(key, data.value+';'+ep.ga_asset_id);
               });
             } else {
               ep.value = value.split(';')[0];
-              ep.ga_asset_id = value.split(';')[1];
+              ep.ga_asset_id = +value.split(';')[1];
             }
           });
           deferreds.push(d);
@@ -690,10 +689,15 @@ function factory ($q, $rootScope, tx_sender, $location, notices, $uibModal,
     if (tx.ins[0].prevOut && tx.ins[0].prevOut.data) {
       var in_value = 0, out_value = 0;
       tx.ins.forEach(function (txin) {
-        var prevtx = Bitcoin.contrib.transactionFromHex(
-          txin.prevOut.data.toString('hex')
-        );
-        var prevout = prevtx.outs[txin.index];
+        if (txin.prevOut.value) {
+          // unblinded outputs have values here already
+          var prevout = txin.prevOut;
+        } else {
+          var prevtx = Bitcoin.contrib.transactionFromHex(
+            txin.prevOut.data.toString('hex')
+          );
+          var prevout = prevtx.outs[txin.index];
+        }
         in_value += prevout.value;
       });
       tx.outs.forEach(function (txout) {
