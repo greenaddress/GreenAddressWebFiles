@@ -93,8 +93,8 @@
                 ng-repeat="asset in transaction.asset_values"
                 ng-class="{'amount-plus': asset.value > 0, 'amount-minus': asset.value < 0}"
                 class="amount">
-              <span ng-show="asset.apply_unit">(( asset.value|format_btc:wallet.unit ))</span>
-              <span ng-show="!asset.apply_unit">(( asset.value|format_btc_nounit:"bits" )) (( asset.name ))</span>
+              <span ng-show="asset.btc_unit">(( asset.value|format_btc:wallet.unit ))</span>
+              <span ng-show="!asset.btc_unit">(( asset.value|format_asset:asset ))</span>
               <br/>
           </span>
         {% else %}
