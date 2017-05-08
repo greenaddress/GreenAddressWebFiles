@@ -251,7 +251,8 @@ function factory ($q, $rootScope, tx_sender, $location, notices, $uibModal,
           $scope.wallet.assetGaIds = data.asset_ids;
           Object.keys(data.asset_ids).forEach(function (k) {
             $scope.wallet.assets[data.asset_ids[k]] = {
-              name: data.assets[k]
+              name: data.assets[k],
+              decimalPlaces: data.asset_decimal_places[k]
             };
           })
         } else {
@@ -662,9 +663,10 @@ function factory ($q, $rootScope, tx_sender, $location, notices, $uibModal,
         if (!asset_values_map[ga_asset_id]) {
           asset_values_map[ga_asset_id] = {
             name: $scope.wallet.assets[ga_asset_id].name,
+            decimalPlaces: $scope.wallet.assets[ga_asset_id].decimalPlaces,
             value: Bitcoin.BigInteger.valueOf(0)
           };
-          asset_values_map[ga_asset_id].apply_unit = (ga_asset_id == 1);
+          asset_values_map[ga_asset_id].btc_unit = (ga_asset_id === 1);
           asset_values.push(asset_values_map[ga_asset_id]);
         }
         var asset = asset_values_map[ga_asset_id];
