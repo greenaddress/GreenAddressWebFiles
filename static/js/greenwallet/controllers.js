@@ -149,15 +149,11 @@ angular.module('greenWalletControllers', [])
             update_balance: function(firstUpdateData) {
                 var that = this;
                 that.balance_updating = true;
-                if (!cur_net.isAlpha) {
+                if (!cur_net.isElements) {
                     var args = [
                         'com.greenaddress.txs.get_balance',
                         $scope.wallet.current_subaccount
                     ];
-                    if (cur_net.isAlphaMultiasset) {
-                        args.push(0);  // confs
-                        args.push($scope.wallet.current_asset);
-                    }
                     var d;
                     if (firstUpdateData) {
                         if ($scope.wallet.current_subaccount) {

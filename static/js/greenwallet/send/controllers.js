@@ -216,10 +216,9 @@ angular.module('greenWalletSendControllers',
                     }
 
                     function calculateFee (tx) {
-                        if (cur_net.isAlphaMultiasset) {
-                            for (var i = 0; i < tx.fees.length; ++i) {
-                               if (tx.fees[ i ]) return tx.fees[ i ];
-                            }
+                        if (cur_net.isElements) {
+                            // FIXME calculate correct fee
+                            return 'unknown;'
                         } else {
                             return tx.ins.reduce(function (a, b) {
                               return a + b.prevOut.value;
