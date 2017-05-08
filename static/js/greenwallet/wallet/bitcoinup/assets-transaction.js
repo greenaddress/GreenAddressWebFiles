@@ -340,7 +340,7 @@ function fromHexImpl (tx, hex, __noStrict) {
     } else {
       assetHash = assetTag;
     }
-    var commitmentFirst = readSlice(1)[0], value;
+    var commitmentFirst = readSlice(1)[0], value = null;
     if (commitmentFirst === 1) {
       value = readUInt64BE();
       commitment = null;
