@@ -1,3 +1,5 @@
+var AssetsTransaction = require('wallet').bitcoinup.AssetsTransaction;
+
 angular.module('greenWalletControllers', [])
 .controller('WalletController', ['$scope', 'tx_sender', '$uibModal', 'notices', 'gaEvent', '$location', 'wallets', '$http', '$q', 'parse_bitcoin_uri', 'parseKeyValue', 'backButtonHandler', '$uibModalStack', 'sound', 'blind', 'storage',
         function WalletController($scope, tx_sender, $uibModal, notices, gaEvent, $location, wallets, $http, $q, parse_bitcoin_uri, parseKeyValue, backButtonHandler, $uibModalStack, sound, blind, storage) {
@@ -223,9 +225,7 @@ angular.module('greenWalletControllers', [])
                         var unblind_ds = [];
                         for (var i = 0; i < rawtxs.length; ++i) {
                             (function(rawtx) {
-                                var tx = Bitcoin.contrib.transactionFromHex(
-                                    rawtx.rawtx
-                                );
+                                var tx = AssetsTransaction.fromHex(rawtx.rawtx).tx;
                                 var key =
                                     'unblinded_value_' + rawtx.txhash + ':' +
                                     rawtx.pt_idx;
