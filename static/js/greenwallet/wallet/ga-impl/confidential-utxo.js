@@ -3,6 +3,7 @@ var bitcoin = require('bitcoinjs-lib');
 var extend = require('xtend/mutable');
 var GAUtxo = require('./utxo-factory').GAUtxo;
 var SchnorrSigningKey = require('../bitcoinup').SchnorrSigningKey;
+var wally = require('wallyjs');
 
 module.exports = GAConfidentialUtxo;
 

@@ -507,10 +507,10 @@ function _rebuildCT () {
   this.tx.outWitness = [];
   var allValues = [], allAbfs = [], allVbfs = [];
   _this.tx.ins.forEach(function (inp) {
-    allValues.push(u64(inp.prevOutRaw.value));
-    if (inp.prevOutRaw.abf) {
-      allAbfs.push(new Buffer(inp.prevOutRaw.abf, 'hex'));
-      allVbfs.push(new Buffer(inp.prevOutRaw.vbf, 'hex'));
+    allValues.push(u64(inp.prevOut.value));
+    if (inp.prevOut.abf) {
+      allAbfs.push(new Buffer(inp.prevOut.abf, 'hex'));
+      allVbfs.push(new Buffer(inp.prevOut.vbf, 'hex'));
     } else {
       var ZEROS = new Buffer('0000000000000000000000000000000000000000000000000000000000000000', 'hex');
       allAbfs.push(ZEROS);
@@ -555,23 +555,22 @@ function _rebuildCT () {
         out.commitment = commitment = commitment_;
         var inputAssets = [], inputAbfs = [], inputAgs = [];
         _this.tx.ins.forEach(function (inp) {
-          if (inp.prevOutRaw.abf) {
-            inputAssets.push(new Buffer(inp.prevOutRaw.assetId, 'hex'));
-            inputAbfs.push(new Buffer(inp.prevOutRaw.abf, 'hex'));
+          if (inp.prevOut.abf) {
+            inputAssets.push(new Buffer(inp.prevOut.assetId, 'hex'));
+            inputAbfs.push(new Buffer(inp.prevOut.abf, 'hex'));
             inputAgs.push(wally.wally_asset_generator_from_bytes(
-              new Buffer(inp.prevOutRaw.assetId, 'hex'),
-              new Buffer(inp.prevOutRaw.abf, 'hex')
+              new Buffer(inp.prevOut.assetId, 'hex'),
+              new Buffer(inp.prevOut.abf, 'hex')
             ));
           } else {
             var ZEROS = new Buffer('0000000000000000000000000000000000000000000000000000000000000000', 'hex');
-            inputAssets.push(new Buffer(inp.prevOutRaw.assetId, 'hex'));
+            inputAssets.push(new Buffer(inp.prevOut.assetId, 'hex'));
             inputAbfs.push(ZEROS);
             inputAgs.push(wally.wally_asset_generator_from_bytes(
-              new Buffer(inp.prevOutRaw.assetId, 'hex'),
+              new Buffer(inp.prevOut.assetId, 'hex'),
               ZEROS
             ));
           }
-
         });
         return Promise.all(inputAgs).then(function (inputAgs) {
           inputAgs = inputAgs.map(function (ui8a) { return new Buffer(ui8a); });
