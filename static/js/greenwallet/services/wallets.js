@@ -108,12 +108,11 @@ function factory ($q, $rootScope, tx_sender, $location, notices, $uibModal,
   };
   walletsService.walletFromHD = function ($scope, hd, options) {
     options = options || {};
-    var WalletClass = window.cur_net.isAlphaMultiasset ? AssetsWallet : GAWallet;
+    var WalletClass = window.cur_net.isElements ? AssetsWallet : GAWallet;
     return new WalletClass({
       SigningWalletClass: HashSwSigningWallet,
       signingWalletOptions: {
-        hd: new SchnorrSigningKey(hd, options),
-        schnorrTx: cur_net.isAlpha
+        hd: new SchnorrSigningKey(hd, options)
       },
       gaService: tx_sender.gaService,
       unblindedCache: unblindedCache,
@@ -123,7 +122,7 @@ function factory ($q, $rootScope, tx_sender, $location, notices, $uibModal,
   };
   walletsService.walletFromHW = function ($scope, hwDevice, options) {
     options = options || {};
-    var WalletClass = window.cur_net.isAlphaMultiasset ? AssetsWallet : GAWallet;
+    var WalletClass = window.cur_net.isElements ? AssetsWallet : GAWallet;
     return hwDevice.getPublicKey().then(function (hdwallet) {
       return new WalletClass({
         SigningWalletClass: HwSigningWallet,
@@ -214,7 +213,7 @@ function factory ($q, $rootScope, tx_sender, $location, notices, $uibModal,
         }
         $scope.wallet.appearance = data.appearance;
         gaWallet.service.appearance = $scope.wallet.appearance;
-        if (cur_net.isAlphaMultiasset && !window.cordova && !is_chrome_app) {
+        if (cur_net.isElements && !window.cordova && !is_chrome_app) {
           if (data.theme && data.theme.css) {
             var sheet = window.document.styleSheets[0];
             sheet.insertRule(data.theme.css, sheet.cssRules.length);
@@ -247,7 +246,7 @@ function factory ($q, $rootScope, tx_sender, $location, notices, $uibModal,
         $scope.wallet.privacy = data.privacy;
         $scope.wallet.limits = data.limits;
         $scope.wallet.subaccounts = gaWallet.subaccounts;
-        if (cur_net.isAlphaMultiasset) {
+        if (cur_net.isElements) {
           $scope.wallet.assets = {};
           $scope.wallet.assetGaIds = data.asset_ids;
           Object.keys(data.asset_ids).forEach(function (k) {
@@ -292,7 +291,7 @@ function factory ($q, $rootScope, tx_sender, $location, notices, $uibModal,
     });
   };
   walletsService.loginWatchOnly = function ($scope, tokenType, token) {
-    var WalletClass = window.cur_net.isAlphaMultiasset ? AssetsWallet : GAWallet;
+    var WalletClass = window.cur_net.isElements ? AssetsWallet : GAWallet;
     return walletsService.newLogin($scope, new WalletClass({
       watchOnly: {
         tokenType: tokenType,
@@ -388,14 +387,14 @@ function factory ($q, $rootScope, tx_sender, $location, notices, $uibModal,
       end && end.toISOString()];
     var args = ['com.greenaddress.txs.get_list_v2',
       page_id, query, sort_by, date_range_iso, subaccount,
-      cur_net.isAlphaMultiasset];
-    if (cur_net.isAlpha) {
+      cur_net.isElements];
+    if (cur_net.isElements) {
       // return prev data
       args.push(true);
     }
     var call = tx_sender.call.apply(tx_sender, args);
 
-    if (cur_net.isAlphaMultiasset) {
+    if (cur_net.isElements) {
       call = call.then(function (data) {
         var deferreds = [];
         var valid = {};
@@ -600,11 +599,11 @@ function factory ($q, $rootScope, tx_sender, $location, notices, $uibModal,
           has_payment_request: tx.has_payment_request,
           double_spent_by: tx.double_spent_by, replaced_by: tx.replaced_by,
           replacement_of: [],
-          rawtx: cur_net.isAlpha ? data.data[tx.txhash] : tx.data,
+          rawtx: cur_net.isElements ? data.data[tx.txhash] : tx.data,
           social_destination: tx_social_destination, social_value: tx_social_value,
           ga_asset_id: ga_asset_id, asset_name: asset_name, size: tx.size,
           fee_per_kb: Math.round(tx.fee / (tx.size / 1000)),
-          rbf_optin: !cur_net.isAlphaMultiasset && tx.rbf_optin,
+          rbf_optin: !cur_net.isElements && tx.rbf_optin,
           issuance: tx.issuance,
           asset_values: asset_values});
         // tx.unclaimed is later used for cache updating

@@ -14,7 +14,7 @@ angular.module('greenWalletSignupLoginControllers', ['greenWalletMnemonicsServic
 
     $scope.install_run_app_label = "";
     var appInstalled = false;
-    if (cur_net.isAlpha && window.chrome && chrome.app && !chrome.storage) {
+    if (!cur_net.isElements && window.chrome && chrome.app && !chrome.storage) {
         if (chrome.runtime) {
             chrome.runtime.sendMessage(
                 $('link[rel="chrome-webstore-item"]').attr('href').split('/detail/')[1],
@@ -31,7 +31,7 @@ angular.module('greenWalletSignupLoginControllers', ['greenWalletMnemonicsServic
         $scope.install_run_app_label = gettext("Install the Chrome App")
     }
     $scope.install_run_app = function(ev) {
-        if (cur_net.isAlpha && window.chrome && chrome.app && !chrome.storage) {
+        if (!cur_net.isElements && window.chrome && chrome.app && !chrome.storage) {
             // !chrome.storage means we're not inside the chrome app
             ev.preventDefault();
             if (appInstalled) {
