@@ -564,10 +564,10 @@ function _rebuildCT () {
             ));
           } else {
             var ZEROS = new Buffer('0000000000000000000000000000000000000000000000000000000000000000', 'hex');
-            inputAssets.push(new Buffer(inp.prevOut.assetId, 'hex'));
+            inputAssets.push(new Buffer(inp.prevOutRaw.assetId, 'hex'));
             inputAbfs.push(ZEROS);
             inputAgs.push(wally.wally_asset_generator_from_bytes(
-              new Buffer(inp.prevOut.assetId, 'hex'),
+              new Buffer(inp.prevOutRaw.assetId, 'hex'),
               ZEROS
             ));
           }
