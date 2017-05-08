@@ -400,10 +400,6 @@ function factory ($q, $rootScope, tx_sender, $location, notices, $uibModal,
     var args = ['com.greenaddress.txs.get_list_v2',
       page_id, query, sort_by, date_range_iso, subaccount,
       cur_net.isElements];
-    if (cur_net.isElements) {
-      // return prev data
-      args.push(true);
-    }
     var call = tx_sender.call.apply(tx_sender, args);
 
     if (cur_net.isElements) {
