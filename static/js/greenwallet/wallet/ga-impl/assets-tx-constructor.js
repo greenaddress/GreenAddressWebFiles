@@ -44,7 +44,7 @@ function _collectOutputs (values, options) {
 
   deferreds.push(TxConstructor._makeUtxoFilter(
     this.buildOptions.assetNetworkId,
-    values.asset + assetIsFee ? values.fee : 0,
+    values.asset + (assetIsFee ? values.fee : 0),
     'not enough asset',
     options
   )(this.utxo).then(function (assetUtxo) {
@@ -70,7 +70,8 @@ function _collectOutputs (values, options) {
 function _initializeNeededValue (outputsWithAmounts, options, feeEstimate) {
   // 16b is very conservative
   // (just version[4b]+num_inputs[1b]+num_outputs[1b]+one_output[10b]
-  var initialFeeEstimate = 16 * feeEstimate / 1000;
+  // ceil to handle very low fees correctly:
+  var initialFeeEstimate = Math.ceil(16 * feeEstimate / 1000);
   return {asset: TxConstructor.prototype._initializeNeededValue.call(
             this, outputsWithAmounts, options, feeEstimate
           ),

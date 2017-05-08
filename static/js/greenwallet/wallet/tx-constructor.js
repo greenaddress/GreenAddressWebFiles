@@ -33,7 +33,7 @@ function _makeUtxoFilter (assetNetworkId, requiredValue, message, options) {
   function processFiltered (utxos) {
     if (assetNetworkId) {
       utxos = utxos.filter(function (utxo) {
-        return utxo.raw.assetId === assetNetworkId.toString('hex');
+        return utxo.assetId === assetNetworkId.toString('hex');
       });
     }
 
