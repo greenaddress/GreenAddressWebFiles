@@ -16,6 +16,20 @@ angular.module('greenWalletReceiveControllers',
             $rootScope.is_loading += 1;
             tx_sender.call('com.greenaddress.addressbook.get_my_addresses', $scope.wallet.current_subaccount).then(function(data) {
                 $scope.receive.my_addresses = data;
+                if (cur_net.isElements) {
+                    $scope.receive.my_addresses = data.map(function (ad) {
+                        var hash = Bitcoin.bs58check.decode(ad.ad).slice(1);
+                        var blindingPrivkey = '0101010101010101010101010101010101010101010101010101010101010101';
+                        var pub = new Bitcoin.bitcoin.ECPair(
+                            Bitcoin.BigInteger.fromBuffer(new Buffer(blindingPrivkey, 'hex'))
+                        ).getPublicKeyBuffer();
+                        ad.ad = Bitcoin.bs58check.encode(Bitcoin.Buffer.Buffer.concat([
+                            new Bitcoin.Buffer.Buffer([4, cur_net.scriptHash]),
+                            pub, hash
+                        ]));
+                        return ad;
+                    })
+                }
                 $scope.receive.my_addresses.has_more = $scope.receive.my_addresses[$scope.receive.my_addresses.length - 1].pointer > 1;
                 $uibModal.open({
                     templateUrl: BASE_URL+'/'+LANG+'/wallet/partials/wallet_modal_my_addresses.html',
@@ -222,11 +236,15 @@ angular.module('greenWalletReceiveControllers',
                             return key.deriveHardened($scope.wallet.current_subaccount);
                         });
                     }
-                    address = key.then(function(key) {
+                    /* address = key.then(function(key) {
                         return key.deriveHardened(branches.BLINDED)
                     }).then(function(branch) {
                         return branch.deriveHardened(data.pointer);
-                    }).then(function(blinded_key) {
+                    }). */ // TODO proper derivation for blinding keys
+                    var blindingPrivkey = '0101010101010101010101010101010101010101010101010101010101010101';
+                    address = Promise.resolve({keyPair: new Bitcoin.bitcoin.ECPair(
+                        Bitcoin.BigInteger.fromBuffer(new Buffer(blindingPrivkey, 'hex'))
+                    )}).then(function(blinded_key) {
                         var version;
                         if (cur_net === Bitcoin.bitcoin.networks.bitcoin) {
                             version = 10;
