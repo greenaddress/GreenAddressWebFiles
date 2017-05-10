@@ -512,6 +512,8 @@ function factory ($q, $rootScope, tx_sender, $location, notices, $uibModal,
             description = gettext('Asset Issuance');
           } else if (redeemable_value.compareTo(new Bitcoin.BigInteger('0')) > 0) {
             description = gettext('Back from ') + sent_back_from;
+          } else if (cur_net.isElements) {
+            description = gettext('Received funds');
           } else {
             description = gettext('From ');
             var addresses = [];
@@ -580,6 +582,10 @@ function factory ($q, $rootScope, tx_sender, $location, notices, $uibModal,
           } else {
             description += addresses.join(', ');
           }
+
+          if (cur_net.isElements) {
+           description = gettext('Sent to confidential address');
+         }
         }
         // prepend zeroes for sorting
         var value_sort = new Bitcoin.BigInteger(Math.pow(10, 19).toString()).add(value).toString();
