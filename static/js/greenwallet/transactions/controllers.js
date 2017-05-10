@@ -310,7 +310,7 @@ angular.module('greenWalletTransactionsControllers',
                 var try_sending = function(twofac_data) {
                     return tx_sender.call(
                         'com.greenaddress.vault.send_raw_tx',
-                        tx.toBuffer().toString('hex'), twofac_data
+                        tx.toBuffer(true).toString('hex'), twofac_data
                     ).then(function(data) {
                         if (data.new_limit) {
                             $scope.wallet.limits.total = data.new_limit;

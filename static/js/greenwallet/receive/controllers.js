@@ -186,10 +186,6 @@ angular.module('greenWalletReceiveControllers',
                 true /* return_pointer */,
                 $scope.wallet.appearance.use_segwit ? 'p2wsh' : 'p2sh'
             ];
-            if (confidential) {
-                // old server doesn't support the 4th argument
-                args.push(true);
-            }
             tx_sender.call.apply(tx_sender, args).then(function(data) {
                 var expectedScript;
                 if (!tx_sender.gaWallet.scriptFactory) {
@@ -235,22 +231,15 @@ angular.module('greenWalletReceiveControllers',
                         if (cur_net === Bitcoin.bitcoin.networks.bitcoin) {
                             version = 10;
                         } else {
-                            version = 25;
+                            version = 4;
                         }
-                        return tx_sender.call(
-                            'com.greenaddress.vault.set_scanning_key',
-                            $scope.wallet.current_subaccount,
-                            data.pointer,
-                            Array.from(blinded_key.keyPair.getPublicKeyBuffer())
-                        ).then(function() {
-                            return Bitcoin.bs58check.encode(Bitcoin.Buffer.Buffer.concat([
-                                new Bitcoin.Buffer.Buffer([version, cur_net.scriptHash]),
-                                blinded_key.keyPair.getPublicKeyBuffer(),
-                                Bitcoin.bitcoin.crypto.hash160(
-                                    new Bitcoin.Buffer.Buffer(data.script, 'hex')
-                                )
-                            ]));
-                        });
+                        return Bitcoin.bs58check.encode(Bitcoin.Buffer.Buffer.concat([
+                            new Bitcoin.Buffer.Buffer([version, cur_net.scriptHash]),
+                            blinded_key.keyPair.getPublicKeyBuffer(),
+                            Bitcoin.bitcoin.crypto.hash160(
+                                new Bitcoin.Buffer.Buffer(data.script, 'hex')
+                            )
+                        ]));
                     });
                 } else {
                     var script = new Bitcoin.Buffer.Buffer(data, 'hex');

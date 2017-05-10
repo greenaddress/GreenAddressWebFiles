@@ -82,7 +82,7 @@ angular.module('greenWalletSendControllers',
                     that.sending = false;
                     return;
                 }
-                isConfidential = (decoded[0] == 25 || decoded[0] == 10);
+                isConfidential = (decoded[0] == 4 || decoded[0] == 10);
             }
             var satoshis =
                 this.spend_all ? "ALL" : this.amount_to_satoshis(this.amount);
@@ -225,7 +225,7 @@ angular.module('greenWalletSendControllers',
                         }
                         return tx_sender.call(
                             'com.greenaddress.vault.send_raw_tx',
-                            tx.toBuffer().toString('hex'),
+                            tx.toBuffer(true).toString('hex'),
                             twofac_data,
                             priv_data
                         ).then(function (data) {
