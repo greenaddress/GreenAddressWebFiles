@@ -530,7 +530,7 @@ function _rebuildCT () {
   }.bind(this)).then(function () {
     return Promise.all(this.tx.outs.map(function (out, idx) {
       if (!out.valueToBlind) {
-        this.tx.outWitness[idx] = new Buffer([0, 0, 0]);
+        _this.tx.outWitness[idx] = new Buffer([0, 0, 0]);
         return;
       }
 
@@ -589,7 +589,7 @@ function _rebuildCT () {
             )
           ]);
         });
-      }.bind()).then(function (results) {
+      }.bind(this)).then(function (results) {
         var rangeproof = new Buffer(results[0]);
         var surjectionproof = new Buffer(results[1]);
         var outwit = new Buffer(
@@ -690,7 +690,7 @@ function _addFeeAndChangeWithAsset (options) {
     }
 
     var requiredValues = {
-      fee: Math.round(feeEstimate * this.byteLength() / 1000),
+      fee: Math.ceil(feeEstimate * this.byteLength() / 1000),
       asset: currentAssetValue
     };
 
@@ -719,7 +719,7 @@ function _addFeeAndChangeWithAsset (options) {
           options.changeAddrFactory
         );
         // update required fee for the new output
-        requiredValues.fee = Math.round(
+        requiredValues.fee = Math.ceil(
           feeEstimate * this.byteLength() / 1000
         );
 
@@ -792,13 +792,13 @@ function _addFeeAndChangeWithAsset (options) {
         }
 
         function iterateFee () {
-          if (requiredValues.fee >= Math.round(
+          if (requiredValues.fee >= Math.ceil(
               feeEstimate * this.byteLength() / 1000
             )) {
             return Promise.resolve();
           }
 
-          requiredValues.fee = Math.round(
+          requiredValues.fee = Math.ceil(
             feeEstimate * this.byteLength() / 1000
           );
 
@@ -878,8 +878,8 @@ function _addFeeAndChange (options) {
     requiredValue += this.getOutput(i).valueToBlind || this.getOutput(i).value;
   }
 
-  // 4. make sure fee is right
-  var fee = Math.round(feeEstimate * this.byteLength() / 1000);
+  // 4. make sure fee is right (round up for at least 1 satoshi fee)
+  var fee = Math.ceil(feeEstimate * this.byteLength() / 1000);
   var ret = Promise.resolve({changeIdx: -1}); // -1 indicates no change
 
   return prevoutsValueDeferred.then(function (prevoutsValue) {
@@ -961,13 +961,13 @@ function _addFeeAndChange (options) {
       return iterateFee;
 
       function iterateFee () {
-        if (fee >= Math.round(
+        if (fee >= Math.ceil(
             feeEstimate * this.byteLength() / 1000
           )) {
           return Promise.resolve();
         }
 
-        fee = Math.round(feeEstimate * this.byteLength() / 1000);
+        fee = Math.ceil(feeEstimate * this.byteLength() / 1000);
 
         if (prevoutsValue === requiredValueForFee + fee) {
           // After adding the change output or CT data, which made the transaction larger,
