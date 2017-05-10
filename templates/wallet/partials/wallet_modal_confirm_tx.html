@@ -15,18 +15,28 @@
 
     <dl>
         <dt>{{ _("Amount") }}</dt>
-        <dd>(( tx.value | format_btc:wallet.unit )) <span ng-if="wallet.current_asset == 1">
-          ( (( tx.value | format_fiat:wallet.fiat )) )</span></dd>
+        <dd>
+          <span ng-if="wallet.current_asset == 1">(( tx.value | format_btc:wallet.unit )) ( (( tx.value | format_fiat:wallet.fiat )) )</span>
+          <span ng-if="wallet.current_asset != 1">(( tx.value | format_asset:wallet.assets[wallet.current_asset] ))</span>
+        </dd>
     </dl>
 
     <dl>
         <dt>{{ _("Fee") }}</dt>
         <dd>
-            (( tx.fee | format_btc:wallet.unit ))<span ng-if="wallet.current_asset == 1">
-             ( (( tx.fee | format_fiat:wallet.fiat )) ) </span>
-            <span ng-show="tx.previous_fee">
-                ({{ _("Previous fee:") }} (( tx.previous_fee | format_btc:wallet.unit )))
-            </span>
+            <div ng-if="wallet.current_asset == 1 && (!tx.feeasset || tx.feeasset == 1)">
+              (( tx.fee | format_btc:wallet.unit ))<span ng-if="wallet.current_asset == 1">
+               ( (( tx.fee | format_fiat:wallet.fiat )) ) </span>
+              <span ng-show="tx.previous_fee">
+                  ({{ _("Previous fee:") }} (( tx.previous_fee | format_btc:wallet.unit )))
+              </span>
+            </div>
+            <div ng-if="wallet.current_asset != 1 || (tx.feeasset && tx.feeasset != 1)">
+              (( tx.fee | format_asset:wallet.assets[wallet.current_asset] ))
+              <span ng-show="tx.previous_fee">
+                  ({{ _("Previous fee:") }} (( tx.previous_fee | format_asset:wallet.assets[tx.feeasset] )))
+              </span>
+            </div>
         </dd>
     </dl>
 </div>

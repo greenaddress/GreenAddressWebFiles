@@ -48,7 +48,12 @@ angular.module('greenWalletSendControllers',
             qrcode.stop_scanning($scope);
         },
         amount_to_satoshis: function(amount) {
-            var div = {'BTC': 1, 'mBTC': 1000, 'µBTC': 1000000, 'bits': 1000000}[$scope.wallet.unit];
+            if (cur_net.isElements && $scope.wallet.current_asset !== 1) {
+                var asset = $scope.wallet.assets[$scope.wallet.current_asset];
+                var div = Math.pow(10, 8 - asset.decimalPlaces)
+            } else {
+                var div = {'BTC': 1, 'mBTC': 1000, 'µBTC': 1000000, 'bits': 1000000}[$scope.wallet.unit];
+            }
             return Bitcoin.Util.parseValue(amount).divide(Bitcoin.BigInteger.valueOf(div)).toString();
         },
         get_add_fee: function() {
