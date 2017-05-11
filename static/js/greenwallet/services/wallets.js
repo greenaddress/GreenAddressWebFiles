@@ -343,7 +343,7 @@ function factory ($q, $rootScope, tx_sender, $location, notices, $uibModal,
       }
       // e.pubkey_pointer !== null means it's our ep, can be
       // from different subaccount than currently processed
-      var txhash, pt_idx, out, subaccount;
+      var txhash, pt_idx, subaccount;
       if (ep.is_credit) {
         txhash = txData.txhash;
         pt_idx = ep.pt_idx;
@@ -353,15 +353,13 @@ function factory ($q, $rootScope, tx_sender, $location, notices, $uibModal,
         pt_idx = ep.previdx;
         subaccount = ep.prevsubaccount;
       }
-      var tx = AssetsTransaction.fromHex(rawTxs[txhash]).tx;
-      var out = tx.outs[pt_idx];
       var ep_to_unblind = {
         txhash: txhash,
         pt_idx: pt_idx,
-        commitment: out.commitment.toString('hex'),
-        nonce_commitment: out.nonceCommitment.toString('hex'),
-        range_proof: out.rangeProof.toString('hex'),
-        asset_tag: out.assetTag.toString('hex')
+        commitment: ep.commitment,
+        nonce_commitment: ep.nonce_commitment,
+        range_proof: ep.range_proof,
+        asset_tag: ep.asset_tag
       };
       var key = 'unblinded_value_' + txhash + ':' + pt_idx;
       var d = storage.get(key).then(function (value) {

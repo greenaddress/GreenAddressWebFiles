@@ -118,6 +118,7 @@ app.config(['$interpolateProvider', '$httpProvider',
     }
 }]).filter('format_decimal', ['btc_formatter', function(btc_formatter) {
     return function format_asset(satoshis, asset) {
+        if (!asset) return '';
         if (!asset.btc_unit) {
             return btc_formatter(satoshis, asset.decimalPlaces) + ' ' + asset.name;
         }
