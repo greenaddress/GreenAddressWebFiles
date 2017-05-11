@@ -700,8 +700,16 @@ function factory ($q, $rootScope, tx_sender, $location, notices, $uibModal,
       // not all txs support this dialog, like redepositing or sweeping
       return $q.when();
     }
-    var scope = $scope.$new(), fee, value;
-    if (tx.ins[0].prevOut && tx.ins[0].prevOut.data) {
+    var scope = $scope.$new(), fee, value, feeunit = {btc_unit: $scope.wallet.unit};;
+    if (cur_net.isElements) {
+      tx.outs.forEach(function (txout) {
+        if (txout.script.length === 0) {
+          fee = txout.value;
+          var assetGaId = $scope.wallet.assetGaIds[txout.assetId.toString('hex')];
+          feeunit = $scope.wallet.assets[assetGaId];
+        }
+      });
+    } else if (tx.ins[0].prevOut && tx.ins[0].prevOut.data) {
       var in_value = 0, out_value = 0;
       tx.ins.forEach(function (txin) {
         if (txin.prevOut.value) {
@@ -733,6 +741,7 @@ function factory ($q, $rootScope, tx_sender, $location, notices, $uibModal,
     }
     scope.tx = {
       fee: fee,
+      feeunit: feeunit,
       previous_fee: options.bumped_tx && options.bumped_tx.fee,
       value: value,
       recipient: options.recipient ? options.recipient :
