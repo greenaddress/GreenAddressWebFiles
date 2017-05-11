@@ -21,7 +21,7 @@
     <dl>
         <dt>{{ _("Fee") }}</dt>
         <dd>
-              (( tx.fee | format_decimal:tx.feeunit ))<span ng-if="wallet.current_asset == 1">
+              (( tx.fee | format_decimal:tx.feeunit ))<span ng-if="tx.feeunit.btc_unit">
                ( (( tx.fee | format_fiat:wallet.fiat )) ) </span>
               <span ng-show="tx.is_min_fee_rate">
                 ({{ _("Fee rate is too low and the minimum rate was used:") }} (( tx.min_fee_rate | format_btc:wallet.unit )))
