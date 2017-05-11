@@ -115,7 +115,7 @@ angular.module('greenWalletSendControllers',
                 if (isConfidential) {
                     destination = {
                         value: satoshis === 'ALL' ?
-                            +$scope.wallet.final_balance : +satoshis,
+                            ~~$scope.wallet.final_balance : ~~satoshis,
                         ctDestination: {
                             b58: to_addr, network: cur_net
                         }
@@ -123,7 +123,7 @@ angular.module('greenWalletSendControllers',
                 } else {
                     destination = {
                         value: satoshis === 'ALL' ?
-                            +$scope.wallet.final_balance : +satoshis,
+                            ~~$scope.wallet.final_balance : ~~satoshis,
                         scriptPubKey: Bitcoin.bitcoin.address.toOutputScript(
                             to_addr, cur_net
                         )
@@ -133,7 +133,7 @@ angular.module('greenWalletSendControllers',
                 var isMinFeeRate = false;
                 if (that.add_fee.amount !== '') {
                   addFee = {
-                    amount: +that.amount_to_satoshis(that.add_fee.amount)
+                    amount: ~~that.amount_to_satoshis(that.add_fee.amount)
                   };
                   var minFeeRate = tx_sender.gaService.getMinFeeRate();
                   if (addFee.amount < minFeeRate) {
@@ -183,7 +183,7 @@ angular.module('greenWalletSendControllers',
                     var fee = calculateFee(tx.tx);
                     var outAmount = satoshis === 'ALL' ?
                         tx.tx.outs[0].value : satoshis;
-                    var amountWithFee = +outAmount + (
+                    var amountWithFee = ~~outAmount + (
                         $scope.wallet.current_asset === 1 ? fee : 0
                     );
                     var asset = $scope.wallet.assets[

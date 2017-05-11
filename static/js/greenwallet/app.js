@@ -116,14 +116,18 @@ app.config(['$interpolateProvider', '$httpProvider',
         var value = satoshis * wallet_fiat.rate / (1000*1000*100);
         return (Math.round(value * 100) / 100) + ' ' + wallet_fiat.currency;
     }
-}]).filter('format_asset', ['btc_formatter', function(btc_formatter) {
+}]).filter('format_decimal', ['btc_formatter', function(btc_formatter) {
     return function format_asset(satoshis, asset) {
-        return btc_formatter(satoshis, asset.decimalPlaces) + ' ' + asset.name;
+        if (!asset.btc_unit) {
+            return btc_formatter(satoshis, asset.decimalPlaces) + ' ' + asset.name;
+        }
+        if (!satoshis) return '0 ' + asset.btc_unit;
+        return btc_formatter(Math.round(satoshis), asset.btc_unit) + ' ' + asset.btc_unit;
     }
 }]).filter('startFrom', function() {
     return function(input, start) {
         if (!input) return input;
-        start = +start; //parse to int
+        start = ~~start; //parse to int
         return input.slice(start);
     };
 }).factory('$exceptionHandler', ['$injector', '$log', function($injector, $log) {

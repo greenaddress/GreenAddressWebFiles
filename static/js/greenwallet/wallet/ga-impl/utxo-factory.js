@@ -83,7 +83,7 @@ function GAUtxo (utxo, options) {
 
   this.prevHash = [].reverse.call(new Buffer(utxo.txhash, 'hex'));
   this.ptIdx = utxo.pt_idx;
-  this.value = +utxo.value;
+  this.value = ~~utxo.value;
   this.raw = utxo;
 
   // FIXME: scriptFactory is not used for signing anymore, just for CT
