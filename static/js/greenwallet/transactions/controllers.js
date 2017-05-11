@@ -262,7 +262,7 @@ angular.module('greenWalletTransactionsControllers',
                             subaccount: $scope.wallet.current_subaccount,
                             script_type: in2out_types[utxo.script_type],
                             pointer: utxo.pubkey_pointer,
-                            value: +utxo.value,
+                            value: ~~utxo.value,
                             script: res.redeemScript.toString('hex')
                         }
                     }));

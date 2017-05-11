@@ -205,91 +205,89 @@ angular.module('greenWalletControllers', [])
                         'any'
                     ).then(function(utxos) {
                         var rawtx_ds = [];
-                        for (var i = 0; i < utxos.length; ++i) {
-                            (function(utxo) {
-                                rawtx_ds.push(tx_sender.call(
-                                    'com.greenaddress.txs.get_raw_unspent_output',
-                                    utxo.txhash, 'any'
-                                ).then(function(rawtx) {
-                                    return {
-                                        txhash: utxo.txhash,
-                                        rawtx: rawtx,
-                                        pt_idx: utxo.pt_idx,
-                                        pointer: utxo.pointer,
-                                        subaccount: utxo.subaccount
-                                    };
-                                }));
-                            })(utxos[i]);
-                        }
+                        utxos.forEach(function(utxo) {
+                            rawtx_ds.push(tx_sender.call(
+                                'com.greenaddress.txs.get_raw_unspent_output',
+                                utxo.txhash, 'any'
+                            ).then(function(rawtx) {
+                                return {
+                                    txhash: utxo.txhash,
+                                    rawtx: rawtx,
+                                    pt_idx: utxo.pt_idx,
+                                    pointer: utxo.pointer,
+                                    subaccount: utxo.subaccount
+                                };
+                            }));
+                        });
                         return $q.all(rawtx_ds);
                     }).then(function(rawtxs) {
                         var unblind_ds = [];
-                        for (var i = 0; i < rawtxs.length; ++i) {
-                            (function(rawtx) {
-                                var tx = AssetsTransaction.fromHex(rawtx.rawtx).tx;
-                                var key =
-                                    'unblinded_value_' + rawtx.txhash + ':' +
-                                    rawtx.pt_idx;
-                                unblind_ds.push(storage.get(key).then(
-                                        function(value) {
-                                    if (value !== null) {
-                                        return {
-                                            value: value.split(';')[0],
-                                            gaAssetId: +value.split(';')[1]
-                                        };
-                                    }
-                                    var txOut = tx.outs[rawtx.pt_idx];
-                                    if (txOut.value > 0) {
-                                        return {
-                                            gaAssetId: $scope.wallet.assetGaIds[txOut.assetId.toString('hex')],
-                                            value: txOut.value
-                                        };
-                                    }
-                                    var ep_to_unblind = {
-                                        txhash: rawtx.txhash,
-                                        pt_idx: rawtx.pt_idx,
-                                        commitment: txOut.commitment.toString('hex'),
-                                        nonce_commitment: txOut.nonceCommitment.toString('hex'),
-                                        range_proof: txOut.rangeProof.toString('hex'),
-                                        asset_tag: txOut.assetTag.toString('hex')
+                        rawtxs.forEach(function(rawtx) {
+                            var tx = AssetsTransaction.fromHex(rawtx.rawtx).tx;
+                            var key =
+                                'unblinded_value_' + rawtx.txhash + ':' +
+                                rawtx.pt_idx;
+                            unblind_ds.push(storage.get(key).then(
+                                    function(value) {
+                                if (value !== null) {
+                                    return {
+                                        value: ~~value.split(';')[0],  // FIXME add BigIntegers support
+                                        gaAssetId: ~~value.split(';')[1]
                                     };
-                                    return new ConfidentialUtxo(
-                                        ep_to_unblind,
-                                        tx_sender.gaWallet.txConstructors[1][0].utxoFactory.options
-                                    ).unblind().then(function (data) {
-                                        var ret = {
-                                            value: data.value,
-                                            gaAssetId: $scope.wallet.assetGaIds[data.assetId.toString('hex')]
-                                        };
-                                        storage.set(key, ret.value+';'+ret.gaAssetId);
-                                        return ret;
-                                    });
-                                }).then(function(data) {
-                                    if (data.gaAssetId !== $scope.wallet.current_asset) {
-                                        return;
-                                    }
-                                    final_balances[rawtx.subaccount] += +data.value;
-                                    $scope.wallet.utxo[rawtx.subaccount].push({
-                                        txhash: rawtx.txhash,
-                                        data: {
-                                            pubkey_pointer: rawtx.pointer,
-                                            pt_idx: rawtx.pt_idx,
-                                            value: data.value
-                                        },
-                                        out: tx.outs[rawtx.pt_idx]
-                                    })
-                                }, function(e) {
-                                    // ignore invalid transactions
-                                    if (e !== "Invalid transaction.") {
-                                        throw e;
-                                    }
-                                }));
-                            })(rawtxs[i]);
-                        }
+                                }
+                                var txOut = tx.outs[rawtx.pt_idx];
+                                if (txOut.value > 0) {
+                                    return {
+                                        gaAssetId: $scope.wallet.assetGaIds[txOut.assetId.toString('hex')],
+                                        value: txOut.value
+                                    };
+                                }
+                                var ep_to_unblind = {
+                                    txhash: rawtx.txhash,
+                                    pt_idx: rawtx.pt_idx,
+                                    commitment: txOut.commitment.toString('hex'),
+                                    nonce_commitment: txOut.nonceCommitment.toString('hex'),
+                                    range_proof: txOut.rangeProof.toString('hex'),
+                                    asset_tag: txOut.assetTag.toString('hex')
+                                };
+                                return new ConfidentialUtxo(
+                                    ep_to_unblind,
+                                    tx_sender.gaWallet.txConstructors[1][0].utxoFactory.options
+                                ).unblind().then(function (data) {
+                                    var ret = {
+                                        value: data.value,
+                                        gaAssetId: $scope.wallet.assetGaIds[data.assetId.toString('hex')]
+                                    };
+                                    storage.set(key, ret.value+';'+ret.gaAssetId);
+                                    return ret;
+                                });
+                            }).then(function(data) {
+                                if (data.gaAssetId !== $scope.wallet.current_asset) {
+                                    return;
+                                }
+                                final_balances[rawtx.subaccount] += ~~data.value;
+                                $scope.wallet.utxo[rawtx.subaccount].push({
+                                    txhash: rawtx.txhash,
+                                    data: {
+                                        pubkey_pointer: rawtx.pointer,
+                                        pt_idx: rawtx.pt_idx,
+                                        value: data.value
+                                    },
+                                    out: tx.outs[rawtx.pt_idx]
+                                })
+                            }, function(e) {
+                                // ignore invalid transactions
+                                if (e !== "Invalid transaction.") {
+                                    throw e;
+                                }
+                            }));
+                        });
                         return $q.all(unblind_ds);
                     }).then(function() {
                         return tx_sender.call('com.greenaddress.txs.get_balance', $scope.wallet.current_subaccount).then(function(data) {
-                            that.final_balance = final_balances[$scope.wallet.current_subaccount];
+                            $rootScope.safeApply(function() {
+                                that.final_balance = final_balances[$scope.wallet.current_subaccount];
+                            });
                             that.fiat_currency = data.fiat_currency;
                             that.fiat_value = data.fiat_value;
                             that.fiat_rate = data.fiat_exchange;

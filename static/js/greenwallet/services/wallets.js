@@ -96,7 +96,7 @@ function factory ($q, $rootScope, tx_sender, $location, notices, $uibModal,
     },
     getValue: function (txhash, pt_idx) {
       return storage.get(this._key(txhash, pt_idx)).then(function (val) {
-        return +val; // convert to a number
+        return ~~val; // convert to a number
       });
     },
     setValue: function (txhash, pt_idx, value) {
@@ -259,8 +259,12 @@ function factory ($q, $rootScope, tx_sender, $location, notices, $uibModal,
           $scope.wallet.assets = {undefined: {name: 'BTC'}};
         }
         $scope.wallet.current_subaccount = $scope.wallet.appearance.current_subaccount || 0;
-        $scope.wallet.current_asset = $scope.wallet.appearance.current_asset || 1;
         $scope.wallet.unit = $scope.wallet.appearance.unit || 'mBTC';
+        $scope.wallet.current_asset = $scope.wallet.appearance.current_asset || 1;
+        $scope.wallet.current_decimal_unit = function () {
+            if (this.current_asset === 1) return {btc_unit: this.unit};
+            else return this.assets[this.current_asset];
+        }
         $scope.wallet.cache_password = data.cache_password;
         $scope.wallet.fiat_exchange = data.exchange;
         $scope.wallet.fiat_exchange_extended = $scope.exchanges[data.exchange];
@@ -321,51 +325,50 @@ function factory ($q, $rootScope, tx_sender, $location, notices, $uibModal,
   };
   var unblindOutputs = function ($scope, txData, rawTxs) {
     var deferreds = [];
-    for (var i = 0; i < txData.eps.length; ++i) {
-      (function (ep) {
-        if (ep.value === null && (ep.is_relevant || ep.pubkey_pointer)) {
-          // e.pubkey_pointer !== null means it's our ep, can be
-          // from different subaccount than currently processed
-          var txhash, pt_idx, out, subaccount;
-          if (ep.is_credit) {
-            txhash = txData.txhash;
-            pt_idx = ep.pt_idx;
-            subaccount = ep.subaccount;
-          } else {
-            txhash = ep.prevtxhash;
-            pt_idx = ep.previdx;
-            subaccount = ep.prevsubaccount;
-          }
-          var tx = AssetsTransaction.fromHex(rawTxs[txhash]).tx;
-          var out = tx.outs[pt_idx];
-          var ep_to_unblind = {
-            txhash: txhash,
-            pt_idx: pt_idx,
-            commitment: out.commitment.toString('hex'),
-            nonce_commitment: out.nonceCommitment.toString('hex'),
-            range_proof: out.rangeProof.toString('hex'),
-            asset_tag: out.assetTag.toString('hex')
-          };
-          var key = 'unblinded_value_' + txhash + ':' + pt_idx;
-          var d = storage.get(key).then(function (value) {
-            if (value === null) {
-              return new ConfidentialUtxo(
-                ep_to_unblind,
-                tx_sender.gaWallet.txConstructors[1][0].utxoFactory.options
-              ).unblind().then(function (data) {
-                ep.value = data.value;
-                ep.ga_asset_id = $scope.wallet.assetGaIds[data.assetId.toString('hex')]
-                storage.set(key, data.value+';'+ep.ga_asset_id);
-              });
-            } else {
-              ep.value = value.split(';')[0];
-              ep.ga_asset_id = +value.split(';')[1];
-            }
+    txData.eps.forEach(function (ep) {
+      if (ep.value !== null || !(ep.is_relevant || ep.pubkey_pointer)) {
+        return;
+      }
+      // e.pubkey_pointer !== null means it's our ep, can be
+      // from different subaccount than currently processed
+      var txhash, pt_idx, out, subaccount;
+      if (ep.is_credit) {
+        txhash = txData.txhash;
+        pt_idx = ep.pt_idx;
+        subaccount = ep.subaccount;
+      } else {
+        txhash = ep.prevtxhash;
+        pt_idx = ep.previdx;
+        subaccount = ep.prevsubaccount;
+      }
+      var tx = AssetsTransaction.fromHex(rawTxs[txhash]).tx;
+      var out = tx.outs[pt_idx];
+      var ep_to_unblind = {
+        txhash: txhash,
+        pt_idx: pt_idx,
+        commitment: out.commitment.toString('hex'),
+        nonce_commitment: out.nonceCommitment.toString('hex'),
+        range_proof: out.rangeProof.toString('hex'),
+        asset_tag: out.assetTag.toString('hex')
+      };
+      var key = 'unblinded_value_' + txhash + ':' + pt_idx;
+      var d = storage.get(key).then(function (value) {
+        if (value === null) {
+          return new ConfidentialUtxo(
+            ep_to_unblind,
+            tx_sender.gaWallet.txConstructors[1][0].utxoFactory.options
+          ).unblind().then(function (data) {
+            ep.value = ~~data.value;
+            ep.ga_asset_id = $scope.wallet.assetGaIds[data.assetId.toString('hex')]
+            storage.set(key, data.value+';'+ep.ga_asset_id);
           });
-          deferreds.push(d);
+        } else {
+          ep.value = ~~value.split(';')[0];  // FIXME add BigIntegers support
+          ep.ga_asset_id = ~~value.split(';')[1];
         }
-      })(txData.eps[i]);
-    }
+      });
+      deferreds.push(d);
+    });
     return $q.all(deferreds);
   };
   walletsService._getTransactions = function ($scope, notifydata, page_id, query, sorting, date_range, subaccount) {
@@ -433,12 +436,17 @@ function factory ($q, $rootScope, tx_sender, $location, notices, $uibModal,
         // description is reused in every iteration of the loop, so lets just null it out at first just in case
         description = null;
         var tx = data.list[i], inputs = [], outputs = [];
-        var ga_asset_id;
+        var ga_asset_id, feeunit = {btc_unit: $scope.wallet.unit};
         for (var j = 0; j < tx.eps.length; ++j) {
+          tx.eps[j].unit = $scope.wallet.assets[tx.eps[j].ga_asset_id] || {btc_unit: $scope.wallet.unit};
+          if (tx.eps[j].script_type === 0 && tx.eps[j].is_credit) {
+            feeunit = tx.eps[j].unit;
+          }
           if (tx.eps[j].is_credit && tx.eps[j].is_relevant) {
             ga_asset_id = tx.eps[j].ga_asset_id;
           }
         }
+        tx.feeunit = feeunit;
         if (ga_asset_id) {
           var num_confirmations = data.cur_block[ga_asset_id] - tx.block_height + 1;
           asset_name = $scope.wallet.assets[ga_asset_id].name;
@@ -591,7 +599,7 @@ function factory ($q, $rootScope, tx_sender, $location, notices, $uibModal,
           value_fiat: data.fiat_value ? value * data.fiat_value / Math.pow(10, 8) : undefined,
           redeemable_value: redeemable_value, negative: negative, positive: positive,
           description: description, external_social: external_social, unclaimed: unclaimed,
-          description_short: addresses.length ? addresses.join(', ') : description,
+          description_short: (addresses && addresses.length) ? addresses.join(', ') : description,
           pubkey_pointer: pubkey_pointer, inputs: inputs, outputs: outputs, fee: tx.fee,
           nonzero: value.compareTo(new Bitcoin.BigInteger('0')) != 0,
           redeemable: redeemable_value.compareTo(new Bitcoin.BigInteger('0')) > 0,
@@ -607,7 +615,7 @@ function factory ($q, $rootScope, tx_sender, $location, notices, $uibModal,
           fee_per_kb: Math.round(tx.fee / (tx.size / 1000)),
           rbf_optin: !cur_net.isElements && tx.rbf_optin,
           issuance: tx.issuance,
-          asset_values: asset_values});
+          asset_values: asset_values, feeunit: tx.feeunit});
         // tx.unclaimed is later used for cache updating
         tx.unclaimed = retval[0].unclaimed || (retval[0].redeemable && retval[0].redeemable_unspent);
       }
@@ -671,7 +679,8 @@ function factory ($q, $rootScope, tx_sender, $location, notices, $uibModal,
             decimalPlaces: $scope.wallet.assets[ga_asset_id].decimalPlaces,
             value: Bitcoin.BigInteger.valueOf(0)
           };
-          asset_values_map[ga_asset_id].btc_unit = (ga_asset_id === 1);
+          asset_values_map[ga_asset_id].btc_unit = (ga_asset_id === 1) ?
+              $scope.wallet.unit : false;
           asset_values.push(asset_values_map[ga_asset_id]);
         }
         var asset = asset_values_map[ga_asset_id];
@@ -792,7 +801,7 @@ function factory ($q, $rootScope, tx_sender, $location, notices, $uibModal,
             tx.tx.ins[i].hash
           ).toString('hex')
         }, prevOut),
-        value: +prevOut.value,
+        value: ~~prevOut.value,
         subaccount: walletsService.getSubaccount($scope, prevOut.subaccount),
         privkey: prevOut.privkey,
         script: (typeof prevOut.script === 'string'

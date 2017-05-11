@@ -45,7 +45,8 @@ function unblind () {
     delete utxo.asset_tag
 
     utxo.assetId = new Buffer(unblindedData[0]).toString('hex');
-    utxo.value = BigInteger.fromByteArrayUnsigned(unblindedData[3]).toString();
+    // FIXME BigIntegers:
+    utxo.value = ~~BigInteger.fromByteArrayUnsigned(unblindedData[3]).toString();
     utxo.abf = new Buffer(unblindedData[1]).toString('hex');
     utxo.vbf = new Buffer(unblindedData[2]).toString('hex');
     return utxo;

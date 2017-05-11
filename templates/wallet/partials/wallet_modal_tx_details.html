@@ -32,9 +32,9 @@
 
         <dt>{{ _("Fee") }} / {{ _("Size (bytes)") }} / {{ _("Fee per kB") }}</dt>
         <dd>
-          (( selected_transaction.fee | format_btc:wallet.unit )) /
+          (( selected_transaction.fee | format_decimal:selected_transaction.feeunit )) /
           ((selected_transaction.size)) /
-          (( selected_transaction.fee_per_kb | format_btc:wallet.unit ))
+          (( selected_transaction.fee_per_kb | format_decimal:selected_transaction.feeunit ))
           <span ng-show="selected_transaction.confirmations == 0">
               ({{ _("Estimated number of confirmations required:") }} (( selected_transaction.current_estimate )))
           </span>
@@ -60,12 +60,7 @@
         <tr><th>{{ _("Address") }}</th><th>{{ _("Amount") }}</th></tr>
         <tr ng-repeat="input in selected_transaction.inputs|limitTo:10">
           <td>(( input.ad ))</td>
-          {% if MULTIASSET %}
-            <td class="amount" ng-if="input.value !== null && input.ga_asset_id == 1">(( input.value | format_btc:wallet.unit ))</td>
-            <td class="amount" ng-if="input.value !== null && input.ga_asset_id != 1">(( input.value )) (( wallet.assets[input.ga_asset_id].name ))</td>
-          {% else %}
-            <td class="amount" ng-if="input.value !== null">(( input.value | format_btc:wallet.unit ))</td>
-          {% endif %}
+            <td class="amount" ng-if="input.value !== null">(( input.value | format_decimal:input.unit ))</td>
             <td class="amount" ng-if="input.value === null">{{ _("Confidential") }}</td>
         </tr>
     </table>
@@ -78,12 +73,7 @@
         <tr><th>{{ _("Address") }}</th><th>{{ _("Amount") }}</th></tr>
         <tr ng-repeat="output in selected_transaction.outputs|limitTo:10">
             <td>(( output.ad ))</td>
-          {% if MULTIASSET %}
-            <td class="amount" ng-if="output.value !== null && output.ga_asset_id == 1">(( output.value | format_btc:wallet.unit ))</td>
-            <td class="amount" ng-if="output.value !== null && output.ga_asset_id != 1">(( output.value )) (( wallet.assets[output.ga_asset_id].name ))</td>
-          {% else %}
-            <td class="amount" ng-if="output.value !== null">(( output.value | format_btc:wallet.unit ))</td>
-          {% endif %}
+            <td class="amount" ng-if="output.value !== null">(( output.value | format_decimal:output.unit ))</td>
             <td class="amount" ng-if="output.value === null">{{ _("Confidential") }}</td>
         </tr>
     </table>

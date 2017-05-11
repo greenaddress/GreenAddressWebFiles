@@ -38,7 +38,7 @@ var privHDWallet = pubHDWallet;
 function MockUtxo (utxo) {
   this.prevHash = [].reverse.call(new Buffer(utxo.txhash, 'hex'));
   this.ptIdx = utxo.pt_idx;
-  this.value = +utxo.value;
+  this.value = ~~utxo.value;
   this.raw = utxo;
 
   this.subaccount = {name: 'Main', pointer: null, type: 'main'};

@@ -478,7 +478,7 @@ function addOutput (outScript, value, fee, assetId) {
 
 function replaceOutput (idx, outScript, value, fee, assetId) {
   this.tx.outs[idx].script = outScript;
-  this.tx.outs[idx].value = value;
+  this.tx.outs[idx].valueToBlind = value;
   this.tx.outs[idx].fee = fee;
   this.tx.outs[idx].assetId = assetId;
 }
@@ -492,7 +492,6 @@ function _rebuildCT () {
     while (val.length < 8) val.unshift(0);
     return new Uint8Array(val);
   }
-  this.tx.outWitness = [];
   this.tx.outs.forEach(function (out, idx) {
     if (!out.valueToBlind) {
       return;
@@ -503,7 +502,6 @@ function _rebuildCT () {
   });
   if (!vbfs.length) return Promise.resolve();
   vbfs.pop();
-  var nonceCommitment;
   this.tx.outWitness = [];
   var allValues = [], allAbfs = [], allVbfs = [];
   _this.tx.ins.forEach(function (inp) {
@@ -535,10 +533,9 @@ function _rebuildCT () {
       var abf = abfs[bf_i];
       var vbf = vbfs[bf_i];
       bf_i += 1;
-      var commitment;
       var ephemeral_key = bitcoin.ECPair.makeRandom({rng: crypto.randomBytes});
       var ephemeral = ephemeral_key.d.toBuffer();
-      nonceCommitment = ephemeral_key.getPublicKeyBuffer();
+      var nonceCommitment = ephemeral_key.getPublicKeyBuffer();
       var blinding = new bitcoin.ECPair(BigInteger.fromByteArrayUnsigned(new Buffer(
         // TODO: real key
         '0101010101010101010101010101010101010101010101010101010101010101', 'hex'
@@ -551,8 +548,8 @@ function _rebuildCT () {
         return wally.wally_asset_value_commitment(
           u64(out.valueToBlind), vbf, out.assetHash
         );
-      }).then(function (commitment_) {
-        out.commitment = commitment = commitment_;
+      }).then(function (commitment) {
+        out.commitment = commitment;
         var inputAssets = [], inputAbfs = [], inputAgs = [];
         _this.tx.ins.forEach(function (inp) {
           if (inp.prevOut.abf) {
@@ -577,7 +574,7 @@ function _rebuildCT () {
           return Promise.all([
             wally.wally_asset_rangeproof(
               u64(out.valueToBlind), blindingPub, ephemeral, out.assetId, abf, vbf,
-              commitment, out.assetHash),
+              out.commitment, out.assetHash),
             wally.wally_asset_surjectionproof(
               new Buffer(out.assetId, 'hex'), abf, out.assetHash,
               crypto.randomBytes(32),
@@ -608,7 +605,7 @@ function _rebuildCT () {
         _this.tx.outWitness[idx] = outwit;
       });
     }.bind(this)));
-  }.bind(this));
+  }.bind(this)).then(function () { return; });
 }
 
 function _addChangeOutput (script, value, assetNetworkId) {
@@ -620,7 +617,8 @@ function _addChangeOutput (script, value, assetNetworkId) {
 
   if (changeIdx === this.getOutputsCount()) {
     // 2. add the output at the index
-    var changeOut = this.addOutput(script.outScript, value, 0, assetNetworkId);
+    var changeOut = this.addOutput(script.outScript, 0, 0, assetNetworkId);
+    changeOut.valueToBlind = value;
     changeOut.pointer = script.pointer;
     changeOut.subaccount = script.subaccount;
   } else {
@@ -628,7 +626,7 @@ function _addChangeOutput (script, value, assetNetworkId) {
     for (var i = 0; i < this.getOutputsCount(); ++i) {
       if (i === changeIdx) {
         newOutputs.push({
-          script: script.outScript, value: value, fee: 0, assetId: assetNetworkId,
+          script: script.outScript, valueToBlind: value, fee: 0, assetId: assetNetworkId,
           pointer: script.pointer, subaccount: script.subaccount
         });
       }
@@ -636,15 +634,10 @@ function _addChangeOutput (script, value, assetNetworkId) {
     }
     this.clearOutputs();
     newOutputs.forEach(function (out) {
-      var newOut = this.addOutput(out.script, out.value, out.fee, out.assetId);
+      var newOut = this.addOutput(out.script, out.value||0, out.fee, out.assetId);
 
       newOut.pointer = out.pointer;
       newOut.subaccount = out.subaccount;
-
-      // keep old CT data in case of non-CT asset change being added:
-      newOut.commitment = out.commitment;
-      newOut.nonce_commitment = out.nonce_commitment;
-      newOut.range_proof = out.range_proof;
 
       // keep data necessary to re-generate CT data too:
       newOut.valueToBlind = out.valueToBlind;
@@ -656,6 +649,7 @@ function _addChangeOutput (script, value, assetNetworkId) {
 }
 
 function _addFeeAndChangeWithAsset (options) {
+  var _this = this;
   var feeEstimate = options.feeEstimate;
   var prevouts = options.prevOutputs;
   var changeCache = options.changeCache || {};
@@ -664,11 +658,11 @@ function _addFeeAndChangeWithAsset (options) {
 
   // 1. calculate prevouts total values for assets and fee
   var prevoutsAsset = prevouts.filter(function (prevout) {
-    return bufferEquals(prevout.assetNetworkId, options.assetNetworkId);
+    return bufferEquals(new Buffer(prevout.assetId || prevout.raw.assetId, 'hex'), options.assetNetworkId);
   });
   var prevoutsFee = prevouts.filter(function (prevout) {
     // not asset -- assume fee:
-    return !bufferEquals(prevout.assetNetworkId, options.assetNetworkId);
+    return !bufferEquals(new Buffer(prevout.assetId || prevout.raw.assetId, 'hex'), options.assetNetworkId);
   });
   var prevoutsAssetTotalDeferred = _sumPrevouts(prevoutsAsset);
   var prevoutsFeeTotalDeferred = _sumPrevouts(prevoutsFee);
@@ -710,19 +704,19 @@ function _addFeeAndChangeWithAsset (options) {
       }
       ret = ret.then(function (outScript) {
         changeCache.assetChange = outScript;
-        assetChangeIdx = this._addChangeOutput(
+        assetChangeIdx = _this._addChangeOutput(
           outScript,
           prevoutsAssetTotal - requiredValues.asset,
           options.assetNetworkId,
           options.changeAddrFactory
         );
+        return _this._rebuildCT().then(function () { return assetChangeIdx; });
+      }).then(function (assetChangeIdx) {
         // update required fee for the new output
         requiredValues.fee = Math.ceil(
           feeEstimate * this.byteLength() / 1000
         );
 
-        this.tx.outs[ assetChangeIdx ].valueToBlind = this.tx.outs[ assetChangeIdx ].value;
-        this.tx.outs[ assetChangeIdx ].value = null;
         return options.changeAddrFactory.getScanningKeyForScript(
           this.tx.outs[ assetChangeIdx ].script
         ).then(function (k) {
@@ -768,8 +762,12 @@ function _addFeeAndChangeWithAsset (options) {
         return { changeIdx: assetChangeIdx };
       }
 
+      this.addOutput(
+        new Buffer([]), requiredValues.fee, 0, options.feeNetworkId
+      );
+
       var ret2;
-      // add a change output if fee prevouts are more than fee
+      // add a fee change output if fee prevouts are more than fee
       if (changeCache.feeChange) {
         ret2 = Promise.resolve(changeCache.feeChange);
       } else {
@@ -777,13 +775,14 @@ function _addFeeAndChangeWithAsset (options) {
       }
       return ret2.then(function (outScript) {
         changeCache.feeChange = outScript;
-        var changeIdx = this._addChangeOutput(
+        var changeIdx = _this._addChangeOutput(
           outScript,
           prevoutsFeeTotal - requiredValues.fee,
           options.feeNetworkId,
           options.changeAddrFactory
         );
-
+        return _this._rebuildCT().then(function () { return changeIdx; });
+      }).then(function (changeIdx) {
         if (assetChangeIdx >= 0 && changeIdx <= assetChangeIdx) {
           // adding the fee change before asset change changes the assetChangeIdx
           assetChangeIdx += 1;
@@ -805,6 +804,7 @@ function _addFeeAndChangeWithAsset (options) {
             // the prevouts match exactly the fee, but we now have change which
             // cannot be zero.
             // In such case increase the fee to have at least minimum change value.
+            console.log('FIXME 2730 dust value is probably incorrect!');
             requiredValues.fee += 2730;
           }
 
@@ -812,7 +812,12 @@ function _addFeeAndChangeWithAsset (options) {
             return Promise.resolve([ requiredValues, changeCache ]);
           }
 
-          // 5. update with the final fee and set the fee field in the output:
+          // 5. update with the final fee:
+          this.tx.outs.forEach(function (out) {
+            if (out.script.length === 0) {  // fee output
+              out.value = requiredValues.fee;
+            }
+          });
           this.replaceOutput(
             changeIdx,
             changeCache.feeChange.outScript,
@@ -820,12 +825,6 @@ function _addFeeAndChangeWithAsset (options) {
             requiredValues.fee,
             options.feeNetworkId
           );
-
-          if (!this.isCT[ options.feeNetworkId.toString('hex') ]) {
-            return Promise.resolve();
-          }
-          this.tx.outs[ changeIdx ].valueToBlind = this.tx.outs[ changeIdx ].value;
-          this.tx.outs[ changeIdx ].value = 0;
 
           return options.changeAddrFactory.getScanningKeyForScript(
             this.tx.outs[ changeIdx ].script
@@ -899,15 +898,10 @@ function _addFeeAndChange (options) {
         options.feeNetworkId
       );
 
-      if (!this.isCT[ options.feeNetworkId.toString('hex') ]) {
-        return Promise.resolve();
-      }
-
       if (!this.tx.outs[ 0 ].valueToBlind) {
         throw new Error('Sweeping from CT addresses is supported only to CT destination addresses');
       }
 
-      this.tx.outs[ 0 ].valueToBlind = this.tx.outs[ 0 ].value;
       this.tx.outs[ 0 ].value = 0;
 
       return this._rebuildCT().then(function () {
@@ -943,7 +937,7 @@ function _addFeeAndChange (options) {
       );
       this.addOutput(
         new Buffer([]), fee, 0, options.feeNetworkId
-      )
+      );
       return this._rebuildCT().then(function () {
         return changeIdx;
       });
@@ -972,6 +966,7 @@ function _addFeeAndChange (options) {
           // the prevouts match exactly the fee, but we now have change which
           // cannot be zero.
           // In such case increase the fee to have at least minimum change value.
+          console.log('FIXME 2730 dust value is probably incorrect!');
           fee += 2730;
         }
 
@@ -979,6 +974,12 @@ function _addFeeAndChange (options) {
           return Promise.resolve([ {asset: requiredValueForFee + fee}, changeCache ]);
         }
 
+        // 5. update with the final fee:
+        this.tx.outs.forEach(function (out) {
+          if (out.script.length === 0) {  // fee output
+            out.value = fee;
+          }
+        });
         this.replaceOutput(
           changeIdx,
           changeScript.outScript,
@@ -987,12 +988,6 @@ function _addFeeAndChange (options) {
           options.feeNetworkId
         );
 
-        if (!this.isCT[ options.feeNetworkId.toString('hex') ]) {
-          return Promise.resolve();
-        }
-
-        this.tx.outs[ changeIdx ].valueToBlind = this.tx.outs[ changeIdx ].value;
-        this.tx.outs[ changeIdx ].value = null;
         if (doNotChangeScanningKey) {
           return this._rebuildCT().then(function () {
             return iterateFee.bind(this)();
