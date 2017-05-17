@@ -24,12 +24,31 @@ angular.module('greenWalletInfoControllers',
         if (newValue && newValue.populate_csv) newValue.populate_csv();
     });
 
+    // Return fee_estimates keyed on the blocks estimate (the response from
+    // the server can have duplicate entries)
+    // FIXME: If the server is fixed so that it doesn't return duplicates
+    //        some of this code can be removed
+    var get_fee_estimates = function() {
+        var fee_estimates = [];
+        var keys = Object.keys($scope.wallet.fee_estimates);
+        for (var i = 0; i < keys.length; ++i) {
+            var fee_estimate = $scope.wallet.fee_estimates[keys[i]];
+            var blocks = parseInt(fee_estimate['blocks']);
+            fee_estimates[blocks] = fee_estimate;
+        }
+        return fee_estimates;
+    }
+
     var updating_timeout;
     var update_tx_fees = function(tx) {
         var estimates = [], below = null;
-        var keys = Object.keys($scope.wallet.fee_estimates).sort();
+        var fee_estimates = get_fee_estimates();
+        var keys = Object.keys(fee_estimates).sort(
+            function(a, b) { return parseInt(a) > parseInt(b); });
+
         for (var i = 0; i < keys.length; ++i) {
-            var feerate = $scope.wallet.fee_estimates[keys[i]].feerate * 1000*1000*100;
+            var fee_estimate = fee_estimates[keys[i]];
+            var feerate = fee_estimate.feerate * 1000*1000*100;
             var estimated_fee = Math.round(
                 feerate * tx.size / 1000
             );
@@ -42,7 +61,7 @@ angular.module('greenWalletInfoControllers',
                 parseInt(tx.fee)+tx.size,
                 estimated_fee
             );
-            var blocks = $scope.wallet.fee_estimates[keys[i]].blocks;
+            var blocks = fee_estimate.blocks;
             if (new_fee > parseInt(tx.fee)) {
                 estimates.push({
                     fee: new_fee,
