@@ -150,7 +150,9 @@ angular.module('greenWalletTransactionsControllers',
                     // new change output needs to be added
                     change_d = tx_sender.call(
                         'com.greenaddress.vault.fund',
-                        $scope.wallet.current_subaccount, true, true
+                        $scope.wallet.current_subaccount,
+                        true /* return_pointer */,
+                        $scope.wallet.appearance.use_segwit ? 'p2wsh' : 'p2sh'
                     ).then(function(data) {
                         change_pointer = data.pointer;
                         return Bitcoin.bitcoin.crypto.hash160(
