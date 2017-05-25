@@ -28,7 +28,7 @@ angular.module('greenWalletSendControllers',
         add_fee: {'party': 'sender',
                   'per_kb': true,
                   'amount': '',
-                  'requiredNumOfBlocks': $scope.settings.required_num_blocks},
+                  'requiredNumOfBlocks': $scope.wallet.appearance.required_num_blocks},
         instant: $routeParams.contact ? (parseContact($routeParams.contact).requires_instant || false) : false,
         recipient: $routeParams.contact ? parseContact($routeParams.contact) : null,
         read_qr_code: function($event)  {
@@ -130,6 +130,11 @@ angular.module('greenWalletSendControllers',
                     // backend constants:
                     requiredNumOfBlocks: 3,
                     multiplier: 2
+                  };
+                } else if (that.add_fee.requiredNumOfBlocks) {
+                  addFee = {
+                    requiredNumOfBlocks: that.add_fee.requiredNumOfBlocks,
+                    multiplier: 1
                   };
                 }
                 var tx;
