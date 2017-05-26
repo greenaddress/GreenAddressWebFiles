@@ -97,6 +97,9 @@ function login () {
     this.service.connection.onclose = this.disconnectedHandler;
     this.service.connection.connectedHandler = this.connectedHandler;
 
+    window.addEventListener("offline", this.offlineHandler);
+    window.addEventListener("online", this.onlineHandler);
+
     if (this.signingWallet) {
       // scriptFactory is required by setupSubAccount below (for non watch-only):
       this.scriptFactory = this.signingWallet.scriptFactory;

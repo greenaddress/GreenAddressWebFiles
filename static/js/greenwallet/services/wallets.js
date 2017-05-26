@@ -179,11 +179,17 @@ function factory ($q, $rootScope, tx_sender, $location, notices, $uibModal,
       $rootScope.$broadcast('connect');
     };
     gaWallet.disconnectedHandler = function (reason, message) {
-      if (reason === 'lost' || reason === 'unreachable') {
+      if (reason === 'lost' || reason === 'unreachable' || reason === 'offline') {
         $rootScope.$broadcast('disconnect', message);
       } else {
         console.error(reason + ', ' + message);
       }
+    };
+    gaWallet.offlineHandler = function () {
+        gaWallet.disconnectedHandler('offline', 'received offline event');
+    };
+    gaWallet.onlineHandler = function () {
+        gaWallet.connectedHandler();
     };
     gaWallet.login();
     gaWallet.loggedIn.then(function (data) {
