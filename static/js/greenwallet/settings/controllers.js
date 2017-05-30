@@ -1310,7 +1310,6 @@ angular.module('greenWalletSettingsControllers',
                                     templateUrl: BASE_URL+'/'+LANG+'/wallet/partials/wallet_modal_mnemonic.html',
                                     scope: scope
                                 });
-                                that.existing.push(subaccount);
                                 that.new_2of3_label = '';
                                 that.new_2of3_xpub = '';
                             });
