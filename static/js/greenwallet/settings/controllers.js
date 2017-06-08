@@ -342,7 +342,7 @@ angular.module('greenWalletSettingsControllers',
             update: function() {
                 this.updating_nlocktime_blocks = true;
                 var that = this;
-                wallets.attempt_two_factor($scope, 'change_nlocktime', {data: {'value': that.blocks_new}}, function(twofac_data) {
+                wallets.attempt_two_factor($scope, 'set_nlocktime', {data: {'value': that.blocks_new}}, function(twofac_data) {
                     return tx_sender.call('com.greenaddress.login.set_nlocktime', that.blocks_new, twofac_data).then(function() {
                         $scope.wallet.nlocktime_blocks = that.blocks = that.blocks_new;
                         notices.makeNotice('success', gettext('nLockTime settings updated successfully'));
