@@ -63,8 +63,8 @@ function signTransaction (tx, options) {
 function derivePath () {
   return this.hw.getPublicKey("18241'").then(function (pubkey) {
     var extended = (
-      pubkey.hdnode.chainCode.toString('hex') +
-      pubkey.hdnode.keyPair.getPublicKeyBuffer().toString('hex')
+      pubkey.hdnode.chainCode +
+      pubkey.hdnode.keyPair.getPublicKeyBuffer()
     );
     return sha512.hmac('GreenAddress.it HD wallet path').finalize(extended);
   });
