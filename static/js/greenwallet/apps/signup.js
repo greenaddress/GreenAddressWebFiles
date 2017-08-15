@@ -121,7 +121,6 @@ function SignupController($scope, $location, mnemonics, focus, tx_sender, notice
             $scope.signup.seed = new Bitcoin.Buffer.Buffer(entropy, 'hex');
             mnemonics.toMnemonic(entropy).then(function(mnemonic) {
                 mnemonics.toSeed(mnemonic).then(function(seed) {
-                    mnemonics.toSeed(mnemonic, 'greenaddress_path').then(function(path_seed) {
                         $q.when(Bitcoin.bitcoin.HDNode.fromSeedHex(seed, cur_net)).then(function(hdwallet) {
                             secured_confirmed.promise.then(function() {
                                 hdwallet.seed_hex = seed;
@@ -150,7 +149,6 @@ function SignupController($scope, $location, mnemonics, focus, tx_sender, notice
                                     loginWalletOptions = {
                                         mnemonic: mnemonic,
                                         seed: new Bitcoin.Buffer.Buffer(seed, 'hex'),
-                                        pathSeed: new Bitcoin.Buffer.Buffer(path_seed, 'hex'),
                                         signup: true
                                     };
                                     walletPromise = $q.when(
@@ -187,16 +185,13 @@ function SignupController($scope, $location, mnemonics, focus, tx_sender, notice
                                 });
                             });
                         });
-                    }, null, function(progress) {
-                        $scope.signup.seed_progress = Math.round(50 + progress/2);
-                    });
                 }, function(err) {
                     $scope.signup.unexpected_error = err;
                 }, function(progress) {
                     // any progress means the mnemonic is valid so we can display it
                     if (!$scope.signup.hw_detected) {
                         $scope.wallet.mnemonic = $scope.signup.mnemonic = mnemonic;
-                        $scope.signup.seed_progress = Math.round(progress/2);
+                        $scope.signup.seed_progress = Math.round(progress);
                     }
                 });
             }, function(err) {

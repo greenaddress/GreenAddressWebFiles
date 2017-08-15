@@ -1,7 +1,6 @@
 var bitcoin = require('bitcoinjs-lib');
 var bip39 = require('bip39');
 var extend = require('xtend/mutable');
-var pbkdf2 = require('pbkdf2').pbkdf2Sync;
 var secp256k1 = require('secp256k1-alpha');
 var secp256k1ctx = null;
 var sha512 = require('sha512');
@@ -184,10 +183,10 @@ function fromMnemonic (mnemonic, netName) {
 
 function derivePathSeed () {
   if (!this.pathSeed) {
-    var mnemonicBuffer = new Buffer(this.mnemonic, 'utf8');
-    var saltBuffer = new Buffer('greenaddress_path', 'utf8');
-
-    this.pathSeed = pbkdf2(mnemonicBuffer, saltBuffer, 2048, 64, 'sha512');
+    this.pathSeed = Buffer.concat([
+      this.getChainCode(),
+      this.getPublicKeyBuffer()
+    ]);
   }
   return this.pathSeed;
 }

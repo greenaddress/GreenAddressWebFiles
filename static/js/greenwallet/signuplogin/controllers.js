@@ -182,13 +182,9 @@ angular.module('greenWalletSignupLoginControllers', ['greenWalletMnemonicsServic
             var login_data_d = mnemonics.validateMnemonic(state.mnemonic).then(function() {
                 var process = function(mnemonic) {
                     return mnemonics.toSeed(mnemonic).then(function(seed) {
-                        return mnemonics.toSeed(mnemonic, 'greenaddress_path').then(function(path_seed) {
-                            return {seed: seed, path_seed: path_seed, mnemonic: mnemonic};
-                        }, undefined, function(progress) {
-                            state.seed_progress = Math.round(50 + progress/2);
-                        });
+                        return {seed: seed, path_seed: 'hw_derived', mnemonic: mnemonic};
                     }, undefined, function(progress) {
-                        state.seed_progress = Math.round(progress/2);
+                        state.seed_progress = Math.round(progress);
                     }).catch(function() {
                         state.seed_progress = undefined;
                     });
@@ -212,7 +208,10 @@ angular.module('greenWalletSignupLoginControllers', ['greenWalletMnemonicsServic
                 var pathSeed = {};
                 if (data.path_seed) {
                     // absent when logging in with btchip seed string
-                    pathSeed.pathSeed = new Bitcoin.Buffer.Buffer(data.path_seed, 'hex')
+                    pathSeed.pathSeed = Buffer.concat([
+                                             hdwallet.chainCode,
+                                             hdwallet.keyPair.getPublicKeyBuffer()
+                                        ]);
                 }
                 return wallets.loginWithHDWallet(
                     $scope, hdwallet, extend({
