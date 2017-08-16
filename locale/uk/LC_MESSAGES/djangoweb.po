@@ -443,10 +443,10 @@ msgstr ""
 
 #: templates/website/faq.html:99
 msgid ""
-"Yes! One is available  <a href=\"http://blog.greenaddress.it/2of3recovery"
+"Yes! One is available  <a href=\"https://github.com/greenaddress/garecovery"
 "\">here</a>"
 msgstr ""
-"Так! Один доступний <a href=\"http://blog.greenaddress.it/2of3recovery"
+"Так! Один доступний <a href=\"https://github.com/greenaddress/garecovery"
 "\">тут</a>"
 
 #: templates/website/index.html:5
@@ -820,11 +820,9 @@ msgstr "Ваші кошти в безпеці"
 
 #: templates/website/service.html:31
 msgid ""
-"For 2of3 recovery see this guide  <a href=\"http://blog.greenaddress."
-"it/2of3recovery\">here</a>"
+"For 2of3 recovery see this guide  <a href=\"https://github.com/greenaddress/garecovery\">here</a>"
 msgstr ""
-"Для 2-з-3 відновлення перегляньте наступну <a href=\"http://blog.greenaddress."
-"it/2of3recovery\">інструкцію</a>"
+"Для 2-з-3 відновлення перегляньте наступну <a href=\"https://github.com/greenaddress/garecovery\">інструкцію</a>"
 
 #: templates/website/service.html:37
 msgid "Want to get in touch? Email us!"

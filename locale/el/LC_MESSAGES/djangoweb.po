@@ -458,7 +458,7 @@ msgstr ""
 
 #: templates/website/faq.html:99
 msgid ""
-"Yes! One is available  <a href=\"http://blog.greenaddress.it/2of3recovery"
+"Yes! One is available  <a href=\"https://github.com/greenaddress/garecovery"
 "\">here</a>"
 msgstr ""
 
@@ -836,8 +836,7 @@ msgstr ""
 
 #: templates/website/service.html:31
 msgid ""
-"For 2of3 recovery see this guide  <a href=\"http://blog.greenaddress."
-"it/2of3recovery\">here</a>"
+"For 2of3 recovery see this guide  <a href=\"https://github.com/greenaddress/garecovery\">here</a>"
 msgstr ""
 
 #: templates/website/service.html:37
