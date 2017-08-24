@@ -1279,7 +1279,7 @@ msgstr "Моментальное подтверждение"
 
 #: templates/wallet/partials/wallet_send.html:177
 msgid "You can enter a memo to store in your transactions list"
-msgstr "Вы можете ввести сообщение для сожранения в списке ваших транзакций"
+msgstr "Вы можете ввести сообщение для сохранения в списке ваших транзакций"
 
 #: templates/wallet/partials/wallet_send.html:184
 #, fuzzy
