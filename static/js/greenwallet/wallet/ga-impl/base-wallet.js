@@ -47,7 +47,7 @@ function BaseWallet (options) {
     };
   } else if (options.watchOnly) {
     this._loginImpl = function () {
-      return _this._loginWatchOnly(options.watchOnly)
+      return _this._loginWatchOnly(options.watchOnly);
     };
   }
 
@@ -97,8 +97,8 @@ function login () {
     this.service.connection.onclose = this.disconnectedHandler;
     this.service.connection.connectedHandler = this.connectedHandler;
 
-    window.addEventListener("offline", this.offlineHandler);
-    window.addEventListener("online", this.onlineHandler);
+    window.addEventListener('offline', this.offlineHandler);
+    window.addEventListener('online', this.onlineHandler);
 
     if (this.signingWallet) {
       // scriptFactory is required by setupSubAccount below (for non watch-only):

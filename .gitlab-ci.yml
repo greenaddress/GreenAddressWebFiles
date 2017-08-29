@@ -1,0 +1,21 @@
+test_debug_build:
+  image: greenaddress/walletcrx@sha256:070241ce8a9f7cb1df9bce97c8fa334660111666578793e1c3f3447bf64edb0f
+  tags:
+    - ga
+  script:
+    - cd $CI_PROJECT_DIR
+    - npm i
+    - npm run build
+    - npm run test
+
+build_tag_release:
+  image: greenaddress/walletcrx@sha256:070241ce8a9f7cb1df9bce97c8fa334660111666578793e1c3f3447bf64edb0f
+  tags:
+    - ga
+  script:
+    - cd $CI_PROJECT_DIR
+    - npm i
+    - npm run build
+    - npm run test
+  only:
+    - tags

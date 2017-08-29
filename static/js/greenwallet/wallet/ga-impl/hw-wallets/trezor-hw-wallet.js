@@ -96,8 +96,8 @@ function getPublicKey (path) {
         pk = pk.toHex ? pk.toHex() : pk;
         var keyPair = bitcoin.ECPair.fromPublicKeyBuffer(
           new Buffer(pk, 'hex'),
-          (_this.network === 'mainnet' ?
-            bitcoin.networks.bitcoin : bitcoin.networks.testnet)
+          (_this.network === 'mainnet'
+            ? bitcoin.networks.bitcoin : bitcoin.networks.testnet)
         );
         var cc = pubkey.message.node.chain_code;
         cc = cc.toHex ? cc.toHex() : cc;
@@ -303,8 +303,8 @@ function signTransaction (tx, options) {
       var TYPE_P2SH = 1;
       var TYPE_MULTISIG = 2;
       var addr = bitcoin.address.fromOutputScript(
-        out.script, (_this.network === 'mainnet' ?
-          bitcoin.networks.bitcoin : bitcoin.networks.testnet)
+        out.script, (_this.network === 'mainnet'
+          ? bitcoin.networks.bitcoin : bitcoin.networks.testnet)
       );
       var ret = {
         amount: out.value,

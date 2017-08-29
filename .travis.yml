@@ -1,0 +1,7 @@
+language: generic
+sudo: required
+matrix:
+  include:
+    - services:
+        - docker
+      script: docker run -v $PWD:/walletcrx greenaddress/walletcrx@sha256:070241ce8a9f7cb1df9bce97c8fa334660111666578793e1c3f3447bf64edb0f /bin/sh -c "cd /walletcrx && npm i && npm run build && npm run test"

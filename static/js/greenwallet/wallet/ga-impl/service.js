@@ -127,7 +127,7 @@ function _loginWithSigningWallet (options, cb, eb) {
     var signature = signed.signature;
     var randomPathHex = signed.path;
     return _this.call('com.greenaddress.login.authenticate',
-      [ signature, false, randomPathHex, null, '[v2,sw]' + (options.userAgent||'')]
+      [ signature, false, randomPathHex, null, '[v2,sw]' + (options.userAgent || '') ]
     );
   }).then(function (data) {
     if (data === false) {
@@ -142,7 +142,7 @@ function _loginWithSigningWallet (options, cb, eb) {
         // first login -- we need to set up the path
         // *NOTE*: don't change the path after signup, because it *will*
         //         cause locked funds
-        var pathPromise = signingWallet.derivePath();
+        var pathPromise = options.signingWallet.derivePath();
         return pathPromise.then(function (path) {
           var pathHex = path.toString('hex');
           return _this.call(
@@ -162,7 +162,7 @@ function _loginWithSigningWallet (options, cb, eb) {
 function _loginWithWatchOnly (options, cb, eb) {
   return this.call(
     'com.greenaddress.login.watch_only_v2', [
-      options.tokenType, options.token, '[v2,sw]' + (options.userAgent||'')
+      options.tokenType, options.token, '[v2,sw]' + (options.userAgent || '')
     ]
   ).then(function (data) {
     cb(data);
