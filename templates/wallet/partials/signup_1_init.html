@@ -5,7 +5,7 @@
 
             <div class="create-modal-header">
                 <span class="pull-left">{{ _("Already got an account?") }}
-                    {% if crapp or cdvapp %}
+                    {% if crapp or cdvapp or electronapp %}
                     <a href="" ng-click="logout()">{{ _("Login to your Wallet") }}</a></span>
                     {% else %}
                     <a href="/wallet">{{ _("Login to your Wallet") }}</a></span>

@@ -1,4 +1,20 @@
 var autobahn = require('autobahn');
+if (global.process && global.process.versions.electron) {
+  // hack to make Autobahn work with Electron
+  var factory = autobahn.transports._repository.websocket.prototype;
+  var oldCreate = factory.create;
+  factory.create = function () {
+    var process = global.process;
+    global.process = null;
+    try {
+       var ret = oldCreate.apply(this, arguments);
+    } finally {
+      // revert the hack
+      global.process = process;
+    }
+    return ret;
+  }
+}
 var bitcoin = require('bitcoinjs-lib');
 var extend = require('xtend/mutable');
 module.exports = GAService;

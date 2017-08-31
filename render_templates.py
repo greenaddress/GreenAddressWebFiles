@@ -45,11 +45,12 @@ def escapejs(txt):
 
 
 class TemplatesRenderer(object):
-    def __init__(self, hostname, outdir, cdvapp, multi_asset):
+    def __init__(self, hostname, outdir, cdvapp, multi_asset, electron):
         self.hostname = hostname
         self.outdir = outdir
         self.cdvapp = cdvapp
         self.multi_asset = multi_asset
+        self.electron = electron
         self.env = gettext_finder.jinja_env
         self.trs = {}
         for lang in gettext_finder.GETTEXT_LANGUAGES:
@@ -79,13 +80,14 @@ class TemplatesRenderer(object):
         kwargs = {
             'HOSTNAME': self.hostname or 'localhost',
             'LANG': lang,
-            'BASE_URL': '..' if self.cdvapp else '',
-            'STATIC_URL': '../static' if self.cdvapp else '/static',
+            'BASE_URL': '..' if (self.cdvapp or self.electron) else '',
+            'STATIC_URL': '../static' if (self.cdvapp or self.electron) else '/static',
             'DEVELOPMENT': True,
             'PATH_NO_LANG': output,
             'MULTIASSET': self.multi_asset,
             'cdvapp': self.cdvapp,
-            'crapp': not self.cdvapp,
+            'crapp': not (self.cdvapp or self.electron),
+            'electronapp': self.electron,
             'WEBWALLET_MODE': 'FULL'
         }
         out = template.render(**kwargs)
@@ -148,6 +150,8 @@ def main():
         help="Optional hostname of deployment (not used for Cordova/crx)")
     parser.add_argument('--cordova', '-a', action='store_true',
         help="Build HTML for Cordova project")
+    parser.add_argument('--electron', '-e', action='store_true',
+        help="Build HTML for Electron project")
     parser.add_argument('--multiasset', '-m', action='store_true',
         help="Build HTML for MultiAsset functionality")
 
@@ -170,6 +174,7 @@ def main():
         outdir=args.outdir,
         cdvapp=args.cordova,
         multi_asset=args.multiasset,
+        electron=args.electron
     )
 
     for output, templates in TEMPLATES.iteritems():

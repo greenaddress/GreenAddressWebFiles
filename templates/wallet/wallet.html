@@ -41,14 +41,7 @@
     <small>(( subpage_title ))</small>
   </div>
   <div class="menu-mobile-bottom" toggle-class="visible" ng-show="wallet.final_balance !== undefined">
-    {% if MULTIASSET %}
-    <a ng-show="wallet.current_asset == 1" style="color:inherit;" href="" x-apple-data-detectors="false">((wallet.final_balance|format_btc:wallet.unit))</a>
-    <a ng-show="wallet.current_asset != 1" style="color:inherit;" href="" x-apple-data-detectors="false">((wallet.final_balance)) ((wallet.assets[wallet.current_asset].name))</a>
-    <a ng-show="wallet.current_asset == 1" style="color:inherit;"  href="" x-apple-data-detectors="false">&asymp; ((wallet.fiat_value|number:2)) ((wallet.fiat_currency))</a>
-    {% include "snippets/loading-indicator.html" %}
-    {% else %}
-    <a style="color:inherit;" href="" x-apple-data-detectors="false">((wallet.final_balance|format_btc:wallet.unit))</a> ≈ <a style="color:inherit;"  href="" x-apple-data-detectors="false">((wallet.fiat_value|number:2)) ((wallet.fiat_currency))</a> {% include "snippets/loading-indicator.html" %}
-    {% endif %}
+    <a style="color:inherit;" href="" x-apple-data-detectors="false">((wallet.final_balance|format_decimal:wallet.current_decimal_unit() ))</a><span ng-show="wallet.current_asset == 1"> ≈ </span><a style="color:inherit;"  href="" x-apple-data-detectors="false" ng-show="wallet.current_asset == 1">((wallet.fiat_value|number:2)) ((wallet.fiat_currency))</a> {% include "snippets/loading-indicator.html" %}
   </div>
   <div class="container" toggle-class="visible">
     <p ng-show="wallet.twofac && !wallet.twofac.any"><span class="label label-warning">{{ _("WARNING") }}</span> {{ _('You have no two factor authentication set up. Please set it up in <a href="#/settings">settings</a>.') }}</p>

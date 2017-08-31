@@ -1,3 +1,4 @@
+var wally = require('wallyjs')
 // Bitcoin utility functions
 Bitcoin.Util = {
     /**
@@ -82,192 +83,56 @@ if (self.angular) {  // not in WebWorkers
     var $q = angular.injector(['ng']).get('$q');
 }
 
-if (self.cordova && cordova.platformId == 'ios') {
+(function() {
+    var wallyjs = require('wallyjs');
 
-    function cordovaReady(fn) {
-        var queue = [];
-
-        var impl = function () {
-          queue.push([this, Array.prototype.slice.call(arguments)]);
-        };
-
-        document.addEventListener('deviceready', function () {
-          queue.forEach(function (args) {
-            fn.apply(args[0], args[1]);
-          });
-          impl = fn;
-        }, false);
-
-        return function () {
-          return impl.apply(this, arguments);
-        };
+    Bitcoin.bitcoin.HDNode.fromSeedHex = function(seed_hex, network) {
+        return wallyjs.bip32_key_from_seed(
+            new Bitcoin.Buffer.Buffer(seed_hex, 'hex'),
+            network === Bitcoin.bitcoin.networks.testnet ? 0x04358394 : 0x0488ADE4,
+            0
+        ).then(function (b) {
+            return wallyjs.wally_base58_from_bytes(b, 1);
+        }).then(function (b58) {
+            return Bitcoin.bitcoin.HDNode.fromBase58(b58, network);
+        })
     };
 
-    Bitcoin.bitcoin.HDNode.fromSeedHex = cordovaReady(function(seed_hex, network) {
-        var deferred = $q.defer();
-        cordova.exec(function(param) {
-            var wallet = new Bitcoin.bitcoin.HDNode(
-                new Bitcoin.bitcoin.ECPair(
-                    Bitcoin.BigInteger.fromBuffer(
-                        new Bitcoin.Buffer.Buffer(param[0], 'hex')
-                    ),
-                    null,
-                    {compressed: true, network: network}
-                ),
-                new Bitcoin.Buffer.Buffer(param[2], 'hex')
-            );
-            // wallet.pub = new Bitcoin.ECPubKey(param[1], true);
-            deferred.resolve(wallet);
-        }, function(fail) {
-            console.log('BIP32.seedToKey failed: ' + fail)
-            deferred.reject(fail);
-        }, "BIP32", "seedToKey", [seed_hex]);
-        return deferred.promise;
-    });
-
     Bitcoin.bitcoin.HDNode.prototype.derive = function(i) {
-        var deferred = $q.defer();
-        var usePriv = i >= Bitcoin.bitcoin.HDNode.HIGHEST_BIT
-
-        if (usePriv) {
-            i -= Bitcoin.bitcoin.HDNode.HIGHEST_BIT;
-        }
-
-        var that = this;
-        var orig_network = this.keyPair.network;
-        this.keyPair.network = Bitcoin.bitcoin.networks.bitcoin;  // our BIP32 for iOS doesn't support testnet
-        cordova.exec(function(param) {
-            var ec_pair;
-            if (that.keyPair.d) {
-                ec_pair = new Bitcoin.bitcoin.ECPair(
-                    Bitcoin.BigInteger.fromBuffer(
-                        new Bitcoin.Buffer.Buffer(param[0], 'hex')
-                    ),
-                    null,
-                    {compressed: true, network: that.keyPair.network}
-                );
+        var _this = this;
+        return wallyjs.wally_base58_to_bytes(this.toBase58(), 1).then(function (b) {
+            if (_this.isNeutered()) {
+                return wallyjs.bip32_pubkey_from_parent(b, i, 1);
             } else {
-                ec_pair = Bitcoin.bitcoin.ECPair.fromPublicKeyBuffer(
-                    new Bitcoin.Buffer.Buffer(param[1], 'hex'),
-                    that.keyPair.network
-                )
+                return wallyjs.bip32_privkey_from_parent(b, i, 0);
             }
-            var hd = new Bitcoin.bitcoin.HDNode(
-                ec_pair,
-                new Bitcoin.Buffer.Buffer(param[2], 'hex')
-            );
-            hd.parentFingerprint = that.getFingerprint();
-            hd.depth = that.depth + 1;
-            hd.index = i;
-            deferred.resolve(hd);
-        }, function(fail) {
-            console.log('BIP32.derive failed: ' + fail)
-            deferred.reject(fail);
-        }, "BIP32", "derive", [
-            Bitcoin.bs58check.decode(this.toBase58()).toString("hex"),
-            parseInt(i), usePriv ? "true" : "false"
-        ]);
-        that.keyPair.network = orig_network;
-
-        return deferred.promise;
+        }).then(function (b) {
+            return wallyjs.wally_base58_from_bytes(b, 1);
+        }).then(function (b58) {
+            return Bitcoin.bitcoin.HDNode.fromBase58(b58, _this.keyPair.network);
+        })
     }
 
     Bitcoin.bitcoin.ECPair.prototype.sign = function(hash) {
-        var deferred = $q.defer();
-        cordova.exec(function(der) {
-            deferred.resolve(Bitcoin.bitcoin.ECSignature.fromDER(
-                new Bitcoin.Buffer.Buffer(der, 'hex')
-            ));
-        }, function(fail) {
-            console.log('ecdsa.sign failed: ' + fail)
-            deferred.reject(fail);
-        }, "ECDSA", "sign", [
-            this.toWIF(),
-            new Bitcoin.Buffer.Buffer(hash).toString('hex')
-        ]);
-        return deferred.promise;
-    }
-} else {
-    if (!self.cordova && self.angular) {
-        angular.element(document).ready(function() {
-            var ready = false;
-            var script = document.createElement('script')
-            script.type = 'text/javascript';
-            script.src = '/static/js/secp256k1-alpha/secp256k1-alpha.js';
-            script.onload = script.onreadystatechange = function () {
-                if (!ready && (!this.readyState || this.readyState == 'complete')) {
-                    ready = true;
-                    Bitcoin.contrib.init_secp256k1(Module, cur_net.isAlpha);
-                    if (cur_net.isAlpha) {
-                        Module._secp256k1_pedersen_context_initialize(Module.secp256k1ctx);
-                        Module._secp256k1_rangeproof_context_initialize(Module.secp256k1ctx);
-                    }
-                    var randArr = new Uint8Array(32);
-                    crypto.getRandomValues(randArr);
-                    if (!Module._secp256k1_context_randomize(Module.secp256k1ctx, randArr)) {
-                        throw new Error("Couldn't initialize library, randomized failed");
-                    }
-                }
-            };
-            var tag = document.getElementsByTagName('script')[0];
-            tag.parentNode.insertBefore(script, tag);
+        return wally.wally_ec_sig_from_bytes(
+            this.d.toBuffer(32),
+            new Buffer(hash),
+            1
+        ).then(function (compact) {
+          return wally.wally_ec_sig_to_der(compact).then(
+            bitcoin.ECSignature.fromDER
+          );
         });
     }
-    if (!self.cordova && self.Worker && !self.GAIT_IN_WORKER) {
-        (function() {
-            var worker = new Worker(BASE_URL+"/static/js/bitcoinjs_util_worker.js"), callId = 0,
-                cbs = {};
 
-            worker.onmessage = function(message) {
-                cbs[message.data.callId](message.data.result);
-                delete cbs[message.data.callId];
-            }
-
-            Bitcoin.bitcoin.HDNode.prototype.derive = function(i) {
-                var deferred = $q.defer(), that = this;
-                cbs[++callId] = function(derived) {
-                    deferred.resolve(
-                        Bitcoin.bitcoin.HDNode.fromBase58(derived, that.keyPair.network)
-                    );
-                };
-                worker.postMessage({
-                    isAlpha: cur_net.isAlpha,
-                    func: 'derive',
-                    data: {wallet: this.toBase58(), i: i},
-                    callId: callId
-                })
-                return deferred.promise;
-            }
-
-            Bitcoin.bitcoin.ECPair.prototype.sign = function(hash) {
-                return _sign(this, hash, false);
-            }
-
-            Bitcoin.bitcoin.ECPair.prototype.signSchnorr = function(hash) {
-                return _sign(this, hash, true);
-            }
-
-            function _sign(_this, hash, schnorr) {
-                var deferred = $q.defer();
-                if (schnorr) {
-                    cbs[++callId] = deferred.resolve;
-                } else {
-                    cbs[++callId] = function(der) {
-                        deferred.resolve(Bitcoin.bitcoin.ECSignature.fromDER(der));
-                    };
-                }
-                worker.postMessage({
-                    schnorr: schnorr,
-                    isAlpha: cur_net.isAlpha,
-                    func: 'sign',
-                    data: {key: _this.toWIF(), hash: hash},
-                    callId: callId
-                })
-                return deferred.promise;
-            }
-        })();
+    Bitcoin.bitcoin.ECPair.prototype.signSchnorr = function(hash) {
+        return wally.wally_ec_sig_from_bytes(
+            this.d.toBuffer(32),
+            new Buffer(hash),
+            2
+        );
     }
-}
+})();
 
 Bitcoin.bitcoin.HDNode.prototype.subpath = function(path_hex) {
     var key = $q.when(this);

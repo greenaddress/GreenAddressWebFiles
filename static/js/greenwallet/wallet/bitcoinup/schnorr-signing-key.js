@@ -2,10 +2,8 @@ var bitcoin = require('bitcoinjs-lib');
 var bip39 = require('bip39');
 var extend = require('xtend/mutable');
 var pbkdf2 = require('pbkdf2').pbkdf2Sync;
-var secp256k1 = require('secp256k1-alpha');
-var secp256k1ctx = null;
 var sha512 = require('sha512');
-var window = require('global/window');
+var wally = require('wallyjs');
 
 module.exports = SchnorrSigningKey;
 
@@ -22,8 +20,6 @@ extend(SchnorrSigningKey.prototype, {
   derivePath: derivePath,
   neutered: neutered
 });
-SchnorrSigningKey.secp256k1 = secp256k1;
-SchnorrSigningKey.getSecp256k1Ctx = checkContext;
 SchnorrSigningKey.fromMnemonic = fromMnemonic;
 
 function SchnorrSigningKey (hdnode, options) {
@@ -35,86 +31,16 @@ function SchnorrSigningKey (hdnode, options) {
 }
 
 function _signHash (msgIn, schnorr) {
-  var _this = this;
-  if (window.cordova) {
-    // libsecp256k1 is slow in Cordova
-    return new Promise(function (resolve) {
-      window.setTimeout(function () {
-        resolve(_this.hdnode.keyPair.sign(msgIn));
-      }, 0);
-    });
-  }
-  checkContext();
-  return new Promise(function (resolve, reject) {
-    var key = _this.hdnode.keyPair;
-    var sig, siglenPointer;
+  var key = this.hdnode.keyPair;
+  return wally.wally_ec_sig_from_bytes(
+    key.d.toBuffer(32),
+    new Buffer(msgIn),
+    schnorr ? 2 : 1
+  ).then(function (compact) {
     if (schnorr) {
-      sig = secp256k1._malloc(64);
-    } else {
-      sig = secp256k1._malloc(128);
-      siglenPointer = secp256k1._malloc(4);
+      return compact;
     }
-    var msg = secp256k1._malloc(32);
-    var seckey = secp256k1._malloc(32);
-    var start = key.d.toByteArray().length - 32;
-    var slice;
-    if (start >= 0) {  // remove excess zeroes
-      slice = key.d.toByteArray().slice(start);
-    } else {  // add missing zeroes
-      slice = key.d.toByteArray();
-      while (slice.length < 32) slice.unshift(0);
-    }
-
-    secp256k1.writeArrayToMemory(slice, seckey);
-    if (!schnorr) {
-      secp256k1.setValue(siglenPointer, 128, 'i32');
-    }
-    var i;
-    for (i = 0; i < 32; ++i) {
-      secp256k1.setValue(msg + i, msgIn[i], 'i8');
-    }
-    var len = -1;
-    if (schnorr) {
-      if (secp256k1._secp256k1_schnorr_sign(
-          secp256k1ctx, sig, msg, seckey, 0, 0
-      ) !== 1) {
-        reject('secp256k1 Schnorr sign failed');
-      } else {
-        len = 64;
-      }
-    } else {
-      len = -1;
-      var sigOpaque = secp256k1._malloc(64);
-      if (secp256k1._secp256k1_ecdsa_sign(
-          secp256k1ctx, sigOpaque, msg, seckey, 0, 0
-      ) !== 1) {
-        reject('secp256k1 ECDSA sign failed');
-      } else if (secp256k1._secp256k1_ecdsa_signature_serialize_der(
-                 secp256k1ctx, sig, siglenPointer, sigOpaque
-      ) !== 1) {
-        reject('secp256k1 ECDSA signature serialize failed');
-      } else {
-        len = secp256k1.getValue(siglenPointer, 'i32');
-      }
-      secp256k1._free(sigOpaque);
-    }
-    if (len !== -1) {
-      var ret = new Buffer(len);
-      for (i = 0; i < len; ++i) {
-        ret.writeUInt8(secp256k1.getValue(sig + i, 'i8') & 0xff, i);
-      }
-      if (schnorr) {
-        resolve(ret);
-      } else {
-        resolve(bitcoin.ECSignature.fromDER(ret));
-      }
-    }
-    secp256k1._free(sig);
-    if (!schnorr) {
-      secp256k1._free(siglenPointer);
-    }
-    secp256k1._free(msg);
-    secp256k1._free(seckey);
+    return wally.wally_ec_sig_to_der(compact).then(bitcoin.ECSignature.fromDER);
   });
 }
 
@@ -154,22 +80,6 @@ function deriveHardened (i) {
   return Promise.resolve(this.hdnode.deriveHardened(i)).then(function (hd) {
     return new SchnorrSigningKey(hd);
   });
-}
-
-function checkContext () {
-  var SECP256K1_FLAGS_BIT_CONTEXT_VERIFY = (1 << 8);
-  var SECP256K1_FLAGS_BIT_CONTEXT_SIGN = (1 << 9);
-  var SECP256K1_FLAGS_TYPE_CONTEXT = (1 << 0);
-  var SECP256K1_CONTEXT_VERIFY = (SECP256K1_FLAGS_TYPE_CONTEXT | SECP256K1_FLAGS_BIT_CONTEXT_VERIFY);
-  var SECP256K1_CONTEXT_SIGN = (SECP256K1_FLAGS_TYPE_CONTEXT | SECP256K1_FLAGS_BIT_CONTEXT_SIGN);
-  if (secp256k1ctx === null) {
-    secp256k1ctx = secp256k1._secp256k1_context_create(
-      SECP256K1_CONTEXT_VERIFY | SECP256K1_CONTEXT_SIGN
-    );
-    secp256k1._secp256k1_pedersen_context_initialize(secp256k1ctx);
-    secp256k1._secp256k1_rangeproof_context_initialize(secp256k1ctx);
-  }
-  return secp256k1ctx;
 }
 
 function fromMnemonic (mnemonic, netName) {

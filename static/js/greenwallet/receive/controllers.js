@@ -1,4 +1,6 @@
 var SchnorrSigningKey = require('wallet').bitcoinup.SchnorrSigningKey;
+var wally = require('wallyjs');
+
 angular.module('greenWalletReceiveControllers',
     ['greenWalletServices'])
 .controller('ReceiveController', ['$rootScope', '$scope', 'wallets', '$filter', 'tx_sender', 'notices', 'cordovaReady', 'hostname', 'gaEvent', '$uibModal', '$location', 'qrcode', 'clipboard', 'branches', '$q',
@@ -14,6 +16,20 @@ angular.module('greenWalletReceiveControllers',
             $rootScope.is_loading += 1;
             tx_sender.call('com.greenaddress.addressbook.get_my_addresses', $scope.wallet.current_subaccount).then(function(data) {
                 $scope.receive.my_addresses = data;
+                if (cur_net.isElements) {
+                    $scope.receive.my_addresses = data.map(function (ad) {
+                        var hash = Bitcoin.bs58check.decode(ad.ad).slice(1);
+                        var blindingPrivkey = '0101010101010101010101010101010101010101010101010101010101010101';
+                        var pub = new Bitcoin.bitcoin.ECPair(
+                            Bitcoin.BigInteger.fromBuffer(new Buffer(blindingPrivkey, 'hex'))
+                        ).getPublicKeyBuffer();
+                        ad.ad = Bitcoin.bs58check.encode(Bitcoin.Buffer.Buffer.concat([
+                            new Bitcoin.Buffer.Buffer([4, cur_net.scriptHash]),
+                            pub, hash
+                        ]));
+                        return ad;
+                    })
+                }
                 $scope.receive.my_addresses.has_more = $scope.receive.my_addresses[$scope.receive.my_addresses.length - 1].pointer > 1;
                 $uibModal.open({
                     templateUrl: BASE_URL+'/'+LANG+'/wallet/partials/wallet_modal_my_addresses.html',
@@ -99,62 +115,19 @@ angular.module('greenWalletReceiveControllers',
                     invalid_privkey: gettext('Not a valid encrypted private key'),
                     invalid_passphrase: gettext('Invalid passphrase')
                 };
-                var is_chrome_app = window.chrome && chrome.storage;
-                if (window.cordova) {
-                    cordovaReady(function() {
-                        cordova.exec(function(data) {
-                            $scope.$apply(function() {
-                                do_sweep_key(Bitcoin.bitcoin.ECPair.fromWIF(data));
-                            });
-                        }, function(fail) {
-                            that.sweeping = false;
-                            notices.makeNotice('error', errors[fail] || fail);
-                        }, "BIP38", "decrypt", [key_wif, that.bip38_password,
-                                'BTC']);  // probably not correct for testnet, but simpler, and compatible with our JS impl
-                    })();
-                } else if (is_chrome_app) {
-                    var process = function() {
-                        var listener = function(message) {
-                            window.removeEventListener('message', listener);
-                            that.sweeping = false;
-                            if (message.data.error) {
-                                notices.makeNotice('error', errors[message.data.error] || message.data.error);
-                            } else {
-                                var ecpair = Bitcoin.bitcoin.ECPair.fromWIF(message.data);
-                                do_sweep_key(ecpair);
-                            }
-                        };
-                        window.addEventListener('message', listener);
-                        iframe.contentWindow.postMessage({b58: key_wif, password: that.bip38_password, cur_net_wif: cur_net.wif}, '*');
-                    };
-                    if (!iframe) {
-                        if (document.getElementById("id_iframe_receive_bip38")) {
-                            iframe = document.getElementById("id_iframe_receive_bip38");
-                            process();
-                        } else {
-                            iframe = document.createElement("IFRAME");
-                            iframe.onload = process;
-                            iframe.setAttribute("src", "/bip38_sandbox.html");
-                            iframe.setAttribute("class", "ng-hide");
-                            iframe.setAttribute("id", "id_iframe_receive_bip38");
-                            document.body.appendChild(iframe);
-                        }
-                    } else {
-                        process();
-                    }
-                } else {
-                    var worker = new Worker(BASE_URL+"/static/js/greenwallet/signup/bip38_worker.js");
-                    worker.onmessage = function(message) {
-                        that.sweeping = false;
-                        if (message.data.error) {
-                            notices.makeNotice('error', errors[message.data.error] || message.data.error);
-                        } else {
-                            var ecpair = Bitcoin.bitcoin.ECPair.fromWIF(message.data);
-                            do_sweep_key(ecpair);
-                        }
-                    }
-                    worker.postMessage({b58: key_wif, password: this.bip38_password, cur_net_wif: cur_net.wif});
-                }
+                wally.wally_base58_to_bytes(key_wif).then(function (bytes) {
+                    wally.bip38_to_private_key(
+                        key_wif, new Buffer(that.bip38_password, 'utf-8'), 0
+                    ).then(function (data) {
+                        $scope.$apply(function() {
+                            do_sweep_key(new Bitcoin.bitcoin.ECPair(
+                                Bitcoin.BigInteger.fromBuffer(data), null, {
+                                    compressed: !!(bytes[2] & 0x20)
+                                })
+                            );
+                        });
+                    });
+                });
             } else if (key_wif.indexOf('K') == 0 || key_wif.indexOf('L') == 0 || key_wif.indexOf('5') == 0 // prodnet
                     || key_wif.indexOf('c') == 0 || key_wif.indexOf('9') == 0) { // testnet
                 var key_bytes = Bitcoin.bs58.decode(key_wif);
@@ -220,17 +193,13 @@ angular.module('greenWalletReceiveControllers',
             if (show_qr) $scope.show_url_qr($scope.receive.bitcoin_uri);
         } else {
             gaEvent('Wallet', 'ReceiveShowBitcoinUri');
-            var confidential = cur_net.isAlpha;
+            var confidential = cur_net.isElements;
             var args = [
                 'com.greenaddress.vault.fund',
                 $scope.wallet.current_subaccount,
                 true /* return_pointer */,
                 $scope.wallet.appearance.use_segwit ? 'p2wsh' : 'p2sh'
             ];
-            if (confidential) {
-                // old server doesn't support the 4th argument
-                args.push(true);
-            }
             tx_sender.call.apply(tx_sender, args).then(function(data) {
                 var expectedScript;
                 if (!tx_sender.gaWallet.scriptFactory) {
@@ -267,31 +236,28 @@ angular.module('greenWalletReceiveControllers',
                             return key.deriveHardened($scope.wallet.current_subaccount);
                         });
                     }
-                    address = key.then(function(key) {
+                    /* address = key.then(function(key) {
                         return key.deriveHardened(branches.BLINDED)
                     }).then(function(branch) {
                         return branch.deriveHardened(data.pointer);
-                    }).then(function(blinded_key) {
+                    }). */ // TODO proper derivation for blinding keys
+                    var blindingPrivkey = '0101010101010101010101010101010101010101010101010101010101010101';
+                    address = Promise.resolve({keyPair: new Bitcoin.bitcoin.ECPair(
+                        Bitcoin.BigInteger.fromBuffer(new Buffer(blindingPrivkey, 'hex'))
+                    )}).then(function(blinded_key) {
                         var version;
                         if (cur_net === Bitcoin.bitcoin.networks.bitcoin) {
                             version = 10;
                         } else {
-                            version = 25;
+                            version = 4;
                         }
-                        return tx_sender.call(
-                            'com.greenaddress.vault.set_scanning_key',
-                            $scope.wallet.current_subaccount,
-                            data.pointer,
-                            Array.from(blinded_key.keyPair.getPublicKeyBuffer())
-                        ).then(function() {
-                            return Bitcoin.bs58check.encode(Bitcoin.Buffer.Buffer.concat([
-                                new Bitcoin.Buffer.Buffer([version, cur_net.scriptHash]),
-                                blinded_key.keyPair.getPublicKeyBuffer(),
-                                Bitcoin.bitcoin.crypto.hash160(
-                                    new Bitcoin.Buffer.Buffer(data.script, 'hex')
-                                )
-                            ]));
-                        });
+                        return Bitcoin.bs58check.encode(Bitcoin.Buffer.Buffer.concat([
+                            new Bitcoin.Buffer.Buffer([version, cur_net.scriptHash]),
+                            blinded_key.keyPair.getPublicKeyBuffer(),
+                            Bitcoin.bitcoin.crypto.hash160(
+                                new Bitcoin.Buffer.Buffer(data.script, 'hex')
+                            )
+                        ]));
                     });
                 } else {
                     var script = new Bitcoin.Buffer.Buffer(data, 'hex');
