@@ -368,7 +368,7 @@ function mockGetNextOutputScriptWithPointer () {
   return Promise.resolve({
     subaccount: 0,
     pointer: 1,
-    outScript: bitcoin.script.scriptHashOutput(
+    outScript: bitcoin.script.scriptHash.output.encode(
       bitcoin.crypto.hash160(new Buffer(toHash, 'hex'))
     )
   });

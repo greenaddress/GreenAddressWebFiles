@@ -10,7 +10,9 @@ extend(GAService.prototype, {
   login: login,
   addNotificationCallback: addNotificationCallback,
   _loginWithSigningWallet: _loginWithSigningWallet,
-  _loginWithWatchOnly: _loginWithWatchOnly
+  _loginWithWatchOnly: _loginWithWatchOnly,
+  getNetName: getNetName,
+  getMinFeeRate: getMinFeeRate
 });
 
 function GAService (netName, options) {
@@ -18,6 +20,7 @@ function GAService (netName, options) {
   this.gaUserPath = options.gaUserPath;
   this.netName = netName || 'testnet';
   this.notificationCallbacks = {};
+  this.minFeeRate = 1000;
   if (this.netName === 'testnet') {
     this.gaHDNode = new bitcoin.HDNode(
       bitcoin.ECPair.fromPublicKeyBuffer(
@@ -86,6 +89,7 @@ function login (options, cb, eb) {
         d = _this._loginWithWatchOnly(watchOnly, cb, eb);
       }
       d.then(function (data) {
+        this.minFeeRate = +data.min_fee;
         _this.session.subscribe('com.greenaddress.txs.wallet_' + data.receiving_id,
           function (event) {
             if (_this.notificationCallbacks.wallet) {
@@ -212,4 +216,12 @@ function call (uri, args) {
   } catch (e) {
     return Promise.reject(e);
   }
+}
+
+function getNetName () {
+  return this.netName;
+}
+
+function getMinFeeRate () {
+  return this.minFeeRate;
 }

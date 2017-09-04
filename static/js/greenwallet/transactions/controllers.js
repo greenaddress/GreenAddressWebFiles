@@ -169,7 +169,7 @@ angular.module('greenWalletTransactionsControllers',
                 return change_d.then(function(change_hash160) {
                     if (change_hash160) {
                         builder.addOutput(
-                            Bitcoin.bitcoin.script.scriptHashOutput(
+                            Bitcoin.bitcoin.script.scriptHash.output.encode(
                                 change_hash160
                             ),
                             -remainingFeeDelta
@@ -197,7 +197,7 @@ angular.module('greenWalletTransactionsControllers',
                                 )),
                                 requtxo.pt_idx,
                                 0,
-                                Bitcoin.bitcoin.script.scriptHashOutput(
+                                Bitcoin.bitcoin.script.scriptHash.output.encode(
                                     Bitcoin.bitcoin.crypto.hash160(
                                         utxos[i].redeemScript
                                     )

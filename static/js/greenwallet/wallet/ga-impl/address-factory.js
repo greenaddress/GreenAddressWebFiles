@@ -50,7 +50,7 @@ function getNextOutputScriptWithPointer () {
     } else {
       scriptHash = bitcoin.crypto.hash160(scriptRaw);
     }
-    var ret = bitcoin.script.scriptHashOutput(scriptHash);
+    var ret = bitcoin.script.scriptHash.output.encode(scriptHash);
     this.scriptToPointer[ret.toString('hex')] = script.pointer;
     return {
       outScript: ret,

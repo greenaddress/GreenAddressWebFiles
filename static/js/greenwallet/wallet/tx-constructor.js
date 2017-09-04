@@ -59,24 +59,16 @@ function _makeUtxoFilter (assetNetworkId, requiredValue, message, options) {
               return curTotal;
             }
 
-            var increase = 0;
-            if (!options.subtractFeeFromOut &&
-              options.increaseNeededValueForEachOutputBy &&
-              options.isFeeAsset) {
-              increase = options.increaseNeededValueForEachOutputBy;
-            }
-
             var nextOut = copied[ i + 1 ];
             if (nextOut !== undefined &&
                   (copied[ i ].raw.block_height === nextOut.raw.block_height ||
                    options.minimizeInputs) && // ignore nlocktime to minimize inputs
-                  nextOut.value >= requiredValue - curTotal + increase) {
+                  nextOut.value >= requiredValue - curTotal) {
               // next one is enough - skip this one which is too large
               return curTotal;
             }
 
             collected.push(copied[ i ]);
-            requiredValue += increase;
             return curTotal + nextValue;
           });
         });
@@ -112,10 +104,7 @@ function _initializeNeededValue (outputsWithAmounts, options, feeEstimate) {
   outputsWithAmounts.forEach(function (output) {
     total += output.value;
   });
-  // 16b is very conservative
-  // (just version[4b]+num_inputs[1b]+num_outputs[1b]+one_output[10b]
-  var initialFeeEstimate = 16 * feeEstimate / 1000;
-  return total + (options.subtractFeeFromOut ? 0 : initialFeeEstimate);
+  return total;
 }
 
 function _increaseNeededValue (oldVal, newVal) {
@@ -127,6 +116,7 @@ function _constructTx (outputsWithAmounts, options) {
   var _this = this;
   // 1. get fee estimate
   var feeEstimate = this.feeEstimatesFactory.getFeeEstimate(
+    options.instantUtxo,
     (options.addFee && options.addFee.requiredNumOfBlocks) || 6
   )[0];
 
@@ -140,14 +130,7 @@ function _constructTx (outputsWithAmounts, options) {
     this._initializeNeededValue(outputsWithAmounts, options, feeEstimate)
   );
 
-  var collectOptions = extendCopy(
-    options, {
-      // 42 is very conservative
-      // (just prevout[32b]+previdx[4b]+seq[4b]+len[1b]+script[1b])
-      // -- for sure the accuracy could be improved for CT, where
-      // transactions become much larger due to rangeproofs
-      increaseNeededValueForEachOutputBy: 42 * feeEstimate / 1000
-    });
+  var collectOptions = extendCopy(options);
   var collectOptionsInstant = null;
   var checkNonInstant = Promise.resolve();
   if (options.instantUtxo) {

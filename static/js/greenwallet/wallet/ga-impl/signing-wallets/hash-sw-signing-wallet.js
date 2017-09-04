@@ -68,6 +68,7 @@ function signTransaction (tx, options) {
   }
   var _this = this;
   var witness = [];
+  tx.clearFeeChanges();
   for (var i = 0; i < tx.tx.ins.length; ++i) {
     (function (i) {
       ret = ret.then(function () {

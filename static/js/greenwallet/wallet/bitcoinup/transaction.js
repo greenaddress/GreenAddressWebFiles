@@ -2,13 +2,16 @@ var BigInteger = require('bigi');
 var bitcoin = require('bitcoinjs-lib');
 var crypto = require('crypto');
 var scriptTypes = require('../ga-impl/constants').scriptTypes;
-var bufferutils = bitcoin.bufferutils;
 var extend = require('xtend/mutable');
 
 module.exports = Transaction;
 
+const SIG_LEN = 73;
+
 extend(Transaction.prototype, {
   byteLength: byteLength,
+  hasWitnesses: hasWitnesses,
+  virtualSize: virtualSize,
   estimateSignedLength: estimateSignedLength,
   toBuffer: toBuffer,
   build: build,
@@ -23,7 +26,8 @@ extend(Transaction.prototype, {
   replaceOutput: replaceOutput,
   clearOutputs: clearOutputs,
   addInput: addInput,
-  clearInputs: clearInputs
+  clearInputs: clearInputs,
+  clearFeeChanges: clearFeeChanges
 });
 Transaction.fromHex = fromHex;
 
@@ -35,6 +39,23 @@ function addInput (input) {
   var idx = this.tx.addInput(
     input.txHash, input.vout, input.sequence, input.prevOutScript
   );
+  if (input.prevOut.raw.script_type === scriptTypes.OUT_P2SH_P2WSH) {
+    var script = bitcoin.script.compile([].concat(
+      bitcoin.opcodes.OP_0,
+      new Buffer([0]),
+      new Buffer(SIG_LEN), // average sig size
+      new Buffer(SIG_LEN), // average sig size
+      new Buffer(input.prevOut.getPrevScriptLength())
+    ));
+    this.tx.setWitness(idx, [script]);
+    this.tx.ins[idx].script = new Buffer(35);
+  } else {
+    this.tx.ins[idx].script = bitcoin.script.compile([].concat(
+      bitcoin.opcodes.OP_0, // OP_0 required for multisig
+      new Buffer(SIG_LEN), // average sig size
+      new Buffer(SIG_LEN), // average sig size
+      new Buffer(input.prevOut.getPrevScriptLength())));
+  }
   var ret = this.tx.ins[idx];
   ret.prevOut = input.prevOut;
   return ret;
@@ -59,39 +80,30 @@ function clearInputs () {
   this.tx.ins = [];
 }
 
+function clearFeeChanges () {
+  for (var i = 0; i < this.tx.ins.length; ++i) {
+    this.tx.ins[i].witness = [];
+    this.tx.ins[i].script = [];
+  }
+}
+
 function byteLength () {
   return this.tx.byteLength();
 }
 
+function hasWitnesses () {
+  return this.tx.hasWitnesses();
+}
+
+function virtualSize () {
+  return this.tx.virtualSize();
+}
+
 function estimateSignedLength () {
-  var ret = this.tx.byteLength();
-  this.tx.ins.forEach(function (input) {
-    var scriptSigSize = (
-      1 + // OP_0 required for multisig
-      // TODO: classify prevscript and derive number of signatures from it
-      2 * pushDataSize(73) + // 2 signatures pushdata
-      pushDataSize(
-        input.prevOut.getPrevScriptLength()
-      ) // prevScript pushdata
-    );
-    if (input.prevOut.raw.script_type === scriptTypes.OUT_P2SH_P2WSH) {
-      var witnessLen = scriptSigSize;
-      ret += scriptSize(2 /* = count(1) + len(1byte) */ + witnessLen);
-      ret -= scriptSize(input.script.length);
-      ret += 35;  // len(pushdata(0x00 + 0x20 + hash256))
-    } else {
-      ret -= scriptSize(input.script.length);
-      ret += scriptSize(scriptSigSize);
-    }
-  });
-
-  return ret;
-
-  function scriptSize (length) {
-    return bufferutils.varIntSize(length) + length;
-  }
-  function pushDataSize (length) {
-    return bufferutils.pushDataSize(length) + length;
+  if (!this.hasWitnesses()) {
+    return this.byteLength();
+  } else {
+    return this.virtualSize();
   }
 }
 

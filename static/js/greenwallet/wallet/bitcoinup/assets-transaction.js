@@ -236,7 +236,7 @@ function toBufferForSigning (signInIndex) {
         writeSlice(new Buffer(new Array(33 - 8)));
         var valBuf = new Buffer(8);
         bufferutils.writeUInt64LE(valBuf, signIn.prevValue, 0);
-        writeSlice(bufferutils.reverse(valBuf));
+        writeSlice(valBuf.reverse());
         writeVarInt(0);
         writeVarInt(0);
       }
@@ -262,7 +262,7 @@ function toBufferForSigning (signInIndex) {
       writeSlice(new Buffer(new Array(33 - 8)));
       var valBuf = new Buffer(8);
       bufferutils.writeUInt64LE(valBuf, txOut.value, 0);
-      writeSlice(bufferutils.reverse(valBuf));
+      writeSlice(valBuf.reverse());
     } else {
       writeSlice(txOut.valueBuffer);
     }

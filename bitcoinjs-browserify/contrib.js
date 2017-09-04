@@ -682,7 +682,7 @@ contrib.AlphaTransactionBuilder.prototype.sign = function (index, keyPair, redee
 
       // if we don't have a prevOutScript, generate a P2SH script
       if (!input.prevOutScript) {
-        input.prevOutScript = bscript.scriptHashOutput(bcrypto.hash160(redeemScript))
+        input.prevOutScript = bscript.scriptHash.output.encode(bcrypto.hash160(redeemScript))
         input.prevOutType = 'scripthash'
       }
 
