@@ -4,4 +4,4 @@ matrix:
   include:
     - services:
         - docker
-      script: docker run -v $PWD:/walletcrx greenaddress/walletcrx@sha256:070241ce8a9f7cb1df9bce97c8fa334660111666578793e1c3f3447bf64edb0f /bin/sh -c "cd /walletcrx && npm i && npm run build && npm run test"
+      script: docker run -v $PWD:/walletcrx greenaddress/walletcrx@sha256:21451ff70e639a2a5c8fb8434b9593626c323a8ffd9372db5ee8bafc512de74f /bin/sh -c "cd /walletcrx && npm i && npm run build && npm run test"
