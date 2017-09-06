@@ -164,7 +164,7 @@ function factory ($q, cordovaReady, $timeout, notices) {
           // facingMode can now be passed to getUserMedia, no need to filter manually:
           tryGUM(
             {
-              video: {facingMode: {exact: 'environment'}},
+              video: {facingMode: 'environment'},
               audio: false
             }, true
           );
