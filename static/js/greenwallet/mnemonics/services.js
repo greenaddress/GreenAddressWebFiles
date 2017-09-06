@@ -37,7 +37,7 @@ angular.module('greenWalletMnemonicsServices', ['greenWalletServices'])
             var bits = words.length*11 - words.length/3;
             var retval = new Bitcoin.BigInteger(binary.substr(0, bits), 2).toBuffer();
             while (retval.length < bits/8) {
-                retval = Bitcoin.Buffer.Buffer.concat([0], retval);
+                retval = Buffer.concat([Buffer([0]), retval]);
             }
 
             var checksum = binary.substr(bits);
