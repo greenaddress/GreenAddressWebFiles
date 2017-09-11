@@ -141,6 +141,7 @@ function signTransaction (tx, options) {
   var hasChange = false;
 
   var inputs = [];
+  tx.clearFeeChanges();
   tx = tx.tx;
 
   var fetch_d = fetchUtxo();  // fech in parallel with everything else

@@ -676,6 +676,7 @@ function _signTransactionNonSegwit (device, tx, options) {
 }
 
 function signTransaction (tx, options) {
+  tx.clearFeeChanges();
   tx = tx.tx;
   return this.getDevice().then(function () {
     var device = LedgerHWWallet.currentDevice;
