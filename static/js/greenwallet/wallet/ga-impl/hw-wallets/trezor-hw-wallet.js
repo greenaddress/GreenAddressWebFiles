@@ -3,6 +3,7 @@ var branches = require('../constants').branches;
 var extend = require('xtend/mutable');
 var SchnorrSigningKey = require('../../bitcoinup/schnorr-signing-key');
 var window = require('global/window');
+var Bitcoin = window.Bitcoin;
 
 var gettext = window.gettext;
 
@@ -156,7 +157,7 @@ function signTransaction (tx, options) {
           inputs.push({
             address_n: prevoutToPath(tx.ins[ i ].prevOut, false),
             prev_hash: fromHex(
-              bitcoin.bufferutils.reverse(
+              Bitcoin.bitcoin.bufferutils.reverse(
                 tx.ins[ i ].hash
               ).toString('hex')
             ),
@@ -309,7 +310,7 @@ function signTransaction (tx, options) {
       var ret = {
         amount: out.value,
         address: addr,
-        script_type: bitcoin.script.isScriptHashOutput(
+        script_type: Bitcoin.bitcoin.script.isScriptHashOutput(
           out.script
         ) ? TYPE_P2SH : TYPE_ADDR
       };
@@ -340,7 +341,7 @@ function signTransaction (tx, options) {
     return ins.map(function (inp) {
       return {
         prev_hash: fromHex(
-          bitcoin.bufferutils.reverse(inp.hash).toString('hex')
+          Bitcoin.bitcoin.bufferutils.reverse(inp.hash).toString('hex')
         ),
         prev_index: inp.index,
         script_sig: fromHex(inp.script.toString('hex')),
