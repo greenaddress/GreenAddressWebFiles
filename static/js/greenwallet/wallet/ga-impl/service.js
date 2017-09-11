@@ -223,5 +223,5 @@ function getNetName () {
 }
 
 function getMinFeeRate () {
-  return this.minFeeRate;
+  return +this.minFeeRate;
 }

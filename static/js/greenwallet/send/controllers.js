@@ -120,11 +120,19 @@ angular.module('greenWalletSendControllers',
                     }
                 }
                 var addFee;
+                var isMinFeeRate = false;
                 if (that.add_fee.amount !== '') {
                   addFee = {
                     isConstant: !that.add_fee.per_kb,
                     amount: +that.amount_to_satoshis(that.add_fee.amount)
                   };
+                  var minFeeRate = tx_sender.gaService.getMinFeeRate();
+                  if (!addFee.isConstant && addFee.amount < minFeeRate) {
+                    addFee.amount = minFeeRate;
+                    isMinFeeRate = true;
+                  } else if (addFee.isConstant && !$scope.wallet.appearance.replace_by_fee) {
+                    throw new Error('Custom fees require transaction replacement functionality to be enabled.');
+                  }
                 } else if (that.instant) {
                   addFee = {
                     // backend constants:
@@ -157,7 +165,7 @@ angular.module('greenWalletSendControllers',
                     return constructor.utxoFactory.fetchUtxoDataForTx(tx.tx);
                 }).then(function() {
                     return wallets.ask_for_tx_confirmation(
-                        $scope, tx.tx
+                        $scope, tx.tx, {is_min_fee_rate: isMinFeeRate}
                     );
                 }).then(function () {
                     var fee = calculateFee(tx.tx);
@@ -242,6 +250,12 @@ angular.module('greenWalletSendControllers',
                     }
                 }.bind(this)).then(function() {
                     $location.url('/info/');
+                }.bind(this)).catch(function (e) {
+                  if (e && e != 'escape key press') {
+                    notices.makeError($scope, e);
+                  } else {
+                    console.log('dialog dismissed');
+                  }
                 });
             }.bind(this)).catch(function(e) {
                 notices.makeError($scope, e);
