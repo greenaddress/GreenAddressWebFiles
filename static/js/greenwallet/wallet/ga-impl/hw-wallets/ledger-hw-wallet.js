@@ -78,9 +78,9 @@ function pingDevice (device) {
   return device.getFirmwareVersion_async().then(function (version) {
     var features = {};
     var firmwareVersion = version.firmwareVersion.bytes(0, 4);
-    if (firmwareVersion.toString(HEX) < '02010000') {
+    if (firmwareVersion.toString(HEX) < '30010109') {
       device.card.disconnect_async();
-      return Promise.reject('Too old Ledger firmware. Please upgrade.');
+      return Promise.reject('Please upgrade your hardware wallet and ensure you have your mnemonics backed up.');
     }
     features.signMessageRecoveryParam =
       firmwareVersion.toString(HEX) >= '00010409';
@@ -133,6 +133,9 @@ function openDevice (network, options, device) {
     }).then(function (vendorId) {
       device.isNanoS = vendorId === 0x2c97;
       return device;
+    }).catch(function (err) {
+      HWWallet.guiCallbacks.ledgerDoErrorNotice(err);
+      return Promise.reject(err);
     });
   }
   return cardFactory.getCardTerminal(device).getCard_async().then(function (dongle) {
@@ -140,6 +143,9 @@ function openDevice (network, options, device) {
     ret.isNanoS = device.device.vendorId === 0x2c97;
     return pingDevice(ret).then(function () {  // populate features
       return ret;
+    }).catch(function (err) {
+      HWWallet.guiCallbacks.ledgerDoErrorNotice(err);
+      return Promise.reject(err);
     });
   });
 }

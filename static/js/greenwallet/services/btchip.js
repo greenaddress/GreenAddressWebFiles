@@ -13,12 +13,17 @@ function factory ($q, $uibModal, $rootScope, focus, notices) {
   BaseHWWallet.registerGUICallback('ledgerSetupModal', showSetupModal);
   BaseHWWallet.registerGUICallback('ledgerPINPrompt', showPINPrompt);
   BaseHWWallet.registerGUICallback('ledgerPleaseOpenBitcoinApp', pleaseOpenApp);
+  BaseHWWallet.registerGUICallback('ledgerDoErrorNotice', doErrorNotice);
 
-  function pleaseOpenApp () {
+  function doErrorNotice (error) {
     notices.makeNotice(
       'error',
-      window.gettext('Ledger Dashboard detected, please open the Bitcoin app on the device to access.')
+      window.gettext(error)
     );
+  }
+
+  function pleaseOpenApp () {
+    doErrorNotice('Ledger Dashboard detected, please open the Bitcoin app on the device to access.');
   }
 
   function showSetupModal (options) {
