@@ -1,7 +1,7 @@
 angular.module('greenWalletSendControllers',
     ['greenWalletServices'])
-.controller('SendController', ['$scope', 'wallets', 'tx_sender', 'cordovaReady', 'notices', 'branches', 'wallets', '$routeParams', 'hostname', 'gaEvent', '$uibModal', '$location', '$rootScope', '$q', 'parse_bitcoin_uri', 'qrcode', 'sound', 'encode_key',
-         function SendController($scope, wallets, tx_sender, cordovaReady, notices, branches, wallets, $routeParams, hostname, gaEvent, $uibModal, $location, $rootScope, $q, parse_bitcoin_uri, qrcode, sound, encode_key) {
+.controller('SendController', ['$scope', 'wallets', 'tx_sender', 'cordovaReady', 'notices', 'branches', 'wallets', 'storage', 'storage_keys', '$routeParams', 'hostname', 'gaEvent', '$uibModal', '$location', '$rootScope', '$q', 'parse_bitcoin_uri', 'qrcode', 'sound', 'encode_key',
+         function SendController($scope, wallets, tx_sender, cordovaReady, notices, branches, wallets, storage, storage_keys, $routeParams, hostname, gaEvent, $uibModal, $location, $rootScope, $q, parse_bitcoin_uri, qrcode, sound, encode_key) {
     if (!wallets.requireWallet($scope)) return;
     var mul = {'BTC': 1, 'mBTC': 1000, 'µBTC': 1000000, 'bits': 1000000}[$scope.wallet.unit];
     var btcToUnit = function(btc) {
@@ -152,6 +152,9 @@ angular.module('greenWalletSendControllers',
                         ).type === '2of3'
                     }
                 ).then(function(tx_) {
+                    if ($scope.wallet.appearance.use_segwit && tx_.segwit_change === true) {
+                        storage.set($scope.wallet.segwit_locked_key, true);
+                    }
                     tx = tx_;
                     // utxo data is necessary for the confirmation modal
                     return constructor.utxoFactory.fetchUtxoDataForTx(tx.tx);

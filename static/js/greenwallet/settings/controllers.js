@@ -1,7 +1,7 @@
 angular.module('greenWalletSettingsControllers',
     ['greenWalletServices', 'greenWalletSettingsDirectives', 'ui.bootstrap.tooltip'])
-.controller('TwoFactorSetupController', ['$scope', '$uibModal', 'notices', 'focus', 'tx_sender', 'wallets', 'gaEvent', '$q', 'clipboard',
-        function TwoFactorSetupController($scope, $uibModal, notices, focus, tx_sender, wallets, gaEvent, $q, clipboard) {
+.controller('TwoFactorSetupController', ['$scope', '$uibModal', 'notices', 'focus', 'tx_sender', 'wallets', 'storage', 'storage_keys', 'gaEvent', '$q', 'clipboard',
+        function TwoFactorSetupController($scope, $uibModal, notices, focus, tx_sender, wallets, storage, storage_keys, gaEvent, $q, clipboard) {
     if (!wallets.requireWallet($scope, true)) return;  // dontredirect=true because this cocntroller is reused in signup
     var twofactor_state = $scope.twofactor_state = {
         twofactor_type: 'email'
@@ -553,21 +553,26 @@ angular.module('greenWalletSettingsControllers',
     });
     $scope.$watch('settings.segregated_witness', function(newValue, oldValue) {
         if (oldValue !== newValue && !settings.segregated_witness_updating &&
-            // avoid infinite loop by checking for post-update value change:
-            newValue != $scope.wallet.appearance.use_segwit) {
+          // avoid infinite loop by checking for post-update value change:
+          newValue != $scope.wallet.appearance.use_segwit) {
+          storage.get($scope.wallet.segwit_locked_key).then(function (sw_locked) {
             settings.segregated_witness_updating = true;
             settings.segregated_witness = oldValue;  // set to old until really updated
             wallets.updateAppearance(
-                $scope, 'use_segwit', newValue
+              $scope, 'use_segwit', newValue
             ).then(function() {
-                settings.segregated_witness_updating = false;
-                settings.segregated_witness = newValue;
+              settings.segregated_witness_updating = false;
+              settings.segregated_witness = newValue;
             }, function() {
-                notices.makeNotice('error', gettext('Segwit can not be disabled for this account as segwit-style receive addresses have been generated for it.'));
+              notices.makeNotice('error', gettext('Segwit can not be disabled for this account as segwit-style receive addresses have been generated for it.'));
             }).finally(function() {
-                settings.segregated_witness_updating = false;
+              settings.segregated_witness_updating = sw_locked;
             });
-        }
+          })} else {
+            storage.get($scope.wallet.segwit_locked_key).then(function (sw_locked) {
+              settings.segregated_witness_updating = sw_locked;
+            })
+          }
     });
     $scope.$watch('settings.required_num_blocks', function(newValue, oldValue){
       if (oldValue !== newValue && !settings.required_num_blocks_update){

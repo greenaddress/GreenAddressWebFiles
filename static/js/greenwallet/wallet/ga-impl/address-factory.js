@@ -55,7 +55,8 @@ function getNextOutputScriptWithPointer () {
     return {
       outScript: ret,
       pointer: script.pointer,
-      subaccount: this.subaccount
+      subaccount: this.subaccount,
+      segwit_change: segWit
     };
   }.bind(this));
 }

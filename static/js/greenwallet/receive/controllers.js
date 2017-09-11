@@ -1,8 +1,8 @@
 var SchnorrSigningKey = require('wallet').bitcoinup.SchnorrSigningKey;
 angular.module('greenWalletReceiveControllers',
     ['greenWalletServices'])
-.controller('ReceiveController', ['$rootScope', '$scope', 'wallets', '$filter', 'tx_sender', 'notices', 'cordovaReady', 'hostname', 'gaEvent', '$uibModal', '$location', 'qrcode', 'clipboard', 'branches', '$q',
-        function InfoController($rootScope, $scope, wallets, $filter, tx_sender, notices, cordovaReady, hostname, gaEvent, $uibModal, $location, qrcode, clipboard, branches, $q) {
+.controller('ReceiveController', ['$rootScope', '$scope', 'wallets', '$filter', 'tx_sender', 'notices', 'cordovaReady', 'storage', 'storage_keys', 'hostname', 'gaEvent', '$uibModal', '$location', 'qrcode', 'clipboard', 'branches', '$q',
+        function InfoController($rootScope, $scope, wallets, $filter, tx_sender, notices, cordovaReady, storage, storage_keys, hostname, gaEvent, $uibModal, $location, qrcode, clipboard, branches, $q) {
     if(!wallets.requireWallet($scope)) return;
     $scope.wallet.signup = false;  // required for 2FA settings to work properly in the same session as signup
 
@@ -296,6 +296,7 @@ angular.module('greenWalletReceiveControllers',
                 } else {
                     var script = new Bitcoin.Buffer.Buffer(data, 'hex');
                     if ($scope.wallet.appearance.use_segwit) {
+                        storage.set($scope.wallet.segwit_locked_key, true);
                         var hash = Bitcoin.bitcoin.crypto.sha256(script);
                         var buf = Bitcoin.Buffer.Buffer.concat([
                             new Bitcoin.Buffer.Buffer([0, 32]),
