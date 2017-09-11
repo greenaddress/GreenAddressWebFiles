@@ -69,7 +69,7 @@ angular.module('greenWalletInfoControllers',
                     message:
                         blocks == 1 ?
                             gettext('1 confirmation') :
-                            gettext('%s confirmations').replace('%s', blocks)
+                            gettext('%s blocks').replace('%s', blocks)
                 });
             } else if (!below) {
                 below = blocks;

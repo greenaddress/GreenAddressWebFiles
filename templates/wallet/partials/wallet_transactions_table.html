@@ -47,7 +47,7 @@
                     <span class="caret"></span>
                   </a>
                   <ul uib-dropdown-menu ng-if="transaction.estimated_fees.length">
-                    <li class="dropdown-header">{{ _("Choose required estimated number of confirmations:") }}
+                    <li class="dropdown-header">{{ _("Choose required estimated number of blocks until first confirmation:") }}
                     <span ng-show="transaction.below_estimate_for"><br/>({{ _("Current estimate") }} &lt; (( transaction.below_estimate_for )))</span>
                     </li>
                     <li role="separator" class="divider"></li>
