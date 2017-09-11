@@ -14,6 +14,8 @@ var SchnorrSigningKey = require('./schnorr-signing-key');
 
 var Transaction = require('./transaction');
 
+var Bitcoin = window.Bitcoin;
+
 var VALUE_UINT64_MAX = window.VALUE_UINT64_MAX;
 
 module.exports = AssetsTransaction;
@@ -370,7 +372,7 @@ function fromHexImpl (tx, hex, __noStrict) {
     if (commitment[0] === 0) {
       var valueBuf = new Buffer(commitment.slice(-8));
       value = bufferutils.readUInt64LE(
-        bitcoin.bufferutils.reverse(valueBuf),
+        Bitcoin.bitcoin.bufferutils.reverse(valueBuf),
         0
       );
       commitment = null;
