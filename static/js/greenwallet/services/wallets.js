@@ -155,7 +155,7 @@ function factory ($q, $rootScope, tx_sender, $location, notices, $uibModal,
     }).then(function (data) { walletsService.onLogin($scope, data); return data; });
   };
   walletsService.onLogin = function ($scope, data) {
-    if (data.appearance.use_segwit === null && // false would mean user-disabled
+    if (data.appearance.use_segwit == null && // false would mean user-disabled
         $scope.wallet.segwit_server) {
       walletsService.updateAppearance($scope, 'use_segwit', true).then(function () {
         $scope.wallet.show_segwit_notice = true;
@@ -266,6 +266,11 @@ function factory ($q, $rootScope, tx_sender, $location, notices, $uibModal,
         $scope.wallet.expired_deposits = data.expired_deposits;
         $scope.wallet.nlocktime_blocks = data.nlocktime_blocks;
         $scope.wallet.gait_path = data.gait_path;
+        // create a per-wallet keyname to store segwit lockin status
+        $scope.wallet.segwit_locked_key =
+          Bitcoin.bitcoin.crypto.sha256(
+            Bitcoin.Buffer.Buffer.concat(
+              [Bitcoin.Buffer.Buffer(data.gait_path), Bitcoin.Buffer.Buffer('segwit_locked')])).toString('hex');
         if (!options.signup && !options.needsPINSetup) {
           // don't change URL on initial login in signup or PIN setup
           walletsService.openInitialPage($scope.wallet, data.has_txs);

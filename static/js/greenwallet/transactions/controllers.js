@@ -2,8 +2,8 @@ var Transaction = require('wallet').bitcoinup.Transaction;
 var scriptTypes = require('wallet').GA.constants.scriptTypes;
 angular.module('greenWalletTransactionsControllers',
     ['greenWalletServices'])
-.controller('TransactionsController', ['$scope', 'wallets', 'tx_sender', 'notices', 'branches', '$uibModal', 'gaEvent', '$timeout', '$q', 'encode_key', 'hostname',
-        function TransactionsController($scope, wallets, tx_sender, notices, branches, $uibModal, gaEvent, $timeout, $q, encode_key, hostname) {
+.controller('TransactionsController', ['$scope', 'wallets', 'tx_sender', 'storage', 'storage_keys', 'notices', 'branches', '$uibModal', 'gaEvent', '$timeout', '$q', 'encode_key', 'hostname',
+        function TransactionsController($scope, wallets, tx_sender, storage, storage_keys, notices, branches, $uibModal, gaEvent, $timeout, $q, encode_key, hostname) {
     // required already by InfoController
     // if(!wallets.requireWallet($scope)) return;
 
@@ -154,6 +154,9 @@ angular.module('greenWalletTransactionsControllers',
                         true /* return_pointer */,
                         $scope.wallet.appearance.use_segwit ? 'p2wsh' : 'p2sh'
                     ).then(function(data) {
+                        if ($scope.wallet.appearance.use_segwit) {
+                          storage.set($scope.wallet.segwit_locked_key, true);
+                        }
                         change_pointer = data.pointer;
                         return Bitcoin.bitcoin.crypto.hash160(
                             new Bitcoin.Buffer.Buffer(data.script, 'hex')

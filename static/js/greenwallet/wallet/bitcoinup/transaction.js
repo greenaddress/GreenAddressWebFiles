@@ -169,6 +169,8 @@ function _addChangeOutput (script, value) {
     }.bind(this));
   }
 
+  this.segwit_change = script.segwit_change;
+
   return changeIdx;
 }
 
