@@ -714,7 +714,9 @@ function factory ($q, $rootScope, tx_sender, $location, notices, $uibModal,
           ($scope.send_tx ?
             ($scope.send_tx.recipient.name ||
             $scope.send_tx.recipient) :
-            gettext("back to myself")))
+            gettext("back to myself"))),
+      is_min_fee_rate: options.is_min_fee_rate,
+      min_fee_rate: tx_sender.gaService.getMinFeeRate()
     };
     var modal = $uibModal.open({
       templateUrl: BASE_URL + '/' + LANG + '/wallet/partials/wallet_modal_confirm_tx.html',
