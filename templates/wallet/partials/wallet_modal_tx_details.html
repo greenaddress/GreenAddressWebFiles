@@ -36,7 +36,7 @@
           ((selected_transaction.size)) /
           (( selected_transaction.fee_per_kb | format_btc:wallet.unit ))
           <span ng-show="selected_transaction.confirmations == 0">
-              ({{ _("Estimated number of confirmations required:") }} (( selected_transaction.current_estimate )))
+              ({{ _("Estimated number of blocks until first confirmation:") }} (( selected_transaction.current_estimate )))
           </span>
         </dd>
 
