@@ -144,7 +144,7 @@ function signTransaction (tx, options) {
   tx.clearFeeChanges();
   tx = tx.tx;
 
-  var fetch_d = fetchUtxo();  // fech in parallel with everything else
+  var fetch_d = fetchUtxo();  // fetch in parallel with everything else
   return this.getDevice().then(function () {
     dev = TrezorHWWallet.currentDevice;
     fromHex = window.trezor.ByteBuffer.fromHex;
