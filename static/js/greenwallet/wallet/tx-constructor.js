@@ -151,13 +151,11 @@ function _constructTx (outputsWithAmounts, options) {
       oldNeededValue, collectOptionsInstant || collectOptions
     );
   }).then(function (prevOutputs) {
-    var constantFee = false;
     var feeMultiplier;
     if (options.addFee) {
       if (options.addFee.multiplier) {
         feeMultiplier = options.addFee.multiplier;
       } else {
-        constantFee = options.addFee.isConstant;
         feeEstimate = options.addFee.amount;
       }
     }
@@ -169,7 +167,6 @@ function _constructTx (outputsWithAmounts, options) {
       // `iterate` call below:
       prevOutputs: prevOutputs,
       feeEstimate: feeEstimate,
-      constantFee: constantFee,
       feeMultiplier: feeMultiplier,
       getChangeOutScript: this.changeAddrFactory.getNextOutputScriptWithPointer.bind(
         this.changeAddrFactory

@@ -204,14 +204,9 @@ function _addFeeAndChange (options) {
   }
 
   // 4. make sure fee is right
-  var fee;
-  if (options.constantFee) {
-    fee = feeEstimate;
-  } else {
-    fee = Math.round(feeEstimate * this.estimateSignedLength() / 1000);
-    if (options.feeMultiplier) {
-      fee = Math.round(fee * options.feeMultiplier);
-    }
+  var fee = Math.round(feeEstimate * this.estimateSignedLength() / 1000);
+  if (options.feeMultiplier) {
+    fee = Math.round(fee * options.feeMultiplier);
   }
   var ret = Promise.resolve({changeIdx: -1}); // -1 indicates no change
 
@@ -273,15 +268,10 @@ function _addFeeAndChange (options) {
       return iterateFee;
 
       function iterateFee () {
-        var expectedFee;
-        if (options.constantFee) {
-          expectedFee = feeEstimate;
-        } else {
-          // check if after constructing the tx the fee needs to be increased
-          expectedFee = Math.round(feeEstimate * this.estimateSignedLength() / 1000);
-          if (options.feeMultiplier) {
-            expectedFee = Math.round(expectedFee * options.feeMultiplier);
-          }
+        // check if after constructing the tx the fee needs to be increased
+        var expectedFee = Math.round(feeEstimate * this.estimateSignedLength() / 1000);
+        if (options.feeMultiplier) {
+          expectedFee = Math.round(expectedFee * options.feeMultiplier);
         }
 
         if (fee >= expectedFee) {

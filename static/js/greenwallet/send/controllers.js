@@ -26,7 +26,6 @@ angular.module('greenWalletSendControllers',
             });
         },
         add_fee: {'party': 'sender',
-                  'per_kb': true,
                   'amount': '',
                   'requiredNumOfBlocks': $scope.wallet.appearance.required_num_blocks},
         instant: $routeParams.contact ? (parseContact($routeParams.contact).requires_instant || false) : false,
@@ -123,14 +122,13 @@ angular.module('greenWalletSendControllers',
                 var isMinFeeRate = false;
                 if (that.add_fee.amount !== '') {
                   addFee = {
-                    isConstant: !that.add_fee.per_kb,
                     amount: +that.amount_to_satoshis(that.add_fee.amount)
                   };
                   var minFeeRate = tx_sender.gaService.getMinFeeRate();
-                  if (!addFee.isConstant && addFee.amount < minFeeRate) {
+                  if (addFee.amount < minFeeRate) {
                     addFee.amount = minFeeRate;
                     isMinFeeRate = true;
-                  } else if (addFee.isConstant && !$scope.wallet.appearance.replace_by_fee) {
+                  } else if (!$scope.wallet.appearance.replace_by_fee) {
                     throw new Error('Custom fees require transaction replacement functionality to be enabled.');
                   }
                 } else if (that.instant) {
@@ -327,9 +325,6 @@ angular.module('greenWalletSendControllers',
         if (subaccount.type === '2of3') {
             $scope.send_tx.instant = false;
         }
-    });
-    $scope.$watch('send_tx.instant', function(newValue, oldValue) {
-        if (newValue) $scope.send_tx.add_fee.per_kb = true;
     });
     var spend_all_succeeded = false;
     $scope.$watch('send_tx.spend_all', function(newValue, oldValue) {

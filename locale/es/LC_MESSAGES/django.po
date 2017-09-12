@@ -1226,10 +1226,6 @@ msgstr "Ofrecemos todas las ventajas de una web wallet:"
 msgid "Leave empty for default"
 msgstr ""
 
-#: templates/wallet/partials/wallet_send.html:129
-msgid "per kB"
-msgstr "per kB"
-
 #: templates/wallet/partials/wallet_send.html:153
 #, fuzzy
 msgid "Network fee will be added to the amount"

@@ -1223,10 +1223,6 @@ msgstr "Προσφέρουμε όλα τα πλεονεκτήματας ενός
 msgid "Leave empty for default"
 msgstr ""
 
-#: templates/wallet/partials/wallet_send.html:129
-msgid "per kB"
-msgstr ""
-
 #: templates/wallet/partials/wallet_send.html:153
 #, fuzzy
 msgid "Network fee will be added to the amount"
