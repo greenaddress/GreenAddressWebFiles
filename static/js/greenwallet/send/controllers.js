@@ -36,7 +36,13 @@ angular.module('greenWalletSendControllers',
             qrcode.scan($scope, $event, '_send').then(function(text) {
                 gaEvent('Wallet', 'SendReadQrCodeSuccessful');
                 $rootScope.safeApply(function() {
-                    that.recipient = text;
+                    var parsed_uri = parse_bitcoin_uri(text);
+                    if (parsed_uri.recipient) {
+                      that.recipient = parsed_uri.recipient;
+                    }
+                    if (parsed_uri.amount) {
+                      that.amount = btcToUnit(parsed_uri.amount);
+                    }
                 });
             }, function(error) {
                 gaEvent('Wallet', 'SendReadQrCodeFailed', error);
