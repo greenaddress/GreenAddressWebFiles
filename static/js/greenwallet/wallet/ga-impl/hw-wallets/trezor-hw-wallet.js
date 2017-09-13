@@ -401,19 +401,24 @@ function openDevice (network, options, device) {
       var outdated = false;
       if (device.vendorId === 11044) {
         // keepkey
-        if (init_res.message.major_version < 1) outdated = true;
+        if (init_res.message.major_version < 4) {
+          outdated = '4.0.0';
+        }
       } else {
         // satoshilabs
-        if (init_res.message.major_version < 1) outdated = true;
-        else if (init_res.message.major_version === 1 &&
-          init_res.message.minor_version < 3) outdated = true;
+        if ((init_res.message.major_version < 1) ||
+            (init_res.message.major_version === 1 &&
+             init_res.message.minor_version < 5) ||
+            (init_res.message.major_version === 1 &&
+             init_res.message.minor_version === 5 &&
+             init_res.message.patch_version < 2)) {
+          outdated = '1.5.2';
+        }
       }
       if (outdated) {
         return Promise.reject({
           outdatedFirmware: true,
-          message: gettext(
-            'Outdated firmware. Please upgrade to at least 1.3.0 at http://mytrezor.com/'
-          ),
+          message: gettext('Outdated hardware wallet firmware. Please upgrade to at least ' + outdated),
           recoverable: false
         });
       } else {
