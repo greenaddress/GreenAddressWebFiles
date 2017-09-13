@@ -4,6 +4,8 @@ var extend = require('xtend/mutable');
 var SchnorrSigningKey = require('../../bitcoinup/schnorr-signing-key');
 var window = require('global/window');
 var Bitcoin = window.Bitcoin;
+var scriptTypes = require('../constants').scriptTypes;
+var sigHash = require('../constants').sigHash;
 
 var gettext = window.gettext;
 
@@ -155,6 +157,7 @@ function signTransaction (tx, options) {
         inputs_d = inputs_d.then(function () {
           return getPubKeys(tx.ins[ i ].prevOut);
         }).then(function (pubKeys) {
+          tx.ins[ i ].segwit = tx.ins[ i ].prevOut.raw.script_type === scriptTypes.OUT_P2SH_P2WSH;
           inputs.push({
             address_n: prevoutToPath(tx.ins[ i ].prevOut, false),
             prev_hash: fromHex(
@@ -165,7 +168,10 @@ function signTransaction (tx, options) {
             prev_index: tx.ins[ i ].index,
             script_type: (tx.ins[ i ].prevOut.raw.branch === branches.EXTERNAL
               ? 0  // SPENDADDRESS
-              : 1  // SPENDMULTISIG
+              : (tx.ins[ i ].segwit
+                  ? 4 // SPENDP2SHWITNESS
+                  : 1 // SPENDMULTISIG
+              )
             ),
             multisig: (tx.ins[ i ].prevOut.raw.branch === branches.EXTERNAL
               ? undefined
@@ -173,7 +179,8 @@ function signTransaction (tx, options) {
                 pubkeys: pubKeys,
                 m: 2
               }),
-            sequence: tx.ins[ i ].sequence
+            sequence: tx.ins[ i ].sequence,
+            amount: tx.ins[ i ].prevOut.value
           });
         });
       })(i);
@@ -210,16 +217,25 @@ function signTransaction (tx, options) {
       for (var i = 0; i < tx.ins.length; ++i) {
         signed.ins[i].prevOut = tx.ins[i].prevOut;
         var decompiled = bitcoin.script.decompile(signed.ins[i].script);
-        signed.ins[i].script = bitcoin.script.compile([].concat(
-          bitcoin.opcodes.OP_0, // OP_0 required for multisig
-          new Buffer([0]), // to be replaced by backend with server's sig
-          new Buffer([].concat(
-            Array.prototype.slice.call(
-              new Buffer(res.signatures[i].toHex(), 'hex')
-            ), [1]
-          )), // our signature with SIGHASH_ALL
-          decompiled[1]  // prevScript
+        var signature = new Buffer(res.signatures[i].toHex(), 'hex');
+        var sigAndSigHash = new Buffer([].concat(
+            Array.prototype.slice.call(signature),
+            [sigHash.ALL]
         ));
+        var raw_script = [];
+        if (tx.ins[i].segwit) {
+          raw_script = [].concat(0x22, Array.from(decompiled[0]));
+          signed.ins[i].witness[0] = sigAndSigHash;
+        } else {
+          raw_script = [].concat(
+            bitcoin.opcodes.OP_0, // OP_0 required for multisig
+            new Buffer([0]), // to be replaced by backend with server's sig
+            sigAndSigHash,
+            decompiled[1]  // prevScript
+          );
+          signed.ins[i].witness = [];
+        }
+        signed.ins[i].script = bitcoin.script.compile(raw_script);
       }
       tx.ins = signed.ins;
     });
