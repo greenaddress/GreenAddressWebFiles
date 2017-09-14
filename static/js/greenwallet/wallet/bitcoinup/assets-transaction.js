@@ -10,12 +10,9 @@ var opcodes = bitcoin.opcodes;
 var Buffer = require('buffer').Buffer;
 var extend = require('xtend/mutable');
 var window = require('global/window');
-var SchnorrSigningKey = require('./schnorr-signing-key');
 var wally = require('wallyjs');
 
 var Transaction = require('./transaction');
-
-var Bitcoin = window.Bitcoin;
 
 var VALUE_UINT64_MAX = window.VALUE_UINT64_MAX;
 
@@ -122,8 +119,6 @@ function scriptSize (someScript) {
 }
 
 function signedByteLength (signInIndex, withWitness) {
-  var forSigning = signInIndex !== -1;
-
   return (
     8 +
     (!withWitness ? 0 : ((this.witness.length || this.outWitness.length) ? 2 : 0)) + // marker
@@ -136,8 +131,8 @@ function signedByteLength (signInIndex, withWitness) {
       return sum + scriptSize(output.script) +
         (output.commitment ? 33 : 9) + // value or commitment
         33; // asset tag
-    }, 0) + (!withWitness ? 0 :
-      (this.witness.length ? bufferutils.varIntSize(this.witness.length) : 0) +
+    }, 0) + (!withWitness ? 0
+      : (this.witness.length ? bufferutils.varIntSize(this.witness.length) : 0) +
       this.witness.reduce(function (sum, wit) {
         return sum + scriptSize(wit);
       }, 0) +
@@ -192,7 +187,6 @@ function clone () {
 
 function toBufferForSigning (signInIndex, withWitness) {
   var buffer = new Buffer(this.signedByteLength(signInIndex, withWitness));
-  var forSigning = signInIndex !== -1;
 
   var offset = 0;
   function writeSlice (slice) {
@@ -203,11 +197,6 @@ function toBufferForSigning (signInIndex, withWitness) {
   function writeUInt32 (i) {
     buffer.writeUInt32LE(i, offset);
     offset += 4;
-  }
-
-  function writeUInt64 (i) {
-    bufferutils.writeUInt64LE(buffer, i, offset);
-    offset += 8;
   }
 
   function writeVarInt (i) {
@@ -238,13 +227,13 @@ function toBufferForSigning (signInIndex, withWitness) {
   });
 
   writeVarInt(this.outs.length);
-  var _this = this;
   this.outs.forEach(function (txOut, idx) {
-    writeSlice(txOut.assetHash !== undefined ?
-      new Buffer(txOut.assetHash) : (
-        txOut.assetId !== undefined ?
-          Buffer.concat([new Buffer([1]), new Buffer(txOut.assetId)]) :
-          new Buffer('000000000000000000000000000000000000000000000000000000000000000000', 'hex')
+    writeSlice(txOut.assetHash !== undefined
+      ? new Buffer(txOut.assetHash)
+      : (
+        txOut.assetId !== undefined
+          ? Buffer.concat([new Buffer([1]), new Buffer(txOut.assetId)])
+          : new Buffer('000000000000000000000000000000000000000000000000000000000000000000', 'hex')
       )
     );
 
@@ -264,7 +253,7 @@ function toBufferForSigning (signInIndex, withWitness) {
   });
 
   if (withWitness) {
-    this.witness.forEach(function (bufs)  {
+    this.witness.forEach(function (bufs) {
       // TODO
     });
     this.outWitness.forEach(function (buf) {
@@ -300,7 +289,6 @@ function fromHexImpl (tx, hex, __noStrict) {
     return bufferutils.readUInt64LE(bufferutils.reverse(buf), 0);
   }
 
-
   function readVarInt () {
     var vi = bufferutils.readVarInt(buffer, offset);
     offset += vi.size;
@@ -333,14 +321,18 @@ function fromHexImpl (tx, hex, __noStrict) {
   tx.fees = [];
 
   var voutLen = readVarInt();
+  var commitment;
   for (i = 0; i < voutLen; ++i) {
-    var assetTag = readSlice(33), assetId, assetHash;
+    var assetTag = readSlice(33);
+    var assetId;
+    var assetHash;
     if (assetTag[0] === 1) {
       assetId = assetTag.slice(1);
     } else {
       assetHash = assetTag;
     }
-    var commitmentFirst = readSlice(1)[0], value = null;
+    var commitmentFirst = readSlice(1)[0];
+    var value = null;
     if (commitmentFirst === 1) {
       value = readUInt64BE();
       commitment = null;
@@ -370,7 +362,6 @@ function fromHexImpl (tx, hex, __noStrict) {
       tx.outs[idx].nonceCommitment = readScript();
     });
   }
-
 
   tx.locktime = readUInt32();
 
@@ -487,7 +478,9 @@ function replaceOutput (idx, outScript, value, fee, assetId) {
 
 function _rebuildCT () {
   var _this = this;
-  var abfs = [], vbfs = [], values = [];
+  var abfs = [];
+  var vbfs = [];
+  var values = [];
   var bf_i = 0;
   function u64 (n) {
     var val = BigInteger.valueOf(n).toByteArrayUnsigned();
@@ -505,7 +498,9 @@ function _rebuildCT () {
   if (!vbfs.length) return Promise.resolve();
   vbfs.pop();
   this.tx.outWitness = [];
-  var allValues = [], allAbfs = [], allVbfs = [];
+  var allValues = [];
+  var allAbfs = [];
+  var allVbfs = [];
   _this.tx.ins.forEach(function (inp) {
     allValues.push(u64(inp.prevOut.value));
     if (inp.prevOut.abf) {
@@ -525,7 +520,7 @@ function _rebuildCT () {
     allValues, this.tx.ins.length, Buffer.concat(allAbfs), Buffer.concat(allVbfs)
   ).then(function (vbf) {
     vbfs.push(vbf);
-  }.bind(this)).then(function () {
+  }).then(function () {
     return Promise.all(this.tx.outs.map(function (out, idx) {
       if (!out.valueToBlind) {
         _this.tx.outWitness[idx] = new Buffer([0, 0, 0]);
@@ -552,7 +547,9 @@ function _rebuildCT () {
         );
       }).then(function (commitment) {
         out.commitment = commitment;
-        var inputAssets = [], inputAbfs = [], inputAgs = [];
+        var inputAssets = [];
+        var inputAbfs = [];
+        var inputAgs = [];
         _this.tx.ins.forEach(function (inp) {
           if (inp.prevOut.abf) {
             inputAssets.push(new Buffer(inp.prevOut.assetId, 'hex'));
@@ -586,7 +583,7 @@ function _rebuildCT () {
             )
           ]);
         });
-      }.bind(this)).then(function (results) {
+      }).then(function (results) {
         var rangeproof = new Buffer(results[0]);
         var surjectionproof = new Buffer(results[1]);
         var outwit = new Buffer(
@@ -606,7 +603,7 @@ function _rebuildCT () {
         writePart(nonceCommitment);
         _this.tx.outWitness[idx] = outwit;
       });
-    }.bind(this)));
+    }));
   }.bind(this)).then(function () { return; });
 }
 
@@ -636,7 +633,7 @@ function _addChangeOutput (script, value, assetNetworkId) {
     }
     this.clearOutputs();
     newOutputs.forEach(function (out) {
-      var newOut = this.addOutput(out.script, out.value||0, out.fee, out.assetId);
+      var newOut = this.addOutput(out.script, out.value || 0, out.fee, out.assetId);
 
       newOut.pointer = out.pointer;
       newOut.subaccount = out.subaccount;

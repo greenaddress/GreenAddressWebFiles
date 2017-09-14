@@ -1,6 +1,4 @@
-var BigInteger = require('bigi');
 var extend = require('xtend/mutable');
-var wally = require('wallyjs');
 
 module.exports = {
   'GAUtxoFactory': GAUtxoFactory,

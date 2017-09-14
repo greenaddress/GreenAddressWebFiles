@@ -1,8 +1,6 @@
 var BigInteger = require('bigi');
-var bitcoin = require('bitcoinjs-lib');
 var extend = require('xtend/mutable');
 var GAUtxo = require('./utxo-factory').GAUtxo;
-var SchnorrSigningKey = require('../bitcoinup').SchnorrSigningKey;
 var wally = require('wallyjs');
 
 module.exports = GAConfidentialUtxo;
@@ -42,7 +40,7 @@ function unblind () {
     delete utxo.nonce_commitment;
     delete utxo.range_proof;
     delete utxo.commitment;
-    delete utxo.asset_tag
+    delete utxo.asset_tag;
 
     utxo.assetId = new Buffer(unblindedData[0]).toString('hex');
     // FIXME BigIntegers:

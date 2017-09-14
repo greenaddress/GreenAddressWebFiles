@@ -1,7 +1,5 @@
-var bitcoinup = require('../bitcoinup');
 var extend = require('xtend/mutable');
 
-var TxConstructor = require('../tx-constructor');
 var AssetsTxConstructor = require('./assets-tx-constructor');
 var BaseWallet = require('./base-wallet');
 var GAUtxoFactory = require('./utxo-factory').GAUtxoFactory;
@@ -17,33 +15,6 @@ extend(GAAssetsWallet.prototype, {
 function GAAssetsWallet (options) {
   BaseWallet.call(this, options);
   this.unblindedCache = options.unblindedCache;
-}
-
-function makeAssetsClassWithDefaultAsssetId (assetId) {
-  AssetsTransactionWithDefaultAsset.prototype = Object.create(bitcoinup.AssetsTransaction.prototype);
-
-  extend(AssetsTransactionWithDefaultAsset.prototype, {
-    addOutput: addOutput,
-    replaceOutput: replaceOutput
-  });
-
-  function AssetsTransactionWithDefaultAsset () {
-    bitcoinup.AssetsTransaction.call(this);
-  }
-
-  function addOutput (outScript, value, fee) {
-    return bitcoinup.AssetsTransaction.prototype.addOutput.call(
-      this, outScript, value, fee, assetId
-    );
-  }
-
-  function replaceOutput (idx, outScript, value, fee) {
-    bitcoinup.AssetsTransaction.prototype.replaceOutput.call(
-      this, idx, outScript, value, fee, assetId
-    );
-  }
-
-  return AssetsTransactionWithDefaultAsset;
 }
 
 function setupSubAccount (subaccount) {

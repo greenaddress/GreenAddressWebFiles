@@ -8,7 +8,6 @@ bitcoin.networks.testnet.pubKeyHash = 235;
 bitcoin.networks.testnet.scriptHash = 40;
 // BTC_BLINDED_VERSION = 4
 
-
 test('CA', function (t) {
   wally.wally_sha256(new Buffer('ca_spender', 'ascii')).then(function (entropy) {
     var mnemonic = bip39.entropyToMnemonic(new Buffer(entropy));
@@ -38,8 +37,8 @@ test('CA', function (t) {
           'com.greenaddress.vault.send_raw_tx', [tx.toBuffer(true).toString('hex')]
         );
       }).catch(function (e) {
-        console.log(e)
-      })
+        console.log(e);
+      });
     }).catch(function (e) { console.log(e); });
-  })
+  });
 });

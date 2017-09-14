@@ -94,7 +94,7 @@ function login () {
     this.assets = data.assets;
     this.assetIds = data.asset_ids;
     this.feeEstimatesFactory = new GAFeeEstimatesFactory(
-      this.service, data.fee_estimates, data.min_fee
+      this.service, data.fee_estimates
     );
     this.service.connection.onclose = this.disconnectedHandler;
     this.service.connection.connectedHandler = this.connectedHandler;
