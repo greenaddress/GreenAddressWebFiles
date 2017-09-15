@@ -548,8 +548,6 @@ function _signTransactionSegwit (device, tx, options) {
   var progressCb = options.signingProgressCallback;
   var deferred = Promise.resolve();
 
-  tx.witness = [];
-
   tx.ins.forEach(function (inp, i) {
     var path = _prevOutToPath(inp.prevOut);
     deferred = deferred.then(function () {
@@ -573,7 +571,6 @@ function _signTransactionSegwit (device, tx, options) {
     }).then(function (script) {
       if (inp.prevOut.raw.script_type !== scriptTypes.OUT_P2SH_P2WSH) {
         // sign segwit only
-        tx.witness.push(new Buffer([0]));
         return;
       }
       return device.gaStartUntrustedHashTransactionInput_async(
@@ -605,10 +602,7 @@ function _signTransactionSegwit (device, tx, options) {
           tx.ins[i].script = new Buffer([].concat(
             0x22, 0x00, 0x20, Array.from(bitcoin.crypto.sha256(script))
           ));
-          tx.witness.push(Buffer.concat(
-            // count + length + signature
-            [new Buffer([1, sigAndSigHash.length]), sigAndSigHash]
-          ));
+          tx.ins[i].witness[0] = sigAndSigHash;
         }).catch(function (err) {
           clearInterval(interval);
           return Promise.reject(err);
