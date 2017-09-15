@@ -233,7 +233,6 @@ function signTransaction (tx, options) {
             sigAndSigHash,
             decompiled[1]  // prevScript
           );
-          signed.ins[i].witness = [];
         }
         signed.ins[i].script = bitcoin.script.compile(raw_script);
       }
