@@ -747,7 +747,16 @@ function factory ($q, $rootScope, tx_sender, $location, notices, $uibModal,
         } else if (decompiled.length === 1) {
           // assume segwit
           // (from signTransaction we pass just the user signature in witness)
-          signature = tx.tx.witness[i].slice(2);
+          // FIXME
+          // There are two code paths here at the moment because legacy code
+          // puts witness data into tx.tx.witness as an array indexed on
+          // input, whereas newer code attaches it to the input. Until legacy
+          // code is updated handle both cases
+          if (tx.tx.witness) {
+              signature = tx.tx.witness[i].slice(2);
+          } else {
+              signature = inp.witness[0];
+          }
         }
         return signature.toString('hex');
       });
