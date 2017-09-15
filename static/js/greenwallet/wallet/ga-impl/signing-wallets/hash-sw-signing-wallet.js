@@ -70,31 +70,17 @@ function signTransaction (tx, options) {
     options.signingProgressCallback(0);
   }
   var _this = this;
-  var witness = [];
   tx.clearFeeChanges();
   for (var i = 0; i < tx.tx.ins.length; ++i) {
     (function (i) {
       ret = ret.then(function () {
         return _this.signInput(tx.tx, i);
-      }).then(function (sig) {
+      }).then(function () {
         if (options.signingProgressCallback) {
           options.signingProgressCallback(Math.round(
             100 * (i + 1) / tx.tx.ins.length
           ));
         }
-        if (sig.witness) {
-          witness.push(Buffer.concat(
-            // count + length + signature
-            [new Buffer([1, sig.witness.length]), sig.witness]
-          ));
-        } else {
-          // count = 0
-          witness.push(new Buffer([0]));
-        }
-        if (sig.witness) {
-          tx.tx.witness = witness;
-        }
-        return sig;
       });
     })(i);
   }
@@ -131,7 +117,6 @@ function signInput (tx, i) {
           sigAndSigHash, // our signature with SIGHASH_ALL
           signingKey.getPublicKeyBuffer()
         );
-        return {};
       } else if (prevOut.raw.branch === branches.EXTERNAL) {
         // priv-der pkhash-spending signature
         return _this.keysManager.getMyPublicKey(
@@ -141,14 +126,13 @@ function signInput (tx, i) {
             sigAndSigHash, // our signature with SIGHASH_ALL
             pubKey.hdnode.getPublicKeyBuffer()
           );
-          return {};
         });
       } else {
         if (prevOut.raw.script_type === scriptTypes.OUT_P2SH_P2WSH) {
           tx.ins[i].script = new Buffer([].concat(
             0x22, 0x00, 0x20, Array.from(bitcoin.crypto.sha256(prevScript))
           ));
-          return {witness: sigAndSigHash};
+          tx.ins[i].witness[0] = sigAndSigHash;
         } else {
           tx.ins[i].script = bitcoin.script.compile([].concat(
             bitcoin.opcodes.OP_0, // OP_0 required for multisig
@@ -156,7 +140,6 @@ function signInput (tx, i) {
             sigAndSigHash, // our signature with SIGHASH_ALL
             prevScript
           ));
-          return {};
         }
       }
     });
