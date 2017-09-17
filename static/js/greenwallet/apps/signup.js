@@ -193,6 +193,9 @@ function SignupController($scope, $location, mnemonics, focus, tx_sender, notice
                         $scope.wallet.mnemonic = $scope.signup.mnemonic = mnemonic;
                         $scope.signup.seed_progress = Math.round(progress);
                     }
+                    else if (hwDevice) {
+                        $scope.signup.seed_progress = 100;
+                    }
                 });
             }, function(err) {
                 $scope.signup.unexpected_error = err.status || err;
