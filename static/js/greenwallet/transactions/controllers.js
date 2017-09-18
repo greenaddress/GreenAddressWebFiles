@@ -1,5 +1,6 @@
 var Transaction = require('wallet').bitcoinup.Transaction;
 var scriptTypes = require('wallet').GA.constants.scriptTypes;
+var bitcoin = require('bitcoinjs-lib');
 angular.module('greenWalletTransactionsControllers',
     ['greenWalletServices'])
 .controller('TransactionsController', ['$scope', 'wallets', 'tx_sender', 'storage', 'storage_keys', 'notices', 'branches', '$uibModal', 'gaEvent', '$timeout', '$q', 'encode_key', 'hostname',
@@ -74,7 +75,7 @@ angular.module('greenWalletTransactionsControllers',
         var new_fee = Math.round(txsize * new_feerate / 1000);
         $scope.bumping_fee = true;
         transaction.bumping_dropdown_open = false;
-        var bumpedTx = Bitcoin.contrib.transactionFromHex(transaction.rawtx);
+        var bumpedTx = bitcoin.Transaction.fromHex(transaction.rawtx);
         var change_pointer;
         var targetFeeDelta = new_fee - parseInt(transaction.fee);
         var requiredFeeDelta = (
@@ -108,7 +109,7 @@ angular.module('greenWalletTransactionsControllers',
         }
         bumpedTx.outs = newOuts;
 
-        var builder = Bitcoin.bitcoin.TransactionBuilder.fromTransaction(
+        var builder = bitcoin.TransactionBuilder.fromTransaction(
             bumpedTx, cur_net
         );
         // reset hashType to allow adding inputs/outputs
