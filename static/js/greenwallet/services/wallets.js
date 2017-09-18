@@ -7,6 +7,7 @@ var HashSwSigningWallet = require('wallet').GA.HashSwSigningWallet;
 var HwSigningWallet = require('wallet').GA.HwSigningWallet;
 var SchnorrSigningKey = require('wallet').bitcoinup.SchnorrSigningKey;
 var Transaction = require('wallet').bitcoinup.Transaction;
+var bitcoin = require('bitcoinjs-lib');
 
 ///@TODO Refactor this file, it's huge and crazy. Also get it to pass lint
 
@@ -324,7 +325,7 @@ function factory ($q, $rootScope, tx_sender, $location, notices, $uibModal,
   };
   var unblindOutputs = function ($scope, txData, rawTxs) {
     var deferreds = [];
-    var tx = Bitcoin.contrib.transactionFromHex(txData.data);
+    var tx = bitcoin.Transaction.fromHex(txData.data);
     for (var i = 0; i < txData.eps.length; ++i) {
       (function (ep) {
         if (ep.value === null && (ep.is_relevant || ep.pubkey_pointer)) {
@@ -339,7 +340,7 @@ function factory ($q, $rootScope, tx_sender, $location, notices, $uibModal,
           } else {
             txhash = ep.prevtxhash;
             pt_idx = ep.previdx;
-            out = Bitcoin.contrib.transactionFromHex(
+            out = bitcoin.Transaction.fromHex(
               rawTxs[ep.prevtxhash]
             ).outs[pt_idx];
             subaccount = ep.prevsubaccount;
@@ -687,7 +688,7 @@ function factory ($q, $rootScope, tx_sender, $location, notices, $uibModal,
     if (tx.ins[0].prevOut && tx.ins[0].prevOut.data) {
       var in_value = 0, out_value = 0;
       tx.ins.forEach(function (txin) {
-        var prevtx = Bitcoin.contrib.transactionFromHex(
+        var prevtx = bitcoin.Transaction.fromHex(
           txin.prevOut.data.toString('hex')
         );
         var prevout = prevtx.outs[txin.index];
@@ -767,7 +768,7 @@ function factory ($q, $rootScope, tx_sender, $location, notices, $uibModal,
 
     var d = $q.defer();
     var tx = new Transaction();
-    tx.tx = Bitcoin.contrib.transactionFromHex(data.tx);
+    tx.tx = bitcoin.Transaction.fromHex(data.tx);
 
     // we can use the utxoFactory from the BTC/mainaccount constructor because
     // the asset/subaccount doesn't matter for the purposes of utxoFactory's
