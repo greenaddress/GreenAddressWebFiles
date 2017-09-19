@@ -8,6 +8,9 @@ var hashSegWit = require('../segwit').hashSegWit;
 var extend = require('xtend/mutable');
 var KeysManager = require('./../keys-managers/sw-keys-manager');
 var ScriptFactory = require('./../script-factory');
+var window = require('global/window');
+
+var Bitcoin = window.Bitcoin;
 
 module.exports = HashSwSigningWallet;
 
@@ -124,7 +127,7 @@ function signInput (tx, i) {
       ));
       if (prevOut.privkey) {
         // privkey provided means we're signing p2pkh
-        tx.ins[ i ].script = bitcoin.script.pubKeyHashInput(
+        tx.ins[ i ].script = Bitcoin.bitcoin.script.pubKeyHashInput(
           sigAndSigHash, // our signature with SIGHASH_ALL
           signingKey.getPublicKeyBuffer()
         );
@@ -134,7 +137,7 @@ function signInput (tx, i) {
         return _this.keysManager.getMyPublicKey(
           prevOut.raw.subaccount, prevOut.raw.pointer, branches.EXTERNAL
         ).then(function (pubKey) {
-          tx.ins[ i ].script = bitcoin.script.pubKeyHashInput(
+          tx.ins[ i ].script = Bitcoin.bitcoin.script.pubKeyHashInput(
             sigAndSigHash, // our signature with SIGHASH_ALL
             pubKey.hdnode.getPublicKeyBuffer()
           );
