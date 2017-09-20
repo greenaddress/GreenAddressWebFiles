@@ -22,6 +22,7 @@ test('sign with plain ecdsa', function (t) {
   }).catch(t.fail);
 });
 
+/*
 test('sign with Schnorr', function (t) {
   testKey.signHashSchnorr(new Uint8Array(32)).then(function (signature) {
     t.equal(
@@ -33,3 +34,4 @@ test('sign with Schnorr', function (t) {
     t.end();
   }).catch(t.fail);
 });
+*/
