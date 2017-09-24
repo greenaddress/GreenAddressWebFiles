@@ -268,10 +268,12 @@ function factory ($q, $rootScope, tx_sender, $location, notices, $uibModal,
         $scope.wallet.nlocktime_blocks = data.nlocktime_blocks;
         $scope.wallet.gait_path = data.gait_path;
         // create a per-wallet keyname to store segwit lockin status
-        $scope.wallet.segwit_locked_key =
-          Bitcoin.bitcoin.crypto.sha256(
-            Bitcoin.Buffer.Buffer.concat(
-              [Bitcoin.Buffer.Buffer(data.gait_path), Bitcoin.Buffer.Buffer('segwit_locked')])).toString('hex');
+        if (data.gait_path) {
+          $scope.wallet.segwit_locked_key =
+            Bitcoin.bitcoin.crypto.sha256(
+              Bitcoin.Buffer.Buffer.concat(
+                [Bitcoin.Buffer.Buffer(data.gait_path), Bitcoin.Buffer.Buffer('segwit_locked')])).toString('hex');
+        }
         if (!options.signup && !options.needsPINSetup) {
           // don't change URL on initial login in signup or PIN setup
           walletsService.openInitialPage($scope.wallet, data.has_txs);
