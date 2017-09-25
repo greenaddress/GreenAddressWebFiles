@@ -26,24 +26,30 @@ function GAUtxoFactory (gaService, options) {
 
 function listAllUtxo (options) {
   options = options || {};
+  var _this = this;
   var args = [
     options.minConfs || 0, /* include 0-confs */
     this.subaccount.pointer || 0  /* subaccount */
   ];
   if (this.options.asset) {
-    args.push(this.options.asset.id);
+    args.push('any');
   }
   return this.gaService.call(
     'com.greenaddress.txs.get_all_unspent_outputs',
     args
   ).then(function (utxos) {
-    return utxos.map(function (utxo) {
-      return new this.UtxoClass(
-        utxo,
-        this.options
-      );
-    }.bind(this));
-  }.bind(this));
+    var utxo_deferreds = utxos.map(function (utxo) {
+      if (!utxo.nonce_commitment) {
+        utxo.assetId = utxo.asset_tag.substring(2);
+      }
+      var ret = new _this.UtxoClass(utxo, _this.options);
+      if (!utxo.nonce_commitment) {
+        return ret;
+      }
+      return ret.unblind();
+    });
+    return Promise.all(utxo_deferreds);
+  });
 }
 
 function getRawTx (txhash) {
@@ -75,7 +81,7 @@ function GAUtxo (utxo, options) {
 
   this.prevHash = [].reverse.call(new Buffer(utxo.txhash, 'hex'));
   this.ptIdx = utxo.pt_idx;
-  this.value = +utxo.value;
+  this.value = ~~utxo.value;
   this.raw = utxo;
 
   // FIXME: scriptFactory is not used for signing anymore, just for CT

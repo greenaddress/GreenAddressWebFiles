@@ -53,7 +53,12 @@ angular.module('greenWalletSendControllers',
             qrcode.stop_scanning($scope);
         },
         amount_to_satoshis: function(amount) {
-            var div = {'BTC': 1, 'mBTC': 1000, 'µBTC': 1000000, 'bits': 1000000}[$scope.wallet.unit];
+            if (cur_net.isElements && $scope.wallet.current_asset !== 1) {
+                var asset = $scope.wallet.assets[$scope.wallet.current_asset];
+                var div = Math.pow(10, 8 - asset.decimalPlaces)
+            } else {
+                var div = {'BTC': 1, 'mBTC': 1000, 'µBTC': 1000000, 'bits': 1000000}[$scope.wallet.unit];
+            }
             return Bitcoin.Util.parseValue(amount).divide(Bitcoin.BigInteger.valueOf(div)).toString();
         },
         get_add_fee: function() {
@@ -87,7 +92,7 @@ angular.module('greenWalletSendControllers',
                     that.sending = false;
                     return;
                 }
-                isConfidential = (decoded[0] == 25 || decoded[0] == 10);
+                isConfidential = (decoded[0] == 4 || decoded[0] == 10);
             }
             var satoshis =
                 this.spend_all ? "ALL" : this.amount_to_satoshis(this.amount);
@@ -110,7 +115,7 @@ angular.module('greenWalletSendControllers',
                 if (isConfidential) {
                     destination = {
                         value: satoshis === 'ALL' ?
-                            +$scope.wallet.final_balance : +satoshis,
+                            ~~$scope.wallet.final_balance : ~~satoshis,
                         ctDestination: {
                             b58: to_addr, network: cur_net
                         }
@@ -118,7 +123,7 @@ angular.module('greenWalletSendControllers',
                 } else {
                     destination = {
                         value: satoshis === 'ALL' ?
-                            +$scope.wallet.final_balance : +satoshis,
+                            ~~$scope.wallet.final_balance : ~~satoshis,
                         scriptPubKey: Bitcoin.bitcoin.address.toOutputScript(
                             to_addr, cur_net
                         )
@@ -128,7 +133,7 @@ angular.module('greenWalletSendControllers',
                 var isMinFeeRate = false;
                 if (that.add_fee.amount !== '') {
                   addFee = {
-                    amount: +that.amount_to_satoshis(that.add_fee.amount)
+                    amount: ~~that.amount_to_satoshis(that.add_fee.amount)
                   };
                   var minFeeRate = tx_sender.gaService.getMinFeeRate();
                   if (addFee.amount < minFeeRate) {
@@ -178,7 +183,7 @@ angular.module('greenWalletSendControllers',
                     var fee = calculateFee(tx.tx);
                     var outAmount = satoshis === 'ALL' ?
                         tx.tx.outs[0].value : satoshis;
-                    var amountWithFee = +outAmount + (
+                    var amountWithFee = ~~outAmount + (
                         $scope.wallet.current_asset === 1 ? fee : 0
                     );
                     var asset = $scope.wallet.assets[
@@ -216,10 +221,9 @@ angular.module('greenWalletSendControllers',
                     }
 
                     function calculateFee (tx) {
-                        if (cur_net.isAlphaMultiasset) {
-                            for (var i = 0; i < tx.fees.length; ++i) {
-                               if (tx.fees[ i ]) return tx.fees[ i ];
-                            }
+                        if (cur_net.isElements) {
+                            // FIXME calculate correct fee
+                            return 'unknown;'
                         } else {
                             return tx.ins.reduce(function (a, b) {
                               return a + b.prevOut.value;
@@ -246,7 +250,7 @@ angular.module('greenWalletSendControllers',
                         }
                         return tx_sender.call(
                             'com.greenaddress.vault.send_raw_tx',
-                            tx.toBuffer().toString('hex'),
+                            tx.toBuffer(true).toString('hex'),
                             twofac_data,
                             priv_data
                         ).then(function (data) {
@@ -334,6 +338,7 @@ angular.module('greenWalletSendControllers',
     });
     var spend_all_succeeded = false;
     $scope.$watch('send_tx.spend_all', function(newValue, oldValue) {
+        if (newValue === oldValue) return;
         if (newValue) {
             $scope.send_tx.amount = 'MAX';
         } else {

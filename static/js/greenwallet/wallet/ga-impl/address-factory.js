@@ -62,7 +62,7 @@ function getNextOutputScriptWithPointer () {
 }
 
 function getNextOutputScript () {
-  return this.getNextOutputWithPointer().then(function (res) {
+  return this.getNextOutputScriptWithPointer().then(function (res) {
     return res.outScript;
   });
 }

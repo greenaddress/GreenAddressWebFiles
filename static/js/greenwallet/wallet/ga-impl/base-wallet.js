@@ -89,8 +89,10 @@ function login () {
   this.loggedIn = this._loginImpl().then(function (data) {
     // TxConstructor calls the service, so it needs to be constructed only
     // after login succeeds:
+    this.service.appearance = data.appearance;
     this.txConstructors = {};
     this.assets = data.assets;
+    this.assetIds = data.asset_ids;
     this.feeEstimatesFactory = new GAFeeEstimatesFactory(
       this.service, data.fee_estimates
     );

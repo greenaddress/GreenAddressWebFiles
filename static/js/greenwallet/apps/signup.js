@@ -98,6 +98,7 @@ function SignupController($scope, $location, mnemonics, focus, tx_sender, notice
     $scope.wallet.signup = true;
 
     var signup_with_hw = function(hd_deferred) {
+        signup.seed_progress = 100;
         hwDevice.getPublicKey().then(function(result) {
             var hdwallet = result.hdnode;
             hd_deferred.resolve({
@@ -122,6 +123,10 @@ function SignupController($scope, $location, mnemonics, focus, tx_sender, notice
             mnemonics.toMnemonic(entropy).then(function(mnemonic) {
                 mnemonics.toSeed(mnemonic).then(function(seed) {
                         $q.when(Bitcoin.bitcoin.HDNode.fromSeedHex(seed, cur_net)).then(function(hdwallet) {
+                            if (!$scope.signup.hw_detected) {
+                              $scope.signup.seed_progress = 100;
+                              $scope.wallet.mnemonic = $scope.signup.mnemonic = mnemonic;
+                            }
                             secured_confirmed.promise.then(function() {
                                 hdwallet.seed_hex = seed;
                                 if ($scope.wallet.mnemonic) {

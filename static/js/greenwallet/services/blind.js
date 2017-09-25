@@ -92,7 +92,7 @@ function factory ($q, branches) {
       new Bitcoin.Buffer.Buffer(ret)
     );
     return {
-      value: '' + (+val),
+      value: ~~val.toString(),  // FIXME BigIntegers
       blinding_factor_out: blinding_factor_out
     };
   };

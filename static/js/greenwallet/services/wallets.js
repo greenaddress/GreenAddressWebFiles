@@ -3,11 +3,13 @@ var is_chrome_app = require('has-chrome-storage');
 var window = require('global/window');
 var AssetsWallet = require('wallet').GA.AssetsWallet;
 var GAWallet = require('wallet').GA.GAWallet;
+var ConfidentialUtxo = require('wallet').GA.ConfidentialUtxo;
 var HashSwSigningWallet = require('wallet').GA.HashSwSigningWallet;
 var HwSigningWallet = require('wallet').GA.HwSigningWallet;
 var SchnorrSigningKey = require('wallet').bitcoinup.SchnorrSigningKey;
 var Transaction = require('wallet').bitcoinup.Transaction;
 var bitcoin = require('bitcoinjs-lib');
+var AssetsTransaction = require('wallet').bitcoinup.AssetsTransaction;
 
 ///@TODO Refactor this file, it's huge and crazy. Also get it to pass lint
 
@@ -95,7 +97,7 @@ function factory ($q, $rootScope, tx_sender, $location, notices, $uibModal,
     },
     getValue: function (txhash, pt_idx) {
       return storage.get(this._key(txhash, pt_idx)).then(function (val) {
-        return +val; // convert to a number
+        return ~~val; // convert to a number
       });
     },
     setValue: function (txhash, pt_idx, value) {
@@ -107,12 +109,11 @@ function factory ($q, $rootScope, tx_sender, $location, notices, $uibModal,
   };
   walletsService.walletFromHD = function ($scope, hd, options) {
     options = options || {};
-    var WalletClass = window.cur_net.isAlphaMultiasset ? AssetsWallet : GAWallet;
+    var WalletClass = window.cur_net.isElements ? AssetsWallet : GAWallet;
     return new WalletClass({
       SigningWalletClass: HashSwSigningWallet,
       signingWalletOptions: {
-        hd: new SchnorrSigningKey(hd, options),
-        schnorrTx: cur_net.isAlpha
+        hd: new SchnorrSigningKey(hd, options)
       },
       gaService: tx_sender.gaService,
       unblindedCache: unblindedCache,
@@ -122,7 +123,7 @@ function factory ($q, $rootScope, tx_sender, $location, notices, $uibModal,
   };
   walletsService.walletFromHW = function ($scope, hwDevice, options) {
     options = options || {};
-    var WalletClass = window.cur_net.isAlphaMultiasset ? AssetsWallet : GAWallet;
+    var WalletClass = window.cur_net.isElements ? AssetsWallet : GAWallet;
     return hwDevice.getPublicKey().then(function (hdwallet) {
       return new WalletClass({
         SigningWalletClass: HwSigningWallet,
@@ -219,7 +220,7 @@ function factory ($q, $rootScope, tx_sender, $location, notices, $uibModal,
         }
         $scope.wallet.appearance = data.appearance;
         gaWallet.service.appearance = $scope.wallet.appearance;
-        if (cur_net.isAlphaMultiasset && !window.cordova && !is_chrome_app) {
+        if (cur_net.isElements && !window.cordova && !is_chrome_app) {
           if (data.theme && data.theme.css) {
             var sheet = window.document.styleSheets[0];
             sheet.insertRule(data.theme.css, sheet.cssRules.length);
@@ -252,14 +253,25 @@ function factory ($q, $rootScope, tx_sender, $location, notices, $uibModal,
         $scope.wallet.privacy = data.privacy;
         $scope.wallet.limits = data.limits;
         $scope.wallet.subaccounts = gaWallet.subaccounts;
-        if (cur_net.isAlphaMultiasset) {
-          $scope.wallet.assets = data.assets;
+        if (cur_net.isElements) {
+          $scope.wallet.assets = {};
+          $scope.wallet.assetGaIds = data.asset_ids;
+          Object.keys(data.asset_ids).forEach(function (k) {
+            $scope.wallet.assets[data.asset_ids[k]] = {
+              name: data.assets[k],
+              decimalPlaces: data.asset_decimal_places[k]
+            };
+          })
         } else {
           $scope.wallet.assets = {undefined: {name: 'BTC'}};
         }
         $scope.wallet.current_subaccount = $scope.wallet.appearance.current_subaccount || 0;
-        $scope.wallet.current_asset = $scope.wallet.appearance.current_asset || 1;
         $scope.wallet.unit = $scope.wallet.appearance.unit || 'mBTC';
+        $scope.wallet.current_asset = $scope.wallet.appearance.current_asset || 1;
+        $scope.wallet.current_decimal_unit = function () {
+            if (this.current_asset === 1) return {btc_unit: this.unit};
+            else return this.assets[this.current_asset];
+        }
         $scope.wallet.cache_password = data.cache_password;
         $scope.wallet.fiat_exchange = data.exchange;
         $scope.wallet.fiat_exchange_extended = $scope.exchanges[data.exchange];
@@ -298,7 +310,7 @@ function factory ($q, $rootScope, tx_sender, $location, notices, $uibModal,
     });
   };
   walletsService.loginWatchOnly = function ($scope, tokenType, token) {
-    var WalletClass = window.cur_net.isAlphaMultiasset ? AssetsWallet : GAWallet;
+    var WalletClass = window.cur_net.isElements ? AssetsWallet : GAWallet;
     return walletsService.newLogin($scope, new WalletClass({
       watchOnly: {
         tokenType: tokenType,
@@ -327,44 +339,48 @@ function factory ($q, $rootScope, tx_sender, $location, notices, $uibModal,
   };
   var unblindOutputs = function ($scope, txData, rawTxs) {
     var deferreds = [];
-    var tx = bitcoin.Transaction.fromHex(txData.data);
-    for (var i = 0; i < txData.eps.length; ++i) {
-      (function (ep) {
-        if (ep.value === null && (ep.is_relevant || ep.pubkey_pointer)) {
-          // e.pubkey_pointer !== null means it's our ep, can be
-          // from different subaccount than currently processed
-          var txhash, pt_idx, out, subaccount;
-          if (ep.is_credit) {
-            txhash = txData.txhash;
-            pt_idx = ep.pt_idx;
-            out = tx.outs[ep.pt_idx];
-            subaccount = ep.subaccount;
-          } else {
-            txhash = ep.prevtxhash;
-            pt_idx = ep.previdx;
-            out = bitcoin.Transaction.fromHex(
-              rawTxs[ep.prevtxhash]
-            ).outs[pt_idx];
-            subaccount = ep.prevsubaccount;
-          }
-          var key =
-          'unblinded_value_' + txhash + ':' + pt_idx;
-          var d = storage.get(key).then(function (value) {
-            if (value === null) {
-              return blind.unblindOutValue(
-                $scope, out, subaccount || 0, ep.pubkey_pointer
-              ).then(function (data) {
-                ep.value = data.value;
-                storage.set(key, data.value);
-              });
-            } else {
-              ep.value = value;
-            }
+    txData.eps.forEach(function (ep) {
+      if (ep.value !== null || !(ep.is_relevant || ep.pubkey_pointer)) {
+        return;
+      }
+      // e.pubkey_pointer !== null means it's our ep, can be
+      // from different subaccount than currently processed
+      var txhash, pt_idx, subaccount;
+      if (ep.is_credit) {
+        txhash = txData.txhash;
+        pt_idx = ep.pt_idx;
+        subaccount = ep.subaccount;
+      } else {
+        txhash = ep.prevtxhash;
+        pt_idx = ep.previdx;
+        subaccount = ep.prevsubaccount;
+      }
+      var ep_to_unblind = {
+        txhash: txhash,
+        pt_idx: pt_idx,
+        commitment: ep.commitment,
+        nonce_commitment: ep.nonce_commitment,
+        range_proof: ep.range_proof,
+        asset_tag: ep.asset_tag
+      };
+      var key = 'unblinded_value_' + txhash + ':' + pt_idx;
+      var d = storage.get(key).then(function (value) {
+        if (value === null) {
+          return new ConfidentialUtxo(
+            ep_to_unblind,
+            tx_sender.gaWallet.txConstructors[1][0].utxoFactory.options
+          ).unblind().then(function (data) {
+            ep.value = ~~data.value;
+            ep.ga_asset_id = $scope.wallet.assetGaIds[data.assetId.toString('hex')]
+            storage.set(key, data.value+';'+ep.ga_asset_id);
           });
-          deferreds.push(d);
+        } else {
+          ep.value = ~~value.split(';')[0];  // FIXME add BigIntegers support
+          ep.ga_asset_id = ~~value.split(';')[1];
         }
-      })(txData.eps[i]);
-    }
+      });
+      deferreds.push(d);
+    });
     return $q.all(deferreds);
   };
   walletsService._getTransactions = function ($scope, notifydata, page_id, query, sorting, date_range, subaccount) {
@@ -385,14 +401,11 @@ function factory ($q, $rootScope, tx_sender, $location, notices, $uibModal,
     var date_range_iso = date_range && [date_range[0] && date_range[0].toISOString(),
       end && end.toISOString()];
     var args = ['com.greenaddress.txs.get_list_v2',
-      page_id, query, sort_by, date_range_iso, subaccount];
-    if (cur_net.isAlpha) {
-      // return prev data
-      args.push(true);
-    }
+      page_id, query, sort_by, date_range_iso, subaccount,
+      cur_net.isElements];
     var call = tx_sender.call.apply(tx_sender, args);
 
-    if (cur_net.isAlpha) {
+    if (cur_net.isElements) {
       call = call.then(function (data) {
         var deferreds = [];
         var valid = {};
@@ -435,12 +448,17 @@ function factory ($q, $rootScope, tx_sender, $location, notices, $uibModal,
         // description is reused in every iteration of the loop, so lets just null it out at first just in case
         description = null;
         var tx = data.list[i], inputs = [], outputs = [];
-        var ga_asset_id;
+        var ga_asset_id, feeunit = {btc_unit: $scope.wallet.unit};
         for (var j = 0; j < tx.eps.length; ++j) {
+          tx.eps[j].unit = $scope.wallet.assets[tx.eps[j].ga_asset_id] || {btc_unit: $scope.wallet.unit};
+          if (tx.eps[j].script_type === 0 && tx.eps[j].is_credit) {
+            feeunit = tx.eps[j].unit;
+          }
           if (tx.eps[j].is_credit && tx.eps[j].is_relevant) {
             ga_asset_id = tx.eps[j].ga_asset_id;
           }
         }
+        tx.feeunit = feeunit;
         if (ga_asset_id) {
           var num_confirmations = data.cur_block[ga_asset_id] - tx.block_height + 1;
           asset_name = $scope.wallet.assets[ga_asset_id].name;
@@ -502,6 +520,8 @@ function factory ($q, $rootScope, tx_sender, $location, notices, $uibModal,
             description = gettext('Asset Issuance');
           } else if (redeemable_value.compareTo(new Bitcoin.BigInteger('0')) > 0) {
             description = gettext('Back from ') + sent_back_from;
+          } else if (cur_net.isElements) {
+            description = gettext('Received funds');
           } else {
             description = gettext('From ');
             var addresses = [];
@@ -570,6 +590,10 @@ function factory ($q, $rootScope, tx_sender, $location, notices, $uibModal,
           } else {
             description += addresses.join(', ');
           }
+
+          if (cur_net.isElements) {
+           description = gettext('Sent to confidential address');
+         }
         }
         // prepend zeroes for sorting
         var value_sort = new Bitcoin.BigInteger(Math.pow(10, 19).toString()).add(value).toString();
@@ -587,7 +611,7 @@ function factory ($q, $rootScope, tx_sender, $location, notices, $uibModal,
           value_fiat: data.fiat_value ? value * data.fiat_value / Math.pow(10, 8) : undefined,
           redeemable_value: redeemable_value, negative: negative, positive: positive,
           description: description, external_social: external_social, unclaimed: unclaimed,
-          description_short: addresses.length ? addresses.join(', ') : description,
+          description_short: (addresses && addresses.length) ? addresses.join(', ') : description,
           pubkey_pointer: pubkey_pointer, inputs: inputs, outputs: outputs, fee: tx.fee,
           nonzero: value.compareTo(new Bitcoin.BigInteger('0')) != 0,
           redeemable: redeemable_value.compareTo(new Bitcoin.BigInteger('0')) > 0,
@@ -597,13 +621,13 @@ function factory ($q, $rootScope, tx_sender, $location, notices, $uibModal,
           has_payment_request: tx.has_payment_request,
           double_spent_by: tx.double_spent_by, replaced_by: tx.replaced_by,
           replacement_of: [],
-          rawtx: cur_net.isAlpha ? data.data[tx.txhash] : tx.data,
+          rawtx: cur_net.isElements ? data.data[tx.txhash] : tx.data,
           social_destination: tx_social_destination, social_value: tx_social_value,
           ga_asset_id: ga_asset_id, asset_name: asset_name, size: tx.size,
           fee_per_kb: Math.round(tx.fee / (tx.size / 1000)),
-          rbf_optin: !cur_net.isAlphaMultiasset && tx.rbf_optin,
+          rbf_optin: !cur_net.isElements && tx.rbf_optin,
           issuance: tx.issuance,
-          asset_values: asset_values});
+          asset_values: asset_values, feeunit: tx.feeunit});
         // tx.unclaimed is later used for cache updating
         tx.unclaimed = retval[0].unclaimed || (retval[0].redeemable && retval[0].redeemable_unspent);
       }
@@ -664,16 +688,18 @@ function factory ($q, $rootScope, tx_sender, $location, notices, $uibModal,
         if (!asset_values_map[ga_asset_id]) {
           asset_values_map[ga_asset_id] = {
             name: $scope.wallet.assets[ga_asset_id].name,
+            decimalPlaces: $scope.wallet.assets[ga_asset_id].decimalPlaces,
             value: Bitcoin.BigInteger.valueOf(0)
           };
-          asset_values_map[ga_asset_id].apply_unit = (ga_asset_id == 1);
+          asset_values_map[ga_asset_id].btc_unit = (ga_asset_id === 1) ?
+              $scope.wallet.unit : false;
           asset_values.push(asset_values_map[ga_asset_id]);
         }
         var asset = asset_values_map[ga_asset_id];
         asset.value = asset.value.add(v);
       }
     }, function (err) {
-      notices.makeNotice('error', err.args[1]);
+      notices.makeError($scope, err);
       d.reject(err);
     }).finally(function () { $rootScope.decrementLoading(); });
     return d.promise;
@@ -686,14 +712,27 @@ function factory ($q, $rootScope, tx_sender, $location, notices, $uibModal,
       // not all txs support this dialog, like redepositing or sweeping
       return $q.when();
     }
-    var scope = $scope.$new(), fee, value;
-    if (tx.ins[0].prevOut && tx.ins[0].prevOut.data) {
+    var scope = $scope.$new(), fee, value, feeunit = {btc_unit: $scope.wallet.unit};;
+    if (cur_net.isElements) {
+      tx.outs.forEach(function (txout) {
+        if (txout.script.length === 0) {
+          fee = txout.value;
+          var assetGaId = $scope.wallet.assetGaIds[txout.assetId.toString('hex')];
+          feeunit = $scope.wallet.assets[assetGaId];
+        }
+      });
+    } else if (tx.ins[0].prevOut && tx.ins[0].prevOut.data) {
       var in_value = 0, out_value = 0;
       tx.ins.forEach(function (txin) {
-        var prevtx = bitcoin.Transaction.fromHex(
-          txin.prevOut.data.toString('hex')
-        );
-        var prevout = prevtx.outs[txin.index];
+        if (txin.prevOut.value) {
+          // unblinded outputs have values here already
+          var prevout = txin.prevOut;
+        } else {
+          var prevtx = bitcoin.Transaction.fromHex(
+            txin.prevOut.data.toString('hex')
+          );
+          var prevout = prevtx.outs[txin.index];
+        }
         in_value += prevout.value;
       });
       tx.outs.forEach(function (txout) {
@@ -714,6 +753,7 @@ function factory ($q, $rootScope, tx_sender, $location, notices, $uibModal,
     }
     scope.tx = {
       fee: fee,
+      feeunit: feeunit,
       previous_fee: options.bumped_tx && options.bumped_tx.fee,
       value: value,
       recipient: options.recipient ? options.recipient :
@@ -783,7 +823,7 @@ function factory ($q, $rootScope, tx_sender, $location, notices, $uibModal,
             tx.tx.ins[i].hash
           ).toString('hex')
         }, prevOut),
-        value: +prevOut.value,
+        value: ~~prevOut.value,
         subaccount: walletsService.getSubaccount($scope, prevOut.subaccount),
         privkey: prevOut.privkey,
         script: (typeof prevOut.script === 'string'

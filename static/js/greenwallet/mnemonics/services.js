@@ -1,3 +1,4 @@
+var wally = require('wallyjs');
 angular.module('greenWalletMnemonicsServices', ['greenWalletServices'])
 .factory('mnemonics', ['$q', '$http', 'cordovaReady', function($q, $http, cordovaReady) {
     var mnemonics = {};
@@ -100,32 +101,9 @@ angular.module('greenWalletMnemonicsServices', ['greenWalletServices'])
         var deferred = $q.defer();
         k = k || 'mnemonic';
         var m = mnemonic;
-        if (window.cordova) {
-            cordovaReady(function() {
-                cordova.exec(function(param) {
-                    if (param.constructor === Number) {
-                        deferred.notify(param);
-                    } else {
-                        var hex = Bitcoin.Buffer.Buffer(
-                            new Uint8Array(param)
-                        ).toString('hex');
-                        deferred.resolve(hex);
-                    }
-                }, function(fail) {
-                    console.log('mnemonic.toSeed failed: ' + fail)
-                }, "BIP39", "calcSeed", [k, m]);
-            })();
-        } else {
-            var worker = new Worker(BASE_URL+"/static/js/greenwallet/mnemonics/mnemonic_seed_worker.js");
-            worker.postMessage({k: k, m: m});
-            worker.onmessage = function(message) {
-                if(message.data.type == 'seed') {
-                    deferred.resolve(message.data.seed);
-                } else {
-                    deferred.notify(message.data.progress);
-                }
-            }
-        }
+        deferred.resolve(wally.wally_pbkdf2_hmac_sha512(
+          new Buffer(m, 'ascii'), new Buffer(k, 'ascii'), 0, 2048
+        ));
         return deferred.promise;
     };
     return mnemonics;

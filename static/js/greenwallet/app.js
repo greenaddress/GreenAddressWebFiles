@@ -83,6 +83,11 @@ app.config(['$interpolateProvider', '$httpProvider',
     }
     return function btc_formatter(satoshis, unit) {
         var mul = {'bits': '1000000', 'µBTC': '1000000', 'mBTC': '1000', 'BTC': '1'};
+        if (mul[unit] === undefined) {
+            // power of 10 specified by format_asset - if 8, then treat like BTC,
+            // for lower, move the decimal place by `8 - unit` places right
+            mul[unit] = '' + Math.pow(10, 8 - unit);
+        }
         satoshis = (new Bitcoin.BigInteger((satoshis || 0).toString())).multiply(new Bitcoin.BigInteger(mul[unit] || mul['µBTC']));
         if (satoshis.compareTo(new Bitcoin.BigInteger('0')) < 0) {
             return '-'+formatNum(Bitcoin.Util.formatValue(satoshis.multiply(new Bitcoin.BigInteger('-1'))));
@@ -111,10 +116,19 @@ app.config(['$interpolateProvider', '$httpProvider',
         var value = satoshis * wallet_fiat.rate / (1000*1000*100);
         return (Math.round(value * 100) / 100) + ' ' + wallet_fiat.currency;
     }
+}]).filter('format_decimal', ['btc_formatter', function(btc_formatter) {
+    return function format_asset(satoshis, asset) {
+        if (!asset) return '';
+        if (!asset.btc_unit) {
+            return btc_formatter(satoshis, asset.decimalPlaces) + ' ' + asset.name;
+        }
+        if (!satoshis) return '0 ' + asset.btc_unit;
+        return btc_formatter(Math.round(satoshis), asset.btc_unit) + ' ' + asset.btc_unit;
+    }
 }]).filter('startFrom', function() {
     return function(input, start) {
         if (!input) return input;
-        start = +start; //parse to int
+        start = ~~start; //parse to int
         return input.slice(start);
     };
 }).factory('$exceptionHandler', ['$injector', '$log', function($injector, $log) {
