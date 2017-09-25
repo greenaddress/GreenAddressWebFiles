@@ -79,7 +79,7 @@ function factory ($q, $rootScope, tx_sender, $location, notices, $uibModal,
       $location.url($location.search().redir);
     } else if (!has_txs) {
       $location.path('/receive');
-    } else if (window.IS_MOBILE || wallet.send_to_receiving_id || wallet.send_to_payment_request) {
+    } else if (wallet.hdwallet.keyPair.d && (window.IS_MOBILE || wallet.send_to_receiving_id || wallet.send_to_payment_request)) {
       $location.path('/send');
     } else {
       $location.url('/info');
