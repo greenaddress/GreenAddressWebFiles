@@ -10,3 +10,4 @@ test_debug_build:
     - virtualenv venv
     - source venv/bin/activate
     - pip install -r requirements.txt --require-hashes
+    - python render_templates.py -a ..
