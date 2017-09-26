@@ -7,15 +7,6 @@ test_debug_build:
     - npm i
     - npm run build
     - npm run test
-
-build_tag_release:
-  image: greenaddress/walletcrx@sha256:21451ff70e639a2a5c8fb8434b9593626c323a8ffd9372db5ee8bafc512de74f
-  tags:
-    - ga
-  script:
-    - cd $CI_PROJECT_DIR
-    - npm i
-    - npm run build
-    - npm run test
-  only:
-    - tags
+    - virtualenv venv
+    - source venv/bin/activate
+    - pip install -r requirements.txt --require-hashes
