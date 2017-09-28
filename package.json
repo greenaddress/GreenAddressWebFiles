@@ -48,6 +48,7 @@
     "bitcoinjs-lib": "^3.1.1",
     "buffer-equals": "^1.0.3",
     "bytebuffer": "^5.0.1",
+    "cordova-plugin-wally": "file:libwally-core/src/wrap_js/cordovaplugin",
     "global": "^4.3.0",
     "has-chrome-storage": "^0.1.0",
     "promise": "^7.1.1",
@@ -57,6 +58,7 @@
     "q": "^1.4.1",
     "raf": "^3.2.0",
     "wallet": "file:./static/js/greenwallet/wallet",
+    "wallyjs": "file:./libwally-core/src/wrap_js",
     "xtend": "^4.0.1"
   },
   "semistandard": {
@@ -104,7 +106,8 @@
       "static/js/greenwallet/wallet/hw-apis/trezor-hid/index.js",
       "static/js/greenwallet/wallet/hw-apis/trezor-hid/trezor.js",
       "static/js/greenwallet/wallet/hw-apis/trezor-hid/messages_proto.js",
-      "static/js/greenwallet/wallet/ga-impl/segwit.js"
+      "static/js/greenwallet/wallet/ga-impl/segwit.js",
+      "libwally-core/"
     ]
   }
 }

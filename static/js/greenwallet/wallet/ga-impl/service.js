@@ -7,13 +7,13 @@ if (global.process && global.process.versions.electron) {
     var process = global.process;
     global.process = null;
     try {
-       var ret = oldCreate.apply(this, arguments);
+      var ret = oldCreate.apply(this, arguments);
     } finally {
       // revert the hack
       global.process = process;
     }
     return ret;
-  }
+  };
 }
 var bitcoin = require('bitcoinjs-lib');
 var extend = require('xtend/mutable');

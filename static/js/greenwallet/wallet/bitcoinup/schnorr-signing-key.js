@@ -1,7 +1,6 @@
 var bitcoin = require('bitcoinjs-lib');
 var bip39 = require('bip39');
 var extend = require('xtend/mutable');
-var pbkdf2 = require('pbkdf2').pbkdf2Sync;
 var sha512 = require('sha512');
 var wally = require('wallyjs');
 
