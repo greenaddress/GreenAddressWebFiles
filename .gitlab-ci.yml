@@ -4,9 +4,7 @@ test_debug_build:
     - ga
   script:
     - cd $CI_PROJECT_DIR
-    - npm i
-    - npm run build
-    - npm run test
+    - ./prepare.sh
     - virtualenv venv
     - source venv/bin/activate
     - pip install -r requirements.txt --require-hashes
