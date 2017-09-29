@@ -1,4 +1,6 @@
 var SchnorrSigningKey = require('wallet').bitcoinup.SchnorrSigningKey;
+var wally = require('wallyjs');
+
 angular.module('greenWalletReceiveControllers',
     ['greenWalletServices'])
 .controller('ReceiveController', ['$rootScope', '$scope', 'wallets', '$filter', 'tx_sender', 'notices', 'cordovaReady', 'storage', 'storage_keys', 'hostname', 'gaEvent', '$uibModal', '$location', 'qrcode', 'clipboard', 'branches', '$q',
@@ -99,62 +101,19 @@ angular.module('greenWalletReceiveControllers',
                     invalid_privkey: gettext('Not a valid encrypted private key'),
                     invalid_passphrase: gettext('Invalid passphrase')
                 };
-                var is_chrome_app = window.chrome && chrome.storage;
-                if (window.cordova) {
-                    cordovaReady(function() {
-                        cordova.exec(function(data) {
-                            $scope.$apply(function() {
-                                do_sweep_key(Bitcoin.bitcoin.ECPair.fromWIF(data));
-                            });
-                        }, function(fail) {
-                            that.sweeping = false;
-                            notices.makeNotice('error', errors[fail] || fail);
-                        }, "BIP38", "decrypt", [key_wif, that.bip38_password,
-                                'BTC']);  // probably not correct for testnet, but simpler, and compatible with our JS impl
-                    })();
-                } else if (is_chrome_app) {
-                    var process = function() {
-                        var listener = function(message) {
-                            window.removeEventListener('message', listener);
-                            that.sweeping = false;
-                            if (message.data.error) {
-                                notices.makeNotice('error', errors[message.data.error] || message.data.error);
-                            } else {
-                                var ecpair = Bitcoin.bitcoin.ECPair.fromWIF(message.data);
-                                do_sweep_key(ecpair);
-                            }
-                        };
-                        window.addEventListener('message', listener);
-                        iframe.contentWindow.postMessage({b58: key_wif, password: that.bip38_password, cur_net_wif: cur_net.wif}, '*');
-                    };
-                    if (!iframe) {
-                        if (document.getElementById("id_iframe_receive_bip38")) {
-                            iframe = document.getElementById("id_iframe_receive_bip38");
-                            process();
-                        } else {
-                            iframe = document.createElement("IFRAME");
-                            iframe.onload = process;
-                            iframe.setAttribute("src", "/bip38_sandbox.html");
-                            iframe.setAttribute("class", "ng-hide");
-                            iframe.setAttribute("id", "id_iframe_receive_bip38");
-                            document.body.appendChild(iframe);
-                        }
-                    } else {
-                        process();
-                    }
-                } else {
-                    var worker = new Worker(BASE_URL+"/static/js/greenwallet/signup/bip38_worker.js");
-                    worker.onmessage = function(message) {
-                        that.sweeping = false;
-                        if (message.data.error) {
-                            notices.makeNotice('error', errors[message.data.error] || message.data.error);
-                        } else {
-                            var ecpair = Bitcoin.bitcoin.ECPair.fromWIF(message.data);
-                            do_sweep_key(ecpair);
-                        }
-                    }
-                    worker.postMessage({b58: key_wif, password: this.bip38_password, cur_net_wif: cur_net.wif});
-                }
+                wally.wally_base58_to_bytes(key_wif).then(function (bytes) {
+                    wally.bip38_to_private_key(
+                        key_wif, new Buffer(that.bip38_password, 'utf-8'), 0
+                    ).then(function (data) {
+                        $scope.$apply(function() {
+                            do_sweep_key(new Bitcoin.bitcoin.ECPair(
+                                Bitcoin.BigInteger.fromBuffer(data), null, {
+                                    compressed: !!(bytes[2] & 0x20)
+                                })
+                            );
+                        });
+                    });
+                });
             } else if (key_wif.indexOf('K') == 0 || key_wif.indexOf('L') == 0 || key_wif.indexOf('5') == 0 // prodnet
                     || key_wif.indexOf('c') == 0 || key_wif.indexOf('9') == 0) { // testnet
                 var key_bytes = Bitcoin.bs58.decode(key_wif);

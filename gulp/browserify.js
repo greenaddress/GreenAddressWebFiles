@@ -1,3 +1,4 @@
+var fs = require('fs');
 var gulp = require('gulp');
 var merge = require('merge-stream');
 var browserify = require('browserify');
@@ -13,11 +14,16 @@ gulp.task('browserify', ['clean-js'], function () {
   // Single entry point to browserify
   var browserified = browserify('static/js/index.js', {
     insertGlobals: true
-  }).require('./secp256k1-shim.js', {expose: 'secp256k1-alpha'})
-    .ignore('ws')
-    .ignore('node-hid')
-    .ignore(require.resolve('wallet/hw-apis/trezor-hid'))
-    .bundle()
+  }).external('ws')
+    .external('node-hid')
+    .external('electron');
+  if (fs.existsSync('../plugins/cordova-plugin-wally/wally.js')) {
+    // Cordova only
+    browserified = browserified.require('../plugins/cordova-plugin-wally/wally', {expose: 'wallyjs'});
+  } else {
+    browserified = browserified.external('wallyjs');
+  }
+  browserified = browserified.bundle()
     .pipe(source('index.js'))
     .pipe(gulp.dest('build/static/js/'));
 

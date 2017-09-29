@@ -21,15 +21,3 @@ test('sign with plain ecdsa', function (t) {
     t.end();
   }).catch(t.fail);
 });
-
-test('sign with Schnorr', function (t) {
-  testKey.signHashSchnorr(new Uint8Array(32)).then(function (signature) {
-    t.equal(
-      signature.toString('hex'),
-      '46f7ab95c516e0d77425a3592f21829119fb17b80356ace98055264b10584f9f' +
-      'cfd7f5aa03b22112ef11231e224b6bd27c5be47d4ad47452075d435f4081a5a4',
-      'signature equals the expected value'
-    );
-    t.end();
-  }).catch(t.fail);
-});

@@ -1,9 +1,10 @@
 var window = require('global/window');
-var is_chrome_app = require('has-chrome-storage');
+var wally = require('wallyjs');
 
 var gettext = window.gettext;
 var BASE_URL = window.BASE_URL;
 var LANG = window.LANG;
+var Bitcoin = window.Bitcoin;
 
 module.exports = factory;
 
@@ -11,57 +12,57 @@ factory.dependencies = ['$q', '$uibModal', 'mnemonics', 'focus', 'cordovaReady']
 
 function factory ($q, $uibModal, mnemonics, focus, cordovaReady) {
   var bip38Service = {};
-  var iframe;
+  var salt;
   bip38Service.processMessage = function (message) {
     var d = $q.defer();
-    if (window.cordova) {
-      var method;
-      var data;
-      var password = message.password;
-      if (message.mnemonic_decrypted) {
-        method = 'encrypt_raw';
-        data = message.mnemonic_decrypted;
-      } else if (message.mnemonic_encrypted) {
-        method = 'decrypt_raw';
-        data = message.mnemonic_encrypted;
-      }
-      cordovaReady(function () {
-        window.cordova.exec(function (result) {
-          d.resolve({data: result});
-        }, function (fail) {
-          d.reject(fail);
-        }, 'BIP38', method, [Array.from(data), password]);
-      })();
-    } else if (is_chrome_app) {
-      var process = function () {
-        var listener = function (message) {
-          window.removeEventListener('message', listener);
-          d.resolve(message);
-        };
-        window.addEventListener('message', listener);
-        iframe.contentWindow.postMessage(message, '*');
-      };
-      if (!iframe) {
-        if (document.getElementById('id_iframe_bip38_service')) {
-          iframe = document.getElementById('id_iframe_bip38_service');
-          process();
-        } else {
-          iframe = document.createElement('IFRAME');
-          iframe.onload = process;
-          iframe.setAttribute('src', '/bip38_sandbox.html');
-          iframe.setAttribute('class', 'ng-hide');
-          iframe.setAttribute('id', 'id_iframe_bip38_service');
-          document.body.appendChild(iframe);
+    if (message.mnemonic_encrypted) {
+      var bytes = message.mnemonic_encrypted;
+      salt = bytes.slice(-4);
+      d.resolve(wally.wally_scrypt(
+        new Buffer(message.password, 'utf-8'), salt, 16384, 8, 8, 64
+      ).then(function (derivedBytes) {
+        var DECRYPT = 2;
+        return wally.wally_aes(
+          derivedBytes.slice(32, 32 + 32), bytes.slice(0, -4), DECRYPT
+        ).then(function (decrypted) {
+          for (var x = 0; x < 32; x++) {
+            decrypted[x] ^= derivedBytes[x];
+          }
+          return decrypted;
+        });
+      }).then(function (decrypted) {
+        var hash = Bitcoin.bitcoin.crypto.hash256(decrypted);
+        for (var i = 0; i < 4; i++) {
+          if (hash[i] !== salt[i]) {
+            return {data: {error: 'invalid password'}};
+          }
         }
-      } else {
-        process();
+        return {data: decrypted};
+      }));
+    } else if (message.mnemonic_decrypted) {
+      var data = message.mnemonic_decrypted;
+      if (!message.salt_a) {
+        message.salt_a = Bitcoin.bitcoin.crypto.hash256(data).slice(0, 4);
       }
-    } else {
-      var worker = new window.Worker('/static/js/greenwallet/signup/bip38_worker.js');
-      worker.onmessage = function (message) {
-        d.resolve(message);
-      };
-      worker.postMessage(message);
+      salt = new Uint8Array(message.salt_a);
+
+      d.resolve(wally.wally_scrypt(
+        new Buffer(message.password, 'utf-8'), salt, 16384, 8, 8, 64
+      ).then(function (key) {
+        var derivedhalf1 = key.slice(0, 32);
+        var derivedhalf2 = key.slice(32, 64);
+        var decrypted = [];
+        for (var i = 0; i < 32; i++) {
+          decrypted.push(data[i] ^ derivedhalf1[i]);
+        }
+        var ENCRYPT = 1;
+        return wally.wally_aes(
+          new Buffer(derivedhalf2), new Buffer(decrypted), ENCRYPT
+        );
+      }).then(function (encrypted) {
+        var saltBuf = new Buffer(salt);
+        return {data: Buffer.concat([new Buffer(encrypted), saltBuf])};
+      }));
     }
     return d.promise;
   };
