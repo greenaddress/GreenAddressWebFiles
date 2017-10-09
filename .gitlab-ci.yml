@@ -1,5 +1,5 @@
 test_debug_build:
-  image: greenaddress/walletcrx@sha256:21451ff70e639a2a5c8fb8434b9593626c323a8ffd9372db5ee8bafc512de74f
+  image: greenaddress/webfiles@sha256:2a5cbacce2f754598b40874526acdf3ac506c765fd1aa558a88e1842351888f3
   tags:
     - ga
   script:
