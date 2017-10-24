@@ -1306,6 +1306,7 @@ angular.module('greenWalletSettingsControllers',
                                     tx_sender.gaWallet.setupSubAccount({
                                       name: that.new_2of3_label,
                                         pointer: min_unused_pointer,
+                                        receiving_id: receiving_id,
                                         '2of3_backup_pubkey': hdhex_recovery.pub,
                                         '2of3_backup_chaincode': hdhex_recovery.chaincode,
                                         type: '2of3'
@@ -1343,6 +1344,7 @@ angular.module('greenWalletSettingsControllers',
                         tx_sender.gaWallet.setupSubAccount({
                             name: that.new_label,
                             pointer: min_unused_pointer,
+                            receiving_id: receiving_id,
                             type: 'simple'
                         });
                     }
