@@ -140,8 +140,8 @@ angular.module('greenWalletSendControllers',
                 } else if (that.instant) {
                   addFee = {
                     // backend constants:
-                    requiredNumOfBlocks: 3,
-                    multiplier: 2
+                    requiredNumOfBlocks: 2,
+                    multiplier: 1
                   };
                 } else if (that.add_fee.requiredNumOfBlocks) {
                   addFee = {
