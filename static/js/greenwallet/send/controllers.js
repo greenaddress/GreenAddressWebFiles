@@ -158,6 +158,7 @@ angular.module('greenWalletSendControllers',
                         rbfOptIn: $scope.wallet.appearance.replace_by_fee,
                         minConfs: that.instant ? 6 : (window.cur_net === Bitcoin.bitcoin.networks.testnet ? 0 : 1),
                         addFee: addFee,
+                        instant: that.instant,
                         locktime: $scope.wallet.cur_block,
                         minimizeInputs: wallets.getSubaccount(
                             $scope, $scope.wallet.current_subaccount
