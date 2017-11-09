@@ -116,7 +116,7 @@ function _constructTx (outputsWithAmounts, options) {
   var _this = this;
   // 1. get fee estimate
   var feeEstimate = this.feeEstimatesFactory.getFeeEstimate(
-    options.instantUtxo,
+    options.instant,
     (options.addFee && options.addFee.requiredNumOfBlocks) || 6
   )[0];
 
