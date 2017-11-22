@@ -153,12 +153,24 @@
         </div>
       </div>
       <div class="form-group">
-      <div class="col-sm-offset-2 col-sm-10" ng-hide="(send_tx.recipient.type == 'payreq' && !send_tx.instant) ||
-              send_tx.current_subaccount_type == '2of3'">
-          <label tooltip="{{ _("Requires recipient to trust GreenAddress instant confirmations") }}">
-            <input type="checkbox" ng-model="send_tx.instant" ng-disabled="send_tx.recipient.type == 'payreq'" />
-            <span>{{ _("Instant Confirmation") }}</span>
-          </label>
+        <div class="col-sm-offset-2 col-sm-10">
+          <div class="col-md-9" submittable>
+            <form role="form" class="form-inline">
+            <div class="form-group">
+              <select ng-model="send_tx.send_fee_rate" ng-change='send_tx.on_change_fee_rate()'>
+                <option value="High">High Priority</option>
+                <option value="Normal">Normal Priority</option>
+                <option value="Low">Low Priority</option>
+                <option value="Economy">Economy Priority</option>
+                <option value="Custom" ng-hide="send_tx.recipient.type === 'payreq'">Custom</option>
+                <option value="Instant" ng-hide="(send_tx.recipient.type === 'payreq' && !send_tx.instant) || send_tx.current_subaccount_type === '2of3'">Instant</option>
+              </select>
+            </div>
+            </form>
+          </div>
+            <label class="text-petty radio-inline" style="padding:0 5px 0 0; display: inline-block;" ng-hide="send_tx.send_fee_rate !== 'Instant'">
+            {{ _("Requires recipient to trust GreenAddress instant confirmations") }} <br />
+            </label>
         </div>
       </div>
       <hr ng-hide="send_tx.recipient.type == 'payreq'">
@@ -173,15 +185,14 @@
         </div>
       </div>
       <hr class="double">
+      <hr class="double" ng-hide="send_tx.recipient.type === 'payreq'">
+      <hr class="double" ng-hide="send_tx.recipient.type === 'payreq'">
       <button ng-disabled="send_tx.sending || send_tx.processing_payreq" class="btn btn-primary btn-block-xs pull-right" ng-click="send_tx.send_money()" href=""><i class="glyphicon glyphicon-send"></i>
         <span ng-hide="send_tx.sending && send_tx.signing">{{ _("Review &amp; Send") }}</span>
         <span ng-show="send_tx.sending && send_tx.signing">
           <span ng-show="send_tx.verifying">{{ _("Verifying") }} ((send_tx.verifying_percentage))% /</span>
           {{ _("Signing") }} ((send_tx.signing_percentage))%</span>
       </button>
-      <div class="pull-right" ng-hide="send_tx.advanced_options_visible">
-        <a class="btn btn-default" ng-click="send_tx.advanced_options_visible = true"><i class="glyphicon glyphicon-wrench"></i> {{ _("Show advanced options") }}</a>
-      </div>
     </form>
   </div>
 </div>

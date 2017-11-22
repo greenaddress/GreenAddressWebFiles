@@ -4,6 +4,8 @@ angular.module('greenWalletSendControllers',
          function SendController($scope, wallets, tx_sender, cordovaReady, notices, branches, wallets, storage, storage_keys, $routeParams, hostname, gaEvent, $uibModal, $location, $rootScope, $q, parse_bitcoin_uri, qrcode, sound, encode_key) {
     if (!wallets.requireWallet($scope)) return;
     var mul = {'BTC': 1, 'mBTC': 1000, 'µBTC': 1000000, 'bits': 1000000}[$scope.wallet.unit];
+    var stringToBlocksToTarget = {"High": 3, "Normal": 6, "Low": 12, "Economy": 24};
+    var blocksToTargetToString = {3: "High", 6: "Normal", 12: "Low", 24: "Economy"};
     var btcToUnit = function(btc) {
         var amount_satoshi = Bitcoin.Util.parseValue(btc);
         return parseFloat(  // parseFloat required for iOS Cordova
@@ -17,6 +19,11 @@ angular.module('greenWalletSendControllers',
         var json = new Bitcoin.Buffer.Buffer(Bitcoin.bs58.decode(str)).toString('utf-8');
         return JSON.parse(json);
     };
+
+    var get_default_fee_rate = function() {
+        return blocksToTargetToString[$scope.wallet.appearance.required_num_blocks || 6]
+    };
+
     $scope.send_tx = {
         _signing_progress_cb: function(progress) {
             var _this = this;
@@ -26,10 +33,17 @@ angular.module('greenWalletSendControllers',
             });
         },
         add_fee: {'party': 'sender',
-                  'amount': '',
-                  'requiredNumOfBlocks': $scope.wallet.appearance.required_num_blocks},
+                  'amount': ''},
         instant: $routeParams.contact ? (parseContact($routeParams.contact).requires_instant || false) : false,
         recipient: $routeParams.contact ? parseContact($routeParams.contact) : null,
+        send_fee_rate: get_default_fee_rate(),
+        on_change_fee_rate: function() {
+            this.advanced_options_visible = this.send_fee_rate === "Custom";
+            this.instant = this.send_fee_rate === "Instant"
+            if (!this.advanced_options_visible) {
+                this.add_fee.amount = '';
+            }
+        },
         read_qr_code: function($event)  {
             gaEvent('Wallet', 'SendReadQrCode');
             var that = this;
@@ -143,9 +157,9 @@ angular.module('greenWalletSendControllers',
                     requiredNumOfBlocks: 2,
                     multiplier: 1
                   };
-                } else if (that.add_fee.requiredNumOfBlocks) {
+                } else {
                   addFee = {
-                    requiredNumOfBlocks: that.add_fee.requiredNumOfBlocks,
+                    requiredNumOfBlocks: stringToBlocksToTarget[that.send_fee_rate],
                     multiplier: 1
                   };
                 }
@@ -331,6 +345,10 @@ angular.module('greenWalletSendControllers',
         $scope.send_tx.current_subaccount_type = subaccount.type;
         if (subaccount.type === '2of3') {
             $scope.send_tx.instant = false;
+            if ($scope.send_tx.send_fee_rate === 'Instant') {
+                $scope.send_tx.send_fee_rate = get_default_fee_rate();
+                $scope.send_tx.on_change_fee_rate();
+            }
         }
     });
     var spend_all_succeeded = false;
@@ -357,6 +375,11 @@ angular.module('greenWalletSendControllers',
                 var name = data.merchant_cn || data.request_url;
                 $scope.send_tx.recipient = {name: name, data: data, type: 'payreq',
                                             amount: amount, requires_instant: data.requires_instant};
+
+                if ($scope.send_tx.send_fee_rate === 'Custom') {
+                    $scope.send_tx.send_fee_rate = get_default_fee_rate();
+                    $scope.send_tx.on_change_fee_rate();
+                }
             }).catch(function(err) {
                 notices.makeNotice('error', gettext('Failed processing payment protocol request:') + ' ' + err.args[1]);
                 $scope.send_tx.recipient = '';
