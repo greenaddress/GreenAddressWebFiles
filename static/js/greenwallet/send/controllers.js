@@ -141,6 +141,9 @@ angular.module('greenWalletSendControllers',
                 var addFee;
                 var isMinFeeRate = false;
                 if (that.add_fee.amount !== '') {
+                  if (!$scope.wallet.appearance.replace_by_fee) {
+                    throw new Error('Custom fees require transaction replacement functionality to be enabled.');
+                  }
                   addFee = {
                     amount: +that.amount_to_satoshis(that.add_fee.amount)
                   };
@@ -148,8 +151,6 @@ angular.module('greenWalletSendControllers',
                   if (addFee.amount < minFeeRate) {
                     addFee.amount = minFeeRate;
                     isMinFeeRate = true;
-                  } else if (!$scope.wallet.appearance.replace_by_fee) {
-                    throw new Error('Custom fees require transaction replacement functionality to be enabled.');
                   }
                 } else if (that.instant) {
                   addFee = {
@@ -158,10 +159,17 @@ angular.module('greenWalletSendControllers',
                     multiplier: 1
                   };
                 } else {
-                  addFee = {
-                    requiredNumOfBlocks: stringToBlocksToTarget[that.send_fee_rate],
-                    multiplier: 1
-                  };
+                  if (!stringToBlocksToTarget[that.send_fee_rate]) {
+                    isMinFeeRate = true;
+                    addFee = {
+                      amount: tx_sender.gaService.getMinFeeRate()
+                    };
+                  } else {
+                    addFee = {
+                      requiredNumOfBlocks: stringToBlocksToTarget[that.send_fee_rate],
+                      multiplier: 1
+                    };
+                  }
                 }
                 var tx;
                 return constructor.constructTx(
