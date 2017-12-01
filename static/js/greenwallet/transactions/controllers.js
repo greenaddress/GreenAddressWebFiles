@@ -173,7 +173,7 @@ angular.module('greenWalletTransactionsControllers',
                 return change_d.then(function(change_hash160) {
                     if (change_hash160) {
                         builder.addOutput(
-                            Bitcoin.bitcoin.script.scriptHash.output.encode(
+                            bitcoin.script.scriptHash.output.encode(
                                 change_hash160
                             ),
                             -remainingFeeDelta
@@ -201,7 +201,7 @@ angular.module('greenWalletTransactionsControllers',
                                 )),
                                 requtxo.pt_idx,
                                 0,
-                                Bitcoin.bitcoin.script.scriptHash.output.encode(
+                                bitcoin.script.scriptHash.output.encode(
                                     Bitcoin.bitcoin.crypto.hash160(
                                         utxos[i].redeemScript
                                     )
@@ -226,13 +226,22 @@ angular.module('greenWalletTransactionsControllers',
                             ));
                             return;
                         }
+
+                        var out2in_types = {};
+                        out2in_types[scriptTypes.OUT_P2SH] = scriptTypes.REDEEM_P2SH;
+                        out2in_types[scriptTypes.OUT_P2SH_P2WSH] = scriptTypes.REDEEM_P2SH_P2WSH;
                         // add inputs to transaction.inputs only if it passed
                         // the above checks -- otherwise the recursive call
                         // would have duplicate inputs in transaction.inputs
                         for (var i = 0; i < required_utxos.length; ++i) {
                             var requtxo = required_utxos[i];
+                            if (requtxo.script_type != scriptTypes.OUT_P2SH && requtxo.script_type != scriptTypes.OUT_P2SH_P2WSH) {
+                                throw new Error('Invalid script type: ' + requtxo.script_type);
+                            }
                             transaction.inputs.push(
-                                {pubkey_pointer: requtxo.pointer}
+                                {pubkey_pointer: requtxo.pointer,
+                                 script_type: out2in_types[requtxo.script_type],
+                                 value: requtxo.value}
                             );
                         }
                         return builder;
@@ -259,6 +268,9 @@ angular.module('greenWalletTransactionsControllers',
             in2out_types[scriptTypes.REDEEM_P2SH_P2WSH] = scriptTypes.OUT_P2SH_P2WSH;
             for (var i = 0; i < transaction.inputs.length; ++i) {
                 (function(utxo) {
+                    if (utxo.script_type != scriptTypes.REDEEM_P2SH && utxo.script_type != scriptTypes.REDEEM_P2SH_P2WSH) {
+                        throw new Error('Invalid script type: ' + utxo.script_type);
+                    }
                     prev_outputs.push(calcRedeemAndKeyPairs(
                         $scope.wallet.current_subaccount,
                         utxo.pubkey_pointer
