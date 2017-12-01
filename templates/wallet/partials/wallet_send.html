@@ -185,8 +185,10 @@
         </div>
       </div>
       <hr class="double">
+      {% if not cdvapp %}
       <hr class="double" ng-hide="send_tx.recipient.type === 'payreq'">
       <hr class="double" ng-hide="send_tx.recipient.type === 'payreq'">
+      {% endif %}
       <button ng-disabled="send_tx.sending || send_tx.processing_payreq" class="btn btn-primary btn-block-xs pull-right" ng-click="send_tx.send_money()" href=""><i class="glyphicon glyphicon-send"></i>
         <span ng-hide="send_tx.sending && send_tx.signing">{{ _("Review &amp; Send") }}</span>
         <span ng-show="send_tx.sending && send_tx.signing">
