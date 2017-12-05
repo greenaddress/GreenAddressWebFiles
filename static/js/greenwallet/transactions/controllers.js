@@ -71,25 +71,28 @@ angular.module('greenWalletTransactionsControllers',
         }
         var ret = $q.defer();
 
-        var txsize = (size_override || transaction.size);
-        var new_fee = Math.round(txsize * new_feerate / 1000);
         $scope.bumping_fee = true;
         transaction.bumping_dropdown_open = false;
+
         var bumpedTx = bitcoin.Transaction.fromHex(transaction.rawtx);
+        var txsize = size_override || bumpedTx.virtualSize();
+        var bandwidthFee = Math.ceil(txsize * tx_sender.gaService.getMinFeeRate() / 1000);
+        var oldFee = parseInt(transaction.fee);
+        var newFee = Math.ceil(txsize * new_feerate / 1000);
+        if (newFee <= oldFee) {
+            newFee = oldFee + 1;
+        }
+
         var change_pointer;
-        var targetFeeDelta = new_fee - parseInt(transaction.fee);
-        var requiredFeeDelta = (
-            txsize + 4 * transaction.inputs.length
-        ); // assumes mintxfee = 1000, and inputs increasing
-           // by at most 4 bytes per input (signatures have variable lengths)
-        var feeDelta = Math.max(targetFeeDelta, requiredFeeDelta);
+        var feeDelta = newFee - oldFee + bandwidthFee;
         var remainingFeeDelta = feeDelta;
-        var new_fee = parseInt(transaction.fee) + feeDelta;
+        newFee += bandwidthFee;
+
         var newOuts = [];
         for (var i = 0; i < transaction.outputs.length; ++i) {
             if (transaction.outputs[i].is_relevant) {
                 // either change or re-deposit
-                if (bumpedTx.outs[i].value < remainingFeeDelta) {
+                if (bumpedTx.outs[i].value < remainingFeeDelta + tx_sender.gaService.getDustThreshold()) {
                     // output too small to be decreased - remove it altogether
                     remainingFeeDelta -= bumpedTx.outs[i].value;
                 } else {
@@ -116,6 +119,8 @@ angular.module('greenWalletTransactionsControllers',
         for (var i = 0; i < builder.inputs.length; ++i) {
             delete builder.inputs[i].hashType;
         }
+        bumpedTx = builder.buildIncomplete();
+        builder.tx = bumpedTx;
         // keep out pointers for Trezor change detection
         for (var i = 0; i < builder.tx.outs.length; ++i) {
             builder.tx.outs[i].pointer = bumpedTx.outs[i].pointer;
@@ -144,10 +149,10 @@ angular.module('greenWalletTransactionsControllers',
                 for (var i = 0; i < utxos.length; ++i) {
                     remainingFeeDelta -= utxos[i].value;
                     required_utxos.push(utxos[i]);
-                    if (remainingFeeDelta <= 0) break;
+                    if (remainingFeeDelta == 0 || remainingFeeDelta < -tx_sender.gaService.getDustThreshold()) break;
                 }
                 var change_d = $q.when();
-                if (remainingFeeDelta < 0) {
+                if (remainingFeeDelta < -tx_sender.gaService.getDustThreshold()) {
                     // new change output needs to be added
                     change_d = tx_sender.call(
                         'com.greenaddress.vault.fund',
@@ -193,9 +198,10 @@ angular.module('greenWalletTransactionsControllers',
                         ));
                     }
                     return $q.all(utxos_ds).then(function(utxos) {
+                        const SIG_LEN = 73;
                         for (var i = 0; i < required_utxos.length; ++i) {
                             var requtxo = required_utxos[i];
-                            builder.addInput(
+                            builder.tx.addInput(
                                 [].reverse.call(new Buffer(
                                     requtxo.txhash, 'hex'
                                 )),
@@ -207,20 +213,30 @@ angular.module('greenWalletTransactionsControllers',
                                     )
                                 )
                             )
+                            var idx = builder.tx.ins.length - 1;
+                            if (requtxo.script_type === scriptTypes.OUT_P2SH_P2WSH) {
+                                var script = bitcoin.script.compile([].concat(
+                                  bitcoin.opcodes.OP_0,
+                                  new Buffer([0]),
+                                  new Buffer(SIG_LEN), // average sig size
+                                  new Buffer(SIG_LEN), // average sig size
+                                  new Buffer(utxos[i].redeemScript.length)));
+                                  builder.tx.setWitness(idx, [script]);
+                                  builder.tx.ins[idx].script = new Buffer(35);
+                            } else if (requtxo.script_type === scriptTypes.OUT_P2SH) {
+                                builder.tx.ins[idx].script = bitcoin.script.compile([].concat(
+                                bitcoin.opcodes.OP_0, // OP_0 required for multisig
+                                new Buffer(SIG_LEN), // average sig size
+                                new Buffer(SIG_LEN), // average sig size
+                                new Buffer(utxos[i].redeemScript.length)));
+                            }
+                            else {
+                                throw new Error('Invalid script type: ' + requtxo.script_type);
+                            }
                         }
-                        // add estimated prevscript + signatures + scripts
-                        // length (72[prevout] + 74[sig] * 2 for each input)
-                        var new_size = builder.tx.byteLength() + builder.tx.ins.length * (72 + 74 * 2);
-                        if (Math.round(new_size * new_feerate / 1000) > new_fee) {
-                            ret.resolve($scope.bump_fee(
-                                transaction, new_feerate, new_size, level + 1
-                            ));
-                            return;
-                        }
-                        var requiredFeeDelta = (
-                            new_size + 4 * transaction.inputs.length
-                        );
-                        if (parseInt(transaction.fee) + requiredFeeDelta > new_fee) {
+
+                        var new_size = builder.tx.virtualSize();
+                        if (Math.ceil(new_size * new_feerate / 1000) > newFee) {
                             ret.resolve($scope.bump_fee(
                                 transaction, new_feerate, new_size, level + 1
                             ));
@@ -393,7 +409,7 @@ angular.module('greenWalletTransactionsControllers',
                 var estimate = $scope.wallet.fee_estimates[keys[i]];
                 if (i == 0) best_estimate = estimate.blocks;
                 var feerate = estimate.feerate * 1000 * 1000 * 100;
-                var estimated_fee = Math.round(
+                var estimated_fee = Math.ceil(
                     feerate * transaction.size / 1000
                 );
                 // If cur fee is already above estimated, don't suggest it.

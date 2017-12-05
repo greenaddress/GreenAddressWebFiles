@@ -3,6 +3,8 @@ var bitcoin = require('bitcoinjs-lib');
 var extend = require('xtend/mutable');
 module.exports = GAService;
 
+const DUST_THRESHOLD = 546;
+
 extend(GAService.prototype, {
   connect: connect,
   disconnect: disconnect,
@@ -12,7 +14,8 @@ extend(GAService.prototype, {
   _loginWithSigningWallet: _loginWithSigningWallet,
   _loginWithWatchOnly: _loginWithWatchOnly,
   getNetName: getNetName,
-  getMinFeeRate: getMinFeeRate
+  getMinFeeRate: getMinFeeRate,
+  getDustThreshold: getDustThreshold
 });
 
 function GAService (netName, options) {
@@ -21,6 +24,7 @@ function GAService (netName, options) {
   this.netName = netName || 'testnet';
   this.notificationCallbacks = {};
   this.minFeeRate = 1000;
+  this.dust = DUST_THRESHOLD;
   if (this.netName === 'testnet') {
     this.gaHDNode = new bitcoin.HDNode(
       bitcoin.ECPair.fromPublicKeyBuffer(
@@ -89,7 +93,8 @@ function login (options, cb, eb) {
         d = _this._loginWithWatchOnly(watchOnly, cb, eb);
       }
       d.then(function (data) {
-        this.minFeeRate = +data.min_fee;
+        _this.minFeeRate = +data.min_fee;
+        _this.dust = +data.dust;
         _this.session.subscribe('com.greenaddress.txs.wallet_' + data.receiving_id,
           function (event) {
             if (_this.notificationCallbacks.wallet) {
@@ -224,4 +229,8 @@ function getNetName () {
 
 function getMinFeeRate () {
   return +this.minFeeRate;
+}
+
+function getDustThreshold () {
+  return +this.dust;
 }
