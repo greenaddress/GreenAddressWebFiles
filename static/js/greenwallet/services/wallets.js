@@ -845,6 +845,8 @@ function factory ($q, $rootScope, tx_sender, $location, notices, $uibModal,
       d.resolve($scope.wallet.twofac);
     } else {
       tx_sender.call('com.greenaddress.twofactor.get_config').then(function (data) {
+        flags = [data['email'], data['gauth'], data['sms'], data['phone']];
+        data.count = flags.filter((x,i) => { return x; }).length;
         $scope.wallet.twofac = data;
         d.resolve($scope.wallet.twofac);
       });
