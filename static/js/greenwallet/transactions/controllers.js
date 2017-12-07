@@ -213,22 +213,18 @@ angular.module('greenWalletTransactionsControllers',
                                     )
                                 )
                             )
-                            var idx = builder.tx.ins.length - 1;
-                            if (requtxo.script_type === scriptTypes.OUT_P2SH_P2WSH) {
-                                var script = bitcoin.script.compile([].concat(
-                                  bitcoin.opcodes.OP_0,
-                                  new Buffer([0]),
-                                  new Buffer(SIG_LEN), // average sig size
-                                  new Buffer(SIG_LEN), // average sig size
-                                  new Buffer(utxos[i].redeemScript.length)));
-                                  builder.tx.setWitness(idx, [script]);
-                                  builder.tx.ins[idx].script = new Buffer(35);
-                            } else if (requtxo.script_type === scriptTypes.OUT_P2SH) {
-                                builder.tx.ins[idx].script = bitcoin.script.compile([].concat(
-                                bitcoin.opcodes.OP_0, // OP_0 required for multisig
+
+                            var script = bitcoin.script.compile([].concat(
+                                bitcoin.opcodes.OP_0,
                                 new Buffer(SIG_LEN), // average sig size
                                 new Buffer(SIG_LEN), // average sig size
                                 new Buffer(utxos[i].redeemScript.length)));
+                            var idx = builder.tx.ins.length - 1;
+                            if (requtxo.script_type === scriptTypes.OUT_P2SH_P2WSH) {
+                                  builder.tx.setWitness(idx, [script]);
+                                  builder.tx.ins[idx].script = new Buffer(35);
+                            } else if (requtxo.script_type === scriptTypes.OUT_P2SH) {
+                                builder.tx.ins[idx].script = script;
                             }
                             else {
                                 throw new Error('Invalid script type: ' + requtxo.script_type);
