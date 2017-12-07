@@ -145,7 +145,7 @@ angular.module('greenWalletSendControllers',
                     throw new Error('Custom fees require transaction replacement functionality to be enabled.');
                   }
                   addFee = {
-                    amount: +that.amount_to_satoshis(that.add_fee.amount)
+                    amount: +that.add_fee.amount
                   };
                   var minFeeRate = tx_sender.gaService.getMinFeeRate();
                   if (addFee.amount < minFeeRate) {

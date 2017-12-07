@@ -113,12 +113,11 @@
           <div class="row">
             <div class="col-xs-6 col-sm-5 col-md-4">
               <div class="input-group">
-                <span class="input-group-addon">((wallet.unit))</span>
                 {% if not cdvapp %}
-                    <input class="form-control" type="text" ng-model="send_tx.add_fee.amount" placeholder="{{ _('Leave empty for default') }}" />
+                    <input class="form-control" type="text" ng-model="send_tx.add_fee.amount" placeholder="{{ _('satoshis/Kb') }}" />
                 {% else %}
-                    <input class="form-control" type="number" ng-model="send_tx.add_fee.amount" placeholder="0.0000" ng-show="cordova_platform=='ios'" />
-                    <input class="form-control" type="tel" ng-model="send_tx.add_fee.amount" placeholder="0.0000" ng-hide="cordova_platform=='ios'" />
+                    <input class="form-control" type="number" ng-model="send_tx.add_fee.amount" placeholder="{{ _('satoshis/Kb') }}" ng-show="cordova_platform=='ios'" />
+                    <input class="form-control" type="tel" ng-model="send_tx.add_fee.amount" placeholder="{{ _('satoshis/Kb') }}" ng-hide="cordova_platform=='ios'" />
                 {% endif %}
               </div>
             </div>
