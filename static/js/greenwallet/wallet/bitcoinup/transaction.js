@@ -39,22 +39,17 @@ function addInput (input) {
   var idx = this.tx.addInput(
     input.txHash, input.vout, input.sequence, input.prevOutScript
   );
+  var script = bitcoin.script.compile([].concat(
+    bitcoin.opcodes.OP_0,
+    new Buffer(SIG_LEN), // average sig size
+    new Buffer(SIG_LEN), // average sig size
+    new Buffer(input.prevOut.getPrevScriptLength())
+  ));
   if (input.prevOut.raw.script_type === scriptTypes.OUT_P2SH_P2WSH) {
-    var script = bitcoin.script.compile([].concat(
-      bitcoin.opcodes.OP_0,
-      new Buffer([0]),
-      new Buffer(SIG_LEN), // average sig size
-      new Buffer(SIG_LEN), // average sig size
-      new Buffer(input.prevOut.getPrevScriptLength())
-    ));
     this.tx.setWitness(idx, [script]);
     this.tx.ins[idx].script = new Buffer(35);
   } else {
-    this.tx.ins[idx].script = bitcoin.script.compile([].concat(
-      bitcoin.opcodes.OP_0, // OP_0 required for multisig
-      new Buffer(SIG_LEN), // average sig size
-      new Buffer(SIG_LEN), // average sig size
-      new Buffer(input.prevOut.getPrevScriptLength())));
+    this.tx.ins[idx].script = script;
   }
   var ret = this.tx.ins[idx];
   ret.prevOut = input.prevOut;
