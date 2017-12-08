@@ -17,6 +17,7 @@
                 <hr class="double">
                 <p>{% trans %}We recommend setting up multiple two factor authentication methods to allow backup access to your funds in case any of your two factor become unavailable.{% endtrans %}</p>
                 <p>{% trans %}To issue a transaction you will not only need to login to your wallet but also confirm it via two factor authentication.{% endtrans %}</p>
+                <p ng-show="wallet.twofac && wallet.twofac.count == 1"><span class="label label-warning">{{ _("WARNING") }}</span> {{ _('You only have one two factor authentication method set up. Please add another as a backup in case you lose access.') }}</p>
             </div>
 
             <div class="create-modal-footer">
