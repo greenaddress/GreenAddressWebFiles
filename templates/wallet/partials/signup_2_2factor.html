@@ -15,9 +15,8 @@
                 <div ng-if="signup.logged_in" ng-controller="TwoFactorSetupController" ng-include="'{{BASE_URL}}/{{LANG}}/wallet/partials/wallet_2fa.html'"></div>
                 <div ng-hide="signup.logged_in" style="text-align: center">{{ _("Please wait while we log you into your new wallet...") }}</div>
                 <hr class="double">
-                <p>{% trans %}We recommend to set up multiple two factor authentication methods, this will make your wallet much more secure and will let you some additional features such as Spending Limits.{% endtrans %}</p>
-                <p>{% trans %}Multiple methods will allow backup access to your funds in case any of your two factor become unavailable.{% endtrans %}</p>
-                <p>{% trans %}To issue a transaction you will not only need to login to your wallet but also confirm it with a code sent to you via email, SMS or google authenticator as per your choice.{% endtrans %}</p>
+                <p>{% trans %}We recommend setting up multiple two factor authentication methods to allow backup access to your funds in case any of your two factor become unavailable.{% endtrans %}</p>
+                <p>{% trans %}To issue a transaction you will not only need to login to your wallet but also confirm it via two factor authentication.{% endtrans %}</p>
             </div>
 
             <div class="create-modal-footer">
