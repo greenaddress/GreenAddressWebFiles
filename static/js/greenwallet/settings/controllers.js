@@ -356,7 +356,11 @@ angular.module('greenWalletSettingsControllers',
         nfcmodal: function() {
             gaEvent('Wallet', 'SettingsNfcModal');
             mnemonics.validateMnemonic($scope.wallet.mnemonic).then(function(bytes) {
-                $scope.nfc_bytes = bytes;
+                var bytearr = [];
+                for (var i = 0; i < bytes.length; i++) {
+                    bytearr.push(bytes[i]);
+                }
+                $scope.nfc_bytes = bytearr;
                 $scope.nfc_mime = 'x-gait/mnc';
                 $uibModal.open({
                     templateUrl: BASE_URL+'/'+LANG+'/wallet/partials/signup_nfc_modal.html',
@@ -370,7 +374,11 @@ angular.module('greenWalletSettingsControllers',
             mnemonics.validateMnemonic($scope.wallet.mnemonic).then(function(bytes) {
                 bip38.encrypt_mnemonic_modal($scope, bytes).then(function(mnemonic_encrypted) {
                     mnemonics.validateMnemonic(mnemonic_encrypted).then(function(bytes_encrypted) {
-                        $scope.nfc_bytes = bytes_encrypted;
+                        var bytearr = [];
+                        for (var i = 0; i < bytes_encrypted.length; i++) {
+                            bytearr.push(bytes_encrypted[i]);
+                        }
+                        $scope.nfc_bytes = bytearr;
                         $scope.nfc_mime = 'x-ga/en';
                         $uibModal.open({
                             templateUrl: BASE_URL+'/'+LANG+'/wallet/partials/signup_nfc_modal.html',
