@@ -592,7 +592,7 @@
 <div class="row" ng-controller="AutoLogoutController">
   <div class="col-md-3">
     <div class="sub-header">{{ _("Auto logout") }}</div>
-    <div class="sub-header-desc">{{ _("Configure auto logout after some inactivity timeout") }}  (( mins )) : (( secs )) </div>
+    <div class="sub-header-desc">{{ _("Configure auto logout after some inactivity timeout") }}  (( mins )) : (( ('0' + secs).slice(-2) )) </div>
   </div>
   <div class="col-md-9" submittable>
     <form role="form" class="form-horizontal" ng-submit="save_logout_timeout()">
