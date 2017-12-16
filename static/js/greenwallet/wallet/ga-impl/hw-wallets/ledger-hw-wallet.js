@@ -80,7 +80,8 @@ function pingDevice (device) {
     var firmwareVersion = version.firmwareVersion.bytes(0, 4);
     if ((device.isNanoS && firmwareVersion.toString(HEX) < '30010109') || firmwareVersion.toString(HEX) < '20010004') {
       device.card.disconnect_async();
-      return Promise.reject('Please upgrade your hardware wallet to the latest firmware and ensure you have your mnemonics backed up.');
+      return Promise.reject('Please upgrade your hardware wallet to the latest firmware and ensure you have your mnemonics backed up. Current firmware is ' +
+                            firmwareVersion.toString(HEX) + ' and expected is ' + (device.isNanoS ? '30010109' : '20010004'));
     }
     features.signMessageRecoveryParam =
       firmwareVersion.toString(HEX) >= '00010409';
