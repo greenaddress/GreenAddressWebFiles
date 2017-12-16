@@ -1,6 +1,7 @@
 var Transaction = require('wallet').bitcoinup.Transaction;
 var scriptTypes = require('wallet').GA.constants.scriptTypes;
 var bitcoin = require('bitcoinjs-lib');
+var GAAddressFactory = require('../wallet/ga-impl/address-factory');
 angular.module('greenWalletTransactionsControllers',
     ['greenWalletServices'])
 .controller('TransactionsController', ['$scope', 'wallets', 'tx_sender', 'storage', 'storage_keys', 'notices', 'branches', '$uibModal', 'gaEvent', '$timeout', '$q', 'encode_key', 'hostname',
@@ -153,20 +154,18 @@ angular.module('greenWalletTransactionsControllers',
                 }
                 var change_d = $q.when();
                 if (remainingFeeDelta < -tx_sender.gaService.getDustThreshold()) {
+                    var addrFactory = new GAAddressFactory(tx_sender.gaService,
+                                                           tx_sender.gaWallet.signingWallet, {
+                                                               scriptFactory: tx_sender.gaWallet.scriptFactory,
+                                                               subaccount: $scope.wallet.subaccount
+                                                           });
                     // new change output needs to be added
-                    change_d = tx_sender.call(
-                        'com.greenaddress.vault.fund',
-                        $scope.wallet.current_subaccount,
-                        true /* return_pointer */,
-                        $scope.wallet.appearance.use_segwit ? 'p2wsh' : 'p2sh'
-                    ).then(function(data) {
+                    change_d = addrFactory.getNextOutputScriptWithPointer().then(function(change_output) {
                         if ($scope.wallet.appearance.use_segwit) {
                           storage.set($scope.wallet.segwit_locked_key, true);
                         }
-                        change_pointer = data.pointer;
-                        return Bitcoin.bitcoin.crypto.hash160(
-                            new Bitcoin.Buffer.Buffer(data.script, 'hex')
-                        );
+                        change_pointer = change_output.pointer;
+                        return change_output;
                     })
                 } else if (remainingFeeDelta == 0) {
                     // if we were lucky enough to match the required value,
@@ -175,12 +174,10 @@ angular.module('greenWalletTransactionsControllers',
                 } else {   // remainingFeeDelta > 0
                     return $q.reject(gettext("Not enough money"));
                 }
-                return change_d.then(function(change_hash160) {
-                    if (change_hash160) {
+                return change_d.then(function(change_output) {
+                    if (change_output) {
                         builder.addOutput(
-                            bitcoin.script.scriptHash.output.encode(
-                                change_hash160
-                            ),
+                            change_output.outScript,
                             -remainingFeeDelta
                         );
                         var out = builder.tx.outs[builder.tx.outs.length - 1];
