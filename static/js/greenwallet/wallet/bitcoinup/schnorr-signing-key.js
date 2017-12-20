@@ -39,7 +39,9 @@ function _signHash (msgIn, schnorr) {
     if (schnorr) {
       return compact;
     }
-    return wally.wally_ec_sig_to_der(compact).then(bitcoin.ECSignature.fromDER);
+    return wally.wally_ec_sig_to_der(compact).then(function (sig) {
+      return bitcoin.ECSignature.fromDER(new Buffer(sig));
+    });
   });
 }
 
