@@ -184,7 +184,9 @@ angular.module('greenWalletSendControllers',
                         locktime: $scope.wallet.cur_block,
                         minimizeInputs: wallets.getSubaccount(
                             $scope, $scope.wallet.current_subaccount
-                        ).type === '2of3'
+                        ).type === '2of3',
+                        satoshisToUnit: satoshisToUnit,
+                        walletUnit: $scope.wallet.unit
                     }
                 ).then(function(tx_) {
                     if ($scope.wallet.appearance.use_segwit && tx_.segwit_change === true) {

@@ -172,7 +172,18 @@ angular.module('greenWalletTransactionsControllers',
                     // no new change output is necessary
                     change_d = $q.when(null);
                 } else {   // remainingFeeDelta > 0
-                    return $q.reject(gettext("Not enough money"));
+                    var mul = {'BTC': 1, 'mBTC': 1000, 'µBTC': 1000000, 'bits': 1000000}[$scope.wallet.unit];
+                    var satoshisToUnit = function(amount_satoshi) {
+                        return parseFloat(  // parseFloat required for iOS Cordova
+                            Bitcoin.Util.formatValue(new Bitcoin.BigInteger(amount_satoshi.toString()).multiply(Bitcoin.BigInteger.valueOf(mul))));
+                    }
+                    var message = gettext('Not enough money, you need ${missing_satoshis} more ${unit} to cover the transaction and fee');
+                    args = {'missing_satoshis': satoshisToUnit(remainingFeeDelta),
+                            'unit': $scope.wallet.unit};
+                    Object.keys(args).forEach(function (argName) {
+                        message = message.replace('${' + argName + '}', args[argName]);
+                    });
+                    return $q.reject(gettext(message));
                 }
                 return change_d.then(function(change_output) {
                     if (change_output) {
