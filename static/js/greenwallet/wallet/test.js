@@ -7,6 +7,13 @@ var proxy = require('proxyquire');
 var GAUtxo = require('./ga-impl').Utxo;
 var GAHashSwSigningWallet = require('./ga-impl').HashSwSigningWallet;
 
+var mul = {'BTC': 1, 'mBTC': 1000, 'µBTC': 1000000, 'bits': 1000000}['mBTC'];
+
+var satoshisToUnit = function (amount_satoshi) {
+  return parseFloat(  // parseFloat required for iOS Cordova
+    amount_satoshi * mul);
+};
+
 var mockUtxoFactory = {
   listAllUtxo: mockListAllUtxo
 };
@@ -61,13 +68,18 @@ test('construct tx', function (t) {
   }, function (e) { console.log(e.stack); t.fail(e); });
 });
 
+var initialOptions = {
+  satoshisToUnit: satoshisToUnit,
+  walletUnit: 'mBTC'
+};
+
 var coinSelectionTestCases = [
   ['single utxo available',
     {
       utxo: [
         {value: 100000, blockHeight: 1}
       ],
-      txValue: 10000, options: {}, utxoExpected: [0]
+      txValue: 10000, options: initialOptions, utxoExpected: [0]
     }
   ],
   ['8 utxo available, with different blockHeight',
@@ -83,7 +95,7 @@ var coinSelectionTestCases = [
         {value: 50000, blockHeight: 2},  // 7
         {value: 50000, blockHeight: 3}   // 8
       ],
-      txValue: 10000, options: {}, utxoExpected: [3]
+      txValue: 10000, options: initialOptions, utxoExpected: [3]
     }
   ],
   ['18 utxo available, blockHeight match not enough because fee too large',
@@ -105,7 +117,7 @@ var coinSelectionTestCases = [
         {value: 3900, blockHeight: 10}, // 16 - could be used to cover fee
         {value: 4700, blockHeight: 10}  // 17 - but dust threshold actually requires more
       ],
-      txValue: 640, options: {}, utxoExpected: [17]
+      txValue: 640, options: initialOptions, utxoExpected: [17]
     }
   ],
   ['3 utxo available, 2 best result in dust output, 3rd needs to be added',

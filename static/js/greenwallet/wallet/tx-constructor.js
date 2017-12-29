@@ -1,6 +1,9 @@
+var window = require('global/window');
 var bitcoinup = require('./bitcoinup/index.js');
 var extend = require('xtend/mutable');
 var extendCopy = require('xtend');
+
+var gettext = window.gettext;
 
 module.exports = TxConstructor;
 
@@ -76,7 +79,15 @@ function _makeUtxoFilter (assetNetworkId, requiredValue, message, options) {
     }
     return collectedTotal.then(function (total) {
       if (total < requiredValue) {
-        var err = new Error(message);
+        var err = new Error(function (args) {
+          var message = message ||
+                        gettext('Not enough money, you need ${missing_satoshis} more ${unit} to cover the transaction and fee');
+          Object.keys(args).forEach(function (argName) {
+            message = message.replace('${' + argName + '}', args[argName]);
+          });
+          return message;
+        }({'missing_satoshis': options.satoshisToUnit(requiredValue - total),
+           'unit': options.walletUnit}));
         err.notEnoughMoney = true;
         throw err;
       }
@@ -94,7 +105,7 @@ function _collectOutputs (requiredValue, options) {
   return _makeUtxoFilter(
     this.buildOptions.feeNetworkId,
     requiredValue,
-    options.message || 'Not enough money',
+    options.message,
     extendCopy(options, { isFeeAsset: true })
   )(options.utxo || this.utxo);
 }
