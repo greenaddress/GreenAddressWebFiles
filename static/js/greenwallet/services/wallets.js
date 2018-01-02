@@ -582,6 +582,11 @@ function factory ($q, $rootScope, tx_sender, $location, notices, $uibModal,
             var a1 = a.name, b1 = b.name;
           return a1 > b1 ? -1 : a1 == b1 ? 0 : -1;
         });
+
+        var txdata = cur_net.isAlpha ? data.data[tx.txhash] : tx.data;
+        var vsize = txdata && $scope.wallet.appearance.use_segwit
+                ? bitcoin.Transaction.fromHex(txdata).virtualSize() : tx.size;
+
         retval.push({ts: new Date(tx.created_at.replace(' ', 'T')), txhash: tx.txhash, memo: tx.memo,
           value_sort: value_sort, value: value, instant: tx.instant,
           value_fiat: data.fiat_value ? value * data.fiat_value / Math.pow(10, 8) : undefined,
@@ -597,10 +602,10 @@ function factory ($q, $rootScope, tx_sender, $location, notices, $uibModal,
           has_payment_request: tx.has_payment_request,
           double_spent_by: tx.double_spent_by, replaced_by: tx.replaced_by,
           replacement_of: [],
-          rawtx: cur_net.isAlpha ? data.data[tx.txhash] : tx.data,
+          rawtx: txdata,
           social_destination: tx_social_destination, social_value: tx_social_value,
-          ga_asset_id: ga_asset_id, asset_name: asset_name, size: tx.size,
-          fee_per_kb: Math.round(tx.fee / (tx.size / 1000)),
+          ga_asset_id: ga_asset_id, asset_name: asset_name, size: vsize,
+          fee_per_kb: Math.round((tx.fee * 1000) / vsize),
           rbf_optin: !cur_net.isAlphaMultiasset && tx.rbf_optin,
           issuance: tx.issuance,
           asset_values: asset_values});
