@@ -83,12 +83,12 @@ angular.module('greenWalletTransactionsControllers',
         if (newFee <= oldFee) {
             newFee = oldFee + 1;
         }
-
-        var change_pointer;
-        var feeDelta = newFee - oldFee + bandwidthFee;
-        var remainingFeeDelta = feeDelta;
         newFee += bandwidthFee;
 
+        var feeDelta = newFee - oldFee;
+        var remainingFeeDelta = feeDelta;
+
+        var change_pointer;
         var newOuts = [];
         for (var i = 0; i < transaction.outputs.length; ++i) {
             if (transaction.outputs[i].is_relevant) {
