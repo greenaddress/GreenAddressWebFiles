@@ -13,7 +13,7 @@
         <dd>(( tx.recipient ))</dd>
     </dl>
 
-    <dl>
+    <dl ng-show="tx.value !== 'utxo value'">
         <dt>{{ _("Amount") }}</dt>
         <dd>(( tx.value | format_btc:wallet.unit )) <span ng-if="wallet.current_asset == 1">
           ( (( tx.value | format_fiat:wallet.fiat )) )</span></dd>
