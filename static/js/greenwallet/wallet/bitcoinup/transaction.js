@@ -27,7 +27,9 @@ extend(Transaction.prototype, {
   clearOutputs: clearOutputs,
   addInput: addInput,
   clearInputs: clearInputs,
-  clearFeeChanges: clearFeeChanges
+  clearFeeChanges: clearFeeChanges,
+  inputTotal: inputTotal,
+  outputTotal: outputTotal
 });
 Transaction.fromHex = fromHex;
 
@@ -80,6 +82,22 @@ function clearFeeChanges () {
     this.tx.ins[i].witness = [];
     this.tx.ins[i].script = [];
   }
+}
+
+function inputTotal () {
+  var total = 0;
+  this.tx.ins.forEach(function (input) {
+    total += input.prevOut.value;
+  });
+  return total;
+}
+
+function outputTotal () {
+  var total = 0;
+  this.tx.outs.forEach(function (output) {
+    total += output.value;
+  });
+  return total;
 }
 
 function byteLength () {

@@ -426,11 +426,7 @@ angular.module('greenWalletControllers', [])
     $scope.url = url;
 }]).controller('RedepositController', ['$scope', 'tx_sender', 'wallets', 'notices', '$q',
         function RedepositController($scope, tx_sender, wallets, notices, $q) {
-    $scope.redeposit_estimated_fees = {
-        single_tx: 10000 * Math.ceil((300+$scope.wallet.expired_deposits.length*180)/1000),
-        multiple_tx: 10000 * $scope.wallet.expired_deposits.length
-    }
-    var redeposit = function(txos, twofac_data) {
+    var redeposit = function(txos, options, twofac_data) {
         var deferred = $q.defer();
         var txos_in = [];
         for (var i = 0; i < txos.length; ++i) {
@@ -439,7 +435,7 @@ angular.module('greenWalletControllers', [])
         tx_sender.call('com.greenaddress.vault.prepare_redeposit', txos_in,
                 {rbf_optin: $scope.wallet.appearance.replace_by_fee, prevouts_mode: 'http'}).then(function(data) {
             data.twofactor_data = twofac_data;
-            wallets.sign_and_send_tx($scope, data).then(function() {
+            wallets.sign_and_send_tx($scope, data, options).then(function() {
                 deferred.resolve();
             }, function(err) {
                 deferred.reject(err);
@@ -451,7 +447,7 @@ angular.module('greenWalletControllers', [])
     };
     $scope.redeposit_single_tx = function() {
         $scope.redepositing = true;
-        redeposit($scope.wallet.expired_deposits).then(function() {
+        redeposit($scope.wallet.expired_deposits, {redeposit: true}).then(function() {
             $scope.redeposit_modal.close();
             notices.makeNotice('success', gettext('Re-depositing successful!'));
         }, function(err) {
@@ -468,9 +464,10 @@ angular.module('greenWalletControllers', [])
             // prepare one to set appropriate tx data for 2FA
             return wallets.attempt_two_factor($scope, 'send_tx', {redeposit: true}, function(twofac_data) {
                 var promise = $q.when();
+                var value = $scope.wallet.expired_deposits.length === 1 ? false : 'utxo value';
                 for (var i = 0; i < $scope.wallet.expired_deposits.length; ++i) {
                     (function(i) { promise = promise.then(function() {
-                        return redeposit([$scope.wallet.expired_deposits[i]], twofac_data);
+                        return redeposit([$scope.wallet.expired_deposits[i]], {redeposit: i === 0, value: value}, twofac_data);
                     }, function(err) {
                         return $q.reject(err);
                     });})(i);
@@ -480,9 +477,13 @@ angular.module('greenWalletControllers', [])
                     notices.makeNotice('success', gettext('Re-depositing successful!'));
                 }, function(error) {
                     $scope.redepositing = false;
-                    notices.makeError($scope, error);
+                    if (error) {
+                      notices.makeError($scope, error);
+                    }
                 });
                 return promise;
+            }).catch(function (error) {
+              $scope.redepositing = false;
             });
         }, function(error) {
             $scope.redepositing = false;

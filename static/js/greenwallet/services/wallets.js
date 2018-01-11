@@ -687,8 +687,8 @@ function factory ($q, $rootScope, tx_sender, $location, notices, $uibModal,
     $scope, tx, options
   ) {
     options = options || {};
-    if (!($scope.send_tx || $scope.bump_fee)) {
-      // not all txs support this dialog, like redepositing or sweeping
+    if (!($scope.send_tx || $scope.bump_fee || options.redeposit)) {
+      // not all txs support this dialog (sweeping)
       return $q.when();
     }
     var scope = $scope.$new(), fee, value;
@@ -797,6 +797,16 @@ function factory ($q, $rootScope, tx_sender, $location, notices, $uibModal,
         )
       };
     });
+
+    if (options.redeposit) {
+        var in_total = tx.inputTotal();
+        var out_total = tx.outputTotal();
+        options.fee = in_total - out_total;
+        if (!options.value) {
+          options.value = out_total;
+        }
+    }
+
     var prevouts_d = btcMainConstructor.utxoFactory.fetchUtxoDataForTx(tx.tx);
 
     var d_all = prevouts_d.then(function (prevouts) {
