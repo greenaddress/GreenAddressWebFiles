@@ -1063,7 +1063,7 @@ msgstr ""
 #: templates/wallet/partials/signup_4_2factor.html:17
 msgid ""
 "We strongly suggest you to set up two factor authentication, this will make "
-"your wallet much more secure and will let you some additional features such "
+"your wallet much more secure and allows use of additional features such "
 "as Spending Limits and Delayed Payments."
 msgstr ""
 
