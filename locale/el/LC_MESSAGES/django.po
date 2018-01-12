@@ -1003,11 +1003,11 @@ msgstr "Please wait while we log you into your new wallet..."
 #, fuzzy
 msgid ""
 "We recommend to set up multiple two factor authentication methods, this "
-"will make your wallet much more secure and will let you some additional "
+"will make your wallet much more secure and allows use of additional "
 "features such as Spending Limits."
 msgstr ""
 "We require you to set up two factor authentication, this will make your "
-"wallet much more secure and will let you some additional features such as"
+"wallet much more secure and allows use of additional features such as"
 " Spending Limits and Delayed Payments."
 
 #: templates/wallet/partials/signup_2_2factor.html:19

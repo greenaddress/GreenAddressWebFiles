@@ -1034,7 +1034,7 @@ msgstr "Будь-ласка зачекайте для входу в Ваш но�
 #, fuzzy
 msgid ""
 "We recommend to set up multiple two factor authentication methods, this "
-"will make your wallet much more secure and will let you some additional "
+"will make your wallet much more secure and allows use of additional "
 "features such as Spending Limits."
 msgstr ""
 "Ми рекомендуємо налаштувати кілька методів 2 факторної автентифікації, це"
