@@ -52,10 +52,13 @@ angular.module('greenWalletSendControllers',
                 $rootScope.safeApply(function() {
                     var parsed_uri = parse_bitcoin_uri(text);
                     if (parsed_uri.recipient) {
-                      that.recipient = parsed_uri.recipient;
+                        that.recipient = parsed_uri.recipient;
+                    }
+                    else {
+                        that.recipient = text;
                     }
                     if (parsed_uri.amount) {
-                      that.amount = btcToUnit(parsed_uri.amount);
+                        that.amount = btcToUnit(parsed_uri.amount);
                     }
                 });
             }, function(error) {
