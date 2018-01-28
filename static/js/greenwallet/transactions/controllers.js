@@ -157,7 +157,7 @@ angular.module('greenWalletTransactionsControllers',
                     var addrFactory = new GAAddressFactory(tx_sender.gaService,
                                                            tx_sender.gaWallet.signingWallet, {
                                                                scriptFactory: tx_sender.gaWallet.scriptFactory,
-                                                               subaccount: $scope.wallet.subaccount
+                                                               subaccount: $scope.wallet.current_subaccount || 0
                                                            });
                     // new change output needs to be added
                     change_d = addrFactory.getNextOutputScriptWithPointer().then(function(change_output) {
