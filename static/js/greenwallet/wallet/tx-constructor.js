@@ -3,8 +3,6 @@ var bitcoinup = require('./bitcoinup/index.js');
 var extend = require('xtend/mutable');
 var extendCopy = require('xtend');
 
-var gettext = window.gettext;
-
 module.exports = TxConstructor;
 
 extend(TxConstructor.prototype, {
@@ -81,7 +79,7 @@ function _makeUtxoFilter (assetNetworkId, requiredValue, message, options) {
       if (total < requiredValue) {
         var err = new Error(function (args) {
           var message = message ||
-                        gettext('Not enough money, you need ${missing_satoshis} more ${unit} to cover the transaction and fee');
+                        window.gettext('Not enough money, you need ${missing_satoshis} more ${unit} to cover the transaction and fee');
           Object.keys(args).forEach(function (argName) {
             message = message.replace('${' + argName + '}', args[argName]);
           });
