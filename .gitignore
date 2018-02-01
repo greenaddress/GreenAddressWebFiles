@@ -13,3 +13,6 @@ jslex.pyc
 static/wallet
 manifest_mainnet.json
 npm-debug.log
+
+# libwally repo
+libwally-core
