@@ -10,8 +10,7 @@ fi
 ./prepare_wally.sh
 
 export LIBWALLY_DIR="$PWD/libwally-core"
-export NODE_GYP_DIR="$PWD/node_modules/wallyjs/build/Release"
 
-npm i
-npm run build
-npm run test
+yarn install
+yarn run build
+yarn run test

@@ -1,5 +1,5 @@
 test_debug_build:
-  image: greenaddress/webfiles@sha256:2a5cbacce2f754598b40874526acdf3ac506c765fd1aa558a88e1842351888f3
+  image: greenaddress/webfiles@sha256:cbae4068483b68f1100a8a048924c983cec5ab0b99bd4f189cf3c2278617ba34
   tags:
     - ga
   script:
