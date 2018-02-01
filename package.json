@@ -48,7 +48,6 @@
     "bitcoinjs-lib": "~3.1.1",
     "buffer-equals": "^1.0.3",
     "bytebuffer": "^5.0.1",
-    "cordova-plugin-wally": "file:./libwally-core/src/wrap_js/cordovaplugin",
     "global": "^4.3.0",
     "has-chrome-storage": "^0.1.0",
     "promise": "^7.1.1",
