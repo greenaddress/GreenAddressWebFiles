@@ -138,7 +138,7 @@ def compile_domain(domain):
         popath = os.path.join('locale', locale, "LC_MESSAGES", domain + ".po")
         mopath = os.path.join('locale', locale, "LC_MESSAGES", domain + ".mo")
 
-        with open(mopath, 'w') as mo_f, open(popath) as po_f:
+        with open(mopath, 'wb') as mo_f, open(popath) as po_f:
             write_mo(mo_f, read_po(po_f))
 
 
@@ -182,6 +182,8 @@ def main():
             for path in gettext_finder.TEMPLATE_SEARCH_PATH:
                 for fname in glob.glob(os.path.join(path, templates)):
                     fname = os.path.relpath(fname, path)
+                    # jinja expects the template name to be '/' separated, even on Windows
+                    fname = fname.replace("\\", '/')
                     for lang in gettext_finder.GETTEXT_LANGUAGES:
                         renderer.process_template(
                             fname,
