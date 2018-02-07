@@ -1,13 +1,12 @@
 {
   "name": "greenaddress-webfiles",
   "version": "1.0.0",
-  "description": "Shared web files used by the Cordova and Chrome apps.",
+  "description": "Shared web files used by the Cordova and Electron apps.",
   "main": "static/js/index.js",
   "scripts": {
-    "testbuild": "npm run test && npm run build",
+    "testbuild": "yarn run test && yarn run build",
     "test": "semistandard && tape $(find static/ -name '*test.js' | grep -v node_modules) | tap-spec",
     "build": "gulp build",
-    "sync": "rsync -av ./build/ ../WalletCrx/",
     "watch": "gulp"
   },
   "repository": {
