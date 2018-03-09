@@ -1742,7 +1742,7 @@ msgid ""
 "Both outgoing and incoming transaction notifications must be enabled for "
 "this feature to work."
 msgstr ""
-"Sia le notifiche per i momvimenti in uscita che per quelli in entrata "
+"Sia le notifiche per i movimenti in uscita che per quelli in entrata "
 "devono essere abilitati per usare questa fetaure."
 
 #: templates/wallet/partials/wallet_settings.html:189
