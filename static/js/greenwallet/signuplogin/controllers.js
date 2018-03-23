@@ -30,6 +30,15 @@ angular.module('greenWalletSignupLoginControllers', ['greenWalletMnemonicsServic
         }
         $scope.install_run_app_label = gettext("Install the Chrome App")
     }
+
+    if ((!window.chrome || !chrome.storage) && !window.cordova) {
+        var modal = $uibModal.open({
+            templateUrl: BASE_URL+'/'+LANG+'/wallet/partials/signuplogin/wallet_modal_deprecated_warning.html',
+            scope: $scope
+        });
+        modal.opened.then(function() {})
+    }
+
     $scope.install_run_app = function(ev) {
         if (cur_net.isAlpha && window.chrome && chrome.app && !chrome.storage) {
             // !chrome.storage means we're not inside the chrome app
