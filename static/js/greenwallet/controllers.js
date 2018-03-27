@@ -28,6 +28,8 @@ angular.module('greenWalletControllers', [])
                 });
             });
         });
+    } else if (typeof window !== 'undefined' && window.process && window.process.type === "renderer") {
+        var app_version = require('electron').remote.app.getVersion();
     } else {
         var app_version = null
     }
