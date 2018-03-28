@@ -497,7 +497,6 @@ chromeDevice.enumerateDongles_async = function(pid) {
     pidHid = 0x0001;
     pidHidIsLedger = true;
     pidHid2 = pidHid3 = 0x0000;
-    usagePage = 0xffa0;
   }
   debug("Looking up " + vid +  " " + pid);
 
