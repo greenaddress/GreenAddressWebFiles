@@ -398,12 +398,7 @@ function openDevice (network, options, device) {
   return trezor_api.open(device).then(function (dev_) {
     return dev_.initialize().then(function (init_res) {
       var outdated = false;
-      if (device.vendorId === 11044) {
-        // keepkey
-        if (init_res.message.major_version < 4) {
-          outdated = '4.0.0';
-        }
-      } else {
+      if (device.vendorId === 21324) {
         // satoshilabs
         if ((init_res.message.major_version < 1) ||
             (init_res.message.major_version === 1 &&
