@@ -402,11 +402,11 @@ function openDevice (network, options, device) {
         // satoshilabs
         if ((init_res.message.major_version < 1) ||
             (init_res.message.major_version === 1 &&
-             init_res.message.minor_version < 5) ||
+             init_res.message.minor_version < 6) ||
             (init_res.message.major_version === 1 &&
-             init_res.message.minor_version === 5 &&
-             init_res.message.patch_version < 2)) {
-          outdated = '1.5.2';
+             init_res.message.minor_version === 6 &&
+             init_res.message.patch_version < 0)) {
+          outdated = '1.6.0';
         }
       }
       if (outdated) {
