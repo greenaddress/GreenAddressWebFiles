@@ -35466,7 +35466,6 @@ Trezor.prototype.devices = function () {
     return new Promise(function(resolve, reject) {
         self.hid.getDevices(
             {filters:[
-                    {vendorId: 0x2B24, productId: 0x0001},
                     {vendorId: 0x534c, productId: 0x0001}
                 ]},
             function(devices) {
