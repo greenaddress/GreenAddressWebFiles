@@ -663,16 +663,8 @@ angular.module('greenWalletSettingsControllers',
     });
     $scope.enable_link_handler = function() {
         if (global.process) {
-            if (global.process.platform === 'win32' || global.process.platform === 'darwin') {
-                require('electron').remote.app.setAsDefaultProtocolClient('bitcoin');
-                notices.makeNotice('success', gettext('Handler registered'));
-            } else {
-                notices.makeNotice(
-                    'error',
-                     gettext('Not supported on this platform. Please try adding ' +
-                             'a .desktop file to your configuration.')
-                );
-            }
+            require('electron').remote.app.setAsDefaultProtocolClient('bitcoin');
+            notices.makeNotice('success', gettext('Handler registered'));
         } else {
             try {
                 navigator.registerProtocolHandler('bitcoin', 'https://'+window.location.hostname+'/uri/?uri=%s', 'GreenAddress.It');

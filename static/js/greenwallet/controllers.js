@@ -98,9 +98,10 @@ angular.module('greenWalletControllers', [])
             };
         }
         if (destPath.indexOf('/uri/') == 0) {
-            var parsed_uri = parse_bitcoin_uri(destUri);
+            var filteredDestUri = destUri.replace('///', '');
+            var parsed_uri = parse_bitcoin_uri(filteredDestUri);
             var initVars = window.WalletControllerInitVars = {
-                send_to_receiving_id_bitcoin_uri: destUri
+                send_to_receiving_id_bitcoin_uri: filteredDestUri
             };
             initVars.send_to_receiving_id = parsed_uri.recipient;
             if (parsed_uri.amount) {
