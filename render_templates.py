@@ -45,12 +45,13 @@ def escapejs(txt):
 
 
 class TemplatesRenderer(object):
-    def __init__(self, hostname, outdir, cdvapp, multi_asset, electron):
+    def __init__(self, hostname, outdir, cdvapp, multi_asset, electron, network):
         self.hostname = hostname
         self.outdir = outdir
         self.cdvapp = cdvapp
         self.multi_asset = multi_asset
         self.electron = electron
+        self.network = network
         self.env = gettext_finder.jinja_env
         self.trs = {}
         for lang in gettext_finder.GETTEXT_LANGUAGES:
@@ -82,6 +83,7 @@ class TemplatesRenderer(object):
             'LANG': lang,
             'BASE_URL': '..' if (self.cdvapp or self.electron) else '',
             'STATIC_URL': '../static' if (self.cdvapp or self.electron) else '/static',
+            'BITCOIN_NETWORK': self.network if self.electron else '',
             'DEVELOPMENT': True,
             'PATH_NO_LANG': output,
             'MULTIASSET': self.multi_asset,
@@ -154,6 +156,8 @@ def main():
         help="Build HTML for Electron project")
     parser.add_argument('--multiasset', '-m', action='store_true',
         help="Build HTML for MultiAsset functionality")
+    parser.add_argument('--network', '-o', type=str, default="",
+        help="Optional app bitcoin network")
 
     # multi_asset
 
@@ -174,7 +178,8 @@ def main():
         outdir=args.outdir,
         cdvapp=args.cordova,
         multi_asset=args.multiasset,
-        electron=args.electron
+        electron=args.electron,
+        network=args.network
     )
 
     for output, templates in TEMPLATES.iteritems():

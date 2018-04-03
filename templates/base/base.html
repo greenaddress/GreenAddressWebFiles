@@ -1,7 +1,7 @@
 <!doctype html>
 <html {% if crapp %}style="overflow-y: auto;"{% endif %} {% block html_attrs %}{%endblock%} lang="{{LANG}}" {% if use_manifest %}manifest="/{{LANG}}/nocache.appcache"{% endif %} {% if crapp %}ng-csp{% endif %}>
   <head>
-    <title>{% block fulltitle %}{% block title %}{{ _("Welcome!") }}{% endblock %} | GreenAddress{% endblock %}</title>
+    <title>{% block fulltitle %}{% block title %}{{ _("Welcome!") }}{% endblock %} | GreenAddress {{BITCOIN_NETWORK}}{% endblock %}</title>
     <meta charset="utf-8" />
     <meta name="description" content="{% block metadescription %}{{ _("The safer Bitcoin wallet that puts you in control.") }}{% endblock %}" />
     <meta name="keywords" content="multisig, deterministic, bitcoin, greenaddress, multisignature, wallet, blockchain, instant">
