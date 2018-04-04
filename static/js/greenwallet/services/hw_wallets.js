@@ -38,6 +38,11 @@ function factory ($q, trezor, btchip, $timeout, $rootScope, $uibModal) {
     allHwWallets: allHwWallets,
     BaseHWWallet: BaseHWWallet,
     success: false,
+    disconnectCurrentDevice: function () {
+      allHwWallets.forEach(function (hw) {
+        hw.disconnectCurrentDevice();
+      });
+    },
     checkDevices: function (netName) {
       allHwWallets.forEach(function (hw) {
         hw.checkForDevices(netName);
