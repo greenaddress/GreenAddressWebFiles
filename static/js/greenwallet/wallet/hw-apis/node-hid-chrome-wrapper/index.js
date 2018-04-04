@@ -5,7 +5,8 @@ module.exports = {
   connect: nodeConnect,
   send: nodeSend,
   sendFeatureReport: nodeSendFeatureReport,
-  receive: nodeReceive
+  receive: nodeReceive,
+  disconnect: nodeDisconnect
 };
 
 function nodeGetDevices (options, cb) {
@@ -47,4 +48,8 @@ function nodeReceive (dev, cb) {
   dev.read(function (_, data) {
     cb(0, data);
   });
+}
+function nodeDisconnect (dev, cb) {
+  dev.close();
+  cb();
 }

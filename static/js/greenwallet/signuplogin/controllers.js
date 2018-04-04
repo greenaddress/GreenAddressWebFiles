@@ -324,8 +324,19 @@ angular.module('greenWalletSignupLoginControllers', ['greenWalletMnemonicsServic
 
     var hwDevice = null;
 
+    var disconnectCurrentDevice = function() {
+      if (!global.chrome) {
+        try {
+          hw_wallets.disconnectCurrentDevice();
+        } catch (e) {}
+      }
+    };
+
     $scope.login_with_hw = function() {
         gaEvent('Login', 'HardwareLogin');
+
+        disconnectCurrentDevice();
+
         // new refactored implementation, unfinished
         var opts = {progressCb: progressCb};
         $scope.logging_in = true;
@@ -340,6 +351,8 @@ angular.module('greenWalletSignupLoginControllers', ['greenWalletMnemonicsServic
             });
         }
     };
+
+    disconnectCurrentDevice();
 
     var template = gettext("{hardware_wallet_name} Login");
     hw_wallets.checkDevices(tx_sender.gaService.netName).then(function (dev) {
