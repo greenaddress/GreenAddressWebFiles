@@ -233,6 +233,9 @@ function disconnect () {
 
 function call (uri, args) {
   try {
+    if (!this.session) {
+      throw new Error('No connection to server');
+    }
     return this.session.call(uri, args);
   } catch (e) {
     return Promise.reject(e);
