@@ -450,9 +450,14 @@ angular.module('greenWalletSignupLoginControllers', ['greenWalletMnemonicsServic
                     }
                 });
             }, function(e) {
-                gaEvent('Login', 'PinLoginFailed', e.args[1]);
+                if (e.args && e.args[1]) {
+                    error_string = e.args[1];
+                } else {
+                    error_string = e.toString();
+                }
+                gaEvent('Login', 'PinLoginFailed', error_string);
                 var suffix = '';
-                if (e.args[0] == "http://greenaddressit.com/error#password") {
+                if (e.args && e.args[0] == "http://greenaddressit.com/error#password") {
                     pin_attempts_left -= 1;
                     if (pin_attempts_left > 0) {
                         suffix = '; ' + gettext('%s attempts left.').replace('%s', pin_attempts_left);
@@ -466,7 +471,7 @@ angular.module('greenWalletSignupLoginControllers', ['greenWalletMnemonicsServic
                         delete use_pin_data.pin;
                     }
                 }
-                notices.makeNotice('error', (e.args[1] || e) + suffix);
+                notices.makeNotice('error', error_string + suffix);
                 state.login_error = true;
             });
     }
