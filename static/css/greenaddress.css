@@ -4465,6 +4465,13 @@ a.thumbnail.active {
 .alert-success .alert-link {
   color: #2b542c;
 }
+.system-message {
+  background-color: #d9edf7;
+  border-color: #bce8f1;
+  color: #31708f;
+  text-align: left;
+  white-space: pre-wrap;
+}
 .alert-info {
   background-color: #d9edf7;
   border-color: #bce8f1;

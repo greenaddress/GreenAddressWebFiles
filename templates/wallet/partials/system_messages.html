@@ -1,0 +1,19 @@
+
+<div class="modal-header">
+    <button type="button" class="close" title="Cancel" ng-click="$dismiss()">&times;</button>
+    <h3>{{ _("Important Notices") }}</h3>
+</div>
+<div class="modal-body text-center">
+
+    <div>
+        <p class="alert system-message">((system_messages_modal.message.message))</p>
+    </div>
+
+    <input type="checkbox" ng-model="system_messages_modal.ack_checkbox" id="ack_checkbox">I confirm I have read and understand the above message</input>
+
+    <p>
+        <a class="btn btn-block-xs btn-success" ng-class="{disabled:!system_messages_modal.ack_checkbox || system_messages_modal.button_disabled}" href="" ng-click="confirm_system_message()">
+            ((system_messages_modal.button_message))</a>
+    </p>
+
+</div>

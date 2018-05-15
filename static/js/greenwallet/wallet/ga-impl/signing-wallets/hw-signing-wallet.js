@@ -9,6 +9,7 @@ module.exports = HwSigningWallet;
 extend(HwSigningWallet.prototype, {
   getChallengeArguments: getChallengeArguments,
   signChallenge: signChallenge,
+  signMessage: signMessage,
   signTransaction: signTransaction,
   derivePath: derivePath,
   getChainCode: getChainCode
@@ -29,16 +30,18 @@ function getChallengeArguments () {
   return this.hw.getChallengeArguments();
 }
 
+function signMessage (path, message, options) {
+  return this.hw.signMessage(path, message, options);
+}
+
 function signChallenge (challenge) {
   // btchip requires 0xB11E to skip HID authentication
   // 0x4741 = 18241 = 256*G + A in ASCII
   var path = '' + 0x4741b11e;
+  var message = 'greenaddress.it      login ' + challenge;
+  var options = {progressCb: this.loginProgressCb};
 
-  challenge = 'greenaddress.it      login ' + challenge;
-  return this.hw.signMessage(
-    path, challenge,
-    {progressCb: this.loginProgressCb}
-  ).then(function (signature) {
+  return this.signMessage(path, message, options).then(function (signature) {
     signature = [ signature.r.toString(), signature.s.toString(), signature.i.toString() ];
     return {signature: signature, path: 'GA'};
   });

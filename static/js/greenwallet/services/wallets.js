@@ -267,6 +267,9 @@ function factory ($q, $rootScope, tx_sender, $location, notices, $uibModal,
         $scope.wallet.expired_deposits = data.expired_deposits;
         $scope.wallet.nlocktime_blocks = data.nlocktime_blocks;
         $scope.wallet.gait_path = data.gait_path;
+
+        $scope.wallet.next_system_message_id = data.next_system_message_id;
+
         // create a per-wallet keyname to store segwit lockin status
         if (data.gait_path) {
           $scope.wallet.segwit_locked_key =

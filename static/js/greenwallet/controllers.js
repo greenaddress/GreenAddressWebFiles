@@ -366,6 +366,28 @@ angular.module('greenWalletControllers', [])
                 scope: $scope
             });
         }
+        if ($scope.wallet.next_system_message_id) {
+
+            tx_sender.call('com.greenaddress.login.get_system_message', $scope.wallet.next_system_message_id).then( function(value) {
+
+                // Attach the id of the requested message to the message that comes
+                // back from the server
+                value['id'] = $scope.wallet.next_system_message_id;
+
+                // Display the messages in a modal for the user to ack
+                $scope.system_messages_modal = $uibModal.open({
+                    templateUrl: BASE_URL+'/'+LANG+'/wallet/partials/system_messages.html',
+                    controller: 'SystemMessagesController',
+                    scope: $scope
+                });
+
+                $scope.system_messages_modal.button_message = 'Confirm';
+                $scope.system_messages_modal.button_disabled = false;
+                $scope.system_messages_modal.ack_checkbox = false;
+                $scope.system_messages_modal.message = value;
+            });
+        }
+
         wallets.getTwoFacConfig($scope);  // required for 2FA missing warning
     });
     $scope.$on('disconnect', function(message) {
@@ -429,6 +451,77 @@ angular.module('greenWalletControllers', [])
 
 }]).controller('UrlQRController', ['$scope', 'url', function UrlQRController($scope, url) {
     $scope.url = url;
+}]).controller('SystemMessagesController', ['$scope', 'tx_sender', 'wallets', 'notices', '$q',
+    function SystemMessagesController($scope, tx_sender, wallets, notices, $q) {
+
+    var _ack_system_message = function(message_id, hash, signature) {
+        signature = [ signature.r.toString(), signature.s.toString() ]
+        var api_ack = 'com.greenaddress.login.ack_system_message';
+        return tx_sender.call(api_ack, message_id, hash, signature);
+    };
+
+    var ack_system_message = function(system_message) {
+
+        // The message that is signed is the hash of the actual message to
+        // avoid issues with maximum message sizes on hardware wallets
+        var hash_fn = Bitcoin.bitcoin.crypto.hash256;
+        var system_message_hash = hash_fn(system_message.message).toString('hex');
+
+        // The path of the key to sign the message with is derived from the
+        // hash of the plaintext message. Take the trailing 8 hex characters
+        // and parse them to form a 32-bit integer, then unset the hardened
+        // bit.
+        // 0x4741b11e is a special value that is required for this to work
+        // on certain hardware wallets
+        var unharden = ~(0x01 << 31);
+        var int_from_hash = parseInt(system_message_hash.slice(-8), 16) & unharden;
+        var root = require('wallet/ga-impl/constants').branches.MESSAGE_SIG;
+        var path = [0x4741b11e, root, int_from_hash].join('/');
+
+        // This progress callback allows the signing wallet instance to
+        // write text into the button on the UI
+        $scope.system_messages_modal.button_disabled = true;
+        var options = {
+            progressCb: function(message) {
+                $scope.system_messages_modal.button_message = message;
+            }
+        }
+
+        var signingWallet = tx_sender.gaWallet.signingWallet;
+        return signingWallet.signMessage(path, system_message_hash, options).then( function(signature) {
+            return _ack_system_message(system_message.id, system_message_hash, signature);
+        });
+    }
+
+    // Called when the user clicks the button in the UI to acknowledge the system message
+    // currently being shown.
+    $scope.confirm_system_message = function() {
+
+        // Sign and ack the message
+        var message = $scope.system_messages_modal.message;
+        ack_system_message(message).then(function() {
+            $scope.wallet.next_system_message_id = message.next_message_id;
+            if (message.next_message_id) {
+                // Load the next system message
+                $scope.system_messages_modal.button_message = 'Loading...';
+                tx_sender.call('com.greenaddress.login.get_system_message', message.next_message_id).then( function(value) {
+                    value['id'] = message.next_message_id;
+                    $scope.system_messages_modal.ack_checkbox = false;
+                    $scope.system_messages_modal.button_message = 'Confirm';
+                    $scope.system_messages_modal.button_disabled = false;
+                    $scope.system_messages_modal.message = value;
+                });
+            } else {
+                // No more messages, dismiss dialog
+                $scope.system_messages_modal.dismiss();
+            }
+        })
+        .catch( function (error) {
+            notices.makeError($scope, error);
+            $scope.system_messages_modal.dismiss();
+        });
+    };
+
 }]).controller('RedepositController', ['$scope', 'tx_sender', 'wallets', 'notices', '$q',
         function RedepositController($scope, tx_sender, wallets, notices, $q) {
     var redeposit = function(txos, options, twofac_data) {

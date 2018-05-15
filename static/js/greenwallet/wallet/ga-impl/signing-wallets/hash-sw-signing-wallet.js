@@ -8,6 +8,7 @@ var hashSegWit = require('../segwit').hashSegWit;
 var extend = require('xtend/mutable');
 var KeysManager = require('./../keys-managers/sw-keys-manager');
 var ScriptFactory = require('./../script-factory');
+var wally = require('wallyjs');
 var window = require('global/window');
 
 var Bitcoin = window.Bitcoin;
@@ -15,12 +16,17 @@ var Bitcoin = window.Bitcoin;
 module.exports = HashSwSigningWallet;
 
 extend(HashSwSigningWallet.prototype, {
-  getChallengeArguments: getChallengeArguments,
-  signChallenge: signChallenge,
-  signTransaction: signTransaction,
-  signInput: signInput,
+  deriveNextKey: deriveNextKey,
   derivePath: derivePath,
-  getChainCode: getChainCode
+  derivePrivateKey: derivePrivateKey,
+  getChainCode: getChainCode,
+  getChallengeArguments: getChallengeArguments,
+  pathFromBytes: pathFromBytes,
+  pathFromString: pathFromString,
+  signChallenge: signChallenge,
+  signInput: signInput,
+  signMessage: signMessage,
+  signTransaction: signTransaction
 });
 
 function HashSwSigningWallet (options) {
@@ -41,26 +47,55 @@ function getChallengeArguments () {
   ]);
 }
 
-function signChallenge (challenge) {
-  var pathBytes = crypto.randomBytes(8);
-  var randomPathHex = pathBytes.toString('hex');
-  while (randomPathHex.length < 16) {
-    randomPathHex = '0' + randomPathHex;
-  }
-  var challengeBuf = new BigInteger(challenge).toBuffer();
+function deriveNextKey (path_elem, key) {
+  return key.derive(path_elem);
+}
+
+function derivePrivateKey (path) {
   var key = Promise.resolve(this.keysManager.privHDWallet);
-  for (var i = 0; i < 4; i++) {
-    key = key.then(function (key) {
-      var dk = key.derive(+BigInteger.fromBuffer(pathBytes.slice(0, 2)));
-      pathBytes = pathBytes.slice(2);
-      return dk;
-    });
+  for (var i = 0; i < path.length; i++) {
+    var derive = deriveNextKey.bind(this, path[i]);
+    key = key.then(derive);
   }
-  return key.then(function (key) {
-    return key.signHash(challengeBuf);
+  return key;
+}
+
+// Return a path as an array of integers given a '/' separated string
+function pathFromString (path) {
+  return path.split('/').map(function (elem) { return parseInt(elem, 10); });
+}
+
+function signMessage (path, message, options) {
+  path = pathFromString(path);
+  message = Buffer(message);
+
+  return this.derivePrivateKey(path).then(function (private_key) {
+    return wally.wally_format_bitcoin_message(message, wally.BITCOIN_MESSAGE_FLAG_HASH).then(function (hash) {
+      return private_key.signHash(hash);
+    });
+  });
+}
+
+function pathFromBytes (pathBytes) {
+  var path = [];
+  for (var i = 0; i < pathBytes.length; i += 2) {
+    path.push(pathBytes.readUInt16BE(i));
+  }
+  return path;
+}
+
+function signChallenge (challenge) {
+  // The private key used for signing is derived from a random path of length 8
+  var pathBytes = crypto.randomBytes(8);
+  var randomPath = pathFromBytes(pathBytes);
+
+  var challengeBuf = new BigInteger(challenge).toBuffer();
+
+  return this.derivePrivateKey(randomPath).then(function (private_key) {
+    return private_key.signHash(challengeBuf);
   }).then(function (signature) {
     signature = [ signature.r.toString(), signature.s.toString() ];
-    return {signature: signature, path: randomPathHex};
+    return {signature: signature, path: pathBytes.toString('hex')};
   });
 }
 

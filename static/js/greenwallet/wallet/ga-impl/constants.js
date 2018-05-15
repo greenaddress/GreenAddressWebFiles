@@ -4,7 +4,8 @@ module.exports = {
     EXTERNAL: 2,
     SUBACCOUNT: 3,
     NLOCKTIME: 4,
-    BLINDED: 5
+    BLINDED: 5,
+    MESSAGE_SIG: 6
   },
   scriptTypes: {
     REDEEM_P2SH: 150,
