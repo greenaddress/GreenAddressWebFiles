@@ -319,6 +319,65 @@ angular.module('greenWalletSettingsControllers',
     setup_2fa('sms');
     setup_2fa('phone');
     setup_2fa('gauth');
+}]).controller('TwoFactorResetController', ['$scope', '$q', 'wallets', 'tx_sender', 'notices', '$uibModal', 'gaEvent', 'storage', 'storage_keys', '$location', '$timeout', 'bip38', 'mnemonics', 'hw_wallets',
+        function TwoFactorResetController($scope, $q, wallets, tx_sender, notices, $uibModal, gaEvent, storage, storage_keys, $location, $timeout, bip38, mnemonics, hw_wallets) {
+        $scope.reset2FAsettings = {};
+        $scope.reset2FAsettings.recovery_email = '';
+        $scope.reset2FAsettings.requesting_2fa_reset = false;
+        $scope.reset2FAsettings.recovery_email_confirmed = false;
+        $scope.reset2FAsettings.recovery_email_confirmation_code = '';
+        $scope.reset2FAsettings.reset_2fa_requested = false;
+
+        var update_reset_2fa_data = function(reset_2fa_data) {
+            $scope.wallet.reset_2fa_active = reset_2fa_data.reset_2fa_active;
+            $scope.wallet.reset_2fa_days_remaining = reset_2fa_data.reset_2fa_days_remaining;
+            $scope.wallet.reset_2fa_disputed = reset_2fa_data.reset_2fa_disputed;
+        }
+
+        $scope.request_2fa_reset = function() {
+            $scope.reset2FAsettings.requesting_2fa_reset = true;
+            var email = $scope.reset2FAsettings.recovery_email;
+            var is_dispute = $scope.wallet.reset_2fa_disputed;
+            return tx_sender.call('com.greenaddress.twofactor.request_reset', email).then( function(reset_2fa_data) {
+                notices.makeNotice('success', gettext('2FA reset requested'));
+                $scope.reset2FAsettings.reset_2fa_requested = true;
+                update_reset_2fa_data(reset_2fa_data);
+            })
+            .catch( function(error) {
+                notices.makeError($scope, error);
+            });
+        };
+
+        $scope.confirm_2fa_reset = function() {
+            var email = $scope.reset2FAsettings.recovery_email;
+            var is_dispute = $scope.wallet.reset_2fa_active;
+            var code = {'code': $scope.reset2FAsettings.recovery_email_confirmation_code, 'method': 'email'};
+            return tx_sender.call('com.greenaddress.twofactor.confirm_reset', email, is_dispute, code).then( function(reset_2fa_data) {
+                $scope.reset2FAsettings.recovery_email_confirmed = true;
+                update_reset_2fa_data(reset_2fa_data);
+                if ($scope.wallet.reset_2fa_disputed) {
+                    var msg = '2FA reset disputed';
+                } else {
+                    var msg = '2FA reset confirmed';
+                }
+                notices.makeNotice('success', gettext(msg));
+                $location.path('/reset_2fa_settings');
+            })
+            .catch( function(error) {
+                notices.makeError($scope, error);
+            });
+        };
+
+        $scope.cancel_reset_2fa = function() {
+            return wallets.attempt_two_factor($scope, 'cancel_reset', undefined, function(twofac_data) {
+                return tx_sender.call('com.greenaddress.twofactor.cancel_reset', twofac_data).then( function(reset_2fa_data) {
+                    notices.makeNotice('success', gettext('Reset 2FA cancelled'));
+                    update_reset_2fa_data(reset_2fa_data);
+                    $location.path('/info');
+                });
+            });
+        };
+
 }]).controller('SettingsController', ['$scope', '$q', 'wallets', 'tx_sender', 'notices', '$uibModal', 'gaEvent', 'storage', 'storage_keys', '$location', '$timeout', 'bip38', 'mnemonics', 'hw_wallets',
         function SettingsController($scope, $q, wallets, tx_sender, notices, $uibModal, gaEvent, storage, storage_keys, $location, $timeout, bip38, mnemonics, hw_wallets) {
     if (!wallets.requireWallet($scope)) return;

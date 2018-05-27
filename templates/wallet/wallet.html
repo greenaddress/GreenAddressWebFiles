@@ -51,9 +51,11 @@
     {% endif %}
   </div>
   <div class="container" toggle-class="visible">
-    <p ng-show="wallet.twofac && !wallet.twofac.any"><span class="label label-warning">{{ _("WARNING") }}</span> {{ _('You have no two factor authentication set up. Please set it up in <a href="#/settings">settings</a>.') }}</p>
-    <p ng-show="wallet.twofac && wallet.twofac.count == 1"><span class="label label-warning">{{ _("WARNING") }}</span> {{ _('You only have one two factor authentication method set up. Please add another in <a href="#/settings">settings</a> as a backup in case you lose access.') }}</p>
+    <p ng-show="wallet.twofac && !wallet.twofac.any"><span class="label label-warning">{{ _("WARNING") }}</span> {{ _('You have no two factor authentication set up. Please set it up in <a href="#/settings#twofa">settings</a>.') }}</p>
+    <p ng-show="wallet.twofac && wallet.twofac.count == 1 && !wallet.reset_2fa_active"><span class="label label-warning">{{ _("WARNING") }}</span> {{ _('You only have one two factor authentication method set up. Please add another in <a href="#/settings#twofa">settings</a> as a backup in case you lose access.') }}</p>
     <p ng-show="wallet.next_system_message_id"><span class="label label-warning">{{ _("WARNING") }}</span> {{ _('You have unacknowledged system messages. Please log in again with your PIN/mnemonic to see them.') }}</p>
+    <p ng-show="wallet.reset_2fa_active && !wallet.reset_2fa_disputed"><span class="label label-warning">{{ _("WARNING") }}</span> {{ _('This wallet is locked down in two factor reset mode and has limited functionality.') }} {{ _('Two factor authentication will be reset in ') }} ((wallet.reset_2fa_days_remaining)) {{ _('days.') }}</p>
+    <p ng-show="wallet.reset_2fa_disputed"><span class="label label-danger">{{ _("WARNING") }}</span> {{ _('Two factor reset has been disputed. The wallet is now locked down with limited functionality') }}</p>
 
     <p ng-show="wallet.hdwallet.keyPair.d && !wallet.appearance.mnemonic_verified && !wallet.logged_in_with_encrypted_mnemonics"><span class="label label-warning">{{ _("WARNING") }}</span>
       {{ _('You have not verified that you have backed up your mnemonic.') }}

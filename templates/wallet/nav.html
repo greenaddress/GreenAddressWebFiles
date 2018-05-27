@@ -2,10 +2,11 @@
   <ul>
     <li class="menu-header"><img src="{{STATIC_URL}}/img/logos/logo-greenaddress-white.png" alt="GreenAddress" /> GreenAddress</li>
     <li path="/info"><a href="#/info">{{ _("Transactions") }}</a></li>
-    <li ng-show="wallet.hdwallet.keyPair.d || wallet.hwDevice" path="/send"><a href="#/send">{{ _("Send") }}</a></li>
-    <li path="/receive"><a href="#/receive">{{ _("Receive") }}</a></li>
+    <li ng-show="!wallet.reset_2fa_active && (wallet.hdwallet.keyPair.d || wallet.hwDevice)" path="/send"><a href="#/send">{{ _("Send") }}</a></li>
+    <li ng-show="!wallet.reset_2fa_active" path="/receive"><a href="#/receive">{{ _("Receive") }}</a></li>
     <li path="/address-book"><a href="#/address-book">{{ _("Address Book") }}</a></li>
-    <li ng-show="wallet.hdwallet.keyPair.d || wallet.hwDevice" path="/settings" class="menu-settings"><a href="#/settings">{{ _("Settings") }}</a></li>
+    <li ng-show="!wallet.reset_2fa_active && (wallet.hdwallet.keyPair.d || wallet.hwDevice)" path="/settings" class="menu-settings"><a href="#/settings">{{ _("Settings") }}</a></li>
+    <li ng-show="wallet.reset_2fa_active && (wallet.hdwallet.keyPair.d || wallet.hwDevice)" path="/reset_2fa_settings" class="menu-settings"><a href="#/reset_2fa_settings">{{ _("Reset 2FA Settings") }}</a></li>
 
     <li ng-show="settings" du-scrollspy="general" class="menu-submenu"><a href="#general" du-smooth-scroll>{{ _("General") }}</a></li>
     <li ng-show="settings" du-scrollspy="transactions" class="menu-submenu"><a href="#transactions" du-smooth-scroll>{{ _("Transactions") }}</a></li>

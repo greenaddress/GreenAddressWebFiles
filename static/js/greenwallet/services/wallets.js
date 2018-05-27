@@ -77,6 +77,8 @@ function factory ($q, $rootScope, tx_sender, $location, notices, $uibModal,
   walletsService.openInitialPage = function (wallet, has_txs) {
     if ($location.search().redir) {
       $location.url($location.search().redir);
+    } else if (wallet.reset_2fa_active) {
+      $location.path('/reset_2fa_settings');
     } else if (!has_txs) {
       $location.path('/receive');
     } else if (wallet.hdwallet.keyPair.d && (window.IS_MOBILE || wallet.send_to_receiving_id || wallet.send_to_payment_request)) {
@@ -269,6 +271,10 @@ function factory ($q, $rootScope, tx_sender, $location, notices, $uibModal,
         $scope.wallet.gait_path = data.gait_path;
 
         $scope.wallet.next_system_message_id = data.next_system_message_id;
+
+        $scope.wallet.reset_2fa_active = data.reset_2fa_active;
+        $scope.wallet.reset_2fa_days_remaining = data.reset_2fa_days_remaining;
+        $scope.wallet.reset_2fa_disputed = data.reset_2fa_disputed;
 
         // create a per-wallet keyname to store segwit lockin status
         if (data.gait_path) {

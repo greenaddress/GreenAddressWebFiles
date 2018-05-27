@@ -370,10 +370,6 @@ angular.module('greenWalletControllers', [])
 
             tx_sender.call('com.greenaddress.login.get_system_message', $scope.wallet.next_system_message_id).then( function(value) {
 
-                // Attach the id of the requested message to the message that comes
-                // back from the server
-                value['id'] = $scope.wallet.next_system_message_id;
-
                 // Display the messages in a modal for the user to ack
                 $scope.system_messages_modal = $uibModal.open({
                     templateUrl: BASE_URL+'/'+LANG+'/wallet/partials/system_messages.html',
@@ -385,6 +381,9 @@ angular.module('greenWalletControllers', [])
                 $scope.system_messages_modal.button_disabled = false;
                 $scope.system_messages_modal.ack_checkbox = false;
                 $scope.system_messages_modal.message = value;
+
+            }).catch(function(err) {
+                notices.makeError($scope, err);
             });
         }
 
@@ -456,8 +455,13 @@ angular.module('greenWalletControllers', [])
 
     var _ack_system_message = function(message_id, hash, signature) {
         signature = [ signature.r.toString(), signature.s.toString() ]
-        var api_ack = 'com.greenaddress.login.ack_system_message';
-        return tx_sender.call(api_ack, message_id, hash, signature);
+        return tx_sender.call('com.greenaddress.login.ack_system_message',
+            message_id,
+            hash,
+            signature)
+        .catch( function (error) {
+            notices.makeError($scope, error);
+        });
     };
 
     var ack_system_message = function(system_message) {
@@ -489,7 +493,10 @@ angular.module('greenWalletControllers', [])
 
         var signingWallet = tx_sender.gaWallet.signingWallet;
         return signingWallet.signMessage(path, system_message_hash, options).then( function(signature) {
-            return _ack_system_message(system_message.id, system_message_hash, signature);
+            return _ack_system_message(system_message.message_id, system_message_hash, signature);
+        })
+        .catch( function (error) {
+            notices.makeError($scope, error);
         });
     }
 
