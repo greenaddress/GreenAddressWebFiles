@@ -302,7 +302,9 @@ function factory ($q, $rootScope, tx_sender, $location, notices, $uibModal,
     }).catch(function (e) { d.reject(e); });
     return d.promise.catch(function (err) {
       if (options.signupOnFailure && err === 'Login failed') {
-        notices.makeNotice('error', gettext('User not found.'));
+        // Login has failed because no wallet exists for the hardware
+        // wallet. Redirect to create a new account
+        console.log('Login failed. Creating new wallet');
         $location.path('/create');
       } else {
         console.log(err);
