@@ -155,7 +155,12 @@ function factory ($q, $rootScope, tx_sender, $location, notices, $uibModal,
         // directly because it has to call signingWalletFromHW earlier anyway.
         $scope, wallet, extend({signupOnFailure: true}, options)
       );
-    }).then(function (data) { walletsService.onLogin($scope, data); return data; });
+    }).then(function (data) {
+        if (data) {
+            walletsService.onLogin($scope, data);
+        }
+        return data;
+    });
   };
   walletsService.onLogin = function ($scope, data) {
     if (data.appearance.use_segwit == null && // false would mean user-disabled
