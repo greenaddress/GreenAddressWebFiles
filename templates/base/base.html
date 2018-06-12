@@ -33,11 +33,6 @@
     <link rel="icon" type="image/png" href="{{STATIC_URL}}/img/favicons/favicon-96x96.png" sizes="96x96" />
     <link rel="icon" type="image/png" href="{{STATIC_URL}}/img/favicons/favicon-32x32.png" sizes="32x32" />
     <link rel="icon" type="image/png" href="{{STATIC_URL}}/img/favicons/favicon-16x16.png" sizes="16x16" />
-    {% if TESTNET %}
-      <link href='https://chrome.google.com/webstore/detail/kbdjlmbommjjeojcngejkamofpnjhahl' rel='chrome-webstore-item' />
-    {% else %}
-      <link href='https://chrome.google.com/webstore/detail/dgbimgjoijjemhdamicmljbncacfndmp' rel='chrome-webstore-item' />
-    {% endif %}
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="msapplication-TileColor" content="#ffffff" />
     <meta name="msapplication-TileImage" content="{{STATIC_URL}}/img/favicons/mstile-144x144.png" />
@@ -158,7 +153,6 @@
           </div>
           <div class="col-xs-6">
             <ul class="list-inline pull-right text-center">
-              <li><a href="https://chrome.google.com/webstore/detail/greenaddressit/dgbimgjoijjemhdamicmljbncacfndmp" target="_blank"><img src="{{STATIC_URL}}/img/logos/logo-chrome-web-store.png" alt="Chrome Web Store" /></a></li>
               <li><a href="https://play.google.com/store/apps/details?id=com.greenaddress.greenbits_android_wallet" target="_blank"><img src="{{STATIC_URL}}/img/logos/logo-google-play.png" alt="Google Play" /></a></li>
               <li><a href="https://itunes.apple.com/app/id1206035886" target="_blank"><img src="{{STATIC_URL}}/img/logos/logo-appstore-{{ LANG }}.svg" height="30" alt="AppStore" /></a></li>
               <li><a href="https://f-droid.org/repository/browse/?fdid=com.greenaddress.greenbits_android_wallet" target="_blank"><img src="{{STATIC_URL}}/img/logos/logo-fdroid.svg" height="30" alt="F-Droid" /></a></li>
