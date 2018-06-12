@@ -99,12 +99,10 @@ angular.module('greenWalletSendControllers',
             } else {
                 try {
                     var decoded = Bitcoin.bs58check.decode(to_addr);
+                    isConfidential = (decoded[0] == 25 || decoded[0] == 10);
                 } catch (e) {
-                    notices.makeNotice('error', gettext('Invalid address'));
-                    that.sending = false;
-                    return;
+                    addrDeferred = Bitcoin.bitcoin.address.validateAddress(to_addr, cur_net);
                 }
-                isConfidential = (decoded[0] == 25 || decoded[0] == 10);
             }
             var satoshis =
                 this.spend_all ? "ALL" : this.amount_to_satoshis(this.amount);
@@ -123,6 +121,10 @@ angular.module('greenWalletSendControllers',
                 refreshAndAddr.push(addrDeferred);
             }
             return $q.all(refreshAndAddr).then(function() {
+                if (!isConfidential) {
+                    return Bitcoin.bitcoin.address.toOutputScriptExt(to_addr, cur_net)
+                }
+            }).then(function(script) {
                 var destination;
                 if (isConfidential) {
                     destination = {
@@ -136,9 +138,7 @@ angular.module('greenWalletSendControllers',
                     destination = {
                         value: satoshis === 'ALL' ?
                             +$scope.wallet.final_balance : +satoshis,
-                        scriptPubKey: Bitcoin.bitcoin.address.toOutputScript(
-                            to_addr, cur_net
-                        )
+                            scriptPubKey: script
                     }
                 }
                 var addFee;
@@ -238,7 +238,7 @@ angular.module('greenWalletSendControllers',
                                 change_idx: satoshis === 'ALL' ? 1 : tx.changeIdx,
                                 fee: fee,
                                 asset: assetName,
-                                recipient: to_addr
+                                // recipient: to_addr
                             }}, attempt
                         );
                     }
@@ -263,7 +263,7 @@ angular.module('greenWalletSendControllers',
                             twofac_data.send_raw_tx_change_idx = satoshis === 'ALL' ? 1 : tx.changeIdx;
                             twofac_data.send_raw_tx_fee = fee;
                             twofac_data.send_raw_tx_asset = assetName;
-                            twofac_data.send_raw_tx_recipient = to_addr;
+                            // twofac_data.send_raw_tx_recipient = to_addr;
                         }
                         var priv_data = {};
                         if (that.memo) {
