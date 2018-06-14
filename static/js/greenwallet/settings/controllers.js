@@ -375,6 +375,9 @@ angular.module('greenWalletSettingsControllers',
                     update_reset_2fa_data(reset_2fa_data);
                     $location.path('/info');
                 });
+            })
+            .catch( function(error) {
+                notices.makeError($scope, error);
             });
         };
 
