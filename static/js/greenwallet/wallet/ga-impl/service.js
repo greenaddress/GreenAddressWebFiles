@@ -109,6 +109,8 @@ function login (options, cb, eb) {
         d = _this._loginWithWatchOnly(watchOnly, cb, eb);
       }
       d.then(function (data) {
+        if (!data) { return; }
+
         _this.minFeeRate = +data.min_fee;
         _this.dust = +data.dust;
         _this.session.subscribe('com.greenaddress.txs.wallet_' + data.receiving_id,
