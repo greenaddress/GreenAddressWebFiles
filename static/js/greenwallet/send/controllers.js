@@ -51,7 +51,8 @@ angular.module('greenWalletSendControllers',
                 gaEvent('Wallet', 'SendReadQrCodeSuccessful');
                 $rootScope.safeApply(function() {
                     var parsed_uri = parse_bitcoin_uri(text);
-                    if (parsed_uri.recipient) {
+                    var is_bip70_uri = parsed_uri.r;
+                    if (parsed_uri.recipient && !is_bip70_uri) {
                         that.recipient = parsed_uri.recipient;
                     }
                     else {
