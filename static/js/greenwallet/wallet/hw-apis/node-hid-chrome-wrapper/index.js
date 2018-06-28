@@ -33,6 +33,15 @@ function nodeSend (dev, reportId, data, cb) {
   if (reportId) {
     data = [reportId].concat(data);
   }
+  // See https://github.com/signal11/hidapi/issues/255
+  // There is a quirk in hidapi that means an extra zero
+  // byte needs to be prepended on Windows.
+  var isWindows = function () {
+    return require('os').release().indexOf('Windows') >= 0;
+  };
+  if (isWindows()) {
+    data = [0x00].concat(data);
+  }
   dev.write(data);
   cb();
 }
