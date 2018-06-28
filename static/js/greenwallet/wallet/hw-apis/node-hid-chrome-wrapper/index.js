@@ -13,7 +13,9 @@ function nodeGetDevices (options, cb) {
   var ret = [];
   options.filters.forEach(function (filter) {
     try {
-      ret = ret.concat(hid.devices(filter.vendorId, filter.productId));
+      var devices = hid.devices(filter.vendorId, filter.productId);
+      devices = devices.sort(function (a, b) { return a.interface > b.interface; });
+      ret = ret.concat(devices);
     } catch (e) {
       console.log(e);
     }
