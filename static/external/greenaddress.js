@@ -6,40 +6,12 @@ var disableEuCookieComplianceBanner = function() {
 };
 
 $(document).ready(function() {
-    var appInstalled = false;
-    if (window.chrome && chrome.runtime) {
-        chrome.runtime.sendMessage(
-            $('link[rel="chrome-webstore-item"]').attr('href').split('/detail/')[1],
-            {greeting: true}, function(response) {
-                appInstalled = (response == "GreenAddress installed");
-            }
-        );
-    }
-
     if (!window.cordova && document.cookie.indexOf('eu-cookie-compliance=true') == -1) {
         $('body').append('<div id="eu-cookie-compliance"><span id="eu-cookie-compliance-hide">×</span>'+
             gettext('Cookies help us deliver our services. By using our services, you agree to our use of cookies.')+
                     ' <a href="/faq/#cookies">'+gettext('More information')+'</a></div>');
         $('#eu-cookie-compliance').click(function() {
             disableEuCookieComplianceBanner();
-        });
-    }
-    if (!cur_net.isAlpha && window.chrome && chrome.app) {
-        $('#wallet-create, #wallet-login').click(function(ev) {
-            ev.preventDefault();
-            if (appInstalled) {
-                if ($(ev.target).attr('id') == 'wallet-create') {
-                    window.location.href = "/launch_chrome_app_signup/";
-                } else {
-                    window.location.href = "/launch_chrome_app/";
-                }
-                return;
-            }
-            try {
-                chrome.webstore.install();
-            } catch (e) {
-                location.href = $('link[rel="chrome-webstore-item"]').attr('href')
-            }
         });
     }
 });
