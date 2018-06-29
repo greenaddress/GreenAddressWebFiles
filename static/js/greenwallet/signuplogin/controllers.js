@@ -12,47 +12,12 @@ angular.module('greenWalletSignupLoginControllers', ['greenWalletMnemonicsServic
         window.WalletControllerInitVars = window.GlobalWalletControllerInitVars;
     }
 
-    $scope.install_run_app_label = "";
-    var appInstalled = false;
-    if (cur_net.isAlpha && window.chrome && chrome.app && !chrome.storage) {
-        if (chrome.runtime) {
-            chrome.runtime.sendMessage(
-                $('link[rel="chrome-webstore-item"]').attr('href').split('/detail/')[1],
-                {greeting: true}, function(response) {
-                    appInstalled = (response == "GreenAddress installed");
-                    if (appInstalled) {
-                        $scope.$apply(function() {
-                            $scope.install_run_app_label = gettext("Launch the Chrome App")
-                        });
-                    }
-                }
-            );
-        }
-        $scope.install_run_app_label = gettext("Install the Chrome App")
-    }
-
     if ((!window.chrome || !chrome.storage) && !window.cordova) {
         var modal = $uibModal.open({
             templateUrl: BASE_URL+'/'+LANG+'/wallet/partials/signuplogin/wallet_modal_deprecated_warning.html',
             scope: $scope
         });
         modal.opened.then(function() {})
-    }
-
-    $scope.install_run_app = function(ev) {
-        if (cur_net.isAlpha && window.chrome && chrome.app && !chrome.storage) {
-            // !chrome.storage means we're not inside the chrome app
-            ev.preventDefault();
-            if (appInstalled) {
-                window.location.href = "/launch_chrome_app_signup/";
-                return;
-            }
-            try {
-                chrome.webstore.install();
-            } catch (e) {
-                location.href = $('link[rel="chrome-webstore-item"]').attr('href')
-            }
-        }
     }
 
     storage.set(storage_keys.LAST_VISIT, new Date().toISOString());

@@ -2,12 +2,10 @@
 <div class="create-modal">
     <div class="create-modal-dialog">
         <div class="create-modal-content">
-            <div class="create-modal-header" ng-hide="wallet.redeem_key{% if WEBWALLET_MODE != "FULL" %} || !install_run_app_label{% endif %}">
+            <div class="create-modal-header" ng-hide="wallet.redeem_key">
                 {% if WEBWALLET_MODE == "FULL" %}
                     {{ _("Haven't got an account yet?") }}
                     <a href="#/create"><strong>{{ _("Create new Wallet") }}</strong></a>
-                {% else %}
-                    <a ng-click="install_run_app($event)" href="#/create{% if not crapp and not cdvapp %}_warning{% endif %}"><strong>(( install_run_app_label ))</strong></a>
                 {% endif %}
             </div>
             <div class="create-modal-body">
