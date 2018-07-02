@@ -10,6 +10,7 @@ angular.module('greenWalletControllers', [])
         BTCCHINA: 'BTCChina',
         BTCE: 'BTC-e',
         HUOBI: 'Huobi',
+        KIWICOIN: 'Kiwi-Coin',
         KRAKEN: 'Kraken',
         LOCALBTC: 'LocalBitcoins',
         LUNO: 'Luno',
