@@ -12,6 +12,7 @@ angular.module('greenWalletControllers', [])
         HUOBI: 'Huobi',
         KRAKEN: 'Kraken',
         LOCALBTC: 'LocalBitcoins',
+        LUNO: 'Luno',
         QUADRIGACX: 'QuadrigaCX',
         TRT: 'The Rock Trading'
     };
