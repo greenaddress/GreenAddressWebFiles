@@ -4,16 +4,16 @@ angular.module('greenWalletControllers', [])
     $scope.cordova_platform = window.cordova && cordova.platformId;
 
     var exchanges = $scope.exchanges = {
-        BITSTAMP: 'Bitstamp',
-        LOCALBTC: 'LocalBitcoins',
-        BTCAVG: 'BitcoinAverage',
-        TRT: 'The Rock Trading',
         BITFINEX: 'BitFinex',
+        BITSTAMP: 'Bitstamp',
+        BTCAVG: 'BitcoinAverage',
+        BTCCHINA: 'BTCChina',
         BTCE: 'BTC-e',
         HUOBI: 'Huobi',
-        BTCCHINA: 'BTCChina',
         KRAKEN: 'Kraken',
-        QUADRIGACX: 'QuadrigaCX'
+        LOCALBTC: 'LocalBitcoins',
+        QUADRIGACX: 'QuadrigaCX',
+        TRT: 'The Rock Trading'
     };
 
     var getExchangeDescription = $scope.getExchangeDescription = function (exchange) {
