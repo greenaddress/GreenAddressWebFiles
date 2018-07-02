@@ -268,7 +268,7 @@ function factory ($q, $rootScope, tx_sender, $location, notices, $uibModal,
         $scope.wallet.unit = $scope.wallet.appearance.unit || 'mBTC';
         $scope.wallet.cache_password = data.cache_password;
         $scope.wallet.fiat_exchange = data.exchange;
-        $scope.wallet.fiat_exchange_extended = $scope.exchanges[data.exchange];
+        $scope.wallet.fiat_exchange_extended = $scope.getExchangeDescription(data.exchange);
         $scope.wallet.receiving_id = data.receiving_id;
         $scope.wallet.expired_deposits = data.expired_deposits;
         $scope.wallet.nlocktime_blocks = data.nlocktime_blocks;

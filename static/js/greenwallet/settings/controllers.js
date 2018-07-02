@@ -565,7 +565,7 @@ angular.module('greenWalletSettingsControllers',
                     if (err.args[0] == "http://greenaddressit.com/error#exchangecurrencynotsupported") {
                         gaEvent('Wallet', 'CurrencyNotSupportedByExchange');
                         notices.makeNotice('error', gettext('{1} supports only the following currencies: {2}')
-                            .replace('{1}', exchanges[exchange])
+                            .replace('{1}', getExchangeDescription(exchange))
                             .replace('{2}', err.detail.supported));
                     } else {
                         gaEvent('Wallet', 'PricingSourceChangeFailed', err.args[1]);
@@ -599,7 +599,7 @@ angular.module('greenWalletSettingsControllers',
                 if (err.args[0] == "http://greenaddressit.com/error#exchangecurrencynotsupported") {
                     gaEvent('Wallet', 'CurrencyNotSupportedByExchange');
                     notices.makeNotice('error', gettext('{1} supports only the following currencies: {2}')
-                        .replace('{1}', exchanges[settings.exchange])
+                        .replace('{1}', getExchangeDescription(settings.exchange))
                         .replace('{2}', err.detail.supported));
                 } else {
                     gaEvent('Wallet', 'CurrencyChangeFailed', err.args[1]);
@@ -677,7 +677,7 @@ angular.module('greenWalletSettingsControllers',
                 if (err.args[0] == "http://greenaddressit.com/error#exchangecurrencynotsupported") {
                     gaEvent('Wallet', 'CurrencyNotSupportedByExchange');
                     notices.makeNotice('error', gettext('{1} supports only the following currencies: {2}')
-                        .replace('{1}', exchanges[newValue])
+                        .replace('{1}', getExchangeDescription(newValue))
                         .replace('{2}', err.detail.supported));
                 } else {
                     gaEvent('Wallet', 'ExchangeChangeFailed', err.args[1]);

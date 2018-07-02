@@ -20,7 +20,7 @@
       <div class="form-group">
         <div class="btn-group">
           <select ng-model="settings.pricing_source"
-              ng-options="(source.currency+'|'+source.exchange) as (source.currency+' ('+exchanges[source.exchange]+')') for source in settings.pricing_sources"
+              ng-options="(source.currency+'|'+source.exchange) as (source.currency+' ('+getExchangeDescription(source.exchange)+')') for source in settings.pricing_sources"
               ng-disabled="settings.updating_pricing_source">
           </select>
         </div>

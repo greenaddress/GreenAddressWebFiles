@@ -16,6 +16,10 @@ angular.module('greenWalletControllers', [])
         QUADRIGACX: 'QuadrigaCX'
     };
 
+    var getExchangeDescription = $scope.getExchangeDescription = function (exchange) {
+        return exchanges[exchange] || exchange;
+    };
+
     if (window.chrome && chrome.runtime && chrome.runtime.getManifest) {
         var app_version = chrome.runtime.getManifest().version;
     } else if ($scope.cordova_platform) {
@@ -187,7 +191,7 @@ angular.module('greenWalletControllers', [])
                         that.fiat = JSON.stringify({rate: data.fiat_exchange,
                                                     currency: data.fiat_currency});
                         that.fiat_last_fetch = 1*((new Date).getTime()/1000).toFixed();
-                        that.fiat_exchange_extended = exchanges[$scope.wallet.fiat_exchange];
+                        that.fiat_exchange_extended = getExchangeDescription($scope.wallet.fiat_exchange);
                         if (firstUpdateData) {
                             $scope.$broadcast('first_balance_updated');
                         }
@@ -285,7 +289,7 @@ angular.module('greenWalletControllers', [])
                                                         currency: data.fiat_currency});
 
                             that.fiat_last_fetch = 1*((new Date).getTime()/1000).toFixed();
-                            that.fiat_exchange_extended = exchanges[$scope.wallet.fiat_exchange];
+                            that.fiat_exchange_extended = getExchangeDescription($scope.wallet.fiat_exchange);
                             if (firstUpdateData) {
                                 $scope.$broadcast('first_balance_updated');
                             }
