@@ -78,7 +78,11 @@ function factory ($q, $rootScope, tx_sender, $location, notices, $uibModal,
     if ($location.search().redir) {
       $location.url($location.search().redir);
     } else if (wallet.reset_2fa_active) {
-      $location.path('/reset_2fa_settings');
+      if (wallet.hdwallet.keyPair.d) { // if not watch only
+          $location.path('/reset_2fa_settings');
+      } else {
+          $location.url('/info');
+      }
     } else if (!has_txs) {
       $location.path('/receive');
     } else if (wallet.hdwallet.keyPair.d && (window.IS_MOBILE || wallet.send_to_receiving_id || wallet.send_to_payment_request)) {
