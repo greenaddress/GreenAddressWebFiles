@@ -1,7 +1,7 @@
 angular.module('greenWalletSendControllers',
     ['greenWalletServices'])
-.controller('SendController', ['$scope', 'wallets', 'tx_sender', 'cordovaReady', 'notices', 'branches', 'wallets', 'storage', 'storage_keys', '$routeParams', 'hostname', 'gaEvent', '$uibModal', '$location', '$rootScope', '$q', 'parse_bitcoin_uri', 'qrcode', 'sound', 'encode_key',
-         function SendController($scope, wallets, tx_sender, cordovaReady, notices, branches, wallets, storage, storage_keys, $routeParams, hostname, gaEvent, $uibModal, $location, $rootScope, $q, parse_bitcoin_uri, qrcode, sound, encode_key) {
+.controller('SendController', ['$scope', 'wallets', 'tx_sender', 'cordovaReady', 'notices', 'branches', 'wallets', 'storage', 'storage_keys', '$routeParams', 'gaEvent', '$uibModal', '$location', '$rootScope', '$q', 'parse_bitcoin_uri', 'qrcode', 'sound', 'encode_key',
+         function SendController($scope, wallets, tx_sender, cordovaReady, notices, branches, wallets, storage, storage_keys, $routeParams, gaEvent, $uibModal, $location, $rootScope, $q, parse_bitcoin_uri, qrcode, sound, encode_key) {
     if (!wallets.requireWallet($scope)) return;
     var mul = {'BTC': 1, 'mBTC': 1000, 'µBTC': 1000000, 'bits': 1000000}[$scope.wallet.unit];
     var stringToBlocksToTarget = {"High": 3, "Normal": 6, "Low": 12, "Economy": 24};

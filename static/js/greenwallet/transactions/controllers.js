@@ -4,8 +4,8 @@ var bitcoin = require('bitcoinjs-lib');
 var GAAddressFactory = require('../wallet/ga-impl/address-factory');
 angular.module('greenWalletTransactionsControllers',
     ['greenWalletServices'])
-.controller('TransactionsController', ['$scope', 'wallets', 'tx_sender', 'storage', 'storage_keys', 'notices', 'branches', '$uibModal', 'gaEvent', '$timeout', '$q', 'encode_key', 'hostname',
-        function TransactionsController($scope, wallets, tx_sender, storage, storage_keys, notices, branches, $uibModal, gaEvent, $timeout, $q, encode_key, hostname) {
+.controller('TransactionsController', ['$scope', 'wallets', 'tx_sender', 'storage', 'storage_keys', 'notices', 'branches', '$uibModal', 'gaEvent', '$timeout', '$q', 'encode_key',
+        function TransactionsController($scope, wallets, tx_sender, storage, storage_keys, notices, branches, $uibModal, gaEvent, $timeout, $q, encode_key) {
     // required already by InfoController
     // if(!wallets.requireWallet($scope)) return;
 

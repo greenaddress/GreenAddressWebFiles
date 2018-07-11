@@ -20,7 +20,6 @@ var serviceMap = {
   encode_key: require('./encode_key'),
   focus: require('./focus'),
   gaEvent: require('./gaEvent'),
-  hostname: require('./hostname'),
   hw_wallets: require('./hw_wallets'),
   notices: require('./notices'),
   parseKeyValue: require('./parseKeyValue'),
