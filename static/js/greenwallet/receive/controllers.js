@@ -3,12 +3,12 @@ var wally = require('wallyjs');
 
 angular.module('greenWalletReceiveControllers',
     ['greenWalletServices'])
-.controller('ReceiveController', ['$rootScope', '$scope', 'wallets', '$filter', 'tx_sender', 'notices', 'cordovaReady', 'storage', 'storage_keys', 'hostname', 'gaEvent', '$uibModal', '$location', 'qrcode', 'clipboard', 'branches', '$q',
-        function InfoController($rootScope, $scope, wallets, $filter, tx_sender, notices, cordovaReady, storage, storage_keys, hostname, gaEvent, $uibModal, $location, qrcode, clipboard, branches, $q) {
+.controller('ReceiveController', ['$rootScope', '$scope', 'wallets', '$filter', 'tx_sender', 'notices', 'cordovaReady', 'storage', 'storage_keys', 'gaEvent', '$uibModal', '$location', 'qrcode', 'clipboard', 'branches', '$q',
+        function InfoController($rootScope, $scope, wallets, $filter, tx_sender, notices, cordovaReady, storage, storage_keys, gaEvent, $uibModal, $location, qrcode, clipboard, branches, $q) {
     if(!wallets.requireWallet($scope)) return;
     $scope.wallet.signup = false;  // required for 2FA settings to work properly in the same session as signup
 
-    var payment_url_prefix = 'https://' + hostname + '/pay/';
+    var payment_url_prefix = window.root_url + '/pay/';
     var base_payment_url = payment_url_prefix + $scope.wallet.receiving_id + '/';
     $scope.receive = {
         payment_url: base_payment_url,
