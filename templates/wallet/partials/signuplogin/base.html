@@ -8,8 +8,8 @@
                 <div ng-include="wallet.signuplogin_header"></div>
                 <hr>
                 {% if WEBWALLET_MODE == "FULL" %}
-                    <div class="subtitle">{{ _("Log in for full Wallet access") }}</div>
-                    <form submittable class="form-horizontal" ng-submit="login()" ng-class="{'has-error': state.mnemonic_error}" autocomplete="off">
+                    <div ng-hide="wallet.send_to_receiving_id" class="subtitle">{{ _("Log in for full Wallet access") }}</div>
+                    <form ng-hide="wallet.send_to_receiving_id" submittable class="form-horizontal" ng-submit="login()" ng-class="{'has-error': state.mnemonic_error}" autocomplete="off">
                         <div class="form-group" ng-show="!state.toggleshowpin" ng-class="{'has-error': state.error && form.$invalid}">
                             <label class="col-sm-3 col-sm-offset-2 control-label" for="pin">{{ _('PIN Number') }}</label>
                             <div class="col-sm-4">
@@ -99,7 +99,7 @@
             </div>
             <div class="create-modal-footer" ng-show="state.has_pin">
                 {% if WEBWALLET_MODE == "FULL" %}
-                    <label class="switch">
+                    <label ng-hide="wallet.send_to_receiving_id" class="switch">
                       <input type="checkbox" class="switch" ng-model="state.toggleshowpin" ng-disabled="is_loading || logging_in || payreq_loading" />
                       <span class="switch"></span>
                         <span>

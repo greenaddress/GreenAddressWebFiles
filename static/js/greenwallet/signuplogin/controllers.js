@@ -12,7 +12,7 @@ angular.module('greenWalletSignupLoginControllers', ['greenWalletMnemonicsServic
         window.WalletControllerInitVars = window.GlobalWalletControllerInitVars;
     }
 
-    if ((!window.chrome || !chrome.storage) && !window.cordova) {
+    if ((!window.chrome || !chrome.storage) && !window.cordova && window.location.href.indexOf('/pay/') == -1) {
         var modal = $uibModal.open({
             templateUrl: BASE_URL+'/'+LANG+'/wallet/partials/signuplogin/wallet_modal_deprecated_warning.html',
             scope: $scope
