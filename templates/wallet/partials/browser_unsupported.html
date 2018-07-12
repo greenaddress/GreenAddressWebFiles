@@ -8,16 +8,19 @@
       <div class="create-modal-body text-center">
         <span class="title">
           {{ _("We are sorry, but your browser is not supported.") }}<br>
-          <small>{{ _("Please try a modern browser like Chrome, Firefox, Safari or our Android, iOS or F-Droid app!") }}</small>
+          <small>{{ _("Please try a modern browser like Chrome, Firefox, Safari or download one of our mobile or desktop apps") }}</small>
         </span>
         <hr>
         <a target="_blank" class="supported-browsers" href="http://www.google.com/chrome/"><img src="/static/img/logos/logo-browser-chrome.png" class="browser" /></a>
         <a target="_blank" class="supported-browsers" href="http://firefox.com/"><img src="/static/img/logos/logo-browser-firefox.png" class="browser" /></a>
         <a target="_blank" class="supported-browsers" href="http://www.apple.com/safari/"><img src="/static/img/logos/logo-browser-safari.png" class="browser" /></a>
         <hr>
-        <a target="_blank" class="supported-browsers" href="https://play.google.com/store/apps/details?id=com.greenaddress.greenbits_android_wallet"><img src="/static/img/logos/logo-google-play.svg" height="30" class="android-app" /></a>
-        <a target="_blank" class="supported-browsers" href="https://itunes.apple.com/app/id1206035886"><img src="/static/img/logos/logo-appstore-{{ LANG }}.svg" height="30" class="ios-app" /></a>
-        <a target="_blank" class="supported-browsers" href="https://f-droid.org/repository/browse/?fdid=com.greenaddress.greenbits_android_wallet"><img src="{{STATIC_URL}}/img/logos/logo-fdroid.svg" height="30" class="fdroid-app" /></a>
+        <ul class="list-inline text-center">
+            {% include "snippets/download-links-desktop.html" %}
+            <br/>
+            <br/>
+            {% include "snippets/download-links-mobile.html" %}
+        </ul>
       </div>
     </div>
   </div>
