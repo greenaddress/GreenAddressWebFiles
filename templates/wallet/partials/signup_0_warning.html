@@ -5,16 +5,10 @@
 
             
             <div class="create-modal-body" ng-hide="signup.unexpected_error">
-                <div class="title">{{ _("For improved security continue the registration via our desktop or mobile apps") }}<br>
-                    <small>{{ _("Locally installed apps are generally more secure than websites") }}</small>
+                <div class="title">{{ _("Download GreenAddress Wallet") }}
                 </div>
                 <hr>
-                <p>{{ _("These apps are designed to protect you and your coins even in case the service is compromised and should be preferred over using the browser.") }}<br/><br/>
-                {{ _("Web access is intended to be used for watch only mode or if you have no alternative, like on the Windows Mobile platform.") }} 
-                <br/>
-                <br/>
-                {{ _("Please see the link to Google Play store or AppStore below") }}
-                </p>
+                <p>{{ _("To continue creating your wallet please download the app from the appropriate link for your platform below") }}</p>
             </div>
 
             <div class="create-modal-footer">
@@ -24,8 +18,6 @@
                 <br/>
                 {% include "snippets/download-links-mobile.html" %}
               </ul>
-                <hr>
-                <a class="btn btn-primary btn-block-xs" href="#/create">{{ _("Continue using web page") }}</a>
             </div>
 
         </div>
