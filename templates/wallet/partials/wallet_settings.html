@@ -588,8 +588,8 @@
     </form>
   </div>
 </div>
-<hr ng-show="wallet.twofac && wallet.twofac.any" class="double">
-<div class="row" ng-show="wallet.twofac && wallet.twofac.any" ng-controller="TwoFactorResetController">
+<hr ng-show="wallet.twofac && wallet.twofac.any && !wallet.reset_2fa_active" class="double">
+<div class="row" ng-show="wallet.twofac && wallet.twofac.any && !wallet.reset_2fa_active" ng-controller="TwoFactorResetController">
   <div class="col-md-3">
     <div class="sub-header">{{ _("Reset two factor authentication") }}</div>
     <div class="sub-header-desc">{{ _("If you have lost access to your two factor authentication mechanism(s) you can request to start the two factor reset recovery process. WARNING: Starting the reset process will lock your wallet") }}</div>
