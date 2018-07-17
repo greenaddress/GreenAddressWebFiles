@@ -324,8 +324,8 @@
           <label ng-show="wallet.twofac.email_addr" class="control-label col-sm-3">{{ _("Change email address") }}</label>
           <label ng-hide="wallet.twofac.email_addr" class="control-label col-sm-3">{{ _("Set email address") }}</label>
           <div class="col-sm-4">
-            <input type="email" class="form-control" placeholder="{{ _("Your email address") }}" ng-model="settings.new_email" ng-disabled="settings.setting_email">
-            <input type="submit" class="btn btn-primary" ng-show="settings.new_email != wallet.twofac.email_addr" value="{{ _("Save") }}" ng-disabled="settings.setting_email" />
+            <input type="email" class="form-control" placeholder="{{ _("Your email address") }}" ng-model="settings.new_email" ng-disabled="settings.setting_email || wallet.reset_2fa_active">
+            <input type="submit" class="btn btn-primary" ng-show="settings.new_email != wallet.twofac.email_addr" value="{{ _("Save") }}" ng-disabled="settings.setting_email || wallet.reset_2fa_active" />
           </div>
         </div>
       </form>
