@@ -222,8 +222,8 @@
     </form>
   </div>
 </div>
-<hr class="double">
-<div class="row" ng-controller="TxLimitsController">
+<hr class="double" ng-show="!wallet.reset_2fa_active">
+<div class="row"  ng-show="!wallet.reset_2fa_active" ng-controller="TxLimitsController">
   <div class="col-md-3">
     <div class="sub-header">{{ _("Spending limits") }}</div>
     <div class="sub-header-desc">{{ _("Set some limits for which you won't be asked for two factor for super userfriendly payments.") }}</div>
