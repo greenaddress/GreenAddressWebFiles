@@ -463,8 +463,8 @@
     </form>
   </div>
 </div>
-<hr class="double">
-<div id="twofa" class="row" ng-controller="TwoFactorSetupController">
+<hr class="double" ng-show="!wallet.reset_2fa_active">
+<div id="twofa" ng-show="!wallet.reset_2fa_active"class="row" ng-controller="TwoFactorSetupController">
   <div class="col-md-3">
     <div class="sub-header">{{ _("Two factor authentication") }}</div>
     <div class="sub-header-desc">{{ _("Set any or all two factor: you can choose which one when needed!") }} {{ _("Enable two or back up the given code where applicable.") }}</div>
