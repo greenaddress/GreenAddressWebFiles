@@ -18,7 +18,7 @@
   <div class="menu-footer">
     {% include "snippets/loading-indicator.html" %}
     {% if not cdvapp %}
-        {% if crapp %}
+        {% if crapp  or electronapp %}
         <div><a href="https://greenaddress.it/faq/" target="_blank">{{ _("FAQ") }}</a> | <a href="https://greenaddress.it/support/" target="_blank">{{ _("Support") }}</a></div>
         {% else %}
         <div><a href="/faq/" target="_blank">{{ _("FAQ") }}</a> | <a href="/support/" target="_blank">{{ _("Support") }}</a></div>
