@@ -150,10 +150,6 @@ msgstr ""
 msgid "Export to CSV"
 msgstr "Exportálás CSV fáljba"
 
-#: templates/wallet/partials/wallet_transactions_table.html:32
-msgid "instant GreenAddress confirmation"
-msgstr "azonnali GreenAddress megerősítés"
-
 #: templates/wallet/partials/wallet_transactions_table.html:37
 msgid "double spend"
 msgstr "dupla költés"
@@ -1228,15 +1224,6 @@ msgstr "hozzá lesz adva az összeghez"
 #: templates/wallet/partials/wallet_send.html:155
 msgid "Rate is"
 msgstr ""
-
-#: templates/wallet/partials/wallet_send.html:165
-#, fuzzy
-msgid "Requires recipient to trust GreenAddress instant confirmations"
-msgstr "A címzettnek meg kell bíznia a GreenAddress azonnali visszaigazolásokban"
-
-#: templates/wallet/partials/wallet_send.html:167
-msgid "Instant Confirmation"
-msgstr "Azonnali visszaigazolással"
 
 #: templates/wallet/partials/wallet_send.html:177
 msgid "You can enter a memo to store in your transactions list"

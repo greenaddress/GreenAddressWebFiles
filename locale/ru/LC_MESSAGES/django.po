@@ -149,10 +149,6 @@ msgstr "Значение"
 msgid "Export to CSV"
 msgstr "Экспортировать в формате CSV"
 
-#: templates/wallet/partials/wallet_transactions_table.html:32
-msgid "instant GreenAddress confirmation"
-msgstr "Мгновенное GreenAddress подтверждение"
-
 #: templates/wallet/partials/wallet_transactions_table.html:37
 msgid "double spend"
 msgstr "двойная трата"
@@ -1268,14 +1264,6 @@ msgstr "Комиссия сети будет добавлена к сумме"
 #: templates/wallet/partials/wallet_send.html:155
 msgid "Rate is"
 msgstr "Тариф"
-
-#: templates/wallet/partials/wallet_send.html:165
-msgid "Requires recipient to trust GreenAddress instant confirmations"
-msgstr "Требует, чтобы получатель доверял моментальному подтверждению GreenAddress"
-
-#: templates/wallet/partials/wallet_send.html:167
-msgid "Instant Confirmation"
-msgstr "Моментальное подтверждение"
 
 #: templates/wallet/partials/wallet_send.html:177
 msgid "You can enter a memo to store in your transactions list"

@@ -162,14 +162,10 @@
                 <option value="Low">Low Priority</option>
                 <option value="Economy">Economy Priority</option>
                 <option value="Custom" ng-hide="send_tx.recipient.type === 'payreq'">Custom</option>
-                <option value="Instant" ng-hide="(send_tx.recipient.type === 'payreq' && !send_tx.instant) || send_tx.current_subaccount_type === '2of3'">Instant</option>
               </select>
             </div>
             </form>
           </div>
-            <label class="text-petty radio-inline" style="padding:0 5px 0 0; display: inline-block;" ng-hide="send_tx.send_fee_rate !== 'Instant'">
-            {{ _("Requires recipient to trust GreenAddress instant confirmations") }} <br />
-            </label>
         </div>
       </div>
       <hr ng-hide="send_tx.recipient.type == 'payreq'">

@@ -148,10 +148,6 @@ msgstr ""
 msgid "Export to CSV"
 msgstr "นำออกเป็น CSV"
 
-#: templates/wallet/partials/wallet_transactions_table.html:32
-msgid "instant GreenAddress confirmation"
-msgstr "ยืนยัน GreenAddress แบบทันที"
-
 #: templates/wallet/partials/wallet_transactions_table.html:37
 msgid "double spend"
 msgstr "ใช้คู่กับการจ่ายเงิน"
@@ -1216,15 +1212,6 @@ msgstr "จะถูกเพิ่มรวมเข้าไปในยอด
 #: templates/wallet/partials/wallet_send.html:155
 msgid "Rate is"
 msgstr ""
-
-#: templates/wallet/partials/wallet_send.html:165
-#, fuzzy
-msgid "Requires recipient to trust GreenAddress instant confirmations"
-msgstr "ต้องการให้ผู้รับรองรับการยืนยันแบบยืนยัน Greenadress"
-
-#: templates/wallet/partials/wallet_send.html:167
-msgid "Instant Confirmation"
-msgstr "การยืนยันแบบทันที"
 
 #: templates/wallet/partials/wallet_send.html:177
 msgid "You can enter a memo to store in your transactions list"

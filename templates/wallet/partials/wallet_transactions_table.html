@@ -29,18 +29,17 @@
             <small ng-show="transaction.memo" style="color: black;">(( transaction.memo ))</small></a>
           <span ng-hide="details">(( transaction.description ))</span>
           <div class="info">
-              <span class="label label-success" ng-show="transaction.instant">{{ _("instant GreenAddress confirmation") }}</span>
               <span class="label label-danger" ng-show="
                 transaction.double_spent_by &&
                 !(transaction.double_spent_by=='update' ||
                   transaction.double_spent_by=='malleability')
               ">{{ _("double spend") }}</span>
-              <span class="label" ng-class="{'label-warning': !transaction.instant, 'label-success': transaction.instant}" ng-show="transaction.rbf_optin && transaction.positive">{{ _("replaceable") }}</span>
+              <span class="label label-warning" ng-show="transaction.rbf_optin && transaction.positive">{{ _("replaceable") }}</span>
               <span class="label label-warning" ng-show="transaction.double_spent_by=='update'">{{ _("updated") }}</span>
               <span class="label label-warning" ng-show="transaction.double_spent_by=='malleability'">{{ _("updated") }}</span>
-              <span class="label label-default" ng-show="transaction.confirmations == 0 && !transaction.instant && !transaction.double_spent_by">{{ _("unconfirmed") }}</span>
+              <span class="label label-default" ng-show="transaction.confirmations == 0 && !transaction.double_spent_by">{{ _("unconfirmed") }}</span>
               <span class="label" ng-class="{'label-info': transaction.confirmations < 6, 'label-success': transaction.confirmations >= 6}" ng-show="transaction.confirmations > 0 && transaction.confirmations < 100">((transaction.confirmations)) {{ _("confirmations") }}</span>
-              <span ng-if="transaction.negative && transaction.rbf_optin && !transaction.replaced_by && !transaction.instant">
+              <span ng-if="transaction.negative && transaction.rbf_optin && !transaction.replaced_by">
                 <span uib-dropdown is-open="transaction.bumping_dropdown_open" ng-show="wallet.hdwallet.keyPair.d || wallet.hwDevice">
                   <a class="btn btn-info btn-xs" uib-dropdown-toggle ng-class="{disabled: bumping_fee}" href="">
                     {{ _("bump fee") }}

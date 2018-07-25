@@ -152,10 +152,6 @@ msgstr "Значення"
 msgid "Export to CSV"
 msgstr "Експортувати у формат CSV"
 
-#: templates/wallet/partials/wallet_transactions_table.html:32
-msgid "instant GreenAddress confirmation"
-msgstr "миттєве підтвердження GreenAddress"
-
 #: templates/wallet/partials/wallet_transactions_table.html:37
 msgid "double spend"
 msgstr "витрачено двічі"
@@ -1263,14 +1259,6 @@ msgstr "Комісія мережі буде додана до суми"
 #: templates/wallet/partials/wallet_send.html:155
 msgid "Rate is"
 msgstr "Тариф "
-
-#: templates/wallet/partials/wallet_send.html:165
-msgid "Requires recipient to trust GreenAddress instant confirmations"
-msgstr "Потребує щоб отримувач довіряв миттєвому підтвердженню GreenAddress"
-
-#: templates/wallet/partials/wallet_send.html:167
-msgid "Instant Confirmation"
-msgstr "Миттєве підтвердження"
 
 #: templates/wallet/partials/wallet_send.html:177
 msgid "You can enter a memo to store in your transactions list"

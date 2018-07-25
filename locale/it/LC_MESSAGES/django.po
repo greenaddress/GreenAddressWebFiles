@@ -147,10 +147,6 @@ msgstr ""
 msgid "Export to CSV"
 msgstr "Esporta in CSV"
 
-#: templates/wallet/partials/wallet_transactions_table.html:32
-msgid "instant GreenAddress confirmation"
-msgstr "conferma immediata GreenAddress"
-
 #: templates/wallet/partials/wallet_transactions_table.html:37
 msgid "double spend"
 msgstr "doppia spesa"
@@ -1229,17 +1225,6 @@ msgstr "Costi di conferma verranno aggiunti all'ammontare"
 #: templates/wallet/partials/wallet_send.html:155
 msgid "Rate is"
 msgstr "Il cambio é"
-
-#: templates/wallet/partials/wallet_send.html:165
-#, fuzzy
-msgid "Requires recipient to trust GreenAddress instant confirmations"
-msgstr ""
-"E' necessario che chi riceve la transazioni accetti le conferme "
-"instantanee GreenAddress"
-
-#: templates/wallet/partials/wallet_send.html:167
-msgid "Instant Confirmation"
-msgstr "Conferma immediata"
 
 #: templates/wallet/partials/wallet_send.html:177
 msgid "You can enter a memo to store in your transactions list"

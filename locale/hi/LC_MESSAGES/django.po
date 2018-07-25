@@ -147,10 +147,6 @@ msgstr ""
 msgid "Export to CSV"
 msgstr ""
 
-#: templates/wallet/partials/wallet_transactions_table.html:32
-msgid "instant GreenAddress confirmation"
-msgstr ""
-
 #: templates/wallet/partials/wallet_transactions_table.html:37
 msgid "double spend"
 msgstr ""
@@ -1140,14 +1136,6 @@ msgstr ""
 
 #: templates/wallet/partials/wallet_send.html:155
 msgid "Rate is"
-msgstr ""
-
-#: templates/wallet/partials/wallet_send.html:165
-msgid "Requires recipient to trust GreenAddress instant confirmations"
-msgstr ""
-
-#: templates/wallet/partials/wallet_send.html:167
-msgid "Instant Confirmation"
 msgstr ""
 
 #: templates/wallet/partials/wallet_send.html:177

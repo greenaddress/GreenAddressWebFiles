@@ -34,12 +34,10 @@ angular.module('greenWalletSendControllers',
         },
         add_fee: {'party': 'sender',
                   'amount': ''},
-        instant: $routeParams.contact ? (parseContact($routeParams.contact).requires_instant || false) : false,
         recipient: $routeParams.contact ? parseContact($routeParams.contact) : null,
         send_fee_rate: get_default_fee_rate(),
         on_change_fee_rate: function() {
             this.advanced_options_visible = this.send_fee_rate === "Custom";
-            this.instant = this.send_fee_rate === "Instant"
             if (!this.advanced_options_visible) {
                 this.add_fee.amount = '';
             }
@@ -156,12 +154,6 @@ angular.module('greenWalletSendControllers',
                     addFee.amount = minFeeRate;
                     isMinFeeRate = true;
                   }
-                } else if (that.instant) {
-                  addFee = {
-                    // backend constants:
-                    requiredNumOfBlocks: 2,
-                    multiplier: 1
-                  };
                 } else {
                   if (!stringToBlocksToTarget[that.send_fee_rate]) {
                     isMinFeeRate = true;
@@ -182,9 +174,9 @@ angular.module('greenWalletSendControllers',
                             that._signing_progress_cb.bind(that),
                         subtractFeeFromOut: satoshis === 'ALL',
                         rbfOptIn: $scope.wallet.appearance.replace_by_fee,
-                        minConfs: that.instant ? 6 : (window.cur_net === Bitcoin.bitcoin.networks.testnet ? 0 : 1),
+                        minConfs: window.cur_net === Bitcoin.bitcoin.networks.testnet ? 0 : 1,
                         addFee: addFee,
-                        instant: that.instant,
+                        instant: false,
                         locktime: $scope.wallet.cur_block,
                         minimizeInputs: wallets.getSubaccount(
                             $scope, $scope.wallet.current_subaccount
@@ -270,9 +262,6 @@ angular.module('greenWalletSendControllers',
                         if (that.memo) {
                             priv_data.memo = that.memo;
                         }
-                        if (that.instant) {
-                            priv_data.instant = true;
-                        }
                         return tx_sender.call(
                             'com.greenaddress.vault.send_raw_tx',
                             tx.toBuffer().toString('hex'),
@@ -357,13 +346,6 @@ angular.module('greenWalletSendControllers',
             if ($scope.wallet.subaccounts[k].pointer === newValue)
                 subaccount = $scope.wallet.subaccounts[k];
         $scope.send_tx.current_subaccount_type = subaccount.type;
-        if (subaccount.type === '2of3') {
-            $scope.send_tx.instant = false;
-            if ($scope.send_tx.send_fee_rate === 'Instant') {
-                $scope.send_tx.send_fee_rate = get_default_fee_rate();
-                $scope.send_tx.on_change_fee_rate();
-            }
-        }
     });
     var spend_all_succeeded = false;
     $scope.$watch('send_tx.spend_all', function(newValue, oldValue) {
@@ -389,7 +371,7 @@ angular.module('greenWalletSendControllers',
                 data.request_url = parsed_uri.r;
                 var name = data.merchant_cn || data.request_url;
                 $scope.send_tx.recipient = {name: name, data: data, type: 'payreq',
-                                            amount: amount, requires_instant: data.requires_instant};
+                                            amount: amount};
 
                 if ($scope.send_tx.send_fee_rate === 'Custom') {
                     $scope.send_tx.send_fee_rate = get_default_fee_rate();
@@ -437,13 +419,11 @@ angular.module('greenWalletSendControllers',
             $scope.wallet.send_to_payment_request = undefined;
             var name = data.merchant_cn || data.request_url;
             recipient_override = {name: name, data: data, type: 'payreq',
-                                  amount: $scope.wallet.send_to_receiving_id_amount,
-                                  requires_instant: data.requires_instant};
+                                  amount: $scope.wallet.send_to_receiving_id_amount};
         }
         if (recipient_override) {
             $scope.send_tx.recipient_overridden = true;
             $scope.send_tx.recipient = recipient_override;
-            $scope.send_tx.instant = recipient_override.requires_instant;
             if ($scope.send_tx.recipient && $scope.send_tx.recipient.amount) {
                 $scope.send_tx.amount = parseFloat(Bitcoin.Util.formatValue(  // parseFloat required for iOS Cordova
                     new Bitcoin.BigInteger($scope.send_tx.recipient.amount.toString()).multiply(Bitcoin.BigInteger.valueOf(mul))));
