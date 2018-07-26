@@ -15,7 +15,7 @@ function GAFeeEstimatesFactory (gaService, initialEstimates) {
   });
 }
 
-function getFeeEstimate (isInstant, confs) {
+function getFeeEstimate (confs) {
   var sortedEstimates = Object.keys(this.estimates).sort(
     function (a, b) {
       return +a - +b;
@@ -29,20 +29,11 @@ function getFeeEstimate (isInstant, confs) {
       continue;
     }
     var actualBlock = +estimate['blocks'];
-    if (isInstant) {
-      if (actualBlock <= 2) {
-        return [feeRate * 1.1 * 1000 * 1000 * 100, actualBlock];
-      }
-      break;
-    } else if (actualBlock < confs) {
+    if (actualBlock < confs) {
       continue;
     }
     return [feeRate * 1000 * 1000 * 100, actualBlock];
   }
 
-  if (isInstant && this.gaService.getNetName() === 'mainnet') {
-    throw new Error('Instant transactions not available at this time. Please try again later.');
-  }
-
-  return [this.gaService.getMinFeeRate() * (isInstant ? 3 : 1), 1];
+  return [this.gaService.getMinFeeRate() * 1, 1];
 }

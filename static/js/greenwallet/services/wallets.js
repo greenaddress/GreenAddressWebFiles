@@ -601,7 +601,7 @@ function factory ($q, $rootScope, tx_sender, $location, notices, $uibModal,
                 ? bitcoin.Transaction.fromHex(txdata).virtualSize() : tx.size;
 
         retval.push({ts: new Date(tx.created_at.replace(' ', 'T')), txhash: tx.txhash, memo: tx.memo,
-          value_sort: value_sort, value: value, instant: false,
+          value_sort: value_sort, value: value,
           value_fiat: data.fiat_value ? value * data.fiat_value / Math.pow(10, 8) : undefined,
           redeemable_value: redeemable_value, negative: negative, positive: positive,
           description: description, external_social: external_social, unclaimed: unclaimed,
