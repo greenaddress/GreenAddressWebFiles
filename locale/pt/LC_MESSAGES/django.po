@@ -1942,18 +1942,14 @@ msgid ""
 "without access to GreenAddress, using additional offline recovery "
 "key.<br/><strong>NOTE:</strong> <a "
 "href=\"https://github.com/greenaddress/garecovery\" "
-"target=\"_blank\">Recovery guide</a><br/><strong>NOTE:</strong> instant "
-"transactions are not available for these accounts because GreenAddress "
-"can't protect them from double spending."
+"target=\"_blank\">Recovery guide</a>"
 msgstr ""
 
 #: templates/wallet/partials/wallet_settings.html:697
 msgid ""
 "Create accounts that allow you to access your funds at any time even "
 "without access to GreenAddress, using additional offline recovery "
-"key.<br/><strong>NOTE:</strong> instant transactions are not available "
-"for these accounts because GreenAddress can't protect them from double "
-"spending."
+"key."
 msgstr ""
 
 #: templates/wallet/partials/wallet_settings.html:703
