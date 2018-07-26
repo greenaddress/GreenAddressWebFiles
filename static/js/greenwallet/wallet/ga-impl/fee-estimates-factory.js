@@ -35,5 +35,5 @@ function getFeeEstimate (confs) {
     return [feeRate * 1000 * 1000 * 100, actualBlock];
   }
 
-  return [this.gaService.getMinFeeRate() * 1, 1];
+  return [this.gaService.getMinFeeRate(), 1];
 }
