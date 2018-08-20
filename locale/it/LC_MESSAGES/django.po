@@ -840,7 +840,7 @@ msgid ""
 "This passphrase is encrypted, so your encryption password is required to "
 "use it."
 msgstr ""
-"Questa password è criptata, quindi la tua password di crittazione è "
+"Questa passphrase è criptata, quindi la tua password di crittazione è "
 "richiesta per utilizzarla."
 
 #: templates/wallet/partials/signup_qr_modal.html:4
