@@ -951,8 +951,7 @@ function factory ($q, $rootScope, tx_sender, $location, notices, $uibModal,
           if (!cb) {
             deferred.resolve(modalResult);
           } else {
-            var res = modalResult.then(function (twofac_data) {
-              return cb(twofac_data).catch(function (err) {
+            var onError = function (err) {
                 if (attemptsLeft > 1 && err.args && err.args[0] === 'http://greenaddressit.com/error#auth') {
                   attemptsLeft -= 1;
                   $scope.twofac.twofactor_code = '';
@@ -961,7 +960,14 @@ function factory ($q, $rootScope, tx_sender, $location, notices, $uibModal,
                 } else {
                   return $q.reject(err);
                 }
+            }
+            var res = modalResult.then(function (twofac_data) {
+              return cb(twofac_data).catch(function (err) {
+                return onError(err);
               })
+            }).catch(function (err) {
+                // End up here if the gauth proxy request fails
+                return onError(err);
             });
             if (retVal) {
               return res;
