@@ -33,7 +33,6 @@ msgid "Dongle is locked - reconnect the dongle and retry"
 msgstr "La chiavetta USB è bloccata - riconnetterla e riprovare"
 
 #: js/index.js:107795
-#, fuzzy
 msgid "Ledger communication failed"
 msgstr "Validazione checksum fallita!"
 
@@ -92,14 +91,14 @@ msgid "Re-depositing successful!"
 msgstr "Rideposito avvenuto con successo!"
 
 #: js/index.js:123276
-#, fuzzy
+#,
 msgid "1 confirmation"
-msgstr "Ulteriori informazioni"
+msgstr "1 conferma"
 
 #: js/index.js:123277
-#, c-format, fuzzy, python-format
+#, c-format, python-format
 msgid "%s confirmations"
-msgstr "Ulteriori informazioni"
+msgstr "%s conferme"
 
 #: js/index.js:123385 js/index.js:123770
 msgid "Not a valid encrypted private key"
@@ -130,9 +129,8 @@ msgid "Already swept or no funds found"
 msgstr "Bitcoin gia' presi o non trovati"
 
 #: js/index.js:124146 js/index.js:128204 js/index.js:128209
-#, fuzzy
 msgid "Invalid address"
-msgstr "Passphrase non valida"
+msgstr "Indirizzo non valido"
 
 #: js/index.js:124334
 msgid "Invalid amount"
@@ -233,13 +231,13 @@ msgid "Re-deposited"
 msgstr "Ridepositato"
 
 #: js/index.js:126892
-#, c-format, fuzzy, python-format
+#, c-format, python-format
 msgid "Time,Description,satoshis,%s,txhash,fee,memo"
-msgstr "Data, Descrizione,satoshis,"
+msgstr "Data,Descrizione,satoshis,%s,txhash,fee,memo"
 
 #: js/index.js:126982
 msgid "back to myself"
-msgstr "indietro a te stesso"
+msgstr "a te stesso"
 
 #: js/index.js:127078
 msgid "Transaction failed: "
@@ -386,9 +384,8 @@ msgid "Limits updated successfully"
 msgstr "Limiti aggiornati con successo"
 
 #: js/index.js:128761
-#, fuzzy
 msgid "Renamed successfully"
-msgstr "Limiti aggiornati con successo"
+msgstr "Operazione riuscita"
 
 #: js/index.js:128969
 msgid "Launch the Chrome App"
