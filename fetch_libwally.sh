@@ -5,5 +5,5 @@ set -e
 # Add the wally plugin:
 if [ \! -e libwally-core ]; then
     git clone https://github.com/ElementsProject/libwally-core.git libwally-core
-    (cd libwally-core && git checkout d0a13e08b51fccf420e2be255e3c959831637aef)
+    (cd libwally-core && git checkout a92ee545c5dc8076fa454bdb2ad2ba10a6d61d59)
 fi
