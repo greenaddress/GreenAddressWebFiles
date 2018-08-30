@@ -88,7 +88,7 @@ msgstr "Sicurezza"
 #: templates/wallet/nav.html:13
 #: templates/wallet/partials/wallet_settings.html:644
 msgid "Accounts"
-msgstr "Acccounts"
+msgstr "Accounts"
 
 #: templates/wallet/nav.html:15
 #: templates/wallet/partials/wallet_modal_logout.html:11
