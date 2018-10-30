@@ -284,10 +284,16 @@ angular.module('greenWalletTransactionsControllers',
 
             var prev_outputs = [];
             var in2out_types = {};
+            var out2in_types = {};
+            out2in_types[scriptTypes.OUT_P2SH] = scriptTypes.REDEEM_P2SH;
+            out2in_types[scriptTypes.OUT_P2SH_P2WSH] = scriptTypes.REDEEM_P2SH_P2WSH;
             in2out_types[scriptTypes.REDEEM_P2SH] = scriptTypes.OUT_P2SH;
             in2out_types[scriptTypes.REDEEM_P2SH_P2WSH] = scriptTypes.OUT_P2SH_P2WSH;
             for (var i = 0; i < transaction.inputs.length; ++i) {
                 (function(utxo) {
+                    if (utxo.script_type == scriptTypes.OUT_P2SH || utxo.script_type == scriptTypes.OUT_P2SH_P2WSH) {
+                        utxo.script_type = out2in_types[utxo.script_type];
+                    }
                     if (utxo.script_type != scriptTypes.REDEEM_P2SH && utxo.script_type != scriptTypes.REDEEM_P2SH_P2WSH) {
                         throw new Error('Invalid script type: ' + utxo.script_type);
                     }
