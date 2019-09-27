@@ -4,4 +4,4 @@ matrix:
   include:
     - services:
         - docker
-      script: docker run -v $PWD:/webfiles greenaddress/webfiles@sha256:cbae4068483b68f1100a8a048924c983cec5ab0b99bd4f189cf3c2278617ba34 /bin/bash -c "cd /webfiles && ./prepare.sh && virtualenv venv && source venv/bin/activate && pip install -r requirements.txt --require-hashes && python render_templates.py -a .."
+      script: docker run -v $PWD:/webfiles greenaddress/webfiles@sha256:6171903b0bbc5dd76e9237d256939bcee68853200b81b512db8d9ca33681424d /bin/bash -c "cd /webfiles && ./prepare.sh && virtualenv venv && source venv/bin/activate && pip install -r requirements.txt --require-hashes && python render_templates.py -a .."
