@@ -6,11 +6,11 @@ var clean = require('gulp-clean');
 var source = require('vinyl-source-stream');
 
 gulp.task('clean-js', function () {
-  return gulp.src(['build/static/js/'], {read: false})
+  return gulp.src(['build/static/js/'], {read: false, allowEmpty: true})
     .pipe(clean());
 });
 
-gulp.task('browserify', ['clean-js'], function () {
+gulp.task('browserify', gulp.series('clean-js', function () {
   // Single entry point to browserify
   var browserified = browserify('static/js/index.js', {
     insertGlobals: true
@@ -37,4 +37,4 @@ gulp.task('browserify', ['clean-js'], function () {
     .pipe(gulp.dest('build/static/js/greenwallet/signup/'));
 
   return merge(browserified, external, mnonic, signupWorker);
-});
+}));

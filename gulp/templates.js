@@ -16,10 +16,10 @@ gulp.task('clean-templates', function () {
     'sv',
     'th',
     'uk'
-  ].map(function (lang) { return 'build/static/' + lang; }), {read: false})
+  ].map(function (lang) { return 'build/static/' + lang; }), {read: false, allowEmpty: true})
     .pipe(clean());
 });
 
-gulp.task('templates', ['clean-templates'], function () {
+gulp.task('templates', gulp.series('clean-templates', function () {
   return run('python render_templates.py build').exec();
-});
+}));

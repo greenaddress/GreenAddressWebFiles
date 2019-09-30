@@ -22,18 +22,17 @@
   "devDependencies": {
     "browserify": "^16.2.2",
     "bufferutil": "4.0.0",
-    "gulp": "^3.9.1",
-    "gulp-clean": "^0.4.0",
-    "gulp-rename": "^1.4.0",
-    "gulp-run": "^1.6.12",
+    "gulp": "4.0.2",
+    "gulp-clean": "0.4.0",
+    "gulp-rename": "1.4.0",
+    "gulp-run": "1.7.1",
     "merge-stream": "^1.0.0",
     "proxyquire": "^2.1.0",
-    "semistandard": "^7.0.5",
+    "semistandard": "14.2.0",
     "tap-spec": "^5.0.0",
     "tape": "^4.9.1",
     "utf-8-validate": "5.0.1",
-    "vinyl-source-stream": "^2.0.0",
-    "zuul": "^3.12.0"
+    "vinyl-source-stream": "^2.0.0"
   },
   "dependencies": {
     "angular": "~1.5.0",
@@ -61,9 +60,11 @@
   },
   "semistandard": {
     "ignore": [
+      "gulp/",
       "bitcoinjs-browserify/",
       "static/external/",
       "static/js/lib/",
+      "static/js/greenwallet/",
       "static/js/greenwallet/app.js",
       "static/js/greenwallet/apps/signup.js",
       "static/js/greenwallet/apps/wallet.js",

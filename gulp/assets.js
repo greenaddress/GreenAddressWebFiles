@@ -6,15 +6,15 @@ gulp.task('clean-assets', function () {
     'build/static/fonts/',
     'build/static/img/',
     'build/static/sound/'
-  ], {read: false})
+  ], {read: false, allowEmpty: true})
     .pipe(clean());
 });
 
-gulp.task('assets', ['clean-assets'], function () {
+gulp.task('assets', gulp.series('clean-assets', function () {
   return gulp.src([
     'static/fonts/**/*',
     'static/img/**/*',
     'static/sound/**/*'
   ], {base: '.'})
     .pipe(gulp.dest('build/'));
-});
+}));
