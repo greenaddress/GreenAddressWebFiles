@@ -52,7 +52,7 @@
     "promise": "^8.0.1",
     "promise-polyfill": "^8.1.0",
     "promise.prototype.finally": "^3.1.0",
-    "protobufjs": "^5.0.0",
+    "protobufjs": "^6.11.3",
     "q": "^1.4.1",
     "raf": "^3.2.0",
     "wallet": "file:./static/js/greenwallet/wallet",
