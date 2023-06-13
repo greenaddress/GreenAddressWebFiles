@@ -1495,8 +1495,8 @@ crypto-browserify@^3.0.0:
     randomfill "^1.0.3"
 
 "crypto-js@>= 3.1.5":
-  version "3.1.8"
-  resolved "https://registry.yarnpkg.com/crypto-js/-/crypto-js-3.1.8.tgz#715f070bf6014f2ae992a98b3929258b713f08d5"
+  version "4.1.1"
+  resolved "https://registry.yarnpkg.com/crypto-js/-/crypto-js-4.1.1.tgz#9e485bcf03521041bd85844786b83fb7619736cf"
 
 ctype@0.5.3:
   version "0.5.3"
